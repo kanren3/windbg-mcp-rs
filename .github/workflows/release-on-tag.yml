@@ -62,5 +62,3 @@ jobs:
           artifacts: |
             windbg-mcp-rs-${{ github.ref_name }}-windows-x64.zip
             windbg-mcp-rs-${{ github.ref_name }}-windows-x64.zip.sha256
-            target/release/windbg_mcp_rs.dll
-            target/release/windbg_mcp_rs.pdb

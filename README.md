@@ -62,6 +62,7 @@ When `!mcp serve` succeeds, the MCP server is available on the reported Streamab
 
 ## Notes
 
+- This is a fully Vibe Coding project.
 - The runtime never parses `docs/debugger.chm`; it only uses the prepared static JSON catalog.
 - `llm_cache/` is only used as a preparation area for extracted CHM content.
 - Command execution is serialized through a dedicated worker that connects back into the active debugger session.

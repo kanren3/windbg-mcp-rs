@@ -44,6 +44,32 @@ cargo build
 
 The WinDbg extension artifact is the generated DLL, for example `target\debug\windbg_mcp_rs.dll`.
 
+Build the optimized release artifact with:
+
+```powershell
+cargo build --release
+```
+
+The release DLL is written to `target\release\windbg_mcp_rs.dll` and the matching symbols are written to `target\release\windbg_mcp_rs.pdb`.
+
+## Automated release
+
+The repository includes a GitHub Actions workflow at `.github/workflows/release-on-tag.yml`.
+
+- Pushing a tag that matches `v*` builds the project in release mode on `windows-latest`.
+- The workflow verifies that the pushed tag matches the version in `Cargo.toml`, for example `v0.1.0`.
+- The release publishes `windbg_mcp_rs.dll`, `windbg_mcp_rs.pdb`, a versioned zip archive, and a SHA-256 checksum file.
+
+Typical release flow:
+
+```powershell
+# update Cargo.toml version first
+git tag v0.1.0
+git push origin v0.1.0
+```
+
+This keeps GitHub Releases aligned with tagged versions instead of overwriting a rolling prerelease on every push.
+
 ## Using the WinDbg extension
 
 After building the DLL, load it in WinDbg and use:

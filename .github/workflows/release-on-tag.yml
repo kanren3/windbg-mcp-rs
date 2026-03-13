@@ -1,0 +1,66 @@
+name: Release On Tag
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Verify tag matches Cargo version
+        shell: pwsh
+        run: |
+          $cargoVersion = Select-String -Path Cargo.toml -Pattern '^version\s*=\s*"([^"]+)"' | ForEach-Object { $_.Matches[0].Groups[1].Value }
+          if (-not $cargoVersion) {
+            throw "Unable to read version from Cargo.toml"
+          }
+
+          $expectedTag = "v$cargoVersion"
+          if ("${{ github.ref_name }}" -ne $expectedTag) {
+            throw "Tag ${{ github.ref_name }} does not match Cargo.toml version $cargoVersion"
+          }
+
+      - name: Build release DLL
+        run: cargo build --release
+
+      - name: Prepare release assets
+        shell: pwsh
+        run: |
+          $assetDir = "dist"
+          $archiveName = "windbg-mcp-rs-${{ github.ref_name }}-windows-x64.zip"
+
+          New-Item -ItemType Directory -Path $assetDir -Force | Out-Null
+          Copy-Item "target/release/windbg_mcp_rs.dll" "$assetDir/windbg_mcp_rs.dll"
+
+          if (Test-Path "target/release/windbg_mcp_rs.pdb") {
+            Copy-Item "target/release/windbg_mcp_rs.pdb" "$assetDir/windbg_mcp_rs.pdb"
+          }
+
+          Compress-Archive -Path "$assetDir/*" -DestinationPath $archiveName -Force
+          $hash = (Get-FileHash $archiveName -Algorithm SHA256).Hash.ToLowerInvariant()
+          Set-Content -Path "$archiveName.sha256" -Value "$hash  $archiveName"
+
+      - name: Publish GitHub release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
+          artifactErrorsFailBuild: true
+          generateReleaseNotes: true
+          artifacts: |
+            windbg-mcp-rs-${{ github.ref_name }}-windows-x64.zip
+            windbg-mcp-rs-${{ github.ref_name }}-windows-x64.zip.sha256
+            target/release/windbg_mcp_rs.dll
+            target/release/windbg_mcp_rs.pdb

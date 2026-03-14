@@ -1,0 +1,242 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The d* commands display the contents of memory in the given range."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>d, da, db, dc, dd, dD, df, dp, dq, du, dw (Display Memory)</title>
+
+<meta name="MS-HAID" content="r16_cmds_C_eddd6afa-a4e9-49c7-8752-7005aca29a84.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.d__da__db__dc__dd__dd__df__dp__dq__du__dw__dw__dyb__dyd__display_memor"></a>d, da, db, dc, dd, dD, df, dp, dq, du, dw (Display Memory)</h1>
+</div>
+<p>The <b>d*</b> commands display the contents of memory in the given range.</p>
+<pre class="syntax">d{a|b|c|d|D|f|p|q|u|w|W} [Options] [Range] 
+dy{b|d} [Options] [Range] 
+d [Options] [Range] 
+</pre>
+<h2><a id="ddk_cmd_display_memory_dbg"></a><a id="DDK_CMD_DISPLAY_MEMORY_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Options______"></a><a id="_______options______"></a><a id="_______OPTIONS______"></a>       <i>Options</i>      </dt>
+<dd>
+<p>Specifies one or more display options. Any of the following options can be included, except that no more than one <b>/p</b>* option can be indicated:</p>
+<p></p>
+<dl>
+<dt><a id="_cWidth"></a><a id="_cwidth"></a><a id="_CWIDTH"></a><b>/c</b><i>Width</i></dt>
+<dd>
+<p>Specifies the number of columns to use in the display. If this is omitted, the default number of columns depends on the display type.</p>
+</dd>
+<dt><a id="_p"></a><a id="_P"></a><b>/p</b></dt>
+<dd>
+<p>(Kernel-mode only)  Uses physical memory addresses for the display. The range specified by <i>Range</i> will be taken from physical memory rather than virtual memory.</p>
+</dd>
+<dt><a id="_p_c_"></a><a id="_P_C_"></a><b>/p[c]</b></dt>
+<dd>
+<p>(Kernel-mode only)  Same as <b>/p</b>, except that cached memory will be read. The brackets around <b>c</b> must be included.</p>
+</dd>
+<dt><a id="_p_uc_"></a><a id="_P_UC_"></a><b>/p[uc]</b></dt>
+<dd>
+<p>(Kernel-mode only)  Same as <b>/p</b>, except that uncached memory will be read. The brackets around <b>uc</b> must be included.</p>
+</dd>
+<dt><a id="_p_wc_"></a><a id="_P_WC_"></a><b>/p[wc]</b></dt>
+<dd>
+<p>(Kernel-mode only)  Same as <b>/p</b>, except that write-combined memory will be read. The brackets around <b>wc</b> must be included.</p>
+</dd>
+</dl>
+</dd>
+<dt><a id="_______Range______"></a><a id="_______range______"></a><a id="_______RANGE______"></a>       <i>Range</i>      </dt>
+<dd>
+<p>Specifies the memory area to display. For more syntax details, see <a href="address_and_address_range_syntax.htm">Address and Address Range Syntax</a>. If you omit <i>Range</i>, the command will display memory starting at the ending location of the last display command. If <i>Range</i> is omitted and no previous display command has been used, the display begins at the current instruction pointer.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>user mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>all </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For an overview of memory manipulation and a description of other memory-related commands, see <a href="reading_and_writing_memory.htm">Reading and Writing Memory</a>.</p>
+<h2>Remarks</h2>
+<p>Each line displayed will include the address of the first byte in the line followed by the contents of memory at that and following locations.</p>
+<p>If you omit <i>Range</i>, the command will display memory starting at the ending location of the last display command. This allows you to continuously scan through memory.</p>
+<p>This command exists in the following forms. The second characters of the <b>dd</b>, <b>dD</b>, <b>dw</b>, and <b>dW</b> commands are case-sensitive, as are the third characters of the <b>dyb</b> and <b>dyd</b> commands.</p>
+<table>
+<tr>
+<th>Command</th>
+<th>Display</th>
+</tr>
+<tr>
+<td>
+<p><b>d</b></p>
+</td>
+<td>
+<p>This displays data in the same format as the most recent <b>d*</b> command. If no previous <b>d*</b> command has been issued, <b>d</b> has the same effect as <b>db</b>.</p>
+<p>Notice that <b>d</b> repeats the most recent command that began with <b>d</b>. This includes <b>dda</b>, <b>ddp</b>, <b>ddu</b>, <b>dpa</b>, <b>dpp</b>, <b>dpu</b>, <b>dqa</b>, <b>dqp</b>, <b>dqu</b>, <b>dds</b>, <b>dps</b>, <b>dqs</b>, <b>ds</b>, <b>dS</b>, <b>dg</b>, <b>dl</b>, <b>dt</b>, and <b>dv</b>, as well as the display commands on this page. If the parameters given after <b>d</b> are not appropriate, errors may result.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>da</b></p>
+</td>
+<td>
+<p>ASCII characters.</p>
+<p>Each line displays up to 48 characters. The display continues until the first null byte or until all characters in <i>range</i> have been displayed. All nonprintable characters, such as carriage returns and line feeds, are displayed as periods (<b>.</b>).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>db</b></p>
+</td>
+<td>
+<p>Byte values and ASCII characters.</p>
+<p>Each display line shows the address of the first byte in the line, followed by up to 16 hexadecimal byte values. The byte values are immediately followed by the corresponding ASCII values. The eighth and ninth hexadecimal values are separated by a hyphen (<b>-</b>). All nonprintable characters, such as carriage returns and line feeds, are displayed as periods (<b>.</b>).</p>
+<p>The default count is 128 bytes.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>dc</b></p>
+</td>
+<td>
+<p>Double-word values (4 bytes) and ASCII characters.</p>
+<p>Each display line shows the address of the first word in the line and up to eight hexadecimal word values, as well as their ASCII equivalent.</p>
+<p>The default count is 32 DWORDs (128 bytes).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>dd</b></p>
+</td>
+<td>
+<p>Double-word values (4 bytes).</p>
+<p>The default count is 32 DWORDs (128 bytes).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>dD</b></p>
+</td>
+<td>
+<p>Double-precision floating-point numbers (8 bytes).</p>
+<p>The default count is 15 numbers (120 bytes).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>df</b></p>
+</td>
+<td>
+<p>Single-precision floating-point numbers (4 bytes).</p>
+<p>The default count is 16 numbers (64 bytes).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>dp</b></p>
+</td>
+<td>
+<p>Pointer-sized values. This command is equivalent to <b>dd</b> or <b>dq</b>, depending on whether the target computer's processor architecture is 32-bit or 64-bit, respectively.</p>
+<p>The default count is 32 DWORDs or 16 quad-words (128 bytes).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>dq</b></p>
+</td>
+<td>
+<p>Quad-word values (8 bytes).</p>
+<p>The default count is 16 quad-words (128 bytes).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>du</b></p>
+</td>
+<td>
+<p>Unicode characters.</p>
+<p>Each line displays up to 48 characters. The display continues until the first null byte or until all characters in <i>range</i> have been displayed. All nonprintable characters, such as carriage returns and line feeds, are displayed as periods (<b>.</b>).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>dw</b></p>
+</td>
+<td>
+<p>Word values (2 bytes).</p>
+<p>Each display line shows the address of the first word in the line and up to eight hexadecimal word values.</p>
+<p>The default count is 64 words (128 bytes).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>dW</b></p>
+</td>
+<td>
+<p>Word values (2 bytes) and ASCII characters.</p>
+<p>Each display line shows the address of the first word in the line and up to eight hexadecimal word values.</p>
+<p>The default count is 64 words (128 bytes).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>dyb</b></p>
+</td>
+<td>
+<p>Binary values and byte values.</p>
+<p>The default count is 32 bytes.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>dyd</b></p>
+</td>
+<td>
+<p>Binary values and double-word values (4 bytes).</p>
+<p>The default count is 8 DWORDs (32 bytes).</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>If you attempt to display an invalid address, its contents are shown as question marks (<b>?</b>).</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20d, da, db, dc, dd, dD, df, dp, dq, du, dw (Display Memory)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

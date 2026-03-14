@@ -1,0 +1,45 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="There are two user-mode debuggers available in the Microsoft Visual Studio environment."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Setting Up User-Mode Debugging in Visual Studio</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.setting_up_user-mode_debugging_in_visual_studio"></a>Setting Up User-Mode Debugging in Visual Studio</h1>
+</div>
+<p>There are two user-mode debuggers available in the Microsoft Visual Studio environment. One is the Windows User-Mode Debugger, which is included in Debugging Tools for Windows. The other is the Visual Studio Debugger, which is part of the Visual Studio product. This topic describes how to get set up to use the Windows User-Mode Debugger from within the Visual Studio environment.</p>
+<h2><a id="Debugging_a_User-Mode_Process_on_the_Local_Computer"></a><a id="debugging_a_user-mode_process_on_the_local_computer"></a><a id="DEBUGGING_A_USER-MODE_PROCESS_ON_THE_LOCAL_COMPUTER"></a>Debugging a User-Mode Process on the Local Computer</h2>
+<p>No special setup is required for debugging a user-mode process on the local computer. For information about attaching to a process or launching a process under the debugger, see <a href="debugging_a_user-mode_process_using_visual_studio.htm">Debugging a User-Mode Process Using Visual Studio</a>.</p>
+<h2><a id="Debugging_a_User-Mode_Process_on_a_Target_Computer"></a><a id="debugging_a_user-mode_process_on_a_target_computer"></a><a id="DEBUGGING_A_USER-MODE_PROCESS_ON_A_TARGET_COMPUTER"></a>Debugging a User-Mode Process on a Target Computer</h2>
+<p>In some cases, two computers are used for debugging. The debugger runs on the <i>host computer</i>, and the code that is being debugged runs on the <i>target computer</i>. In Visual Studio (running on the host computer), you can use the Windows User-Mode Debugger to attach to a user-mode process on a target computer.</p>
+<p>On the target computer, go to <b>Control Panel&gt;Network and Internet&gt;Network and Sharing Center&gt;Advanced sharing settings</b>. Under <b>Guest or Public</b>, select <b>Turn on network discovery</b> and <b>Turn on file and printer sharing</b>.</p>
+<p>You can do the rest of the configuration from the host computer:</p>
+<ol>
+<li>On the host computer, in Visual Studio, on the <b>Tools</b> menu, choose <b>Attach to Process</b>.</li>
+<li>For <b>Transport</b>, choose <b>Windows User Mode Debugger</b>.</li>
+<li>To the right of the <b>Qualifier</b> box, click the <b>Browse</b> button.</li>
+<li>Click the <b>Add</b> button.</li>
+<li>Enter the name of the target computer.</li>
+<li>To the right of <b>Configure Target Computer</b>, click the <b>Configure</b> button. The <b>Configure Target Computer</b> dialog box opens and displays the configuration progress.</li>
+<li>When the configuration is complete, in the <b>Configure Computers</b> dialog box, click <b>OK</b>.</li>
+</ol>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Setting Up User-Mode Debugging in Visual Studio%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

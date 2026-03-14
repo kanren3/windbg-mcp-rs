@@ -1,0 +1,102 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="This section describes the USB 2.0 debugger extension commands. These commands display information from data structures maintained by drivers in the USB 2.0 driver stack."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>USB 2.0 Extensions</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.usb_2_0_extensions"></a>USB 2.0 Extensions</h1>
+</div>
+<p>This section describes the USB 2.0 debugger extension commands. These commands display information from data structures maintained by drivers in the USB 2.0 driver stack. For more information about these three drivers, see <a href="http://go.microsoft.com/fwlink/p?LinkId=251983">USB Driver Stack Architecture</a>.</p>
+<p>The USB 2.0 debugger extension commands are implemented in Usbkd.dll. To load the Usbkd commands, enter <b>.load usbkd.dll</b> in the debugger.</p>
+<h2><a id="usb_2_tree"></a><a id="USB_2_TREE"></a>USB 2.0 Tree</h2>
+<p>The USB 2.0 tree contains the device nodes that represent execution units on EHCI host controller devices along with the child nodes that represent hubs and connected devices. This diagram shows an example of a USB 2.0 tree.</p><img src="images/usbkd01.png" alt="Diagram that shows USB 2tree"/><p>The diagram shows one physical host controller device that has two execution units. Each execution unit appears as a device node in the Plug and Play device tree. One execution unit appears as a UHCI USB host controller node, and the other execution unit shows as an EHCI USB host controller node. Each of those nodes has a child node that represents a USB root hub. Each root hub has a single child node that represents a connected USB device.</p>
+<p>Notice that the diagram is not a tree in the sense that not all nodes descend from a single parent node. However, when we use the term <i>USB 2.0 tree</i>, we are referring to the set of device nodes that represent execution units on EHCI host controller devices along with the nodes for hubs and connected devices.</p>
+<h2><a id="Getting_started_with_USB_2.0_debugging"></a><a id="getting_started_with_usb_2.0_debugging"></a><a id="GETTING_STARTED_WITH_USB_2.0_DEBUGGING"></a>Getting started with USB 2.0 debugging</h2>
+<p>To start debugging a  USB 2.0 issue, enter the <a href="_usbkd_usb2tree.htm"><b>!usb2tree</b></a> command. The <b>!usb2tree</b> command displays a list of commands and addresses that you can use to investigate host controllers, hubs, ports, devices, endpoints, and other elements of the USB 2.0 tree.</p>
+<p>
+<h2><a id="in_this_section"></a>In this section</h2>
+<ul>
+<li><a href="_usbkd_usbhelp.htm"><b>!usbkd.usbhelp</b></a></li>
+<li><a href="_usbkd__ehcidd.htm"><b>!usbkd._ehcidd</b></a></li>
+<li><a href="_usbkd__ehciep.htm"><b>!usbkd._ehciep</b></a></li>
+<li><a href="_usbkd__ehciframe.htm"><b>!usbkd._ehciframe</b></a></li>
+<li><a href="_usbkd__ehciqh.htm"><b>!usbkd._ehciqh</b></a></li>
+<li><a href="_usbkd__ehciregs.htm"><b>!usbkd._ehciregs</b></a></li>
+<li><a href="_usbkd__ehcisitd.htm"><b>!usbkd._ehcisitd</b></a></li>
+<li><a href="_usbkd__ehcistq.htm"><b>!usbkd._ehcistq</b></a></li>
+<li><a href="_usbkd__ehcitd.htm"><b>!usbkd._ehcitd</b></a></li>
+<li><a href="_usbkd__ehcitfer.htm"><b>!usbkd._ehcitfer</b></a></li>
+<li><a href="_usbkd__ehciitd.htm"><b>!usbkd._ehciitd</b></a></li>
+<li><a href="_usbkd_doesdumphaveusbdata.htm"><b>!usbkd.doesdumphaveusbdata</b></a></li>
+<li><a href="_usbkd_isthisdumpasyncissue.htm"><b>!usbkd.isthisdumpasyncissue</b></a></li>
+<li><a href="_usbkd_urbfunc.htm"><b>!usbkd.urbfunc</b></a></li>
+<li><a href="_usbkd_usb2.htm"><b>!usbkd.usb2</b></a></li>
+<li><a href="_usbkd_usb2tree.htm"><b>!usbkd.usb2tree</b></a></li>
+<li><a href="_usbkd_usbchain.htm"><b>!usbkd.usbchain</b></a></li>
+<li><a href="_usbkd_usbdevobj.htm"><b>!usbkd.usbdevobj</b></a></li>
+<li><a href="_usbkd_usbdpc.htm"><b>!usbkd.usbdpc</b></a></li>
+<li><a href="_usbkd_ehci_info_from_fdo.htm"><b>!usbkd.ehci_info_from_fdo</b></a></li>
+<li><a href="_usbkd_usbdevh.htm"><b>!usbkd.usbdevh</b></a></li>
+<li><a href="_usbkd_usbep.htm"><b>!usbkd.usbep</b></a></li>
+<li><a href="_usbkd_usbfaildata.htm"><b>!usbkd.usbfaildata</b></a></li>
+<li><a href="_usbkd_usbhcdext.htm"><b>!usbkd.usbhcdext</b></a></li>
+<li><a href="_usbkd_usbdstatus.htm"><b>!usbkd.usbdstatus</b></a></li>
+<li><a href="_usbkd_usbhcdhccontext.htm"><b>!usbkd.usbhcdhccontext</b></a></li>
+<li><a href="_usbkd_usbhcdlist.htm"><b>!usbkd.usbhcdlist</b></a></li>
+<li><a href="_usbkd_usbhcdlistlogs.htm"><b>!usbkd.usbhcdlistlogs</b></a></li>
+<li><a href="_usbkd_usbhcdlog.htm"><b>!usbkd.usbhcdlog</b></a></li>
+<li><a href="_usbkd_usbhcdlogex.htm"><b>!usbkd.usbhcdlogex</b></a></li>
+<li><a href="_usbkd_usbhcdpnp.htm"><b>!usbkd.usbhcdpnp</b></a></li>
+<li><a href="_usbkd_usbhcdpow.htm"><b>!usbkd.usbhcdpow</b></a></li>
+<li><a href="_usbkd_hub2_info_from_fdo.htm"><b>!usbkd.hub2_info_from_fdo</b></a></li>
+<li><a href="_usbkd_usbhuberr.htm"><b>!usbkd.usbhuberr</b></a></li>
+<li><a href="_usbkd_usbhubext.htm"><b>!usbkd.usbhubext</b></a></li>
+<li><a href="_usbkd_usbhubinfo.htm"><b>!usbkd.usbhubinfo</b></a></li>
+<li><a href="_usbkd_usbhublog.htm"><b>!usbkd.usbhublog</b></a></li>
+<li><a href="_usbkd_usbhubmddevext.htm"><b>!usbkd.usbhubmddevext</b></a></li>
+<li><a href="_usbkd_usbhubmdpd.htm"><b>!usbkd.usbhubmdpd</b></a></li>
+<li><a href="_usbkd_usbhubpd.htm"><b>!usbkd.usbhubpd</b></a></li>
+<li><a href="_usbkd_usbhubs.htm"><b>!usbkd.usbhubs</b></a></li>
+<li><a href="_usbkd_usblist.htm"><b>!usbkd.usblist</b></a></li>
+<li><a href="_usbkd_usbpo.htm"><b>!usbkd.usbpo</b></a></li>
+<li><a href="_usbkd_usbpdos.htm"><b>!usbkd.usbpdos</b></a></li>
+<li><a href="_usbkd_usbpdoxls.htm"><b>!usbkd.usbpdoxls</b></a></li>
+<li><a href="_usbkd_usbpnp.htm"><b>!usbkd.usbpnp</b></a></li>
+<li><a href="_usbkd_usbportisasyncadv.htm"><b>!usbkd.usbportisasyncadv</b></a></li>
+<li><a href="_usbkd_usbportmdportlog.htm"><b>!usbkd.usbportmdportlog</b></a></li>
+<li><a href="_usbkd_usbportmddcontext.htm"><b>!usbkd.usbportmddcontext</b></a></li>
+<li><a href="_usbkd_usbportmddevext.htm"><b>!usbkd.usbportmddevext</b></a></li>
+<li><a href="_usbkd_usbtriage.htm"><b>!usbkd.usbtriage</b></a></li>
+<li><a href="_usbkd_usbtt.htm"><b>!usbkd.usbtt</b></a></li>
+<li><a href="_usbkd_usbtx.htm"><b>!usbkd.usbtx</b></a></li>
+<li><a href="_usbkd_usbusb2ep.htm"><b>!usbkd.usbusb2ep</b></a></li>
+<li><a href="_usbkd_usbusb2tt.htm"><b>!usbkd.usbusb2tt</b></a></li>
+<li><a href="_usbkd_usbver.htm"><b>!usbkd.usbver</b></a></li>
+</ul>
+</p>
+<h2><a id="related_topics"></a>Related topics</h2>
+<dl>
+<dt><a href="usb_3_extensions.htm">USB 3.0 Extensions</a></dt>
+<dt><a href="rcdrkd_extensions.htm">RCDRKD Extensions</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20USB 2.0 Extensions%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,91 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .echo command displays a comment string."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.echo (Echo Comment)</title>
+
+<meta name="MS-HAID" content="r20_metacmds_E_6eb44413-2b5e-423a-8a53-73546ee1e3d1.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._echo__echo_comment_"></a>.echo (Echo Comment)</h1>
+</div>
+<p>The <b>.echo</b> command displays a comment string.</p>
+<pre class="syntax">
+<b>.echo </b><i>String</i> 
+<b>.echo "</b><i>String</i><b>"</b> 
+</pre>
+<h2><a id="ddk_meta_echo_comment_dbg"></a><a id="DDK_META_ECHO_COMMENT_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______String______"></a><a id="_______string______"></a><a id="_______STRING______"></a>       <i>String</i>      </dt>
+<dd>
+<p>Specifies the text to display. You can also enclose <i>String</i> in quotation marks ("). Regardless of whether you use quotation marks, <i>String</i> can contain any number of spaces, commas, and single quotation marks ('). If you enclose <i>String</i> in quotation marks, it can include semicolons, but not additional quotation marks. If you do not enclose <i>String</i> in quotation marks, it can include quotation marks in any location except the first character, but it cannot include semicolons.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes
+         </b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets
+         </b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Platforms
+         </b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>The <b>.echo</b> command causes the debugger to display <i>String</i>  immediately after you enter the command.</p>
+<p>An <b>.echo</b> command is ended if the debugger encounters a semicolon (unless the semicolon occurs within a quoted string). This restriction enables you to use <b>.echo</b> in complex constructions such as <a href="setting_a_conditional_breakpoint.htm">conditional breakpoints</a>, as the following example shows.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; bp `:143` "j (poi(MyVar)&gt;5) '.echo MyVar Too Big'; '.echo MyVar Acceptable; gc' " </pre>
+</td>
+</tr>
+</table></span></div>
+<p>The <b>.echo</b> command also provides an easy way for users of debugging servers and debugging clients to communicate with one another. For more information about this situation, see <a href="controlling_a_remote_debugging_session.htm">Controlling a Remote Debugging Session</a>.</p>
+<p>The <b>.echo</b> command differs from the <a href="_____comment_specifier_.htm"><b>$$  (Comment Specifier)</b></a> token and the <a href="____comment_line_specifier_.htm"><b>*  (Comment Line Specifier)</b></a> token, because these tokens cause the debugger to ignore the input text without displaying it.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.echo (Echo Comment)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

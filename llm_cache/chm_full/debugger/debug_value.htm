@@ -1,0 +1,266 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The DEBUG_VALUE structure holds register and expression values."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>DEBUG_VALUE structure</title>
+
+<meta name="MS-HAID" content="Structures_2486f31c-2a25-41eb-ac3f-9cc1d62dd2e0.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.debug_value"></a>DEBUG_VALUE structure</h1>
+</div>
+<p>The DEBUG_VALUE structure holds register and expression values.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>typedef struct _DEBUG_VALUE {
+  union {
+    UCHAR   I8;
+    USHORT  I16;
+    ULONG   I32;
+    struct {
+      ULONG64 I64;
+      BOOL    Nat;
+    };
+    float   F32;
+    double  F64;
+    UCHAR   F80Bytes[10];
+    UCHAR   F82Bytes[11];
+    UCHAR   F128Bytes[16];
+    UCHAR   VI8[16];
+    USHORT  VI16[8];
+    ULONG   VI32[4];
+    ULONG64 VI64[2];
+    float   VF32[4];
+    double  VF64[2];
+    struct {
+      ULONG LowPart;
+      ULONG HighPart;
+    } I64Parts32;
+    struct {
+      ULONG64 LowPart;
+      LONG64  HighPart;
+    } F128Parts64;
+    UCHAR   RawBytes[24];
+  };
+  ULONG TailOfRawBytes;
+  ULONG Type;
+}  DEBUG_VALUE, *PDEBUG_VALUE;</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Members</h2>
+<dl>
+<dt>( <i>unnamed union</i> )</dt>
+<dd>
+<p> </p>
+<dl>
+<dt><b>I8</b></dt>
+<dd>
+<p>See Remarks.</p>
+</dd>
+<dt><b>I16</b></dt>
+<dd>
+<p>See Remarks.</p>
+</dd>
+<dt><b>I32</b></dt>
+<dd>
+<p>See Remarks.</p>
+</dd>
+<dt>( <i>unnamed struct</i> )</dt>
+<dd>
+<p> </p>
+<dl>
+<dt><b>I64</b></dt>
+<dd>
+<p>See Remarks.</p>
+</dd>
+<dt><b>Nat</b></dt>
+<dd>
+<p>See Remarks.</p>
+</dd>
+</dl>
+</dd>
+<dt><b>F32</b></dt>
+<dd>
+<p>See Remarks.</p>
+</dd>
+<dt><b>F64</b></dt>
+<dd>
+<p>See Remarks.</p>
+</dd>
+<dt><b>F80Bytes</b></dt>
+<dd>
+<p>See Remarks.</p>
+</dd>
+<dt><b>F82Bytes</b></dt>
+<dd>
+<p>See Remarks.</p>
+</dd>
+<dt><b>F128Bytes</b></dt>
+<dd>
+<p>See Remarks.</p>
+</dd>
+<dt><b>VI8</b></dt>
+<dd>
+<p>See Remarks.</p>
+</dd>
+<dt><b>VI16</b></dt>
+<dd>
+<p>See Remarks.</p>
+</dd>
+<dt><b>VI32</b></dt>
+<dd>
+<p>See Remarks.</p>
+</dd>
+<dt><b>VI64</b></dt>
+<dd>
+<p>See Remarks.</p>
+</dd>
+<dt><b>VF32</b></dt>
+<dd>
+<p>See Remarks.</p>
+</dd>
+<dt><b>VF64</b></dt>
+<dd>
+<p>See Remarks.</p>
+</dd>
+<dt><b>I64Parts32</b></dt>
+<dd>
+<p>See Remarks.</p>
+<dl>
+<dt><b>LowPart</b></dt>
+<dd>
+<p>See Remarks.</p>
+</dd>
+<dt><b>HighPart</b></dt>
+<dd>
+<p>See Remarks.</p>
+</dd>
+</dl>
+</dd>
+<dt><b>F128Parts64</b></dt>
+<dd>
+<p>See Remarks.</p>
+<dl>
+<dt><b>LowPart</b></dt>
+<dd>
+<p>See Remarks.</p>
+</dd>
+<dt><b>HighPart</b></dt>
+<dd>
+<p>See Remarks.</p>
+</dd>
+</dl>
+</dd>
+<dt><b>RawBytes</b></dt>
+<dd>
+<p>See Remarks.</p>
+</dd>
+</dl>
+</dd>
+<dt><b>TailOfRawBytes</b></dt>
+<dd>
+<p>See Remarks.</p>
+</dd>
+<dt><b>Type</b></dt>
+<dd>
+<p>See Remarks.</p>
+</dd>
+</dl>
+<h2>Remarks</h2>
+<p>The <b>Type</b> field specifies the value type that is being held by the structure. This also specifies which field in the structure is valid. The possible values of the <b>Type</b> field, and the corresponding field specified as valid in the structure, include the following.</p>
+<table>
+<tr>
+<th>Type Name</th>
+<th>Type</th>
+<th>Valid DEBUG_VALUE Field</th>
+</tr>
+<tr>
+<td>DEBUG_VALUE_INT8</td>
+<td>8-bit signed integer</td>
+<td><b>I8</b></td>
+</tr>
+<tr>
+<td>DEBUG_VALUE_INT16</td>
+<td>16-bit signed integer</td>
+<td><b>I16</b></td>
+</tr>
+<tr>
+<td>DEBUG_VALUE_INT32</td>
+<td>32-bit signed integer</td>
+<td><b>I32</b></td>
+</tr>
+<tr>
+<td>DEBUG_VALUE_INT64</td>
+<td>64-bit signed integer</td>
+<td><b>I64</b></td>
+</tr>
+<tr>
+<td>DEBUG_VALUE_FLOAT32</td>
+<td>32-bit floating point number</td>
+<td><b>F32</b></td>
+</tr>
+<tr>
+<td>DEBUG_VALUE_FLOAT64</td>
+<td>64-bit floating point number</td>
+<td><b>F64</b></td>
+</tr>
+<tr>
+<td>DEBUG_VALUE_FLOAT80</td>
+<td>80-bit floating point number</td>
+<td><b>F80Bytes</b></td>
+</tr>
+<tr>
+<td>DEBUG_VALUE_FLOAT128</td>
+<td>128-bit floating point number</td>
+<td><b>F128Bytes</b></td>
+</tr>
+<tr>
+<td>DEBUG_VALUE_VECTOR64</td>
+<td>64-bit vector</td>
+<td><b>VI8[8]</b>, <b>VI16[4]</b>, <b>VI32[2]</b>, <b>VI64[1]</b>, <b>VF32[2]</b>, <b>VF64[1]</b></td>
+</tr>
+<tr>
+<td>DEBUG_VALUE_VECTOR128</td>
+<td>128-bit vector</td>
+<td><b>VI8[16]</b>, <b>VI16[8]</b>, <b>VI32[4]</b>, <b>VI64[2]</b>, <b>VF32[4]</b>, <b>VF64[2]</b></td>
+</tr>
+</table>
+<p> </p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>DbgEng.h (include DbgEng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20DEBUG_VALUE structure%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

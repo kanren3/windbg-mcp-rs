@@ -1,0 +1,52 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Debugging CSRSS"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Debugging CSRSS</title>
+
+<meta name="MS-HAID" content="t13_advanced_ca72febd-3528-4880-aba8-fed799ea20d5.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.debugging_csrss"></a>Debugging CSRSS</h1>
+</div>
+<h2><a id="ddk_debugging_csrss_with_ntsd_dbg"></a><a id="DDK_DEBUGGING_CSRSS_WITH_NTSD_DBG"></a></h2>
+<p>The Client Server Run-Time Subsystem (CSRSS) is the user-mode process that controls the underlying layer for the Windows environment. There are a number of problems that make it necessary to debug CSRSS itself.</p>
+<p>Debugging CSRSS is also useful when the Windows subsystem terminates unexpectedly  with a <a href="bug_check_0xc000021a__status_system_process_terminated.htm"><b>Bug Check 0xC000021A</b></a> (STATUS_SYSTEM_PROCESS_TERMINATED).   In this case, debugging CSRSS will catch the failure before it gets to an "unexpected" point.</p>
+<h3><a id="controlling_ntsd_from_the_kernel_debugger"></a><a id="CONTROLLING_NTSD_FROM_THE_KERNEL_DEBUGGER"></a>Controlling NTSD from the Kernel Debugger</h3>
+<p>The easiest way to debug CSRSS is to use NTSD and <a href="controlling_the_user_mode_debugger_from_the_kernel_debugger.htm">control it from the kernel debugger</a>.  </p>
+<h3><a id="enabling_csrss_debugging"></a><a id="ENABLING_CSRSS_DEBUGGING"></a>Enabling CSRSS Debugging</h3>
+<p>CSRSS debugging must be enabled before you can proceed. If the target computer is running a <i>checked build</i> of Windows, CSRSS debugging is always enabled. If the target computer is running a <i>free build</i> of Windows, you will have to enable CSRSS debugging through the Global Flags Utility (GFlags).</p>
+<p>To do this, start the GFlags utility, select the <b>System Registry</b> radio button, and select <b>Enable debugging of Win32 subsystem</b>.</p>
+<p>Alternatively, you can use the following GFlags command-line:</p>
+<pre class="syntax" xml:space="preserve"><code>gflags /r +20000 </code></pre>
+<p>Or, if you prefer, you can edit the registry key manually instead of using GFlags. Open the following registry key:</p>
+<pre class="syntax" xml:space="preserve"><code>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager </code></pre>
+<p>Edit the <b>GlobalFlag</b> value entry (of type REG_DWORD) and set the bit 0x00020000. </p>
+<p>After using GFlags or manually editing the registry, you must reboot for the changes to take effect.</p>
+<h3><a id="starting_ntsd"></a><a id="STARTING_NTSD"></a>Starting NTSD</h3>
+<p>Because you will be controlling the user-mode debugger from the kernel debugger, you will need to set up a kernel debugging connection. See <a href="getting_set_up_for_debugging.htm">Getting Set Up for Debugging</a> for details.</p>
+<p>After the registry has been properly configured, it is a simple matter of starting NTSD as follows:</p>
+<p><b>ntsd --</b></p>
+<p>See <a href="controlling_the_user_mode_debugger_from_the_kernel_debugger.htm">Controlling the User-Mode Debugger from the Kernel Debugger</a> for an explanation of how to proceed.</p>
+<p>You will have to set your symbol path to a location on your host computer or to some other location on your network. When CSRSS is being debugged, network authentication on the target computer will not work properly.</p>
+<p>Note that you may see an "in page io error" message. This is another manifestation of a hardware failure.</p>
+<p>In Windows XP and later versions of Windows, when the debugging session ends, the debugger will detach from CSRSS while the CSRSS process is still running. This avoids termination of the CSRSS process itself. </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Debugging CSRSS%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,114 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Example 9: Detecting a Pool Memory Leak"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Example 9:  Detecting a Pool Memory Leak</title>
+
+<meta name="MS-HAID" content="GFlags_6d4e8cad-6699-4443-aeca-21f7c87e55bb.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.example_9___detecting_a_pool_memory_leak"></a>Example 9:  Detecting a Pool Memory Leak</h1>
+</div>
+<h2><a id="ddk_example_9___detecting_a_pool_memory_leak_dtools"></a><a id="DDK_EXAMPLE_9___DETECTING_A_POOL_MEMORY_LEAK_DTOOLS"></a></h2>
+<p>The following example uses GFlags to set the system-wide <a href="enable_pool_tagging.htm">Enable pool tagging</a> flag in the registry. Then, it uses PoolMon (poolmon.exe), a tool in the Windows Driver Kit, to display the size of the memory pools. </p>
+<p>PoolMon monitors the bytes in the paged and nonpaged memory pools and sorts them by pool tag. By running PoolMon periodically, you can identify pools that expand continuously over time. This pattern often indicates a memory leak.</p>
+<div class="alert"><b>Note</b>  
+     Pool tagging is permanently enabled in Windows Server 2003 and later versions of Windows. On these systems, the <b>Enable pool tagging</b> check box on the <b>Global Flags</b> dialog box is dimmed, and commands to enable or disable pool tagging fail. <p class="note">If pool tagging is not enabled, PoolMon fails and displays the following message: "Query pooltags Failed c0000002." </p>
+</div>
+<div> </div>
+<p class="proch"><img src="../common/wedge.gif" alt=""/><b>To detect a pool memory leak
+     </b></p>
+<ol>
+<li>To enable pool tagging for all processes in versions of Windows earlier than Windows Server 2003, set the system-wide <a href="enable_pool_tagging.htm">Enable pool tagging</a> flag in the registry. The following command line uses the flag abbreviation method, but you can identify the flag by its hexadecimal value or use the <b>Global Flags</b> dialog box:<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>gflags /r +ptg </pre>
+</td>
+</tr>
+</table></span></div>
+</li>
+<li>
+<p>Restart the computer to make the registry change effective.</p>
+</li>
+<li>Run PoolMon periodically by using the following command. In this command, the <b>/b</b> parameter sorts the pools in descending size order. <div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>poolmon /b </pre>
+</td>
+</tr>
+</table></span></div>
+<p>In response, PoolMon displays allocations from the memory pools in descending size order , including the number of allocate operations and free operations, and the amount of memory remaining in the pool (in the Bytes column).</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>Memory: 16224K Avail: 4564K PageFlts: 31 InRam Krnl: 684K P: 680K
+ Commit: 24140K Limit: 24952K Peak: 24932K  Pool N: 744K P: 2180K
+
+ Tag  Type    Allocs          Frees         Diff   Bytes      Per Alloc
+-----------------------------------------------------------------------
+
+ CM   Paged    1283 (   0)    1002 (   0)    281 1377312 (     0) 4901
+Strg  Paged   10385 (  10)    6658 (   4)   3727  317952 (   512)   85
+ Fat  Paged    6662 (   8)    4971 (   6)   1691  174560 (   128)  103
+MmSt  Paged     614 (   0)     441 (   0)    173   83456 (     0)  482</pre>
+</td>
+</tr>
+</table></span></div>
+<p>If the value in the <b>Bytes</b> column for an allocation expands continuously for no obvious reason, there might be a memory leak in that pool.</p>
+</li>
+<li>Clear the <b>Enable pool tagging</b> flag. <p>The following command line uses the flag abbreviation method, but you can identify the flag by its hexadecimal value or use the <b>Global Flags</b> dialog box:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>gflags /r -ptg </pre>
+</td>
+</tr>
+</table></span></div>
+</li>
+<li>
+<p>Restart Windows to make the registry change effective. </p>
+</li>
+</ol>
+<div class="alert"><b>Note</b>    Use the append symbol (<b>&gt;&gt;</b>) to redirect the PoolMon output to a log file. Later, you can examine the log file for pool size trends. For example:</div>
+<div> </div>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>poolmon.exe /b &gt;&gt; poolmon.log </pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Example 9:  Detecting a Pool Memory Leak%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

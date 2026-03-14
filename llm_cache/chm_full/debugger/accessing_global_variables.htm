@@ -1,0 +1,84 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Accessing Global Variables"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Accessing Global Variables</title>
+
+<meta name="MS-HAID" content="r07_use_operation_fe7504ce-59d2-44b1-8aa7-bfe8296ce2cd.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.accessing_global_variables"></a>Accessing Global Variables</h1>
+</div>
+<h2><a id="ddk_debugging_bios_code_dbg"></a><a id="DDK_DEBUGGING_BIOS_CODE_DBG"></a></h2>
+<p>The names of global variables are stored in the symbol files that are created when an application is compiled. The debugger interprets the name of a global variable as a virtual address. Any command that accepts an address as a parameter also accepts the name of a variable. Therefore, you can use all of the commands that are described in <a href="accessing_memory_by_virtual_address.htm">Accessing Memory by Virtual Address</a> to read or write global variables.</p>
+<p>In addition, you can use the <a href="___evaluate_expression_.htm"><b>? (Evaluate Expression)</b></a> command to display the address that is associated with any symbol.</p>
+<p>Visual Studio and WinDbg provide user interface elements that you can use (in addition to commands) to view and edit global variables. See <a href="viewing_memory__variables__and_registers_in_visual_studio.htm">Viewing and Editing Memory and Registers in Visual Studio</a> and <a href="viewing_and_editing_global_variables_in_windbg.htm">Viewing and Editing Global Variables in WinDbg</a>.</p>
+<p>Consider the following example. Suppose that you want to examine the <code>MyCounter</code> global variable, which is a 32-bit integer. Also suppose that the default radix is 10.</p>
+<p>You can obtain this variable's address and then display it as follows.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; ? MyCounter 
+Evaluate expression: 1244892 = 0012fedc
+0:000&gt; dd 0x0012fedc L1 
+0012fedc  00000052</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The first command output tells you that the address of <code>MyCounter</code> is 0x0012FEDC. You can then use the <a href="d__da__db__dc__dd__dd__df__dp__dq__du__dw__dw__dyb__dyd__display_memor.htm"><b>d* (Display Memory)</b></a> command to display one double-word at this address. (You could also use 1244892, which is the decimal version of this address. However, most C programmers prefer to use 0x0012FEDC.) The second command tells you that the value of MyCounter is 0x52 (decimal 82).</p>
+<p>You could also perform these steps in the following command.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; dd MyCounter L1 
+0012fedc  00000052</pre>
+</td>
+</tr>
+</table></span></div>
+<p>To change the value of <code>MyCounter</code> to decimal 83, use the following command.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; ed MyCounter 83 </pre>
+</td>
+</tr>
+</table></span></div>
+<p>This example uses decimal input, because that format seems more natural for an integer. However, the output of the <a href="d__da__db__dc__dd__dd__df__dp__dq__du__dw__dw__dyb__dyd__display_memor.htm"><b>d*</b></a> command is still in hexadecimal format.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; dd MyCounter L1 0012fedc  00000053</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Accessing Global Variables%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

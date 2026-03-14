@@ -1,0 +1,133 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Advanced SymSrv Use"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Advanced SymSrv Use</title>
+
+<meta name="MS-HAID" content="r09_symbols_9b636a39-5e64-4046-9e72-b12fdfc36cb1.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.advanced_symsrv_use"></a>Advanced SymSrv Use</h1>
+</div>
+<p>SymSrv can deliver symbol files from a centralized symbol store. This store can contain any number of symbol files, corresponding to any number of programs or operating systems. The store can also contain binary files (this is useful when debugging minidumps).</p>
+<p>The store can contain the actual symbol and binary files, or it can simply contain pointers to symbol files. If the store contains pointers, SymSrv will retrieve the actual files directly from their sources.</p>
+<p>SymSrv can also be used to separate a large symbol store into a smaller subset that is appropriate for a specialized debugging task.</p>
+<p>Finally, SymSrv can obtain symbol files from an HTTP or HTTPS source using the logon information provided by the operating system. SymSrv supports HTTPS sites protected by smartcards, certificates, and regular logins and passwords.  For more information, see <a href="http_symbol_stores.htm">HTTP Symbol Stores</a>. </p>
+<h3><a id="setting_the_symbol_path"></a><a id="SETTING_THE_SYMBOL_PATH"></a>Setting the Symbol Path</h3>
+<p>To use this symbol server, symsrv.dll must be installed in the same directory as the debugger. The symbol path can be set as shown here:</p>
+<pre class="syntax" xml:space="preserve"><code>set _NT_SYMBOL_PATH = symsrv*ServerDLL*DownstreamStore*\\Server\Share 
+
+set _NT_SYMBOL_PATH = symsrv*ServerDLL*\\Server\Share 
+
+set _NT_SYMBOL_PATH = srv*DownstreamStore*\\Server\Share 
+
+set _NT_SYMBOL_PATH = srv*\\Server\Share </code></pre>
+<p>The parts of this syntax are explained as follows:</p>
+<p></p>
+<dl>
+<dt><a id="________symsrv"></a><a id="________SYMSRV"></a><b>
+       symsrv</b></dt>
+<dd>
+<p>This keyword must always appear first. It indicates to the debugger that this item is a symbol server, not just a normal symbol directory.</p>
+</dd>
+<dt><a id="ServerDLL"></a><a id="serverdll"></a><a id="SERVERDLL"></a><i>ServerDLL</i></dt>
+<dd>
+<p>Specifies the name of the symbol server DLL. If you are using the SymSrv symbol server, this will always be symsrv.dll.</p>
+</dd>
+<dt><a id="srv"></a><a id="SRV"></a><b>srv</b></dt>
+<dd>
+<p>This is shorthand for <b>symsrv*symsrv.dll</b>.</p>
+</dd>
+<dt><a id="DownstreamStore"></a><a id="downstreamstore"></a><a id="DOWNSTREAMSTORE"></a><i>DownstreamStore</i></dt>
+<dd>
+<p>Specifies the downstream store. This is a local directory or network share that will be used to cache individual symbol files.</p>
+<p>You can specify more than one downstream store, separated by asterisks. Multiple downstream stores are explained in <b>Cascading Downstream Stores</b> further down on this page.</p>
+<p>If you include two asterisks in a row where a downstream store would normally be specified, then the default downstream store is used. This store will be located in the sym subdirectory of the home directory. The home directory defaults to the debugger installation directory; this can be changed by using the <a href="_homedir.htm"><b>!homedir</b></a> extension or by setting the DBGHELP_HOMEDIR environment variable.</p>
+<p>If <i>DownstreamStore</i> specifies a directory that does not exist, SymStore will attempt to create it.</p>
+<p>If the <i>DownstreamStore</i> parameter is omitted and no extra asterisk is included -- in other words, if you use <b>srv</b> with exactly one asterisk or <b>symsrv</b> with exactly two asterisks -- then no downstream store will be created. The debugger will load all symbol files directly from the server, without caching them locally.</p>
+<div class="alert"><b>Note</b>    If you are accessing symbols from an HTTP or HTTPS site, or if the symbol store uses compressed files, a downstream store is always used. If no downstream store is specified, one will be created in the sym subdirectory of the home directory.</div>
+<div> </div>
+</dd>
+<dt><a id="__Server_Share"></a><a id="__server_share"></a><a id="__SERVER_SHARE"></a><i>\\Server\Share</i></dt>
+<dd>
+<p>Specifies the server and share of the remote symbol store. </p>
+</dd>
+</dl>
+<p>If a downstream store is used, the debugger will first look for a symbol file in this store. If the symbol file is not found, the debugger will locate the symbol file from the specified <i>Server</i> and <i>Share</i>, and then cache a copy of this file in the downstream store. The file will be copied to a subdirectory in the tree under <i>DownstreamStore</i> which corresponds to its location in the tree under <i>\\Server\Share</i>.</p>
+<p>The symbol server does not have to be the only entry in the symbol path. If the symbol path consists of multiple entries, the debugger checks each entry for the needed symbol files, in order (from left to right), regardless of whether a symbol server or an actual directory is named.</p>
+<p>Here are some examples. To use SymSrv as the symbol server with a symbol store on \\mybuilds\mysymbols, set the following symbol path:</p>
+<pre class="syntax" xml:space="preserve"><code>set _NT_SYMBOL_PATH= symsrv*symsrv.dll*\\mybuilds\mysymbols</code></pre>
+<p>To set the symbol path so that the debugger will copy symbol files from a symbol store on \\mybuilds\mysymbols to your local directory c:\localsymbols, use: </p>
+<pre class="syntax" xml:space="preserve"><code>set _NT_SYMBOL_PATH=symsrv*symsrv.dll*c:\localsymbols*\\mybuilds\mysymbols</code></pre>
+<p>To set the symbol path so that the debugger will copy symbol files from the HTTP site www.company.com/manysymbols to a local network directory \\localserver\myshare\mycache, use: </p>
+<pre class="syntax" xml:space="preserve"><code>set _NT_SYMBOL_PATH=symsrv*symsrv.dll*\\localserver\myshare\mycache*http://www.company.com/manysymbols</code></pre>
+<p>This last example can also be shortened as such:</p>
+<pre class="syntax" xml:space="preserve"><code>set _NT_SYMBOL_PATH=srv*\\localserver\myshare\mycache*http://www.company.com/manysymbols</code></pre>
+<p>In addition, the symbol path can contain several directories or symbol servers, separated by semicolons. This allows you to locate symbols from multiple locations (or even multiple symbol servers). If a binary has a mismatched symbol file, the debugger cannot locate it using the symbol server because it checks only for the exact parameters. However, the debugger may find a mismatched symbol file with the correct name, using the traditional symbol path, and successfully load it. Even though the file is technically not the correct symbol file, it might provide useful information.</p>
+<h3><a id="compressed_files"></a><a id="COMPRESSED_FILES"></a>Compressed Files</h3>
+<p>SymSrv is compatible with symbol stores that contain compressed files, as long as this compression has been done with the compress.exe tool, which is available <a href="http://go.microsoft.com/fwlink/p/?linkid=239917">here</a>. Compressed files should have an underscore as the last character in their file extensions (for example, module1.pd_ or module2.db_). For details, see <a href="symstore.htm">SymStore</a>.</p>
+<p>If the files on the store are compressed, you must use a downstream store. SymSrv will uncompress all files before caching them on the downstream store.</p>
+<h3><a id="deleting_the_cache"></a><a id="DELETING_THE_CACHE"></a>Deleting the Cache</h3>
+<p>If you are using a <i>DownstreamStore</i> as a cache, you can delete this directory at any time to save disk space.</p>
+<p>It is possible to have a vast symbol store that includes symbol files for many different programs or Windows versions. If you upgrade the version of Windows used on your target computer, the cached symbol files will all match the earlier version. These cached files will not be of any further use, and therefore this might be a good time to delete the cache.</p>
+<h3><a id="cascading_downstream_stores"></a><a id="CASCADING_DOWNSTREAM_STORES"></a>Cascading Downstream Stores</h3>
+<p>You can specify any number of downstream stores, separated by asterisks. These stores are known as <i>cascading symbol stores</i>.</p>
+<p>After the initial <b>srv*</b> or <b>symsrv*</b><i>ServerDLL</i><b>*</b>, each subsequent token represents a symbol location. The token furthest left is checked first. An empty token -- indicated by two asterisks in a row, or by an asterisk at the end of the string -- represents the default downstream store.</p>
+<p>Here is an example of a symbol path that uses two downstream stores to hold information from the main symbol store being accessed. These could be called the master store, the mid-level store, and the local cache:</p>
+<pre class="syntax" xml:space="preserve"><code>srv*c:\localcache*\\interim\store*https://msdl.microsoft.com/download/symbols</code></pre>
+<p>In this scenario, SymSrv will first look in c:\localcache for a symbol file. If it is found there, it will return a path to it. If it is not found there, it will look in \\interim\store. If the symbol file is found there, SymSrv will copy it to c:\localcache and return the path. If it is not found there, SymSrv will look in the <a href="microsoft_public_symbols.htm">Microsoft public symbol store</a> at https://msdl.microsoft.com/download/symbols; if the file is found there, SymSrv will copy it to both \\interim\store and c:\localcache.</p>
+<p>A similar behavior would be obtained by using the following path:</p>
+<pre class="syntax" xml:space="preserve"><code>srv**\\interim\store*http://internetsite</code></pre>
+<p>In this case, the local cache is the default downstream store and the master store is an internet site. A mid-level store of \\interim\store has been specified for use in between the other two.</p>
+<p>When SymSrv processes a path that contains cascading stores, it will skip any store that it cannot read or write to. So if a share goes down, it will copy the file to the store downstream from the missing store without any error. A nice side effect of this error is that the user can specify more than one master store that feeds a single stream of downstream stores as long as the master stores are not writable.</p>
+<p>When a compressed symbol file is retrieved from the master store, it will be stored in compressed form in any mid-level store. The file will be uncompressed in the bottom-most store in the path.</p>
+<h3><a id="Working_With_HTTP_and_SMB__Symbol_Server_Paths"></a><a id="working_with_http_and_smb__symbol_server_paths"></a><a id="WORKING_WITH_HTTP_AND_SMB__SYMBOL_SERVER_PATHS"></a>Working With HTTP and SMB  Symbol Server Paths</h3>
+<p>As previously discussed, chaining (or cascading) refers to the copy that occurs between each “*” separator in the symbol path. The symbols are searched for in a left-to-right order. On each miss, the next (upstream) symbol server is queried, until the file is found.</p>
+<p>If found, the file is copied from the (upstream) symbol server to the previous (downstream) symbol server. This is repeated for each (downstream) symbol server. In this way, the (shared) downstream symbol servers are populated with the collective efforts of all clients using the symbol servers.</p>
+<p>Even though chained UNC paths can be used without the SRV* prefix, we recommend that SRV* be specified so that the advanced error handling of symsrv.dll be used.</p>
+<p>When including a HTTP symbol server in the path, only one can be specified (per chain), and it must be at the end of the path (as it can’t be written to serve as a cache). If an HTTP-based symbol store was located in the middle or the left of the store list, it would not be possible to copy any found files to it and the chain would be broken. Furthermore, because the symbol handler cannot open a file from a web site, an HTTP-based store should not be the leftmost or only store on the list. If SymSrv is ever presented with this symbol path, it will attempt to recover by copying the file to the default downstream store and open it from there, regardless of whether the default downstream store is indicated in the symbol path or not.</p>
+<p>HTTP is only supported when using the SRV* prefix (implemented by the symsrv.dll symbol handler).</p>
+<p><b>Example HTTP and SMB Share Symbol Server Scenarios</b></p>
+<p>A common UNC-only deployment involves a central office hosting all of the files (\\MainOffice\Symbols), branch offices caching a subset (\\BranchOfficeA\Symbols), and desktops (C:\Symbols) caching the files that they reference.</p>
+<p></p>
+<pre class="syntax" xml:space="preserve"><code>srv*C:\Symbols*\\BranchOfficeA\Symbols*\\MainOffice\Symbols</code></pre>
+<p>When the SMB share is the primary (upstream) symbol store, Read is required.</p>
+<pre class="syntax" xml:space="preserve"><code>srv*C:\Symbols*\\MachineName\Symbols</code></pre>
+<p>When the SMB share is an intermediate (downstream) symbol store, Read/Change is required. The client will copy the file from the primary symbol store to the SMB share, and then from the SMB share to the local folder.</p>
+<pre class="syntax" xml:space="preserve"><code>srv*C:\Symbols*\\MachineName\Symbols*https://msdl.microsoft.com/download/symbols
+srv*C:\Symbols*\\MachineName\Symbols*\\MainOffice\Symbols
+</code></pre>
+<p>When the SMB share is an intermediate (downstream) symbol store in a SymProxy deployment, only Read is required. The SymProxy ISAPI Filter will perform the writes, not the client.</p>
+<pre class="syntax" xml:space="preserve"><code>srv*C:\Symbols*\\MachineName\Symbols*https://SymProxyName/Symbols</code></pre>
+<p><b>Multiple HTTP and SMB Share Symbol Server Cache Scenarios</b></p>
+<p>It is possible to specify multiple chains of symbol servers and cache locations, separated by a semi colon “;”. If the symbols are located in the first chain, the second chain is not traversed. If the symbols are not located in the first chain, the second chain will be traversed and if the symbols are located in the second chain, they will be cached in the specified location. This approach will allow a primary symbol server to normally be used, with a secondary server only being used, if the symbols are not available on the primary symbol server specified in the first chain. </p>
+<pre class="syntax" xml:space="preserve"><code>srv*C:\Symbols*\\Machine1\Symbols*http://SymProxyName/Symbols;srv*C:\WebSymbols* https://msdl.microsoft.com/download/symbols</code></pre>
+<h3><a id="cache_localsymbolcache"></a><a id="CACHE_LOCALSYMBOLCACHE"></a>cache*<i>localsymbolcache</i></h3>
+<p>Another way to create a local cache of symbols is by using the <b>cache*</b><i>localsymbolcache</i> string in your symbol path.  This is not part of the symbol server element, but a separate element in your symbol path.  The debugger will use the specified directory <i>localsymbolcache</i> to store any symbols loaded from any element that appears in your symbol path to the right of this string. This allows you to use a local cache for symbols downloaded from any location, not just those downloaded by a symbol server.</p>
+<p>For example, the following symbol path will not cache symbols taken from <i>\\someshare</i>.  It will use c:\mysymbols to cache symbols taken from <i>\\anothershare</i>, because the element beginning with <i>\\anothershare</i> appears to the right of the <b>cache*c:\mysymbols</b> element.  It will also use c:\mysymbols to cache symbols taken from the Microsoft public symbol store, because of the usual syntax used by the symbol server (<b>srv</b> with two or more asterisks).  Moreover, if you subsequently use the <a href="_sympath__set_symbol_path_.htm"><b>.sympath+</b></a> command to add additional locations to this path, these new elements will also be cached, since they will be appended to the right side of the path.</p>
+<pre class="syntax" xml:space="preserve"><code>_NT_SYMBOL_PATH=\\someshare\that\cachestar\ignores;srv*c:\mysymbols*https://msdl.microsoft.com/download/symbols;cache*c:\mysymbols;\\anothershare\that\gets\cached</code></pre>
+<h3><a id="how_symsrv_locates_files"></a><a id="HOW_SYMSRV_LOCATES_FILES"></a>How SymSrv Locates Files</h3>
+<p>SymSrv creates a fully qualified UNC path to the desired symbol file. This path begins with the path to the symbol store recorded in the _NT_SYMBOL_PATH environment variable. The <b>SymbolServer</b> routine is then used to identify the name of the desired file; this name is appended to the path as a directory name. Another directory name, consisting of the concatenation of the <i>id</i>, <i>two</i>, and <i>three</i> parameters passed to <b>SymbolServer</b>, is then appended. If any of these values is zero, they are omitted.</p>
+<p>The resulting directory is searched for the symbol file, or a symbol store pointer file.</p>
+<p>If this search is successful, <b>SymbolServer</b> passes the path to the caller and returns <b>TRUE</b>. If the file is not found, <b>SymbolServer</b> returns <b>FALSE</b>.</p>
+<h3><a id="using_agestore_to_reduce_the_cache_size"></a><a id="USING_AGESTORE_TO_REDUCE_THE_CACHE_SIZE"></a>Using AgeStore to Reduce the Cache Size</h3>
+<p>The AgeStore tool can be used to delete cached files that are older than a specified date, or to reduce the contents of the cache below a specified size.  This can be useful if your downstream store is too large.  For details, see <a href="agestore.htm">AgeStore</a>. </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Advanced SymSrv Use%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

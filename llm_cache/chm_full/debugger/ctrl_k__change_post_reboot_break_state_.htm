@@ -1,0 +1,95 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The CTRL+K key changes the conditions on which the debugger will automatically break into the target computer."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>CTRL+K (Change Post-Reboot Break State)</title>
+
+<meta name="MS-HAID" content="r23_keys_79aa3c00-93cf-4c56-956a-8ba0f4ae8b43.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.ctrl_k__change_post_reboot_break_state_"></a>CTRL+K (Change Post-Reboot Break State)</h1>
+</div>
+<p>The CTRL+K key changes the conditions on which the debugger will automatically break into the target computer.</p>
+<p>KD Syntax</p>
+<pre class="syntax">CTRL+K  ENTER 
+</pre>
+<p>WinDbg Syntax</p>
+<pre class="syntax">CTRL+ALT+K 
+</pre>
+<h2><a id="ddk_meta_ctrl_k_dbg"></a><a id="DDK_META_CTRL_K_DBG"></a></h2>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Debuggers</b></p>
+</td>
+<td>
+<p>KD and WinDbg only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>kernel mode only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>live debugging only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>all </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For an overview of related commands and an explanation of how the reboot process affects the debugger, see <a href="crashing_and_rebooting_the_target_computer.htm">Crashing and Rebooting the Target Computer</a>. </p>
+<h2>Remarks</h2>
+<p>This control key causes the kernel debugger to cycle through the following three states:</p>
+<p></p>
+<dl>
+<dt><a id="No_break"></a><a id="no_break"></a><a id="NO_BREAK"></a><b>No break</b></dt>
+<dd>
+<p>In this state, the debugger will not break into the target computer unless you press <a href="ctrl_c__break_.htm"><b>CTRL+C</b></a>.</p>
+</dd>
+<dt><a id="Break_on_reboot"></a><a id="break_on_reboot"></a><a id="BREAK_ON_REBOOT"></a><b>Break on reboot</b></dt>
+<dd>
+<p>In this state, the debugger will break into a rebooted target computer after the kernel initializes. This is equivalent to starting KD or WinDbg with the <b>-b</b><a href="command_line_options.htm">command-line option</a>.</p>
+</dd>
+<dt><a id="Break_on_first_module_load"></a><a id="break_on_first_module_load"></a><a id="BREAK_ON_FIRST_MODULE_LOAD"></a><b>Break on first module load</b></dt>
+<dd>
+<p>In this state, the debugger will break into a rebooted target computer after the first kernel module is loaded. (This will cause the break to occur <u>earlier</u> than in the <b>Break on reboot</b> option.) This is equivalent to starting KD or WinDbg with the <b>-d</b><a href="command_line_options.htm">command-line option</a>.</p>
+</dd>
+</dl>
+<p>When CTRL+K is used, the new break state is displayed.</p>
+<p>In WinDbg, this can also be accomplished by selecting <a href="debug___kernel_connection___cycle_initial_break.htm">Debug | Kernel Connection | Cycle Initial Break</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20CTRL+K (Change Post-Reboot Break State)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

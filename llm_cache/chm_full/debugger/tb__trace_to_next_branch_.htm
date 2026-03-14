@@ -1,0 +1,94 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The tb command executes the program until a branch instruction is reached."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>tb (Trace to Next Branch)</title>
+
+<meta name="MS-HAID" content="r18_cmds_S_6181ccf6-55e9-4a8a-9aec-f5616cd9f1f0.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.tb__trace_to_next_branch_"></a>tb (Trace to Next Branch)</h1>
+</div>
+<p>The <b>tb</b> command executes the program until a branch instruction is reached.</p>
+<pre class="syntax">
+    <b>tb</b> [<b>r</b>] [= StartAddress] [Count] 
+</pre>
+<h2><a id="ddk_cmd_trace_to_next_branch_dbg"></a><a id="DDK_CMD_TRACE_TO_NEXT_BRANCH_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______r______"></a><a id="_______R______"></a>       <b>r</b>      </dt>
+<dd>
+<p>Turns on and off the display of registers and flags. By default, the registers and flags are displayed. You can disable register display by using the <b>tbr</b>, <a href="p__step_.htm"><b>pr</b></a>, <a href="t__trace_.htm"><b>tr</b></a>, or .prompt_allow -reg commands. All of these commands control the same setting and you can use any of them to override any previous use of these commands.  </p>
+<p>You can also disable register display by using the l-os command. This setting is separate from the other four commands. To control <u>which</u> registers and flags are displayed, use the <a href="rm__register_mask_.htm"><b>rm (Register Mask)</b></a> command.</p>
+</dd>
+<dt><a id="_______StartAddress______"></a><a id="_______startaddress______"></a><a id="_______STARTADDRESS______"></a>       <i>StartAddress</i>      </dt>
+<dd>
+<p>Specifies the address where the debugger starts execution. If you do not use <i>StartAddress</i>, execution begins at the instruction that the instruction pointer points to. For more information about the syntax, see <a href="address_and_address_range_syntax.htm">Address and Address Range Syntax</a>.</p>
+</dd>
+<dt><a id="_______Count______"></a><a id="_______count______"></a><a id="_______COUNT______"></a>       <i>Count</i>      </dt>
+<dd>
+<p>Specifies the number of branches to allow. Every time that a branch is encountered, the instruction address and the instruction are displayed. If you omit <i>Count</i>, the default number is 1.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>
+<dl>
+<dt><b>x86-based:</b> Kernel mode only</dt>
+<dt><b>Itanium-based:</b> User mode, kernel mode</dt>
+<dt><b>x64-based:</b> User mode, kernel mode</dt>
+</dl>
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>Live debugging only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>x86-based (GenuineIntel processor family 6 and later), Itanium-based, x64-based</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about related commands, see <a href="controlling_the_target.htm">Controlling the Target</a>. </p>
+<h2>Remarks</h2>
+<p>The <b>tb</b> command causes the target to begin executing. This execution continues until a branch command is reached.</p>
+<p>Execution stops at any branch command that is to be taken. This stopping of execution is always based on the <i>disassembly</i> code, even when the debugger is in source mode.</p>
+<p>Branch instructions include calls, returns, jumps, counted loops, and while loops. If the debugger encounters an unconditional branch, or a conditional branch for which the condition is true, execution stops. If the debugger encounters a conditional branch whose condition is false, execution continues.</p>
+<p>When execution stops, the address of the branch instruction and any associated symbols are displayed. This information is followed by an arrow and then the address and instructions of the new program counter location.</p>
+<p>The <b>tb</b> command works only on the current processor. If you use <b>tb</b> on a multiprocessor system, execution stops when a branch command is reached or when another processor's event occurs, whichever comes first.</p>
+<p>Usually, branch tracing is enabled after the processor control block (PRCB) has been initialized. (The PRCB is initialized early in the boot process.) However, if you have to use the <b>tb</b> command before this point, you can use <a href="_force_tb__forcibly_allow_branch_tracing_.htm"><b>.force_tb (Forcibly Allow Branch Tracing)</b></a> to enable branch tracing earlier. Use the <b>.force_tb</b> command cautiously, because it can corrupt your processor state.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20tb (Trace to Next Branch)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

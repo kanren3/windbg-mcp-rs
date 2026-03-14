@@ -1,0 +1,100 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The WinDbgExtensionDllInit callback function is used to load and initialize the extension module."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>WinDbgExtensionDllInit callback function</title>
+
+<meta name="MS-HAID" content="WdbgExts_Callbacks_18383848-27f2-4d4e-a5b0-c6ce27377687.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.windbgextensiondllinit"></a>WinDbgExtensionDllInit callback function</h1>
+</div>
+<p>The <b>WinDbgExtensionDllInit</b> callback function is used to load and initialize the extension module.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>VOID WinDbgExtensionDllInit(
+   PWINDBG_EXTENSION_APIS64 lpExtensionApis,
+   USHORT                   MajorVersion,
+   USHORT                   MinorVersion
+);</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Parameters</h2>
+<dl>
+<dt><i>lpExtensionApis</i> </dt>
+<dd>
+<p>A pointer to a WINDBG_EXTENSION_APIS64 structure, which contains  pointers to functions that you can use for standard operations. Copy the entire structure to a global variable in your DLL. For example, you could create a  global variable named ExtensionApis as shown in the following example.</p>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>WINDBG_EXTENSION_APIS64   ExtensionApis;</pre>
+</td>
+</tr>
+</table></span></div>
+</dd>
+<dt><i>MajorVersion</i> </dt>
+<dd>
+<p>Specifies the Microsoft Windows build type. A value of 0xC indicates the checked build of Windows. A value of 0xF indicates the free build of Windows.   Save this value in a global variable in your DLL. For example, you could create a global variable named SavedMajorVersion.</p>
+</dd>
+<dt><i>MinorVersion</i> </dt>
+<dd>
+<p>Specifies the Windows build number (for example 2600) of the target system. Save this value in a global variable in your DLL. For example, you could create a global variable named SavedMinorVersion.</p>
+</dd>
+</dl>
+<h2>Return value</h2>
+<p>None</p>
+<h2>Remarks</h2>
+<p><i>WinDbgExtensionDllInit</i> is called by the debugger when the extension DLL is loaded.</p>
+<p>It is recommended that you always use 64-bit pointers in your code, since the debugger will automatically resize these pointers when necessary. See <a href="32_bit_pointers_and_64_bit_pointers.htm">32-Bit Pointers and 64-Bit Pointers</a> for details. However, if you choose to use 32-bit pointers, the first parameter of <i>WinDbgExtensionDllInit</i> will have the type PWINDBG_EXTENSION_APIS instead of PWINDBG_EXTENSION_APIS64.</p>
+<p>For more details, see <a href="using_wdbgexts_extension_callbacks.htm">Using WdbgExts Extension Callbacks</a>.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Target platform</p>
+</th>
+<td width="70%">
+<dl>
+<dt></dt>
+</dl>
+</td>
+</tr>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Wdbgexts.h</dt>
+</dl>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20WinDbgExtensionDllInit callback function%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

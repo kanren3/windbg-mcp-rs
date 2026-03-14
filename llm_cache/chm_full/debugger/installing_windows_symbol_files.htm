@@ -1,0 +1,101 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Installing Windows Symbol Files"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Installing Windows Symbol Files</title>
+
+<meta name="MS-HAID" content="r09_symbols_02a93db3-239a-4416-8bd5-2630a8eaa4f1.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.installing_windows_symbol_files"></a>Installing Windows Symbol Files</h1>
+</div>
+<h2><a id="ddk_installing_windows_symbol_files_dbg"></a><a id="DDK_INSTALLING_WINDOWS_SYMBOL_FILES_DBG"></a></h2>
+<p>Before you debug the Windows kernel or a driver or application running on Windows, you need access to the proper symbol files.</p>
+<p>If you have access to the internet while your debugger is running, you may wish to use Microsoft's public symbol store. You can connect to this with one simple use of the <a href="_symfix__set_symbol_store_path_.htm"><b>.symfix (Set Symbol Store Path)</b></a> command. For full details, see <a href="microsoft_public_symbols.htm">Microsoft Public Symbols</a>.</p>
+<p>If you plan to install symbols manually, it is crucial that you remember this basic rule: <u>the symbol files on the host computer are required to match the version of Windows installed on the target computer</u>. If you are planning to do a kernel mode debug of a Windows XP target from a Windows 2000 host, you need to install the Windows XP symbol files on the Windows 2000 system. If you plan to perform user-mode debugging on the same computer as the target application, then install the symbol files that match the version of Windows running on that system. If you are analyzing a memory dump file, then the version of symbol files needed on the debug computer are those that match the version of the operating system that produced the dump file, not necessarily those matching the version of the operating system on the machine running the debug session.</p>
+<div class="alert"><b>Note</b>    If you are going to use your host computer to debug several different target computers, you may need symbols for more than one build of Windows. In this case, be sure to install each symbol collection in a distinct directory path.</div>
+<div> </div>
+<p>If you are debugging from a Windows computer attached to a network, it may be useful to install symbols for a variety of different builds on a network server. Microsoft debuggers will accept a network path (<i>\\server\share\dir</i>) as a valid symbol directory path. This avoids the need for each debugging computer on the network to install the symbol files separately.</p>
+<p>Symbol files stored on a crashed target computer are not usable by the debugger on the host computer.</p>
+<p class="proch"><img src="../common/wedge.gif" alt=""/><b>To install symbol files for Windows XP or later</b></p>
+<ol>
+<li>
+<p>Make sure you have at least 1000 MB of available space on the disk drive of the host computer.</p>
+</li>
+<li>
+<p>Open the <a href="http://go.microsoft.com/fwlink/p/?linkid=17363">Windows Symbols</a> Web site in your internet browser.</p>
+</li>
+<li>
+<p>Follow the links to download the appropriate symbol package.</p>
+</li>
+</ol>
+<p class="proch"><img src="../common/wedge.gif" alt=""/><b>To install symbol files for Windows 2000 from the Web
+     </b></p>
+<ol>
+<li>
+<p>Make sure you have at least 1000 MB of available space on the disk drive of the host computer.</p>
+</li>
+<li>
+<p>Open the <a href="http://go.microsoft.com/fwlink/p/?linkid=17363">Windows Symbols</a> Web site in your internet browser.</p>
+</li>
+<li>
+<p>Follow the links to download Windows 2000 symbols.</p>
+</li>
+</ol>
+<p class="proch"><img src="../common/wedge.gif" alt=""/><b>To install symbol files for Windows 2000 from the Support CD
+     </b></p>
+<ol>
+<li>
+<p>Make sure you have at least 500 MB of available space on the disk drive of the host computer.</p>
+</li>
+<li>
+<p>Insert the Windows 2000 Customer Support Diagnostics CD.</p>
+</li>
+<li>
+<p>Click <b>Install Symbols</b>.</p>
+</li>
+<li>
+<p>Select either <b>Install Retail Symbols </b>(free build) or <b>Install Debug Symbols</b> (checked build). The symbols must match the version of the operating system being debugged.</p>
+</li>
+<li>
+<p>Enter the path where the symbols are to be stored, or accept the default path. The default path is %windir%\symbols.</p>
+</li>
+</ol>
+<h3><a id="sequence_of_symbol_file_installation"></a><a id="SEQUENCE_OF_SYMBOL_FILE_INSTALLATION"></a>Sequence of Symbol File Installation</h3>
+<p>If you intend to keep your symbols in a single directory tree, the installation sequence of symbol files should mirror the installation sequence of operating system files:</p>
+<p class="proch"><img src="../common/wedge.gif" alt=""/><b>To install the symbol files in correct sequence
+     </b></p>
+<ol>
+<li>
+<p>Install the operating system symbol files.</p>
+</li>
+<li>
+<p>Install the symbol files for the currently installed Service Pack (if any).</p>
+</li>
+<li>
+<p>Install the symbol files for any Hot Fixes that were installed after the current Service Pack was installed (if any).</p>
+</li>
+</ol>
+<p>However, a superior setup would be to install the symbols from each Service Pack and Hot Fix in a separate directory tree, and put all these directories in your symbol search path. The debugger will then find the proper symbols. (Since the symbol files have date and time stamps, the debugger will be able to tell which are the most recent.) See <a href="symbol_path.htm">Symbol Path</a> for details.</p>
+<h3><a id="installing_user_mode_symbols"></a><a id="INSTALLING_USER_MODE_SYMBOLS"></a>Installing User-Mode Symbols</h3>
+<p>If you are going to debug a user-mode application, you need to install the symbols for this application as well.</p>
+<p>You can debug an application if you have its symbols but not Windows symbols. However, your results will be much more limited. You will still be able to step through the application code, but any debugger activity which requires analysis of the kernel (such as getting a stack trace) is likely to fail.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Installing Windows Symbol Files%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

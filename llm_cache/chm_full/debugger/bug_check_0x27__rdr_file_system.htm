@@ -1,0 +1,85 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The RDR_FILE_SYSTEM bug check has a value of 0x00000027. This indicates that a problem occurred in the SMB redirector file system."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0x27: RDR_FILE_SYSTEM</title>
+
+<meta name="MS-HAID" content="t04_bugs_00_a4d1bc66-5f58-4594-bcfd-44196766da30.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0x27__rdr_file_system"></a>Bug Check 0x27: RDR_FILE_SYSTEM</h1>
+</div>
+<p>The RDR_FILE_SYSTEM bug check has a value of 0x00000027. This indicates that a problem occurred in the SMB redirector file system.</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2> RDR_FILE_SYSTEM Parameters</h2>
+<p>The following parameters are displayed on the blue screen.</p>
+<table>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>1</p>
+</td>
+<td>
+<p>The high 16 bits (the first four hexadecimal digits after the "0x") identify the type of problem. Possible values include:</p>
+<p>0xCA550000 RDBSS_BUG_CHECK_CACHESUP</p>
+<p>0xC1EE0000 RDBSS_BUG_CHECK_CLEANUP</p>
+<p>0xC10E0000 RDBSS_BUG_CHECK_CLOSE</p>
+<p>0xBAAD0000 RDBSS_BUG_CHECK_NTEXCEPT</p>
+<p></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>2</p>
+</td>
+<td>
+<p>If <b>RxExceptionFilter</b> is on the stack, this parameter specifies the address of the exception record.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>3</p>
+</td>
+<td>
+<p>If <b>RxExceptionFilter</b> is on the stack, this parameter specifies the address of the context record.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>4</p>
+</td>
+<td>
+<p>Reserved </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Cause</h2>
+<p>One possible cause of this bug check is depletion of nonpaged pool memory. If the nonpaged pool memory is completely depleted, this error can stop the system. However, during the indexing process, if the amount of available nonpaged pool memory is very low, another kernel-mode driver requiring nonpaged pool memory can also trigger this error. </p>
+<h2>Resolution</h2>
+<p><b>To debug this problem:</b>  Use the <a href="_cxr__display_context_record_.htm"><b>.cxr (Display Context Record)</b></a> command with Parameter 3, and then use <a href="k__kb__kc__kd__kp__kp__kv__display_stack_backtrace_.htm"><b>kb (Display Stack Backtrace)</b></a>.  </p>
+<p><b>To resolve a nonpaged pool memory depletion problem:</b> Add new physical memory to the computer. This will increase the quantity of nonpaged pool memory available to the kernel.</p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,88 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="A value in the FA_EXTENSION_PLUGIN_PHASE enumeration is passed to the _EFN_Analyze function to specify which phase of the analysis is currently in progress."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>FA_EXTENSION_PLUGIN_PHASE enumeration</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.fa_extension_plugin_phase"></a>FA_EXTENSION_PLUGIN_PHASE enumeration</h1>
+</div>
+<p>A value in the <b>FA_EXTENSION_PLUGIN_PHASE</b> enumeration is passed to the <a href="_efn_analyze.htm"><b>_EFN_Analyze</b></a> function to specify which phase of the analysis is currently in progress.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>typedef enum _FA_EXTENSION_PLUGIN_PHASE { 
+  FA_PLUGIN_INITILIZATION   = 0x0001,
+  FA_PLUGIN_STACK_ANALYSIS  = 0x0002,
+  FA_PLUGIN_PRE_BUCKETING   = 0x0004,
+  FA_PLUGIN_POST_BUCKETING  = 0x0008
+} FA_EXTENSION_PLUGIN_PHASE;</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Constants</h2>
+<dl>
+<dt><a id="FA_PLUGIN_INITILIZATION"></a><a id="fa_plugin_initilization"></a><b>FA_PLUGIN_INITILIZATION</b></dt>
+<dd>
+<p>The analysis is in the initialization phase. This is after the primary data such as
+    exception record (for user mode) or  bugcheck code (for kernel
+     mode) is initialized.</p>
+</dd>
+<dt><a id="FA_PLUGIN_STACK_ANALYSIS"></a><a id="fa_plugin_stack_analysis"></a><b>FA_PLUGIN_STACK_ANALYSIS</b></dt>
+<dd>
+<p>The analysis is in the stack analysis phase. This is after the stack is analyzed, and
+    the analysis engine has the information, if it was available on the stack, about the faulting symbol and
+     module.</p>
+</dd>
+<dt><a id="FA_PLUGIN_PRE_BUCKETING"></a><a id="fa_plugin_pre_bucketing"></a><b>FA_PLUGIN_PRE_BUCKETING</b></dt>
+<dd>
+<p>The analysis is in the prebucketing phase. This is just before the analysis engine generates a bucket.</p>
+</dd>
+<dt><a id="FA_PLUGIN_POST_BUCKETING"></a><a id="fa_plugin_post_bucketing"></a><b>FA_PLUGIN_POST_BUCKETING</b></dt>
+<dd>
+<p>The analysis is in the post bucketing phase. This is just after the analysis engine generates a bucket.</p>
+</dd>
+</dl>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Extsfns.h</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="writing_an_analysis_extension_to_extend__analyze.htm">Writing an Analysis Extension Plug-in to Extend !analyze</a></dt>
+<dt><a href="idebugfailureanalysis2.htm"><b>IDebugFailureAnalysis2</b></a></dt>
+<dt><a href="_efn_analyze.htm"><b>_EFN_Analyze</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20FA_EXTENSION_PLUGIN_PHASE enumeration%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

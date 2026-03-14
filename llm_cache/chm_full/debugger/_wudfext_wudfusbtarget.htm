@@ -1,0 +1,68 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !wudfext.wudfusbtarget extension displays information about a USB I/O target."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!wudfext.wudfusbtarget</title>
+
+<meta name="MS-HAID" content="r33~e_exts_umdf_6924af8b-4342-4d4c-943c-61d9b689a5ec.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._wudfext_wudfusbtarget"></a>!wudfext.wudfusbtarget</h1>
+</div>
+<p>The <b>!wudfext.wudfusbtarget</b> extension displays information about a USB I/O target.</p>
+<pre class="syntax"><b>!wudfext.wudfusbtarget </b><i>pWDFUSBTarget</i><b> </b><i>TypeName</i></pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______pWDFUSBTarget______"></a><a id="_______pwdfusbtarget______"></a><a id="_______PWDFUSBTARGET______"></a>       <i>pWDFUSBTarget</i>      </dt>
+<dd>
+<p>Specifies the address of the <b>IWDFUsbTargetDevice</b> interface to display information about. The <a href="_wudfext_wudfobject.htm"><b>!wudfext.wudfobject</b></a> extension command determines the address of <b>IWDFUsbTargetDevice</b>. </p>
+</dd>
+<dt><a id="_______TypeName______"></a><a id="_______typename______"></a><a id="_______TYPENAME______"></a>       <i>TypeName</i>      </dt>
+<dd>
+<p>Optional. Specifies the type of the interface (for example,<b> IWDFDevice</b>). If a value for <i>TypeName</i> is supplied, the extension uses the value as the type of the interface. If an asterisk (*) is supplied as <i>TypeName</i>, or if <i>TypeName</i> is omitted, the extension attempts to automatically determine the type of the supplied interface.  </p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000</b></p>
+</td>
+<td>
+<p>Unavailable </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP with UMDF version 1.7 and later</b></p>
+</td>
+<td>
+<p>
+          Wudfext.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information, see <a href="user_mode_driver_framework_debugging.htm">User-Mode Driver Framework Debugging</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!wudfext.wudfusbtarget%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

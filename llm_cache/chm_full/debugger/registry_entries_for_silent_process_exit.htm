@@ -1,0 +1,157 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Beginning with Windows 7, you can use the Silent Process Exit tab in GFlags to enter the name of a process that you want to monitor for silent exit."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Monitoring Silent Process Exit</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.registry_entries_for_silent_process_exit"></a>Monitoring Silent Process Exit</h1>
+</div>
+<p>Beginning with Windows 7, you can use the <b>Silent Process Exit</b> tab in GFlags to enter the name of a process that you want to monitor for silent exit. </p>
+<p>In the context of this monitoring feature, we use the term <i>silent exit</i> to mean that the monitored process terminates in one of the following ways.</p>
+<p></p>
+<dl>
+<dt><a id="Self_termination"></a><a id="self_termination"></a><a id="SELF_TERMINATION"></a>Self termination</dt>
+<dd>
+<p>The monitored process terminates itself by calling <b>ExitProcess</b>.</p>
+</dd>
+<dt><a id="Cross-process_termination"></a><a id="cross-process_termination"></a><a id="CROSS-PROCESS_TERMINATION"></a>Cross-process termination</dt>
+<dd>
+<p>A second process terminates the monitored process by calling <b>TerminateProcess</b>.</p>
+</dd>
+</dl>
+<p>The monitoring feature does not detect normal process termination that happens when the last thread of the process exits. The monitoring feature does not detect process termination that is initiated by kernel-mode code.</p>
+<p>To register a process for silent exit monitoring, open the <b>Silent Process Exit</b> tab in GFlags. Enter the process name as the <b>Image</b> and press the <b>Tab</b> key. Check the <b>Enable Silent Process Exit Monitoring</b> box, and click <b>Apply</b>. This sets the FLG_MONITOR_SILENT_PROCESS_EXIT flag in the following registry entry.</p>
+<p><b>HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\<i>ProcessName</i>\GlobalFlag</b></p>
+<p>For more information about this flag, see <a href="enable_silent_process_exit_monitoring.htm">Enable silent process exit monitoring</a>.</p>
+<p>For more information about using the <b>Silent Process Exit</b> tab in GFlags, see <a href="setting_and_clearing_flags_for_silent_process_exit.htm">Configuring Silent Process Exit Monitoring</a>.</p>
+<p>In the <b>Silent Process Exit</b> tab of GFlags, you can configure the actions that will take place when a monitored process exits silently. You can configure notification, event logging, and creation of dump files. You can  specify a process that will be launched when silent exit is detected, and you can specify a list of modules that the monitor will ignore. Several of these settings are available both globally and for individual applications. Global settings apply to all processes that you register for silent exit monitoring. Application settings apply to an individual process and override global settings.</p>
+<p>Global settings are stored in the registry under the following key.</p>
+<p><b>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SilentProcessExit</b></p>
+<p>Application settings are stored in the registry under the following  key.</p>
+<p><b>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SilentProcessExit\<i>ProcessName</i></b></p>
+<h2><a id="Reporting_Mode"></a><a id="reporting_mode"></a><a id="REPORTING_MODE"></a>Reporting Mode</h2>
+<p>The <b>Reporting Mode</b> setting is available as an application setting, but not as a global setting. You can use the following check boxes to set the reporting mode.</p>
+<dl>
+<dd><b>Launch monitor process</b></dd>
+<dd><b>Enable dump collection</b></dd>
+<dd><b>Enable notification</b></dd>
+</dl>
+<p>The <b>ReportingMode</b> registry entry is a bitwise OR of the following flags.</p>
+<table>
+<tr>
+<th>Flag</th>
+<th>Value</th>
+<th>Meaning</th>
+</tr>
+<tr>
+<td>LAUNCH_MONITORPROCESS</td>
+<td>0x1</td>
+<td>When silent exit is detected, the monitor process (specified in the <b>Monitor Process</b> box) is launched.</td>
+</tr>
+<tr>
+<td>LOCAL_DUMP</td>
+<td>0x2</td>
+<td>When silent exit is detected, a dump file is created for the monitored process. In the case of cross-process termination, a dump file is also created for the process that caused the termination.</td>
+</tr>
+<tr>
+<td>NOTIFICATION</td>
+<td>0x4</td>
+<td>When silent exit is detected, a pop-up notification is displayed.</td>
+</tr>
+</table>
+<p> </p>
+<h2><a id="Ignore_Self_Exits"></a><a id="ignore_self_exits"></a><a id="IGNORE_SELF_EXITS"></a>Ignore Self Exits</h2>
+<p>The <b>Ignore Self Exits</b> setting is available as an application setting, but not as a global setting. You can use the <b>Ignore Self Exits</b> check box to specify whether self exits are ignored.</p>
+<p>The <b>IgnoreSelfExits</b> registry entry has one of the following values.</p>
+<table>
+<tr>
+<th>Value</th>
+<th>Meaning</th>
+</tr>
+<tr>
+<td>0x0</td>
+<td>Detect and respond to both self termination and cross-process termination.</td>
+</tr>
+<tr>
+<td>0x1</td>
+<td>Ignore self termination. Detect and respond to cross-process termination. </td>
+</tr>
+</table>
+<p> </p>
+<h2><a id="Monitor_Process"></a><a id="monitor_process"></a><a id="MONITOR_PROCESS"></a>Monitor Process</h2>
+<p>You can specify a monitor process by entering a process name, along with command line parameters, in the <b>Monitor Process</b> text box. You can use the following variables in your command line.</p>
+<table>
+<tr>
+<th>Varaible</th>
+<th>Meaning</th>
+</tr>
+<tr>
+<td>%e</td>
+<td>ID of the exiting process. This is the monitored process that exited silently.</td>
+</tr>
+<tr>
+<td>%i</td>
+<td>ID of the initiating process. In the case of self termination, this is the same as the exiting process. In the case of cross-process termination, this is the ID of the process that caused the termination.</td>
+</tr>
+<tr>
+<td>%t</td>
+<td>ID of the initiating thread. This is the tread that caused the termination.</td>
+</tr>
+<tr>
+<td>%c</td>
+<td>The status code passed to <b>ExitThread</b> or <b>TerminateThread</b> .</td>
+</tr>
+</table>
+<p> </p>
+<p>For example, the following value for <b>Monitor Process</b> specifies that on silent exit, WinDbg is launched and attached to the exiting process.</p>
+<p><b>windbg -p %e</b></p>
+<p>The <b>Monitor Process</b> command line is stored in the <b>MonitorProcess</b> registry entry.</p>
+<h2><a id="Dump_Folder_Location"></a><a id="dump_folder_location"></a><a id="DUMP_FOLDER_LOCATION"></a>Dump Folder Location</h2>
+<p>You can use the <b>Dump folder location</b> text box to specify a location for the dump files that are written when a silent exit is detected.</p>
+<p>The string that you enter for <b>Dump folder location</b> is stored in the <b>LocalDumpFolder</b> registry entry.</p>
+<p>If you do not specify a dump folder location, dump files are written to the default location, which is %TEMP%\Silent Process Exit.</p>
+<h2><a id="Dump_Folder_Size"></a><a id="dump_folder_size"></a><a id="DUMP_FOLDER_SIZE"></a>Dump Folder Size</h2>
+<p>You can use the <b>Dump folder size</b> text box to specify the maximum number of dump files that can be written to the dump folder. Enter this value as a decimal integer.</p>
+<p>The value that you enter for <b>Dump folder size</b> is stored in the <b>MaximumNumberOfDumpFiles</b> registry entry.</p>
+<p>By default, there is no limit to the number of dump files that can be written.</p>
+<h2><a id="Dump_Type"></a><a id="dump_type"></a><a id="DUMP_TYPE"></a>Dump Type</h2>
+<p>You can use the <b>Dump Type</b> drop-down list to specify the type of dump file (Micro, Mini, Heap, or Custom) that is written when a silent exit is detected.</p>
+<p>The dump type is stored in the <b>DumpType</b> registry entry, which is a bitwise OR of the members of the <b>MINIDUMP_TYPE</b> enumeration. This enumeration is defined in dbghelp.h, which is included in the Debugging Tools for Windows package.</p>
+<p>For example, suppose you chose a dump type of <b>Micro</b>, and you see that the <b>DumpType</b> registry entry has a value of 0x88. The value 0x88 is a bitwise OR of the following two <b>MINIDUMP_TYPE</b> enumeration values.</p>
+<table>
+<tr>
+<td>MiniDumpFilterModulePaths</td>
+<td>0x00000080</td>
+</tr>
+<tr>
+<td>MiniDumpFilterMemory</td>
+<td>0x00000008</td>
+</tr>
+</table>
+<p> </p>
+<p>If you choose a dump type of <b>Custom</b>, enter your own bitwise OR of <b>MINIDUMP_TYPE</b> enumeration values in the <b>Custom Dump Type</b> box. Enter this value as a decimal integer.</p>
+<h2><a id="Module_Ignore_List"></a><a id="module_ignore_list"></a><a id="MODULE_IGNORE_LIST"></a>Module Ignore List</h2>
+<p>You can use the <b>Module Ignore List</b> box to specify a list of modules that will be ignored when a silent exit is detected. If the monitored process is terminated by one of the modules in this list, the silent exit is ignored.</p>
+<p>The list of modules that you enter in the <b>Module Ignore List</b> box is stored in the <b>ModuleIgnoreList</b> registry entry.</p>
+<h2><a id="Reading_Process_Exit_Reports_in_Event_Viewer"></a><a id="reading_process_exit_reports_in_event_viewer"></a><a id="READING_PROCESS_EXIT_REPORTS_IN_EVENT_VIEWER"></a>Reading Process Exit Reports in Event Viewer</h2>
+<p>When a monitored process exits silently, the monitor creates an entry in Event Viewer. To open Event Viewer, enter the command <b>eventvwr.msc</b>. Navigate to <b>Windows Logs &gt; Application</b>. Look for log entries that have a <b>Source</b> of Process Exit Monitor.</p><img src="images/GflagsSilentProcessExit02.png" alt="Event Properties dialog box showing general tab displaying the Source as Process Exit Monitor"/><p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Monitoring Silent Process Exit%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,162 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !filecache extension displays information regarding the system file cache memory and PTE use."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!filecache</title>
+
+<meta name="MS-HAID" content="r27_exts_kernel_E_437f7b0c-9c9a-4c10-a758-0df801c7c5dc.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._filecache"></a>!filecache</h1>
+</div>
+<p>The <b>!filecache</b> extension displays information regarding the system file cache memory and PTE use.</p>
+<pre class="syntax"><b>!filecache [</b><i>Flags</i><b>]</b></pre>
+<h2><a id="ddk__filelock_dbg"></a><a id="DDK__FILELOCK_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Flags"></a><a id="_______flags"></a><a id="_______FLAGS"></a>       <i>Flags</i></dt>
+<dd>
+<p>Optional. Default value is 0x0. Set <i>Flags</i> to 0x1 to sort the output by shared cache map. This way you can locate all the
+        system cache views for a given control area.</p>
+</dd>
+</dl>
+<h2><a id="ddk__filecache_dbg"></a><a id="DDK__FILECACHE_DBG"></a></h2>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<p>
+          Kdexts.dll</p>
+<p></p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For information about file system drivers, see the Windows Driver Kit (WDK) documentation and <i>Microsoft Windows Internals</i> by Mark Russinovich and David Solomon. (These resources may not be available in some languages 
+
+and countries.)
+</p>
+<h2>Remarks</h2>
+<p>Each line of this extension's output represents a virtual address control block (VACB). When named files are mapped into the VACB, the names of these files are displayed. If "no name for file" is specified, this means that this VACB is being used to cache metadata.</p>
+<p>Here is an example of the output from this extension from a Windows XP system:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !filecache
+***** Dump file cache******
+  Reading and sorting VACBs ...
+  Removed 1811 nonactive VACBs, processing 235 active VACBs ...
+File Cache Information
+  Current size 28256 kb
+  Peak size    30624 kb
+  235 Control Areas
+Skipping view @ c1040000 - no VACB, but PTE is valid!
+  Loading file cache database (100% of 131072 PTEs)
+  SkippedPageTableReads = 44
+  File cache has 4056 valid pages
+ 
+
+  Usage Summary (in Kb):
+Control Valid Standby/Dirty Shared Locked Name
+817da668     4      0     0     0  $MftMirr
+8177ae68   304    920     0     0  $LogFile
+81776160   188      0     0     0  $BitMap
+817cf370     4      0     0     0  $Mft
+81776a00     8      0     0     0  $Directory
+817cfdd0     4      0     0     0  $Directory
+81776740    36      0     0     0    No Name for File
+817cf7c8    20      0     0     0  $Directory
+817cfb98   304      0     0     0  $Directory
+8177be40    16      0     0     0  $Directory
+817dadc0  2128     68     0     0  $Mft
+817cf008     4      0     0     0  $Directory
+817d0258     8      4     0     0  $Directory
+817763f8     4      0     0     0  $Directory
+...
+8173f058     4      0     0     0  $Directory
+8173e628    32      0     0     0  $Directory
+8173e4c8    32      0     0     0  $Directory
+8173da38     4      0     0     0  $Directory
+817761f8     4      0     0     0  $Directory
+81740530    32      0     0     0  $Directory
+8173d518     4      0     0     0  $Directory
+817d9560     8      0     0     0  $Directory
+8173f868     4      0     0     0  $Directory
+8173fc00     4      0     0     0  $Directory
+81737278     4      0     0     0  $MftMirr
+81737c88    44      0     0     0  $LogFile
+81735fa0    48      0     0     0  $Mft
+81737e88   188      0     0     0  $BitMap
+817380b0     4      0     0     0  $Mft
+817399e0     4      0     0     0  $Directory
+817382b8     4      0     0     0  $Directory
+817388d8    12      0     0     0    No Name for File
+81735500     8      0     0     0  $Directory
+81718e38   232      0     0     0  default
+81735d40    48     20     0     0  SECURITY
+81723008  8632      0     0     0  software
+816da3a0    24     44     0     0  SAM
+8173dfa0     4      0     0     0  $Directory
+...
+8173ba90     4      0     0     0  $Directory
+8170ee30     4     36     4     0  AppEvent.Evt
+816223f8     4      0     0     0  $Directory
+8170ec28     8     28     4     0  SecEvent.Evt
+816220a8     4      0     0     0  $Directory
+8170ea20     4     32     4     0  SysEvent.Evt
+8170d188   232      0     0     0  NTUSER.DAT
+81709f10     8      0     0     0  UsrClass.dat
+81708918   232      0     0     0  NTUSER.DAT
+81708748     8      0     0     0  UsrClass.dat
+816c58f8    12      0     0     0  change.log
+815c3880     4      0     0     0  $Directory
+81706aa8     4      0     0     0  SchedLgU.Txt
+815ba2d8     4      0     0     0  $Directory
+815aa5f8     8      0     0     0  $Directory
+8166d728    44      0     0     0  Netlogon.log
+81701120     8     16     4     0  es.dll
+816ff0a8     4      8     4     0  stdole2.tlb
+8159a358     4      0     0     0  $Directory
+8159da70     4      0     0     0  $Directory
+8159c158     4      0     0     0  $Directory
+815cb9b0     4      0     0     0  00000001
+81779b20     4      0     0     0  $Directory
+8159ac20     4      0     0     0  $Directory
+815683f8     4      0     0     0  $Directory
+81566978   580      0     0     0  NTUSER.DAT
+81568460     4      0     0     0  $Directory
+815675d8    68      0     0     0  UsrClass.dat
+81567640     4      0     0     0  $Directory
+...
+81515878     4      0     0     0  $Directory
+81516870     8      0     0     0  $Directory
+8150df60     4      0     0     0  $Directory
+...
+816e5300     4      0     0     0  $Directory
+8152afa0    16    212     0     0  msmsgs.exe
+8153bbd8     4     32     0     0  stdole32.tlb
+8172f950   488    392     0     0  OBJECTS.DATA
+8173e9c0     4      0     0     0  $Directory
+814f4538     4      0     0     0  $Directory
+81650790   344     48     0     0  INDEX.BTR
+814f55f8     4      0     0     0  $Directory
+...
+814caef8     4      0     0     0  $Directory
+8171cd90  1392     36     0     0  system
+815f07f0     4      0     0     0  $Directory
+814a2298     4      0     0     0  $Directory
+81541538     4      0     0     0  $Directory
+81585288    28      0     0     0  $Directory
+8173f708     4      0     0     0  $Directory
+...
+8158cf10     4      0     0     0  $Directory</code></pre>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!filecache%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

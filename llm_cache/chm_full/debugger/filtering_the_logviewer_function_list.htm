@@ -1,0 +1,47 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Filtering the LogViewer Function List"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Filtering the LogViewer Function List</title>
+
+<meta name="MS-HAID" content="Logger+LogViewer_21dddd44-f081-4590-8544-c5c53a501c2f.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.filtering_the_logviewer_function_list"></a>Filtering the LogViewer Function List</h1>
+</div>
+<h2><a id="ddk_filtering_the_logviewer_function_list_dtoolq"></a><a id="DDK_FILTERING_THE_LOGVIEWER_FUNCTION_LIST_DTOOLQ"></a></h2>
+<p>Logger usually captures some function calls that are not needed for your analysis. These can be filtered out by Logger when it creates the log file. However, this process is not reversible, so it is usually preferable to allow all functions to be logged, and then filter the display in LogViewer.</p>
+<p>There are several ways to filter out function calls in LogViewer:</p>
+<ul>
+<li>
+<p>In the main viewing area, selected a function by clicking on it or using the cursor keys. (When a function is selected, LogViewer outlines it in red.) Then, press the DELETE key, or right-click and select <b>Hide</b>. This will hide all instances of that function call from view.</p>
+</li>
+<li>
+<p>Select <b>View | APIs Display</b>. A dialog box will appear that has three areas. On the right is an alphabetical listing of all functions, and on the left are categorical groupings. You can enable or disable the display of any function by checking or clearing the box to the left of its name.</p>
+</li>
+<li>
+<p>Select <b>View | Modules Display</b>. A dialog box will appear that allows you to select calling modules; only those functions that were called from these modules will be displayed.</p>
+</li>
+<li>
+<p>Select <b>View | First Level Calls Only</b>. This will display only calls that have "d0" in the left column. It is often desirable to hide function calls that are made by other logged functions. (For example, it is usually not interesting to know that <b>ShellExecuteEx</b> makes thirty different registry calls during its course of execution.)</p>
+</li>
+</ul>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Filtering the LogViewer Function List%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,78 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Using a Manifest File with SymChk"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Using a Manifest File with SymChk</title>
+
+<meta name="MS-HAID" content="SymChk_d6695d21-0614-4dd6-bd17-2bf82da20111.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.using_a_manifest_file_with_symchk"></a>Using a Manifest File with SymChk</h1>
+</div>
+<h2><a id="ddk_using_symchk_dtoolq"></a><a id="DDK_USING_SYMCHK_DTOOLQ"></a></h2>
+<p>In some cases, you might need to retrieve symbols for files that are on an isolated computer; that is, a computer that is either not on any network or is on a network that has no symbol store. In that situation, you can use the following procedure to retrieve symbols.</p>
+<ol>
+<li>
+<p>Run SymChk with the <b>/om</b> parameter to create a manifest file that describes the files for which you want to retrieve symbols.</p>
+</li>
+<li>
+<p>Move the manifest file to a network that has a symbol store.</p>
+</li>
+<li>
+<p>Run SymChk with <b>/im</b> parameter to retrieve symbols for the files described int the manifest file.</p>
+</li>
+<li>
+<p>Move the symbol files back to the isolated computer.</p>
+</li>
+</ol>
+<h3><a id="example"></a><a id="EXAMPLE"></a>Example</h3>
+<p>Suppose yourApp.exe is running on an isolated computer. The following command creates a manifest file that describes all the symbols needed to debug the yourApp.exe pocess.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>C:\&gt;SymChk /om c:\Manifest\man.txt /ie yourApp.exe
+
+SYMCHK: FAILED files = 0
+SYMCHK: PASSED + IGNORED files = 28</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Now assume you have moved the manifest file to a different computer that is on a network that has access to a symbol store. The following command retrieves the symbols described in the manifest file and places them in the mySymbols folder.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>C:\&gt;SymChk /im c:\FolderOnOtherComputer\man.txt /s srv*c:\mysymbols*\\aServer\symbols
+
+SYMCHK: myApp.exe             ERROR - Unable to download file. Error reported was 2
+. . .
+SYMCHK: FAILED files = 28
+SYMCHK: PASSED + IGNORED files = 28</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Now you can move the symbols to the isolated computer and use them for debugging.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Using a Manifest File with SymChk%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

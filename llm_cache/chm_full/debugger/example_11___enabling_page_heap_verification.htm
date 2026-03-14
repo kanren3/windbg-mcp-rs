@@ -1,0 +1,71 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Example 11: Enabling Page Heap Verification"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Example 11:  Enabling Page Heap Verification</title>
+
+<meta name="MS-HAID" content="GFlags_04f5d47b-24a8-4272-8972-3eb89793992a.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.example_11___enabling_page_heap_verification"></a>Example 11:  Enabling Page Heap Verification</h1>
+</div>
+<h2><a id="ddk_example_11___enabling_page_heap_verification_dtools"></a><a id="DDK_EXAMPLE_11___ENABLING_PAGE_HEAP_VERIFICATION_DTOOLS"></a></h2>
+<p>The following commands enable full and standard page heap verification for myapp.exe, a fictitious program.</p>
+<p>The first command enables <i>standard</i> page heap verification for myapp.exe. It uses the <b>/p</b> parameter to enable page heap for a process. By default, <b>/p</b> enables standard page heap.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>gflags /p /enable myapp.exe </pre>
+</td>
+</tr>
+</table></span></div>
+<p>The following commands enable <i>full</i> page heap verification for the myapp.exe program. Although these commands create different settings in the registry, they are all functionally equivalent to selecting the <b>Enable page heap</b> check box for the myapp.exe image file in the <b>Global Flags</b> dialog box. These methods can be used interchangeably.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>gflags /p /enable myapp.exe /full
+gflags /i myapp.exe +hpa
+gflags /i myapp.exe +02000000</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The following commands disable full or standard page heap verification for the myapp.exe program, regardless of the command or dialog box method used to enable page heap verification.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>gflags /p /disable myapp.exe
+gflags /i myapp.exe -hpa
+gflags /i myapp.exe -02000000</pre>
+</td>
+</tr>
+</table></span></div>
+<div class="alert"><b>Note</b>    When using the <b>/debug</b> or <b>/kdebug</b> parameters, use the <b>/p /disable</b> parameters to turn off the page heap verification (not the <b>/i -hpa</b> parameters). The <b>/p /disable</b> parameters disable page heap verification and delete registry entries that the debugger reads.</div>
+<div> </div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Example 11:  Enabling Page Heap Verification%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

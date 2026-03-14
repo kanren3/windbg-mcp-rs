@@ -1,0 +1,95 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !rpcexts.getthreadinfo extension searches the system's RPC state information for thread information."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!rpcexts.getthreadinfo</title>
+
+<meta name="MS-HAID" content="r32_exts_Lg_ND_RPC_d860cd45-5614-4fe5-8eb7-bbc921c70fc3.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._rpcexts_getthreadinfo"></a>!rpcexts.getthreadinfo</h1>
+</div>
+<p>The <b>!rpcexts.getthreadinfo</b> extension searches the system's RPC state information for thread information.</p>
+<pre class="syntax">
+    <b>!rpcexts.getthreadinfo </b><i>ProcessID</i><b> </b>[<i>ThreadID</i>] 
+<b>!rpcexts.getthreadinfo -?</b> 
+</pre>
+<h2><a id="ddk__rpcexts_getthreadinfo_dbg"></a><a id="DDK__RPCEXTS_GETTHREADINFO_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______ProcessID______"></a><a id="_______processid______"></a><a id="_______PROCESSID______"></a>       <i>ProcessID</i>      </dt>
+<dd>
+<p>Specifies the process ID (PID) of the process containing the desired thread.</p>
+</dd>
+<dt><a id="_______ThreadID______"></a><a id="_______threadid______"></a><a id="_______THREADID______"></a>       <i>ThreadID</i>      </dt>
+<dd>
+<p>Specifies the thread ID of the thread to be displayed. If omitted, all threads in the specified process will be displayed.</p>
+</dd>
+<dt><a id="_______-_______"></a>       <b>-?</b>      </dt>
+<dd>
+<p>Displays some brief Help text for this extension in the Command Prompt window.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000</b></p>
+</td>
+<td>
+<p>Unavailable </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Rpcexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about debugging Microsoft Remote Procedure Call (RPC), see <a href="rpc_debugging.htm">RPC Debugging</a>.</p>
+<h2>Remarks</h2>
+<p>This extension can only be used with CDB or with user-mode WinDbg.</p>
+<p>Here is an example:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:002&gt; !rpcexts.getthreadinfo 26c
+Searching for thread info ...
+PID  CELL ID   ST TID      LASTTIME
+-----------------------------------
+026c 0000.0002 01 000003c4 0004caa5
+026c 0000.0005 03 00000254 0004ca9b</pre>
+</td>
+</tr>
+</table></span></div>
+<p>For a similar example using the DbgRpc tool, see <a href="get_rpc_thread_information.htm">Get RPC Thread Information</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!rpcexts.getthreadinfo%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

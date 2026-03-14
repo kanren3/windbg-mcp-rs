@@ -1,0 +1,73 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Remote.exe Batch Files"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Remote.exe Batch Files</title>
+
+<meta name="MS-HAID" content="r08_use_remote_316cad9d-3fbf-4c0a-bf09-185b5d3a8c0c.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.remote_exe_batch_files"></a>Remote.exe Batch Files</h1>
+</div>
+<h2><a id="ddk_remote_exe_batch_files_dbg"></a><a id="DDK_REMOTE_EXE_BATCH_FILES_DBG"></a></h2>
+<p>As a more detailed example of remote debugging with remote.exe, assume the following about a local host computer in a three-computer kernel debugging scenario:</p>
+<ul>
+<li>
+<p>Debugging needs to take place over a null-modem cable on COM2.</p>
+</li>
+<li>
+<p>The symbol files are in the folder c:\winnt\symbols.</p>
+</li>
+<li>
+<p>A log file called debug.log is created in <b>c:\temp</b>. </p>
+</li>
+</ul>
+<p>The log file holds a copy of everything you see on the Debug screen during your debug session. All input from the person doing the debugging, and all output from the kernel debugger on the target system, is written to that log file.</p>
+<p>A sample batch file for running a debugging session on the local host is:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>set _NT_DEBUG_PORT=com2
+set _NT_DEBUG_BAUD_RATE=19200
+set _NT_SYMBOL_PATH=c:\winnt\symbols
+set _NT_LOG_FILE_OPEN=c:\temp\debug.log
+remote /s "KD -v" debug</pre>
+</td>
+</tr>
+</table></span></div>
+<div class="alert"><b>Note</b>    If this batch file is not in the same directory as Remote.exe, and Remote.exe is not in a directory listed in the system path, then you should give the full path to the utility when invoking Remote.exe in this batch file.</div>
+<div> </div>
+<p>After this batch file is run, anyone with a Windows computer that is networked to the local host computer can connect to the debug session by using the following command:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>remote /c computername debug </pre>
+</td>
+</tr>
+</table></span></div>
+<p>where <i>computername</i> is the NetBIOS name of the local host computer. </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Remote.exe Batch Files%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

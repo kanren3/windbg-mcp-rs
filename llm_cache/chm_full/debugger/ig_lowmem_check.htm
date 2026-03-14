@@ -1,0 +1,51 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The IG_LOWMEM_CHECK Ioctl operation looks for memory corruption in the low 4 GB of memory."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IG_LOWMEM_CHECK</title>
+
+<meta name="MS-HAID" content="WdbgExts_Ref_958f146b-889a-4a89-9e02-a1bab5f0db54.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.ig_lowmem_check"></a>IG_LOWMEM_CHECK</h1>
+</div>
+<p>The IG_LOWMEM_CHECK <a href="ioctl.htm"><b>Ioctl</b></a> operation looks for memory corruption in the low 4 GB of memory.</p>
+<p>This <b>Ioctl</b> operation does not take any parameters and the <i>lpvData</i> and <i>cbSizeOfContext</i> parameters should be set to <b>NULL</b> and zero respectively.</p>
+<h3><a id="Return_Value"></a><a id="return_value"></a><a id="RETURN_VALUE"></a>Return Value</h3>
+<p>If no corrupt memory was found, the return value is <b>TRUE</b>; otherwise, it is <b>FALSE</b>.</p>
+<h2>Remarks</h2>
+<p>This operation is only available in kernel-mode debugging, and is only useful when the kernel was started using the <b>/nolowmem</b> option.</p>
+<p>When the kernel is started with the <b>/nolowmem</b> option, the kernel, drivers, operating system, and applications are loaded in memory above 4 GB, while the low 4 GB of memory is filled with a unique pattern. The IG_LOWMEM_CHECK <b>Ioctl</b> operation checks this pattern for corruption.</p>
+<p>This can be used to verify that a driver works correctly when using physical addresses greater than 32 bits in length. See <i>Physical Address Extension (PAE)</i>, <b>/pae</b>,  and <b>/nolowmem</b> in the Windows Driver Kit.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Wdbgexts.h (include Wdbgexts.h or Dbgeng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IG_LOWMEM_CHECK%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

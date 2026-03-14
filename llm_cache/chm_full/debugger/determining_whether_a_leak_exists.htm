@@ -1,0 +1,47 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Determining Whether a Leak Exists"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Determining Whether a Leak Exists</title>
+
+<meta name="MS-HAID" content="t13_advanced_4f1c5fa2-e124-4555-8f5e-b0636e5ece4b.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.determining_whether_a_leak_exists"></a>Determining Whether a Leak Exists</h1>
+</div>
+<p>If Windows performance is degrading over time and you suspect that a memory leak may be involved, the technique described in this section can indicate whether there is a memory leak. It will not tell you what the source of the leak is, nor whether it is user mode or kernel mode.</p>
+<p>Begin by launching Performance Monitor. Add the following counters:</p>
+<ul>
+<li>
+<p><b>Memory</b>--&gt;<b>Pool Nonpaged Bytes </b></p>
+</li>
+<li>
+<p><b>Memory</b>--&gt;<b>Pool Paged Bytes </b></p>
+</li>
+<li>
+<p><b>Paging File</b>--&gt;<b>% Usage </b></p>
+</li>
+</ul>
+<p>Change the update time to 600 seconds to capture a graph of the leak over time. You might also want to log the data to a file for later examination.</p>
+<p>Start the application or test that you believe is causing the leak. Allow the application or test to run undisturbed for some time; do not use the target computer during this time. Leaks are usually slow and may take hours to detect. Wait for a few hours before deciding whether a leak has occurred.</p>
+<p>Monitor the Performance Monitor counters. After  the test has started, the counter values will change rapidly, and it may take some time for the memory pools values to reach a steady state. </p>
+<p>User-mode memory leaks are always located in pageable pool and cause both the <b>Pool Paged Bytes</b> counter and the page file <b>Usage</b> counter to increase steadily over time. Kernel-mode memory leaks usually deplete nonpaged pool, causing the <b>Pool Nonpaged Bytes</b> counter to increase, although pageable memory can be affected as well.  Occasionally these counters may show false positives because an application is caching data. </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Determining Whether a Leak Exists%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

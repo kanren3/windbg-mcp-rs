@@ -1,0 +1,136 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The GetPseudoDescriptionWide method returns a description of a pseudo-register, including its name and type."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IDebugRegisters2::GetPseudoDescriptionWide method</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.getpseudodescriptionwide"></a>IDebugRegisters2::GetPseudoDescriptionWide method</h1>
+</div>
+<p>The <b>GetPseudoDescriptionWide</b> method returns a description of a pseudo-register, including its name and type.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>HRESULT GetPseudoDescriptionWide(
+  [in]            ULONG    Register,
+  [out, optional] PWSTR    NameBuffer,
+  [in]            ULONG    NameBufferSize,
+  [out, optional] PULONG   NameSize,
+  [out, optional] PULONG64 TypeModule,
+  [out, optional] PULONG   TypeId
+);</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Parameters</h2>
+<dl>
+<dt><i>Register</i> [in]</dt>
+<dd>
+<p>Specifies the index of the pseudo-register whose description is requested.  The index is always between zero and the number of pseudo-registers (returned by <a href="getnumberpseudoregisters.htm"><b>GetNumberPseudoRegisters</b></a>) minus one.</p>
+</dd>
+<dt><i>NameBuffer</i> [out, optional]</dt>
+<dd>
+<p>Receives the name of the pseudo-register.  If <i>NameBuffer</i> is <b>NULL</b>, this information is not returned.</p>
+</dd>
+<dt><i>NameBufferSize</i> [in]</dt>
+<dd>
+<p>Specifies the size, in characters, of the buffer that <i>NameBuffer </i>specifies.</p>
+</dd>
+<dt><i>NameSize</i> [out, optional]</dt>
+<dd>
+<p>Receives the size in characters of the name of the pseudo-register.  If <i>NameSize</i> is <b>NULL</b>, this information is not returned.</p>
+</dd>
+<dt><i>TypeModule</i> [out, optional]</dt>
+<dd>
+<p>Receives the base address of the module to which the register's type belongs.  If the type of the register is not known, zero is returned.  If <i>TypeModule</i> is <b>NULL</b>, no information is returned.</p>
+</dd>
+<dt><i>TypeId</i> [out, optional]</dt>
+<dd>
+<p>Receives the type ID of the type within the module returned in <i>TypeModule</i>.  If the type ID is not known, zero is returned.  If <i>TypeId</i> is <b>NULL</b>, no information is returned.</p>
+</dd>
+</dl>
+<h2>Return value</h2>
+<p>This list does not contain all the errors that might occur.  For a list of possible errors, see <a href="hresult_values.htm"><b>HRESULT Values</b></a>.</p>
+<table>
+<tr>
+<th>Return code</th>
+<th>Description</th>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>S_OK</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>The method was successful.</p>
+</td>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>E_FAIL</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>The description for the register was not available</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>Descriptions are not always available for all registers.  If a pseudo-register does not have a value - for example, <b>$eventip</b> will not have a value before an event has occurred - or a type cannot be determined for a pseudo-register, this method will return E_FAIL.</p>
+<p>For an overview of the <a href="idebugregisters.htm"><b>IDebugRegisters</b></a> interface and other register-related methods, see <a href="registers.htm">Registers</a>.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Target platform</p>
+</th>
+<td width="70%">
+<dl>
+<dt></dt>
+</dl>
+</td>
+</tr>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Dbgeng.h (include DbgEng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="idebugregisters2.htm"><b>IDebugRegisters2</b></a></dt>
+<dt><a href="getnumberpseudoregisters.htm"><b>GetNumberPseudoRegisters</b></a></dt>
+<dt><a href="getpseudoindexbyname.htm"><b>GetPseudoIndexByName</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IDebugRegisters2::GetPseudoDescriptionWide method%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

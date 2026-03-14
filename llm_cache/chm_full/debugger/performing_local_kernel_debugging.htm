@@ -1,0 +1,71 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Local Kernel-Mode Debugging"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Local Kernel-Mode Debugging</title>
+
+<meta name="MS-HAID" content="r07_use_operation_fabb9469-404e-4883-950a-5f35a09c27a2.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.performing_local_kernel_debugging"></a>Local Kernel-Mode Debugging</h1>
+</div>
+<p>Debugging Tools for Windows supports <i>local kernel debugging</i>. This is kernel-mode debugging on a single computer. In other words, the debugger runs on the same computer that is being debugged.</p>
+<h2><a id="starting_local_kernel_debugging"></a><a id="STARTING_LOCAL_KERNEL_DEBUGGING"></a>Setting Up Local Kernel-Mode Debugging</h2>
+<p>For information on setting up local kernel-mode debugging, see <a href="setting_up_local_kernel_debugging_of_a_single_computer_manually.htm">Setting Up Local Kernel-Mode Debugging of a Single Computer Manually</a>.</p>
+<h2><a id="Starting_the_Debugging_Session"></a><a id="starting_the_debugging_session"></a><a id="STARTING_THE_DEBUGGING_SESSION"></a>Starting the Debugging Session</h2>
+<h3><a id="Using_WinDbg"></a><a id="using_windbg"></a><a id="USING_WINDBG"></a>Using WinDbg</h3>
+<p>Open WinDbg as Administrator. On the <b>File</b> menu, choose <b>Kernel Debug</b>. In the Kernel Debugging dialog box, open the <b>Local</b> tab. Click <b>OK</b>.</p>
+<p>You can also start a session with WinDbg by opening a Command Prompt window as Administrator and entering the following command:</p>
+<p><b>windbg -kl</b></p>
+<h3><a id="Using_KD"></a><a id="using_kd"></a><a id="USING_KD"></a>Using KD</h3>
+<p>Open a Command Prompt window as Administrator, and enter the following command:</p>
+<p><b>kd -kl</b></p>
+<h2><a id="commands_that_are_not_available"></a><a id="COMMANDS_THAT_ARE_NOT_AVAILABLE"></a>Commands That Are Not Available</h2>
+<p>Not all commands are available in a local kernel debugging session. Typically, you cannot use any command that causes the target computer to stop, even momentarily, because you cannot resume operation.</p>
+<p>In particular, you cannot use the following commands:</p>
+<ul>
+<li>
+<p>Execution commands, such as <b>g (Go)</b>, <b>p (Step)</b>, <b>t (Trace)</b>, <b>wt (Trace and Watch Data)</b>, <b>tb (Trace to Next Branch)</b>, <b>gh (Go with Exception Handled)</b>, and <b>gn (Go with Exception Not Handled)</b></p>
+</li>
+<li>
+<p>Shutdown and dump file commands, such as <b>.crash</b>, <b>.dump</b>, and <b>.reboot</b></p>
+</li>
+<li>
+<p>Breakpoint commands, such as <b>bp</b>, <b>bu</b>, <b>ba</b>, <b>bc</b>, <b>bd</b>, <b>be</b>, and <b>bl</b></p>
+</li>
+<li>
+<p>Register display commands, such as <b>r</b> and variations </p>
+</li>
+<li>
+<p>Stack trace commands, such as <b>k</b> and variations </p>
+</li>
+</ul>
+<p>If you are performing local kernel debugging with WinDbg, all of the equivalent menu commands and buttons are also unavailable.</p>
+<h2><a id="commands_that_are_available"></a><a id="COMMANDS_THAT_ARE_AVAILABLE"></a>Commands That Are Available</h2>
+<p>All memory input and output commands are available. You can freely read from user memory and kernel memory. You can also write to memory. Make sure that you do not write to the wrong part of kernel memory, because it can corrupt data structures and frequently causes the computer to stop responding (that is, <i>crash</i>).</p>
+<h2><a id="difficulties_in_performing_local_kernel_debugging"></a><a id="DIFFICULTIES_IN_PERFORMING_LOCAL_KERNEL_DEBUGGING"></a>Difficulties in Performing Local Kernel Debugging</h2>
+<p>Local kernel debugging is a very delicate operation. Be careful that you do not corrupt or crash the system.</p>
+<p>One of the most difficult aspects of local kernel debugging is that the machine state is constantly changing. Memory is paged in and out, the active process constantly changes, and virtual address contexts do not remain constant. However, under these conditions, you can effectively analyze things that change slowly, such as certain device states.</p>
+<p>Kernel-mode drivers and the Windows operating system frequently send messages to the kernel debugger by using <b>DbgPrint</b> and related functions. These messages are not automatically displayed during local kernel debugging. You can display them by using the <a href="_dbgprint.htm"><b>!dbgprint</b></a> extension.</p>
+<h2><a id="livekd"></a><a id="LIVEKD"></a>LiveKD</h2>
+<p>The LiveKD tool simulates local kernel debugging. This tool creates a "snapshot" dump file of the kernel memory, without actually stopping the kernel while this snapshot is made. (Therefore, the snapshot might not actually show a single instant state of the computer.)</p>
+<p>LiveKD is not part of the Debugging Tools for Windows package. You can download <a href="http://go.microsoft.com/fwlink/p/?linkid=56552">LiveKd</a> from the Windows Sysinternals site. </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Local Kernel-Mode Debugging%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

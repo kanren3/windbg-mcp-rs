@@ -1,0 +1,82 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .enable_long_status command specifies whether the debugger displays long integers in decimal format or in the default radix."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.enable_long_status (Enable Long Integer Display)</title>
+
+<meta name="MS-HAID" content="r20_metacmds_E_c15fcdd0-2668-465e-b455-98469d929bd6.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._enable_long_status__enable_long_integer_display_"></a>.enable_long_status (Enable Long Integer Display)</h1>
+</div>
+<p>The <b>.enable_long_status</b> command specifies whether the debugger displays long integers in decimal format or in the default radix.</p>
+<pre class="syntax"><b>.enable_long_status 0</b> 
+<b>.enable_long_status 1</b></pre>
+<p></p>
+<h2><a id="ddk_meta_enable_long_integer_display_dbg"></a><a id="DDK_META_ENABLE_LONG_INTEGER_DISPLAY_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______0______"></a>       <b>0</b>      </dt>
+<dd>
+<p>Displays all long integers in decimal format. This is the default behavior of the debugger.</p>
+</dd>
+<dt><a id="_______1______"></a>       <b>1</b>      </dt>
+<dd>
+<p>Displays all long integers in the default radix.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>The <b>.enable_long_status</b> command affects the output of the <a href="dt__display_type_.htm"><b>dt (Display Type)</b></a> command.</p>
+<p>In WinDbg, <b>.enable_long_status</b> also affects the display in the <a href="locals_window.htm">Locals window</a> and the </p>
+<p>Watch window. These windows are automatically updated after you issue <b>.enable_long_status</b>.</p>
+<p>This command affects only the display of long integers. To control whether standard integers are displayed in decimal format or the default radix, use the <a href="_force_radix_output__use_radix_for_integers_.htm"><b>.force_radix_output (Use Radix for Integers)</b></a> command.</p>
+<div class="alert"><b>Note</b>    The <a href="dv__display_local_variables_.htm"><b>dv (Display Local Variables)</b></a> command always displays long integers in the current number base.</div>
+<div> </div>
+<p>To change the default radix, use the <a href="n__set_number_base_.htm"><b>n (Set Number Base)</b></a> command.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.enable_long_status (Enable Long Integer Display)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

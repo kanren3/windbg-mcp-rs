@@ -1,0 +1,82 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The DRIVER_PAGE_FAULT_IN_FREED_SPECIAL_POOL bug check has a value of 0x000000D5. This indicates that a driver has referenced memory which was earlier freed."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0xD5: DRIVER_PAGE_FAULT_IN_FREED_SPECIAL_POOL</title>
+
+<meta name="MS-HAID" content="t06_bugs_B0_a442285e-088e-433e-96bf-8755ca3a4210.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0xd5__driver_page_fault_in_freed_special_pool"></a>Bug Check 0xD5: DRIVER_PAGE_FAULT_IN_FREED_SPECIAL_POOL</h1>
+</div>
+<p>The DRIVER_PAGE_FAULT_IN_FREED_SPECIAL_POOL bug check has a value of 0x000000D5. This indicates that a driver has referenced memory which was earlier freed.</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2> DRIVER_PAGE_FAULT_IN_FREED_SPECIAL_POOL Parameters</h2>
+<p>The following parameters are displayed on the blue screen.</p>
+<table>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>1</p>
+</td>
+<td>
+<p>Memory address referenced</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>2</p>
+</td>
+<td>
+<p><b>0:</b> Read</p>
+<p><b>1:</b> Write</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>3</p>
+</td>
+<td>
+<p>Address that referenced memory (if known)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>4</p>
+</td>
+<td>
+<p>Reserved  </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>If the driver responsible for the error can be identified, its name is printed on the blue screen and stored in memory at the location (PUNICODE_STRING) <b>KiBugCheckDriver</b>.</p>
+<h2>Cause</h2>
+<p>The Driver Verifier <b>Special Pool</b> option has caught the driver accessing memory which was earlier freed.</p>
+<p>For information about the special pool, consult the Driver Verifier section of the Windows Driver Kit.  </p>
+<h2>Remarks</h2>
+<p>This cannot be protected by a <b>try - except</b> handler -- it can only be protected by a probe.</p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

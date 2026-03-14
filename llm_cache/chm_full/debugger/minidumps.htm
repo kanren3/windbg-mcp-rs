@@ -1,0 +1,160 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Minidumps"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Minidumps</title>
+
+<meta name="MS-HAID" content="r10_dump_files_39e1a7e3-abf0-4809-9432-1fcc4e98492e.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.minidumps"></a>Minidumps</h1>
+</div>
+<h2><a id="ddk_minidumps_dbg"></a><a id="DDK_MINIDUMPS_DBG"></a></h2>
+<p>A user-mode dump file that includes only selected parts of the memory associated with a process is called a <i>minidump</i>.</p>
+<p>The size and contents of a minidump file vary depending on the program being dumped and the application doing the dumping. Sometimes, a minidump file is fairly large and includes the full memory and handle table. Other times, it is much smaller -- for example, it might only contain information about a single thread, or only contain information about modules that are actually referenced in the stack.</p>
+<p>The name "minidump" is misleading, because the largest minidump files actually contain more information than the "full" user-mode dump. For example, <b>.dump /mf</b> or <b>.dump /ma</b> will create a larger and more complete file than <b>.dump /f</b>.  For this reason,  <b>.dump /m</b>[<i>MiniOptions</i>] recommended over <b>.dump /f</b> for all user-mode dump file creation.</p>
+<p>If you are creating a minidump file with the debugger, you can choose exactly what information to include. A simple <b>.dump /m</b> command will include basic information about the loaded modules that make up the target process, thread information, and stack information. This can be modified by using any of the following options:</p>
+<table>
+<tr>
+<th>.dump option </th>
+<th>
+       Effect on dump file 
+      </th>
+</tr>
+<tr>
+<td>
+<p><b>/ma </b></p>
+</td>
+<td>
+<p>Creates a minidump with all optional additions. The <b>/ma</b> option is equivalent to <b>/mfFhut</b> -- it adds full memory data, handle data, unloaded module information, basic memory information, and thread time information to the minidump.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>/mf </b></p>
+</td>
+<td>
+<p>Adds full memory data to the minidump. All accessible committed pages owned by the target application will be included.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>/mF</b></p>
+</td>
+<td>
+<p>Adds all basic memory information to the minidump.    This adds a stream to the minidump that contains all basic memory information, not just information about valid memory. This allows the debugger to reconstruct the complete virtual memory layout of the process when the minidump is being debugged. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>/mh </b></p>
+</td>
+<td>
+<p>Adds data about the handles associated with the target application to the minidump.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>/mu </b></p>
+</td>
+<td>
+<p>Adds unloaded module information to the minidump. This is only available in Windows Server 2003 and later versions of Windows.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>/mt</b></p>
+</td>
+<td>
+<p>Adds additional thread information to the minidump. This includes thread times, which can be displayed by using <a href="_ttime__display_thread_times_.htm"><b>.ttime (Display Thread Times)</b></a> when debugging the minidump.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>/mi </b></p>
+</td>
+<td>
+<p>Adds <i>secondary memory</i> to the minidump. Secondary memory is any memory referenced by a pointer on the stack or backing store, plus a small region surrounding this address.   </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>/mp </b></p>
+</td>
+<td>
+<p>Adds process environment block (PEB) and thread environment block (TEB) data to the minidump. This can be useful if you need access to Windows system information regarding the application's processes and threads.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>/mw </b></p>
+</td>
+<td>
+<p>Adds all committed read-write private pages to the minidump.  </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>/md </b></p>
+</td>
+<td>
+<p>Adds all read-write data segments within the executable image to the minidump.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>/mc </b></p>
+</td>
+<td>
+<p>Adds code sections within images.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>/mr </b></p>
+</td>
+<td>
+<p>Deletes from the minidump those portions of the stack and store memory that are not useful for recreating the stack trace. Local variables and other data type values are deleted as well. This option does not make the minidump smaller (since these memory sections are simply zeroed), but it is useful if you wish to protect the privacy of other applications. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>/mR </b></p>
+</td>
+<td>
+<p>Deletes the full module paths from the minidump. Only the module <i>names</i> will be included. This is a useful option if you wish to protect the privacy of the user's directory structure.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>/mk "
+        </b><i>FileName</i><b>
+        "</b></p>
+</td>
+<td>
+<p>(Windows Vista only)  Creates a kernel-mode minidump in addition to the user-mode minidump. The kernel-mode minidump will be restricted to the same threads that are stored in the user-mode minidump. <i>FileName</i> must be enclosed in quotation marks.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>These options can be combined. For example, the command <b>.dump /mfiu</b> can be used to create a fairly large minidump, or the command <b>.dump /mrR</b> can be used to create a minidump that preserves the user's privacy. For full syntax details, see <a href="_dump__create_dump_file_.htm"><b>.dump (Create Dump File)</b></a>.</p>
+<p>For details on the internals of minidump files, see the DbgHelp Reference in the Microsoft Windows SDK.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Minidumps%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,106 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !apc extension formats and displays the contents of one or more asynchronous procedure calls (APCs)."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!apc</title>
+
+<meta name="MS-HAID" content="r26_exts_kernel_A_729f0dbf-e54a-4754-a79e-277a4f78804a.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._apc"></a>!apc</h1>
+</div>
+<p>The <b>!apc</b> extension formats and displays the contents of one or more asynchronous procedure calls (APCs).</p>
+<pre class="syntax"><b>!apc</b>
+<b>!apc proc </b><i>Process</i>
+<b>!apc thre </b><i>Thread</i>
+<b>!apc </b><i>KAPC</i></pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="Process"></a><a id="process"></a><a id="PROCESS"></a><i>Process</i></dt>
+<dd>
+<p>Specifies the address of the process whose APCs are to be displayed.</p>
+</dd>
+<dt><a id="Thread"></a><a id="thread"></a><a id="THREAD"></a><i>Thread</i></dt>
+<dd>
+<p>Specifies the address of the thread whose APCs are to be displayed.</p>
+</dd>
+<dt><a id="_______KAPC______"></a><a id="_______kapc______"></a>       <i>KAPC</i>      </dt>
+<dd>
+<p>Specifies the address of the kernel APC to be displayed.</p>
+</dd>
+</dl>
+<h2><a id="DLL"></a><a id="dll"></a>DLL</h2>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000</b></p>
+</td>
+<td>
+<p>Unavailable </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later</b></p>
+</td>
+<td>
+<p>Kdexts.dll</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h2>
+<p>For information about APCs, see the Windows Driver Kit (WDK) documentation and Microsoft Windows Internals by Mark Russinovich and David Solomon.</p>
+<h2>Remarks</h2>
+<p>Without any parameters, <b>!apc</b> displays all APCs.</p>
+<p>Here is an example:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; !apc
+*** Enumerating APCs in all processes
+Process e0000000858ba8b0 System
+Process e0000165fff86040 smss.exe
+Process e0000165fff8c040 csrss.exe
+Process e0000165fff4e1d0 winlogon.exe
+Process e0000165fff101d0 services.exe
+Process e0000165fffa81d0 lsass.exe
+Process e0000165fff201d0 svchost.exe
+Process e0000165fff8e040 svchost.exe
+Process e0000165fff3e040 svchost.exe
+Process e0000165fff6e040 svchost.exe
+Process e0000165fff24040 spoolsv.exe
+Process e000000085666640 wmiprvse.exe
+Process e00000008501e520 wmiprvse.exe
+Process e0000000856db480 explorer.exe
+Process e0000165fff206a0 ctfmon.exe
+Process e0000000850009d0 ctfmon.exe
+Process e0000165fff51600 conime.exe
+Process e000000085496340 taskmgr.exe
+Process e000000085489c30 userinit.exe</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!apc%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

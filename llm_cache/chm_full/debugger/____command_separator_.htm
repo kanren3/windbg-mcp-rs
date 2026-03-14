@@ -1,0 +1,56 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The semicolon ( ; ) character is used to separate multiple commands on a single line."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>;  (Command Separator)</title>
+
+<meta name="MS-HAID" content="r14_tokens_de2c1f74-59fa-4839-980a-f429363d0d06.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.____command_separator_"></a>;  (Command Separator)</h1>
+</div>
+<p>The semicolon ( <b>;</b> ) character is used to separate multiple commands on a single line.</p>
+<pre class="syntax">
+    <i>Command1</i><b> ; </b><i>Command2</i><b> </b>[; <i>Command3</i> ...] 
+</pre>
+<h2><a id="ddk_token_command_separator_dbg"></a><a id="DDK_TOKEN_COMMAND_SEPARATOR_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Command1__Command2__..."></a><a id="_______command1__command2__..."></a><a id="_______COMMAND1__COMMAND2__..."></a>       <i>Command1</i>, <i>Command2</i>, ...</dt>
+<dd>
+<p>The commands to be executed.</p>
+</dd>
+</dl>
+<h2>Remarks</h2>
+<p>Commands are executed sequentially from left to right. All commands on a single line refer to the current thread, unless otherwise specified. If a command causes the thread to execute, the remaining commands on the line will be deferred until that thread stops on a debug event.</p>
+<p>A small number of commands cannot be followed by a semicolon, because they automatically take the entire remainder of the line as their argument. These include <a href="as__as__set_alias_.htm"><b>as (Set Alias)</b></a>, <a href="_______________________a___run_script_file_.htm"><b>$&lt; (Run Script File)</b></a>, <b>$&gt;&lt; (Run Script File)</b>, and any command beginning with the <a href="____comment_line_specifier_.htm"><b>*  (Comment Line Specifier)</b></a> token.</p>
+<p>Here is an example. This executes the current program to source line 123, prints the value of <b>counter</b>, then resumes execution:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; g `:123`; ? poi(counter); g </pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20;  (Command Separator)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

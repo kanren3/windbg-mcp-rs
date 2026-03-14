@@ -1,0 +1,170 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !minipkd.adapters extension displays all of the adapters that work with the SCSI Port driver that have been identified in the system, and the individual devices associated with each adapter."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!minipkd.adapters</title>
+
+<meta name="MS-HAID" content="r33~d_exts_SCSI_1b6be74d-e7c0-4e05-ba52-fc4fc7337750.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._minipkd_adapters"></a>!minipkd.adapters</h1>
+</div>
+<p>The <b>!minipkd.adapters</b> extension displays all of the adapters that work with the SCSI Port driver that have been identified in the system, and the individual devices associated with each adapter.</p>
+<pre class="syntax">
+    <b>!minipkd.adapters</b> 
+</pre>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Windows 2000</b></p>
+</td>
+<td>
+<p>Unavailable</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Minipkd.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information, see <a href="scsi_miniport_debugging.htm">SCSI Miniport Debugging</a>.</p>
+<h2>Remarks</h2>
+<p>The display includes the driver name, the device object address, and the device extension address for each adapter. The display for each adapter also includes a list of each device on the adapter. The display for each device includes the device extension address, the SCSI address, the device object address, and some flags for the device. Information about the Plug and Play state and the power state is also included.</p>
+<p>The flags in the display are explained in the following table:</p>
+<table>
+<tr>
+<th>Flag</th>
+<th>Meaning</th>
+</tr>
+<tr>
+<td>
+<p>
+        c
+       </p>
+</td>
+<td>
+<p>Claimed. Indicates that the device has a driver on it.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+        m
+       </p>
+</td>
+<td>
+<p>Missing. Indicates that the device was present on the bus in a prior scan but was not present during the latest scan.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+        e
+       </p>
+</td>
+<td>
+<p>Enumerated. Indicates that the device has been reported to the Plug and Play manager.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+        v
+       </p>
+</td>
+<td>
+<p>Visible. Indicates that the device has been enumerated by the system. This flag is more significant when it is not present for a device.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+        p
+       </p>
+</td>
+<td>
+<p>Paging. Indicates that the device is in the paging path.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+        d
+       </p>
+</td>
+<td>
+<p>Dump. Indicates that the device is in the crash dump path and will be used for a crash dump.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+        h
+       </p>
+</td>
+<td>
+<p>Hibernate. Indicates that the device is hibernating.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>Here is an example of the <b>!minipkd.adapters</b> display:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0: kd&gt; !minipkd.adapters
+Adapter \Driver\lp6nds35     DO 86334a70         DevExt 86334b28
+Adapter \Driver\adpu160m     DO 8633da70         DevExt 8633db28
+ LUN 862e60f8 @(0,0,0) c ev     pnp(00/ff) pow(0,0) DevObj 862e6040
+ LUN 863530f8 @(0,1,0) c ev p d pnp(00/ff) pow(0,0) DevObj 86353040
+ LUN 862e50f8 @(0,2,0) c ev     pnp(00/ff) pow(0,0) DevObj 862e5040
+ LUN 863520f8 @(0,6,0)   ev     pnp(00/ff) pow(0,0) DevObj 86352040
+Adapter \Driver\adpu160m     DO 86376040         DevExt 863760f8</pre>
+</td>
+</tr>
+</table></span></div>
+<p>An error message similar to the following indicates that either the symbol path is incorrect and does not point to the correct version of the Scsiport.sys symbols, or that Windows has not identified any adapters that work with the SCSI Port driver.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>minipkd error (0) &lt;path&gt; ... \minipkd\minipkd.c @ line 435</pre>
+</td>
+</tr>
+</table></span></div>
+<p>If the <a href="_minipkd_help.htm"><b>!minipkd.help</b></a> extension command returns help information successfully, the SCSI Port symbols are correct. </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!minipkd.adapters%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

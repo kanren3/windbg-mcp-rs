@@ -1,0 +1,146 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !db, !dc, !dd, !dp, !dq, !du, and !dw extensions display data at the specified physical address on the target computer.These extension commands should not be confused with the d* (Display Memory) command, or with the !ntsdexts.dp extension command."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!db, !dc, !dd, !dp, !dq, !du, !dw</title>
+
+<meta name="MS-HAID" content="r26_exts_kernel_A_cfc39aa4-b8b1-4ff0-b867-3f0a6b9a1c82.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._db___dc___dd___dp___dq___du___dw"></a>!db, !dc, !dd, !dp, !dq, !du, !dw</h1>
+</div>
+<p>The <b>!db</b>, <b>!dc</b>, <b>!dd</b>, <b>!dp</b>, <b>!dq</b>, <b>!du</b>, and <b>!dw</b> extensions display data at the specified physical address on the target computer.</p>
+<p>These extension commands should not be confused with the <a href="d__da__db__dc__dd__dd__df__dp__dq__du__dw__dw__dyb__dyd__display_memor.htm"><b>d* (Display Memory)</b></a> command, or with the <a href="_dp___ntsdexts_dp_.htm"><b>!ntsdexts.dp</b></a> extension command.</p>
+<pre class="syntax"><b>!db </b>[<i>Caching</i>] [<b>-m</b>] [<i>PhysicalAddress</i>] [<b>L</b> <i>Size</i>] 
+<b>!dc </b>[<i>Caching</i>] [<b>-m</b>] [<i>PhysicalAddress</i>] [<b>L</b> <i>Size</i>] 
+<b>!dd </b>[<i>Caching</i>] [<b>-m</b>] [<i>PhysicalAddress</i>] [<b>L</b> <i>Size</i>] 
+<b>!dp </b>[<i>Caching</i>] [<b>-m</b>] [<i>PhysicalAddress</i>] [<b>L</b> <i>Size</i>] 
+<b>!dq </b>[<i>Caching</i>] [<b>-m</b>] [<i>PhysicalAddress</i>] [<b>L</b> <i>Size</i>] 
+<b>!du </b>[<i>Caching</i>] [<b>-m</b>] [<i>PhysicalAddress</i>] [<b>L</b> <i>Size</i>] 
+<b>!dw </b>[<i>Caching</i>] [<b>-m</b>] [<i>PhysicalAddress</i>] [<b>L</b> <i>Size</i>] 
+</pre>
+<h2><a id="ddk__d__dbg"></a><a id="DDK__D__DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Caching______"></a><a id="_______caching______"></a><a id="_______CACHING______"></a>       <i>Caching</i>      </dt>
+<dd>
+<p>Can be any one of the following values. The <i>Caching</i> value must be surrounded by square brackets:  </p>
+<p></p>
+<dl>
+<dt><a id="_c_"></a><a id="_C_"></a><b>[c]</b></dt>
+<dd>
+<p>Causes this extension to read from cached memory.</p>
+</dd>
+<dt><a id="_uc_"></a><a id="_UC_"></a><b>[uc]</b></dt>
+<dd>
+<p>Causes this extension to read from uncached memory.</p>
+</dd>
+<dt><a id="_wc_"></a><a id="_WC_"></a><b>[wc]</b></dt>
+<dd>
+<p>Causes this extension to read from write-combined memory.</p>
+</dd>
+</dl>
+</dd>
+<dt><a id="_______-m______"></a><a id="_______-M______"></a>       <b>-m</b>      </dt>
+<dd>
+<p>Causes memory to be read one unit at a time. For example, <b>!db -m</b> reads memory in 8-bit chunks and <b>!dw -m</b> reads memory in 16-bit chunks. If your hardware does not support 32-bit physical memory reads, it may be necessary to use the <b>-m</b> option. This option does not affect the length or appearance of the display -- it only affects how the memory is accessed.</p>
+</dd>
+<dt><a id="_______PhysicalAddress______"></a><a id="_______physicaladdress______"></a><a id="_______PHYSICALADDRESS______"></a>       <i>PhysicalAddress</i>      </dt>
+<dd>
+<p>Specifies the first physical address to be displayed, in hexadecimal format. If this is omitted the first time this command is used, the address defaults to zero. If this is omitted on a subsequent use, the display will begin where the last display ended.</p>
+</dd>
+<dt><a id="_______L_______Size______"></a><a id="_______l_______size______"></a><a id="_______L_______SIZE______"></a><b>       L</b><b>       </b><i>Size</i>      </dt>
+<dd>
+<p>Specifies the number of chunks of memory to display. The size of a chunk is determined by the precise extension used.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000</b></p>
+</td>
+<td>
+<p>
+<dl>
+<dt>
+          Kext.dll
+          </dt>
+<dt>Kdextx86.dll
+          </dt>
+</dl>
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later</b></p>
+</td>
+<td>
+<p>
+          Kext.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>To write to physical memory, use the <a href="_eb___ed.htm"><b>!e*</b></a> extensions. For an overview of memory manipulation and a description of other memory-related commands, see <a href="reading_and_writing_memory.htm">Reading and Writing Memory</a>.</p>
+<h2>Remarks</h2>
+<p>These extensions each display physical memory, but their display formats and default length differ:</p>
+<ul>
+<li>
+<p>The <b>!db</b> extension displays hexadecimal bytes and their ASCII character equivalents. The default length is 128 bytes.</p>
+</li>
+<li>
+<p>The <b>!dc</b> extension displays DWORD values and their ASCII character equivalents. The default length is 32 DWORDs (128 total bytes).</p>
+</li>
+<li>
+<p>The <b>!dd</b> extension displays DWORD values. The default length is 32 DWORDs (128 total bytes).</p>
+</li>
+<li>
+<p>The <b>!dp</b> extension displays ULONG_PTR values. These are either 32-bit or 64-bit words, depending on the instruction size. The default length is 128 total bytes.</p>
+</li>
+<li>
+<p>The <b>!dq</b> extension displays ULONG64_PTR values. These are 32-bit words. The default length is 128 total bytes.</p>
+</li>
+<li>
+<p>The <b>!du</b> extension displays UNICODE characters. The default length is 16 characters (32 total bytes), or until a NULL character is encountered. </p>
+</li>
+<li>
+<p>The <b>!dw</b> extension displays WORD values. The default length is 64 DWORDs (128 total bytes).</p>
+</li>
+</ul>
+<p>Consequently, using two of these extensions that are distinct with the same value of <i>Size</i> will most likely result in a difference in the total amount of memory displayed. For example, using the command <b>!db L 32</b> results in 32 bytes being displayed (as hexadecimal bytes), whereas the command <b>!dd L 32</b> results in 128 bytes being displayed (as DWORD values).</p>
+<p>Here is an example in which the caching attribute flag is needed:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !dc e9000
+physical memory read at e9000 failed
+If you know the caching attributes used for the memory,
+try specifying [c], [uc] or [wc], as in !dd [c] &lt;params&gt;.
+WARNING: Incorrect use of these flags will cause unpredictable
+processor corruption. This may immediately (or at any time in
+the future until reboot) result in a system hang, incorrect data
+being displayed or other strange crashes and corruption.
+
+kd&gt; !dc [c] e9000
+#   e9000 000ea002 000ea002 000ea002 000ea002 ................
+#   e9010 000ea002 000ea002 000ea002 000ea002 ................</code></pre>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!db, !dc, !dd, !dp, !dq, !du, !dw%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,82 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Robots" content="noindex, nofollow"/>
+<meta name="Description" content="Glossary page"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>K</title>
+
+<meta name="MS-HAID" content="dbg_glossary_25516462-f653-424b-9a0c-f6d3ca1bb457.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.k"></a>K</h1>
+</div>
+<dl>
+<dt><a id="kd_connection_server"></a><a id="KD_CONNECTION_SERVER"></a><b>KD connection server</b></dt>
+<dd>
+<p>A proxy used during some forms of kernel-mode remote debugging.  It listens for connections from smart client and performs memory, processor, or Windows operations as requested by these remote clients.</p>
+<p>See also debugging server.</p>
+<p>For more information, see <a href="kd_connection_servers__kernel_mode_.htm">KD Connection Servers (Kernel Mode)</a>.</p>
+</dd>
+<dt><a id="kernel"></a><a id="KERNEL"></a><b>kernel</b></dt>
+<dd>
+<p>The kernel is the portion of the Windows operating system that manages and controls access to hardware resources. It performs thread scheduling and dispatching, interrupt and exception handling, and multiprocessor synchronization.</p>
+</dd>
+<dt><a id="kernel_error"></a><a id="KERNEL_ERROR"></a><b>kernel error</b></dt>
+<dd>
+<p>See 
+     bug check.</p>
+</dd>
+<dt><a id="kernel_mode"></a><a id="KERNEL_MODE"></a><b>kernel mode</b></dt>
+<dd>
+<p>Kernel-mode code has permission to access any part of the system, and is not restricted like user-mode code. It can gain access to any part of any other process running in either user mode or kernel mode.</p>
+<p>Performance-sensitive operating system components run in kernel mode. In this way they can interact with the hardware and with each other without the overhead of context switch. All the kernel-mode components are fully protected from applications running in user mode. They can be grouped as follows:</p>
+<ul>
+<li>
+<p>Executive.</p>
+<p>This contains the base operating system components such as memory management, process and thread management, security, I/O, interprocess communication. </p>
+</li>
+<li>
+<p>Kernel.</p>
+<p>This performs low-level functions such as thread scheduling, interrupt and exception dispatching, and multiprocessor synchronization. It also provides a set of routines and basic objects used by the Executive to implement higher-level semantics.</p>
+</li>
+<li>
+<p>Hardware Abstraction Layer (HAL).</p>
+<p>This handles all direct interface to hardware. It thus isolates the Windows Kernel, device drivers, and Windows Executive from platform-specific hardware differences. </p>
+</li>
+<li>
+<p>Window and Graphics Subsystem.</p>
+<p>This implements the graphical user interface (GUI) functions. </p>
+</li>
+</ul>
+<p>When a process erroneously accesses a portion of memory that is in use by another application or by the system, the lack of restrictions on kernel-mode processes forces Windows to stop the entire system. This is referred to as a bug check.</p>
+<p>Malfunctioning hardware devices or device drivers, which reside in kernel mode, are often the culprits in bug checks.</p>
+</dd>
+<dt><a id="kernel_mode_target"></a><a id="KERNEL_MODE_TARGET"></a><b>kernel-mode target</b></dt>
+<dd>
+<p>See 
+     target computer.</p>
+</dd>
+<dt><a id="kernel_mode_debugging"></a><a id="KERNEL_MODE_DEBUGGING"></a><b>kernel-mode debugging</b></dt>
+<dd>
+<p>A debugger session in which the target is running in kernel mode.</p>
+</dd>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20K%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

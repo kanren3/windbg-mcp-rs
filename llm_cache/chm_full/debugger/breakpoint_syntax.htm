@@ -1,0 +1,63 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Breakpoint Syntax"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Breakpoint Syntax</title>
+
+<meta name="MS-HAID" content="r07_use_operation_ac8251aa-d8c8-42bf-96b4-686b3bd4f80b.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.breakpoint_syntax"></a>Breakpoint Syntax</h1>
+</div>
+<h2><a id="ddk_debugging_bios_code_dbg"></a><a id="DDK_DEBUGGING_BIOS_CODE_DBG"></a></h2>
+<p>The following syntax elements can be used when creating a <a href="using_breakpoints.htm">breakpoint</a>, either through the Debugger Command window or through the WinDbg graphical interface.</p>
+<h3><a id="addresses_in_breakpoints"></a><a id="ADDRESSES_IN_BREAKPOINTS"></a>Addresses in Breakpoints</h3>
+<p>Breakpoints support many kinds of address syntax, including virtual addresses, function offsets, and source line numbers. For example, you can use any of the following commands to set breakpoints:</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; bp 0040108c
+0:000&gt; bp main+5c
+0:000&gt; bp `source.c:31`</code></pre>
+<p>For more information about this syntax, see <a href="numerical_expression_syntax.htm">Numerical Expression Syntax</a>, <a href="source_line_syntax.htm">Source Line Syntax</a>, and the individual command topics.</p>
+<h3><a id="breakpoints_on_methods"></a><a id="BREAKPOINTS_ON_METHODS"></a>Breakpoints on Methods</h3>
+<p>If you want to put a breakpoint on the <i>MyMethod</i> method in the <i>MyClass</i> class, you can use two different syntaxes:</p>
+<ul>
+<li>In MASM expression syntax, you can indicate a method by a double colon or by a double underscore.<pre class="syntax" xml:space="preserve"><code>0:000&gt; bp MyClass::MyMethod 
+0:000&gt; bp MyClass__MyMethod </code></pre>
+</li>
+<li>In C++ expression syntax, you must indicate a method by a double colon.<pre class="syntax" xml:space="preserve"><code>0:000&gt; bp @@( MyClass::MyMethod ) </code></pre>
+</li>
+</ul>
+<p>If you want to use a more complex breakpoint command, you should use MASM expression syntax. For more information about expression syntax, see <a href="evaluating_expressions.htm">Evaluating Expressions</a>. </p>
+<h3><a id="breakpoints_using_complicated_text"></a><a id="BREAKPOINTS_USING_COMPLICATED_TEXT"></a>Breakpoints Using Complicated Text</h3>
+<p>To set a breakpoint on complicated functions, including functions that contain spaces, as well as a member of a C++ public class, enclose the expression in parentheses. For example, use <b>bp (??MyPublic)</b> or <b>bp (operator new)</b>. </p>
+<p>A more versatile technique is to use the @!"chars" syntax. This is a special escape in the MASM evaluator that enables you to provide arbitrary text for symbol resolution. You must start with the three symbols @!" and end with a quotation mark ("). Without this syntax, you cannot use spaces, angle brackets (&lt;, &gt;), or other special characters in symbol names in the MASM evaluator. This syntax is exclusively for names, and not parameters. Templates and overloads are the primary sources of symbols that require this quote notation. You can also set the <b>bu </b>command by using the @!"chars" syntax, as the following code example shows.</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; bu @!"ExecutableName!std::pair&lt;unsigned int,std::basic_string&lt;unsigned short,std::char_traits&lt;unsigned short&gt;,std::allocator&lt;unsigned short&gt; &gt; &gt;::operator="</code></pre>
+<p>In this example, <i>ExecutableName</i> is the name of an executable file.</p>
+<p>This escape syntax is more useful for C++ (for example, overloaded operators) instead of C because there are no spaces (or special characters) in C function names. However, this syntax is also important for a lot of managed code because of the considerable use of overloads in the .NET Framework.</p>
+<p>To set a breakpoint on arbitrary text in C++ syntax, use <b>bu @@c++(</b><i>text</i><b>)</b> for C++-compatible symbols.</p>
+<h3><a id="breakpoints_in_scripts"></a><a id="BREAKPOINTS_IN_SCRIPTS"></a>Breakpoints in Scripts</h3>
+<p>Breakpoint IDs do not have to be referred to explicitly.  Instead, you can use a numerical expression that resolves to an integer that corresponds to a breakpoint ID.  To indicate that the expression should be interpreted as a breakpoint, use the following syntax.</p>
+<pre class="syntax" xml:space="preserve"><code>b?[Expression]</code></pre>
+<p>In this syntax, the square brackets are required, and <i>Expression</i> stands for any numerical expression that resolves to an integer that corresponds to a breakpoint ID.</p>
+<p>This syntax allows debugger scripts to programmatically select a breakpoint.  In the following example, the breakpoint changes depending on the value of a user-defined pseudo-register.</p>
+<pre class="syntax" xml:space="preserve"><code>b?[@$t0]</code></pre>
+<h3><a id="breakpoint_pseudo_registers"></a><a id="BREAKPOINT_PSEUDO_REGISTERS"></a>Breakpoint Pseudo-Registers</h3>
+<p>If you want to refer to a breakpoint address in an expression, you can use a <a href="pseudo_register_syntax.htm">pseudo-register</a> with the <b>$bp</b><i>Number</i> syntax, where <i>Number</i> is the breakpoint ID. For more information about this syntax, see Pseudo-Register Syntax.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Breakpoint Syntax%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

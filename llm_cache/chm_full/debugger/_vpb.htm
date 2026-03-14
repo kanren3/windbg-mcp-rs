@@ -1,0 +1,113 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !vpb extension displays a volume parameter block (VPB)."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!vpb</title>
+
+<meta name="MS-HAID" content="r30_exts_kernel_U_dbae16d0-8d6a-4c63-beb7-adb8e1834ae5.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._vpb"></a>!vpb</h1>
+</div>
+<p>The <b>!vpb</b> extension displays a volume parameter block (VPB).</p>
+<pre class="syntax"><b>!vpb </b><i>Address</i></pre>
+<h2><a id="ddk__vpb_dbg"></a><a id="DDK__VPB_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Address______"></a><a id="_______address______"></a><a id="_______ADDRESS______"></a>       <i>Address</i>      </dt>
+<dd>
+<p>Specifies the hexadecimal address of the VPB.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Windows 2000</b></p>
+</td>
+<td>
+<p>
+          Kdextx86.dll
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later</b></p>
+</td>
+<td>
+<p>
+          Kdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For information about VPBs, see the Windows Driver Kit (WDK) documentation and <i>Microsoft Windows Internals</i>, by Mark Russinovich and David Solomon. (These resources may not be available in some languages and 
+
+countries.)
+</p>
+<h2>Remarks</h2>
+<p>Here is an example. First, the device tree is displayed with the <a href="_devnode.htm"><b>!devnode</b></a> extension:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !devnode 0 1
+Dumping IopRootDeviceNode (= 0x80e203b8)
+DevNode 0x80e203b8 for PDO 0x80e204f8
+  InstancePath is "HTREE\ROOT\0"
+  State = DeviceNodeStarted (0x308)
+  Previous State = DeviceNodeEnumerateCompletion (0x30d)
+  DevNode 0x80e56dc8 for PDO 0x80e56f18
+    InstancePath is "Root\dmio\0000"
+    ServiceName is "dmio"
+    State = DeviceNodeStarted (0x308)
+    Previous State = DeviceNodeEnumerateCompletion (0x30d)
+  DevNode 0x80e56ae8 for PDO 0x80e56c38
+    InstancePath is "Root\ftdisk\0000"
+    ServiceName is "ftdisk"
+    State = DeviceNodeStarted (0x308)
+    Previous State = DeviceNodeEnumerateCompletion (0x30d)
+ DevNode 0x80e152a0 for PDO 0x80e15cb8
+      InstancePath is "STORAGE\Volume\1&amp;30a96598&amp;0&amp;Signature5C34D70COffset7E00Length60170A00"
+      ServiceName is "VolSnap"
+      TargetDeviceNotify List - f 0xe1250938  b 0xe14b9198
+      State = DeviceNodeStarted (0x308)
+      Previous State = DeviceNodeEnumerateCompletion (0x30d)
+    .....</code></pre>
+<p>The last device node listed is a volume. Examine its physical device object (PDO) with the <a href="_devobj.htm"><b>!devobj</b></a> extension:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !devobj 80e15cb8
+Device object (80e15cb8) is for:
+ HarddiskVolume1 \Driver\Ftdisk DriverObject 80e4e248
+Current Irp 00000000 RefCount 14 Type 00000007 Flags 00001050
+Vpb 80e15c30 DevExt 80e15d70 DevObjExt 80e15e40 Dope 80e15bd8 DevNode 80e152a0 
+ExtensionFlags (0000000000)  
+AttachedDevice (Upper) 80e14c60 \Driver\VolSnap
+Device queue is not busy.</code></pre>
+<p>The address of this device's VPB is included in this listing. Use this address with the <b>!vpb</b> extension:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !vpb 80e15c30
+Vpb at 0x80e15c30
+Flags: 0x1 mounted 
+DeviceObject: 0x80de5020
+RealDevice:   0x80e15cb8
+RefCount: 14
+Volume Label:           MY-DISK-C</code></pre>
+<p></p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!vpb%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

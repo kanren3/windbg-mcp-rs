@@ -1,0 +1,95 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !ipi extension displays the interprocessor interrupt (IPI) state for a specified processor."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!ipi</title>
+
+<meta name="MS-HAID" content="r27_exts_kernel_E_c80b094a-c088-4cdd-af65-92b46fe91895.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._ipi"></a>!ipi</h1>
+</div>
+<p>The <b>!ipi</b> extension displays the interprocessor interrupt (IPI) state for a specified processor.</p>
+<pre class="syntax"><b>!ipi </b>[<i>Processor</i>]</pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Processor______"></a><a id="_______processor______"></a><a id="_______PROCESSOR______"></a>       <i>Processor</i>      </dt>
+<dd>
+<p>Specifies a processor. If <i>Processor</i> is omitted, the IPI state for every processor is displayed.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Windows 2000
+         </b></p>
+</td>
+<td>
+<p>Unavailable</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Kdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>This extension command can only be used with an x86-based target computer.</p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For information about IPIs, see <i>Microsoft Windows Internals</i> by Mark Russinovich and David Solomon.</p>
+<h2>Remarks</h2>
+<p>Here is an example of the output from this extension:</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !ipi
+IPI State for Processor 0
+  Worker Routine:  nt!KiFlushTargetMultipleTb [Stale]
+  Parameter[0]:    0
+  Parameter[1]:    3
+  Parameter[2]:    F7C98770
+  Ipi Trap Frame:  F7CCCCDC [.trap F7CCCCDC]
+  Signal Done:     0
+  IPI Frozen:      24 [FreezeActive] [Owner]
+  Request Summary: 0
+  Target Set:      0
+  Packet Barrier:  0
+
+IPI State for Processor 1
+  Worker Routine:  nt!KiFlushTargetMultipleTb [Stale]
+  Parameter[0]:    1
+  Parameter[1]:    3
+  Parameter[2]:    F7CDCD28
+  Ipi Trap Frame:  F7C8CCC4 [.trap F7C8CCC4]
+  Signal Done:     0
+  IPI Frozen:      2 [Frozen]
+  Request Summary: 0
+  Target Set:      0
+  Packet Barrier:  0</code></pre>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!ipi%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,474 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The ExtExtension class is the base class for the C++ class that represents the EngExtCpp extension library."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>ExtExtension</title>
+
+<meta name="MS-HAID" content="EngExtCpp_Ref_3a533353-f008-4887-b937-2098acf1c68e.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.extextension"></a>ExtExtension</h1>
+</div>
+<p>The <b>ExtExtension</b> class is the base class for the C++ class that represents the EngExtCpp extension library.</p>
+<p>The <b>ExtExtension</b> class includes the following methods, which can be used by the subclass:</p>
+<dl>
+<dd>
+<p><a href="initialize.htm"><b>Initialize</b></a></p>
+</dd>
+<dd>
+<p><a href="uninitialize.htm"><b>Uninitialize</b></a></p>
+</dd>
+<dd>
+<p><a href="onsessionactive.htm"><b>OnSessionActive</b></a></p>
+</dd>
+<dd>
+<p><a href="onsessioninactive.htm"><b>OnSessionInactive</b></a></p>
+</dd>
+<dd>
+<p><a href="onsessionaccessible.htm"><b>OnSessionAccessible</b></a></p>
+</dd>
+<dd>
+<p><a href="onsessioninaccessible.htm"><b>OnSessionInaccessible</b></a></p>
+</dd>
+<dd>
+<p><b>IsUserMode</b></p>
+</dd>
+<dd>
+<p><b>IsKernelMode</b></p>
+</dd>
+<dd>
+<p><b>IsLiveLocalUser</b></p>
+</dd>
+<dd>
+<p><b>IsMachine32</b></p>
+</dd>
+<dd>
+<p><b>IsCurMachine32</b></p>
+</dd>
+<dd>
+<p><b>IsMachine64</b></p>
+</dd>
+<dd>
+<p><b>IsCurMachine64</b></p>
+</dd>
+<dd>
+<p><b>Is32On64</b></p>
+</dd>
+<dd>
+<p><b>CanQueryVirtual</b></p>
+</dd>
+<dd>
+<p><b>HasFullMemBasic</b></p>
+</dd>
+<dd>
+<p><b>IsExtensionRemote</b></p>
+</dd>
+<dd>
+<p><b>AreOutputCallbacksDmlAware</b></p>
+</dd>
+<dd>
+<p><b>RequireUserMode</b></p>
+</dd>
+<dd>
+<p><b>RequireKernelMode</b></p>
+</dd>
+<dd>
+<p><a href="getnumunnamedargs.htm"><b>GetNumUnnamedArgs</b></a></p>
+</dd>
+<dd>
+<p><a href="getunnamedargstr.htm"><b>GetUnnamedArgStr</b></a></p>
+</dd>
+<dd>
+<p><a href="getunnamedargu64.htm"><b>GetUnnamedArgU64</b></a></p>
+</dd>
+<dd>
+<p><a href="hasunnamedarg.htm"><b>HasUnnamedArg</b></a></p>
+</dd>
+<dd>
+<p><a href="getargstr.htm"><b>GetArgStr</b></a></p>
+</dd>
+<dd>
+<p><a href="getargu64.htm"><b>GetArgU64</b></a></p>
+</dd>
+<dd>
+<p><a href="hasarg.htm"><b>HasArg</b></a></p>
+</dd>
+<dd>
+<p><a href="haschararg.htm"><b>HasCharArg</b></a></p>
+</dd>
+<dd>
+<p><a href="setunnamedarg.htm"><b>SetUnnamedArg</b></a></p>
+</dd>
+<dd>
+<p><a href="setunnamedargstr.htm"><b>SetUnnamedArgStr</b></a></p>
+</dd>
+<dd>
+<p><a href="setunnamedargu64.htm"><b>SetUnnamedArgU64</b></a></p>
+</dd>
+<dd>
+<p><a href="setarg.htm"><b>SetArg</b></a></p>
+</dd>
+<dd>
+<p><a href="setargstr.htm"><b>SetArgStr</b></a></p>
+</dd>
+<dd>
+<p><a href="setargu64.htm"><b>SetArgU64</b></a></p>
+</dd>
+<dd>
+<p><a href="getrawargstr.htm"><b>GetRawArgStr</b></a></p>
+</dd>
+<dd>
+<p><b>GetRawArgCopy</b></p>
+</dd>
+<dd>
+<p><b>Out</b></p>
+</dd>
+<dd>
+<p><b>Warn</b></p>
+</dd>
+<dd>
+<p><b>Err</b></p>
+</dd>
+<dd>
+<p><b>Verb</b></p>
+</dd>
+<dd>
+<p><b>Dml</b></p>
+</dd>
+<dd>
+<p><b>DmlWarn</b></p>
+</dd>
+<dd>
+<p><b>DmlErr</b></p>
+</dd>
+<dd>
+<p><b>DmlVerb</b></p>
+</dd>
+<dd>
+<p><b>DmlCmdLink</b></p>
+</dd>
+<dd>
+<p><b>DmlCmdExec</b></p>
+</dd>
+<dd>
+<p><b>RefreshOutputCallbackFlags</b></p>
+</dd>
+<dd>
+<p><b>WrapLine</b></p>
+</dd>
+<dd>
+<p><b>OutWrapStr</b></p>
+</dd>
+<dd>
+<p><b>OutWrapVa</b></p>
+</dd>
+<dd>
+<p><b>OutWrap</b></p>
+</dd>
+<dd>
+<p><b>DemandWrap</b></p>
+</dd>
+<dd>
+<p><b>AllowWrap</b></p>
+</dd>
+<dd>
+<p><b>TestWrap</b></p>
+</dd>
+<dd>
+<p><b>RequestCircleString</b></p>
+</dd>
+<dd>
+<p><b>CopyCircleString</b></p>
+</dd>
+<dd>
+<p><b>PrintCircleStringVa</b></p>
+</dd>
+<dd>
+<p><b>PrintCircleString</b></p>
+</dd>
+<dd>
+<p><b>SetAppendBuffer</b></p>
+</dd>
+<dd>
+<p><b>AppendBufferString</b></p>
+</dd>
+<dd>
+<p><b>AppendStringVa</b></p>
+</dd>
+<dd>
+<p><b>AppendString</b></p>
+</dd>
+<dd>
+<p><b>IsAppendStart</b></p>
+</dd>
+<dd>
+<p><b>SetCallStatus</b></p>
+</dd>
+<dd>
+<p><b>GetCachedSymbolTypeId</b></p>
+</dd>
+<dd>
+<p><b>GetCachedFieldOffset</b></p>
+</dd>
+<dd>
+<p><b>GetCachedFieldOffset</b></p>
+</dd>
+<dd>
+<p><b>AddCachedSymbolInfo</b></p>
+</dd>
+<dd>
+<p><b>GetExpr64</b></p>
+</dd>
+<dd>
+<p><b>GetExprU64</b></p>
+</dd>
+<dd>
+<p><b>GetExprS64</b></p>
+</dd>
+<dd>
+<p><b>ThrowCommandHelp</b></p>
+</dd>
+<dd>
+<p><b>ThrowInterrupt</b></p>
+</dd>
+<dd>
+<p><b>ThrowOutOfMemory</b></p>
+</dd>
+<dd>
+<p><b>ThrowContinueSearch</b></p>
+</dd>
+<dd>
+<p><b>ThrowReloadExtension</b></p>
+</dd>
+<dd>
+<p><b>ThrowInvalidArg</b></p>
+</dd>
+<dd>
+<p><b>ThrowRemote</b></p>
+</dd>
+<dd>
+<p><b>ThrowStatus</b></p>
+</dd>
+<dd>
+<p><b>ThrowLastError</b></p>
+</dd>
+</dl>
+<p>The <b>ExtExtension</b> class also contains the following fields that can be used by the subclass:</p>
+<pre class="syntax" xml:space="preserve"><code>class ExtExtension
+{
+public:
+    USHORT  m_ExtMajorVersion;
+    USHORT  m_ExtMinorVersion;
+    ULONG  m_ExtInitFlags;
+    ExtKnownStruct *  m_KnownStructs;
+    ExtProvidedValue *  m_ProvidedValues;
+    ExtCheckedPointer&lt;IDebugAdvanced&gt;  m_Advanced;
+    ExtCheckedPointer&lt;IDebugClient&gt;  m_Client;
+    ExtCheckedPointer&lt;IDebugControl&gt;  m_Control;
+    ExtCheckedPointer&lt;IDebugDataSpaces&gt;  m_Data;
+    ExtCheckedPointer&lt;IDebugRegisters&gt;  m_Registers;
+    ExtCheckedPointer&lt;IDebugSymbols&gt;  m_Symbols;
+    ExtCheckedPointer&lt;IDebugSystemObjects&gt;  m_System;
+    ExtCheckedPointer&lt;IDebugAdvanced2&gt;  m_Advanced2;
+    ExtCheckedPointer&lt;IDebugAdvanced3&gt;  m_Advanced3;
+    ExtCheckedPointer&lt;IDebugClient2&gt;  m_Client2;
+    ExtCheckedPointer&lt;IDebugClient3&gt;  m_Client3;
+    ExtCheckedPointer&lt;IDebugClient4&gt;  m_Client4;
+    ExtCheckedPointer&lt;IDebugClient5&gt;  m_Client5;
+    ExtCheckedPointer&lt;IDebugControl2&gt;  m_Control2;
+    ExtCheckedPointer&lt;IDebugControl3&gt;  m_Control3;
+    ExtCheckedPointer&lt;IDebugControl4&gt;  m_Control4;
+    ExtCheckedPointer&lt;IDebugDataSpaces2&gt;  m_Data2;
+    ExtCheckedPointer&lt;IDebugDataSpaces3&gt;  m_Data3;
+    ExtCheckedPointer&lt;IDebugDataSpaces4&gt;  m_Data4;
+    ExtCheckedPointer&lt;IDebugRegisters2&gt;  m_Registers2;
+    ExtCheckedPointer&lt;IDebugSymbols2&gt;  m_Symbols2;
+    ExtCheckedPointer&lt;IDebugSymbols3&gt;  m_Symbols3;
+    ExtCheckedPointer&lt;IDebugSystemObjects2&gt;  m_System2;
+    ExtCheckedPointer&lt;IDebugSystemObjects3&gt;  m_System3;
+    ExtCheckedPointer&lt;IDebugSystemObjects4&gt;  m_System4;
+    ULONG  m_OutputWidth;
+    ULONG  m_ActualMachine;
+    ULONG  m_Machine;
+    ULONG  m_PageSize;
+    ULONG  m_PtrSize;
+    ULONG  m_NumProcessors;
+    ULONG64  m_OffsetMask;
+    ULONG  m_DebuggeeClass;
+    ULONG  m_DebuggeeQual;
+    ULONG  m_DumpFormatFlags;
+    bool  m_IsRemote;
+    bool  m_OutCallbacksDmlAware;
+    ULONG  m_OutMask;
+    ULONG  m_CurChar;
+    ULONG  m_LeftIndent;
+    bool  m_AllowWrap;
+    bool  m_TestWrap;
+    ULONG  m_TestWrapChars;
+    PSTR  m_AppendBuffer;
+    ULONG  m_AppendBufferChars;
+    PSTR  m_AppendAt;
+};
+
+
+</code></pre>
+<h2><a id="Members"></a><a id="members"></a><a id="MEMBERS"></a>Members</h2>
+<p></p>
+<dl>
+<dt><a id="m_ExtMajorVersion"></a><a id="m_extmajorversion"></a><a id="M_EXTMAJORVERSION"></a><b>m_ExtMajorVersion</b></dt>
+<dd>
+<p>The major version number of the extension library.  This should be set by the <a href="initialize.htm"><b>Initialize</b></a> method.  If it is not set, it defaults to <b>1</b>.</p>
+</dd>
+<dt><a id="m_ExtMinorVersion"></a><a id="m_extminorversion"></a><a id="M_EXTMINORVERSION"></a><b>m_ExtMinorVersion</b></dt>
+<dd>
+<p>The minor version number of the extension library.  This should be set by the <a href="initialize.htm"><b>Initialize</b></a> method.  If it is not set, it defaults to <b>0</b> (zero).</p>
+</dd>
+<dt><a id="m_ExtInitFlags"></a><a id="m_extinitflags"></a><a id="M_EXTINITFLAGS"></a><b>m_ExtInitFlags</b></dt>
+<dd>
+<p>The DbgEng extension initialization flags for <a href="debugextensioninitialize.htm"><i>DebugExtensionInitialize</i></a>.</p>
+</dd>
+<dt><a id="m_KnownStructs"></a><a id="m_knownstructs"></a><a id="M_KNOWNSTRUCTS"></a><b>m_KnownStructs</b></dt>
+<dd>
+<p>An array of <a href="extknownstruct.htm"><b>ExtKnownStruct</b></a> structures that the extension library is capable of formatting for output.   This member should be set by the <a href="initialize.htm"><b>Initialize</b></a> method and should not be changed once this method returns.</p>
+<p>If <b>m_KnownStructs</b> is not <b>NULL</b>, the <b>TypeName</b> member of the last <b>ExtKnownStruct</b> structure in the array must be <b>NULL</b>.</p>
+<p>When formatting a target's structure for output, if the name of the structure's type matches the <b>TypeName</b> member of one of the <b>ExtKnownStruct</b> structures in this array, the callback function specified in the <b>Method</b> member is called to perform the formatting.</p>
+</dd>
+<dt><a id="m_ProvidedValues"></a><a id="m_providedvalues"></a><a id="M_PROVIDEDVALUES"></a><b>m_ProvidedValues</b></dt>
+<dd>
+<p>An array of <b>ExtProvidedValue</b> structures listing the pseudo registers that the extension library can provide values for.   This member should be set by the <a href="initialize.htm"><b>Initialize</b></a> method and should not be changed once this method returns.</p>
+<p>If <b>m_ProvidedValues</b> is not <b>NULL</b>, the <b>ValueName</b> member of the last <b>ExtProvidedValue</b> structure in the array must be <b>NULL</b>.</p>
+<p>When evaluating a pseudo register, if the name of the pseudo register matches the <b>ValueName</b> member of one of the <b>ExtProvidedValue</b> structures in this array, the callback function specified in the <b>Method</b> member is called to evaluate the pseudo register.</p>
+</dd>
+<dt><a id="m_Advanced"></a><a id="m_advanced"></a><a id="M_ADVANCED"></a><b>m_Advanced</b></dt>
+<dd>
+<p>The <a href="idebugadvanced.htm"><b>IDebugAdvanced</b></a> interface pointer for the client object that can be used by the extension library.  It is valid during the invocation of externally-called extension methods-for example, the execution of an extension command, a call to <a href="extknownstructmethod.htm"><i>ExtKnownStructMethod</i></a> and <b>ExtProvideValueMethod</b>.</p>
+</dd>
+<dt><a id="m_Client"></a><a id="m_client"></a><a id="M_CLIENT"></a><b>m_Client</b></dt>
+<dd>
+<p>The <a href="idebugclient.htm"><b>IDebugClient</b></a> interface pointer for the client object that can be used by the extension library.  It is valid during the invocation of externally-called extension methods-for example, the execution of an extension command, a call to <a href="extknownstructmethod.htm"><i>ExtKnownStructMethod</i></a> and <b>ExtProvideValueMethod</b>.</p>
+</dd>
+<dt><a id="m_Control"></a><a id="m_control"></a><a id="M_CONTROL"></a><b>m_Control</b></dt>
+<dd>
+<p>The <a href="idebugcontrol.htm"><b>IDebugControl</b></a> interface pointer for the client object that can be used by the extension library.  It is valid during the invocation of externally-called extension methods-for example, the execution of an extension command, a call to <a href="extknownstructmethod.htm"><i>ExtKnownStructMethod</i></a> and <b>ExtProvideValueMethod</b>.</p>
+</dd>
+<dt><a id="m_Data"></a><a id="m_data"></a><a id="M_DATA"></a><b>m_Data</b></dt>
+<dd>
+<p>The <a href="idebugdataspaces.htm"><b>IDebugDataSpaces</b></a> interface pointer for the client object that can be used by the extension library.  It is valid during the invocation of externally-called extension methods-for example, the execution of an extension command, a call to <a href="extknownstructmethod.htm"><i>ExtKnownStructMethod</i></a> and <b>ExtProvideValueMethod</b>.</p>
+</dd>
+<dt><a id="m_Registers"></a><a id="m_registers"></a><a id="M_REGISTERS"></a><b>m_Registers</b></dt>
+<dd>
+<p>The <a href="idebugregisters.htm"><b>IDebugRegisters</b></a> interface pointer for the client object that can be used by the extension library.  It is valid during the invocation of externally-called extension methods-for example, the execution of an extension command, a call to <a href="extknownstructmethod.htm"><i>ExtKnownStructMethod</i></a> and <b>ExtProvideValueMethod</b>.</p>
+</dd>
+<dt><a id="m_Symbols"></a><a id="m_symbols"></a><a id="M_SYMBOLS"></a><b>m_Symbols</b></dt>
+<dd>
+<p>The <a href="idebugsymbols.htm"><b>IDebugSymbols</b></a> interface pointer for the client object that can be used by the extension library.  It is valid during the invocation of externally-called extension methods-for example, the execution of an extension command, a call to <a href="extknownstructmethod.htm"><i>ExtKnownStructMethod</i></a> and <b>ExtProvideValueMethod</b>.</p>
+</dd>
+<dt><a id="m_System"></a><a id="m_system"></a><a id="M_SYSTEM"></a><b>m_System</b></dt>
+<dd>
+<p>The <a href="idebugsystemobjects.htm"><b>IDebugSystemObjects</b></a> interface pointer for the client object that can be used by the extension library.  It is valid during the invocation of externally-called extension methods-for example, the execution of an extension command, a call to <a href="extknownstructmethod.htm"><i>ExtKnownStructMethod</i></a> and <b>ExtProvideValueMethod</b>.</p>
+</dd>
+<dt><a id="m_Advanced2"></a><a id="m_advanced2"></a><a id="M_ADVANCED2"></a><b>m_Advanced2</b></dt>
+<dd>
+<p>The <a href="idebugadvanced.htm"><b>IDebugAdvanced2</b></a> interface pointer for the client object that can be used by the extension library.  It is valid during the invocation of externally-called extension methods-for example, the execution of an extension command, a call to <a href="extknownstructmethod.htm"><i>ExtKnownStructMethod</i></a> and <b>ExtProvideValueMethod</b>.  This interface might not be available in all versions of the debugger engine.</p>
+</dd>
+<dt><a id="m_Advanced3"></a><a id="m_advanced3"></a><a id="M_ADVANCED3"></a><b>m_Advanced3</b></dt>
+<dd>
+<p>The <a href="idebugadvanced.htm"><b>IDebugAdvanced3</b></a> interface pointer for the client object that can be used by the extension library.  It is valid during the invocation of externally-called extension methods-for example, the execution of an extension command, a call to <a href="extknownstructmethod.htm"><i>ExtKnownStructMethod</i></a> and <b>ExtProvideValueMethod</b>.  This interface might not be available in all versions of the debugger engine.</p>
+</dd>
+<dt><a id="m_Client2"></a><a id="m_client2"></a><a id="M_CLIENT2"></a><b>m_Client2</b></dt>
+<dd>
+<p>The <a href="idebugclient.htm"><b>IDebugClient2</b></a> interface pointer for the client object that can be used by the extension library.  It is valid during the invocation of externally-called extension methods-for example, the execution of an extension command, a call to <a href="extknownstructmethod.htm"><i>ExtKnownStructMethod</i></a> and <b>ExtProvideValueMethod</b>.  This interface might not be available in all versions of the debugger engine.</p>
+</dd>
+<dt><a id="m_Client3"></a><a id="m_client3"></a><a id="M_CLIENT3"></a><b>m_Client3</b></dt>
+<dd>
+<p>The <a href="idebugclient.htm"><b>IDebugClient3</b></a> interface pointer for the client object that can be used by the extension library.  It is valid during the invocation of externally-called extension methods-for example, the execution of an extension command, a call to <a href="extknownstructmethod.htm"><i>ExtKnownStructMethod</i></a> and <b>ExtProvideValueMethod</b>.  This interface might not be available in all versions of the debugger engine.</p>
+</dd>
+<dt><a id="m_Client4"></a><a id="m_client4"></a><a id="M_CLIENT4"></a><b>m_Client4</b></dt>
+<dd>
+<p>The <a href="idebugclient.htm"><b>IDebugClient4</b></a> interface pointer for the client object that can be used by the extension library.  It is valid during the invocation of externally-called extension methods-for example, the execution of an extension command, a call to <a href="extknownstructmethod.htm"><i>ExtKnownStructMethod</i></a> and <b>ExtProvideValueMethod</b>.  This interface might not be available in all versions of the debugger engine.</p>
+</dd>
+<dt><a id="m_Client5"></a><a id="m_client5"></a><a id="M_CLIENT5"></a><b>m_Client5</b></dt>
+<dd>
+<p>The <a href="idebugclient.htm"><b>IDebugClient5</b></a> interface pointer for the client object that can be used by the extension library.  It is valid during the invocation of externally-called extension methods-for example, the execution of an extension command, a call to <a href="extknownstructmethod.htm"><i>ExtKnownStructMethod</i></a> and <b>ExtProvideValueMethod</b>.  This interface might not be available in all versions of the debugger engine.</p>
+</dd>
+<dt><a id="m_Control2"></a><a id="m_control2"></a><a id="M_CONTROL2"></a><b>m_Control2</b></dt>
+<dd>
+<p>The <a href="idebugcontrol.htm"><b>IDebugControl2</b></a> interface pointer for the client object that can be used by the extension library.  It is valid during the invocation of externally-called extension methods-for example, the execution of an extension command, a call to <a href="extknownstructmethod.htm"><i>ExtKnownStructMethod</i></a> and <b>ExtProvideValueMethod</b>.  This interface might not be available in all versions of the debugger engine.</p>
+</dd>
+<dt><a id="m_Control3"></a><a id="m_control3"></a><a id="M_CONTROL3"></a><b>m_Control3</b></dt>
+<dd>
+<p>The <a href="idebugcontrol.htm"><b>IDebugControl3</b></a> interface pointer for the client object that can be used by the extension library.  It is valid during the invocation of externally-called extension methods-for example, the execution of an extension command, a call to <a href="extknownstructmethod.htm"><i>ExtKnownStructMethod</i></a> and <b>ExtProvideValueMethod</b>.  This interface might not be available in all versions of the debugger engine.</p>
+</dd>
+<dt><a id="m_Control4"></a><a id="m_control4"></a><a id="M_CONTROL4"></a><b>m_Control4</b></dt>
+<dd>
+<p>The <a href="idebugcontrol.htm"><b>IDebugControl4</b></a> interface pointer for the client object that can be used by the extension library.  It is valid during the invocation of externally-called extension methods-for example, the execution of an extension command, a call to <a href="extknownstructmethod.htm"><i>ExtKnownStructMethod</i></a> and <b>ExtProvideValueMethod</b>.  This interface might not be available in all versions of the debugger engine.</p>
+</dd>
+<dt><a id="m_Data2"></a><a id="m_data2"></a><a id="M_DATA2"></a><b>m_Data2</b></dt>
+<dd>
+<p>The <a href="idebugdataspaces.htm"><b>IDebugDataSpaces2</b></a> interface pointer for the client object that can be used by the extension library.  It is valid during the invocation of externally-called extension methods-for example, the execution of an extension command, a call to <a href="extknownstructmethod.htm"><i>ExtKnownStructMethod</i></a> and <b>ExtProvideValueMethod</b>.  This interface might not be available in all versions of the debugger engine.</p>
+</dd>
+<dt><a id="m_Data3"></a><a id="m_data3"></a><a id="M_DATA3"></a><b>m_Data3</b></dt>
+<dd>
+<p>The <a href="idebugdataspaces.htm"><b>IDebugDataSpaces3</b></a> interface pointer for the client object that can be used by the extension library.  It is valid during the invocation of externally-called extension methods-for example, the execution of an extension command, a call to <a href="extknownstructmethod.htm"><i>ExtKnownStructMethod</i></a> and <b>ExtProvideValueMethod</b>.  This interface might not be available in all versions of the debugger engine.</p>
+</dd>
+<dt><a id="m_Data4"></a><a id="m_data4"></a><a id="M_DATA4"></a><b>m_Data4</b></dt>
+<dd>
+<p>The <a href="idebugdataspaces.htm">IDebugDataSpaces4</a> interface pointer for the client object that can be used by the extension library.  It is valid during the invocation of externally-called extension methods-for example, the execution of an extension command, a call to <a href="extknownstructmethod.htm"><i>ExtKnownStructMethod</i></a> and <b>ExtProvideValueMethod</b>.  This interface might not be available in all versions of the debugger engine.</p>
+</dd>
+<dt><a id="m_Registers2"></a><a id="m_registers2"></a><a id="M_REGISTERS2"></a><b>m_Registers2</b></dt>
+<dd>
+<p>The <a href="idebugregisters.htm"><b>IDebugRegisters2</b></a> interface pointer for the client object that can be used by the extension library.  It is valid during the invocation of externally-called extension methods-for example, the execution of an extension command, a call to <a href="extknownstructmethod.htm"><i>ExtKnownStructMethod</i></a> and <b>ExtProvideValueMethod</b>.  This interface might not be available in all versions of the debugger engine.</p>
+</dd>
+<dt><a id="m_Symbols2"></a><a id="m_symbols2"></a><a id="M_SYMBOLS2"></a><b>m_Symbols2</b></dt>
+<dd>
+<p>The <a href="idebugsymbols.htm"><b>IDebugSymbols2</b></a> interface pointer for the client object that can be used by the extension library.  It is valid during the invocation of externally-called extension methods-for example, the execution of an extension command, a call to <a href="extknownstructmethod.htm"><i>ExtKnownStructMethod</i></a> and <b>ExtProvideValueMethod</b>.  This interface might not be available in all versions of the debugger engine.</p>
+</dd>
+<dt><a id="m_Symbols3"></a><a id="m_symbols3"></a><a id="M_SYMBOLS3"></a><b>m_Symbols3</b></dt>
+<dd>
+<p>The <a href="idebugsymbols.htm"><b>IDebugSymbols3</b></a> interface pointer for the client object that can be used by the extension library.  It is valid during the invocation of externally-called extension methods-for example, the execution of an extension command, a call to <a href="extknownstructmethod.htm"><i>ExtKnownStructMethod</i></a> and <b>ExtProvideValueMethod</b>.  This interface might not be available in all versions of the debugger engine.</p>
+</dd>
+<dt><a id="m_System2"></a><a id="m_system2"></a><a id="M_SYSTEM2"></a><b>m_System2</b></dt>
+<dd>
+<p>The <a href="idebugsystemobjects.htm"><b>IDebugSystemObjects2</b></a> interface pointer for the client object that can be used by the extension library.  It is valid during the invocation of externally-called extension methods-for example, the execution of an extension command, a call to <a href="extknownstructmethod.htm"><i>ExtKnownStructMethod</i></a> and <b>ExtProvideValueMethod</b>.  This interface might not be available in all versions of the debugger engine.</p>
+</dd>
+<dt><a id="m_System3"></a><a id="m_system3"></a><a id="M_SYSTEM3"></a><b>m_System3</b></dt>
+<dd>
+<p>The <a href="idebugsystemobjects.htm"><b>IDebugSystemObjects3</b></a> interface pointer for the client object that can be used by the extension library.  It is valid during the invocation of externally-called extension methods-for example, the execution of an extension command, a call to <a href="extknownstructmethod.htm"><i>ExtKnownStructMethod</i></a> and <b>ExtProvideValueMethod</b>.  This interface might not be available in all versions of the debugger engine.</p>
+</dd>
+<dt><a id="m_System4"></a><a id="m_system4"></a><a id="M_SYSTEM4"></a><b>m_System4</b></dt>
+<dd>
+<p>The <a href="idebugsystemobjects.htm"><b>IDebugSystemObjects4</b></a> interface pointer for the client object that can be used by the extension library.  It is valid during the invocation of externally-called extension methods-for example, the execution of an extension command, a call to <a href="extknownstructmethod.htm"><i>ExtKnownStructMethod</i></a> and <b>ExtProvideValueMethod</b>.  This interface might not be available in all versions of the debugger engine.</p>
+</dd>
+<dt><a id="m_PtrSize"></a><a id="m_ptrsize"></a><a id="M_PTRSIZE"></a><b>m_PtrSize</b></dt>
+<dd>
+<p>The size of a pointer on the current target.  If the target uses 32-bit pointers, <b>m_PtrSize</b> is 4.  If the target uses 64-bit pointers, <b>m_PtrSize</b> is 8.</p>
+</dd>
+<dt><a id="m_AppendBuffer"></a><a id="m_appendbuffer"></a><a id="M_APPENDBUFFER"></a><b>m_AppendBuffer</b></dt>
+<dd>
+<p>A character buffer used to return strings from the extension library to the engine.  The size of this buffer is <b>m_AppendBufferChars</b>.  The methods <b>AppendBufferString</b>, <b>AppendStringVa</b>, and <b>AppendString</b> can be used to write strings to this buffer.
+	  </p>
+</dd>
+<dt><a id="m_AppendBufferChars"></a><a id="m_appendbufferchars"></a><a id="M_APPENDBUFFERCHARS"></a><b>m_AppendBufferChars</b></dt>
+<dd>
+<p>The size, in characters, of the buffer <b>m_AppendBuffer</b>.</p>
+</dd>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20ExtExtension%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

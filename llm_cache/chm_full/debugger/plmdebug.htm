@@ -1,0 +1,146 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="PLMDebug.exe is a tool that enables you to use the Windows debugger to debug Windows app, which run under Process Lifecycle Management (PLM). With PLMDebug, you can take manual control of suspending, resuming, and terminating a Windows app."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>PLMDebug</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.plmdebug"></a>PLMDebug</h1>
+</div>
+<p>PLMDebug.exe is a tool that enables you to use the Windows debugger to debug Windows app, which run under Process Lifecycle Management (PLM). With PLMDebug, you can take manual control of suspending, resuming, and terminating a Windows app.</p>
+<div class="alert"><b>Tip</b>  With Windows 10, version 1607 or later, you can use the UWP commands, such as .createpackageapp to debug UWP apps. For more information see <a href="debugging_a_uwp_app_using_windbg.htm">Debugging a UWP app using WinDbg</a>.</div>
+<div> </div>
+<p><b>Where to get PLMDebug</b></p>
+<p>PLMDebug.exe is included in <a href="introduction6.htm">Debugging Tools for Windows</a>.</p>
+<pre class="syntax"><b>plmdebug </b><b>/query</b> [<i>Package</i>]
+<b>plmdebug </b><b>/enableDebug</b> <i>Package</i> [<i>DebuggerCommandLine</i>]
+<b>plmdebug /terminate </b><i>Package</i>
+<b>plmdebug /forceterminate </b><i>Package</i>
+<b>plmdebug /cleanterminate </b><i>Package</i>
+<b>plmdebug /suspend </b><i>Package</i>
+<b>plmdebug /resume </b><i>Package</i>
+<b>plmdebug /disableDebug </b><i>Package</i>
+<b>plmdebug /enumerateBgTasks </b><i>Package</i>
+<b>plmdebug /activateBgTask</b><i>TaskId</i>
+</pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Package"></a><a id="_______package"></a><a id="_______PACKAGE"></a>       <i>Package</i></dt>
+<dd>
+<p>The full name of a package or the ID of a running process.</p>
+</dd>
+<dt><a id="_______DebuggerCommandLine"></a><a id="_______debuggercommandline"></a><a id="_______DEBUGGERCOMMANDLINE"></a>       <i>DebuggerCommandLine</i></dt>
+<dd>
+<p>A command line to open a debugger. The command line must include the full path to the debugger. If the path has blank spaces, it must be enclosed in quotes. The command line can also include arguments. Here are some examples:</p>
+<p><code>"C:\Program Files (x86)\Windows Kits\8.0\Debuggers\x64\WinDbg.exe"</code></p>
+<p><code>"\"C:\Program Files\Debugging Tools for Windows (x64)\WinDbg.exe\" -server npipe:pipe=test"</code></p>
+</dd>
+<dt><a id="________query_Package"></a><a id="________query_package"></a><a id="________QUERY_PACKAGE"></a>       <b>/query</b> [<i>Package</i>]</dt>
+<dd>
+<p>Displays the running state for an installed package. If <i>Package</i> is not specified, this command displays the running states for all installed packages.</p>
+</dd>
+<dt><a id="________enableDebug_Package_DebuggerCommandLine"></a><a id="________enabledebug_package_debuggercommandline"></a><a id="________ENABLEDEBUG_PACKAGE_DEBUGGERCOMMANDLINE"></a>       <b>/enableDebug</b> <i>Package</i> [<i>DebuggerCommandLine</i>]</dt>
+<dd>
+<p>Increments the debug reference count for a package. The package is exempt from PLM policy if it has a non-zero debug reference count. Each call to <b>/enableDebug</b> must be paired with a call to /<b>disableDebug</b>. If you specify <i>DebuggerCommandLine</i>, the debugger will attach when any app from the package is launched.</p>
+</dd>
+<dt><a id="________terminate_Package"></a><a id="________terminate_package"></a><a id="________TERMINATE_PACKAGE"></a>       <b>/terminate </b><i>Package</i></dt>
+<dd>
+<p>Terminates a package.</p>
+</dd>
+<dt><a id="________forceTerminate_Package"></a><a id="________forceterminate_package"></a><a id="________FORCETERMINATE_PACKAGE"></a>       <b>/forceTerminate </b><i>Package</i></dt>
+<dd>
+<p>Forces termination of a package.</p>
+</dd>
+<dt><a id="________cleanTerminate_Package"></a><a id="________cleanterminate_package"></a><a id="________CLEANTERMINATE_PACKAGE"></a>       <b>/cleanTerminate </b><i>Package</i></dt>
+<dd>
+<p>Suspends and then terminates a package.</p>
+</dd>
+<dt><a id="________suspend_Package"></a><a id="________suspend_package"></a><a id="________SUSPEND_PACKAGE"></a>       <b>/suspend </b><i>Package</i></dt>
+<dd>
+<p>Suspends a package.</p>
+</dd>
+<dt><a id="________resume_Package"></a><a id="________resume_package"></a><a id="________RESUME_PACKAGE"></a>       <b>/resume </b><i>Package</i></dt>
+<dd>
+<p>Resumes a package.</p>
+</dd>
+<dt><a id="________disableDebug_Package"></a><a id="________disabledebug_package"></a><a id="________DISABLEDEBUG_PACKAGE"></a>       <b>/disableDebug </b><i>Package</i></dt>
+<dd>
+<p>Decrements the debug reference count for a package.</p>
+</dd>
+<dt><a id="________enumerateBgTasksPackage"></a><a id="________enumeratebgtaskspackage"></a><a id="________ENUMERATEBGTASKSPACKAGE"></a>       <b>/enumerateBgTasks</b><i>Package</i></dt>
+<dd>
+<p>Enumerate background task ids for a package.</p>
+</dd>
+<dt><a id="________activateBgTaskTaskId"></a><a id="________activatebgtasktaskid"></a><a id="________ACTIVATEBGTASKTASKID"></a>       <b>/activateBgTask</b><i>TaskId</i></dt>
+<dd>
+<p>Activates a background task. Note that not all background tasks can be activated using  PLMDebug.</p>
+</dd>
+</dl>
+<h2>Remarks</h2>
+<p>You must call <b>plmdebug /enableDebug</b> before you call any of the suspend, resume, or terminate functions.</p>
+<p>The PLMDebug tool calls the methods of the <a href="http://go.microsoft.com/fwlink/p/?LinkID=267918">IPackageDebugSettings interface</a>. This interface enables you to take manual control of the process lifecycle management for your apps. Through this interface (and as a result, through this tool), you can suspend, resume, and terminate your Windows app. Note that the  methods of the <a href="http://go.microsoft.com/fwlink/p/?LinkID=267918">IPackageDebugSettings interface</a> apply to an entire package. Suspend, resume, and terminate affect all currently running apps in the package.</p>
+<h2>Examples</h2>
+<p><b>Example 1</b></p>
+<p><b>Attach a debugger when your app is launched</b></p>
+<p>Suppose you have an app named MyApp that is in a package named MyApp_1.0.0.0_x64__tnq5r49etfg3c. Verify that your package is installed by displaying the full names and running states all installed packages. In a Command Prompt window, enter the following command.</p>
+<p><b>plmdebug /query</b></p>
+<pre class="syntax" xml:space="preserve"><code>Package full name: 1daa103b-74e1-426d-8193-b6bc7ed66fed_1.0.0.0_x86__tnq5r49etfg3c
+Package state: Terminated
+
+Package full name: 41fb5f27-7b60-4f5e-8459-803673131dd9_1.0.0.0_x86__tnq5r49etfg3c
+Package state: Suspended
+...
+Package full name: MyApp_1.0.0.0_x64__tnq5r49etfg3c
+Package state: Terminated
+...</code></pre>
+<p>Increment the debug reference count for your package, and specify that you want WinDbg to attach when your app is launched.</p>
+<p><b>plmdebug /enableDebug MyApp_1.0.0.0_x64__tnq5r49etfg3c "C:\Program Files (x86)\Windows Kits\8.0\Debuggers\x64\WinDbg.exe"</b></p>
+<p>When you launch your app, WinDbg will attach and break in.</p>
+<p>When you have finished debugging, detach the debugger. Then decrement the debug reference count for your package.</p>
+<p><b>plmdebug /disableDebug MyApp_1.0.0.0_x64__tnq5r49etfg3c </b></p>
+<p><b>Example 2</b></p>
+<p><b>Attach a debugger to an app that is already running</b></p>
+<p>Suppose you want to attach WinDbg to MyApp, which is already running. In WinDbg, on the <b>File</b> menu, choose <b>Attach to a Process</b>. Note the process ID for MyApp. Let's say the process ID is 4816.</p>
+<p>Increment the debug reference count for the package that contains MyApp.</p>
+<p><b>plmdebug /enableDebug 4816</b></p>
+<p>In WinDbg, in the <b>Attach to Process</b> dialog box, select process 4816, and click <b>OK</b>. WinDbg will attach to MyApp.</p>
+<p>When you have finished debugging MyApp, detach the debugger. Then decrement the debug reference count for the package.</p>
+<p><b>plmdebug /disableDebug 4816</b></p>
+<div class="code"></div>
+<p><b>Example 3</b></p>
+<p><b>Manually suspend and resume your app</b></p>
+<p>Suppose you want to manually suspend and resume your app. First, increment the debug reference count for the package that contains your app.</p>
+<p><b>plmdebug /enableDebug MyApp_1.0.0.0_x64__tnq5r49etfg3c</b></p>
+<p>Suspend the package. Your app's suspend handler is called, which can be helpful for debugging.</p>
+<p><b>plmdebug /suspend MyApp_1.0.0.0_x64__tnq5r49etfg3c</b></p>
+<p>When you have finished debugging, resume the package.</p>
+<p><b>plmdebug /resume MyApp_1.0.0.0_x64__tnq5r49etfg3c</b></p>
+<p>Finally, decrement the debug reference count for the package.</p>
+<p><b>plmdebug /disableDebug MyApp_1.0.0.0_x64__tnq5r49etfg3c</b></p>
+<div class="code"></div>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="http://go.microsoft.com/fwlink/p/?LinkID=267916">How to trigger suspend, resume, and background events in Windows Apps</a></dt>
+<dt><a href="extra_tools.htm">Tools Included in Debugging Tools for Windows</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20PLMDebug%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

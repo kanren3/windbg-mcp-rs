@@ -1,0 +1,79 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The SetThreadForOperation64 function sets the thread to use for the next StackTrace call."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>SetThreadForOperation64 function</title>
+
+<meta name="MS-HAID" content="WdbgExts_Ref_8c7ef2e9-4096-4284-9878-63d90f49e227.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.setthreadforoperation64"></a>SetThreadForOperation64 function</h1>
+</div>
+<p>The <b>SetThreadForOperation64</b> function sets the thread to use for the next <a href="stacktrace.htm"><b>StackTrace</b></a> call.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>__inline VOID SetThreadForOperation64(
+   PULONG64 Thread
+);</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Parameters</h2>
+<dl>
+<dt><i>Thread</i> </dt>
+<dd>
+<p>Points to the thread object to be used for the next stack trace.</p>
+</dd>
+</dl>
+<h2>Return value</h2>
+<p>None</p>
+<h2>Remarks</h2>
+<p>If you are writing 32-bit code, you should use <a href="setthreadforoperation.htm"><b>SetThreadForOperation</b></a> instead. See <a href="32_bit_pointers_and_64_bit_pointers.htm">32-Bit Pointers and 64-Bit Pointers</a> for details.</p>
+<p>For a WdbgExts extension, include Wdbgexts.h. For a DbgEng extension, include Wdbgexts.h before Dbgeng.h. See <a href="writing_dbgeng_extension_code.htm">Writing DbgEng Extension Code</a> for details.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Target platform</p>
+</th>
+<td width="70%">
+<dl>
+<dt></dt>
+</dl>
+</td>
+</tr>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Wdbgexts.h (include Wdbgexts.h, Wdbgexts.h, or Dbgeng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20SetThreadForOperation64 function%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

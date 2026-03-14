@@ -1,0 +1,34 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="WdbgExts Input and Output"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>WdbgExts Input and Output</title>
+
+<meta name="MS-HAID" content="WdbgExts_DG_12d4d5ed-2f47-4018-affc-3fbb24ff9e83.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.wdbgexts_input_and_output"></a>WdbgExts Input and Output</h1>
+</div>
+<p>This topic provides a brief overview of how input and output can be performed using the WdbgExts API.  For an overview of the input and output streams in the <a href="introduction.htm#debugger_engine">debugger engine</a>, see <a href="input_and_output.htm">Input and Output</a> in the <a href="debugger_engine_overview.htm">Debugger Engine Overview</a> section of this documentation.</p>
+<p>The function <a href="dprintf.htm"><b>dprintf</b></a> works in a way similar to the standard C <b>printf</b> function and prints a formatted string to the Debugger Command window or, more precisely, the formatted string is sent to the <a href="using_input_and_output.htm#output_callbacks">output callbacks</a>.  To read a line of input from the debugger engine, use the function <a href="getinputline.htm"><b>GetInputLine</b></a>.</p>
+<p>To check for a user-initiated interrupt, use <a href="checkcontrolc.htm"><b>CheckControlC</b></a>.  This function should be used in loops to determine if the user has attempted to cancel execution of an extension.</p>
+<p>For a more powerful input and output API, see <a href="using_input_and_output.htm">Using Input and Output</a> in the <a href="using_the_debugger_engine_api.htm">Using the Debugger Engine API</a> section of this documentation.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20WdbgExts Input and Output%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

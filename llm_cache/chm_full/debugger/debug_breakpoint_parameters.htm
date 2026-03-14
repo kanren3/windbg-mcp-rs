@@ -1,0 +1,121 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The DEBUG_BREAKPOINT_PARAMETERS structure contains most of the parameters for describing a breakpoint."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>DEBUG_BREAKPOINT_PARAMETERS structure</title>
+
+<meta name="MS-HAID" content="Structures_ad5f0e1f-7d6f-498d-80a0-1275ca3cb016.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.debug_breakpoint_parameters"></a>DEBUG_BREAKPOINT_PARAMETERS structure</h1>
+</div>
+<p>The DEBUG_BREAKPOINT_PARAMETERS structure contains most of the parameters for describing a breakpoint.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>typedef struct _DEBUG_BREAKPOINT_PARAMETERS {
+  ULONG64 Offset;
+  ULONG   Id;
+  ULONG   BreakType;
+  ULONG   ProcType;
+  ULONG   Flags;
+  ULONG   DataSize;
+  ULONG   DataAccessType;
+  ULONG   PassCount;
+  ULONG   CurrentPassCount;
+  ULONG   MatchThread;
+  ULONG   CommandSize;
+  ULONG   OffsetExpressionSize;
+} DEBUG_BREAKPOINT_PARAMETERS, *PDEBUG_BREAKPOINT_PARAMETERS;</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Members</h2>
+<dl>
+<dt><b>Offset</b></dt>
+<dd>
+<p>The location in the target's memory address space that will trigger the breakpoint.  If the breakpoint is deferred (see <a href="getflags.htm"><b>GetFlags</b></a>), <b>Offset</b> is DEBUG_INVALID_OFFSET.  See <a href="getoffset.htm"><b>GetOffset</b></a>.</p>
+</dd>
+<dt><b>Id</b></dt>
+<dd>
+<p>The breakpoint ID.  See <a href="getid.htm"><b>GetId</b></a>.</p>
+</dd>
+<dt><b>BreakType</b></dt>
+<dd>
+<p>Specifies if the breakpoint is a software breakpoint or a processor breakpoint.  See <a href="gettype.htm"><b>GetType</b></a>.</p>
+</dd>
+<dt><b>ProcType</b></dt>
+<dd>
+<p>The processor type for which the breakpoint is set.  See <a href="gettype.htm"><b>GetType</b></a>.</p>
+</dd>
+<dt><b>Flags</b></dt>
+<dd>
+<p>The flags for the breakpoint.  See <a href="getflags.htm"><b>GetFlags</b></a>.</p>
+</dd>
+<dt><b>DataSize</b></dt>
+<dd>
+<p>The size, in bytes, of the memory block whose access will trigger the breakpoint.  If the type of the breakpoint is not a data breakpoint, this is zero.  See <a href="getdataparameters.htm"><b>GetDataParameters</b></a>.</p>
+</dd>
+<dt><b>DataAccessType</b></dt>
+<dd>
+<p>The type of access that will trigger the breakpoint.  If the type of the breakpoint is not a data breakpoint, this is zero.  See <a href="getdataparameters.htm"><b>GetDataParameters</b></a>.</p>
+</dd>
+<dt><b>PassCount</b></dt>
+<dd>
+<p>The number of times the target will hit the breakpoint before it is triggered.  See <a href="getpasscount.htm"><b>GetPassCount</b></a>.</p>
+</dd>
+<dt><b>CurrentPassCount</b></dt>
+<dd>
+<p>The remaining number of times that the target will hit the breakpoint before it is triggered.  See <a href="getcurrentpasscount.htm"><b>GetCurrentPassCount</b></a>.</p>
+</dd>
+<dt><b>MatchThread</b></dt>
+<dd>
+<p>The engine thread ID of the thread that can trigger this breakpoint.  If any thread can trigger this breakpoint, <b>MatchThread</b> is DEBUG_ANY_ID.  See <a href="getmatchthreadid.htm"><b>GetMatchThreadId</b></a>.</p>
+</dd>
+<dt><b>CommandSize</b></dt>
+<dd>
+<p>The size, in characters, of the command string that will be executed when the breakpoint is triggered.  If no command is set, <b>CommandSize</b> is zero.  See <a href="getcommand.htm"><b>GetCommand</b></a>.</p>
+</dd>
+<dt><b>OffsetExpressionSize</b></dt>
+<dd>
+<p>The size, in characters, of the expression string that evaluates to the location in the target's memory address space where the breakpoint is triggered.  If no expression string is set, <b>OffsetExpressionSize</b> is zero.  See <a href="getoffsetexpression.htm"><b>GetOffsetExpression</b></a>.</p>
+</dd>
+</dl>
+<h2>Remarks</h2>
+<p>For an overview of how to use breakpoints, and a description of all breakpoint-related methods, see <a href="using_breakpoints2.htm">Breakpoints</a>.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>DbgEng.h (include DbgEng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20DEBUG_BREAKPOINT_PARAMETERS structure%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

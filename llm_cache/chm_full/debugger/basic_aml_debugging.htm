@@ -1,0 +1,86 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Basic AML Debugging"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Basic AML Debugging</title>
+
+<meta name="MS-HAID" content="t11_rpc_acpi_4de764b0-bf54-4d66-a30f-b5d79fcb10e3.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.basic_aml_debugging"></a>Basic AML Debugging</h1>
+</div>
+<h2><a id="ddk_basic_aml_debugging_dbg"></a><a id="DDK_BASIC_AML_DEBUGGING_DBG"></a></h2>
+<p>The AMLI Debugger supports two types of specialized commands: <i>AMLI Debugger extensions</i> and <i>AMLI Debugger commands</i>.</p>
+<p>When you are performing AML debugging, you should carefully distinguish between two different kinds of prompts that will appear in the Debugger Command window:</p>
+<ul>
+<li>
+<p>When you see the <b>kd&gt;</b> prompt, you are controlling the kernel debugger. All the standard kernel debugger commands and extensions are available. In addition, the AMLI Debugger extensions are also available. In Windows 2000, these extensions have a syntax of <b>!acpikd.amli </b><i>command</i>. In Windows XP and later versions of Windows, these extensions have a syntax of <b>!amli </b><i>command</i>. The AMLI Debugger commands are not available in this mode.</p>
+</li>
+<li>
+<p>When you see the <b>AMLI(? for help)-&gt;</b> prompt, you are controlling the AMLI Debugger. (When you are using WinDbg, this prompt will appear in the top pane of the Debugger Command window, and an <b>Input&gt;</b> prompt will appear in the bottom pane.) From this prompt, you can enter any AMLI Debugger command. You can also enter any AMLI Debugger extension; these extensions should <u>not</u> be prefixed with <b>!amli</b>. The standard kernel debugging commands are not available in this mode.</p>
+</li>
+<li>
+<p>When you see no prompt at all, the target computer is running.</p>
+</li>
+</ul>
+<p>At the beginning of any debugging session, you should set your AMLI Debugger options with the <a href="_amli_set.htm"><b>!amli set</b></a> extension. The <b>verboseon</b>, <b>traceon</b>, and <b>errbrkon</b> options are also very useful. When your target computer is running Windows XP or later, you should <u>always</u> activate the <b>spewon</b> option. See the extension reference page for details.</p>
+<p>There are several ways for the AMLI Debugger to become active:</p>
+<ul>
+<li>
+<p>If a breakpoint in AML code is encountered, ACPI will break into the AMLI Debugger.</p>
+</li>
+<li>
+<p>If a serious error or exception occurs within AML code (such as an <b>int 3</b>), ACPI will break into the AMLI Debugger.</p>
+</li>
+<li>
+<p>If the <b>errbrkon</b> option has been set, <u>any</u> AML error will cause ACPI to break into the AMLI Debugger.</p>
+</li>
+<li>
+<p>If you want to deliberately break into the AMLI Debugger, use the <a href="_amli_debugger.htm"><b>!amli debugger</b></a> extension and then the <a href="g__go_.htm"><b>g (Go)</b></a> command. The next time any AML code is executed by the interpreter, the AMLI Debugger will take over.</p>
+</li>
+</ul>
+<p>When you are at the AMLI Debugger prompt, you can type <b>q</b> to return to the kernel debugger, or type <b>g</b> to resume normal execution.</p>
+<p>The following extensions are especially useful for AML debugging:</p>
+<ul>
+<li>
+<p>The <a href="_amli_dns.htm"><b>!amli dns</b></a> extension displays the ACPI namespace for a particular object, the namespace tree subordinate to that object, or even the entire namespace tree. This command is especially useful in determining what a particular namespace object is -- whether it is a method, a fieldunit, a device, or another type of object.</p>
+</li>
+<li>
+<p>The <a href="_amli_find.htm"><b>!amli find</b></a> extension takes the name of any namespace object and returns its full path.</p>
+</li>
+<li>
+<p>The <a href="_amli_u.htm"><b>!amli u</b></a> extension unassembles AML code.</p>
+</li>
+<li>
+<p>The <a href="_amli_lc.htm"><b>!amli lc</b></a> extension displays brief information about all active ACPI contexts.</p>
+</li>
+<li>
+<p>The <a href="_amli_r.htm"><b>!amli r</b></a> extension displays detailed information about the current context of the interpreter. This is useful when the AMLI Debugger prompt appears after an error is detected.</p>
+</li>
+<li>
+<p>Breakpoints can be set and controlled within AML code. Use <a href="_amli_bp.htm"><b>!amli bp</b></a> to set a breakpoint, <a href="_amli_bc.htm"><b>!amli bc</b></a> to clear a breakpoint, <a href="_amli_bd.htm"><b>!amli bd</b></a> to disable a breakpoint, <a href="_amli_be.htm"><b>!amli be</b></a> to re-enable a breakpoint, and <a href="_amli_bl.htm"><b>!amli bl</b></a> to list all breakpoints.</p>
+</li>
+<li>
+<p>The AMLI Debugger is able to run, step, and trace through AML code. Use the <b>run</b>, <b>p</b>, and <b>t</b> commands to perform these actions.</p>
+</li>
+</ul>
+<p>For a full list of extensions and commands, see <a href="using_amli_debugger_extensions.htm">Using AMLI Debugger Extensions</a> and <a href="using_amli_debugger_commands.htm">Using AMLI Debugger Commands</a> .</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Basic AML Debugging%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

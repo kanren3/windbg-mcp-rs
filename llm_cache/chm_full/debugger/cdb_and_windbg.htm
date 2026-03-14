@@ -1,0 +1,39 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="CDB and WinDbg"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>CDB and WinDbg</title>
+
+<meta name="MS-HAID" content="r10_dump_files_ba341fb1-1c3a-4800-86dc-44e3eae60a85.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.cdb_and_windbg"></a>CDB and WinDbg</h1>
+</div>
+<h2><a id="ddk_cdb_and_windbg_dbg"></a><a id="DDK_CDB_AND_WINDBG_DBG"></a></h2>
+<p>CDB and WinDbg can create user-mode dump files in a variety of ways.</p>
+<h3><a id="creating_a_dump_file_automatically"></a><a id="CREATING_A_DUMP_FILE_AUTOMATICALLY"></a>Creating a Dump File Automatically </h3>
+<p>When an application error occurs, Windows can respond in several different ways, depending on the postmortem debugging settings. If these settings instruct a debugging tool to create a dump file, a user-mode memory dump file will be created. For more information, see <a href="enabling_postmortem_debugging.htm">Enabling Postmortem Debugging</a>.</p>
+<h3><a id="creating_dump_files_while_debugging"></a><a id="CREATING_DUMP_FILES_WHILE_DEBUGGING"></a>Creating Dump Files While Debugging</h3>
+<p>When CDB or WinDbg is debugging a user-mode application, you can also the <a href="_dump__create_dump_file_.htm"><b>.dump (Create Dump File)</b></a> command to create a dump file.</p>
+<p>This command does not cause the target application to terminate. By selecting the proper command options, you can create a minidump file that contains exactly the amount of information you wish.</p>
+<h3><a id="shrinking_an_existing_dump_file"></a><a id="SHRINKING_AN_EXISTING_DUMP_FILE"></a>Shrinking an Existing Dump File</h3>
+<p>CDB and WinDbg can also be used to <i>shrink</i> a dump file. To do this, begin debugging an existing dump file, and then use the <b>.dump</b> command to create a dump file of smaller size.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20CDB and WinDbg%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

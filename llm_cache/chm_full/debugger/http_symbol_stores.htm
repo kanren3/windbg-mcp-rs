@@ -1,0 +1,214 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="HTTP Symbol Stores"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>HTTP Symbol Stores</title>
+
+<meta name="MS-HAID" content="r09_symbols_a0af9a12-53b2-477f-a7aa-57a27f442437.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.http_symbol_stores"></a>HTTP Symbol Stores</h1>
+</div>
+<h2><a id="ddk_using_other_symbol_stores_dbg"></a><a id="DDK_USING_OTHER_SYMBOL_STORES_DBG"></a></h2>
+<p>By using the SRV protocol supported through symsrv.dll (shipped with debugger), the symbol store can be accessed using HTTP (instead of just UNC/SMB).</p>
+<p>HTTP is commonly used instead of SMB when a firewall doesn’t allow SMB between the client and the server. Production and Lab environments are good examples of this.</p>
+<p>An HTTP symbol server can’t be a downstream store in a symbol path chain due to its read-only nature. Symbol Server Proxy (ISAPI Filter) works around this limit. SymProxy downloads the missing files to the server’s file system using preconfigured upstream symbol stores. The filter downloads the file to the file system, allowing IIS to download the file to the client, thereby restoring the concept of symbol store chaining. Refer to <a href="symproxy.htm">SymProxy</a> for more information.</p>
+<p>Configuring IIS as a symbol store is relatively easy as the symbol files are just served as static files. The only non-default setting is the configuration of the MIME Types to allow the download of the symbol files as binary streams. This can be done by using a “*” wildcard applied to the virtual directory of the symbol folder.</p>
+<p>In order to make a symbol store accessible over the Internet, you must configure both the directories containing the symbol files and Internet Information Services (IIS).</p>
+<div class="alert"><b>Note</b>  Because of the way IIS will be configured to serve symbol files, it is not recommended that the same server instance be used for any other purpose. Typically the desired security settings for a symbol server will not make sense for other uses, for example for an external facing commerce server. Make sure that the sample configuration described here makes sense for your environment and adapt it as appropriate for your specific needs. </div>
+<div> </div>
+<h3><a id="configuring_the_directories"></a><a id="CONFIGURING_THE_DIRECTORIES"></a>Creating the Symbol Directory</h3>
+<p>Begin by selecting the directory you will use as your symbol store.  In our  examples, we call this directory c:\symstore and the name of the server on the network is  \SymMachineName.</p>
+<p>For details on how to populate your symbol store, see <a href="symstore.htm">SymStore</a> and <a href="symbol_store_folder_tree.htm">Symbol Store Folder Tree</a>. </p>
+<h3><a id="configuring_iis"></a><a id="CONFIGURING_IIS"></a>Configuring IIS</h3>
+<p>Internet Information Services (IIS) must be configured to serve the symbols by creating a virtual directory and configuring MIME types. After this has been done, the authentication method may be chosen.</p>
+<p class="proch"><img src="../common/wedge.gif" alt=""/><b>To create a virtual directory
+     </b></p>
+<ol>
+<li>
+<p>From <b>Administrative Tools</b> open <b>Internet Information Services (IIS) Manager</b>.</p>
+</li>
+<li>
+<p>Navigate to <b>Web Sites</b>.</p>
+</li>
+<li>
+<p>Right-click <b>Default Web Site</b> or the name of the site being used and select <b>Add Virtual Directory…</b>.</p>
+</li>
+<li>
+<p>Type <b>Symbols</b> for <b>Alias</b> and click <b>Next</b>.</p>
+<p>For ease of administration, it’s recommended that the same name be used for the Folder, Share and Virtual Directory.</p>
+</li>
+<li>
+<p>For the <b>Path</b> enter <b>c:\SymStore</b> and click <b>Next</b>.</p>
+</li>
+<li>
+<p>Click  <b>OK</b> to finish the adding the virtual directory.</p>
+</li>
+</ol>
+<p></p>
+<p>Perform the subdirectory configuration process once for the server. Note that this is a global setting and will effect applications not hosted in the root folder of a site.</p>
+<p class="proch"><img src="../common/wedge.gif" alt=""/><b>Subdirectory Configuration</b></p>
+<ol>
+<li>
+<p>Navigate to <b>[Computer]</b>.</p>
+</li>
+<li>
+<p>Open the <b>Configuration Editor</b>.</p>
+</li>
+<li>
+<p>Navigate to<b> system ApplicationHost/sites</b>.</p>
+</li>
+<li>
+<p>Expand <b>virtualDirectoryDefaults</b>.</p>
+</li>
+<li>
+<p>Set <b>allowSubDirConfig</b> to <i>False</i>.</p>
+</li>
+</ol>
+<p></p>
+<p>Perform this process once for the server. Note that this is a global setting and will effect applications not hosted in the root folder of a site.</p>
+<p class="proch"><img src="../common/wedge.gif" alt=""/><b>Optionaly Make the Symbol Files Browseable</b></p>
+<ol>
+<li>
+<p>Navigate to <b>[Computer] | Sites | [Web Site] | Symbols</b>.</p>
+</li>
+<li>
+<p>Double click <b>Directory Browsing</b> in the center pane.</p>
+</li>
+<li>
+<p>Click <b>Enable</b> in the right pane.</p>
+</li>
+</ol>
+<p></p>
+<p>The MIME Type for the downloaded content needs to be set to application/octet-stream to allow all symbols files to be delivered by IIS.</p>
+<p class="proch"><img src="../common/wedge.gif" alt=""/><b>Configuring MIME types</b></p>
+<ol>
+<li>
+<p>Right-click the <b>Symbols</b> virtual directory and choose <b>Properties</b>.</p>
+</li>
+<li>
+<p>Select <b>HTTP Headers</b>.</p>
+</li>
+<li>
+<p>Click <b>MIME Types</b>.</p>
+</li>
+<li>
+<p>Click <b>New</b>.</p>
+</li>
+<li>
+<p>For <b>Extension</b>, type <b>*</b>.</p>
+</li>
+<li>
+<p>For <b>MIME type</b>, type <b>application/octet-stream</b>.</p>
+</li>
+<li>
+<p>To exit the <b>MIME Types</b> dialog box, click <b>OK</b>.</p>
+</li>
+<li>
+<p>To exit <b>Symbols Properties</b>, click <b>OK</b>.</p>
+</li>
+</ol>
+<p>You can edit the web.config file to configure MIME types for Symbols. This approach clears the inherited MIME Types and adds a catch-all wild card * MIME Type. This approach may be necessary when MIME types are being inherited in certain IIS configurations.</p>
+<p class="proch"><img src="../common/wedge.gif" alt=""/><b>Using web.config to configure MIME types</b></p>
+<ol>
+<li>
+<p>Edit the web.config file as shown here.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;configuration&gt;
+    &lt;system.webServer&gt;
+        &lt;directoryBrowse enabled="true" /&gt;
+        &lt;staticContent&gt;
+            &lt;clear /&gt;
+            &lt;mimeMap fileExtension=".*" 
+mimeType="application/octet-stream" /&gt;
+        &lt;/staticContent&gt;
+    &lt;/system.webServer&gt;
+&lt;/configuration&gt;
+</pre>
+</td>
+</tr>
+</table></span></div>
+</li>
+<li>
+<p>Restart IIS.</p>
+</li>
+</ol>
+<p>IIS is now ready to serve symbol files of all types from the symbol store.  </p>
+<h2><a id="Configuring_Authentication"></a><a id="configuring_authentication"></a><a id="CONFIGURING_AUTHENTICATION"></a>Configuring Authentication</h2>
+<p>It is possible to configure IIS to use “Integrated Windows Authentication” so that clients (windbg.exe for example) can automatically authenticate against IIS without prompting the end-user for credentials.</p>
+<div class="alert"><b>Note</b>  Only configure Windows Authentication on IIS to control access to the symbol server if that is appropriate for your environment. There are other security options available to further control access to IIS if that is required for your environment.</div>
+<div> </div>
+<p class="proch"><img src="../common/wedge.gif" alt=""/><b>To configure the authentication method
+     as Anonymous</b></p>
+<ol>
+<li>
+<p>	Launch the <b>Internet Information Services (IIS) Manager</b>.</p>
+</li>
+<li>
+<p>	Navigate to <b>[Computer] | Sites | [Web Site] | Symbols</b>.</p>
+</li>
+<li>
+<p>	Double click <b>Authentication</b> in the center pane.</p>
+</li>
+<li>
+<p>Under <b>Authentication and access control</b> click <b>Edit</b>.</p>
+</li>
+<li>
+<p>	Right click <b>Windows Authentication </b> and select <b>Enable</b>.</p>
+</li>
+<li>
+<p>	For all other authentication providers, right click each provider and select <b>Disable</b>.</p>
+</li>
+<li>
+<p>Click <b>OK</b> to finish configuring authentication.</p>
+</li>
+</ol>
+<p>If Window Authentication is not listed, use <b>Turn Windows features on and off</b> to enable the feature. The location of the feature is different in each version of Windows. In Windows 8.1/Windows 2012 R2, it is located under Internet Information Services | World Wide Web Services | Security.</p>
+<p></p>
+<p></p>
+<h2><a id="Disable_Kerberos_Support"></a><a id="disable_kerberos_support"></a><a id="DISABLE_KERBEROS_SUPPORT"></a>Disable Kerberos Support</h2>
+<p>SymSrv.dll does not support Kerberos authentication when connecting to IIS. As such, Kerberos authentication must be disabled in IIS and NTLM needs to be set as the only Windows Authentication protocol.</p>
+<div class="alert"><b>Note</b>  Only disable Kerberos security if that is appropriate for your environment.</div>
+<div> </div>
+<p class="proch"><img src="../common/wedge.gif" alt=""/><b>Disable Kerberos Support Using appcmd.exe</b></p>
+<ol>
+<li>
+<p>Open a Command Prompt window</p>
+</li>
+<li>To disable Kerberos and force the use of NTLM, use this command:<pre class="syntax" xml:space="preserve"><code>appcmd.exe set config -section:system.webServer/security/authentication/windowsAuthentication /+"providers.[value='NTLM']" /commit:apphost</code></pre>
+</li>
+<li>To return to the default value with Kerberos enabled, use this command:<pre class="syntax" xml:space="preserve"><code>appcmd.exe set config -section:system.webServer/security/authentication/windowsAuthentication /+"providers.[value='Negotiate,NTLM']" /commit:apphost</code></pre>
+</li>
+</ol>
+<h2><a id="Configuring_SymSrv_Client_Authentication_Prompts"></a><a id="configuring_symsrv_client_authentication_prompts"></a><a id="CONFIGURING_SYMSRV_CLIENT_AUTHENTICATION_PROMPTS"></a>Configuring SymSrv Client Authentication Prompts</h2>
+<p>When SymSrv receives authentication requests, the debugger can either display the authentication dialog box or automatically refuse the request, depending on how it has been configured. You can configure this behavior using !sym prompts on|off.  For example to turn prompts on, use this command.</p>
+<pre class="syntax" xml:space="preserve"><code>!sym prompts on</code></pre>
+<p>To check the current setting, use this command.</p>
+<pre class="syntax" xml:space="preserve"><code>!sym prompts</code></pre>
+<p>For more information see <a href="_sym.htm"><b>!sym</b></a> and <a href="firewalls_and_proxy_servers.htm">Firewalls and Proxy Servers</a> on MSDN.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20HTTP Symbol Stores%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

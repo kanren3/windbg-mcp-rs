@@ -1,0 +1,95 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !analyze extension displays information about the current exception or bug check."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!analyze</title>
+
+<meta name="MS-HAID" content="r24_exts_general_A_6e1c68d6-f825-4a02-a9ba-2b0cd08cded8.xml"/>
+<meta name="MS-HAID" content="debugger._analyze"/>
+<meta name="MS-HAID" content="debugger._analyze_external"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._analyze"></a>!analyze</h1>
+</div>
+<p>The <b>!analyze</b> extension displays information about the current exception or bug check.</p>
+<p>User-Mode </p>
+<pre class="syntax"><b>!analyze </b>[<b>-v</b>] [<b>-f</b> | <b>-hang</b>] [<b>-D</b> <i>BucketID</i>] 
+<b>!analyze </b><b>-c</b> [<b>-load</b> <i>KnownIssuesFile</i> | <b>-unload</b> | <b>-help</b> ]</pre>
+<p>Kernel-Mode </p>
+<pre class="syntax"><b>!analyze </b>[<b>-v</b>] [<b>-f</b> | <b>-hang</b>] [<b>-D</b> <i>BucketID</i>] 
+<b>!analyze </b><b>-c</b> [<b>-load</b> <i>KnownIssuesFile</i> | <b>-unload</b> | <b>-help</b> ]
+<b>!analyze </b><b>-show</b> <i>BugCheckCode</i> [<i>BugParameters</i>]</pre>
+<h2><a id="ddk__analyze_dbg"></a><a id="DDK__ANALYZE_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______-v______"></a><a id="_______-V______"></a>       <b>-v</b>      </dt>
+<dd>
+<p>Displays verbose output. </p>
+</dd>
+<dt><a id="-f"></a><a id="-F"></a><b>-f</b></dt>
+<dd>
+<p>Generates the <b>!analyze</b> exception output. Use this parameter to see an exception analysis even when the debugger does not detect an exception.</p>
+</dd>
+<dt><a id="-hang"></a><a id="-HANG"></a><b>-hang</b></dt>
+<dd>
+<p>Generates <b>!analyze</b> hung-application output. Use this parameter when the target has experienced a bug check or exception, but an analysis of why an application hung is more relevant to your problem. In kernel mode, <b>!analyze </b><b>-hang</b> investigates locks that the system holds and then scans the DPC queue chain. In user mode, <b>!analyze </b><b>-hang</b> analyzes the thread stack to determine whether any threads are blocking other threads. </p>
+<p>Before you run this extension in user mode, consider changing the current thread to the thread that you think has stopped responding (that is, hung), because the exception might have changed the current thread to a different one.  </p>
+</dd>
+<dt><a id="_______-D_______BucketID______"></a><a id="_______-d_______bucketid______"></a><a id="_______-D_______BUCKETID______"></a>       <b>-D       </b><i>BucketID</i>      </dt>
+<dd>
+<p>Displays only those items that are relevant to the specified <i>BucketID</i>. 
+		</p>
+</dd>
+<dt><a id="_______-show_______BugCheckCode___BugParameters_"></a><a id="_______-show_______bugcheckcode___bugparameters_"></a><a id="_______-SHOW_______BUGCHECKCODE___BUGPARAMETERS_"></a>       <b>-show      </b> <i>BugCheckCode</i>  [<i>BugParameters</i>]</dt>
+<dd>
+<p>Displays information about the bug check specified by <i>BugCheckCode</i>. <i>BugParameters</i> specifies up to four bug check parameters separated by spaces. These parameters enable you to further refine your search.</p>
+</dd>
+<dt><a id="_______-c______"></a><a id="_______-C______"></a>       <b>-c      </b></dt>
+<dd>
+<p>Continues execution when the debugger encounters a known issue. If the issue is not a "known" issue, the debugger remains broken into the target.</p>
+<p>You can use the <b>-c      </b> option with the following subparameters. These subparameters configure the list of known issues. They do not cause execution to occur by themselves. Until you run <b>!analyze </b><b>-c</b><b> </b><b>-load</b>  at least one time, <b>!analyze </b><b>-c</b> has no effect.</p>
+<p></p>
+<dl>
+<dt><a id="-load_KnownIssuesFile"></a><a id="-load_knownissuesfile"></a><a id="-LOAD_KNOWNISSUESFILE"></a><b>-load</b> <i>KnownIssuesFile</i></dt>
+<dd>
+<p>Loads the specified known-issues file. <i>KnownIssuesFile</i> specifies the path and file name of this file. This file must be in XML format. You can find a sample file in the sdk\samples\analyze_continue subdirectory of the debugger installation directory. (You must have performed a full installation of Debugging Tools for Windows to have this file.)</p>
+<p>The list of known issues in the <i>KnownIssuesFile</i> file is used for all later <b>-c      </b> commands until you use <b>-c      </b><b> </b><b>-unload</b>, or until you use <b>-c      </b><b> </b><b>-load</b> again (at which point the new data replaces the old data).</p>
+</dd>
+<dt><a id="-unload"></a><a id="-UNLOAD"></a><b>-unload</b></dt>
+<dd>
+<p>Unloads the current list of known issues.</p>
+</dd>
+<dt><a id="-help"></a><a id="-HELP"></a><b>-help</b></dt>
+<dd>
+<p>Displays help for the <b>!analyze </b><b>-c</b> extension commands extension in the <a href="debugger_command_window.htm">Debugger Command window</a>. </p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<p>Ext.dll</p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For sample analysis of a user-mode exception and of a kernel-mode stop error (that is, crash), and for more information about how <b>!analyze</b> uses the triage.ini file, see <a href="using_the__analyze_extension.htm">Using the !analyze Extension</a>.</p>
+<h2>Remarks</h2>
+<p>In user mode, <b>!analyze</b> displays information about the current exception.</p>
+<p>In kernel mode, <b>!analyze</b> displays information about the most recent bug check. If a bug check occurs, the <b>!analyze</b> display is automatically generated. You can use <b>!analyze </b><b>-v</b> to show additional information. If you want to see only the basic bug check parameters, you can use the <a href="_bugcheck__display_bug_check_data_.htm"><b>.bugcheck (Display Bug Check Data)</b></a> command.</p>
+<p>For drivers that use User-Mode Driver Framework (UMDF) version 2.15 or later, <b>!analyze</b> provides information about UMDF verifier failures and unhandled exceptions. This functionality is available when performing live kernel-mode debugging, as well when analyzing a user-mode memory dump file.  For UMDF driver crashes, <b>!analyze</b> attempts to identify the responsible driver.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!analyze%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

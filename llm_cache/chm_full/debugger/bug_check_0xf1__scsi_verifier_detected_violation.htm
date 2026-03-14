@@ -1,0 +1,275 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The SCSI_VERIFIER_DETECTED_VIOLATION bug check has a value of 0x000000F1. This is the bug check code for all Driver Verifier SCSI Verification violations."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0xF1: SCSI_VERIFIER_DETECTED_VIOLATION</title>
+
+<meta name="MS-HAID" content="t07_bugs_E0_bb054e47-c1da-428d-8821-7d2a15a67270.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0xf1__scsi_verifier_detected_violation"></a>Bug Check 0xF1: SCSI_VERIFIER_DETECTED_VIOLATION</h1>
+</div>
+<p>The SCSI_VERIFIER_DETECTED_VIOLATION bug check has a value of 0x000000F1. This is the bug check code for all Driver Verifier <b>SCSI Verification</b> violations.</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2> SCSI_VERIFIER_DETECTED_VIOLATION Parameters</h2>
+<p>The four bug check parameters are displayed on the blue screen. Parameter 1 identifies the type of violation.</p>
+<table>
+<tr>
+<th>Parameter 1</th>
+<th>Parameter 2</th>
+<th>Parameter 3</th>
+<th>Parameter 4</th>
+<th>Cause of Error</th>
+</tr>
+<tr>
+<td>
+<p>0x1000</p>
+</td>
+<td>
+<p>First argument passed</p>
+</td>
+<td>
+<p>Second argument passed</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>The miniport driver passed bad arguments to <b>ScsiPortInitialize</b>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x1001</p>
+</td>
+<td>
+<p>Delay, in microseconds</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>The miniport driver called <b>ScsiPortStallExecution</b> and specified a delay greater than 0.1 second, stalling the processor too long.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x1002</p>
+</td>
+<td>
+<p>Address of routine that took too long</p>
+</td>
+<td>
+<p>Address of miniport's HW_DEVICE_EXTENSION</p>
+</td>
+<td>
+<p>Duration of the routine, in microseconds</p>
+</td>
+<td>
+<p>A miniport routine called by the port driver took longer than 0.5 second to execute.</p>
+<p>(0.5 seconds is the limit for most routines. However, the <b>HwInitialize</b> routine is allowed 5 seconds, and the <b>FindAdapter</b> routine is exempt.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x1003</p>
+</td>
+<td>
+<p>Address of miniport's HW_DEVICE_EXTENSION </p>
+</td>
+<td>
+<p>Address of the SRB</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>The miniport driver completed a request more than once.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x1004</p>
+</td>
+<td>
+<p>Address of the SRB</p>
+</td>
+<td>
+<p>Address of miniport's HW_DEVICE_EXTENSION</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>The miniport driver completed a request with an invalid SRB status.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x1005</p>
+</td>
+<td>
+<p>Address of miniport's HW_DEVICE_EXTENSION</p>
+</td>
+<td>
+<p>Address of LOGICAL_UNIT_EXTENSION</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>The miniport driver called <b>ScsiPortNotification</b> to ask for <b>NextLuRequest</b>, but an untagged request is still active.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x1006</p>
+</td>
+<td>
+<p>Address of miniport's HW_DEVICE_EXTENSION</p>
+</td>
+<td>
+<p>Invalid virtual address</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>The miniport driver passed an invalid virtual address to <b>ScsiPortGetPhysicalAddress</b>.</p>
+<p>(This usually means the address supplied doesn't map to the common buffer area.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x1007</p>
+</td>
+<td>
+<p>Address of ADAPTER_EXTENSION</p>
+</td>
+<td>
+<p>Address of miniport's HW_DEVICE_EXTENSION</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>The reset hold period for the bus ended, but the miniport driver still has outstanding requests.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x2001</p>
+</td>
+<td>
+<p>Delay,  in microseconds</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>The Storport miniport driver called <b>StorPortStallExecution</b> and specified a delay longer than 0.1 second, stalling the processor for an excessive length of time.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x2002</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p><b>StorPortGetUncachedExtension</b> was not called  from the miniport driver's <b>HwStorFindAdapter</b> routine. The  <b>StorPortGetUncachedExtension</b> routine can only be  called  from the miniport driver's <b>HwStorFindAdapter</b> routine and only for a bus-master adapter.           A Storport miniport driver must set the <b>SrbExtensionSize</b> of the <b>HW_INITIALIZATION_DATA</b> (Storport) structure before calling          <b>StorPortGetUncachedExtension</b>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x2003</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>An invalid address was passed to the  <b>StorPortGetDeviceBase</b> routine. The  <b>StorPortGetDeviceBase</b> routine supports only those addresses that were assigned to the driver by the system Plug and Play (PnP) manager.                       </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x2004</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>The Storport miniport driver completed the same I/O request more than once. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x2005</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>The Storport miniport driver passed an invalid virtual address to one of the <b>StorPortRead</b><i>xxx</i> or <b>StorPortWrite</b><i>xxx</i> routines. This usually means the address supplied doesn't map to the common buffer area. The specified <i>Register</i> or <i>Port</i>  must be in mapped memory-space range returned by <b>StorPortGetDeviceBase</b> routine.          </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Cause</h2>
+<p>See the description of each code in the Parameters section for an explanation of the cause.</p>
+<h2>Resolution</h2>
+<p>This bug check can only occur when Driver Verifier has been instructed to monitor one or more drivers. If you did not intend to use Driver Verifier, you should deactivate it. You might consider removing the driver which caused this problem as well.</p>
+<p>If you are the driver writer, use the information obtained through this bug check to fix the bugs in your code.</p>
+<p>The Driver Verifier <b>SCSI Verification</b>   option is available only in Windows XP and later. The Driver Verifier <b>Storport Verification</b>  option is available only in Windows 7 and later. For full details on Driver Verifier, see the Windows Driver Kit.  </p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,94 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The PDBCopy command line uses the following syntax. The parameters can be included in any order."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>PDBCopy Command-Line Options</title>
+
+<meta name="MS-HAID" content="SymChk_d1eaeede-1831-4ca1-adf7-bee43362f20d.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.pdbcopy_command_line_options"></a>PDBCopy Command-Line Options</h1>
+</div>
+<p>The PDBCopy command line uses the following syntax. The parameters can be included in any order.</p>
+<pre class="syntax">
+    <b>pdbcopy </b><i>OldPDB</i><b> </b><i>NewPDB</i><b> [</b><i>Options</i><b>] 
+
+pdbcopy </b><i>OldPDB</i><b> </b><i>NewPDB</i><b> -p [-f:</b><i>Symbol</i><b>] [-f:@</b><i>TextFile</i><b>] [</b><i>Options</i><b>] 
+
+pdbcopy </b><i>OldPDB</i><b> </b><i>NewPDB</i><b> -p [-F:</b><i>Symbol</i><b>] [-F:@</b><i>TextFile</i><b>] [</b><i>Options</i><b>] 
+
+pdbcopy /? 
+</b>
+   </pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______OldPDB______"></a><a id="_______oldpdb______"></a><a id="_______OLDPDB______"></a>       <i>OldPDB</i>      </dt>
+<dd>
+<p>Specifies the path and file name of the original symbol file to be read, including the .pdb file name extension. <i>OldPDB</i> may contain the absolute or relative path of a directory on the local computer, or a UNC path.  If no path is specified, the current working directory is used. If <i>OldPDB</i> contains spaces, it must be enclosed in quotation marks.</p>
+</dd>
+<dt><a id="_______NewPDB______"></a><a id="_______newpdb______"></a><a id="_______NEWPDB______"></a>       <i>NewPDB</i>      </dt>
+<dd>
+<p>Specifies the path and file name of the new symbol file to be created, including the .pdb file name extension. <i>NewPDB</i> may contain the absolute or relative path of a directory on the local computer, or a UNC path.  This path must already exist; PDBCopy will not create a new directory. If no path is specified, the current working directory is used. If <i>NewPDB</i> contains spaces, you must enclose it in quotation marks. The specified file should not already exist; if it does, the new file may not be written, or may be written incorrectly. </p>
+</dd>
+<dt><a id="_______-p______"></a><a id="_______-P______"></a>       <b>-p</b>      </dt>
+<dd>
+<p>Causes PDBCopy to remove private symbol data from the new symbol file. If the old symbol file contains no private symbols, this option has no effect. If this option is omitted, PDBCopy creates a new file with identical symbol content as the original file. </p>
+</dd>
+<dt><a id="-f_Symbol"></a><a id="-f_symbol"></a><a id="-F_SYMBOL"></a><b>-f:</b><i>Symbol</i></dt>
+<dd>
+<p>Causes PDBCopy to remove the specified public symbol from the new symbol file. <i>Symbol</i> must specify the name of the symbol to be removed, including any symbol name decorations (for example, initial underscores), but not including the module name.  This option requires the -p option. If you use multiple <b>-f</b> or <b>-f:@</b> parameters, PDBCopy removes all the specified symbols  from the new symbol file.</p>
+</dd>
+<dt><a id="-f__TextFile"></a><a id="-f__textfile"></a><a id="-F__TEXTFILE"></a><b>-f:@</b><i>TextFile</i></dt>
+<dd>
+<p>Causes PDBCopy to remove the public symbols listed in the specified text file from the new symbol file. <i>TextFile</i> specifies the file name and path (absolute or relative) of this file. This file can list the names of any number of symbols, one on each line, including any symbol name decorations (for example, initial underscores), but not including module names. This option requires the -p option.</p>
+</dd>
+<dt><a id="-F_Symbol"></a><a id="-f_symbol"></a><a id="-F_SYMBOL"></a><b>-F:</b><i>Symbol</i></dt>
+<dd>
+<p>Causes PDBCopy to remove all public and private symbols from the new symbol file, except for the specified public symbol. <i>Symbol</i> must specify the name of the symbol to be retained, including any symbol name decorations (for example, initial underscores), but not including the module name. This option requires the -p option. If multiple <b>-F</b> or <b>-F:@</b> parameters are used, all the specified symbols are retained in the new symbol file.</p>
+</dd>
+<dt><a id="-F__TextFile"></a><a id="-f__textfile"></a><a id="-F__TEXTFILE"></a><b>-F:@</b><i>TextFile</i></dt>
+<dd>
+<p>Causes PDBCopy to remove all public and private symbols from the new symbol file, except for the public symbols listed in the specified text file. <i>TextFile</i> specifies the file name and path (absolute or relative) of this file. This file can list the names of any number of symbols, one on each line, including any symbol name decorations (for example, initial underscores), but not including module names.  This option requires the -p option.</p>
+</dd>
+<dt><a id="_______Options______"></a><a id="_______options______"></a><a id="_______OPTIONS______"></a>       <i>Options</i>      </dt>
+<dd>
+<p>Any combination of the following options. These options are case-sensitive.</p>
+<p></p>
+<dl>
+<dt><a id="-s"></a><a id="-S"></a><b>-s</b></dt>
+<dd>
+<p>Causes the new symbol file to have a different signature than the old file. Normally you should not use the -s option, because a new signature may cause SymSrv to assign a different index value to the new file than to the old file, preventing new file from properly replacing the old one. </p>
+</dd>
+<dt><a id="-vc6"></a><a id="-VC6"></a><b>-vc6</b></dt>
+<dd>
+<p>Causes PDBCopy to use mspdb60.dll instead of mspdb80.dll. This option is never required, because PDBCopy automatically looks for the proper version of mspdb*.dll. By default, PDBCopy uses mspdb80.dll, which is the version used by Visual Studio .NET 2002 and later versions of Visual Studio. If your symbols were built using Visual Studio 6.0 or an earlier version, you can specify this command-line option so that PDBCopy will use mspdb60.dll instead. However, this is not required, since PDBCopy looks for the appropriate file even if this option is not used. Whichever version of mspdb*.dll you use must be in the executable path of the Command Prompt window from which you launch PDBCopy. </p>
+</dd>
+</dl>
+</dd>
+<dt><a id="_______-_______"></a>       <b>-?</b>      </dt>
+<dd>
+<p>Displays help text for the PDBCopy command line.</p>
+</dd>
+</dl>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about the PDBCopy tool, see <a href="using_pdbcopy.htm">Using PDBCopy</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20PDBCopy Command-Line Options%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

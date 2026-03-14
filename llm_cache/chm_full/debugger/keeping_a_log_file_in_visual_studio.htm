@@ -1,0 +1,44 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The Windows Debugger can write a log file that records the debugging session."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Keeping a Log File in Visual Studio</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.keeping_a_log_file_in_visual_studio"></a>Keeping a Log File in Visual Studio</h1>
+</div>
+<p>The Windows Debugger   can write a log file that records the debugging session. This log file contains all of the commands that you type and the responses from the debugger. In Microsoft Visual Studio, you can open, append, and close log files by entering commands in the Debugger Immediate Window.</p>
+<p>The procedures shown in this topic require that you have the Windows Driver Kit integrated into Visual Studio. To get the integrated environment, first install Visual Studio, and then install the   Windows Driver Kit (WDK). For more information, see Windows Driver Development.</p>
+<h2><a id="ddk_keeping_a_log_file_dbg"></a><a id="DDK_KEEPING_A_LOG_FILE_DBG"></a></h2>
+<p>If the Debugger Immediate Window is not already open, from the <b>Debug</b> menu, choose <b>Windows&gt;Immediate</b>.</p>
+<h3><a id="opening_a_new_log_file"></a><a id="OPENING_A_NEW_LOG_FILE"></a>Opening a New Log File</h3>
+<p>To open a new log file, enter the <a href="_logopen__open_log_file_.htm"><b>.logopen (Open Log File)</b></a> command. If you use the <b>/t</b> option, the date and time are appended to your specified file name. If you use the <b>/u</b> option, the log file is written in Unicode instead of in ASCII.</p>
+<h3><a id="appending_to_an_existing_log_file"></a><a id="APPENDING_TO_AN_EXISTING_LOG_FILE"></a>Appending to an Existing Log File</h3>
+<p>To append text to an existing log file, enter the <a href="_logappend__append_log_file_.htm"><b>.logappend (Append Log File)</b></a> command. If you are appending to a Unicode log file, you must use the <b>/u</b> option.</p>
+<h3><a id="closing_a_log_file"></a><a id="CLOSING_A_LOG_FILE"></a>Closing a Log File</h3>
+<p>To close  an open log file, enter  the <a href="_logclose__close_log_file_.htm"><b>.logclose (Close Log File)</b></a> command.
+     
+     
+    </p>
+<h3><a id="checking_log_file_status"></a><a id="CHECKING_LOG_FILE_STATUS"></a>Checking Log File Status</h3>
+<p>To determine the log file status, enter the <a href="_logfile__display_log_file_status_.htm"><b>.logfile (Display Log File Status)</b></a> command.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Keeping a Log File in Visual Studio%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

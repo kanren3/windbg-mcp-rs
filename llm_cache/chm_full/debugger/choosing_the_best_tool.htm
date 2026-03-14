@@ -1,0 +1,145 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Choosing the Best Tool"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Choosing the Best Tool</title>
+
+<meta name="MS-HAID" content="r10_dump_files_59201637-1a08-4d6d-9346-06de2d09e014.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.choosing_the_best_tool"></a>Choosing the Best Tool</h1>
+</div>
+<h2><a id="ddk_choosing_the_best_tool_dbg"></a><a id="DDK_CHOOSING_THE_BEST_TOOL_DBG"></a></h2>
+<p>There are severa; different tools that can create user-mode dump files. In most cases, ADPlus is the best tool to use.</p>
+<p>The following table shows the features of each tool.</p>
+<table>
+<tr>
+<th>Feature</th>
+<th><a href="adplus.htm">ADPlus</a></th>
+<th><a href="windows_error_reporting.htm">Windows Error Reporting</a></th>
+<th><a href="cdb_and_windbg.htm">CDB and WinDbg</a></th>
+<th><a href="userdump.htm">UserDump</a></th>
+</tr>
+<tr>
+<td>
+<p>Creating a dump file when an application crashes  (postmortem debugging)</p>
+</td>
+<td>
+<p>Yes</p>
+</td>
+<td>
+<p>Yes</p>
+</td>
+<td>
+<p>Yes</p>
+</td>
+<td>
+<p>Yes</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Creating a dump file when an application "hangs" (stops responding but does not actually crash)</p>
+</td>
+<td>
+<p>Yes</p>
+</td>
+<td>
+<p>No</p>
+</td>
+<td>
+<p>Yes</p>
+</td>
+<td>
+<p>Yes</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Creating a dump file when an application encounters an exception</p>
+</td>
+<td>
+<p>Yes</p>
+</td>
+<td>
+<p>Yes</p>
+</td>
+<td>
+<p>Yes</p>
+</td>
+<td>
+<p>Yes  </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Creating a dump file while an application is running normally</p>
+</td>
+<td>
+<p>No</p>
+</td>
+<td>
+<p>No</p>
+</td>
+<td>
+<p>Yes</p>
+</td>
+<td>
+<p>No  </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Creating a dump file from an application that fails during startup</p>
+</td>
+<td>
+<p>No</p>
+</td>
+<td>
+<p>No  </p>
+</td>
+<td>
+<p>Yes</p>
+</td>
+<td>
+<p>Yes</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Shrinking an existing dump file</p>
+</td>
+<td>
+<p>No</p>
+</td>
+<td>
+<p>No</p>
+</td>
+<td>
+<p>Yes</p>
+</td>
+<td>
+<p>No</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Choosing the Best Tool%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

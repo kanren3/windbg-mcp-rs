@@ -1,0 +1,99 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The PROCESS_HAS_LOCKED_PAGES bug check has a value of 0x00000076. This bug check indicates that a driver failed to release locked pages after an I/O operation, or that it attempted to unlock pages that were already unlocked."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0x76: PROCESS_HAS_LOCKED_PAGES</title>
+
+<meta name="MS-HAID" content="t05_bugs_60_761ea51e-aa41-47df-90b7-54f8cbfdca17.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0x76__process_has_locked_pages"></a>Bug Check 0x76: PROCESS_HAS_LOCKED_PAGES</h1>
+</div>
+<p>The PROCESS_HAS_LOCKED_PAGES bug check has a value of 0x00000076. This bug check indicates that a driver failed to release locked pages after an I/O operation, or that it attempted to unlock pages that were already unlocked.</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2> PROCESS_HAS_LOCKED_PAGES Parameters</h2>
+<p>The following parameters appear on the blue screen.</p>
+<table>
+<tr>
+<th>Parameter 1</th>
+<th>Parameter 2</th>
+<th>Parameter 3</th>
+<th>Parameter 4</th>
+<th>Cause of error</th>
+</tr>
+<tr>
+<td>
+<p>0x00</p>
+</td>
+<td>
+<p>The pointer to the process object</p>
+</td>
+<td>
+<p>The number of locked pages</p>
+</td>
+<td>
+<p>The pointer to driver stacks (if they are enabled). Otherwise, this parameter is zero.</p>
+</td>
+<td>
+<p>The process being terminated has locked memory pages. The driver must unlock any memory that it might have locked in a process, before the process terminates. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x01</p>
+</td>
+<td>
+<p>MDL specified by the driver</p>
+</td>
+<td>
+<p>Current number of locked memory pages in that process</p>
+</td>
+<td>
+<p>A pointer to driver stacks for that process (if they are enabled). Otherwise, this parameter is zero.</p>
+</td>
+<td>
+<p>The driver is attempting to unlock process memory pages that are not locked.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Cause</h2>
+<p>The driver either failed to unlock pages that it locked (parameter 1 value is 0x0), or the driver is attempting to unlock pages that have not been locked or that have already been unlocked (parameter 1 value is 0x1).</p>
+<h2>Resolution</h2>
+<p><b>If the parameter 1 value is 0x0
+   </b></p>
+<p>First use the <a href="_search.htm"><b>!search</b></a> extension on the current process pointer throughout all of physical memory.  This extension might find at least one memory descriptor list (MDL) that points to the current process.  Next, use <b>!search</b> on each MDL that you find to obtain the I/O request packet (IRP) that points to the current process. From this IRP, you can identify which driver is leaking the pages.</p>
+<p>Otherwise, you can detect which driver caused the error by editing the registry: </p>
+<ol>
+<li>
+<p>In the <b>\\HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management</b> registry key, create or edit the <b>TrackLockedPages</b> value, and then set it equal to DWORD 1. </p>
+</li>
+<li>
+<p>Restart the computer. </p>
+</li>
+</ol>
+<p>The system then saves stack traces, so you can easily identify the driver that caused the problem. If the driver causes the same error again, <a href="bug_check_0xcb__driver_left_locked_pages_in_process.htm"><b>bug check 0xCB</b></a> (DRIVER_LEFT_LOCKED_PAGES_IN_PROCESS) is issued, and the name of the driver that causes this error is displayed on the blue screen and stored in memory at the location (PUNICODE_STRING) <b>KiBugCheckDriver</b>.</p>
+<p><b> If the parameter 1 value is 0x1
+   </b></p>
+<p>Examine the driver source code that locks and unlocks memory, and try to locate an instance where memory is unlocked without first being locked.</p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

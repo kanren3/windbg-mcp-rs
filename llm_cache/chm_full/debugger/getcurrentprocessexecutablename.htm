@@ -1,0 +1,117 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The GetCurrentProcessExecutableName method returns the name of executable file loaded in the current process."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IDebugSystemObjects::GetCurrentProcessExecutableName method</title>
+
+<meta name="MS-HAID" content="IDebugSystemObjects_2659a668-4ecb-44de-b287-b4adc830f8c4.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.getcurrentprocessexecutablename"></a>IDebugSystemObjects::GetCurrentProcessExecutableName method</h1>
+</div>
+<p>The <b>GetCurrentProcessExecutableName</b>  method returns the name of executable file loaded in the current process.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>HRESULT GetCurrentProcessExecutableName(
+  [out, optional] PSTR   Buffer,
+  [in]            ULONG  BufferSize,
+  [out, optional] PULONG ExeSize
+);</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Parameters</h2>
+<dl>
+<dt><i>Buffer</i> [out, optional]</dt>
+<dd>
+<p>Receives the name of the executable file.  If <i>Buffer</i> is <b>NULL</b>, this information is not returned.</p>
+</dd>
+<dt><i>BufferSize</i> [in]</dt>
+<dd>
+<p>Specifies the size in characters of the buffer <i>Buffer</i>.</p>
+</dd>
+<dt><i>ExeSize</i> [out, optional]</dt>
+<dd>
+<p>Receives the size in characters of the name of the executable file.  If <i>ExeSize</i> is <b>NULL</b>, this information is not returned.</p>
+</dd>
+</dl>
+<h2>Return value</h2>
+<p>This method may also return error values.  See <a href="hresult_values.htm"><b>Return Values</b></a> for more details.</p>
+<table>
+<tr>
+<th>Return code</th>
+<th>Description</th>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>S_OK</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>The method was successful.</p>
+</td>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>S_FALSE</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>The method was successful. However, the buffer was not large enough to hold the name of the executable file and it was truncated.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>These methods are only available in user-mode debugging.</p>
+<p>If the engine cannot determine the name of the executable file, it writes the string "?NoImage?" to the buffer.</p>
+<p>For more information about processes, see <a href="controlling_threads_and_processes.htm">Threads and Processes</a>.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Target platform</p>
+</th>
+<td width="70%">
+<dl>
+<dt></dt>
+</dl>
+</td>
+</tr>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Dbgeng.h (include Dbgeng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IDebugSystemObjects::GetCurrentProcessExecutableName method%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Threads and Processes"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Threads and Processes</title>
+
+<meta name="MS-HAID" content="Engine_Overview_89c9fa4e-c2fe-4ba7-84d5-b049cebd3130.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.threads_and_processes"></a>Threads and Processes</h1>
+</div>
+<h3><a id="terminology"></a><a id="TERMINOLOGY"></a>Terminology</h3>
+<p>Thread and a process concepts are different between user-mode debugging and kernel-mode debugging.</p>
+<ul>
+<li>
+<p>In <i>user-mode debugging</i>, a <i>process</i> is an operating system process and a <i>thread</i> is an operating system thread.</p>
+</li>
+<li>
+<p>In <i>kernel-mode debugging</i>, the <a href="introduction.htm#debugger_engine">debugger engine</a> creates a <i>virtual process</i> for each target; this process represents the kernel and does not correspond to any operating system process.  For each physical processor in the target computer, the debugger creates a <i>virtual thread</i>; these threads represent the processors and do not correspond to any operating system threads.</p>
+</li>
+</ul>
+<p>When an event occurs, the engine sets the <i>event process</i> and <i>event thread</i> to the process and thread (operating system or virtual) in which the event occurred.</p>
+<p>The <i>current thread</i> is the thread (operating system or virtual) that the engine is currently controlling.  The <i>current process</i> is the process (operating system or virtual) that the engine is currently controlling.  When an event occurs, the current thread and process are initially set to the event thread and process; but, they can be changed using the clients while the session is accessible.</p>
+<p>In kernel mode, the debugger keeps track of an implicit process and implicit thread.  The <i>implicit process</i> is the operating system process that determines the translation from virtual to physical memory addresses.</p>
+<p>The <i>implicit thread</i> is the operating system thread that determines the target's registers, including call stack, stack frame, and instruction offset.</p>
+<p>When an event occurs, the implicit thread and implicit process are initially set to the event thread and process; they can be changed while the session is accessible.</p>
+<h3><a id="thread_and_process_data"></a><a id="THREAD_AND_PROCESS_DATA"></a>Thread and Process Data</h3>
+<p>The engine maintains several pieces of information about each thread and process.  This includes the system thread and process ID and system handles, and the process environment (PEB), the thread environment block (TEB), and their locations in target's memory.</p>
+<h3><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For details about using thread and processes, see <a href="controlling_threads_and_processes.htm">Controlling Threads and Processes</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Threads and Processes%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

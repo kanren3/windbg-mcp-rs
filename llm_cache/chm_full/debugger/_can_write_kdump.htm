@@ -1,0 +1,92 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !can_write_kdump extension verifies that there is enough disk space on the target computer to write a kernel dump file of the specified type."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!can_write_kdump</title>
+
+<meta name="MS-HAID" content="r26_exts_kernel_A_0b60d1a5-8dd5-4668-bc90-1c8ff43ab41f.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._can_write_kdump"></a>!can_write_kdump</h1>
+</div>
+<p>The <b>!can_write_kdump</b> extension verifies that there is enough disk space on the target computer to write a kernel dump file of the specified type.</p>
+<pre class="syntax"><b>!can_write_kdump </b>[<b>-dn</b>]<b> </b>[<i>Options</i>]</pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______-dn______"></a><a id="_______-DN______"></a>       <b>-dn</b>      </dt>
+<dd>
+<p>Specifies that the file system on the target computer is an NTFS file system. If this parameter is omitted, then the amount of disk free space cannot be determined, and a warning will be shown. However, the amount of space required will still be displayed. </p>
+</dd>
+<dt><a id="_______Options______"></a><a id="_______options______"></a><a id="_______OPTIONS______"></a>       <i>Options</i>      </dt>
+<dd>
+<p>The following options are valid:</p>
+<p></p>
+<dl>
+<dt><a id="-t"></a><a id="-T"></a><b>-t</b></dt>
+<dd>
+<p>Specifies that the extension should determine if there is enough space for a minidump.</p>
+</dd>
+<dt><a id="-s"></a><a id="-S"></a><b>-s</b></dt>
+<dd>
+<p>Specifies that the extension should determine if there is enough space for a summary kernel dump. This is the default value.</p>
+</dd>
+<dt><a id="-f"></a><a id="-F"></a><b>-f</b></dt>
+<dd>
+<p>Specifies that the extension should determine if there is enough space for a full kernel dump.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000</b></p>
+</td>
+<td>
+<p>
+          Kext.dll
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later</b></p>
+</td>
+<td>
+<p>
+          Kext.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>If no <i>Option</i> is specified, then the extension will determine if there is enough space for a summary kernel dump.</p>
+<p>In the following example, the file system is not specified:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !can_write_kdump
+Checking kernel summary dump...
+WARNING: Can't predict how many pages will be used, assuming worst-case.
+Physical memory: 285560 KB
+Page file size: 1572864 KB
+NO: Page file too small</code></pre>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!can_write_kdump%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

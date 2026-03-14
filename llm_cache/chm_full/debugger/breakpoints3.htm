@@ -1,0 +1,58 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Breakpoints"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Breakpoints</title>
+
+<meta name="MS-HAID" content="Engine_Overview_c23d9360-986f-4a98-8815-580deb69b591.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.breakpoints3"></a>Breakpoints</h1>
+</div>
+<p>The <a href="introduction.htm#debugger_engine">debugger engine</a> can create and monitor breakpoints in the target.</p>
+<p>There are two types of breakpoints that the engine can insert into a target: software breakpoints and processor breakpoints.</p>
+<ul>
+<li>
+<p><i>Software breakpoints </i>are inserted into the target's code by modifying the processor instruction at the breakpoint's location.  The debugger engine keeps track of such breakpoints; they are invisible to the clients reading and writing memory at that location.  A software breakpoint is triggered when the target executes the modified instruction.</p>
+</li>
+<li>
+<p><i>Processor breakpoints</i> are inserted into the target's processor by the debugger engine.  A processor breakpoint can be triggered by different actions, for example, executing an instruction at the location (like software breakpoints), or reading or writing memory at the breakpoint's location.  Support for processor breakpoints is dependent on the processor in the target's computer.</p>
+</li>
+</ul>
+<p>A breakpoint's address can be specified by an explicit address, by an expression that evaluates to an address, or by an expression that might evaluate to an address at a future time.  In the last case, each time a module is loaded or unloaded in the target, the engine will attempt to reevaluate the expression and insert the breakpoint if it can determine the address; this makes it possible to set breakpoints in modules before they are loaded.</p>
+<p>A number of parameters can be associated with a breakpoint to control its behavior:</p>
+<ul>
+<li>
+<p>A breakpoint can be associated with a particular thread in the target and will only be triggered by that thread.</p>
+</li>
+<li>
+<p>A breakpoint can have debugger commands associated with it; these commands will automatically be executed when the breakpoint is triggered.</p>
+</li>
+<li>
+<p>A breakpoint can be flagged as inactive until the target has passed it a specified number of times.</p>
+</li>
+<li>
+<p>A breakpoint can be automatically removed the first time it is triggered.</p>
+</li>
+</ul>
+<h3><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For details about using breakpoints, see <a href="setting_breakpoints.htm">Using Breakpoints</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Breakpoints%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

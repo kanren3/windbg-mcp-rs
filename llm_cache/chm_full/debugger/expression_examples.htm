@@ -1,0 +1,142 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Expression Examples"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Expression Examples</title>
+
+<meta name="MS-HAID" content="r13_syntax_7538f485-e4d2-4edc-8290-314527cbb37d.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.expression_examples"></a>Expression Examples</h1>
+</div>
+<h2><a id="ddk_expression_examples_dbg"></a><a id="DDK_EXPRESSION_EXAMPLES_DBG"></a></h2>
+<p>This topics contains examples of MASM and C++ expressions that are used in various commands.</p>
+<p>All other sections of this Help documentation use MASM expression syntax in the examples (unless otherwise noted). C++ expression syntax is very useful for manipulating structures and variables, but it does not parse the parameters of debugger commands very well. </p>
+<p>If you are using debugger commands for general purposes or using debugger extensions, you should set MASM expression syntax as the default syntax. If you must have a specific parameter to use C++ expression syntax, use the <b>@@( )</b> syntax.</p>
+<h3><a id="conditional_breakpoints"></a><a id="CONDITIONAL_BREAKPOINTS"></a>Conditional Breakpoints</h3>
+<p>You can use comparison operators to create <a href="setting_a_conditional_breakpoint.htm">conditional breakpoints</a>.  The following code example uses MASM expression syntax. Because the current default radix is 16, the example uses the <b>0n</b> prefix so that the number 20 is understood as a decimal number.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; bp MyFunction+0x43 "j ( poi(MyVar)&gt;0n20 ) ''; 'gc' " </pre>
+</td>
+</tr>
+</table></span></div>
+<p>In the previous example, <b>MyVar</b> is an integer in the C source. Because the MASM parser treats all symbols as addresses, the example must have the <b>poi</b> operator to dereference <b>MyVar</b>.</p>
+<h3><a id="conditional_expressions"></a><a id="CONDITIONAL_EXPRESSIONS"></a>Conditional Expressions</h3>
+<p>The following example prints the value of <b>ecx</b> if <b>eax</b> is greater than <b>ebx</b>, 7 if <b>eax</b> is less than <b>ebx</b>, and 3 if <b>eax</b> equals <b>ebx</b>. This example uses the MASM expression evaluator, so the equal sign (=) is a comparison operator, not an assignment operator.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; ? ecx*(eax&gt;ebx) + 7*(eax&lt;ebx) + 3*(eax=ebx) </pre>
+</td>
+</tr>
+</table></span></div>
+<p>In C++ syntax, the <b>@</b> sign indicates a register, a double equal sign (==) is the comparison operator, and code must explicitly cast from BOOL to <b>int</b>. Therefore, in C++ syntax, the previous command becomes the following.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; ?? @ecx*(int)(@eax&gt;@ebx) + 7*(int)(@eax&lt;@ebx) + 3*(int)(@eax==@ebx) </pre>
+</td>
+</tr>
+</table></span></div>
+<h3><a id="c___expression_examples"></a><a id="C___EXPRESSION_EXAMPLES"></a>C++ Expression Examples</h3>
+<p>If <b>myInt</b> is a ULONG32 value and if you are using the MASM expression evaluator, the following two examples show the value of <b>MyInt</b>.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; ?? myInt 
+0:000&gt; dd myInt L1 </pre>
+</td>
+</tr>
+</table></span></div>
+<p>However, the following example shows the <i>address</i> of <b>myInt</b>.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; ? myInt </pre>
+</td>
+</tr>
+</table></span></div>
+<h3><a id="mixed_expression_examples"></a><a id="MIXED_EXPRESSION_EXAMPLES"></a>Mixed Expression Examples</h3>
+<p>You cannot use source-line expressions in a C++ expression. The following example uses the <b>@@( )</b> syntax to nest an MASM expression within a C++ expression. This example sets <b>MyPtr</b> equal to the address of line 43 of the Myfile.c file.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; ?? MyPtr = @@( `myfile.c:43` )</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The following examples set the default expression evaluator to MASM and then evaluate <i>Expression2</i> as a C++ expression, and evaluate <i>Expression1</i> and <i>Expression3</i> as MASM expressions.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; .expr /s masm 
+0:000&gt; bp Expression1 + @@( Expression2 ) + Expression3 </pre>
+</td>
+</tr>
+</table></span></div>
+<p>If <b>myInt</b> is a ULONG64 value and if you know that this value is followed in memory by another ULONG64, you can set an access breakpoint at that location by using one of the following examples. (Note the use of pointer arithmetic.)</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; ba r8 @@( &amp;myInt + 1 ) 
+0:000&gt; ba r8 myInt + 8 </pre>
+</td>
+</tr>
+</table></span></div>
+<h3><a id="structures"></a><a id="STRUCTURES"></a>Structures</h3>
+<p>The C++ expression evaluator casts pseudo-registers to their appropriate types. For example, <b>$teb</b> is cast as a TEB*. The following example displays the process ID.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; ??  @$teb-&gt;ClientId.UniqueProcess </pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Expression Examples%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

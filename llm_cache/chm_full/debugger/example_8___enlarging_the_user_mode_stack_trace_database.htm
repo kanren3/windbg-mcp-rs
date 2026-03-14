@@ -1,0 +1,102 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Example 8: Enlarging the User-Mode Stack Trace Database"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Example 8:  Enlarging the User-Mode Stack Trace Database</title>
+
+<meta name="MS-HAID" content="GFlags_f1182099-4a58-4b7f-94f0-441694244bcf.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.example_8___enlarging_the_user_mode_stack_trace_database"></a>Example 8:  Enlarging the User-Mode Stack Trace Database</h1>
+</div>
+<h2><a id="ddk_example_8___enlarging_the_user_mode_stack_trace_database_dtools"></a><a id="DDK_EXAMPLE_8___ENLARGING_THE_USER_MODE_STACK_TRACE_DATABASE_DTOOLS"></a></h2>
+<p>The following GFlags command increases the maximum size of the user-mode stack trace database for myapp.exe, a fictitious program, from 8 MB to 24 MB.</p>
+<p>The command uses the <b>/i</b> parameter to specify the image file. It uses the <b>/tracedb</b> parameter to set the maximum stack trace database size and the value 24 to indicate the size in megabytes. The command uses decimal units. (Hexadecimal units are not valid.)</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>gflags /i MyApp.exe /tracedb 24</pre>
+</td>
+</tr>
+</table></span></div>
+<p>As the following error message indicates, this command fails because the <a href="create_user_mode_stack_trace_database.htm">Create user mode stack trace database</a> (+ust) flag is not set for the MyApp image file. You cannot set the size of a trace database until you create one. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>Failed to set the trace database size for `MyApp.exe'</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The following commands fix the error. The first command creates a trace database for myapp.exe and the second command sets the maximum size of the trace database to 24 MB. These commands cannot be combined into a single command. The following display shows the commands and the success message from GFlags.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>gflags /i MyApp.exe +ust
+
+Current Registry Settings for MyApp.exe executable are: 00001000
+    ust - Create user mode stack trace database
+
+gflags /i MyApp.exe /tracedb 24
+
+Trace database size for `MyApp.exe' set to 24 Mb.</pre>
+</td>
+</tr>
+</table></span></div>
+<p>GFlags can change the size of the user-mode stack trace database, but it does not display it. To display the trace database size, use registry APIs, Regedit, or Reg (reg.exe), a tool included in Windows XP and Windows Server 2003, to check the value of the <b>StackTraceDatabaseSizeInMB</b> registry entry (HKLM\Software\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\<i>ImageFileName</i>\<b>StackTraceDatabaseSizeInMB</b>).</p>
+<p>(A version of Reg is included in Windows XP, but that version does not permit the <b>/v</b> and <b>/s</b> switches in the same command.) </p>
+<p>The following command uses Reg to query the value of <b>StackTraceDatabaseSizeInMB</b>:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>reg query "HKLM\Software\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\MyApp.exe" /v StackTraceDatabaseSizeInMB </pre>
+</td>
+</tr>
+</table></span></div>
+<p>In response, Reg displays the value of <b>StackTraceDatabaseSizeInMB</b>, which confirms that the new value, 24 (0x18), was set. This value becomes effective when you restart myapp.exe.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>! REG.EXE VERSION 3.0
+
+HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\MyApp.exe
+    StackTraceDatabaseSizeInMB  REG_DWORD       0x18</pre>
+</td>
+</tr>
+</table></span></div>
+<div class="alert"><b>Tip</b>  
+     Type the <b>reg query</b> command into Notepad, then save the file as tracedb.bat. Thereafter, to display the value of <b>StackTraceDatabaseSizeInMB</b>, just type <b>TraceDb</b>. </div>
+<div> </div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Example 8:  Enlarging the User-Mode Stack Trace Database%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

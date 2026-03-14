@@ -1,0 +1,79 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The CTRL+D key toggles debugger internal information flow on and off. This is used to restart communication between the target computer and the host computer in cases where the debugger is not communicating properly."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>CTRL+D (Toggle Debug Info)</title>
+
+<meta name="MS-HAID" content="r23_keys_099a6f71-3f8d-48fd-9839-6e38b8cbb28d.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.ctrl_d__toggle_debug_info_"></a>CTRL+D (Toggle Debug Info)</h1>
+</div>
+<p>The CTRL+D key toggles debugger internal information flow on and off. This is used to restart communication between the target computer and the host computer in cases where the debugger is not communicating properly.</p>
+<p>KD Syntax</p>
+<pre class="syntax">CTRL+D  ENTER 
+</pre>
+<p>WinDbg Syntax</p>
+<pre class="syntax">CTRL+ALT+D 
+</pre>
+<h2><a id="ddk_meta_ctrl_d_dbg"></a><a id="DDK_META_CTRL_D_DBG"></a></h2>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Debuggers</b></p>
+</td>
+<td>
+<p>KD and WinDbg only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>kernel mode only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>live debugging only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>all </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>When this is toggled on, the debugger outputs information about the communication between the host computer and the target computer.</p>
+<p>This key can be used to test whether the debugger has crashed. If you suspect that either the debugger or the target is frozen, use this key. If you see packets being sent, the target is still working. If you see time-out messages, then the target is not responding. If there are no messages at all, the debugger has crashed.</p>
+<p>If the target is not responding, use CTRL+R ENTER CTRL+C. If time-out messages continue to appear, the target has crashed (or the debugger was misconfigured).</p>
+<p>This is also useful for debugging the KD debugger itself.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20CTRL+D (Toggle Debug Info)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

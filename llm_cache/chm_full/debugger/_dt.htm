@@ -1,0 +1,78 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !dt extension displays information about a CSR thread.This extension command should not be confused with the dt (Display Type) command."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!dt</title>
+
+<meta name="MS-HAID" content="r31_exts_user_021363b5-37d4-4d44-b957-bd2a38d4691f.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._dt"></a>!dt</h1>
+</div>
+<p>The <b>!dt</b> extension displays information about a CSR thread.</p>
+<p>This extension command should not be confused with the <a href="dt__display_type_.htm"><b>dt (Display Type)</b></a> command.</p>
+<pre class="syntax">
+    <b>!dt </b>[<b>v</b>]<b> </b><i>CSR-Thread</i> 
+</pre>
+<h2><a id="ddk__dt_dbg"></a><a id="DDK__DT_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______v______"></a><a id="_______V______"></a>       <b>v</b>      </dt>
+<dd>
+<p>Verbose mode.</p>
+</dd>
+<dt><a id="_______CSR-Thread______"></a><a id="_______csr-thread______"></a><a id="_______CSR-THREAD______"></a>       <i>CSR-Thread</i>      </dt>
+<dd>
+<p>Specifies the hexadecimal address of the CSR thread.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000</b></p>
+</td>
+<td>
+<p>
+          Ntsdexts.dll
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Windows XP and later</b></p>
+</td>
+<td>
+<p>
+          Ntsdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>This extension displays the thread, process, client ID, flags, and reference count associated with the CSR thread. If verbose mode is selected, the display will also include list pointers, thread handle, and the wait block.</p>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="_dp___ntsdexts_dp_.htm"><b>!dp (!ntsdexts.dp)</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!dt%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

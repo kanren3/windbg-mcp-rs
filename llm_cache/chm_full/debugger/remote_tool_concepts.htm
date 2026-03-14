@@ -1,0 +1,45 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Remote Tool Concepts"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Remote Tool Concepts</title>
+
+<meta name="MS-HAID" content="Remote_58739417-0eb2-4500-ba8e-6c8216d6ab86.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.remote_tool_concepts"></a>Remote Tool Concepts</h1>
+</div>
+<h2><a id="ddk_remote_tool_concepts_dtools"></a><a id="DDK_REMOTE_TOOL_CONCEPTS_DTOOLS"></a></h2>
+<p>The following concepts are used in the Remote tool.</p>
+<h3><a id="client_and_server"></a><a id="CLIENT_AND_SERVER"></a>Client and Server</h3>
+<p>The Remote tool uses a client-server paradigm that avoids the words <i>local</i> and <i>remote</i>, which are relative terms that can be confusing when there are multiple users and multiple computers.</p>
+<p>Commands that you type at the client and server computers appear in the Command Prompt windows of both computers.</p>
+<h3><a id="the_server"></a><a id="THE_SERVER"></a>The Server</h3>
+<p>The <i>server</i> is the computer on which the console program runs. The <i>Remote Server</i> is the instance of the Remote tool running on the server. The server establishes and names the remote session (named pipe), issues the command to start the console program, and determines who is permitted to connect to the session.</p>
+<h3><a id="the_client"></a><a id="THE_CLIENT"></a>The Client</h3>
+<p>The <i>client</i> is a remote computer that sends commands to the console program. The <i>Remote Client</i> is the instance of the Remote tool running on the client computer. The client connects to the remote session that the server established and uses the remote session (named pipe) that the server created to send commands to the console program that runs on the server. </p>
+<p>The Remote tool supports multiple clients in each remote session. Each client is running one Remote Client. All of the clients can send commands to the console program running on the server, and all of the clients can see the commands sent and output displayed.</p>
+<h3><a id="visible_session"></a><a id="VISIBLE_SESSION"></a>Visible Session</h3>
+<p>When remote sessions are <i>visible</i>, they appear in the list of remote sessions on the computer. To display the list, use the <a href="remote_server_query_command.htm"><b>Remote Server query command</b></a> (<b>/q</b>).</p>
+<p>By default, only debugger sessions are visible, that is, sessions in which the value of the <i>Command</i> parameter include the words <b>kd</b>, <b>dbg</b>, <b>remoteds</b>, <b>ntsd</b>, or <b>cdb</b>; otherwise, the session is not visible. The <i>Command</i> parameter is part of the Remote tool command on the server.</p>
+<p>To make a session visible, add the <b>/v</b> parameter to the <a href="remote_server_syntax.htm"><b>Remote Server</b></a> command. To make a debugger session invisible, add the <b>/-v</b> parameter to the command.</p>
+<p>For help with the Remote Server query command, see <a href="remote_server_query_command.htm"><b>Remote Server Query Command</b></a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Remote Tool Concepts%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

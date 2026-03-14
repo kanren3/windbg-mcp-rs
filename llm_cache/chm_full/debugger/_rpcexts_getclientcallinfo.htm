@@ -1,0 +1,102 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !rpcexts.getclientcallinfo extension searches the system's RPC state information for client call (CCALL) information."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!rpcexts.getclientcallinfo</title>
+
+<meta name="MS-HAID" content="r32_exts_Lg_ND_RPC_1c73c315-aa3a-49aa-89f5-be5de77dab52.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._rpcexts_getclientcallinfo"></a>!rpcexts.getclientcallinfo</h1>
+</div>
+<p>The <b>!rpcexts.getclientcallinfo</b> extension searches the system's RPC state information for client call (CCALL) information.</p>
+<pre class="syntax">
+    <b>!rpcexts.getclientcallinfo [ </b><i>CallID</i><b> | 0 [ </b><i>IfStart</i><b> | 0 [ </b><i>ProcNum</i><b> | 0xFFFF [</b><i>ProcessID</i><b>|0] ] ] ]</b> 
+<b>!rpcexts.getclientcallinfo -?</b> 
+</pre>
+<h2><a id="ddk__rpcexts_getclientcallinfo_dbg"></a><a id="DDK__RPCEXTS_GETCLIENTCALLINFO_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______CallID______"></a><a id="_______callid______"></a><a id="_______CALLID______"></a>       <i>CallID</i>      </dt>
+<dd>
+<p>Specifies the call ID. This parameter is optional; include it if you only want to display calls matching a specific <i>CallID</i> value.</p>
+</dd>
+<dt><a id="_______IfStart______"></a><a id="_______ifstart______"></a><a id="_______IFSTART______"></a>       <i>IfStart</i>      </dt>
+<dd>
+<p>Specifies the first DWORD of the interface UUID on which the call was made. This parameter is optional; include it if you only want to display calls matching a specific <i>IfStart</i> value.</p>
+</dd>
+<dt><a id="_______ProcNum______"></a><a id="_______procnum______"></a><a id="_______PROCNUM______"></a>       <i>ProcNum</i>      </dt>
+<dd>
+<p>Specifies the procedure number of this call. (The RPC Run-Time identifies individual routines from an interface by numbering them by position in the IDL file -- the first routine in the interface is 0, the second 1, and so on.)  This parameter is optional; include it if you only want to display calls matching a specific <i>ProcNum</i> value.</p>
+</dd>
+<dt><a id="_______ProcessID______"></a><a id="_______processid______"></a><a id="_______PROCESSID______"></a>       <i>ProcessID</i>      </dt>
+<dd>
+<p>Specifies the process ID (PID) of the client process that owns the calls you want to display. This parameter is optional; omit it if you want to display calls owned by multiple processes.</p>
+</dd>
+<dt><a id="_______-_______"></a>       <b>-?</b>      </dt>
+<dd>
+<p>Displays some brief Help text for this extension in the Command Prompt window.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000</b></p>
+</td>
+<td>
+<p>Unavailable </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Rpcexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about debugging Microsoft Remote Procedure Call (RPC), see <a href="rpc_debugging.htm">RPC Debugging</a>.</p>
+<h2>Remarks</h2>
+<p>This extension can only be used with CDB or with user-mode WinDbg. It is only available if full RPC state information is being gathered.</p>
+<p>Here is an example:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:002&gt; !rpcexts.getclientcallinfo
+Searching for call info ...
+PID  CELL ID   PNO  IFSTART  TIDNUMBER CALLID   LASTTIME PS CLTNUMBER ENDPOINT
+------------------------------------------------------------------------------
+03d4 0000.0001 0000 19bb5061 0000.0000 00000001 0004ca9b 07 0000.0002 1118</pre>
+</td>
+</tr>
+</table></span></div>
+<p>For a similar example using the DbgRpc tool, see <a href="get_rpc_client_call_information.htm">Get RPC Client Call Information</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!rpcexts.getclientcallinfo%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

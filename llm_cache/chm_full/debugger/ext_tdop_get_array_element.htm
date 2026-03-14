@@ -1,0 +1,66 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The EXT_TDOP_GET_ARRAY_ELEMENT sub-operation of the DEBUG_REQUEST_EXT_TYPED_DATA_ANSI Request operation returns an element from an array."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>EXT_TDOP_GET_ARRAY_ELEMENT</title>
+
+<meta name="MS-HAID" content="IDebugAdvanced_109155b7-0804-4cbd-89db-04e8d4ccbb73.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.ext_tdop_get_array_element"></a>EXT_TDOP_GET_ARRAY_ELEMENT</h1>
+</div>
+<p>The EXT_TDOP_GET_ARRAY_ELEMENT sub-operation of the <a href="debug_request_ext_typed_data_ansi.htm"><b>DEBUG_REQUEST_EXT_TYPED_DATA_ANSI</b></a><a href="request.htm"><b> Request</b></a> operation returns an element from an array.</p>
+<p>
+<p><b>Parameters</b></p>
+</p>
+<dl>
+<dt><a id="Operation"></a><a id="operation"></a><a id="OPERATION"></a><b>Operation</b></dt>
+<dd>
+<p>Set to EXT_TDOP_GET_ARRAY_ELEMENT for this sub-operation.</p>
+</dd>
+<dt><a id="InData"></a><a id="indata"></a><a id="INDATA"></a><b>InData</b></dt>
+<dd>
+<p>Specifies the array whose element is being requested.  <b>InData</b> can also specify a pointer, in which case it is treated as an array.</p>
+</dd>
+<dt><a id="OutData"></a><a id="outdata"></a><a id="OUTDATA"></a><b>OutData</b></dt>
+<dd>
+<p>Receives the requested element from the array.</p>
+</dd>
+<dt><a id="In64"></a><a id="in64"></a><a id="IN64"></a><b>In64</b></dt>
+<dd>
+<p>Specifies the index of the element in the array.</p>
+</dd>
+<dt><a id="Status"></a><a id="status"></a><a id="STATUS"></a><b>Status</b></dt>
+<dd>
+<p>Receives the status code returned by this sub-operation.  This is the same as the value returned by <a href="request.htm"><b>Request</b></a>.</p>
+</dd>
+</dl>
+<h2>Remarks</h2>
+<p>EXT_TDOP_GET_ARRAY_ELEMENT is a value in the <a href="ext_tdop.htm"><b>EXT_TDOP</b></a> enumeration.</p>
+<p>The parameters for this sub-operation are members of the <a href="ext_typed_data.htm"><b>EXT_TYPED_DATA</b></a> structure.  The members of EXT_TYPED_DATA that are not listed in the preceding Parameters section are not used by this sub-operation and should be set to zero.  The descriptions of the members in the preceding Parameters section specify what the members are used for. See <b>EXT_TYPED_DATA</b> for more details.</p>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="debug_request_ext_typed_data_ansi.htm"><b>DEBUG_REQUEST_EXT_TYPED_DATA_ANSI</b></a></dt>
+<dt><a href="ext_tdop.htm"><b>EXT_TDOP</b></a></dt>
+<dt><a href="ext_typed_data.htm"><b>EXT_TYPED_DATA</b></a></dt>
+<dt><a href="request.htm"><b>Request</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20EXT_TDOP_GET_ARRAY_ELEMENT%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

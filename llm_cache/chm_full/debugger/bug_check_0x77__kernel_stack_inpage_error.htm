@@ -1,0 +1,157 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The KERNEL_STACK_INPAGE_ERROR bug check has a value of 0x00000077. This bug check indicates that the requested page of kernel data from the paging file could not be read into memory."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0x77: KERNEL_STACK_INPAGE_ERROR</title>
+
+<meta name="MS-HAID" content="t05_bugs_60_2bb65949-533f-4dde-b9c4-1a3058b900f4.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0x77__kernel_stack_inpage_error"></a>Bug Check 0x77: KERNEL_STACK_INPAGE_ERROR</h1>
+</div>
+<p>The KERNEL_STACK_INPAGE_ERROR bug check has a value of 0x00000077. This bug check indicates that the requested page of kernel data from the paging file could not be read into memory. </p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2> KERNEL_STACK_INPAGE_ERROR Parameters</h2>
+<p>The four parameters that listed in the message have two possible meanings.</p>
+<p>If the first parameter is 0, 1, or 2, the parameters have the following meaning.</p>
+<table>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>1</p>
+</td>
+<td>
+<p><b>0:</b>  The page of kernel data was retrieved from page cache.</p>
+<p><b>1:</b>  The page was retrieved from a disk.</p>
+<p><b>2:</b>  The page was retrieved from a disk, the storage stack returned SUCCESS, but <b>Status.Information</b> is not equal to PAGE_SIZE.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>2</p>
+</td>
+<td>
+<p>The value that appears in the stack where the signature should be.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>3</p>
+</td>
+<td>
+<p>0</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>4</p>
+</td>
+<td>
+<p>The address of the signature on the kernel stack</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>If the first parameter is any value other than 0, 1, or 2, the parameters have the following meaning.</p>
+<table>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>1</p>
+</td>
+<td>
+<p>The status code</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>2</p>
+</td>
+<td>
+<p>The I/O status code</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>3</p>
+</td>
+<td>
+<p>The page file number</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>4</p>
+</td>
+<td>
+<p>The offset into page file</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Cause</h2>
+<p>If the first parameter is 0 or 1, the stack signature in the kernel stack was not found. This error is probably caused by defective hardware, such as a RAM error.</p>
+<p>If the first parameter is 2, the driver stack returned an inconsistent status for the read of the page. For example, the driver stack returned a success status even though it did not read the whole page.</p>
+<p>If the first parameter is any value other than 0, 1, or 2, the value of the first parameter is an NTSTATUS error code that the driver stack returns after it tries to retrieve the page of kernel data.  You can determine the exact cause of this error from the I/O status code (the second parameter). Some common status codes include the following:</p>
+<ul>
+<li>
+<p>0xC000009A, or STATUS_INSUFFICIENT_RESOURCES, indicates a lack of nonpaged pool resources. This status code indicates a driver error in the storage stack. (The storage stack should always be able to retrieve this data, regardless of software resource availability.)</p>
+</li>
+<li>
+<p>0xC000009C, or STATUS_DEVICE_DATA_ERROR, indicates bad blocks (sectors) on the hard disk.</p>
+</li>
+<li>
+<p>0xC000009D, or STATUS_DEVICE_NOT_CONNECTED, indicates defective or loose cabling, termination, or that the controller does not see the hard disk drive.</p>
+</li>
+<li>
+<p>0xC000016A, or STATUS_DISK_OPERATION_FAILED, indicates bad blocks (sectors) on the hard disk.</p>
+</li>
+<li>
+<p>0xC0000185, or STATUS_IO_DEVICE_ERROR, indicates improper termination or defective cabling on SCSI devices or that two devices are trying to use the same IRQ.</p>
+</li>
+</ul>
+<p>These status codes are the most common ones that have specific causes. For more information about other possible status codes that might be returned, see the Ntstatus.h file in the Microsoft Windows Driver Kit (WDK).</p>
+<p>A virus infection can also cause this bug check.</p>
+<h2>Resolution</h2>
+<p><b>Resolving a bad block problem:</b> If you can restart the computer after the error, Autochk runs automatically and attempts to map the bad sector to prevent it from being used anymore. </p>
+<p>If Autochk does not scan the hard disk for errors, you can manually start the disk scanner. Run <b>Chkdsk /f /r</b> on the system partition. You must restart the computer before the disk scan begins. If you cannot start the system because the error, use the Recovery Console and run <b>Chkdsk /r</b>.  </p>
+<div class="alert"><b>Warning</b>    If your system partition is formatted with the FAT file system, the long file names that the Windows operating system uses might be damaged if you use Scandisk or another MS-DOS-based hard disk tool to verify the integrity of your hard disk drive from MS-DOS. Always use the version of Chkdsk that matches your version of the Windows operating system.</div>
+<div> </div>
+<p><b>Resolving a defective hardware problem:</b> If the I/O status is 0xC0000185 and the paging file is on an SCSI disk, check the disk cabling and SCSI termination for problems.  </p>
+<p><b>Resolving a failing RAM problem:</b> Run the hardware diagnostics that the system manufacturer supplies, especially the memory scanner. For more information about these procedures, see the owner's manual for your computer. </p>
+<p>Check that all the adapter cards in the computer are properly seated. Use an ink eraser or an electrical contact treatment, available at electronics supply stores, to ensure adapter card contacts are clean.</p>
+<p>Check the System Log in Event Viewer for additional error messages that might help identify the device that is causing the error. You can also disable memory caching of the BIOS to try to resolve this error.</p>
+<p>Make sure that the latest Windows Service Pack is installed.</p>
+<p>If the preceding steps fail to resolve the error, take the system motherboard to a repair facility for diagnostic testing. A crack, a scratched trace, or a defective component on the motherboard can cause this error.</p>
+<p><b>Resolving a virus infection:</b> Check your computer for viruses by using any up-to-date, commercial virus scanning software that examines the Master Boot Record of the hard disk. All Windows file systems can be infected by viruses.</p>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="bug_check_0x7a__kernel_data_inpage_error.htm"><b>Bug Check 0x7A (KERNEL_DATA_INPAGE_ERROR) </b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

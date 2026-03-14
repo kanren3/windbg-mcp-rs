@@ -1,0 +1,181 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !errrec extension displays the contents of a Windows Hardware Error Architecture (WHEA) error record."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!errrec</title>
+
+<meta name="MS-HAID" content="r27_exts_kernel_E_0ca982be-b5e0-4f4a-953d-93df795592bd.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._errrec"></a>!errrec</h1>
+</div>
+<p>The <b>!errrec</b> extension displays the contents of a Windows Hardware Error Architecture (WHEA) error record.</p>
+<pre class="syntax">
+    <b>!errrec </b><i>Address</i> 
+</pre>
+<h2><a id="ddk__ubp_dbg"></a><a id="DDK__UBP_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Address______"></a><a id="_______address______"></a><a id="_______ADDRESS______"></a>       <i>Address</i>      </dt>
+<dd>
+<p>Specifies the address of the error record. </p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Windows 2000
+         </b></p>
+</td>
+<td>
+<p>Unavailable </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP</b></p>
+</td>
+<td>
+<p>Unavailable </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows Server 2003</b></p>
+</td>
+<td>
+<p>Unavailable </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows Vista and later
+         </b></p>
+</td>
+<td>
+<p>
+          Kdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>This extension can be used only in Windows Vista and later versions of Windows.</p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>The <a href="_whea.htm"><b>!whea</b></a> and <a href="_errpkt.htm"><b>!errpkt</b></a> extensions can be used to display additional WHEA information.  For general information about WHEA, see <a href="http://go.microsoft.com/fwlink/p/?linkid=153571">Windows Hardware Error Architecture (WHEA)</a> in the Windows Driver Kit (WDK) documentation. </p>
+<h2>Remarks</h2>
+<p>The following example shows how the <a href="_whea.htm"><b>!whea</b></a> extension can be used to obtain the address of an error record, and then the contents of this record can be displayed by the <b>!errrec</b> extension: </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>3: kd&gt; !whea 
+Error Source Table @ fffff800019ca250
+13 Error Sources
+Error Source 0 @ fffffa80064132c0
+   Notify Type      : Machine Check Exception
+   Type             : 0x0 (MCE)
+   Error Count      : 8
+   Record Count     : 10
+   Record Length    : c3e
+   Error Records    : wrapper @ fffffa8007cf4000  record @ fffffa8007cf4030
+
+. . . . 
+
+3: kd&gt; !errrec fffffa8007cf4030 
+===============================================================================
+Common Platform Error Record @ fffffa8007cf4030
+-------------------------------------------------------------------------------
+Revision      : 2.1
+Record Id     : 01c9c7ff04e0ff7d
+Severity      : Fatal (1)
+Length        : 1730
+Creator       : Microsoft
+Notify Type   : Machine Check Exception
+Timestamp     : 4/28/2009 12:54:47
+Flags         : 0x00000000
+
+===============================================================================
+Section 0     : Processor Generic
+-------------------------------------------------------------------------------
+Descriptor    @ fffffa8007cf40b0
+Section       @ fffffa8007cf4188
+Offset        : 344
+Length        : 192
+Flags         : 0x00000001 Primary
+Severity      : Fatal
+
+No valid data fields are present.
+
+===============================================================================
+Section 1     : {390f56d5-ca86-4649-95c4-73a408ae5834}
+-------------------------------------------------------------------------------
+Descriptor    @ fffffa8007cf40f8
+Section       @ fffffa8007cf4248
+Offset        : 536
+Length        : 658
+Flags         : 0x00000000
+Severity      : Fatal
+
+*** Unknown section format ***
+
+===============================================================================
+Section 2     : Error Packet
+-------------------------------------------------------------------------------
+Descriptor    @ fffffa8007cf4140
+Section       @ fffffa8007cf44da
+Offset        : 1194
+Length        : 536
+Flags         : 0x00000000
+Severity      : Fatal
+
+   WHEA Error Packet Info Section (@ fffffa8007cf44da)
+   Flags            : 0x00000000
+   Size             : 0x218
+   RawDataLength    : 0x392
+   Context          : 0x0000000000000000
+   ErrorType        : 0x0 - Processor
+   ErrorSeverity    : 0x1 - Fatal
+   ErrorSourceId    : 0x0
+   ErrorSourceType  : 0x0 - MCE
+   Version          : 00000002
+   Cpu              : 0000000000000002
+   RawDataFormat    : 0x2 - Intel64 MCA
+
+   Raw Data         : Located @ FFFFFA8007CF45F2
+
+Processor Error: (Internal processor error)
+This error means either the processor is damaged or perhaps
+voltage and/or temperature thresholds have been exceeded.
+If the problem continues to occur, replace the processor.
+Processor Number : 2
+Bank Number      : 0
+   Status  :                0
+   Address : 0000000000000000 (I)
+   Misc    : 0000000000000000 (I)</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!errrec%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,93 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !storagekd.storloglist extension displays the Storport adapter’s internal log entries."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!storagekd.storloglist</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._storagekd_storloglist"></a>!storagekd.storloglist</h1>
+</div>
+<p>The <b>!storagekd.storloglist</b> extension displays the Storport adapter’s internal log entries.</p>
+<pre class="syntax">
+    <b>!storagekd.storloglist </b><i>&lt;Address&gt;</i> [<i>&lt;starting_entry&gt;</i> [<i>&lt;ending_entry&gt;</i>]] [<i>L &lt;count&gt;</i>] 
+</pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Address______"></a><a id="_______address______"></a><a id="_______ADDRESS______"></a>       <i>Address</i>      </dt>
+<dd>
+<p>Specifies the address of a Storport adapter device extension or device object.</p>
+</dd>
+<dt><a id="_______starting_entry______"></a><a id="_______STARTING_ENTRY______"></a>       <i>starting_entry</i>      </dt>
+<dd>
+<p>The beginning entry in the range to display. If not specified, the last <i>count</i> entries will be displayed.</p>
+</dd>
+<dt><a id="_______ending_entry______"></a><a id="_______ENDING_ENTRY______"></a>       <i>ending_entry</i>      </dt>
+<dd>
+<p>The ending entry in the range to display. If not specified, <i>count</i> entries will be displayed, beginning with the item specified by <i>starting_entry</i>.</p>
+</dd>
+<dt><a id="_______count______"></a><a id="_______COUNT______"></a>       <i>count</i>      </dt>
+<dd>
+<p>Count of entries to be displayed. If not specified, a value of 50 is used.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 8 and later</b></p>
+</td>
+<td>
+<p>
+          Storagekd.dll</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>Here is an example of <b>!storagekd.storloglist</b> display:</p>
+<p><b>0: kd&gt; !storagekd.storloglist ffffe0010f5e01a0</b></p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>
+Storport RaidLogList
+    Circular buffer location:  0xffffe0010f5e1720
+    Total logs written: 8
+    Displaying entries 0 through 7
+    ---------------------------------------------------------------------
+    [0]_[23:04:20.521] ResumeDevice.......... Caller: storport!RaidUnitPauseTimerDpcRoutine+0x28 (fffff800`fb4d0b28), P/P/T/L: 0/0/0/0, Pause count: 0, Resumed: True
+    [1]_[23:04:20.646] ResumeDevice.......... Caller: storport!RaidUnitPauseTimerDpcRoutine+0x28 (fffff800`fb4d0b28), P/P/T/L: 0/0/0/0, Pause count: 0, Resumed: True
+    [2]_[23:04:20.646] SpPauseDevice......... Caller: iaStorAV!RpiPauseDevice+0x67 (fffff800`fb70554f), P/T/L: 3/0/0, Timeout: 180, Adapter: 0xffffe0010f5e01a0
+    [3]_[23:04:20.646] PauseDevice........... Caller: storport!StorPortPauseDevice+0x2f6 (fffff800`fb4b52d6), P/P/T/L: 0/3/0/0, Pause count: 1
+    [4]_[23:04:20.646] SpResumeDevice........ Caller: iaStorAV!RpiResumeDevice+0x5f (fffff800`fb7055fb), P/T/L: 3/0/0, Adapter: 0xffffe0010f5e01a0
+    [5]_[23:04:20.646] ResumeDevice.......... Caller: storport!StorPortResumeDevice+0x19 (fffff800`fb4aa23f), P/P/T/L: 0/3/0/0, Pause count: 0, Resumed: True
+    [6]_[23:04:20.646] SpPauseDevice......... Caller: iaStorAV!RpiPauseDevice+0x67 (fffff800`fb70554f), P/T/L: 3/0/0, Timeout: 180, Adapter: 0xffffe0010f5e01a0
+    [7]_[23:04:20.646] PauseDevice........... Caller: storport!StorPortPauseDevice+0x2f6 (fffff800`fb4b52d6), P/P/T/L: 0/3/0/0, Pause count: 1
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!storagekd.storloglist%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,121 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .kdfiles command reads a file and uses its contents as the driver replacement map."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.kdfiles (Set Driver Replacement Map)</title>
+
+<meta name="MS-HAID" content="r20_metacmds_E_ac521695-c758-497c-bf40-870a5b50011d.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._kdfiles__set_driver_replacement_map_"></a>.kdfiles (Set Driver Replacement Map)</h1>
+</div>
+<p>The <b>.kdfiles</b> command reads a file and uses its contents as the driver replacement map.</p>
+<pre class="syntax"><b>.kdfiles </b><i>MapFile</i> 
+<b>.kdfiles -m </b><i>OldDriver</i><b> </b><i>NewDriver</i>
+<b>.kdfiles -s </b><i>SaveFile</i> 
+<b>.kdfiles -c</b> 
+<b>.kdfiles</b> 
+
+</pre>
+<h2><a id="ddk_meta_set_driver_replacement_map_dbg"></a><a id="DDK_META_SET_DRIVER_REPLACEMENT_MAP_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______MapFile______"></a><a id="_______mapfile______"></a><a id="_______MAPFILE______"></a>       <i>MapFile</i>      </dt>
+<dd>
+<p>Specifies the driver replacement map file to read.</p>
+</dd>
+<dt><a id="_______-m______"></a><a id="_______-M______"></a>       <b>-m</b>      </dt>
+<dd>
+<p>Adds a driver replacement association to the current association list.</p>
+</dd>
+<dt><a id="_______OldDriver______"></a><a id="_______olddriver______"></a><a id="_______OLDDRIVER______"></a>       <i>OldDriver</i>      </dt>
+<dd>
+<p>Specifies the path and file name of the previous driver on the target computer. The syntax for <i>OldDriver</i> is the same as that of the first line after <b>map</b> in a driver replacement file. For more information about this syntax, see <a href="mapping_driver_files.htm">Mapping Driver Files</a>.</p>
+</dd>
+<dt><a id="_______NewDriver______"></a><a id="_______newdriver______"></a><a id="_______NEWDRIVER______"></a>       <i>NewDriver</i>      </dt>
+<dd>
+<p>Specifies the path and file name of the new driver. This driver can be on the host computer or at some other network location. The syntax for <i>NewDriver</i> is the same as that of the second line after <b>map</b> in a driver replacement file. For more information about this syntax, see <a href="mapping_driver_files.htm">Mapping Driver Files</a>.</p>
+</dd>
+<dt><a id="_______-s______"></a><a id="_______-S______"></a>       <b>-s</b>      </dt>
+<dd>
+<p>Creates a file and writes the current driver replacement associations to that file.</p>
+</dd>
+<dt><a id="_______SaveFile______"></a><a id="_______savefile______"></a><a id="_______SAVEFILE______"></a>       <i>SaveFile</i>      </dt>
+<dd>
+<p>Specifies the name of the file to create.</p>
+</dd>
+<dt><a id="_______-c______"></a><a id="_______-C______"></a>       <b>-c</b>      </dt>
+<dd>
+<p>Deletes the existing driver replacement map. (This option does not alter the map file itself. Instead, this option clears the debugger's current map settings.)</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<p>You can use the <b>.kdfiles</b> command in Microsoft Windows XP and later versions of Windows. If you use this command in earlier versions of Windows, the command has no effect and does not generate an error.</p>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>Kernel mode only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets
+         </b></p>
+</td>
+<td>
+<p>Live debugging only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Platforms
+         </b></p>
+</td>
+<td>
+<p>x86-based and Itanium-based processors only</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about and examples of driver replacement and the replacement of other kernel-mode modules, a description of the format for driver replacement map files, and restrictions for using this feature, see <a href="mapping_driver_files.htm">Mapping Driver Files</a>.</p>
+<h2>Remarks</h2>
+<p>If you use the <b>.kdfiles</b> command without parameters, the debugger displays the path and name of the current driver replacement map file and the current set of replacement associations.  </p>
+<p>When you run this command, the specified <i>MapFile</i>file is read. If the file is not found or if it does not contain text in the proper format, the debugger displays a message that states, "Unable to load file associations".</p>
+<p>If the specified file is in the correct driver replacement map file format, the debugger loads the file's contents and uses them as the driver replacement map. This map remains until you exit the debugger, or until you issue another <b>.kdfiles</b> command.</p>
+<p>After the file has been read, the driver replacement map is not affected by subsequent changes to the file (unless these changes are followed by another <b>.kdfiles</b> command).</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Version</p>
+</th>
+<td width="70%">
+<p>Supported in Windows XP and later versions of the Windows operating system.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.kdfiles (Set Driver Replacement Map)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

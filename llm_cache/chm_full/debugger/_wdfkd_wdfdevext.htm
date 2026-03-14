@@ -1,0 +1,96 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !wdfkd.wdfdevext extension displays information that is associated with the DeviceExtension member of a Microsoft Windows Driver Model (WDM) DEVICE_OBJECT structure."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!wdfkd.wdfdevext</title>
+
+<meta name="MS-HAID" content="r33~c_exts_WDF_62b0ef23-cfc3-46f9-83bd-d35ddb0c8e9e.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._wdfkd_wdfdevext"></a>!wdfkd.wdfdevext</h1>
+</div>
+<p>The <b>!wdfkd.wdfdevext</b> extension displays information that is associated with the <b>DeviceExtension</b> member of a Microsoft Windows Driver Model (WDM) DEVICE_OBJECT structure.</p>
+<pre class="syntax"><b>!wdfkd.wdfdevext </b><i>DeviceExtension</i></pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______DeviceExtension______"></a><a id="_______deviceextension______"></a><a id="_______DEVICEEXTENSION______"></a>       <i>DeviceExtension</i>      </dt>
+<dd>
+<p>A pointer to a device extension. </p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<p>
+       Wdfkd.dll
+      </p>
+<h3><a id="Frameworks"></a><a id="frameworks"></a><a id="FRAMEWORKS"></a>Frameworks</h3>
+<p>
+       KMDF 1, UMDF 1, UMDF 2</p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information, see <a href="kernel_mode_driver_framework_debugging.htm">Kernel-Mode Driver Framework Debugging</a>.</p>
+<h2>Remarks</h2>
+<p>Here is an example for HdAudBus.sys, which is a KMDF driver. Use <a href="_devnode.htm"><b>!devnode</b></a> to find a device node that has HdAudBus as its function driver. Take the physical device object (PDO) from the output and pass it to <a href="_devstack.htm"><b>!devstack</b></a>. Take the device extension address from the output of <b>!devstack</b> and pass it to <b>!wdfdevext</b>.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !devnode 0 1 hdaudbus
+Dumping IopRootDeviceNode (= 0xffffe000002cfd30)
+DevNode 0xffffe000009b7a50 for PDO 0xffffe00000226880
+  InstancePath is "PCI\VEN_8086&amp;DEV_293E&amp;SUBSYS_2819103C&amp;REV_02\3&amp;33fd14ca&amp;0&amp;D8"
+  ServiceName is "HDAudBus"
+  ...
+0: kd&gt; !devstack 0xffffe00000226880
+  !DevObj           !DrvObj            !DevExt           ObjectName
+  ffffe00001351e20  \Driver\HDAudBus   ffffe000009a3c00  
+&gt; ffffe00000226880  \Driver\pci        ffffe000002269d0  NTPNP_PCI0009
+!DevNode ffffe000009b7a50 :
+  DeviceInst is "PCI\VEN_8086&amp;DEV_293E&amp;SUBSYS_2819103C&amp;REV_02\3&amp;33fd14ca&amp;0&amp;D8"
+  ServiceName is "HDAudBus"
+0: kd&gt; *
+0: kd&gt; !wdfdevext ffffe000009a3c00
+Device context is 0xffffe000009a3c00
+    context:  dt 0xffffe000009a3c00 HDAudBus!HDAudioDeviceExtension (size is 0xa8 bytes)
+    EvtCleanupCallback fffff80001f35950 HDAudBus!HdAudBusEvtDeviceCleanupCallback
+
+!wdfdevice 0x00001fffff65c6e8                        
+!wdfobject 0xffffe000009a3910</code></pre>
+<p>Here is an example for Wudfrd.sys, which is the function driver for the kernel-mode portion of a UMDF 2 driver stack. Use <a href="_devnode.htm"><b>!devnode</b></a> to find a device node that has Wudfrd as its function driver. Take the physical device object (PDO) from the output and pass it to <a href="_devstack.htm"><b>!devstack</b></a>. Take the device extension address from the output of <b>!devstack</b> and pass it to <b>!wdfdevext</b>.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !devnode 0 1 wudfrd
+Dumping IopRootDeviceNode (= 0xffffe000002cfd30)
+DevNode 0xffffe00000a1e530 for PDO 0xffffe00000b15b00
+  InstancePath is "ROOT\SAMPLE\0001"
+  ServiceName is "WUDFRd"
+  ...
+0: kd&gt; !devstack 0xffffe00000b15b00
+  !DevObj           !DrvObj            !DevExt           ObjectName
+  ffffe00000c11040  \Driver\WUDFRd     ffffe00000c11190  
+&gt; ffffe00000b15b00  \Driver\PnpManager 00000000  00000052
+!DevNode ffffe00000a1e530 :
+  DeviceInst is "ROOT\SAMPLE\0001"
+  ServiceName is "WUDFRd"
+0: kd&gt; *
+0: kd&gt; !wdfdevext ffffe00000c11190
+Device context is 0xffffe00000c11190
+---------------------------------------------------------------
+ UMDF Device Instances for this Redirector extension
+---------------------------------------------------------------
+  DriverManagerProcess: 0xffffe00003470500
+
+  ImageName              Ver   DevStack           HostProcess        DeviceID      
+  MyUmdf2Driver.dll      v2.0  0x000000a5a3ab5f70 0xffffe00000c32900  \Device\00000052</code></pre>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!wdfkd.wdfdevext%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

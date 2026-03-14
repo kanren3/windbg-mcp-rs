@@ -1,0 +1,68 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !whattime extension converts a tick count into a standard time value."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!whattime</title>
+
+<meta name="MS-HAID" content="r30_exts_kernel_U_7b92217d-92e2-4ef5-ba5f-17acbab0cf00.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._whattime"></a>!whattime</h1>
+</div>
+<p>The <b>!whattime</b> extension converts a tick count into a standard time value.</p>
+<pre class="syntax"><b>!whattime </b><i>Ticks</i></pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Ticks______"></a><a id="_______ticks______"></a><a id="_______TICKS______"></a>       <i>Ticks</i>      </dt>
+<dd>
+<p>The number of ticks.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000
+         </b></p>
+</td>
+<td>
+<p>Unavailable</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Kdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>The output is displayed as <i>HH:MM:SS.mmm</i>. Here is an example:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !whattime 29857ae4
+696613604 Ticks in Standard Time:  15:02:16.040s</code></pre>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!whattime%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

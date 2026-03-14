@@ -1,0 +1,93 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The following error codes can be returned by IG_DUMP_SYMBOL_INFO and related functions and macros."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IG_DUMP_SYMBOL_INFO Error Codes</title>
+
+<meta name="MS-HAID" content="WdbgExts_Ref_a6260d9a-190f-4533-bcc4-8f5e5ae08647.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.ig_dump_symbol_info_error_codes"></a>IG_DUMP_SYMBOL_INFO Error Codes</h1>
+</div>
+<p>The following error codes can be returned by <a href="ig_dump_symbol_info.htm"><b>IG_DUMP_SYMBOL_INFO</b></a> and related functions and macros.</p>
+<p><b>Successful result.</b>  A successful result always returns zero. </p>
+<p><b>Error results.</b>  Nonzero return values represent errors. These values are defined in WDbgExts.h.</p>
+<dl>
+<dt><a id="MEMORY_READ_ERROR_"></a><a id="memory_read_error_"></a><b>MEMORY_READ_ERROR </b></dt>
+<dd>
+<p>An error occurred while reading memory. </p>
+</dd>
+<dt><a id="SYMBOL_TYPE_INDEX_NOT_FOUND_"></a><a id="symbol_type_index_not_found_"></a><b>SYMBOL_TYPE_INDEX_NOT_FOUND </b></dt>
+<dd>
+<p>The internal index containing symbol type information was not found. </p>
+</dd>
+<dt><a id="SYMBOL_TYPE_INFO_NOT_FOUND_"></a><a id="symbol_type_info_not_found_"></a><b>SYMBOL_TYPE_INFO_NOT_FOUND </b></dt>
+<dd>
+<p>Information about a specific symbol type was not found. </p>
+</dd>
+<dt><a id="FIELDS_DID_NOT_MATCH_"></a><a id="fields_did_not_match_"></a><b>FIELDS_DID_NOT_MATCH </b></dt>
+<dd>
+<p>Mismatched parameters were passed to this routine. </p>
+</dd>
+<dt><a id="NULL_SYM_DUMP_PARAM_"></a><a id="null_sym_dump_param_"></a><b>NULL_SYM_DUMP_PARAM </b></dt>
+<dd></dd>
+<dt><a id="NULL_FIELD_NAME_"></a><a id="null_field_name_"></a><b>NULL_FIELD_NAME </b></dt>
+<dd></dd>
+<dt><a id="INCORRECT_VERSION_INFO_"></a><a id="incorrect_version_info_"></a><b>INCORRECT_VERSION_INFO </b></dt>
+<dd>
+<p>A version mismatch occurred. </p>
+</dd>
+<dt><a id="EXIT_ON_CONTROLC_"></a><a id="exit_on_controlc_"></a><b>EXIT_ON_CONTROLC </b></dt>
+<dd>
+<p>The user pressed CTRL+C or CTRL+BREAK before the routine completed. </p>
+</dd>
+<dt><a id="CANNOT_ALLOCATE_MEMORY_"></a><a id="cannot_allocate_memory_"></a><b>CANNOT_ALLOCATE_MEMORY </b></dt>
+<dd>
+<p>A memory allocation error occurred. </p>
+</dd>
+<dt><a id="INSUFFICIENT_SPACE_TO_COPY_"></a><a id="insufficient_space_to_copy_"></a><b>INSUFFICIENT_SPACE_TO_COPY </b></dt>
+<dd>
+<p>A memory write error occurred. </p>
+</dd>
+<dt><a id="ADDRESS_TYPE_INDEX_NOT_FOUND_"></a><a id="address_type_index_not_found_"></a><b>ADDRESS_TYPE_INDEX_NOT_FOUND </b></dt>
+<dd>
+<p>A problem occurred when attempting to access the internal index containing type information. </p>
+</dd>
+</dl>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>WDbgExts.h (include WDbgExts.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="ig_dump_symbol_info.htm"><b>IG_DUMP_SYMBOL_INFO</b></a></dt>
+<dt><a href="ioctl.htm"><b>Ioctl</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IG_DUMP_SYMBOL_INFO Error Codes%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

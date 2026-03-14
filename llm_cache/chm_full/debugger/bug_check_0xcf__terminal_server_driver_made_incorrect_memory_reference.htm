@@ -1,0 +1,80 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The TERMINAL_SERVER_DRIVER_MADE_INCORRECT_MEMORY_REFERENCE bug check has a value of 0x000000CF. This indicates that a driver has been incorrectly ported to the terminal server."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0xCF: TERMINAL_SERVER_DRIVER_MADE_INCORRECT_MEMORY_REFERENCE</title>
+
+<meta name="MS-HAID" content="t06_bugs_B0_32e57dc2-474d-4877-aa07-459e84a77311.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0xcf__terminal_server_driver_made_incorrect_memory_reference"></a>Bug Check 0xCF: TERMINAL_SERVER_DRIVER_MADE_INCORRECT_MEMORY_REFERENCE</h1>
+</div>
+<p>The TERMINAL_SERVER_DRIVER_MADE_INCORRECT_MEMORY_REFERENCE bug check has a value of 0x000000CF. This indicates that a driver has been incorrectly ported to the terminal server.</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2> TERMINAL_SERVER_DRIVER_MADE_INCORRECT_MEMORY_REFERENCE Parameters</h2>
+<p>The following parameters are displayed on the blue screen.</p>
+<table>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>1</p>
+</td>
+<td>
+<p>Memory address referenced</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>2</p>
+</td>
+<td>
+<p><b>0:</b> Read</p>
+<p><b>1:</b> Write</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>3</p>
+</td>
+<td>
+<p>Address that referenced memory (if known)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>4</p>
+</td>
+<td>
+<p>Reserved  </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>If the driver responsible for the error can be identified, its name is printed on the blue screen and stored in memory at the location (PUNICODE_STRING) <b>KiBugCheckDriver</b>.</p>
+<h2>Cause</h2>
+<p>The driver is referencing session space addresses from the system process context. This probably results from the driver queuing an item to a system worker thread.</p>
+<p>This driver needs to comply with Terminal Server's memory management rules.</p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

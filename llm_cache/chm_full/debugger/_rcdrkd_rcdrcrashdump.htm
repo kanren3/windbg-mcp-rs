@@ -1,0 +1,51 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !rcdrkd.rcdrcrashdump extension is used with a minidump file to display the recorder log (if the log is present in the minidump)."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!rcdrkd.rcdrcrashdump</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._rcdrkd_rcdrcrashdump"></a>!rcdrkd.rcdrcrashdump</h1>
+</div>
+<p>The  <a href="_usb3kd_device_info.htm"><b>!rcdrkd.rcdrcrashdump</b></a> extension is used with a minidump file to display the recorder log (if the log is present in the minidump).</p>
+<pre class="syntax"><b>!rcdrkd.rcdrcrashdump </b><i>TraceProviderGuid</i>
+<b>!rcdrkd.rcdrcrashdump </b><i>DriverName</i></pre>
+<h2><a id="ddk__devobj_dbg"></a><a id="DDK__DEVOBJ_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______TraceProviderGuid______"></a><a id="_______traceproviderguid______"></a><a id="_______TRACEPROVIDERGUID______"></a>       <i>TraceProviderGuid</i>      </dt>
+<dd>
+<p>GUID of the trace provider. This parameter must include braces: {<i>guid</i>}</p>
+</dd>
+<dt><a id="_______DriverName______"></a><a id="_______drivername______"></a><a id="_______DRIVERNAME______"></a>       <i>DriverName</i>      </dt>
+<dd>
+<p>The name of the driver. The driver name can be used instead of the trace provider GUID for drivers that use the Inflight Trace Recorder (IFR).</p>
+</dd>
+</dl>
+<h2><a id="DLL"></a><a id="dll"></a>DLL</h2>
+<p>Rcdrkd.dll
+     </p>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="rcdrkd_extensions.htm">RCDRKD Extensions</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!rcdrkd.rcdrcrashdump%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

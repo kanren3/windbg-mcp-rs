@@ -1,0 +1,95 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Debugging Tools for Windows supports kernel debugging over a 1394 (Firewire) cable. This topic describes how to set up 1394 debugging manually."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Setting Up Kernel-Mode Debugging over a 1394 Cable Manually</title>
+
+<meta name="MS-HAID" content="r02_setup_1_f15cdae4-9a5d-4eef-8507-cd68d6e729f9.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.setting_up_a_1394_cable_connection"></a>Setting Up Kernel-Mode Debugging over a 1394 Cable Manually</h1>
+</div>
+<p>Debugging Tools for Windows supports kernel debugging over a  1394 (Firewire) cable. This topic describes how to set up 1394 debugging manually.</p>
+<p>As an alternative to setting up 1394 debugging manually, you can do the setup using Microsoft Visual Studio. For more information, see <a href="setting_up_a_1394_cable_connection_in_visual_studio.htm">Setting Up Kernel-Mode Debugging over a 1394 Cable in Visual Studio</a>.</p>
+<p>The computer that runs the debugger is called the <i>host computer</i>, and the computer being debugged is called the <i>target computer</i>. The host and target computers must each have a 1394 adapter and must be running  Windows XP or later. The host and target computers do not have to be running the same version of Windows.</p>
+<h2><a id="Setting_Up_the_Target_Computer"></a><a id="setting_up_the_target_computer"></a><a id="SETTING_UP_THE_TARGET_COMPUTER"></a>Setting Up the Target Computer</h2>
+<ol>
+<li>Connect a 1394 cable to the 1394 controllers that you have chosen for debugging on the host and target computers.</li>
+<li>
+<p>In an elevated Command Prompt window, enter the following commands, where <i>n</i> is a channel number of your choice, from 0 through 62:</p>
+<dl>
+<dd><b>bcdedit /debug on</b></dd>
+<dd><b>bcdedit /dbgsettings 1394 channel:</b><i>n</i></dd>
+</dl>
+</li>
+<li>
+<p>If there is more than one 1394 controller on the target computer, you must specify the bus, device, and function numbers of the 1394 controller that you intend to use for debugging. For more information, see <a href="#troubleshooting_tips_for_debugging_over_a_1394_cable">Troubleshooting Tips for 1394 Debugging</a>.</p>
+</li>
+<li>Do not reboot  the target computer yet.</li>
+</ol>
+<h2><a id="Starting_a_Debugging_Session_for_the_First_Time"></a><a id="starting_a_debugging_session_for_the_first_time"></a><a id="STARTING_A_DEBUGGING_SESSION_FOR_THE_FIRST_TIME"></a>Starting a Debugging Session for the First Time</h2>
+<ol>
+<li>Determine the bitness (32-bit or 64-bit) of Windows running on the host computer.</li>
+<li>On the host computer, open a version of WinDbg (as Administrator) that matches the bitness of Windows running on the host computer. For example, if the host computer is running a 64-bit version of Windows, open the 64-bit version of WinDbg as Administrator.</li>
+<li>
+<p>On the <b>File</b> menu, choose <b>Kernel Debug</b>. In the Kernel Debugging dialog box, open the <b>1394</b> tab. Enter your channel number, and click <b>OK</b>.</p>
+<p>At this point, the 1394 debug driver gets installed on the host computer. This is why it is important to match the bitness of WinDbg to the bitness of Windows. After the 1394 debug driver is installed, you can use either the 32-bit or 64-bit version of WinDbg for subsequent debugging sessions.</p>
+</li>
+<li>Reboot the target computer.</li>
+</ol>
+<h2><a id="Starting_a_Debugging_Session"></a><a id="starting_a_debugging_session"></a><a id="STARTING_A_DEBUGGING_SESSION"></a>Starting a Debugging Session</h2>
+<p></p>
+<h3><a id="Using_WinDbg"></a><a id="using_windbg"></a><a id="USING_WINDBG"></a>Using WinDbg</h3>
+<ul>
+<li>
+<p>On the host computer, open WinDbg. On the <b>File</b> menu, choose <b>Kernel Debug</b>. In the Kernel Debugging dialog box, open the <b>1394</b> tab. Enter your channel number, and click <b>OK</b>.</p>
+<p>You can also start a session with WinDbg by entering the following command in a Command Prompt window, where <i>n</i> is your channel number:</p><b>windbg /k 1394:channel=</b><i>n</i></li>
+</ul>
+<h3><a id="Using_KD"></a><a id="using_kd"></a><a id="USING_KD"></a>Using KD</h3>
+<ul>
+<li>
+<p>On the host computer, open a Command Prompt window and enter the following command, where <i>n</i> is your channel number:</p><b>kd /k 1394:channel=</b><i>n</i></li>
+</ul>
+<h2><a id="Using_Environment_Variables"></a><a id="using_environment_variables"></a><a id="USING_ENVIRONMENT_VARIABLES"></a>Using Environment Variables</h2>
+<p>On the host computer, you can use environment variables to specify the 1394 channel. Then you do not have to specify the channel each time you start a debugging session. To use environment variables to specify the 1394 channel, open a Command Prompt window and enter the following commands, where <i>n</i> is your channel number:</p>
+<ul>
+<li><b>set _NT_DEBUG_BUS=1394</b></li>
+<li><b>set _NT_DEBUG_1394_CHANNEL=</b><i>n</i></li>
+</ul>
+<p>To start a debugging session, open a Command Prompt window and enter one of the following commands:</p>
+<ul>
+<li><b>kd</b></li>
+<li><b>windbg</b></li>
+</ul>
+<h2><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h2>
+<p>For complete documentation of the <b>bcdedit</b> command and the boot.ini file, see Boot Options for Driver Testing and Debugging
+ in the Windows Driver Kit (WDK) documentation.</p>
+<h2><a id="troubleshooting_tips_for_debugging_over_a_1394_cable"></a><a id="TROUBLESHOOTING_TIPS_FOR_DEBUGGING_OVER_A_1394_CABLE"></a>Troubleshooting Tips for Debugging over a 1394 Cable</h2>
+<p>Most  1394 debugging problems are caused by using multiple 1394 controllers in either the host or target computer.  Using multiple 1394 controllers in the host computer is not supported. The 1394 debug driver, which runs on the host, can communicate only with the first 1394 controller enumerated in the registry. If you have a 1394 controller built into the motherboard and a separate 1394 card, either remove the card or disable  the built-in controller in the BIOS settings of the computer.</p>
+<p>The target computer can have multiple 1394 controllers, although this is not recommended. If your target computer has a 1394 controller on the motherboard, use that controller for debugging, if possible. If there is an additional 1394 card, you should remove the card and use the onboard controller. Another solution is to disable the onboard 1394 controller in the BIOS settings of the computer. </p>
+<p>If you decide to have multiple 1394 controllers enabled on the target computer, you must specify bus parameters so that the debugger knows which controller to claim for debugging. To specify the bus parameters, Open Device Manager on the target computer, and locate the 1394 controller that you want to use for debugging. Open the property page for the controller, and make a note of the bus number, device number, and function number. In an elevated Command Prompt Window, enter the following command, where <i>b</i>, <i>d</i>, and <i>f</i> are the bus, device and function numbers in decimal format:</p>
+<p><b>bcdedit -set "{dbgsettings}" busparams </b><i>b</i><b>.</b><i>d</i><b>.</b><i>f</i>.</p>
+<p>Reboot the target computer.</p>
+<h2><a id="related_topics"></a>Related topics</h2>
+<dl>
+<dt><a href="setting_up_kernel-mode_debugging_in_windbg__cdb__or_ntsd.htm">Setting Up Kernel-Mode Debugging Manually</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Setting Up Kernel-Mode Debugging over a 1394 Cable Manually%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,101 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !wdfkd.wdfinterrupt extension displays information about a WDFINTERRUPT object."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!wdfkd.wdfinterrupt</title>
+
+<meta name="MS-HAID" content="r33~c_exts_WDF_915ca2c8-aed1-4f72-8b45-6b867954541a.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._wdfkd_wdfinterrupt"></a>!wdfkd.wdfinterrupt</h1>
+</div>
+<p>The <b>!wdfkd.wdfinterrupt</b> extension displays information about a WDFINTERRUPT object. </p>
+<pre class="syntax"><b>!wdfkd.wdfinterrupt </b><i>Handle</i><b> </b>[<i>Flags</i>]</pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Handle______"></a><a id="_______handle______"></a><a id="_______HANDLE______"></a>       <i>Handle</i>      </dt>
+<dd>
+<p>A handle to a WDFINTERRUPT object. </p>
+</dd>
+<dt><a id="_______Flags______"></a><a id="_______flags______"></a><a id="_______FLAGS______"></a>       <i>Flags</i>      </dt>
+<dd>
+<p>Optional. Specifies the kind of information to display. <i>Flags</i> can be any combination of the following bits. The default value is 0x0.</p>
+<p></p>
+<dl>
+<dt><a id="Bit_0__0x1_"></a><a id="bit_0__0x1_"></a><a id="BIT_0__0X1_"></a>Bit 0 (0x1)</dt>
+<dd>
+<p>Displays the interrupt service routines (ISRs) for the interrupt dispatch table (IDT) associated with this WDFINTERRUPT object.  Setting this flag is equivalent to following the <b>!wdfinterrupt</b> extension with the <a href="_idt.htm"><b>!idt</b></a> extension. </p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<p>
+       Wdfkd.dll
+      </p>
+<h3><a id="Frameworks"></a><a id="frameworks"></a><a id="FRAMEWORKS"></a>Frameworks</h3>
+<p>
+       KMDF 1, UMDF 2</p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information, see <a href="kernel_mode_driver_framework_debugging.htm">Kernel-Mode Driver Framework Debugging</a>.</p>
+<h2>Remarks</h2>
+<p>The following example shows the output of the <b>!wdfinterrupt</b> extension with bit 0 set in the <i>Flags</i> parameter (so the output displays information about the IDT).</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; !wdfkd.wdfinterrupt 0x7a988698  1 
+
+Dumping WDFINTERRUPT 0x7a988698
+=========================
+  Interrupt Type: Line-based, Connected, Enabled
+  Vector: 0xa1 (!idt 0xa1)
+  Irql: 0x9
+  Mode: LevelSensitive
+  Polarity: WdfInterruptPolarityUnknown
+  ShareDisposition: CmResourceShareShared
+  FloatingSave: FALSE
+  Interrupt Priority Policy: WdfIrqPriorityUndefined
+  Processor Affinity Policy: WdfIrqPolicyOneCloseProcessor
+  Processor Group: 0
+  Processor Affinity: 0x3
+
+  dt nt!KINTERRUPT 0x8594eb28
+
+  EvtInterruptIsr: 1394ohci!Interrupt::WdfEvtInterruptIsr (0x8d580552)
+  EvtInterruptDpc: 1394ohci!Interrupt::WdfEvtInterruptDpc (0x8d580682)
+
+Dumping IDT:
+
+a1:          85167a58 ndis!ndisMiniportIsr (KINTERRUPT 85167a00)
+                                    Wdf01000!FxInterrupt::_InterruptThunk (KINTERRUPT 85987500)
+
+To get ISR from KINTERRUPT: 
+   dt &lt;KINTERRUPT&gt; nt!KINTERRUPT ServiceContext
+   dt &lt;ServiceContext&gt; wdf01000!FxInterrupt m_EvtInterruptIsr</pre>
+</td>
+</tr>
+</table></span></div>
+<p>In the preceding example, the display concludes with two suggested <a href="dt__display_type_.htm"><b>dt (Display Type)</b></a> commands that can be used to display additional data. </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!wdfkd.wdfinterrupt%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

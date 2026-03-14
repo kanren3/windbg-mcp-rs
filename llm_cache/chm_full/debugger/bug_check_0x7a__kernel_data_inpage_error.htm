@@ -1,0 +1,198 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The KERNEL_DATA_INPAGE_ERROR bug check has a value of 0x0000007A. This bug check indicates that the requested page of kernel data from the paging file could not be read into memory."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0x7A: KERNEL_DATA_INPAGE_ERROR</title>
+
+<meta name="MS-HAID" content="t05_bugs_60_0b233b52-160a-482d-9a51-c53f2b3843b6.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0x7a__kernel_data_inpage_error"></a>Bug Check 0x7A: KERNEL_DATA_INPAGE_ERROR</h1>
+</div>
+<p>The KERNEL_DATA_INPAGE_ERROR bug check has a value of 0x0000007A. This bug check indicates that the requested page of kernel data from the paging file could not be read into memory. </p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2> KERNEL_DATA_INPAGE_ERROR Parameters</h2>
+<p>The four parameters that are listed in the message can have three possible meanings. If the first parameter is 1 or 2, or 3 and the third parameter is 0, the parameters have the following definitions.</p>
+<table>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>1</p>
+</td>
+<td>
+<p>The lock type that was held (1, 2, or 3)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>2</p>
+</td>
+<td>
+<p>The error status (usually an I/O status code) </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>3</p>
+</td>
+<td>
+<p><b>If Lock Type is 1:</b> the current process</p>
+<p><b>If Lock Type is 2 or 3:</b> 0</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>4</p>
+</td>
+<td>
+<p>The virtual address that could not be paged into memory</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>If the first parameter is 3 (and the third parameter is nonzero) or 4, the parameters have the following definitions.</p>
+<table>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>1</p>
+</td>
+<td>
+<p>The lock type that was held (3 or 4)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>2</p>
+</td>
+<td>
+<p>The error status (typically an I/O status code) </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>3</p>
+</td>
+<td>
+<p>The address of the InPageSupport structure</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>4</p>
+</td>
+<td>
+<p>The faulting address</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>Otherwise, the parameters have the following definitions.</p>
+<table>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>1</p>
+</td>
+<td>
+<p>The address of the page table entry (PTE) </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>2</p>
+</td>
+<td>
+<p>The error status (usually an I/O status code) </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>3</p>
+</td>
+<td>
+<p>The PTE contents </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>4</p>
+</td>
+<td>
+<p>The faulting address </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Cause</h2>
+<p>Frequently, you can determine the cause of the KERNEL_DATA_INPAGE_ERROR bug check from the error status (Parameter 2). Some common status codes include the following:</p>
+<ul>
+<li>
+<p>0xC000009A, or STATUS_INSUFFICIENT_RESOURCES, indicates a lack of nonpaged pool resources.  </p>
+</li>
+<li>
+<p>0xC000009C, or STATUS_DEVICE_DATA_ERROR, typically indicates bad blocks (sectors) on the hard disk.</p>
+</li>
+<li>
+<p>0xC000009D, or STATUS_DEVICE_NOT_CONNECTED, indicates defective or loose cabling, termination, or that the controller does not see the hard disk.</p>
+</li>
+<li>
+<p>0xC000016A, or STATUS_DISK_OPERATION_FAILED, indicates bad blocks (sectors) on the hard disk.</p>
+</li>
+<li>
+<p>0xC0000185, or STATUS_IO_DEVICE_ERROR, indicates improper termination or defective cabling on SCSI devices or that two devices are trying to use the same IRQ.</p>
+</li>
+<li>
+<p>0xC000000E, or STATUS_NO_SUCH_DEVICE, indicates a  hardware failure or an incorrect drive configuration.  Check your cables and check the drive with the diagnostic utility available from your drive manufacturer.  If you are using older PATA (IDE) drives, this status code can indicate an incorrect master/subordinate drive configuration.</p>
+</li>
+</ul>
+<p></p>
+<p>These status codes are the most common ones that have specific causes. For more information about other possible status codes that can be returned, see the Ntstatus.h file in the Microsoft Windows Driver Kit (WDK).</p>
+<p>Another common cause of this error message is defective hardware or failing RAM.</p>
+<p>A virus infection can also cause this bug check.</p>
+<h2>Resolution</h2>
+<p><b>Resolving a bad block problem:</b> An I/O status code of 0xC000009C or 0xC000016A typically indicates that the data could not be read from the disk because of a bad block (sector). If you can restart the computer after the error, Autochk runs automatically and attempts to map the bad sector to prevent it from being used anymore. </p>
+<p>If Autochk does not scan the hard disk for errors, you can manually start the disk scanner. Run <b>Chkdsk /f /r</b> on the system partition. You must restart the computer before the disk scan begins. If you cannot start the computer because of the error, use the Recovery Console and run <b>Chkdsk /r</b>.  </p>
+<div class="alert"><b>Warning</b>    If your system partition is formatted with the FAT file system, the long file names that the Windows operating system uses might be damaged if you use Scandisk or another MS-DOS-based hard disk tool to verify the integrity of your hard disk from MS-DOS. Always use the version of Chkdsk that matches your version of Windows.</div>
+<div> </div>
+<p><b>Resolving a defective hardware problem:</b> If the I/O status is C0000185 and the paging file is on an SCSI disk, check the disk cabling and SCSI termination for problems.</p>
+<p><b>Resolving a failing RAM problem:</b> Run the hardware diagnostics that the system manufacturer supplies, especially the memory scanner. For more information about these procedures, see the owner's manual for your computer. </p>
+<p>Check that all the adapter cards in the computer are properly seated. Use an ink eraser or an electrical contact treatment, available at electronics supply stores, to ensure adapter card contacts are clean.</p>
+<p>Check the System Log in Event Viewer for additional error messages that might help identify the device that is causing the error. You can also disable memory caching of the BIOS to try to resolve this error.</p>
+<p>Make sure that the latest Windows Service Pack is installed.</p>
+<p>If the preceding steps do not resolve the error, take the system motherboard to a repair facility for diagnostic testing. A crack, a scratched trace, or a defective component on the motherboard can cause this error.</p>
+<p><b>Resolving a virus infection:</b> Check your computer for viruses by using any up-to-date, commercial virus scanning software that examines the Master Boot Record of the hard disk. All Windows file systems can be infected by viruses.</p>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="bug_check_0x77__kernel_stack_inpage_error.htm"><b>Bug Check 0x77 (KERNEL_STACK_INPAGE_ERROR) </b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

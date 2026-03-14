@@ -1,0 +1,78 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .wake command causes sleep mode to end. This command is used only when you are controlling the user-mode debugger from the kernel debugger."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.wake (Wake Debugger)</title>
+
+<meta name="MS-HAID" content="r22_metacmds_S_935bb156-3ff7-49b1-84ff-18de81356c08.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._wake__wake_debugger_"></a>.wake (Wake Debugger)</h1>
+</div>
+<p>The <b>.wake</b> command causes sleep mode to end. This command is used only when you are controlling the user-mode debugger from the kernel debugger.</p>
+<pre class="syntax"><b>.wake </b><i>PID</i></pre>
+<h2><a id="ddk_meta_wake_debugger_dbg"></a><a id="DDK_META_WAKE_DEBUGGER_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______PID______"></a><a id="_______pid______"></a>       <i>PID</i>      </dt>
+<dd>
+<p>The process ID of the user-mode debugger.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Modes</b></p>
+</td>
+<td>
+<p>controlling the user-mode debugger from the kernel debugger</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>live debugging only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Platforms
+         </b></p>
+</td>
+<td>
+<p>all </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more details, see <a href="controlling_the_user_mode_debugger_from_the_kernel_debugger.htm">Controlling the User-Mode Debugger from the Kernel Debugger</a>. For information about how to find the process ID of the debugger, see <a href="finding_the_process_id.htm">Finding the Process ID</a>.</p>
+<h2>Remarks</h2>
+<p>When you are controlling the user-mode debugger from the kernel debugger and the system is in sleep mode, this command can be used to wake up the debugger before the sleep timer runs out.</p>
+<p>This command is not issued in the user-mode debugger on the target machine, nor in the kernel debugger on the host machine. It must be issued from a third debugger (KD, CDB, or NTSD) running on the target machine.</p>
+<p>This debugger can be started expressly for this purpose, or can be another debugger that happens to be running. However, if there is no other debugger already running, it is easier just to use CDB with the <b>-wake</b> <a href="cdb_command_line_options.htm"><b>command-line option</b></a>.</p>
+<p></p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.wake (Wake Debugger)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

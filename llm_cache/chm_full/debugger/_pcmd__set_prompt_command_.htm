@@ -1,0 +1,126 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .pcmd command causes the debugger to issue a command whenever the target stops executing and to display a prompt in the Debugger Command window with register or target state information."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.pcmd (Set Prompt Command)</title>
+
+<meta name="MS-HAID" content="r21_metacmds_L_f0876876-f8a3-4362-9f64-0546b18ae66e.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._pcmd__set_prompt_command_"></a>.pcmd (Set Prompt Command)</h1>
+</div>
+<p>The <b>.pcmd</b> command causes the debugger to issue a command whenever the target stops executing and to display a prompt in the <a href="debugger_command_window.htm">Debugger Command window</a> with register or target state information.</p>
+<pre class="syntax">
+    <b>.pcmd -s </b><i>CommandString</i> 
+<b>.pcmd -c</b> 
+<b>.pcmd</b> 
+</pre>
+<h2><a id="ddk_meta_set_prompt_command_dbg"></a><a id="DDK_META_SET_PROMPT_COMMAND_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______-s_______CommandString______"></a><a id="_______-s_______commandstring______"></a><a id="_______-S_______COMMANDSTRING______"></a>       <b>-s</b><b>       </b><i>CommandString</i>      </dt>
+<dd>
+<p>Specifies a new prompt command string. Whenever the target stops executing, the debugger issues and immediately runs the <i>CommandString</i> command. If <i>CommandString</i> contains spaces or semicolons, you must enclose it in quotation marks.</p>
+</dd>
+<dt><a id="_______-c______"></a><a id="_______-C______"></a>       <b>-c</b>      </dt>
+<dd>
+<p>Deletes any existing prompt command string.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets
+         </b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about the Debugger Command window prompt, see <a href="using_debugger_commands.htm">Using Debugger Commands</a>.</p>
+<h2>Remarks</h2>
+<p>If you use the <b>.pcmd</b> command without parameters, the current prompt command is displayed.</p>
+<p>When you set a prompt command by using <b>.pcmd -s</b>, the specified <i>CommandString</i> is issued whenever the target stops executing (for example, when a <a href="g__go_.htm"><b>g</b></a>, <a href="p__step_.htm"><b>p</b></a>, or <a href="t__trace_.htm"><b>t</b></a> command ends). The <i>CommandString</i> command is not issued when you use a non-execution command, unless that command displays registers or target state information.</p>
+<p>In the following example, the first use of <b>.pcmd</b> sets a fixed string that appears with the prompt. The second use of <b>.pcmd</b> causes the debugger to display the target's current process ID and thread ID every time that the prompt appears. The special prompt does not appear after the <a href="_ttime__display_thread_times_.htm"><b>.ttime</b></a> command is used, because that command does not involve execution.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; .pcmd
+No per-prompt command
+
+0:000&gt; .pcmd -s ".echo Execution is done."
+Per-prompt command is '.echo Execution is done.'
+
+0:000&gt; t
+Prymes!isPrime+0xd0:
+004016c0 837dc400      cmp dword ptr [ebp-0x3c],0x0 ss:0023:0012fe70=00000002
+Execution is done.
+
+0:000&gt; t
+Prymes!isPrime+0xd4:
+004016c4 7507             jnz     Prymes!isPrime+0xdd (004016cd)
+ [br=1]
+Execution is done.
+
+0:000&gt; .ttime
+Created: Thu Aug 21 13:18:59 2003
+Kernel:  0 days 0:00:00.031
+User:    0 days 0:00:00.000
+
+0:000&gt; .pcmd -s "r $tpid, $tid"
+Per-prompt command is 'r $tpid, $tid'
+
+0:000&gt; t
+Prymes!isPrime+0xdd:
+004016cd ebc0             jmp     Prymes!isPrime+0x9f (0040168f)
+$tpid=0000080c $tid=00000514
+
+0:000&gt; t
+Prymes!isPrime+0x9f:
+0040168f 8b55fc           mov     edx,[ebp-0x4]     ss:0023:0012fea8=00000005
+$tpid=0000080c $tid=00000514</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.pcmd (Set Prompt Command)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

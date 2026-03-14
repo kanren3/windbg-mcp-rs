@@ -1,0 +1,116 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !dreg extension displays registry information."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!dreg</title>
+
+<meta name="MS-HAID" content="r31_exts_user_d482904d-4ea0-436c-b377-c69863fd8d7b.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._dreg"></a>!dreg</h1>
+</div>
+<p>The <b>!dreg</b> extension displays registry information.</p>
+<p></p>
+<pre class="syntax"><b>!dreg </b>[<b>-d</b>|<b>-w</b>]<b> </b><i>KeyPath</i>[!<i>Value</i>] 
+<b>!dreg</b></pre>
+<h2><a id="ddk__dreg_dbg"></a><a id="DDK__DREG_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______-d______"></a><a id="_______-D______"></a>       <b>-d</b>      </dt>
+<dd>
+<p>Causes binary values to be displayed as DWORDs.</p>
+</dd>
+<dt><a id="_______-w______"></a><a id="_______-W______"></a>       <b>-w</b>      </dt>
+<dd>
+<p>Causes binary values to be displayed as WORDs.</p>
+</dd>
+<dt><a id="_______KeyPath______"></a><a id="_______keypath______"></a><a id="_______KEYPATH______"></a>       <i>KeyPath</i>      </dt>
+<dd>
+<p>Specifies the registry key path. It can begin with any of the following abbreviations:</p>
+<p></p>
+<dl>
+<dt><a id="hklm"></a><a id="HKLM"></a><b>hklm</b></dt>
+<dd>
+<p>HKEY_LOCAL_MACHINE</p>
+</dd>
+<dt><a id="hkcu"></a><a id="HKCU"></a><b>hkcu</b></dt>
+<dd>
+<p>HKEY_CURRENT_USER</p>
+</dd>
+<dt><a id="hkcr"></a><a id="HKCR"></a><b>hkcr</b></dt>
+<dd>
+<p>HKEY_CLASSES_ROOT</p>
+</dd>
+<dt><a id="hku"></a><a id="HKU"></a><b>hku</b></dt>
+<dd>
+<p>HKEY_USERS</p>
+</dd>
+</dl>
+<p>If no abbreviation is used, HKEY_LOCAL_MACHINE is assumed. </p>
+</dd>
+<dt><a id="_______Value______"></a><a id="_______value______"></a><a id="_______VALUE______"></a>       <i>Value</i>      </dt>
+<dd>
+<p>Specifies the name of the registry value to be displayed. If an asterisk (*) is used, all values are displayed. If <i>Value</i> is omitted, all subkeys are displayed.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000</b></p>
+</td>
+<td>
+<p>
+          Ntsdexts.dll
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Windows XP and later</b></p>
+</td>
+<td>
+<p>
+          Ntsdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For information about the registry, see the Windows Driver Kit (WDK) documentation and <i>Microsoft Windows Internals</i> by Mark Russinovich and David Solomon. (These resources may not be available in some languages 
+
+and countries.)</p>
+<h2>Remarks</h2>
+<p>The <b>!dreg</b> extension can be used to display the registry during user-mode debugging.  </p>
+<p>It is most useful during remote debugging, as it allows you to browse the registry of the remote machine. It is also useful when controlling the user-mode debugger from the kernel debugger, because you cannot run a standard registry editor on the target machine when it is frozen. (You can use the <a href="_sleep__pause_debugger_.htm"><b>.sleep</b></a> command for this purpose as well. See <a href="controlling_the_user_mode_debugger_from_the_kernel_debugger.htm">Controlling the User-Mode Debugger from the Kernel Debugger</a> for details.)</p>
+<p>It is also useful when debugging locally, as the information is presented in an easily readable format.</p>
+<p>If <b>!dreg</b> is used during kernel-mode debugging, the results shown will be for the host computer, and not the target computer.  To display raw registry information for the target computer, use the <a href="_reg.htm"><b>!reg</b></a> extension instead.</p>
+<p></p>
+<p>Here are some examples. The following will display all subkeys of the specified registry key:</p>
+<pre class="syntax" xml:space="preserve"><code>!dreg hkcu\Software\Microsoft</code></pre>
+<p>The following will display all values in the specified registry key:</p>
+<pre class="syntax" xml:space="preserve"><code>!dreg System\CurrentControlSet\Services\Tcpip!*</code></pre>
+<p>The following will display the value Start in the specified registry key:</p>
+<pre class="syntax" xml:space="preserve"><code>!dreg System\CurrentControlSet\Services\Tcpip!Start</code></pre>
+<p>Typing <b>!dreg</b> without any arguments will display some brief Help text for this extension in the Debugger Command window.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!dreg%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

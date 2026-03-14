@@ -1,0 +1,147 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The KERNEL_SECURITY_CHECK_FAILURE bug check has a value of 0x00000139. This bug check indicates that the kernel has detected the corruption of a critical data structure."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0x139: KERNEL_SECURITY_CHECK_FAILURE</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check___bug_check_0x139_kernel_security_check_failure"></a>Bug Check 0x139: KERNEL_SECURITY_CHECK_FAILURE</h1>
+</div>
+<p>The KERNEL_SECURITY_CHECK_FAILURE  bug check has a value of 0x00000139. This bug check indicates that the kernel has detected the corruption of a critical data structure.</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2>Bug Check 0x139 KERNEL_SECURITY_CHECK_FAILURE Parameters</h2>
+<p>The following parameters are displayed on the blue screen.</p>
+<table>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>1</td>
+<td>The type of corruption. For more information, see the following table.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Address of the trap frame for the exception that caused the bug check</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Address of the exception record for the exception that caused the bug check</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Reserved</td>
+</tr>
+</table>
+<p> </p>
+<p>The following table describes possible values for Parameter 1.</p>
+<table>
+<tr>
+<th>Parameter 1</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>0</td>
+<td>A stack-based buffer has been overrun (legacy /GS violation).</td>
+</tr>
+<tr>
+<td>1</td>
+<td>VTGuard instrumentation code detected an attempt to use an illegal virtual function table.  Typically, a C++ object was corrupted, and then a virtual method call was attempted using the corrupted object's <b>this</b> pointer.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Stack cookie instrumentation code detected a stack-based buffer overrun (/GS violation).</td>
+</tr>
+<tr>
+<td>3</td>
+<td>A LIST_ENTRY was corrupted (for example, a double remove).  For more information, see the following Cause section.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Reserved</td>
+</tr>
+<tr>
+<td>5</td>
+<td>An invalid parameter was passed to a function that considers invalid parameters fatal.</td>
+</tr>
+<tr>
+<td>6</td>
+<td>The stack cookie security cookie was not properly initialized by the loader.  This may be caused by building a driver to  run only on Windows 8 and attempting to load the driver image on an earlier version of Windows. To avoid this problem, you must build the driver to run on an earlier version of Windows.</td>
+</tr>
+<tr>
+<td>7</td>
+<td>A fatal program exit was requested.</td>
+</tr>
+<tr>
+<td>8</td>
+<td>A array bounds check inserted by the compiler detected an illegal array indexing operation.</td>
+</tr>
+<tr>
+<td>9</td>
+<td>A call to <b>RtlQueryRegistryValues</b> was made specifying RTL_QUERY_REGISTRY_DIRECT without RTL_QUERY_REGISTRY_TYPECHECK, and the target value was not in a trusted system hive.</td>
+</tr>
+</table>
+<p> </p>
+<h2>Cause</h2>
+<p>Using the parameter 1 table,  and a dump file, it is possible to narrow down the cause for many bug checks of this type. </p>
+<p>LIST_ENTRY corruption can be difficult to track down and this bug check, indicates that an inconsistency has been introduced into a doubly-linked list (detected when an individual list entry element is added to or removed from the list).  Unfortunately, the inconsistency is not necessarily detected at the time when the corruption occurred, so some detective work may be necessary to identify the root cause.</p>
+<p>Common causes of list entry corruption include:</p>
+<ul>
+<li>A driver has corrupted a kernel synchronization object, such as a KEVENT (for example double initializing a KEVENT while a thread was still waiting on that same KEVENT, or allowing a stack-based KEVENT to go out of scope while another thread was using that KEVENT).  This type of bug check typically occurs in nt!Ke* or nt!Ki* code. It can happen when a thread finishes waiting on a synchronization object or when code attempts to put a  synchronization object in the signaled state. Usually, the synchronization object being signaled is the one that has been corrupted.  Sometimes, Driver Verifier with special pool can help track down the culprit (if the corrupted synchronization object is in a  pool block that has already been freed).</li>
+<li>A driver has corrupted a periodic KTIMER.  This type of bug check typically occurs in nt!Ke* or nt!Ki* code and involves signaling a timer, or inserting or removing a timer from a timer table.  The timer being manipulated may be the corrupted one, but it might be necessary to inspect the timer table with <a href="_timer.htm"><b>!timer</b></a> (or manually walking the timer list links) to identify which timer has been corrupted.  Sometimes, Driver Verifier with special pool can help track down the culprit (if the corrupted KTIMER is in a pool block that has already been freed).</li>
+<li>A driver has mismanaged an internal LIST_ENTRY-style linked list.  A typical example would be calling <b>RemoveEntryList</b> twice on the same list entry without reinserting the list entry between the two <b>RemoveEntryList</b> calls.  Other variations are possible, such as double inserting an entry into the same list.</li>
+<li>A driver has freed a data structure that contains a LIST_ENTRY without removing the data structure from its corresponding list, causing corruption to be detected later when the list is examined after the old pool block has been reused.</li>
+<li>A driver has used a LIST_ENTRY-style list in a concurrent fashion without proper synchronization, resulting in a torn update to the list. </li>
+</ul>
+<p>In most cases, you can identify the corrupted data structure by walking the linked list both forward and backwards (the <a href="dl__display_linked_list_.htm"><b>dl</b></a> and <b>dlb</b> commands are useful for this purpose) and comparing the results. Where the list is inconsistent between a forward and backward walk is typically the location of the corruption.  Since a linked list update operation can modify the list links of a neighboring element, you should look at the neighbors of a corrupted list entry closely, as they may be the underlying culprit.</p>
+<p>Because many system components internally utilize LIST_ENTRY lists, various types of resource mismanagement by a driver using system APIs might cause linked list corruption in a system-managed linked list.</p>
+<h2>Resolution</h2>
+<p>Determining the cause of this issues typically requires the use of the debugger to gather additional information. Multiple dump files should be examined to see if this stop code has similar characteristics, such as the code that is running when the stop code appears.</p>
+<p>For more information,  see <a href="crash_dump_files.htm">Crash dump analysis using the Windows debuggers (WinDbg)</a>,  <a href="using_the__analyze_extension.htm">Using the !analyze Extension</a> and <a href="_analyze.htm">!analyze</a>. </p>
+<p>Use the event log to see if there are higher level events that occur leading up to this stop code.</p>
+<p>These general troubleshooting tips may be helpful.</p>
+<ul>
+<li>
+<p>If you recently added hardware to the system, try removing or replacing it. Or check with the manufacturer to see if any patches are available.</p>
+</li>
+<li>
+<p>If new device drivers or system services have been added recently, try removing or updating them. Try to determine what changed in the system that caused the new bug check code to appear.</p>
+</li>
+<li>
+<p>Check the System Log in Event Viewer for additional error messages that might help pinpoint the device or driver that is causing the error. For more information, see <a href="http://windows.microsoft.com/en-us/windows/what-information-event-logs-event-viewer#1TC=windows-7">Open Event Viewer</a>. Look for critical errors in the system log that occurred in the same time window as the blue screen.</p>
+</li>
+<li>
+<p>Look in <b>Device Manager</b> to see if any devices are marked with the exclamation point (!). Review the events log displayed in driver properties for any faulting driver.  Try updating the related driver.  </p>
+</li>
+<li>
+<p>Run a virus detection program. Viruses can infect all types of hard disks formatted for Windows, and resulting disk corruption can generate system bug check codes. Make sure the virus detection program checks the Master Boot Record for infections.</p>
+</li>
+<li>For additional general troubleshooting information, see <a href="blue_screen_data.htm"><b>Blue Screen Data</b></a>. </li>
+</ul>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="crash_dump_files.htm">Crash dump analysis using the Windows debuggers (WinDbg)</a></dt>
+<dt><a href="analyzing_a_kernel_mode_dump_file_with_windbg.htm">Analyzing a Kernel-Mode Dump File with WinDbg</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

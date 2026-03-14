@@ -1,0 +1,174 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Analyzing a Stuck Call Problem"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Analyzing a Stuck Call Problem</title>
+
+<meta name="MS-HAID" content="t11_rpc_acpi_929368a2-bac1-44be-b7df-8642cae1ed9d.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.analyzing_a_stuck_call_problem"></a>Analyzing a Stuck Call Problem</h1>
+</div>
+<h2><a id="ddk_analyzing_a_stuck_call_problem_dbg"></a><a id="DDK_ANALYZING_A_STUCK_CALL_PROBLEM_DBG"></a></h2>
+<p>A common problem occurs when a process makes an RPC call, directly or indirectly, while holding a critical section or a resource. In this case, the RPC call goes to another process or machine and dispatches to the manager routine (server routine), which then hangs or takes too long. This causes the original caller to encounter a critical section time-out.</p>
+<p>When examined through the debugger, RPC is on top of the stack of the thread owning the critical section, but it is not clear what it is waiting for.</p>
+<p>Here is one example of such a stack. Many variations are possible.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:002&gt; ~1k
+ChildEBP RetAddr
+0068fba0 77e9e8eb ntdll!ZwWaitForSingleObject+0xb
+0068fbc8 4efeff73 KERNEL32!WaitForSingleObjectEx+0x5a
+0068fbe8 4eff0012 RPCRT4!UTIL_WaitForSyncIO+0x21
+0068fc0c 4efe6e2b RPCRT4!UTIL_GetOverlappedResultEx+0x44
+0068fc44 4ef973bf RPCRT4!WS_SyncRecv+0x12a
+0068fc68 4ef98d5a RPCRT4!OSF_CCONNECTION__TransSendReceive+0xcb
+0068fce4 4ef9b682 RPCRT4!OSF_CCONNECTION__SendFragment+0x297
+0068fd38 4ef9a5a8 RPCRT4!OSF_CCALL__SendNextFragment+0x272
+0068fd88 4ef9a9cb RPCRT4!OSF_CCALL__FastSendReceive+0x165
+0068fda8 4ef9a7f8 RPCRT4!OSF_CCALL__SendReceiveHelper+0xed
+0068fdd4 4ef946a7 RPCRT4!OSF_CCALL__SendReceive+0x37
+0068fdf0 4efd56b3 RPCRT4!I_RpcSendReceive+0xc4
+0068fe08 01002850 RPCRT4!NdrSendReceive+0x4f
+0068ff40 01001f32 rtclnt+0x2850
+0068ffb4 77e92ca8 rtclnt+0x1f32
+0068ffec 00000000 KERNEL32!CreateFileA+0x11b</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Here's how to troubleshoot this problem.</p>
+<p class="proch"><img src="../common/wedge.gif" alt=""/><b>
+      Troubleshooting a stuck call problem</b></p>
+<ol>
+<li>
+<p>Make sure the debugger is debugging the process that owns the stuck cell. (This is the process containing the client thread that is suspected of hanging in RPC.)</p>
+</li>
+<li>
+<p>Get the stack pointer of this thread. The stack will look like the one shown in the preceding example. In this example, the stack pointer is 0x0068FBA0.  </p>
+</li>
+<li>Get the call information for this thread. In order to do that, use the <a href="_rpcexts_rpcreadstack.htm"><b>!rpcexts.rpcreadstack</b></a> extension with the thread stack pointer as its parameter, as follows:<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:001&gt; !rpcexts.rpcreadstack 68fba0
+CallID: 1
+IfStart: 19bb5061
+ProcNum: 0
+        Protocol Sequence:      "ncacn_ip_tcp"  (Address: 00692ED8)
+        NetworkAddress: ""      (Address: 00692F38)
+        Endpoint:       "1120"  (Address: 00693988)</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The information displayed here will allow you to trace the call.</p>
+</li>
+<li>The network address is empty, which indicates the local machine. The endpoint is 1120. You need to determine which process hosts this endpoint. This can be done by passing this endpoint number to the <a href="_rpcexts_getendpointinfo.htm"><b>!rpcexts.getendpointinfo</b></a> extension, as follows:<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:001&gt; !rpcexts.getendpointinfo 1120
+Searching for endpoint info ...
+PID  CELL ID   ST PROTSEQ        ENDPOINT
+--------------------------------------------
+0278 0000.0001 01            TCP 1120</pre>
+</td>
+</tr>
+</table></span></div>
+</li>
+<li>From the preceding information, you can see that process 0x278 contains this endpoint. You can determine if this process knows anything about this call by using the <a href="_rpcexts_getcallinfo.htm"><b>!rpcexts.getcallinfo</b></a> extension. This extension needs four parameters: <i>CallID</i>, <i>IfStart</i>, and <i>ProcNum</i> (which were found in step 3), and the <i>ProcessID </i>of 0x278:<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:001&gt; !rpcexts.getcallinfo 1 19bb5061 0 278
+Searching for call info ...
+PID  CELL ID   ST PNO IFSTART  TIDNUMBER CALLFLAG CALLID   LASTTIME CONN/CLN
+----------------------------------------------------------------------------
+0278 0000.0004 02 000 19bb5061 0000.0002 00000001 00000001 00072c09 0000.0003</pre>
+</td>
+</tr>
+</table></span></div>
+</li>
+<li>The information in step 5 is useful, but somewhat abbreviated. The cell ID is given in the second column as 0000.0004. If you pass the process ID and this cell number to the <a href="_rpcexts_getdbgcell.htm"><b>!rpcexts.getdbgcell</b></a> extension, you will see a more readable display of this cell:<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:001&gt; !rpcexts.getdbgcell 278 0.4
+Getting cell info ...
+Call
+Status: Dispatched
+Procedure Number: 0
+Interface UUID start (first DWORD only): 19BB5061
+Call ID: 0x1 (1)
+Servicing thread identifier: 0x0.2
+Call Flags: cached
+Last update time (in seconds since boot):470.25 (0x1D6.19)
+Owning connection identifier: 0x0.3</pre>
+</td>
+</tr>
+</table></span></div>
+<p>This shows that the call is in state "dispatched", which means is has left the RPC Run-Time. The last update time is 470.25. You can learn the current time by using the <a href="_rpcexts_rpctime.htm"><b>!rpcexts.rpctime</b></a> extension:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:001&gt; !rpcexts.rpctime
+Current time is: 6003, 422</pre>
+</td>
+</tr>
+</table></span></div>
+<p>This shows that the last contact with this call was approximately 5533 seconds ago, which is about 92 minutes. Thus, this must be a stuck call. </p>
+</li>
+<li>As a last step before you attach a debugger to the server process, you can isolate the thread that should currently service the call by using the Servicing thread identifier. This is another cell number; it appeared in step 6 as "0x0.2". You can use it as follows:<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:001&gt; !rpcexts.getdbgcell 278 0.2
+Getting cell info ...
+Thread
+Status: Dispatched
+Thread ID: 0x1A4 (420)
+Last update time (in seconds since boot):470.25 (0x1D6.19)</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Now you know that you are looking for thread 0x1A4 in process 0x278.</p>
+</li>
+</ol>
+<p>It is possible that the thread was making another RPC call. If necessary, you can trace this call by repeating this procedure.</p>
+<div class="alert"><b>Note</b>    This procedure shows how to find the server thread if you know the client thread. For an example of the reverse technique, see <a href="identifying_the_caller_from_the_server_thread.htm">Identifying the Caller From the Server Thread</a>.</div>
+<div> </div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Analyzing a Stuck Call Problem%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

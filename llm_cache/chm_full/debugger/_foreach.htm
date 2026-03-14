@@ -1,0 +1,106 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .foreach token parses the output of one or more debugger commands and uses each value in this output as the input to one or more additional commands."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.foreach</title>
+
+<meta name="MS-HAID" content="r14_tokens_edf3a785-a32a-495f-be5c-364833d77aa6.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._foreach"></a>.foreach</h1>
+</div>
+<p>The <b>.foreach</b> token parses the output of one or more debugger commands and uses each value in this output as the input to one or more additional commands.</p>
+<pre class="syntax">
+<b>.foreach </b>[<i>Options</i>]<b> ( </b><i>Variable</i><b>  { </b><i>InCommands</i><b> } ) { </b><i>OutCommands</i><b> }</b> 
+
+<b>.foreach </b>[<i>Options</i>]<b> /s ( </b><i>Variable</i><b>  "</b><i>InString</i><b>" ) { </b><i>OutCommands</i><b> }</b> 
+
+<b>.foreach </b>[<i>Options</i>]<b> /f ( </b><i>Variable</i><b>  "</b><i>InFile</i><b>" ) { </b><i>OutCommands</i><b> }</b> 
+</pre>
+<h2><a id="ddk_token_foreach_dbg"></a><a id="DDK_TOKEN_FOREACH_DBG"></a>Syntax Elements</h2>
+<p></p>
+<dl>
+<dt><a id="_______Options______"></a><a id="_______options______"></a><a id="_______OPTIONS______"></a>       <i>Options</i>      </dt>
+<dd>
+<p>Can be any combination of the following options:</p>
+<p></p>
+<dl>
+<dt><a id="_pS_InitialSkipNumber"></a><a id="_ps_initialskipnumber"></a><a id="_PS_INITIALSKIPNUMBER"></a><b>/pS </b><i>InitialSkipNumber</i></dt>
+<dd>
+<p>Causes some initial tokens to be skipped.  <i>InitialSkipNumber</i> specifies the number of output tokens that will not be passed to the specified <i>OutCommands</i>.</p>
+</dd>
+<dt><a id="_ps_SkipNumber"></a><a id="_ps_skipnumber"></a><a id="_PS_SKIPNUMBER"></a><b>/ps </b><i>SkipNumber</i></dt>
+<dd>
+<p>Causes tokens to be skipped repeatedly each time a command is processed.  After each time a token is passed to the specified <i>OutCommands</i>, a number of tokens equal to the value of <i>SkipNumber</i> will be ignored.</p>
+</dd>
+</dl>
+</dd>
+<dt><a id="_______Variable______"></a><a id="_______variable______"></a><a id="_______VARIABLE______"></a>       <i>Variable</i>      </dt>
+<dd>
+<p>Specifies a variable name. This variable will be used to hold the output from each command in the <i>InCommands</i> string; you can reference <i>Variable</i> by name in the parameters passed to the <i>OutCommands</i>. Any alphanumeric string can be used, although using a string that can also pass for a valid hexadecimal number or debugger command is not recommended. If the name used for <i>Variable</i> happens to match an existing global variable, local variable, or alias, their values will not be affected by the <b>.foreach</b> command.</p>
+</dd>
+<dt><a id="_______InCommands______"></a><a id="_______incommands______"></a><a id="_______INCOMMANDS______"></a>       <i>InCommands</i>      </dt>
+<dd>
+<p>Specifies one or more commands whose output will be parsed; the resulting tokens will be passed to <i>OutCommands</i>. The output from <i>InCommands</i> is not displayed.</p>
+</dd>
+<dt><a id="_______InString______"></a><a id="_______instring______"></a><a id="_______INSTRING______"></a>       <i>InString</i>      </dt>
+<dd>
+<p>Used with <b>/s</b>.  Specifies a string that will be parsed; the resulting tokens will be passed to <i>OutCommands</i>.</p>
+</dd>
+<dt><a id="_______InFile______"></a><a id="_______infile______"></a><a id="_______INFILE______"></a>       <i>InFile</i>      </dt>
+<dd>
+<p>Used with <b>/f</b>.  Specifies a text file that will be parsed; the resulting tokens will be passed to <i>OutCommands</i>. The file name <i>InFile</i> must be enclosed in quotation marks.</p>
+</dd>
+<dt><a id="_______OutCommands______"></a><a id="_______outcommands______"></a><a id="_______OUTCOMMANDS______"></a>       <i>OutCommands</i>      </dt>
+<dd>
+<p>Specifies one or more commands which will be executed for each token. Whenever the <i>Variable</i> string occurs it will be replaced by the current token.</p>
+<div class="alert"><b>Note</b>    When the string <i>Variable</i> appears within <i>OutCommands</i>, it must be surrounded by spaces. If it is adjacent to any other text -- even a parenthesis -- it will not be replaced by the current token value, unless you use the <a href="_______alias_interpreter_.htm"><b>${ }  (Alias Interpreter)</b></a> token.</div>
+<div> </div>
+</dd>
+</dl>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For information about other control flow tokens and their use in debugger command programs, see <a href="using_debugger_command_programs.htm">Using Debugger Command Programs</a>.</p>
+<h2>Remarks</h2>
+<p>When the output from <i>InCommands</i>, the <i>InString</i> string, or the <i>InFile</i> file is parsed, any number of spaces, tabs, or carriage returns is treated as a single delimiter. Each of the resulting pieces of text is used to replace <i>Variable</i> when it appears within <i>OutCommands</i>.</p>
+<p>Here is an example of a <b>.foreach</b> statement that uses the <a href="dds__dps__dqs__display_words_and_symbols_.htm"><b>dds</b></a> command on each token found in the file <i>myfile.txt</i>:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; .foreach /f ( place "g:\myfile.txt") { dds place } </pre>
+</td>
+</tr>
+</table></span></div>
+<p>The <b>/pS</b> and <b>/ps</b> flags can be used to pass only certain tokens to the specified <i>OutCommands</i>.  For example, the following statement will skip the first two tokens in the <i>myfile.txt</i> file and then pass the third to <a href="dds__dps__dqs__display_words_and_symbols_.htm"><b>dds</b></a>.  After each token that is passed, it will skip four tokens.  The result is that <b>dds</b> will be used with the 3rd, 8th, 13th, 18th, and 23rd tokens, and so on:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; .foreach /pS 2 /ps 4 /f ( place "g:\myfile.txt") { dds place } </pre>
+</td>
+</tr>
+</table></span></div>
+<p>For more examples that use the <b>.foreach</b> token, see <a href="debugger_command_program_examples.htm">Debugger Command Program Examples</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.foreach%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

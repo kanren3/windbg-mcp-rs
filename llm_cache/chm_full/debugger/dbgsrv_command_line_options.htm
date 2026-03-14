@@ -1,0 +1,76 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The DbgSrv command line uses the following syntax."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>DbgSrv Command-Line Options</title>
+
+<meta name="MS-HAID" content="r12_cmdline_b6cb864a-a33f-42c6-96a1-5bfcb1468bde.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.dbgsrv_command_line_options"></a>DbgSrv Command-Line Options</h1>
+</div>
+<p></p>
+<p>The DbgSrv command line uses the following syntax.</p>
+<pre class="syntax">
+    <b>dbgsrv -t</b><i> ServerTransport </i><b>[-sifeo </b><i>image.ext</i><b>] -c[s] </b><i>AppCmdLine</i><b> [-x | -pc] 
+
+dbgsrv -? 
+</b>
+   </pre>
+<p>All options are case-sensitive.</p>
+<h2><a id="ddk_dbgsrv_command_line_options_dbg"></a><a id="DDK_DBGSRV_COMMAND_LINE_OPTIONS_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______-t_______ServerTransport______"></a><a id="_______-t_______servertransport______"></a><a id="_______-T_______SERVERTRANSPORT______"></a>       <b>-t</b>       <i>ServerTransport</i>      </dt>
+<dd>
+<p>Specifies the transport protocol. For a list of the possible protocols and the syntax for <i>ServerTransport</i> in each case, see <a href="activating_a_process_server.htm"><b>Activating a Process Server</b></a>.</p>
+</dd>
+<dt><a id="_______-sifeo_______Executable______"></a><a id="_______-sifeo_______executable______"></a><a id="_______-SIFEO_______EXECUTABLE______"></a>       <b>-sifeo</b>       <i>Executable</i>      </dt>
+<dd>
+<p>Suspends the Image File Execution Option (IFEO) value for the given image.  <i>Executable</i> should include the file name of the executable image, including the file name extensions. The -sifeo option allows DbgSrv to be set as the IFEO debugger for an image created by the -c option, without causing recursive invocation due to the IFEO setting. This option can be used only if -c is used. </p>
+</dd>
+<dt><a id="_______-c______"></a><a id="_______-C______"></a>       <b>-c</b>      </dt>
+<dd>
+<p>Causes DbgSrv to create a new process. You can use this to create a process that you intend to debug. This is similar to spawning a new process from the debugger, except that this process will <i>not</i> be debugged when it is created. To debug this process, determine its PID and use the <b>-p</b> option when starting the smart client to debug this process. </p>
+</dd>
+<dt><a id="_______s______"></a><a id="_______S______"></a>       <b>s</b>      </dt>
+<dd>
+<p>Causes the newly-created process to be immediately suspended. If you are using this option, it is recommended that you use CDB as your smart client, and that you start the smart client with the -pb command-line option, in conjunction with -p PID. If you include the -pb option on the command line, the process will resume when the debugger attaches to it; otherwise you can resume the process with the <a href="_m__resume_thread_.htm"><b>~*m</b></a> command. </p>
+</dd>
+<dt><a id="_______AppCmdLine______"></a><a id="_______appcmdline______"></a><a id="_______APPCMDLINE______"></a>       <i>AppCmdLine</i>      </dt>
+<dd>
+<p>Specifies the full command line of the process to be created. <i>AppCmdLine</i> can be either a Unicode or ASCII string, and can include any printable character. All text that appears after the <b>-c</b>[<b>s</b>] parameter will be taken to form the string <i>AppCmdLine</i>.</p>
+</dd>
+<dt><a id="_______-x______"></a><a id="_______-X______"></a>       <b>-x</b>      </dt>
+<dd>
+<p>Causes the remainder of the command line to be ignored. This option is useful if you are launching DbgSrv from an application that may append unwanted text to its command line.</p>
+</dd>
+<dt><a id="_______-pc______"></a><a id="_______-PC______"></a>       <b>-pc</b>      </dt>
+<dd>
+<p>Causes the remainder of the command line to be ignored. This option is useful if you are launching DbgSrv from an application that may append unwanted text to its command line. A syntax error results if -pc is the final element on the DbgSrv command line. Aside from this restriction, -pc is identical to -x.   </p>
+</dd>
+<dt><a id="_______-_______"></a>       <b>-?</b>      </dt>
+<dd>
+<p>Displays a message box with help text for the DbgSrv command line.</p>
+<p>For information about using DbgSrv, see <a href="process_servers__user_mode_.htm">Process Servers (User Mode)</a>.</p>
+</dd>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20DbgSrv Command-Line Options%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

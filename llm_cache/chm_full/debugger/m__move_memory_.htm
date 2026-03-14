@@ -1,0 +1,79 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The m command copies the contents of memory from one location to another. Do not confuse this command with the ~m (Resume Thread) command."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>m (Move Memory)</title>
+
+<meta name="MS-HAID" content="r17_cmds_I_5b3de760-98e6-4da5-8d5c-cb48cfd3d03e.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.m__move_memory_"></a>m (Move Memory)</h1>
+</div>
+<p>The <b>m</b> command copies the contents of memory from one location to another. </p>
+<p>Do not confuse this command with the <a href="_m__resume_thread_.htm"><b>~m (Resume Thread)</b></a> command.</p>
+<pre class="syntax">
+    <b>m</b> Range Address 
+</pre>
+<h2><a id="ddk_cmd_move_memory_dbg"></a><a id="DDK_CMD_MOVE_MEMORY_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Range______"></a><a id="_______range______"></a><a id="_______RANGE______"></a>       <i>Range</i>      </dt>
+<dd>
+<p>Specifies the memory area to copy. For more information about the syntax of this parameter, see <a href="address_and_address_range_syntax.htm">Address and Address Range Syntax</a>.</p>
+</dd>
+<dt><a id="_______Address______"></a><a id="_______address______"></a><a id="_______ADDRESS______"></a>       <i>Address</i>      </dt>
+<dd>
+<p>Specifies the starting address of the destination memory area. For more information about the syntax of this parameter, see <a href="address_and_address_range_syntax.htm">Address and Address Range Syntax</a>.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about memory manipulation and a description of other memory-related commands, see <a href="reading_and_writing_memory.htm">Reading and Writing Memory</a>.</p>
+<h2>Remarks</h2>
+<p>The memory area that <i>Address</i> specifies can be part of the memory area that <i>Range</i> specifies. Overlapping moves are handled correctly.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20m (Move Memory)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

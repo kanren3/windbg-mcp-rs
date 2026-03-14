@@ -1,0 +1,41 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Elements of a Debugger Command Program"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Elements of a Debugger Command Program</title>
+
+<meta name="MS-HAID" content="r05_use_start_262edb22-df18-4102-a408-04f482aaac86.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.elements_of_a_debugger_command_program"></a>Elements of a Debugger Command Program</h1>
+</div>
+<h2><a id="ddk_elements_of_a_debugger_command_program_dbg"></a><a id="DDK_ELEMENTS_OF_A_DEBUGGER_COMMAND_PROGRAM_DBG"></a></h2>
+<p>A <i>debugger command program</i> is a small application that consists of debugger commands and control flow tokens, such as <b>.if</b>, <b>.for</b>, and <b>.while</b>. (For a full list of control flow tokens and their syntax, see <a href="control_flow_tokens.htm">Control Flow Tokens</a>.)</p>
+<p>You can use braces ( <b>{ }</b> ) to enclose a block of statements within a larger command block. When you enter each block, all aliases within the block are evaluated. If you later alter the value of an alias within a command block, commands after that point do not use the new alias value unless they are within a subordinate block.</p>
+<p>You cannot create a block by using a pair of braces. You must add a control flow token before the opening brace. If you want to create a block only to evaluate aliases, you should use the <a href="_block.htm"><b>.block</b></a> token before the opening brace.</p>
+<p>A debugger command program can use <a href="using_aliases.htm">user-named aliases or fixed-name aliases</a> as its local variables. If you want to use numeric or typed variables, you can use the <b>$t</b><i>n</i><a href="pseudo_register_syntax.htm">pseudo-registers</a>.</p>
+<p>User-named aliases are evaluated only if they are not next to other text. If you want to evaluate an alias that is next to other text, use the <a href="_______alias_interpreter_.htm"><b>${ }  (Alias Interpreter)</b></a> token. This token has optional switches that enable you to evaluate the alias in a variety of ways.</p>
+<p>You can add comments to a debugger command program by using two dollar signs (<a href="_____comment_specifier_.htm"><b>$$  (Comment Specifier)</b></a>). You should not insert a comment between a token and its elements (such as braces or conditions).</p>
+<div class="alert"><b>Note</b>    You should not use an asterisk (<a href="____comment_line_specifier_.htm"><b>*  (Comment Line Specifier)</b></a>). Because comments that are specified with an asterisk do not end with a semicolon, the rest of the program is disregarded.</div>
+<div> </div>
+<p>Typically, you should use MASM syntax within a debugger command program. When you have to use C++ elements (such as specifying a member of a structure or class), you can use the <b>@@c++( )</b> token to switch to C++ syntax for that clause. </p>
+<p>The <b>$scmp</b>, <b>$sicmp</b>, and <b>$spat</b> string operators in MASM syntax are particularly useful. For more information about these operators, see <a href="masm_numbers_and_operators.htm">MASM Numbers and Operators</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Elements of a Debugger Command Program%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

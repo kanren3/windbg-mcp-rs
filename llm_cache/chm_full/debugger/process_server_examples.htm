@@ -1,0 +1,103 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Process Server Examples"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Process Server Examples</title>
+
+<meta name="MS-HAID" content="r08_use_remote_c921f1a0-9f2d-4d63-b5c5-9035df7132d5.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.process_server_examples"></a>Process Server Examples</h1>
+</div>
+<h2><a id="ddk_process_server_examples_dbg"></a><a id="DDK_PROCESS_SERVER_EXAMPLES_DBG"></a></h2>
+<p>Suppose one person is running an application on a computer named \\BOX17. This application has problems, but the debugging technician is at a different site.</p>
+<p>The first person sets up a process server using DbgSrv on \\BOX17. The target application has a process ID of 122. TCP protocol is chosen, with a socket port number of 1025. The server is started with the following command:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>E:\Debugging Tools for Windows&gt; dbgsrv -t tcp:port=1025 </pre>
+</td>
+</tr>
+</table></span></div>
+<p>On the other computer, the technician starts WinDbg as a smart client with this command:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>G:\Debugging Tools&gt; windbg -premote tcp:server=BOX17,port=1025 -p 122 </pre>
+</td>
+</tr>
+</table></span></div>
+<p>Here is another example. In this case, NPIPE protocol is chosen, and CDB is used instead of WinDbg. The first user chooses a pipe name. This can be any alphanumeric string -- in this example, "AnotherPipe".  The first user opens an elevated Command Prompt window (Run as Administrator) and starts a debugging server by entering this command:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>E:\Debugging Tools for Windows&gt; dbgsrv -t npipe:pipe=AnotherPipe</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The technician is logged on to the client computer with an account that does not have access to the server computer. But the technician knows the username and password for an account that does have access to the server computer. The username for that account is Contoso. The technician enters the following command:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>net use \\BOX17\ipc$ /user:Contoso</pre>
+</td>
+</tr>
+</table></span></div>
+<p>When prompted, the technician enters the password for the Contoso account.</p>
+<p>The technician is not sure what name was used for the named pipe, so  she queries BOX17 for process servers:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>G:\Debugging Tools&gt; cdb -QR \\BOX17 
+Servers on \\BOX17:
+Debugger Server - npipe:Pipe=MainPipe
+Remote Process Server - npipe:Pipe=AnotherPipe</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Two pipes are shown. However, only one is a process server -- the other is a debugging server, and we are not interested in that. So <b>AnotherPipe</b> must be the correct name. The technician enters the following command  to start the smart client:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>G:\Debugging Tools&gt; cdb -premote npipe:server=BOX17,pipe=AnotherPipe -v sol.exe </pre>
+</td>
+</tr>
+</table></span></div>
+<p>For a more complicated example using a process server, see <a href="symbols_in_the_middle.htm">Symbols in the Middle</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Process Server Examples%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

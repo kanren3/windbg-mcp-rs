@@ -1,0 +1,82 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The ss command sets or displays the current suffix value that is used for symbol matching in numeric expressions."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>ss (Set Symbol Suffix)</title>
+
+<meta name="MS-HAID" content="r18_cmds_S_9dfba3f9-c225-429b-a29c-0b29fbe28a7b.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.ss__set_symbol_suffix_"></a>ss (Set Symbol Suffix)</h1>
+</div>
+<p>The <b>ss</b> command sets or displays the current suffix value that is used for symbol matching in numeric expressions.</p>
+<pre class="syntax">
+    <b>ss</b> [<b>a</b>|<b>w</b>|<b>n</b>] 
+</pre>
+<h2><a id="ddk_cmd_set_symbol_suffix_dbg"></a><a id="DDK_CMD_SET_SYMBOL_SUFFIX_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______a______"></a><a id="_______A______"></a>       <b>a</b>      </dt>
+<dd>
+<p>Specifies that the symbol suffix should be "A", matching many ASCII symbols.</p>
+</dd>
+<dt><a id="_______w______"></a><a id="_______W______"></a>       <b>w</b>      </dt>
+<dd>
+<p>Specifies that the symbol suffix should be "W", matching many Unicode symbols.</p>
+</dd>
+<dt><a id="_______n______"></a><a id="_______N______"></a>       <b>n</b>      </dt>
+<dd>
+<p>Specifies that the debugger should not use a symbol suffix. (This parameter is the default behavior.)</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about symbol matching, see <a href="symbol_syntax_and_symbol_matching.htm">Symbol Syntax and Symbol Matching</a>.</p>
+<h2>Remarks</h2>
+<p>If you specify the <b>ss</b> command together with no parameters, the current state of the suffix value is displayed.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20ss (Set Symbol Suffix)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

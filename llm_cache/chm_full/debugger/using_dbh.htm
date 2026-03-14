@@ -1,0 +1,103 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Using DBH"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Using DBH</title>
+
+<meta name="MS-HAID" content="SymChk_f9e919d7-c05c-4f74-9972-bb1e1870da84.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.using_dbh"></a>Using DBH</h1>
+</div>
+<p>DBH is a command-line tool that exposes many of the functions in the DbgHelp API (dbghelp.dll). It can display information about the contents of a symbol file, display specific details of the symbols in the file, and search through the file for symbols matching various criteria.</p>
+<p>The functionality provided by DBH is similar to that provided within WinDbg, KD, and CDB by commands such as <a href="x__examine_symbols_.htm"><b>x (Examine Symbols)</b></a>. </p>
+<h3><a id="running_dbh_in_interactive_mode"></a><a id="RUNNING_DBH_IN_INTERACTIVE_MODE"></a>Running DBH in Interactive Mode</h3>
+<p>You start DBH with a simple command line, on which you specify the target module whose symbols you wish to investigate.  A target module can be an EXE program or a PDB symbol file. You can also specify a process ID (PID) to investigate.  See <a href="dbh_command_line_options.htm"><b>DBH Command-Line Options</b></a> for the full syntax.</p>
+<p>When DBH starts, it loads the symbols for the specified module, and then presents you with a prompt at which you can type a variety of commands.  See <a href="dbh_commands.htm">DBH Commands</a> for a list of available commands.</p>
+<p>For example, the following sequence starts DBH by specifying the target process with process ID 4672, then executes the <b>enum</b> command at the DBH prompt to display symbols matching a specific pattern, and then executes the <b>q</b> command to quit DBH:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>C:\&gt; dbh -p:4672 
+            400000 : TimeTest
+          77820000 : ntdll
+          77740000 : kernel32
+
+pid:4672 mod:TimeTest[400000]: enum TimeTest!ma* 
+
+ index            address     name
+     1             42cc56 :   main
+     3             415810 :   malloc
+     5             415450 :   mainCRTStartup
+
+pid:4672 mod:TimeTest[400000]: q 
+
+goodbye </pre>
+</td>
+</tr>
+</table></span></div>
+<h3><a id="running_dbh_in_batch_mode"></a><a id="RUNNING_DBH_IN_BATCH_MODE"></a>Running DBH in Batch Mode</h3>
+<p>If you wish to run only a single DBH command, you can specify it at the end of the command line.  This causes DBH to start, load the specified module, run the specified command, and then exit.</p>
+<p>For example, the previous example could be replaced with a single command line:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>C:\&gt; dbh -p:4672 enum TimeTest!ma* 
+           400000 : TimeTest
+         77820000 : ntdll
+         77740000 : kernel32
+
+index            address     name
+    1             42cc56 :   main
+    3             415810 :   malloc
+    5             415450 :   mainCRTStartup </pre>
+</td>
+</tr>
+</table></span></div>
+<p>This method of running DBH is called <i>batch mode</i>, because it can be easily used in batch files.  This version of the command line can also be followed by a pipe ( <b>|</b> ) which redirects the DBH output to another program.</p>
+<h3><a id="specifying_the_target"></a><a id="SPECIFYING_THE_TARGET"></a>Specifying the Target</h3>
+<p>DBH can select a target in three ways:  by the process ID of a running process, by the name of the executable, or by the name of the symbol file.  For example, if there is exactly one instance of MyProg.exe currently running, with process ID 1234, then the following commands are almost equivalent:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>C:\&gt; dbh -v -p:1234 
+C:\&gt; dbh -v c:\mydir\myprog.exe 
+C:\&gt; dbh -v c:\mydir\myprog.pdb </pre>
+</td>
+</tr>
+</table></span></div>
+<p>One difference between these commands is that when you start DBH by specifying the process ID, DBH uses the actual virtual addresses being used by this process.  When you start DBH by specifying the executable name or the symbol file name, DBH assumes that the module's base address is a standard value (for example, 0x01000000). You can then use the <b>base</b> command to specify the actual base address, thus shifting the addresses of all the symbols in the module.</p>
+<p>DBH does not attach to the target process in the way that a debugger does.  DBH cannot cause a process to begin or end, nor can it alter how that process runs.  For DBH to attach to a process by its process ID, the target process has to be running, but once DBH has been started the target process can be terminated and DBH will continue to access its symbols.</p>
+<h3><a id="decorated_and_undecorated_symbols"></a><a id="DECORATED_AND_UNDECORATED_SYMBOLS"></a>Decorated and Undecorated Symbols</h3>
+<p>By default, DBH uses undecorated symbol names when displaying and searching for symbols.  If you turn off the <a href="symbol_options.htm#symopt_undname">SYMOPT_UNDNAME</a> symbol option, or include the -d option on the DBH command line, decorations will be included.</p>
+<p>For information on symbol decorations, see <a href="public_and_private_symbols.htm">Public and Private Symbols</a>.</p>
+<h3><a id="exiting_dbh"></a><a id="EXITING_DBH"></a>Exiting DBH</h3>
+<p>To exit DBH, use the <b>q</b> command at the DBH prompt.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Using DBH%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Security During User-Mode Debugging"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Security During User-Mode Debugging</title>
+
+<meta name="MS-HAID" content="r11_security_8dae7f21-98c3-4e82-a622-4d9ff98c5f73.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.security_during_user_mode_debugging"></a>Security During User-Mode Debugging</h1>
+</div>
+<h2><a id="ddk_security_during_user_mode_debugging_dbg"></a><a id="DDK_SECURITY_DURING_USER_MODE_DEBUGGING_DBG"></a></h2>
+<p>When a user-mode debugger is active, it can effectively control any of the processes on the computer.</p>
+<p>There are three possible ways in which security problems could arise during user-mode debugging:</p>
+<ul>
+<li>
+<p>If you use corrupt or destructive extension DLLs, they could cause your debugger to take unexpected actions, possibly affecting applications other than your target.</p>
+</li>
+<li>
+<p>It is possible that corrupt or destructive symbol files could also cause your debugger to take unexpected actions, possibly affecting applications other than your target.</p>
+</li>
+<li>
+<p>If you are running a remote debugging session, an unexpected client might attempt to link to your server. Or perhaps the client you are expecting might attempt to perform actions that you do not anticipate.</p>
+</li>
+</ul>
+<p>For suggestions on how to guard against unexpected remote connections, see <a href="security_during_remote_debugging.htm">Security During Remote Debugging</a>. After a remote client has joined a user-mode debugging session, there is no way to restrict its access to processes on your computer.  </p>
+<p>If you are not performing remote debugging, you should still beware of bad symbol files and extension DLLs. do not load symbols or extensions that you distrust!</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Security During User-Mode Debugging%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

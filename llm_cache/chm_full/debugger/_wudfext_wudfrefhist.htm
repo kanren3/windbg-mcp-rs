@@ -1,0 +1,108 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !wudfext.wudfrefhist extension displays the reference count stack history for a UMDF object."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!wudfext.wudfrefhist</title>
+
+<meta name="MS-HAID" content="r33~e_exts_umdf_0cf85125-fe1e-4ac7-8cbf-42c28308a305.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._wudfext_wudfrefhist"></a>!wudfext.wudfrefhist</h1>
+</div>
+<p>The <b>!wudfext.wudfrefhist</b> extension displays the reference count stack history for a UMDF object. </p>
+<pre class="syntax"><b>!wudfext.wudfrefhist </b><i>ObjectAddress</i></pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______ObjectAddress______"></a><a id="_______objectaddress______"></a><a id="_______OBJECTADDRESS______"></a>       <i>ObjectAddress</i>      </dt>
+<dd>
+<p>Specifies the address of the UMDF object whose reference count stack history is to be displayed. Note that this is the address of the object itself, not of the interface. </p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000</b></p>
+</td>
+<td>
+<p>Unavailable </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later</b></p>
+</td>
+<td>
+<p>
+          Wudfext.dll</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information, see <a href="user_mode_driver_framework_debugging.htm">User-Mode Driver Framework Debugging</a>.</p>
+<h2>Remarks</h2>
+<p>The <b>!wudfext.wudfrefhist</b> command is not supported by UMDF 1.11.</p>
+<p>The <i>ObjectAddress</i> parameter must be the address of the UMDF object, not the address of the interface (which is used by many other UMDF extension commands). To determine the address of the UMDF object, use the <a href="_wudfext_wudfdumpobjects.htm"><b>!wudfext.wudfdumpobjects</b></a> command, which displays both the UMDF object address and the interface address. Alternatively, if you know the address of the interface, you can use it as the argument of the <a href="_wudfext_wudfobject.htm"><b>!wudfext.wudfobject</b></a> command, which displays the object address (displayed after the symbol "Fx:"). </p>
+<p>If the reference count tracking option (<b>TrackRefCounts</b>) has been enabled in WDF Verifier, you can use <b>!wudfext.wudfrefhist</b> to display each call stack that increments or decrements an object's reference count.  You can determine whether a call stack is causing a memory leak by examining its <b>AddRef</b> and <b>Release</b> calls for references that are being added and not released.</p>
+<p>This command can be used at any time, even if UMDF has not broken in to the debugger. </p>
+<p>If this command does not display the desired information, make sure that the relevant data is paged in and then try again. </p>
+<p>Here is an example of using the  <b>!wudfext.wudfrefhist</b> command:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:007&gt; !wudfext.umdevstacks
+...
+      UMDriver Image Path: C:\Windows\System32\drivers\UMDF\WUDFOsrUsbFilter.dll
+      Object Tracker Address: 0x0000003792ee9fc0
+        Object   Tracking ON
+        Refcount Tracking ON
+
+0:007&gt; !wudfext.wudfdumpobjects 0x0000003792ee9fc0
+...
+WdfTypeIoQueue   Object: 0x0000003792f05ce0, Interface: 0x0000003792f05d58
+
+0:007&gt; !wudfext.wudfrefhist 0x0000003792f05ce0
+-----------------------------------------------------------------------
+2  (++)
+-----------------------------------------------------------------------
+WUDFx!UfxObject::TrackRefCounts+0xb2
+WUDFx!CWdfIoQueue::AddRef+0x17adc
+WUDFx!CWdfIoQueue::CreateAndInitialize+0xeb
+WUDFx!CWdfDevice::CreateIoQueue+0x1e7
+WUDFOsrUsbFilter!CMyQueue::Initialize+0x48
+WUDFOsrUsbFilter!CMyDevice::Configure+0x7d
+WUDFOsrUsbFilter!CMyDriver::OnDeviceAdd+0xca
+WUDFx!CWdfDriver::OnAddDevice+0x486
+WUDFx!CWUDF::AddDevice+0x43
+WUDFHost!CWudfDeviceStack::LoadDrivers+0x320
+WUDFHost!CLpcNotification::Message+0x1340
+WUDFPlatform!WdfLpcPort::ProcessMessage+0x140
+WUDFPlatform!WdfLpcCommPort::ProcessMessage+0x92
+WUDFPlatform!WdfLpc::RetrieveMessage+0x20c</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!wudfext.wudfrefhist%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

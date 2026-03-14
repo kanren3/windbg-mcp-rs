@@ -1,0 +1,248 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The x command displays the symbols in all contexts that match the specified pattern."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>x (Examine Symbols)</title>
+
+<meta name="MS-HAID" content="r18_cmds_S_717feb00-25c4-4911-be94-52c11698f782.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.x__examine_symbols_"></a>x (Examine Symbols)</h1>
+</div>
+<p>The <b>x</b> command displays the symbols in all contexts that match the specified pattern.</p>
+<pre class="syntax"><b>x [</b><i>Options</i><b>] </b><i>Module</i><b>!</b><i>Symbol</i> 
+<b>x [</b><i>Options</i><b>] *</b></pre>
+<h2><a id="ddk_cmd_examine_symbols_dbg"></a><a id="DDK_CMD_EXAMINE_SYMBOLS_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Options______"></a><a id="_______options______"></a><a id="_______OPTIONS______"></a>       <i>Options</i>      </dt>
+<dd>
+<p>Specifies symbol searching options. You can use one or more of the following options:</p>
+<p></p>
+<dl>
+<dt><a id="_0"></a><b>/0</b></dt>
+<dd>
+<p>Displays only the address of each symbol.</p>
+</dd>
+<dt><a id="_1"></a><b>/1</b></dt>
+<dd>
+<p>Displays only the name of each symbol.</p>
+</dd>
+<dt><a id="_2"></a><b>/2</b></dt>
+<dd>
+<p>Displays only the address and name of each symbol (not the data type).</p>
+</dd>
+<dt><a id="_D"></a><a id="_d"></a><b>/D</b></dt>
+<dd>
+<p>Displays the output using <a href="debugger_markup_language_commands.htm">Debugger Markup Language</a>.</p>
+</dd>
+<dt><a id="_t"></a><a id="_T"></a><b>/t</b></dt>
+<dd>
+<p>Displays the data type of each symbol, if the data type is known.</p>
+</dd>
+<dt><a id="_v"></a><a id="_V"></a><b>/v</b></dt>
+<dd>
+<p>Displays the symbol type (local, global, parameter, function, or unknown) of each symbol. This option also displays the size of each symbol. The size of a function symbol is the size of the function in memory. The size of other symbols is the size of the data type that the symbol represents. Size is always measured in bytes and displayed in hexadecimal format.</p>
+</dd>
+<dt><a id="_s_Size"></a><a id="_s_size"></a><a id="_S_SIZE"></a><b>/s </b><i>Size</i></dt>
+<dd>
+<p>Display only those symbols whose size, in bytes, equals the value of <i>Size</i>. The <i>Size</i> of a function symbol is the size of the function in memory. The <i>Size</i> of other symbols is the size of the data type that the symbol represents. Symbols whose size cannot be determined are always displayed. <i>Size</i> must be a nonzero integer.</p>
+</dd>
+<dt><a id="_q"></a><a id="_Q"></a><b>/q</b></dt>
+<dd>
+<p>Displays symbol names in quoted format.</p>
+</dd>
+<dt><a id="_p"></a><a id="_P"></a><b>/p</b></dt>
+<dd>
+<p>Omits the space before the opening parenthesis when the debugger displays a function name and its arguments. This kind of display can make it easier if you are copying function names and arguments from the <b>x</b> display to another location.</p>
+</dd>
+<dt><a id="_f"></a><a id="_F"></a><b>/f</b></dt>
+<dd>
+<p>Displays the data size of a function.</p>
+</dd>
+<dt><a id="_d"></a><a id="_D"></a><b>/d</b></dt>
+<dd>
+<p>Displays the data size of data.</p>
+</dd>
+<dt><a id="_a"></a><a id="_A"></a><b>/a</b></dt>
+<dd>
+<p>Sorts the display by address, in ascending order.</p>
+</dd>
+<dt><a id="_A"></a><a id="_a"></a><b>/A</b></dt>
+<dd>
+<p>Sorts the display by address, in descending order.</p>
+</dd>
+<dt><a id="_n"></a><a id="_N"></a><b>/n</b></dt>
+<dd>
+<p>Sorts the display by name, in ascending order.</p>
+</dd>
+<dt><a id="_N"></a><a id="_n"></a><b>/N</b></dt>
+<dd>
+<p>Sorts the display by name, in descending order.</p>
+</dd>
+<dt><a id="_z"></a><a id="_Z"></a><b>/z</b></dt>
+<dd>
+<p>Sorts the display by size, in ascending order.</p>
+</dd>
+<dt><a id="_Z"></a><a id="_z"></a><b>/Z</b></dt>
+<dd>
+<p>Sorts the display by size, in descending order.</p>
+</dd>
+</dl>
+</dd>
+<dt><a id="_______Module______"></a><a id="_______module______"></a><a id="_______MODULE______"></a>       <i>Module</i>      </dt>
+<dd>
+<p>Specifies the module to search. This module can be an .exe, .dll, or .sys file. <i>Module</i> can contain a variety of wildcard characters and specifiers. For more information about the syntax, see <a href="string_wildcard_syntax.htm">String Wildcard Syntax</a>.</p>
+</dd>
+<dt><a id="_______Symbol______"></a><a id="_______symbol______"></a><a id="_______SYMBOL______"></a>       <i>Symbol</i>      </dt>
+<dd>
+<p>Specifies a pattern that the symbol must contain. <i>Symbol</i> can contain a variety of wildcard characters and specifiers. For more information about the syntax, see <a href="string_wildcard_syntax.htm">String Wildcard Syntax</a>. </p>
+<p>Because this pattern is matched to a symbol, the match is not case sensitive, and a single leading underscore (_) represents any quantity of leading underscores. You can add spaces within <i>Symbol</i>, so that you can specify symbol names that contain spaces (such as "operator new" or "Template&lt;A, B&gt;") without using wildcard characters.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p>
+          Modes
+         </p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+          Targets
+         </p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+          Platforms
+         </p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>The following command finds all of the symbols in MyModule that contain the string "spin".</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; x mymodule!*spin* </code></pre>
+<p>The following command quickly locates the "DownloadMinor" and "DownloadMajor" symbols in MyModule.</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; x mymodule!downloadm??or </code></pre>
+<p>You can also show all symbols in the MyModule by using the following command.</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; x mymodule!* </code></pre>
+<p>The preceding commands also force the debugger to reload symbol information from MyModule. If you want to reload the symbols in the module with a minimal display, use the following command.</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; x mymodule!*start* </code></pre>
+<p>A few symbols always contain the string "start". Therefore, the preceding command always displays some output to verify that the command works. But the preceding command avoids the excessive display length of <b>x mymodule!*</b>.</p>
+<p>The display shows the starting address of each symbol and the full symbol name. If the symbol is a function name, the display also includes a list of its argument types. If the symbol is a global variable, its current value is displayed.</p>
+<p>There is one other special case of the <b>x</b> command. To display the addresses and names of all local variables for the current context, use the following command.</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; x * </code></pre>
+<div class="alert"><b>Note</b>    In most cases, you cannot access local variables unless private symbols have been loaded. For more information about this situation, see <a href="dbgerr005__private_symbols_required.htm">dbgerr005: Private Symbols Required</a>. To display the values of local variables, use the <a href="dv__display_local_variables_.htm"><b>dv (Display Local Variables)</b></a> command.</div>
+<div> </div>
+<p>The following example illustrates the <b>/0</b>, <b>/1</b>, and <b>/2</b> options.</p>
+<pre class="syntax" xml:space="preserve"><code>0:000:x86&gt; x /0 MyApp!Add*
+00b51410          
+00b513d0 
+      
+0:000:x86&gt; x /1 MyApp!Add*
+MyApp!AddThreeIntegers
+MyApp!AddTwoIntegers
+
+0:000:x86&gt; x /2 MyApp!Add*
+00b51410          MyApp!AddThreeIntegers
+00b513d0          MyApp!AddTwoIntegers</code></pre>
+<p>The <b>/0</b>, <b>/1</b>, and <b>/2</b> options are useful if you want to use the output of the <b>x</b> command as input to the <a href="_foreach.htm"><b>.foreach</b></a> command.</p>
+<pre class="syntax" xml:space="preserve"><code>.foreach ( place { x /0 MyApp!*MySym*} ) { .echo ${place}+0x18 }</code></pre>
+<p>The following example demonstrates the switch <b>/f</b> when used to filter functions on the module notepad.exe.</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; x /f /v notepad!*main*
+prv func   00000001`00003340  249 notepad!WinMain (struct HINSTANCE__ *, struct HINSTANCE__ *, char *, int)
+prv func   00000001`0000a7b0   1c notepad!WinMainCRTStartup$filt$0 (void)
+prv func   00000001`0000a540  268 notepad!WinMainCRTStartup (void)</code></pre>
+<p>When you use the <b>/v</b> option, the first column of the display shows the symbol type (local, global, parameter, function, or unknown). The second column is the address of the symbol. The third column is the size of the symbol, in bytes. The fourth column shows the module name and symbol name. In some cases, this display is followed by an equal sign (=) and then the data type of the symbol. The source of the symbol (public or full symbol information) is also displayed.</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; x /v nt!CmType*
+global 806c9e68    0 nt!CmTypeName = struct _UNICODE_STRING []
+global 806c9e68  150 nt!CmTypeName = struct _UNICODE_STRING [42]
+global 806c9e68    0 nt!CmTypeName = struct _UNICODE_STRING []
+global 805bd7b0    0 nt!CmTypeString = unsigned short *[]
+global 805bd7b0   a8 nt!CmTypeString = unsigned short *[42]</code></pre>
+<p>In the preceding example, the size is given in hexadecimal format, while the data type is given in decimal format. Therefore, in the last line of the preceding example, the data type is an array of 42 pointers to unsigned short integers. The size of this array is 42*4 = 168, and 168 is displayed in hexadecimal format as 0xA8.</p>
+<p>You can use the <b>/s</b><i>Size</i> option to display only those symbols whose size, in bytes, is a certain value. For example, you can restrict the command in the preceding example to symbols that represent objects whose size is 0xA8.</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; x /v /s a8 nt!CmType*
+global 805bd7b0   a8 nt!CmTypeString = unsigned short *[42]</code></pre>
+<p><b>Working With Data Types</b></p>
+<p>The <b>/t</b> option causes the debugger to display information about each symbol's data type. Note that for many symbols, this information is displayed even without the <b>/t </b>option. When you use <b>/t</b>, such symbols have their data type information displayed twice.</p>
+<pre class="syntax" xml:space="preserve"><code>0:001&gt; x prymes!__n*
+00427d84 myModule!__nullstring = 0x00425de8 "(null)"
+0042a3c0 myModule!_nstream = 512
+Type information missing error for _nh_malloc
+004021c1 myModule!MyStructInstance = struct MyStruct
+00427d14 myModule!_NLG_Destination = &lt;no type information&gt;
+
+0:001&gt; x /t prymes!__n*
+00427d84 char * myModule!__nullstring = 0x00425de8 "(null)"
+0042a3c0 int myModule!_nstream = 512
+Type information missing error for _nh_malloc
+004021c1 struct MyStruct myModule!MyStructInstance = struct MyStruct
+00427d14 &lt;NoType&gt; myModule!_NLG_Destination = &lt;no type information&gt;</code></pre>
+<p>The x command will display an instance of a type.</p>
+<pre class="syntax" xml:space="preserve"><code>0:001&gt; x foo!MyClassInstance
+00f4f354          foo!MyClassInstance = 0x00f78768</code></pre>
+<p>The x command does not display anything based on just the name of a type.</p>
+<pre class="syntax" xml:space="preserve"><code>0:001&gt; x foo!MyClass
+0:001&gt;</code></pre>
+<p>To display type information using the name of a type, consider using <a href="dt__display_type_.htm"><b>dt (Display Type)</b></a>, it provides information for both types and instances of types:
+
+</p>
+<pre class="syntax" xml:space="preserve"><code>0:001&gt; dt foo!MyClass
+   +0x000 IntMemberVariable : Int4B
+   +0x004 FloatMemberVariable : Float
+   +0x008 BoolMemberVariable : Bool
+   +0x00c PtrMemberVariable : Ptr32 MyClass
+</code></pre>
+<p><b>Working With Templates</b></p>
+<p>You can use wild cards with the x command to display template classes as shown in this sample. </p>
+<pre class="syntax" xml:space="preserve"><code>0:001&gt;  x Fabric!Common::ConfigEntry*TimeSpan?
+000007f6`466a2f9c Fabric!Common::ConfigEntry&lt;Common::TimeSpan&gt;::ConfigEntry&lt;Common::TimeSpan&gt; (void)
+000007f6`466a3020 Fabric!Common::ConfigEntry&lt;Common::TimeSpan&gt;::~ConfigEntry&lt;Common::TimeSpan&gt; (void)
+</code></pre>
+<p>Consider using the <a href="dt__display_type_.htm"><b>dt (Display Type)</b></a> command when working with templates, as the x command does not display individual template class items. </p>
+<pre class="syntax" xml:space="preserve"><code>0:001&gt; dt foo!Common::ConfigEntry&lt;Common::TimeSpan&gt;
+   +0x000 __VFN_table : Ptr64 
+   +0x008 componentConfig_ : Ptr64 Common::ComponentConfig
+   +0x010 section_         : std::basic_string&lt;wchar_t,std::char_traits&lt;wchar_t&gt;,std::allocator&lt;wchar_t&gt; &gt;
+   +0x038 key_             : std::basic_string&lt;wchar_t,std::char_traits&lt;wchar_t&gt;,std::allocator&lt;wchar_t&gt; &gt;
+</code></pre>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="verifying_symbols.htm">Verifying Symbols</a></dt>
+<dt><a href="dv__display_local_variables_.htm"><b>dv (Display Local Variables)</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20x (Examine Symbols)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

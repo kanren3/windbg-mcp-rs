@@ -1,0 +1,73 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The bc command permanently removes previously set breakpoints from the system."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>bc (Breakpoint Clear)</title>
+
+<meta name="MS-HAID" content="r15_cmds_A_ccc07fee-278e-46c1-83a8-a80313d93ba2.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bc__breakpoint_clear_"></a>bc (Breakpoint Clear)</h1>
+</div>
+<p>The <b>bc</b> command permanently removes previously set breakpoints from the system.</p>
+<pre class="syntax">bc Breakpoints </pre>
+<h2><a id="ddk_cmd_breakpoint_clear_dbg"></a><a id="DDK_CMD_BREAKPOINT_CLEAR_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Breakpoints______"></a><a id="_______breakpoints______"></a><a id="_______BREAKPOINTS______"></a>       <i>Breakpoints</i>      </dt>
+<dd>
+<p>Specifies the ID numbers of the breakpoints to remove. You can specify any number of breakpoints. You must separate multiple IDs by spaces or commas. You can specify a range of breakpoint IDs by using a hyphen (-). You can use an asterisk (*) to indicate all breakpoints. If you want to use a <a href="numerical_expression_syntax.htm">numeric expression</a> for an ID, enclose it in brackets ([]). If you want to use a <a href="string_wildcard_syntax.htm">string with wildcard characters</a> to match a breakpoint's symbolic name, enclose it in quotation marks ( " " ). </p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>Live debugging only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about how to use breakpoints, other breakpoint commands and methods of controlling breakpoints, and how to set breakpoints in user space from a kernel debugger, see <a href="using_breakpoints.htm">Using Breakpoints</a>. For more information about conditional breakpoints, see <a href="setting_a_conditional_breakpoint.htm">Setting a Conditional Breakpoint</a>.</p>
+<h2>Remarks</h2>
+<p>Use the <a href="bl__breakpoint_list_.htm"><b>bl (Breakpoint List)</b></a> command to list all existing breakpoints, their ID numbers, and their status.</p>
+<p>Use the <a href="_bpcmds__display_breakpoint_commands_.htm"><b>.bpcmds (Display Breakpoint Commands)</b></a> command to list all existing breakpoints, their ID numbers, and the commands that were used to create them.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20bc (Breakpoint Clear)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Controlling Processes and Threads in WinDbg"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Controlling Processes and Threads in WinDbg</title>
+
+<meta name="MS-HAID" content="r36_gui_1_8a25e803-69aa-49a0-b3ef-2f3334b803c5.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.processes_and_threads_window"></a>Controlling Processes and Threads in WinDbg</h1>
+</div>
+<h2><a id="ddk_processes_and_threads_window_dbg"></a><a id="DDK_PROCESSES_AND_THREADS_WINDOW_DBG"></a></h2>
+<p>In WinDbg, the Processes and Threads window displays information about the systems, processes, and threads that are being debugged. This window also enables you to select a new system, process, and thread to be active.</p>
+<h3><a id="opening_the_processes_and_threads_window"></a><a id="OPENING_THE_PROCESSES_AND_THREADS_WINDOW"></a>Opening the Processes and Threads Window</h3>
+<p>To open the Processes and Threads window, choose <b>Processes and Threads</b> from the <b>View</b> menu. (You can also press ALT+9 or click the <b>Processes and Threads</b> button (<img src="images/window-processes-threads.png" alt="Screen shot of the Processes and Threads button"/>) on the toolbar.  ALT+SHIFT+9 closes the Processes and Threads window.)</p>
+<p>The following screen shot shows an example of a Processes and Threads window.</p><img src="images/window-prth.png" alt="Screen shot of the Processes and Threads window"/><p>The Processes and Threads window displays a list of all processes that are currently being debugged. The threads in the process appear under each process. If the debugger is attached to multiple systems, the systems are shown at the top level of the tree, with the processes subordinate to them, and the threads subordinate to the processes.</p>
+<p>Each system listing includes the server name and the protocol details. The system that the debugger is running on is identified as <b>&lt;Local&gt;</b>.</p>
+<p>Each process listing includes the internal decimal process index that the debugger uses, the hexadecimal process ID, and the name of the application that is associated with the process.</p>
+<p>Each thread listing includes the internal decimal thread index that the debugger uses and the hexadecimal thread ID.</p>
+<h3><a id="using_the_processes_and_threads_window"></a><a id="USING_THE_PROCESSES_AND_THREADS_WINDOW"></a>Using the Processes and Threads Window</h3>
+<p>In the Processes and Threads window, the current or active system, process, and thread appear in bold type. To make a new system, process, or thread active, click its line in the window.</p>
+<p>The Processes and Threads window has a shortcut menu with additional commands. To access the menu, right-click the title bar or click the icon near the upper-right corner of the window (<img src="images/window-processes-threads.png" alt="Screen shot of the button that displays the Scratch Pad window toolbar shortcut menu"/>). The following list describes some of the menu commands:</p>
+<ul>
+<li>
+<p><b>Move to new dock</b> closes the Processes and Threads window and opens it in a new dock.</p>
+</li>
+<li>
+<p><b>
+       Always floating</b> causes the window to remain undocked even if it is dragged to a docking location.</p>
+</li>
+<li>
+<p><b>Move with frame</b> causes the window to move when the WinDbg frame is moved, even if the window is undocked.</p>
+</li>
+</ul>
+<h3><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For other methods of displaying or controlling systems, see <a href="debugging_multiple_targets.htm">Debugging Multiple Targets</a>. For other methods of displaying or controlling processes and threads, see <a href="controlling_processes_and_threads.htm">Controlling Processes and Threads</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Controlling Processes and Threads in WinDbg%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

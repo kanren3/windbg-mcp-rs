@@ -1,0 +1,96 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .idle_cmd command sets the idle command. This is a command that is executed whenever control returns from the target to the debugger. For example, when the target reaches a breakpoint, this command executes."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.idle_cmd (Set Idle Command)</title>
+
+<meta name="MS-HAID" content="r20_metacmds_E_d4a949c6-e66f-45aa-a576-7215696f949d.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._idle_cmd__set_idle_command_"></a>.idle_cmd (Set Idle Command)</h1>
+</div>
+<p>The <b>.idle_cmd</b> command sets the <i>idle command</i>.  This is a command that is executed whenever control returns from the target to the debugger.  For example, when the target reaches a breakpoint, this command executes.</p>
+<pre class="syntax">
+    <b>.idle_cmd</b>
+<b>.idle_cmd </b><i>String</i> 
+<b>.idle_cmd /d</b>
+</pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______String______"></a><a id="_______string______"></a><a id="_______STRING______"></a>       <i>String</i>      </dt>
+<dd>
+<p>Specifies the string to which the idle command should be set.</p>
+</dd>
+<dt><a id="________d______"></a><a id="________D______"></a>       <b>/d</b>      </dt>
+<dd>
+<p>Clears the idle command.  </p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<p>This command cannot be used in script files.</p>
+<table>
+<tr>
+<td>
+<p><b>
+          Modes</b></p>
+</td>
+<td>
+<p>user mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets</b></p>
+</td>
+<td>
+<p>live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Platforms</b></p>
+</td>
+<td>
+<p>all </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>When <b>.idle_cmd</b> is used with no parameters it displays the current idle command.</p>
+<p>In WinDbg, idle commands are stored in workspaces.</p>
+<p>Here is an example.  The idle command is set to <a href="r__registers_.htm"><b>r eax</b></a>.  Then, because the debugger is already idle, this command immediately executes, displaying the <b>eax</b> register:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>windbg&gt; .idle_cmd r eax 
+Execute when idle: r eax
+eax=003b0de8</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.idle_cmd (Set Idle Command)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

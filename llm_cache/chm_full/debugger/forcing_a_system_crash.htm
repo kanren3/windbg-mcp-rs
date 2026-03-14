@@ -1,0 +1,56 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Forcing a System Crash"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Forcing a System Crash</title>
+
+<meta name="MS-HAID" content="r10_dump_files_9f03f640-4a73-4b26-ad4b-8e9e132279f2.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.forcing_a_system_crash"></a>Forcing a System Crash</h1>
+</div>
+<h2><a id="ddk_forcing_a_system_crash_dbg"></a><a id="DDK_FORCING_A_SYSTEM_CRASH_DBG"></a></h2>
+<p>Once kernel-mode dump files have been <a href="enabling_a_kernel_mode_dump_file.htm">enabled</a>, most system crashes should cause a crash file to be written and the blue screen to be displayed.</p>
+<p>However, there are times that a system freezes without actually initiating a kernel crash. Possible symptoms of such a freeze include:</p>
+<ul>
+<li>
+<p>The mouse pointer moves, but can't do anything. </p>
+</li>
+<li>
+<p>All video is frozen, the mouse pointer does not move, but paging continues. </p>
+</li>
+<li>
+<p>There is no response at all to the mouse or keyboard, and no use of the disk.</p>
+</li>
+</ul>
+<p>If an experienced debugging technician is present, he or she can hook up a kernel debugger and analyze the problem. For some tips on what to look for when this situation occurs, see <a href="debugging_a_stalled_system.htm">Debugging a Stalled System</a>.</p>
+<p>However, if no technician is present, you may wish to create a kernel-mode dump file and send it to an off-site technician. This dump file can be used to analyze the cause of the error.</p>
+<p>There are two ways to deliberately cause a system crash:</p>
+<dl>
+<dd>
+<p><a href="forcing_a_system_crash_from_the_debugger.htm">Forcing a System Crash from the Debugger</a></p>
+</dd>
+<dd>
+<p><a href="forcing_a_system_crash_from_the_keyboard.htm">Forcing a System Crash from the Keyboard</a></p>
+</dd>
+</dl>
+<p></p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Forcing a System Crash%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,143 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The ReadMultiByteStringVirtual method reads a null-terminated, multibyte string from the target."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IDebugDataSpaces4::ReadMultiByteStringVirtual method</title>
+
+<meta name="MS-HAID" content="IDebugDataSpaces_43ca08e3-d4f0-43f8-b84e-514d3b52c6c4.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.readmultibytestringvirtual"></a>IDebugDataSpaces4::ReadMultiByteStringVirtual method</h1>
+</div>
+<p>The <b>ReadMultiByteStringVirtual</b> method reads a null-terminated, multibyte string from the target.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>HRESULT ReadMultiByteStringVirtual(
+  [in]            ULONG64 Offset,
+  [in]            ULONG   MaxBytes,
+  [out, optional] PSTR    Buffer,
+  [in]            ULONG   BufferSize,
+  [out, optional] PULONG  StringBytes
+);</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Parameters</h2>
+<dl>
+<dt><i>Offset</i> [in]</dt>
+<dd>
+<p>Specifies the location of the string in the process's virtual address space.</p>
+</dd>
+<dt><i>MaxBytes</i> [in]</dt>
+<dd>
+<p>Specifies the maximum number of bytes to read from the target.</p>
+</dd>
+<dt><i>Buffer</i> [out, optional]</dt>
+<dd>
+<p>Receives the string from the target.  If <i>Buffer</i> is <b>NULL</b>, this information is not returned.</p>
+<div class="alert"><b>Note</b>    The remainder of the buffer, following the returned string, might be overwritten by this method.</div>
+<div> </div>
+</dd>
+<dt><i>BufferSize</i> [in]</dt>
+<dd>
+<p>Specifies the size, in characters, of the <i>Buffer</i> buffer.</p>
+</dd>
+<dt><i>StringBytes</i> [out, optional]</dt>
+<dd>
+<p>Receives the size, in bytes, of the string.  If <i>StringBytes</i> is <b>NULL</b>, this information is not returned.</p>
+</dd>
+</dl>
+<h2>Return value</h2>
+<table>
+<tr>
+<th>Return code</th>
+<th>Description</th>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>S_OK</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>The method was successful.</p>
+</td>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>S_FALSE</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>The method was successful.  However <i>Buffer</i> was not large enough to hold the string and the string was truncated to fit in <i>Buffer</i>.  The truncated string is null-terminated if <i>Buffer</i> has space for at least one character.</p>
+</td>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>E_INVALIDARG</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>A null-terminator was not found after reading <i>MaxBytes</i> from the target.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>This method can also return error values.  See <a href="hresult_values.htm"><b>Return Values</b></a> for more details.</p>
+<h2>Remarks</h2>
+<p>The engine will read up to <i>MaxBytes</i> from the target looking for a null-terminator.  If the string has more than <i>BufferSize</i> characters, the string will be truncated to fit in <i>Buffer</i>.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Target platform</p>
+</th>
+<td width="70%">
+<dl>
+<dt></dt>
+</dl>
+</td>
+</tr>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Dbgeng.h (include Dbgeng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="idebugdataspaces4.htm"><b>IDebugDataSpaces4</b></a></dt>
+<dt><a href="readmultibytestringvirtualwide.htm"><b>ReadMultiByteStringVirtualWide</b></a></dt>
+<dt><a href="readunicodestringvirtual.htm"><b>ReadUnicodeStringVirtual</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IDebugDataSpaces4::ReadMultiByteStringVirtual method%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

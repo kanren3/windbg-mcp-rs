@@ -1,0 +1,125 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !amli set extension sets or displays the AMLI Debugger options."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!amli set</title>
+
+<meta name="MS-HAID" content="r33_exts_ACPI_d7069173-5282-4e7f-8685-163c13340c28.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._amli_set"></a>!amli set</h1>
+</div>
+<p>The <b>!amli set</b> extension sets or displays the AMLI Debugger options.</p>
+<pre class="syntax"><b>!amli set </b><i>Options</i></pre>
+<h2><a id="ddk__amli_set_dbg"></a><a id="DDK__AMLI_SET_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Options______"></a><a id="_______options______"></a><a id="_______OPTIONS______"></a>       <i>Options</i>      </dt>
+<dd>
+<p>Specifies one or more options to be set. Separate multiple options with spaces. Possible values include:</p>
+<p></p>
+<dl>
+<dt><a id="spewon"></a><a id="SPEWON"></a><b>spewon</b></dt>
+<dd>
+<p>Causes full debug output to be sent from the target computer. This option should be left on at all times for effective AML debugging. See the Remarks section for details.</p>
+</dd>
+<dt><a id="spewoff"></a><a id="SPEWOFF"></a><b>spewoff</b></dt>
+<dd>
+<p>Suppresses debug output.</p>
+</dd>
+<dt><a id="verboseon"></a><a id="VERBOSEON"></a><b>verboseon</b></dt>
+<dd>
+<p>Turns on verbose mode. This causes the AMLI Debugger to display the names of AML methods as they are evaluated.  </p>
+</dd>
+<dt><a id="verboseoff"></a><a id="VERBOSEOFF"></a><b>verboseoff</b></dt>
+<dd>
+<p>Turns off verbose mode.</p>
+</dd>
+<dt><a id="traceon"></a><a id="TRACEON"></a><b>traceon</b></dt>
+<dd>
+<p>Activates ACPI tracing. This produces much more output than the <b>verboseon</b> option. This option is very useful for tracking SMI-related hard hangs.</p>
+</dd>
+<dt><a id="traceoff"></a><a id="TRACEOFF"></a><b>traceoff</b></dt>
+<dd>
+<p>Deactivates ACPI tracing.</p>
+</dd>
+<dt><a id="nesttraceon"></a><a id="NESTTRACEON"></a><b>nesttraceon</b></dt>
+<dd>
+<p>Activates nest tracing. This option is only effective if the <b>traceon</b> option is also selected.</p>
+</dd>
+<dt><a id="dbgbrkon"></a><a id="DBGBRKON"></a><b>dbgbrkon</b></dt>
+<dd>
+<p>Enables breaking into the AMLI Debugger. </p>
+</dd>
+<dt><a id="dbgbrkoff"></a><a id="DBGBRKOFF"></a><b>dbgbrkoff</b></dt>
+<dd>
+<p>Deactivates the dbgbrkon option.</p>
+</dd>
+<dt><a id="nesttraceoff"></a><a id="NESTTRACEOFF"></a><b>nesttraceoff</b></dt>
+<dd>
+<p>Deactivates nest tracing.</p>
+</dd>
+<dt><a id="lbrkon"></a><a id="LBRKON"></a><b>lbrkon</b></dt>
+<dd>
+<p>Breaks into the AMLI Debugger when DDB loading is completed. </p>
+</dd>
+<dt><a id="lbrkoff"></a><a id="LBRKOFF"></a><b>lbrkoff</b></dt>
+<dd>
+<p>Deactivates the <b>lbrkon</b> option.</p>
+</dd>
+<dt><a id="errbrkon"></a><a id="ERRBRKON"></a><b>errbrkon</b></dt>
+<dd>
+<p>Breaks into the AMLI Debugger whenever the interpreter has a problem evaluating AML code.</p>
+</dd>
+<dt><a id="errbrkoff"></a><a id="ERRBRKOFF"></a><b>errbrkoff</b></dt>
+<dd>
+<p>Deactivates the <b>errbrkon</b> option.</p>
+</dd>
+<dt><a id="logon"></a><a id="LOGON"></a><b>logon</b></dt>
+<dd>
+<p>Enables event logging.</p>
+</dd>
+<dt><a id="logoff"></a><a id="LOGOFF"></a><b>logoff</b></dt>
+<dd>
+<p>Disables event logging.</p>
+</dd>
+<dt><a id="logmuton"></a><a id="LOGMUTON"></a><b>logmuton</b></dt>
+<dd>
+<p>Enables mutex event logging.</p>
+</dd>
+<dt><a id="logmutoff"></a><a id="LOGMUTOFF"></a><b>logmutoff</b></dt>
+<dd>
+<p>Disables mutex event logging.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<p>
+          Kdexts.dll</p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For information about related commands and their uses, see <a href="the_amli_debugger.htm">The AMLI Debugger</a>.</p>
+<h2>Remarks</h2>
+<p>If no options are specified, the current status of all options is displayed.</p>
+<p>By default, many messages are filtered out, you may need to turn this output on with <b>!amli set spewon</b>. Otherwise, numerous AMLI Debugger messages will be lost.</p>
+<p>If the AML interpreter breaks into the AMLI Debugger, this output will be automatically turned on.</p>
+<p>For more details on this output filtering, see <b>DbgPrintEx</b> and <b>KdPrintEx</b> in the Windows Driver Kit (WDK) documentation.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!amli set%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

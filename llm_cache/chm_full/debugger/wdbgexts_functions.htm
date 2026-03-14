@@ -1,0 +1,220 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="WdbgExts Functions"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>WdbgExts Functions</title>
+
+<meta name="MS-HAID" content="WdbgExts_Ref_a074bbf3-80f8-415e-988d-1b45b2e73cc1.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.wdbgexts_functions"></a>WdbgExts Functions</h1>
+</div>
+<h2><a id="ddk_wdbgexts_functions_dbwx"></a><a id="DDK_WDBGEXTS_FUNCTIONS_DBWX"></a></h2>
+<p>The wdbgexts.h header file contains prototypes for the following functions. These functions use the same prototype for both 32-bit and 64-bit extensions:</p>
+<dl>
+<dd>
+<p><a href="getcontext.htm"><b>GetContext</b></a></p>
+</dd>
+<dd>
+<p><a href="setcontext.htm"><b>SetContext</b></a></p>
+</dd>
+<dd>
+<p><a href="checkcontrolc.htm"><b>CheckControlC</b></a></p>
+</dd>
+<dd>
+<p><a href="getcurrentprocessaddr.htm"><b>GetCurrentProcessAddr</b></a></p>
+</dd>
+<dd>
+<p><a href="getcurrentprocesshandle.htm"><b>GetCurrentProcessHandle</b></a></p>
+</dd>
+<dd>
+<p><a href="getcurrentthreadaddr.htm"><b>GetCurrentThreadAddr</b></a></p>
+</dd>
+<dd>
+<p><a href="getdebuggercachesize.htm"><b>GetDebuggerCacheSize</b></a></p>
+</dd>
+<dd>
+<p><a href="getdebuggerdata.htm"><b>GetDebuggerData</b></a></p>
+</dd>
+<dd>
+<p><a href="disasm.htm"><b>Disasm</b></a></p>
+</dd>
+<dd>
+<p><a href="dprintf.htm"><b>dprintf</b></a></p>
+</dd>
+<dd>
+<p><a href="getexpression.htm"><b>GetExpression</b></a></p>
+</dd>
+<dd>
+<p><a href="getexpressionex.htm"><b>GetExpressionEx</b></a></p>
+</dd>
+<dd>
+<p><a href="getinputline.htm"><b>GetInputLine</b></a></p>
+</dd>
+<dd>
+<p><a href="ioctl.htm"><b>Ioctl</b></a></p>
+</dd>
+<dd>
+<p><a href="getkdcontext.htm"><b>GetKdContext</b></a></p>
+</dd>
+<dd>
+<p><a href="readmemory.htm"><b>ReadMemory</b></a></p>
+</dd>
+<dd>
+<p><a href="searchmemory.htm"><b>SearchMemory</b></a></p>
+</dd>
+<dd>
+<p><a href="writememory.htm"><b>WriteMemory</b></a></p>
+</dd>
+<dd>
+<p><a href="readmsr.htm"><b>ReadMsr</b></a></p>
+</dd>
+<dd>
+<p><a href="writemsr.htm"><b>WriteMsr</b></a></p>
+</dd>
+<dd>
+<p><a href="getpebaddress.htm"><b>GetPebAddress</b></a></p>
+</dd>
+<dd>
+<p><a href="readphysical.htm"><b>ReadPhysical</b></a></p>
+</dd>
+<dd>
+<p><a href="readphysicalwithflags.htm"><b>ReadPhysicalWithFlags</b></a></p>
+</dd>
+<dd>
+<p><a href="writephysical.htm"><b>WritePhysical</b></a></p>
+</dd>
+<dd>
+<p><a href="writephysicalwithflags.htm"><b>WritePhysicalWithFlags</b></a></p>
+</dd>
+<dd>
+<p><a href="gettebaddress.htm"><b>GetTebAddress</b></a></p>
+</dd>
+<dd>
+<p><a href="stacktrace.htm"><b>StackTrace</b></a></p>
+</dd>
+<dd>
+<p><a href="getsymbol.htm"><b>GetSymbol</b></a></p>
+</dd>
+<dd>
+<p><a href="reloadsymbols.htm"><b>ReloadSymbols</b></a></p>
+</dd>
+<dd>
+<p><a href="getsetsympath.htm"><b>GetSetSympath</b></a></p>
+</dd>
+<dd>
+<p><a href="translatevirtualtophysical.htm"><b>TranslateVirtualToPhysical</b></a></p>
+</dd>
+</dl>
+<p>The wdbgexts.h header file contains prototypes for the following functions. These functions have different prototypes for 32-bit and 64-bit extensions:</p>
+<dl>
+<dd>
+<p><a href="readcontrolspace.htm"><b>ReadControlSpace</b></a></p>
+</dd>
+<dd>
+<p><a href="readcontrolspace64.htm"><b>ReadControlSpace64</b></a></p>
+</dd>
+<dd>
+<p><a href="readtypedcontrolspace32.htm"><b>ReadTypedControlSpace32</b></a></p>
+</dd>
+<dd>
+<p><a href="readtypedcontrolspace64.htm"><b>ReadTypedControlSpace64</b></a></p>
+</dd>
+<dd>
+<p><a href="writecontrolspace.htm"><b>WriteControlSpace</b></a></p>
+</dd>
+<dd>
+<p><a href="readiospace.htm"><b>ReadIoSpace</b></a></p>
+</dd>
+<dd>
+<p><a href="readiospace64.htm"><b>ReadIoSpace64</b></a></p>
+</dd>
+<dd>
+<p><a href="readiospaceex.htm"><b>ReadIoSpaceEx</b></a></p>
+</dd>
+<dd>
+<p><a href="readiospaceex64.htm"><b>ReadIoSpaceEx64</b></a></p>
+</dd>
+<dd>
+<p><a href="writeiospace.htm"><b>WriteIoSpace</b></a></p>
+</dd>
+<dd>
+<p><a href="writeiospace64.htm"><b>WriteIoSpace64</b></a></p>
+</dd>
+<dd>
+<p><a href="writeiospaceex.htm"><b>WriteIoSpaceEx</b></a></p>
+</dd>
+<dd>
+<p><a href="writeiospaceex64.htm"><b>WriteIoSpaceEx64</b></a></p>
+</dd>
+<dd>
+<p><a href="setthreadforoperation.htm"><b>SetThreadForOperation</b></a></p>
+</dd>
+<dd>
+<p><a href="setthreadforoperation64.htm"><b>SetThreadForOperation64</b></a></p>
+</dd>
+</dl>
+<p>The wdbgexts.h header file contains prototypes for the following functions. These functions can be used only in 64-bit extensions:</p>
+<dl>
+<dd>
+<p><a href="getfielddata.htm"><b>GetFieldData</b></a></p>
+</dd>
+<dd>
+<p><a href="getfieldoffset.htm"><b>GetFieldOffset</b></a></p>
+</dd>
+<dd>
+<p><a href="getfieldvalue.htm"><b>GetFieldValue</b></a></p>
+</dd>
+<dd>
+<p><a href="getshortfield.htm"><b>GetShortField</b></a></p>
+</dd>
+<dd>
+<p><a href="readfield.htm"><b>ReadField</b></a></p>
+</dd>
+<dd>
+<p><a href="readlistentry.htm"><b>ReadListEntry</b></a></p>
+</dd>
+<dd>
+<p><a href="readpointer.htm"><b>ReadPointer</b></a></p>
+</dd>
+<dd>
+<p><a href="writepointer.htm"><b>WritePointer</b></a></p>
+</dd>
+<dd>
+<p><a href="isptr64.htm"><b>IsPtr64</b></a></p>
+</dd>
+<dd>
+<p><a href="readptr.htm"><b>ReadPtr</b></a></p>
+</dd>
+<dd>
+<p><a href="gettypesize.htm"><b>GetTypeSize</b></a></p>
+</dd>
+<dd>
+<p><a href="inittyperead.htm"><b>InitTypeRead</b></a></p>
+</dd>
+<dd>
+<p><a href="inittypereadphysical.htm"><b>InitTypeReadPhysical</b></a></p>
+</dd>
+<dd>
+<p><a href="listtype.htm"><b>ListType</b></a></p>
+</dd>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20WdbgExts Functions%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

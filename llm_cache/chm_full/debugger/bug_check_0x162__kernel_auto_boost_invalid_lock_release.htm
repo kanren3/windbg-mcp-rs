@@ -1,0 +1,66 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The KERNEL_AUTO_BOOST_INVALID_LOCK_RELEASE bug check has a value of 0x00000162. This indicates that a lock tracked by AutoBoost was released by a thread that did not own the lock."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0x162: KERNEL_AUTO_BOOST_INVALID_LOCK_RELEASE</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0x162__kernel_auto_boost_invalid_lock_release"></a>Bug Check 0x162: KERNEL_AUTO_BOOST_INVALID_LOCK_RELEASE</h1>
+</div>
+<p>The KERNEL_AUTO_BOOST_INVALID_LOCK_RELEASE bug check has a value of 0x00000162. This indicates that a lock tracked by AutoBoost was released by a thread that did not own the lock.
+</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2>KERNEL_AUTO_BOOST_INVALID_LOCK_RELEASE Parameters</h2>
+<p>The following parameters are displayed on the blue screen.</p>
+<table>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>1</td>
+<td>The address of the thread</td>
+</tr>
+<tr>
+<td>2</td>
+<td>
+        The lock address
+        
+        </td>
+</tr>
+<tr>
+<td>3</td>
+<td>The session ID of the thread</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Reserved</td>
+</tr>
+</table>
+<p> </p>
+<h2>Cause</h2>
+<p>This is typically caused when some thread releases a lock on behalf of another
+thread (which is not legal with AutoBoost tracking enabled) or when some thread
+tries to release a lock it no longer owns.</p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

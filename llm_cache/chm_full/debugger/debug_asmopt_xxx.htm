@@ -1,0 +1,105 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The assembly and disassembly options affect how the debugger engine assembles and disassembles processor instructions for the target."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>DEBUG_ASMOPT_XXX</title>
+
+<meta name="MS-HAID" content="Structures_c96e3334-ac5c-4f61-8286-3f2983ed299a.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.debug_asmopt_xxx"></a>DEBUG_ASMOPT_XXX</h1>
+</div>
+<p>The assembly and disassembly options affect how the debugger engine assembles and disassembles processor instructions for the target.</p>
+<p>
+<p>The options are represented by a bitset with the following bit flags.</p>
+</p>
+<table>
+<tr>
+<th>Constant</th>
+<th>Description</th>
+</tr>
+<tr VALIGN="top">
+<td align="left" width="40%"><a id="DEBUG_ASMOPT_VERBOSE"></a><a id="debug_asmopt_verbose"></a><dl>
+<dt><b>DEBUG_ASMOPT_VERBOSE</b></dt>
+</dl>
+</td>
+<td align="left" width="60%">
+<p>When this bit is set, additional information is included in the disassembly.</p>
+<p>This is equivalent to the <b>verbose</b> option in the <b>.asm</b> command.</p>
+</td>
+</tr>
+<tr VALIGN="top">
+<td align="left" width="40%"><a id="DEBUG_ASMOPT_NO_CODE_BYTES"></a><a id="debug_asmopt_no_code_bytes"></a><dl>
+<dt><b>DEBUG_ASMOPT_NO_CODE_BYTES</b></dt>
+</dl>
+</td>
+<td align="left" width="60%">
+<p>When this bit is set, the raw bytes for an instruction are not included in the disassembly.</p>
+<p>This is equivalent to the <b>no_code_bytes</b> option in the <b>.asm</b> command.</p>
+</td>
+</tr>
+<tr VALIGN="top">
+<td align="left" width="40%"><a id="DEBUG_ASMOPT_IGNORE_OUTPUT_WIDTH"></a><a id="debug_asmopt_ignore_output_width"></a><dl>
+<dt><b>DEBUG_ASMOPT_IGNORE_OUTPUT_WIDTH</b></dt>
+</dl>
+</td>
+<td align="left" width="60%">
+<p>When this bit is set, the debugger ignores the width of the output display when formatting instructions during disassembly.</p>
+<p>This is equivalent to the <b>ignore_output_width</b> option in the <b>.asm</b> command.</p>
+</td>
+</tr>
+<tr VALIGN="top">
+<td align="left" width="40%"><a id="DEBUG_ASMOPT_SOURCE_LINE_NUMBER"></a><a id="debug_asmopt_source_line_number"></a><dl>
+<dt><b>DEBUG_ASMOPT_SOURCE_LINE_NUMBER</b></dt>
+</dl>
+</td>
+<td align="left" width="60%">
+<p>When this bit is set, each line of the disassembly output is prefixed with the line number of the source code provided by symbol information.</p>
+<p>This is equivalent to the <b>source_line</b> option in the <b>.asm</b> command.</p>
+</td>
+</tr>
+</table>
+<h2>Remarks</h2>
+<p>Additionally, the value DEBUG_ASMOPT_DEFAULT represents the default set of assembly and disassembly options.  This means that all the options in the preceding table are turned off. </p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>DbgEng.h (include DbgEng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="getassemblyoptions.htm"><b>GetAssemblyOptions</b></a></dt>
+<dt><a href="setassemblyoptions.htm"><b>SetAssemblyOptions</b></a></dt>
+<dt><a href="addassemblyoptions.htm"><b>AddAssemblyOptions</b></a></dt>
+<dt><a href="removeassemblyoptions.htm"><b>RemoveAssemblyOptions</b></a></dt>
+<dt><a href="assemble.htm"><b>Assemble</b></a></dt>
+<dt><a href="disassemble.htm"><b>Disassemble</b></a></dt>
+<dt><a href="_asm__change_disassembly_options_.htm"><b>.asm (Change Disassembly Options)</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20DEBUG_ASMOPT_XXX%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

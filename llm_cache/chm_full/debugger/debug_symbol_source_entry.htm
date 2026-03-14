@@ -1,0 +1,119 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The DEBUG_SYMBOL_SOURCE_ENTRY structure describes a section of the source code and a corresponding region of the target's memory."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>DEBUG_SYMBOL_SOURCE_ENTRY structure</title>
+
+<meta name="MS-HAID" content="Structures_9f8ab4b6-98b2-4a10-a450-bb73e655dd32.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.debug_symbol_source_entry"></a>DEBUG_SYMBOL_SOURCE_ENTRY structure</h1>
+</div>
+<p>The DEBUG_SYMBOL_SOURCE_ENTRY structure describes a section of the source code and a corresponding region of the target's memory.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>typedef struct _DEBUG_SYMBOL_SOURCE_ENTRY {
+  ULONG64 ModuleBase;
+  ULONG64 Offset;
+  ULONG64 FileNameId;
+  ULONG64 EngineInternal;
+  ULONG   Size;
+  ULONG   Flags;
+  ULONG   FileNameSize;
+  ULONG   StartLine;
+  ULONG   EndLine;
+  ULONG   StartColumn;
+  ULONG   EndColumn;
+  ULONG   Reserved;
+} DEBUG_SYMBOL_SOURCE_ENTRY, *PDEBUG_SYMBOL_SOURCE_ENTRY;</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Members</h2>
+<dl>
+<dt><b>ModuleBase</b></dt>
+<dd>
+<p>The base address, in the target's virtual address space, of the module that the source symbol came from.</p>
+</dd>
+<dt><b>Offset</b></dt>
+<dd>
+<p>The location of the memory corresponding to the source code in the target's virtual address space.</p>
+</dd>
+<dt><b>FileNameId</b></dt>
+<dd>
+<p>Identifier for the source code file name. If this information is not available, <b>FieldNameId</b> is set to zero.</p>
+</dd>
+<dt><b>EngineInternal</b></dt>
+<dd>
+<p>Reserved for internal debugger engine use.</p>
+</dd>
+<dt><b>Size</b></dt>
+<dd>
+<p>The size of the region of memory corresponding to the source code. If this information is not available, <b>Size</b> is set to one.</p>
+</dd>
+<dt><b>Flags</b></dt>
+<dd>
+<p>Set to zero.</p>
+</dd>
+<dt><b>FileNameSize</b></dt>
+<dd>
+<p>The number of characters in the source filename, including the terminator. </p>
+</dd>
+<dt><b>StartLine</b></dt>
+<dd>
+<p>The line number of the start of the region of source code in the file. The number of the first line in the file is one. If this information is not available, <b>StartLine</b> is set to DEBUG_ANY_ID.</p>
+</dd>
+<dt><b>EndLine</b></dt>
+<dd>
+<p>The line number of the end of the region of source code in the file. The number of the first line in the file is one. If this information is not available, <b>StartLine</b> is set to DEBUG_ANY_ID.</p>
+</dd>
+<dt><b>StartColumn</b></dt>
+<dd>
+<p>The column number of the start of the region of source code. The number of the first column is one. If this information is not available, <b>StartLine</b> is set to DEBUG_ANY_ID.</p>
+</dd>
+<dt><b>EndColumn</b></dt>
+<dd>
+<p>The column number of the end of the region of source code. The number of the first column is one. If this information is not available, <b>StartLine</b> is set to DEBUG_ANY_ID.</p>
+</dd>
+<dt><b>Reserved</b></dt>
+<dd>
+<p>Reserved for future use.</p>
+</dd>
+</dl>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>DbgEng.h (include DbgEng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20DEBUG_SYMBOL_SOURCE_ENTRY structure%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

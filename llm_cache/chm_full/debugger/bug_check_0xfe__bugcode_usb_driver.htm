@@ -1,0 +1,348 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The BUGCODE_USB_DRIVER bug check has a value of 0x000000FE. This indicates that an error has occurred in a universal serial bus (USB) driver."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0xFE: BUGCODE_USB_DRIVER</title>
+
+<meta name="MS-HAID" content="t07_bugs_E0_ee52c585-14b2-4b07-a188-6ee6c21d9d8c.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0xfe__bugcode_usb_driver"></a>Bug Check 0xFE: BUGCODE_USB_DRIVER</h1>
+</div>
+<p>The BUGCODE_USB_DRIVER bug check has a value of 0x000000FE. This indicates that an error has occurred in a universal serial bus (USB) driver.</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2> BUGCODE_USB_DRIVER Parameters</h2>
+<p>The four bug check parameters are displayed on the blue screen. Parameter 1 identifies the type of violation.</p>
+<table>
+<tr>
+<th>Parameter 1</th>
+<th>Parameter 2</th>
+<th>Parameter 3</th>
+<th>Parameter 4</th>
+<th>Cause of Error</th>
+</tr>
+<tr>
+<td>
+<p>0x1</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>An internal error has occurred in the USB stack.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x2</p>
+</td>
+<td>
+<p>Address of the pending IRP</p>
+</td>
+<td>
+<p>Address of the IRP that was passed in</p>
+</td>
+<td>
+<p>Address of the USB request block (URB) that caused the error</p>
+</td>
+<td>
+<p>The USB client driver has submitted a URB that is still attached to another IRP pending in the bus driver.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x3</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>The USB miniport driver has generated a bug check. This usually happens in response to a  hardware failure.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x4</p>
+</td>
+<td>
+<p>Address of the IRP</p>
+</td>
+<td>
+<p>Address of the URB</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>The caller has submitted an IRP that is already pending in the USB bus driver.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x5</p>
+</td>
+<td>
+<p>Device extension pointer of the host controller</p>
+</td>
+<td>
+<p>PCI vendor, product id for the controller</p>
+</td>
+<td>
+<p>Pointer to endpoint data structure</p>
+</td>
+<td>
+<p>A hardware failure has occurred because of a bad physical address found in a hardware data structure.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x6</p>
+</td>
+<td>
+<p>Object address</p>
+</td>
+<td>
+<p>Signature that was expected</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>An internal data structure (object) is corrupted.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x7</p>
+</td>
+<td>
+<p>Pointer to usbport.sys debug log</p>
+</td>
+<td>
+<p>Message string</p>
+</td>
+<td>
+<p>File name</p>
+</td>
+<td>
+<p>Please see the provided message string for detailed information.</p>
+</td>
+</tr>
+<tr>
+<td rowspan="6">
+<p>0x8</p>
+</td>
+<td>
+<p>1</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>2</p>
+</td>
+<td>
+<p>Device object</p>
+</td>
+<td>
+<p>IRP</p>
+</td>
+<td>
+<p>An IRP was received by the hub driver that it does not expect or has not registered for.  </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>3</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>4</p>
+</td>
+<td>
+<p>PDO if Parameter 3 is not NULL. Context if Parameter 3 is NULL.</p>
+</td>
+<td>
+<p>Context or NULL</p>
+</td>
+<td>
+<p>Fatal PDO trap</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>5</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>6</p>
+</td>
+<td>
+<p>Time-out code. See the following table.</p>
+</td>
+<td>
+<p>Time-out code context: port data</p>
+</td>
+<td>
+<p>Fatal time-out</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>If Parameter 1 has a value of 8 and Parameter 2 has a value of 6, then Parameter 3 is a time-out code. Possible values for the time-out code are given in the following table.</p>
+<table>
+<tr>
+<th>Time-out code</th>
+<th>Meaning</th>
+</tr>
+<tr>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>Non-fatal time-out</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>1</p>
+</td>
+<td>
+<p>Failed resuming a suspended port.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>2</p>
+</td>
+<td>
+<p>Timed out waiting for a reset, initiated by a client driver, to complete before suspending the port.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>3</p>
+</td>
+<td>
+<p>Timed out waiting for the port to complete resume before suspending it.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>4</p>
+</td>
+<td>
+<p>Timed out waiting for the port-change state machine to be disabled prior to suspending the port.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>5</p>
+</td>
+<td>
+<p>Timed out waiting for a suspend-port request to complete.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>6</p>
+</td>
+<td>
+<p>Timed out waiting for the port-change state machine to be disabled.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>7</p>
+</td>
+<td>
+<p>Timed out waiting for the port-change state machine to be closed.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>8</p>
+</td>
+<td>
+<p>Timed out waiting for the hub to resume from selective suspend.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>9</p>
+</td>
+<td>
+<p>Timed out waiting for the hub to resume from selective suspend prior to system suspend.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>10</p>
+</td>
+<td>
+<p>Timed out waiting for port-change state machine to become idle.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

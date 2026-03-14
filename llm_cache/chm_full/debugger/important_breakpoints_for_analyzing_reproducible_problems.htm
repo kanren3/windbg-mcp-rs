@@ -1,0 +1,45 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Important Breakpoints for Analyzing Reproducible Problems"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Important Breakpoints for Analyzing Reproducible Problems</title>
+
+<meta name="MS-HAID" content="t11~d_scsi_fa8fe93f-4605-43bb-be9f-4b20dd84e2eb.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.important_breakpoints_for_analyzing_reproducible_problems"></a>Important Breakpoints for Analyzing Reproducible Problems</h1>
+</div>
+<h2><a id="ddk_device_manager_problem_codes_dbg"></a><a id="DDK_DEVICE_MANAGER_PROBLEM_CODES_DBG"></a></h2>
+<p>When debugging a SCSI miniport driver, there are three routines in which it is useful to set a breakpoint:</p>
+<ul>
+<li>
+<p><b>scsiport!scsiportnotification</b></p>
+</li>
+<li>
+<p><b>scsiport!spstartiosynchronized</b></p>
+</li>
+<li>
+<p><b>miniport!HwStartIo</b></p>
+</li>
+</ul>
+<p>The routine <b>scsiport!scsiportnotification</b> is called right after a request is sent to the miniport. Thus, if you set a breakpoint in <b>scsiport!scsiportnotification</b> and then run a stack backtrace using <a href="k__kb__kc__kd__kp__kp__kv__display_stack_backtrace_.htm"><b>kb 3</b></a>, you can determine whether the miniport is receiving and completing requests. If the first parameter is zero, the request has been completed. If the first parameter is nonzero, the third parameter is the address of the SCSI request block (SRB) that is not being completed, and you can use the <a href="_minipkd_srb.htm"><b>!minipkd.srb</b></a> extension to further analyze the situation.</p>
+<p>Placing a breakpoint in either <b>scsiport!spstartiosynchronized</b> or <b>miniport!HwStartIo</b> will cause a break just prior to sending a request to the miniport. </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Important Breakpoints for Analyzing Reproducible Problems%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

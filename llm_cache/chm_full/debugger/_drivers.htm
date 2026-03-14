@@ -1,0 +1,176 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="In operating systems prior to Windows XP, the !drivers extension displays a list of all drivers loaded on the target computer, along with summary information about their memory use.In Windows XP and later versions of Windows, the !drivers extension is obsolete. To display information about loaded drivers and other modules, use the lm command. The command lm t n displays information in a format very similar to the old !drivers extension. However, this command will not display the memory usage of the drivers as the !drivers extension did. It will only display the drivers' start and end addresses, image names, and timestamps. The !vm and !memusage extensions can be used to display memory usage statistics."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!drivers</title>
+
+<meta name="MS-HAID" content="r26_exts_kernel_A_c8029c52-4738-4fa1-88a8-bf6f6819dc09.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._drivers"></a>!drivers</h1>
+</div>
+<p>In operating systems prior to Windows XP, the <b>!drivers</b> extension displays a list of all drivers loaded on the target computer, along with summary information about their memory use.</p>
+<p>In Windows XP and later versions of Windows, the <b>!drivers</b> extension is obsolete. To display information about loaded drivers and other modules, use the <a href="lm__list_loaded_modules_.htm"><b>lm</b></a> command. The command lm t n displays information in a format very similar to the old <b>!drivers</b> extension.  However, this command will not display the memory usage of the drivers as the <b>!drivers</b> extension did. It will only display the drivers' start and end addresses, image names, and timestamps.  The <a href="_vm.htm"><b>!vm</b></a> and <a href="_memusage.htm"><b>!memusage</b></a> extensions can be used to display memory usage statistics.</p>
+<pre class="syntax"><b>!drivers </b>[<i>Flags</i>]</pre>
+<h2><a id="ddk__drivers_dbg"></a><a id="DDK__DRIVERS_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Flags______"></a><a id="_______flags______"></a><a id="_______FLAGS______"></a>       <i>Flags</i>      </dt>
+<dd>
+<p>Can be any combination of the following values. (The default is 0x0.)</p>
+<p></p>
+<dl>
+<dt><a id="Bit_0__0x1_"></a><a id="bit_0__0x1_"></a><a id="BIT_0__0X1_"></a>Bit 0 (0x1)</dt>
+<dd>
+<p>Causes the display to include information about resident and standby memory.</p>
+</dd>
+<dt><a id="Bit_1__0x2_"></a><a id="bit_1__0x2_"></a><a id="BIT_1__0X2_"></a>Bit 1 (0x2)</dt>
+<dd>
+<p>If this bit is set and bit 2 (0x4) is not set, the display will include information about resident, standby, and locked memory, as well as the loader entry address. If bit 2 is set, this causes the display to be a much longer and more detailed list of the driver image.  Information about the headers is included, as is section information.</p>
+</dd>
+<dt><a id="Bit_2__0x4_"></a><a id="bit_2__0x4_"></a><a id="BIT_2__0X4_"></a>Bit 2 (0x4)</dt>
+<dd>
+<p>Causes the display to be a much longer and more detailed list of the driver image. Information about each section is included. If bit 1 (0x2) is set, this will also include header information.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000</b></p>
+</td>
+<td>
+<p>
+          Kdextx86.dll
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Windows XP and later</b></p>
+</td>
+<td>
+<p>Unavailable</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>See <a href="plug_and_play_debugging.htm">Plug and Play Debugging</a> for applications of this extension command. For information about drivers and their memory use, see the Windows Driver Kit (WDK) documentation and <i>Microsoft Windows Internals</i> by Mark Russinovich and David Solomon. (These resources may not be available in some languages 
+
+and countries.)</p>
+<h2>Remarks</h2>
+<p>An explanation of this command's display is given in the following table:</p>
+<table>
+<tr>
+<th>Column</th>
+<th>Meaning</th>
+</tr>
+<tr>
+<td>
+<p>Base</p>
+</td>
+<td>
+<p>The starting address of the device driver code, in hexadecimal. When the memory address used by the code that causes a stop falls between the base address for a driver and the base address for the next driver in the list, that driver is frequently the cause of the fault. For instance, the base for Ncrc810.sys is 0x80654000. Any address between that and 0x8065a000 belongs to this driver.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Code Size</p>
+</td>
+<td>
+<p>The size, in kilobytes, of the driver code, in both hexadecimal and decimal.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Data Size</p>
+</td>
+<td>
+<p>The amount of space, in kilobytes, allocated to the driver for data, in both hexadecimal and decimal.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Locked</p>
+</td>
+<td>
+<p>
+        (Only when Flag 0x2 is used)  The amount of memory locked by the driver. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Resident</p>
+</td>
+<td>
+<p>
+        (Only when Flag 0x1 or 0x2 is used)  The amount of the driver's memory that actually resides in physical memory.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Standby</p>
+</td>
+<td>
+<p>
+        (Only when Flag 0x1 or 0x2 is used)  The amount of the driver's memory that is on standby. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Loader Entry</p>
+</td>
+<td>
+<p>
+        (Only when Flag 0x2 is used)  The loader entry address. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Driver Name</p>
+</td>
+<td>
+<p>The driver file name.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Creation Time</p>
+</td>
+<td>
+<p>The link date of the driver. Do not confuse this with the file date of the driver, which can be set by external tools. The link date is set by the compiler when a driver or executable file is compiled. It should be close to the file date, but it is not always the same.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>The following is a truncated example of this command:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !drivers
+Loaded System Driver Summary
+Base     Code Size      Data Size      Driver Name  Creation Time
+80080000 f76c0 (989 kb) 1f100 (124 kb) ntoskrnl.exe Fri May 26 15:13:00
+80400000 d980  ( 54 kb) 4040  ( 16 kb) hal.dll      Tue May 16 16:50:34
+80654000 3f00  ( 15 kb) 1060   ( 4 kb) ncrc810.sys  Fri May 05 20:07:04
+8065a000 a460  ( 41 kb) 1e80   ( 7 kb) SCSIPORT.SYS Fri May 05 20:08:05</code></pre>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!drivers%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

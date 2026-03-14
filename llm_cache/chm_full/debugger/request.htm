@@ -1,0 +1,267 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The Request method performs a variety of different operations."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IDebugAdvanced2::Request method</title>
+
+<meta name="MS-HAID" content="IDebugAdvanced_8fbf249e-5550-42c0-b16d-d42aaa4de660.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.request"></a>IDebugAdvanced2::Request method</h1>
+</div>
+<p>The <b>Request</b> method performs a variety of different operations.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>HRESULT Request(
+  [in]            ULONG  Request,
+  [in, optional]  PVOID  InBuffer,
+  [in]            ULONG  InBufferSize,
+  [out, optional] PVOID  OutBuffer,
+  [in]            ULONG  OutBufferSize,
+  [out, optional] PULONG OutSize
+);</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Parameters</h2>
+<dl>
+<dt><i>Request</i> [in]</dt>
+<dd>
+<p>Specifies which operation to perform.  <b>Request</b> can be one of the values in the following table.  Details of each operation can be found by following the link in the "Request" column.</p>
+<table>
+<tr>
+<th>Request</th>
+<th>Action</th>
+</tr>
+<tr>
+<td>
+<p><a href="debug_request_source_path_has_source_server.htm"><b>DEBUG_REQUEST_SOURCE_PATH_HAS_SOURCE_SERVER</b></a></p>
+</td>
+<td>
+<p>Check the source path for a source server.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="debug_request_target_exception_context.htm"><b>DEBUG_REQUEST_TARGET_EXCEPTION_CONTEXT</b></a></p>
+</td>
+<td>
+<p>Return the <a href="scopes_and_symbol_groups.htm#thread_context">thread context</a> for the stored event in a user-mode minidump file.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="debug_request_target_exception_thread.htm"><b>DEBUG_REQUEST_TARGET_EXCEPTION_THREAD</b></a></p>
+</td>
+<td>
+<p>Return the operating system thread ID for the stored event in a user-mode minidump file.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="debug_request_target_exception_record.htm"><b>DEBUG_REQUEST_TARGET_EXCEPTION_RECORD</b></a></p>
+</td>
+<td>
+<p>Return the exception record for the stored event in a user-mode minidump file.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="debug_request_get_additional_create_options.htm"><b>DEBUG_REQUEST_GET_ADDITIONAL_CREATE_OPTIONS</b></a></p>
+</td>
+<td>
+<p>Return the default process creation options.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="debug_request_set_additional_create_options.htm"><b>DEBUG_REQUEST_SET_ADDITIONAL_CREATE_OPTIONS</b></a></p>
+</td>
+<td>
+<p>Set the default process creation options.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="debug_request_get_win32_major_minor_versions.htm"><b>DEBUG_REQUEST_GET_WIN32_MAJOR_MINOR_VERSIONS</b></a></p>
+</td>
+<td>
+<p>Return the version of Windows that is currently running on the target.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="debug_request_read_user_minidump_stream.htm"><b>DEBUG_REQUEST_READ_USER_MINIDUMP_STREAM</b></a></p>
+</td>
+<td>
+<p>Read a stream from a user-mode minidump target.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="debug_request_target_can_detach.htm"><b>DEBUG_REQUEST_TARGET_CAN_DETACH</b></a></p>
+</td>
+<td>
+<p>Check to see if it is possible for the debugger engine to detach from the current process (leaving the process running but no longer being debugged).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="debug_request_set_local_implicit_command_line.htm"><b>DEBUG_REQUEST_SET_LOCAL_IMPLICIT_COMMAND_LINE</b></a></p>
+</td>
+<td>
+<p>Set the <a href="introduction.htm#debugger_engine">debugger engine</a>'s implicit command line.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="debug_request_get_captured_event_code_offset.htm"><b>DEBUG_REQUEST_GET_CAPTURED_EVENT_CODE_OFFSET</b></a></p>
+</td>
+<td>
+<p>Return the current event's instruction pointer.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="debug_request_read_captured_event_code_stream.htm"><b>DEBUG_REQUEST_READ_CAPTURED_EVENT_CODE_STREAM</b></a></p>
+</td>
+<td>
+<p>Return up to 64 bytes of memory at the current event's instruction pointer.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="debug_request_ext_typed_data_ansi.htm"><b>DEBUG_REQUEST_EXT_TYPED_DATA_ANSI</b></a></p>
+</td>
+<td>
+<p>Perform a variety of different operations that aid in the interpretation of typed data.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+</dd>
+<dt><i>InBuffer</i> [in, optional]</dt>
+<dd>
+<p>Specifies the input to this method.  The type and interpretation of the input depends on the <i>Request</i> parameter.</p>
+</dd>
+<dt><i>InBufferSize</i> [in]</dt>
+<dd>
+<p>Specifies the size of the input buffer <i>InBuffer</i>.  If the request requires no input, <i>InBufferSize</i> should be set to zero.</p>
+</dd>
+<dt><i>OutBuffer</i> [out, optional]</dt>
+<dd>
+<p>Receives the output from this method.  The type and interpretation of the output depends on the <i>Request</i> parameter.  If <i>OutBuffer</i> is <b>NULL</b>, the output is not returned.</p>
+</dd>
+<dt><i>OutBufferSize</i> [in]</dt>
+<dd>
+<p>Specifies the size of the output buffer <i>OutBufferSize</i>.  If the type of the output returned to <i>OutBuffer</i> has a known size, <i>OutBufferSize</i> is usually expected to be exactly that size, even if <i>OutBuffer</i> is set to <b>NULL</b>.</p>
+</dd>
+<dt><i>OutSize</i> [out, optional]</dt>
+<dd>
+<p>Receives the size of the output returned in the output buffer <i>OutBuffer</i>.  If <i>OutSize</i> is <b>NULL</b>, this information is not returned.</p>
+</dd>
+</dl>
+<h2>Return value</h2>
+<p>The interpretation of the return value depends on the value of the <i>Request</i> parameter.  Unless otherwise stated, the following values may be returned.</p>
+<table>
+<tr>
+<th>Return code</th>
+<th>Description</th>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>S_OK</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>The method was successful.</p>
+</td>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>S_FALSE</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>The method was successful.  However, the output would not fit in the output buffer <i>OutBuffer</i>, so truncated output was returned.</p>
+</td>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>E_INVALIDARG</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>The size of the input buffer <i>InBufferSize</i> or the size of the output buffer <i>OutBufferSize</i> was not the expected value.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>This method may also return error values.  See <a href="hresult_values.htm"><b>Return Values</b></a> for more details.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Target platform</p>
+</th>
+<td width="70%">
+<dl>
+<dt></dt>
+</dl>
+</td>
+</tr>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Dbgeng.h (include Dbgeng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="idebugadvanced2.htm"><b>IDebugAdvanced2</b></a></dt>
+<dt><a href="idebugadvanced3.htm"><b>IDebugAdvanced3</b></a></dt>
+<dt><a href="debug_request_source_path_has_source_server.htm"><b>DEBUG_REQUEST_SOURCE_PATH_HAS_SOURCE_SERVER</b></a></dt>
+<dt><a href="debug_request_target_exception_context.htm"><b>DEBUG_REQUEST_TARGET_EXCEPTION_CONTEXT</b></a></dt>
+<dt><a href="debug_request_target_exception_thread.htm"><b>DEBUG_REQUEST_TARGET_EXCEPTION_THREAD</b></a></dt>
+<dt><a href="debug_request_target_exception_record.htm"><b>DEBUG_REQUEST_TARGET_EXCEPTION_RECORD</b></a></dt>
+<dt><a href="debug_request_get_additional_create_options.htm"><b>DEBUG_REQUEST_GET_ADDITIONAL_CREATE_OPTIONS</b></a></dt>
+<dt><a href="debug_request_set_additional_create_options.htm"><b>DEBUG_REQUEST_SET_ADDITIONAL_CREATE_OPTIONS</b></a></dt>
+<dt><a href="debug_request_get_win32_major_minor_versions.htm"><b>DEBUG_REQUEST_GET_WIN32_MAJOR_MINOR_VERSIONS</b></a></dt>
+<dt><a href="debug_request_read_user_minidump_stream.htm"><b>DEBUG_REQUEST_READ_USER_MINIDUMP_STREAM</b></a></dt>
+<dt><a href="debug_request_target_can_detach.htm"><b>DEBUG_REQUEST_TARGET_CAN_DETACH</b></a></dt>
+<dt><a href="debug_request_set_local_implicit_command_line.htm"><b>DEBUG_REQUEST_SET_LOCAL_IMPLICIT_COMMAND_LINE</b></a></dt>
+<dt><a href="debug_request_get_captured_event_code_offset.htm"><b>DEBUG_REQUEST_GET_CAPTURED_EVENT_CODE_OFFSET</b></a></dt>
+<dt><a href="debug_request_read_captured_event_code_stream.htm"><b>DEBUG_REQUEST_READ_CAPTURED_EVENT_CODE_STREAM</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IDebugAdvanced2::Request method%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

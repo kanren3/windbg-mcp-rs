@@ -1,0 +1,88 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Edit | Breakpoints"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Edit | Breakpoints</title>
+
+<meta name="MS-HAID" content="r37_gui_2_5abe2105-cf44-4d1e-a4ae-f4d44409ed58.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.edit___breakpoints"></a>Edit | Breakpoints</h1>
+</div>
+<h2><a id="ddk_edit_breakpoints_dbg"></a><a id="DDK_EDIT_BREAKPOINTS_DBG"></a></h2>
+<p>Click <b>Breakpoints</b> on the <b>Edit</b> menu to display or control breakpoints.</p>
+<p>This command is equivalent to pressing ALT+F9. If a <a href="source_window.htm">Source window</a> or the <a href="disassembly_window.htm">Disassembly window</a> is not active, you can also press F9 or click the <b>Insert or remove breakpoint (F9) </b>button (<img src="images/tbbp.png" alt="Screen shot of the Insert or remove breakpoint button"/>) on the toolbar.</p>
+<p>However, if a Source window or the Disassembly window is open, the <b>Insert or remove breakpoint (F9)</b> button and the F9 key set a breakpoint on the current line. (If there is already a breakpoint set at the current line, this button or key will remove the breakpoint.)</p>
+<p>If a statement or call spans multiple lines, WinDbg sets the breakpoint on the last line of the statement or call. You should insert the caret (^) on or before the statement to set a breakpoint for the whole statement. If the debugger cannot set a breakpoint at the current caret position, it will search in a downward direction for the next allowed position and insert the breakpoint there.</p>
+<h3><a id="dialog_box"></a><a id="DIALOG_BOX"></a>Dialog Box</h3>
+<p>When you click <b>Breakpoints</b>, the <b>Breakpoints</b> dialog box appears. This dialog box displays all current breakpoint information and is presented in the following columns:</p>
+<ul>
+<li>
+<p>The breakpoint number. This number is a decimal number that you can use to refer to the breakpoint in future commands.</p>
+</li>
+<li>
+<p>The breakpoint status. This status can be <b>e</b> (enabled) or <b>d</b> (disabled).</p>
+</li>
+<li>
+<p>(Unresolved breakpoints only)  The letter <b>u</b>. This letter appears if the breakpoint is unresolved (that is, it does not match any currently-loaded module address). For details, see <a href="unresolved_breakpoints___bu_breakpoints_.htm">Unresolved Breakpoints (bu Breakpoints)</a>. </p>
+</li>
+<li>
+<p>The virtual address of the breakpoint. If you have enabled the loading of source line numbers, the display includes file and line number information instead of address offsets. If the breakpoint is unresolved, the address appears at the end of the listing instead of here.</p>
+</li>
+<li>
+<p>(Processor breakpoints only)  Type and size information. This information can be <b>e</b> (execute), <b>r</b> (read/write), <b>w</b> (write), or <b>i</b> (input/output). These types are followed with the size of the block, in bytes. For details, see <a href="processor_breakpoints___ba_breakpoints_.htm">Processor Breakpoints (ba Breakpoints)</a>. </p>
+</li>
+<li>
+<p>The number of passes that are remaining until the breakpoint becomes active, followed by the initial number of passes in parentheses. The number of times that the program counter passes through the breakpoint <u>without</u> breaking is one less than the value of this number. Therefore, this number is never lower than 1. Note also that this number counts only the times the application executes <u>through</u> this point. In other words, stepping over this point does not count. After the full count has been reached, you can reset the count only by clearing and resetting the breakpoint.</p>
+</li>
+<li>
+<p>The associated process and thread. If thread is given with three asterisks (***), this breakpoint is not a thread-specific breakpoint.</p>
+</li>
+<li>
+<p>The module and function, with offset, that correspond to the breakpoint address. If the breakpoint is unresolved, the breakpoint address appears here, in parentheses. If the breakpoint is set on a valid address but symbol information is missing, this column will be blank.</p>
+</li>
+<li>
+<p>The command string that is automatically executed when this breakpoint is hit. This command string is displayed in quotation marks. If the breakpoint is hit, the commands in this command string are executed until application execution resumes. Any command that resumes program execution (such as <b>g</b> or <b>t</b>) will stop the execution of the command list.</p>
+</li>
+</ul>
+<p>If you select any breakpoint, you can then click the <b>Remove</b>, <b>Disable</b>, or <b>Enable</b> button. The <b>Remove</b> button permanently removes the breakpoint. The <b>Disable</b> button temporarily deactivates the breakpoint. The <b>Enable</b> button re-enables a disabled breakpoint.</p>
+<p>The <b>Remove All</b> button permanently removes all breakpoints.</p>
+<p>You can also enter commands in the <b>Command</b> box in the following ways:</p>
+<ul>
+<li>
+<p>If you enter a <a href="bp__bu__bm__set_breakpoint_.htm"><b>bp (Set Breakpoint)</b></a>, <b>bu (Set Unresolved Breakpoint)</b>, <b>bm (Set Symbol Breakpoint)</b>, <a href="ba__break_on_access_.htm"><b>ba (Break on Access)</b></a>, <a href="bc__breakpoint_clear_.htm"><b>bc (Breakpoint Clear)</b></a>, <a href="bd__breakpoint_disable_.htm"><b>bd (Breakpoint Disable)</b></a>, or <a href="be__breakpoint_enable_.htm"><b>be (Breakpoint Enable)</b></a> command, the <b>Command </b>box works as if you were entering the command in the <a href="debugger_command_window.htm">Debugger Command window</a>. However, the command itself must be in lowercase letters. The command cannot begin with a thread specifier. If you want to use a thread specifier, enter it in the <b>Thread</b> box without the initial tilde (~).</p>
+</li>
+<li>
+<p>If you enter any other text, the text will be treated as the argument string for a <a href="bp__bu__bm__set_breakpoint_.htm"><b>bu (Set Unresolved Breakpoint)</b></a> command. That is, the debugger prefixes your entry with <b>bu</b> and a space and then executes it as a command.</p>
+</li>
+</ul>
+<p>When you are entering a new breakpoint, you can also do the following:</p>
+<ul>
+<li>
+<p>Create a thread-specific breakpoint by entering a thread specifier in the <b>Thread</b> box. Do not include the tilde (~) character that is typically prefixed to a thread specifier.</p>
+</li>
+<li>
+<p>Create a conditional breakpoint by entering a condition in the <b>Condition</b> box. The condition can be any evaluable expression, and it will be evaluated according to the current expression syntax (see <a href="evaluating_expressions.htm">Evaluating Expressions</a>). For more information about these types of breakpoints, see <a href="setting_a_conditional_breakpoint.htm">Setting a Conditional Breakpoint</a>.</p>
+</li>
+</ul>
+<h3><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about how to use breakpoints, other breakpoint commands and methods of controlling breakpoints, and setting breakpoints in user space from a kernel debugger, see <a href="using_breakpoints.htm">Using Breakpoints</a>. For more information about conditional breakpoints, see <a href="setting_a_conditional_breakpoint.htm">Setting a Conditional Breakpoint</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Edit | Breakpoints%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,57 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Debugging a Stalled System"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Debugging a Stalled System</title>
+
+<meta name="MS-HAID" content="t13_advanced_73fd075e-9d2a-44ba-823d-9e9d021c2670.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.debugging_a_stalled_system"></a>Debugging a Stalled System</h1>
+</div>
+<h2><a id="ddk_debugging_a_stalled_system_dbg"></a><a id="DDK_DEBUGGING_A_STALLED_SYSTEM_DBG"></a></h2>
+<p>There are times when the computer can stop responding without actually initiating a bug check. This "freeze" can appear in a variety of forms:</p>
+<ul>
+<li>
+<p>The mouse pointer can be moved, but does not affect any windows on the screen.</p>
+</li>
+<li>
+<p>The entire screen is still and the mouse pointer does not move, but paging continues between the memory and the disk.</p>
+</li>
+<li>
+<p>The screen is still and the disk is silent.</p>
+</li>
+</ul>
+<p>If the mouse pointer moves or there is paging to the disk, this is usually due to a problem within the Client Server Run-Time Subsystem (CSRSS).</p>
+<p>If NTSD is running on CSRSS, press F12 and dump out each thread to see if there is anything out of the ordinary. (See <a href="debugging_csrss.htm">Debugging CSRSS</a> for more details.)</p>
+<p>If an examination of CSRSS reveals nothing, then the problem may be with the kernel after all.</p>
+<p>If there is no mouse movement or paging, then it is almost certainly a kernel problem.</p>
+<p>Analyzing a kernel crash of this sort is generally a difficult task. To begin, break into KD (with <a href="ctrl_c__break_.htm"><b>CTRL+C</b></a>) or WinDbg (with <b>CTRL+BREAK</b>). You can now use the debugger commands to examine the situation.</p>
+<p>Some useful techniques in this case include:</p>
+<dl>
+<dd>
+<p><a href="finding_the_failed_process.htm">Finding the Failed Process</a></p>
+</dd>
+<dd>
+<p><a href="debugging_an_interrupt_storm.htm">Debugging an Interrupt Storm</a></p>
+</dd>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Debugging a Stalled System%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

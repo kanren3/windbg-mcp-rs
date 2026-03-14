@@ -1,0 +1,137 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The IG_POINTER_SEARCH_PHYSICAL Ioctl operation searches the target's physical memory for pointers lying within a specified range."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IG_POINTER_SEARCH_PHYSICAL</title>
+
+<meta name="MS-HAID" content="WdbgExts_Ref_ce742570-c023-4e34-a8e2-aef530e61c04.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.ig_pointer_search_physical"></a>IG_POINTER_SEARCH_PHYSICAL</h1>
+</div>
+<p>The IG_POINTER_SEARCH_PHYSICAL <a href="ioctl.htm"><b>Ioctl</b></a> operation searches the target's physical memory for pointers lying within a specified range.  When calling <b>Ioctl</b> with <i>IoctlType</i> set to IG_POINTER_SEARCH_PHYSICAL, <i>IpvData</i> should contain an instance of the POINTER_SEARCH_PHYSICAL structure.</p>
+<pre class="syntax" xml:space="preserve"><code>typedef struct _POINTER_SEARCH_PHYSICAL {
+    IN ULONG64  Offset;
+    IN ULONG64  Length;
+    IN ULONG64  PointerMin;
+    IN ULONG64  PointerMax;
+    IN ULONG  Flags;
+    OUT PULONG64  MatchOffsets;
+    IN ULONG  MatchOffsetsSize;
+    OUT ULONG  MatchOffsetsCount;
+} POINTER_SEARCH_PHYSICAL, *PPOINTER_SEARCH_PHYSICAL;</code></pre>
+<h2><a id="Members"></a><a id="members"></a><a id="MEMBERS"></a>Members</h2>
+<p></p>
+<dl>
+<dt><a id="Offset"></a><a id="offset"></a><a id="OFFSET"></a><b>Offset</b></dt>
+<dd>
+<p>Specifies the address in the target's physical memory to start searching from.</p>
+</dd>
+<dt><a id="Length"></a><a id="length"></a><a id="LENGTH"></a><b>Length</b></dt>
+<dd>
+<p>Specifies the amount of the target's physical memory to search.</p>
+</dd>
+<dt><a id="PointerMin"></a><a id="pointermin"></a><a id="POINTERMIN"></a><b>PointerMin</b></dt>
+<dd>
+<p>Specifies the lower limit of the range of pointers to search for.</p>
+</dd>
+<dt><a id="PointerMax"></a><a id="pointermax"></a><a id="POINTERMAX"></a><b>PointerMax</b></dt>
+<dd>
+<p>Specifies the upper limit of the range of pointers to search for.</p>
+</dd>
+<dt><a id="Flags"></a><a id="flags"></a><a id="FLAGS"></a><b>Flags</b></dt>
+<dd>
+<p>Specifies bit flags that alter the behavior of this <b>Ioctl</b> operation.  The following flags can be included.</p>
+<table>
+<tr>
+<th>Flag</th>
+<th>Behavior when set</th>
+</tr>
+<tr>
+<td>
+<p>PTR_SEARCH_PHYS_ALL_HITS</p>
+</td>
+<td>
+<p>Return all pointers in the specified range.  If this flag is not set, only one pointer per page is returned.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>PTR_SEARCH_PHYS_PTE</p>
+</td>
+<td>
+<p>The memory is searched for a page table entry (PTE) that matches the Page Frame Number specified in <b>PointerMin</b>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>PTR_SEARCH_PHYS_RANGE_CHECK_ONLY</p>
+</td>
+<td>
+<p></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>PTR_SEARCH_NO_SYMBOL_CHECK</p>
+</td>
+<td>
+<p>Do not check that the symbols used for the kernel are correct.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+</dd>
+<dt><a id="MatchOffsets"></a><a id="matchoffsets"></a><a id="MATCHOFFSETS"></a><b>MatchOffsets</b></dt>
+<dd>
+<p>Receives the addresses of all the pointers that match the search criteria.  <b>MatchOffsets</b> is an array that contains <b>MatchOffsetsSize</b> elements.</p>
+</dd>
+<dt><a id="MatchOffsetsSize"></a><a id="matchoffsetssize"></a><a id="MATCHOFFSETSSIZE"></a><b>MatchOffsetsSize</b></dt>
+<dd>
+<p>Specifies the number of entries in the array <b>MatchOffsets</b>.</p>
+</dd>
+<dt><a id="MatchOffsetsCount"></a><a id="matchoffsetscount"></a><a id="MATCHOFFSETSCOUNT"></a><b>MatchOffsetsCount</b></dt>
+<dd>
+<p>Receives the number of pointers found that match the search criteria.</p>
+</dd>
+</dl>
+<h2><a id="Return_Value"></a><a id="return_value"></a><a id="RETURN_VALUE"></a>Return Value</h2>
+<p>If this <b>Ioctl</b> operation was successful, the return value is <b>TRUE</b>; otherwise, it is <b>FALSE</b>.</p>
+<h2>Remarks</h2>
+<p>The parameters for the IG_POINTER_SEARCH_PHYSICAL <a href="ioctl.htm"><b>Ioctl</b></a> operation are the members of the POINTER_SEARCH_PHYSICAL structure.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Wdbgexts.h (include Wdbgexts.h or Dbgeng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="ioctl.htm"><b>Ioctl</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IG_POINTER_SEARCH_PHYSICAL%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

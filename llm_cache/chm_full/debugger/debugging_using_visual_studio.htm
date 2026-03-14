@@ -1,0 +1,55 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Starting with Windows Driver Kit (WDK) 8, the driver development environment and the Windows debuggers are integrated into Microsoft Visual Studio."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Debugging Using Visual Studio</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.debugging_using_visual_studio"></a>Debugging Using Visual Studio</h1>
+</div>
+<p>
+<p>Starting with  Windows Driver Kit (WDK) 8, the driver development environment and the Windows debuggers are integrated into Microsoft Visual Studio. In this integrated environment, most of the tools you need for coding, building, packaging, testing, debugging, and deploying a driver are available in the Visual Studio user interface.</p>
+</p>
+<p>To get the integrated envrionment, first install Visual Studio, and then install the   Windows Driver Kit (WDK). For more information, see <a href="http://go.microsoft.com/fwlink/p?linkid=391063">Windows Driver Kit (WDK)</a>.</p>
+<p>Typically kernel-mode debugging requires two computers. The debugger runs on the <i>host computer</i>, and the code being debugged runs on the <i>target computer</i>. The target computer is also called the <i>test computer</i>. You can do user-mode debugging on a single computer, but in some cases you might want to debug a user-mode process that is running on a separate target computer.</p>
+<p>In the Visual Studio environment, you can configure target computers for kernel-mode and user-mode debugging. You can establish a kernel-mode debugging session. You can attach to a user-mode process or launch and debug a user mode process on the host computer or a target computer. You can analyze dump files. In Visual Studio you can sign, deploy, install, and load a driver on a target computer.</p>
+<p>These topics show you how to use Visual Studio to perform several of the tasks involved in debugging a driver.</p>
+<p>
+<h2><a id="in_this_section"></a>In this section</h2>
+<ul>
+<li><a href="debugging_a_user-mode_process_using_visual_studio.htm">Debugging a User-Mode Process Using Visual Studio</a></li>
+<li><a href="opening_a_crash_dump_file_using_visual_studio.htm">Opening a Dump File Using Visual Studio</a></li>
+<li><a href="performing_kernel-mode_debugging_using_visual_studio.htm">Kernel-Mode Debugging in Visual Studio</a></li>
+<li><a href="ending_a_debugging_session_in_visual_studio.htm">Ending a Debugging Session in Visual Studio</a></li>
+<li><a href="setting_symbol_and_source_paths_in_visual_studio.htm">Setting Symbol and Executable Image Paths in Visual Studio</a></li>
+<li><a href="remote_debugging_using_visual_studio.htm">Remote Debugging Using Visual Studio</a></li>
+<li><a href="entering_debugger_commands_in_visual_studio.htm">Entering Debugger Commands in Visual Studio</a></li>
+<li><a href="setting_breakpoints_in_visual_studio.htm">Setting Breakpoints in Visual Studio</a></li>
+<li><a href="viewing_the_call_stack_in_visual_studio.htm">Viewing the Call Stack in Visual Studio</a></li>
+<li><a href="viewing_source_and_assembly_code_in_visual_studio.htm">Source Code Debugging in Visual Studio</a></li>
+<li><a href="viewing_memory__variables__and_registers_in_visual_studio.htm">Viewing and Editing Memory and Registers in Visual Studio</a></li>
+<li><a href="viewing_threads_and_processes_in_visual_studio.htm">Controlling Threads and Processes in Visual Studio</a></li>
+<li><a href="configuring_exceptions_and_events_in_visual_studio.htm">Configuring Exceptions and Events in Visual Studio</a></li>
+<li><a href="keeping_a_log_file_in_visual_studio.htm">Keeping a Log File in Visual Studio</a></li>
+</ul>
+</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Debugging Using Visual Studio%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

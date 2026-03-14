@@ -1,0 +1,45 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The Microsoft symbol server makes Windows debugger symbols publicly available."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Microsoft public symbol server</title>
+
+<meta name="MS-HAID" content="r09_symbols_7bd43120-4e98-4568-a44f-0fe75ee0ac12.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.microsoft_public_symbols"></a>Microsoft public symbol server</h1>
+</div>
+<p>
+<p>The Microsoft symbol server makes Windows debugger symbols publicly available.</p>
+</p>
+<p>You can refer directly to the public symbol server in your symbol path in the following manner:</p>
+<pre class="syntax" xml:space="preserve"><code>set _NT_SYMBOL_PATH=srv*DownstreamStore*https://msdl.microsoft.com/download/symbols</code></pre>
+<p><i>DownstreamStore</i> must specify a directory on your local computer or network that will be used to cache symbols. This downstream store holds symbols that the debugger has accessed; the vast majority of symbols that have never been accessed remain on the symbol store at Microsoft. This keeps your downstream store relatively small and allows the symbol server to work quickly, only downloading each file once.</p>
+<p>To avoid typing this long symbol path, use the <a href="_symfix__set_symbol_store_path_.htm"><b>.symfix (Set Symbol Store Path)</b></a> command. The following command appends the public symbol store to your existing symbol path:</p>
+<pre class="syntax" xml:space="preserve"><code>.symfix+ DownstreamStore </code></pre>
+<div class="alert"><b>Note</b>    To successfully access Microsoft's public symbol store, you will need a fast internet connection. If your internet connection is only 56 Kbps or slower, you should install Windows symbols directly onto your hard drive. For details, see <a href="installing_windows_symbol_files.htm">Installing Windows Symbol Files</a>.</div>
+<div> </div>
+<p>For more information about the public symbol store, see the <a href="http://go.microsoft.com/fwlink/p/?linkid=17363">Windows Symbols</a> Web site.</p>
+<p><b>Symbol File Compression</b></p>
+<p>The Microsoft Symbol Server provides compressed versions of the symbol files. The files have an underscore at the end of the filename’s extension to indicate that they are compressed. For example, the PDB for ntdll.dll is available as ntdll.pd_. When SymProxy downloads a compressed file, it will store the file decompressed in the local file system. The DontUncompress registry key can be set to disable this behavior in SymProxy. </p>
+<p>Refer to the Debugger topic <a href="symstore.htm">SymStore</a> for information on using SymStore.exe /compress to store your own symbols compressed on your symbol server.</p>
+<p></p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Microsoft public symbol server%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

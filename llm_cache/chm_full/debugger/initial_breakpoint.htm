@@ -1,0 +1,35 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Initial Breakpoint"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Initial Breakpoint</title>
+
+<meta name="MS-HAID" content="r07_use_operation_4d852e32-e333-4f48-a97f-dc9b15419af4.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.initial_breakpoint"></a>Initial Breakpoint</h1>
+</div>
+<p>When the debugger starts a new target application, an initial breakpoint automatically occurs after the main image and all statically-linked DLLs are loaded before any DLL initialization routines are called.</p>
+<p>When the debugger attaches to an existing user-mode application, an initial <a href="using_breakpoints.htm">breakpoint</a> occurs immediately.</p>
+<p>The <b>-g</b> command-line option causes WinDbg or CDB to ignore the initial breakpoint. You can automatically execute a command at this point. For more information about this situation, see <a href="controlling_exceptions_and_events.htm">Controlling Exceptions and Events</a>.</p>
+<p>If you want to start a new target and break into it when the execution of the actual application is about to begin, do not use the <b>-g</b> option. Instead, let the initial breakpoint occur. After the debugger is active, set a breakpoint on the <b>main</b> or <b>winmain</b> routine and then use the <a href="g__go_.htm"><b>g (Go)</b></a> command. All of the initialization procedures then run, and the application stops when execution of the main application is about to begin.</p>
+<p>For more information about automatic breakpoints in kernel mode, see <a href="crashing_and_rebooting_the_target_computer.htm">Crashing and Rebooting the Target Computer</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Initial Breakpoint%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

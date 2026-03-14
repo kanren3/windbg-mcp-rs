@@ -1,0 +1,166 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The dtx command displays extended symbolic type information using the debugger object model. The dtx command is similar to the dt (Display Type) command."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>dtx (Display Type - Extended Debugger Object Model Information)</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.dtx__display_type_-_extended_debugger_object_model_information_"></a>dtx (Display Type - Extended Debugger Object Model Information)</h1>
+</div>
+<p>The dtx command displays extended symbolic type information using the debugger object model. The dtx command is similar to the <a href="dt__display_type_.htm"><b>dt (Display Type)</b></a> command.</p>
+<pre class="syntax">
+    <b>dtx </b><b>-DisplayOpts</b><b> </b>[<b>Module!</b>]<b>Name</b><b> </b><b>Address</b></pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="________DisplayOpts_______"></a><a id="________displayopts_______"></a><a id="________DISPLAYOPTS_______"></a>
+       <b>DisplayOpts</b>
+      </dt>
+<dd>
+<p>Use the following optional flags to change how the output is displayed. </p>
+<p><i>-a</i>  Displays  array elements in a new line with its index.
+</p>
+<p><i>-r [n]</i>  Recursively dump the subtypes (fields) up to <i>n</i> levels.</p>
+<p><i>-h</i>  Displays command line help for the dtx command.
+</p>
+</dd>
+<dt><a id="Module______________"></a><a id="module______________"></a><a id="MODULE______________"></a><b>Module!</b>
+            </dt>
+<dd>
+<p>An optional parameter specifying the module that defines this structure, followed by the exclamation point. If there is a local variable or type with the same name as a global variable or type, you should include <i>module</i> name to specify the global variable. </p>
+</dd>
+<dt><a id="________Name_______"></a><a id="________name_______"></a><a id="________NAME_______"></a>
+       <b>Name</b>
+      </dt>
+<dd>
+<p> A type name or a global symbol.
+</p>
+</dd>
+<dt><a id="________Address_______"></a><a id="________address_______"></a><a id="________ADDRESS_______"></a>
+       <b>Address</b>
+      </dt>
+<dd>
+<p>Memory address containing the type.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>user mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>all </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>The following examples show how to use the dtx command.</p>
+<p>Use the address and the name to display  extended symbolic type information.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0: kd&gt; dtx nt!_EPROCESS ffffb607560b56c0
+(*((nt!_EPROCESS *)0xffffb607560b56c0))                 [Type: _EPROCESS]
+    [+0x000] Pcb              [Type: _KPROCESS]
+    [+0x2d8] ProcessLock      [Type: _EX_PUSH_LOCK]
+    [+0x2e0] RundownProtect   [Type: _EX_RUNDOWN_REF]
+    [+0x2e8] UniqueProcessId  : 0x4 [Type: void *]
+    [+0x2f0] ActiveProcessLinks [Type: _LIST_ENTRY]</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Display additional  information using the -r recursion option. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0: kd&gt; dtx -r2 HdAudio!CAzMixertopoMiniport fffff806`d24992b8
+(*((HdAudio!CAzMixertopoMiniport *)0xfffff806d24992b8))                 [Type: CAzMixertopoMiniport]
+    [+0x018] m_lRefCount      : -766760880 [Type: long]
+    [+0x020] m_pUnknownOuter  : 0xfffff806d24dbc40 [Type: IUnknown *]
+    [+0x028] m_FilterDesc     [Type: PCFILTER_DESCRIPTOR]
+        [+0x000] Version          : 0xd24c2890 [Type: unsigned long]
+        [+0x008] AutomationTable  : 0xfffff806d24c2780 [Type: PCAUTOMATION_TABLE *]
+            [+0x000] PropertyItemSize : 0x245c8948 [Type: unsigned long]
+            [+0x004] PropertyCount    : 0x6c894808 [Type: unsigned long]
+            [+0x008] Properties       : 0x5718247489481024 [Type: PCPROPERTY_ITEM *]
+            [+0x010] MethodItemSize   : 0x55415441 [Type: unsigned long]
+            [+0x014] MethodCount      : 0x57415641 [Type: unsigned long]
+            [+0x018] Methods          : 0x4ce4334540ec8348 [Type: PCMETHOD_ITEM *]
+            [+0x020] EventItemSize    : 0x8b41f18b [Type: unsigned long]
+            [+0x024] EventCount       : 0xd8b48f4 [Type: unsigned long]
+            [+0x028] Events           : 0x7d2d8d4cfffdf854 [Type: PCEVENT_ITEM *]
+            [+0x030] Reserved         : 0x66fffd79 [Type: unsigned long]
+        [+0x010] PinSize          : 0xd24aa9b0 [Type: unsigned long]
+        [+0x014] PinCount         : 0xfffff806 [Type: unsigned long]
+        [+0x018] Pins             : 0xfffff806d24aa740 [Type: PCPIN_DESCRIPTOR *]
+            [+0x000] MaxGlobalInstanceCount : 0x57555340 [Type: unsigned long]
+            [+0x004] MaxFilterInstanceCount : 0x83485741 [Type: unsigned long]
+            [+0x008] MinFilterInstanceCount : 0x8b4848ec [Type: unsigned long]
+            [+0x010] AutomationTable  : 0xa5158b48ed33c000 [Type: PCAUTOMATION_TABLE *]
+            [+0x018] KsPinDescriptor  [Type: KSPIN_DESCRIPTOR]</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Tip: Use the <a href="x__examine_symbols_.htm"><b>x (Examine Symbols)</b></a>
+    command to display the address of an item of interest.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0: kd&gt; x /d HdAudio!CazMixertopoMiniport*
+...
+fffff806`d24992b8 HdAudio!CAzMixertopoMiniport::`vftable' = &lt;no type information&gt;
+...</pre>
+</td>
+</tr>
+</table></span></div>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="dt__display_type_.htm"><b>dt (Display Type)</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20dtx (Display Type - Extended Debugger Object Model Information)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

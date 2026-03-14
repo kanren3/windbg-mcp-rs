@@ -1,0 +1,39 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Assembling and Disassembling Instructions"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Assembling and Disassembling Instructions</title>
+
+<meta name="MS-HAID" content="Engine_DG_8c5b4c23-1d98-4736-be58-777a5a30520c.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.assembling_and_disassembling_instructions"></a>Assembling and Disassembling Instructions</h1>
+</div>
+<p>The debugger engine supports the use of assembly language for displaying and changing code in the target.  For an overview of the use of assembly language in the debugger, see <a href="debugging_in_assembly_mode.htm">Debugging in Assembly Mode</a>.</p>
+<div class="alert"><b>Note</b>  
+      Assembly language is not supported for all architectures.  And on some architectures not all instructions are supported.</div>
+<div> </div>
+<p>To assemble a single assembly-language instruction and place the resulting processor instruction in the target's memory, use <a href="assemble.htm"><b>Assemble</b></a>.</p>
+<p>To disassemble a single instruction by taking a processor instruction from the target and producing a string that represents the assembly instruction, use <a href="disassemble.htm"><b>Disassemble</b></a>.</p>
+<p>The method <a href="getdisassembleeffectiveoffset.htm"><b>GetDisassembleEffectiveOffset</b></a> returns the first effective address of the last instruction to be disassembled.  For example, if the last instruction to be disassembled is <code>move ax, [ebp+4]</code>, the effective address is the value of <code>ebp+4</code>.  This corresponds to the <b>$ea</b> pseudo-register.</p>
+<p>To send disassembled instructions to the output callbacks, use the methods <a href="outputdisassembly.htm"><i>OutputDisassembly</i></a> and <a href="outputdisassemblylines.htm"><i>OutputDisassemblyLines</i></a>.</p>
+<p>The debugger engine has some options that control the assembly and disassembly.  These options are returned by <a href="getassemblyoptions.htm"><b>GetAssemblyOptions</b></a>.  They can be set using <a href="setassemblyoptions.htm"><b>SetAssemblyOptions</b></a> and some options can be turned on with <a href="addassemblyoptions.htm"><b>AddAssemblyOptions</b></a> or turned off with <a href="removeassemblyoptions.htm"><b>RemoveAssemblyOptions</b></a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Assembling and Disassembling Instructions%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

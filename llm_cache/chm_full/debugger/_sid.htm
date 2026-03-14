@@ -1,0 +1,70 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !sid extension displays the security identifier (SID) at the specified address."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!sid</title>
+
+<meta name="MS-HAID" content="r25_exts_general_He_5ebb8207-6e5d-483f-88e5-2c9036865802.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._sid"></a>!sid</h1>
+</div>
+<p>The <b>!sid</b> extension displays the security identifier (SID) at the specified address.</p>
+<p>Syntax</p>
+<pre class="syntax">
+    <b>!sid </b><i>Address</i><b> </b>[<i>Flags</i>] 
+</pre>
+<h2><a id="ddk__sid_dbg"></a><a id="DDK__SID_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Address______"></a><a id="_______address______"></a><a id="_______ADDRESS______"></a>       <i>Address</i>      </dt>
+<dd>
+<p>Specifies the address of the SID structure.</p>
+</dd>
+<dt><a id="_______Flags______"></a><a id="_______flags______"></a><a id="_______FLAGS______"></a>       <i>Flags</i>      </dt>
+<dd>
+<p>  If this is set to 1, the SID type, domain, and user name for the SID is displayed.</p>
+<p>  If this is set to 1, the friendly name is displayed. This includes the SID type, as well as the domain and user name for the SID.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<p>
+          Exts.dll
+         </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For information about SIDs, see the Microsoft Windows SDK documentation, the Windows Driver Kit (WDK) documentation, or <i>Microsoft Windows Internals</i> by Mark Russinovich and David Solomon. Also see <a href="_sd.htm"><b>!sd</b></a> and <a href="_acl.htm"><b>!acl</b></a>.</p>
+<h2>Remarks</h2>
+<p>Here are two examples, one without the friendly name shown, and one with:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; !sid 0xe1bf35b8
+SID is: S-1-5-21-518066528-515770016-299552555-513
+
+kd&gt; !sid 0xe1bf35b8 1
+SID is: S-1-5-21-518066528-515770016-299552555-513 (Group: MYGROUP\Domain Users)</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!sid%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

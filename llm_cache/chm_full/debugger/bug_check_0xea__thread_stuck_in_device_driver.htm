@@ -1,0 +1,85 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The THREAD_STUCK_IN_DEVICE_DRIVER bug check has a value of 0x000000EA. This indicates that a thread in a device driver is endlessly spinning."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0xEA: THREAD_STUCK_IN_DEVICE_DRIVER</title>
+
+<meta name="MS-HAID" content="t07_bugs_E0_dd47292f-bdb1-4ae8-bbb9-3baf2e2b24c2.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0xea__thread_stuck_in_device_driver"></a>Bug Check 0xEA: THREAD_STUCK_IN_DEVICE_DRIVER</h1>
+</div>
+<p>The THREAD_STUCK_IN_DEVICE_DRIVER bug check has a value of 0x000000EA. This indicates that a thread in a device driver is endlessly spinning.</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2> THREAD_STUCK_IN_DEVICE_DRIVER Parameters</h2>
+<p>The following parameters are displayed on the blue screen.</p>
+<table>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>1</p>
+</td>
+<td>
+<p>A pointer to the stuck thread object </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>2</p>
+</td>
+<td>
+<p>A pointer to the DEFERRED_WATCHDOG object</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>3</p>
+</td>
+<td>
+<p>A pointer to the offending driver name </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>4</p>
+</td>
+<td>
+<p><b>In the kernel debugger:</b> The number of times the "intercepted" bug check 0xEA was hit</p>
+<p><b>On the blue screen:</b> 1  </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Cause</h2>
+<p>A device driver is spinning in an infinite loop, most likely waiting for hardware to become idle.</p>
+<p>This usually indicates problem with the hardware itself, or with the device driver programming the hardware incorrectly. Frequently, this is the result of a bad video card or a bad display driver.</p>
+<h2>Resolution</h2>
+<p>Use the <a href="_thread__set_register_context_.htm"><b>.thread (Set Register Context)</b></a> command together with Parameter 1. Then use <a href="k__kb__kc__kd__kp__kp__kv__display_stack_backtrace_.htm"><b>kb (Display Stack Backtrace)</b></a> to find the location where the thread is stuck.</p>
+<p>If the kernel debugger is already connected and running when Windows detects a time-out condition. Then <b>DbgBreakPoint</b> will be called instead of <b>KeBugCheckEx</b>. A detailed message will be printed to the debugger.  See <a href="sending_output_to_the_debugger.htm">Sending Output to the Debugge</a>for more information.    </p>
+<p>This message will include what would have been the bug check parameters. Because no actual bug check was issued, the <a href="_bugcheck__display_bug_check_data_.htm"><b>.bugcheck (Display Bug Check Data)</b></a> command will not be useful. The four parameters can also be retrieved from Watchdog's global variables by using <b>dd watchdog!g_WdBugCheckData L5</b>" on a 32-bit system, or <b>dq watchdog!g_WdBugCheckData L5</b>" on a 64-bit system.</p>
+<p>Debugging this error in an interactive manner such as this will enable you to find an offending thread, set breakpoints in it, and then use <a href="g__go_.htm"><b>g (Go)</b></a> to return to the spinning code to debug it further. </p>
+<p>On multiprocessor machines (OS build 3790 or earlier), you can hit a time out if the spinning thread is interrupted by a hardware interrupt and an ISR or DPC routine is running at the time of the bug check. This is because the time out's work item can be delivered and handled on the second CPU and the same time. If this occurs, you must look deeper at the offending thread's stack to determine the spinning code which caused the time out to occur. Use the <a href="dds__dps__dqs__display_words_and_symbols_.htm"><b>dds (Display Words and Symbols)</b></a> command to do this.</p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

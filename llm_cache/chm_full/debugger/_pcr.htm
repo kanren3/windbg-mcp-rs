@@ -1,0 +1,102 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !pcr extension displays the current status of the Processor Control Region (PCR) on a specific processor."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!pcr</title>
+
+<meta name="MS-HAID" content="r28_exts_kernel_N_4ab42b0e-acdd-42f1-9594-e7db30d8276b.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._pcr"></a>!pcr</h1>
+</div>
+<p>The <b>!pcr</b> extension displays the current status of the Processor Control Region (PCR) on a specific processor.</p>
+<p></p>
+<pre class="syntax"><b>!pcr </b>[<i>Processor</i>]</pre>
+<h2><a id="ddk__pcr_dbg"></a><a id="DDK__PCR_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Processor______"></a><a id="_______processor______"></a><a id="_______PROCESSOR______"></a>       <i>Processor</i>      </dt>
+<dd>
+<p>Specifies the processor to retrieve the PCR information from. If <i>Processor</i> is omitted, the current processor is used.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Windows 2000</b></p>
+</td>
+<td>
+<p>
+          Kdextx86.dll
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Kdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For information about the PCR and the PRCB, see <i>Microsoft Windows Internals</i>, by Mark Russinovich and David Solomon.(This book may not be available in some languages 
+
+and countries.)</p>
+<h2>Remarks</h2>
+<p>The processor control block (PRCB) is an extension of the PCR. It can be displayed with the <a href="_prcb.htm"><b>!prcb</b></a> extension.   </p>
+<p>Here is an example of the <b>!pcr</b> extension on an x86 target computer:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !pcr 0
+KPCR for Processor 0 at ffdff000:
+    Major 1 Minor 1
+      NtTib.ExceptionList: 801626e0
+          NtTib.StackBase: 801628f0
+         NtTib.StackLimit: 8015fb00
+       NtTib.SubSystemTib: 00000000
+            NtTib.Version: 00000000
+        NtTib.UserPointer: 00000000
+            NtTib.SelfTib: 00000000
+
+                  SelfPcr: ffdff000
+                     Prcb: ffdff120
+                     Irql: 00000000
+                      IRR: 00000000
+                      IDR: ffffffff
+            InterruptMode: 00000000
+                      IDT: 80043400
+                      GDT: 80043000
+                      TSS: 803cc000
+
+            CurrentThread: 8015e8a0
+               NextThread: 00000000
+               IdleThread: 8015e8a0
+
+                DpcQueue:  0x80168ee0 0x80100d04 ntoskrnl!KiTimerExpiration
+ </code></pre>
+<p>One of the entries in this display shows the interrupt request level (IRQL). The <b>!pcr</b> extension shows the current IRQL, but the current IRQL is usually not of much interest. The IRQL that existed just before the bug check or debugger connection is more interesting. This is displayed by <a href="_irql.htm"><b>!irql</b></a>, which is only available on computers running Windows Server 2003 or later versions of Windows.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!pcr%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,47 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="GFlags and PageHeap"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>GFlags and PageHeap</title>
+
+<meta name="MS-HAID" content="GFlags_dfff1d36-2831-4e62-b8ce-16457d783651.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.gflags_and_pageheap"></a>GFlags and PageHeap</h1>
+</div>
+<h2><a id="ddk_gflags_and_pageheap_dtools"></a><a id="DDK_GFLAGS_AND_PAGEHEAP_DTOOLS"></a></h2>
+<p>This version of GFlags includes the functionality of PageHeap (pageheap.exe), a tool that enables heap allocation monitoring in Windows. PageHeap enables Windows features that reserve memory at the boundary of each allocation to detect attempts to access memory beyond the allocation.</p>
+<p>The page heap options in GFlags let you select <i>standard heap verification</i>, which writes fill patterns at the end of each heap allocation and examines the patterns when the allocations are freed, or <i>full-page heap verification</i>, which places an inaccessible page at the end of each allocation so that the program stops immediately if if accesses memory beyond the allocation. Because full heap verification uses a full page of memory for each allocation, its widespread use can cause system memory shortages.</p>
+<ul>
+<li>
+<p>To enable standard page heap verification for all processes, use <b>gflags /r +hpa</b> or <b>gflags /k +hpa</b>. </p>
+</li>
+<li>
+<p>To enable standard page heap verification for one process, use <b>gflags /p /enable </b><i>ImageFileName</i>. </p>
+</li>
+<li>
+<p>To enable full page heap verification for one process, use <b>gflags /i </b><i>ImageFileName</i><b> +hpa</b> or <b>gflags /p /enable </b><i>ImageFileName </i><b>/full</b>. </p>
+</li>
+</ul>
+<p>All page heap settings, except for <b>/k</b>, are stored in the registry and remain effective until you change them.</p>
+<p>Use care in interpreting the <b>Enable page heap</b> check box for an image file in the GFlags dialog box. It indicates that page heap verification is enabled for an image file, but it does not indicate whether it is full or standard page heap verification. If the check results from selecting the check box, then full page heap verification is enabled for the image file. However, if the check results from use of the command-line interface, then the check can represent the enabling of either full or standard page heap verification for the image file.</p>
+<p>To determine whether full or standard page heap verification is enabled for a program, at the command line, type <b>gflags /p</b>. In the resulting display, <b>traces</b> indicates that standard page heap verification is enabled for the program and <b>full traces</b> indicates that full page heap verification is enabled for the program.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20GFlags and PageHeap%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,114 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The StartProcessServerWide method starts a process server."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IDebugClient5::StartProcessServerWide method</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.startprocessserverwide"></a>IDebugClient5::StartProcessServerWide method</h1>
+</div>
+<p>The <b>StartProcessServerWide</b> method starts a process server.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>HRESULT StartProcessServerWide(
+  [in]           ULONG  Flags,
+  [in]           PCWSTR Options,
+  [in, optional] PVOID  Reserved
+);</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Parameters</h2>
+<dl>
+<dt><i>Flags</i> [in]</dt>
+<dd>
+<p>Specifies the class of the targets that will be available through the process server.  This must be set to DEBUG_CLASS_USER_WINDOWS.</p>
+</dd>
+<dt><i>Options</i> [in]</dt>
+<dd>
+<p>Specifies the connections options for this process server.  These are the same options given to the <b>-t</b> option of the DbgSrv command line.  For details on the syntax of this string, see <a href="activating_a_process_server.htm"><b>Activating a Process Server</b></a>.</p>
+</dd>
+<dt><i>Reserved</i> [in, optional]</dt>
+<dd>
+<p>Set to <b>NULL</b>.</p>
+</dd>
+</dl>
+<h2>Return value</h2>
+<p>This method may also return error values.  See <a href="hresult_values.htm"><b>Return Values</b></a> for more details.</p>
+<table>
+<tr>
+<th>Return code</th>
+<th>Description</th>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>S_OK</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>The method was successful.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>The process server that is started will be accessible by remote clients through the transport specified in the <i>Options</i> parameter.</p>
+<p>To stop the process server from the smart client, use the <a href="endprocessserver.htm"><b>EndProcessServer</b></a> method. To shut down the process server from the computer that it is running on, use Task Manager to end the process. If the instance of the debugger engine that used <b>StartProcessServer</b> is still running, it can use <a href="execute.htm"><b>Execute</b></a> to issue the debugger command <a href="_endsrv__end_debugging_server_.htm"><b>.endsrv 0</b></a>, which will end the process server (this is an exception to the usual behavior of <b>.endsrv</b>, which generally does not affect process servers). </p>
+<p>For more information about process servers and remote debugging, see <a href="remote_targets.htm#process_server_and_smart_client">Process Servers, Kernel Connection Servers, and Smart Clients</a>.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Target platform</p>
+</th>
+<td width="70%">
+<dl>
+<dt></dt>
+</dl>
+</td>
+</tr>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Dbgeng.h (include Dbgeng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="idebugclient5.htm"><b>IDebugClient5</b></a></dt>
+<dt><a href="waitforprocessserverend.htm"><b>WaitForProcessServerEnd</b></a></dt>
+<dt><a href="connectprocessserver.htm"><b>ConnectProcessServer</b></a></dt>
+<dt><a href="endprocessserver.htm"><b>EndProcessServer</b></a></dt>
+<dt><a href="disconnectprocessserver.htm"><b>DisconnectProcessServer</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IDebugClient5::StartProcessServerWide method%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

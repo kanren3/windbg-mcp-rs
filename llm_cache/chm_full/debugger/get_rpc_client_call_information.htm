@@ -1,0 +1,52 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Get RPC Client Call Information"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Get RPC Client Call Information</title>
+
+<meta name="MS-HAID" content="t11_rpc_acpi_043c8f1b-d4f6-4058-8cf3-cd0956ba302f.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.get_rpc_client_call_information"></a>Get RPC Client Call Information</h1>
+</div>
+<h2><a id="ddk_get_rpc_client_call_information_dbg"></a><a id="DDK_GET_RPC_CLIENT_CALL_INFORMATION_DBG"></a></h2>
+<p>Client call (CCALL) call information is displayed by the <b>!rpcexts.getclientcallinfo</b> extension, or by DbgRpc when the <b>-a</b> switch is used.</p>
+<p>Four optional parameters are permitted. Three of these -- <i>CallID</i>, <i>IfStart</i>, and <i>ProcNum</i> -- are identifying information used by RPC to keep track of its calls. The fourth parameter, <i>ProcessID</i>, is the PID of the process that owns the call. You should supply whatever parameters you know to narrow down the search.</p>
+<p>If no parameters are supplied, all known CCALLs in the system will be displayed. The following is an example of this (potentially long) display:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>D:\wmsg&gt;dbgrpc -a
+Searching for call info ...
+PID  CELL ID   PNO  IFSTART  TIDNUMBER CALLID   LASTTIME PS CLTNUMBER ENDPOINT
+------------------------------------------------------------------------------
+0390 0000.0001 0000 19bb5061 0000.0000 00000001 00072bff 07 0000.0002 1120</pre>
+</td>
+</tr>
+</table></span></div>
+<p>For details on the optional parameters, see <a href="dbgrpc_command_line_options.htm"><b>DbgRpc Command-Line Options</b></a>.</p>
+<p>For a similar example using the RPC debugger extensions, see <a href="_rpcexts_getclientcallinfo.htm"><b>!rpcexts.getclientcallinfo</b></a>.</p>
+<div class="alert"><b>Note</b>    Information about Client Call objects is only gathered if the <b>Full</b> state information is being gathered. See <a href="enabling_rpc_state_information.htm">Enabling RPC State Information</a> for details.</div>
+<div> </div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Get RPC Client Call Information%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

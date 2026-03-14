@@ -1,0 +1,55 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Building EngExtCpp Extensions"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Building EngExtCpp Extensions</title>
+
+<meta name="MS-HAID" content="EngExtCpp_DG_e692ac53-fab8-4532-914f-5760f68e2ae1.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.building_extengcpp_extensions"></a>Building EngExtCpp Extensions</h1>
+</div>
+<h2><a id="ddk_building_dbgeng_extensions_dbx"></a><a id="DDK_BUILDING_DBGENG_EXTENSIONS_DBX"></a></h2>
+<p>The EngExtCpp extension libraries are built almost the same way as the DbgEng extension libraries. For more information, see <a href="building_dbgeng_extensions.htm">Building DbgEng Extensions</a>.</p>
+<p>The EngExtCpp implementation code (engextcpp.cpp) is used instead of  linking with a static library.</p>
+<p>Because the EngExtCpp extension framework is built on top of the DbgEng extension framework, an EngExtCpp extension DLL should export the same functions as a DbgEng extension DLL.</p>
+<p>Each extension should be exported.  When you use the <a href="ext_command.htm"><b>EXT_COMMAND</b></a> macro to define an extension function, this macro also creates a C function with the same name as the extension.  This function should be exported from the DLL.</p>
+<p>The following functions are provided by engextcpp should be exported from the EngExtCpp DLL.</p>
+<ul>
+<li>
+<p><b>DebugExtensionInitialize</b> -- so that the <a href="getrawargstr.htm"><b>Initialize</b></a> method can be called to initialize the library.</p>
+</li>
+<li>
+<p><b>DebugExtensionUnitialize</b> -- so that the <a href="getrawargstr.htm"><b>Uninitialize</b></a> method can be called to uninitialize the library.</p>
+</li>
+<li>
+<p><b>KnownStructOutputEx</b> -- so that the engine can call the <a href="extknownstructmethod.htm"><i>ExtKnownStructMethod</i></a> methods to format known structures for output.</p>
+</li>
+<li>
+<p><b>DebugExtensionNotify</b> -- so that the engine can call the <a href="getrawargstr.htm"><b>OnSessionActive</b></a>, <b>OnSessionInactive</b>, <b>OnSessionAccessible</b>, and <b>OnSessionInaccessible</b> methods to notify the extension library of changes to the debugging session's state.</p>
+</li>
+<li>
+<p><b>help</b> -- so that the EngExtCpp extension framework can automatically provide a <b>!help</b> extension.</p>
+</li>
+</ul>
+<p>These functions can be exported even if the functionality they provide is not needed.  Moreover, if they are not exported, the functionality they provide will be lost.</p>
+<p><b>DebugExtensionInitialize</b> must be exported in order for the debugger engine to recognize the DLL as a valid DbgEng extension DLL.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Building EngExtCpp Extensions%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

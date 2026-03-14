@@ -1,0 +1,105 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The AppendSourcePath method appends directories to the source path."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IDebugSymbols::AppendSourcePath method</title>
+
+<meta name="MS-HAID" content="IDebugSymbols_8e47c1ea-e190-4f34-a952-1dcf4ef9e971.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.appendsourcepath"></a>IDebugSymbols::AppendSourcePath method</h1>
+</div>
+<p>The <b>AppendSourcePath</b>  method appends directories to the source path.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>HRESULT AppendSourcePath(
+  [in] PCSTR Addition
+);</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Parameters</h2>
+<dl>
+<dt><i>Addition</i> [in]</dt>
+<dd>
+<p>Specifies the directories to append to the source path.  This is a string that contains source path elements separated by semicolons (;).  Each source path element can specify either a directory or a source server.</p>
+</dd>
+</dl>
+<h2>Return value</h2>
+<table>
+<tr>
+<th>Return code</th>
+<th>Description</th>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>S_OK</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>The method was successful.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>This method may also return error values.  See <a href="hresult_values.htm"><b>Return Values</b></a> for more details.</p>
+<h2>Remarks</h2>
+<p>The source path is used by the engine when searching for source files.</p>
+<p>For more information about manipulating the source path, see <a href="using_source_files.htm">Using Source Files</a>.  For an overview of the source path and its syntax, see <a href="source_path.htm">Source Path</a>.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Target platform</p>
+</th>
+<td width="70%">
+<dl>
+<dt></dt>
+</dl>
+</td>
+</tr>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Dbgeng.h (include Dbgeng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="idebugsymbols.htm"><b>IDebugSymbols</b></a></dt>
+<dt><a href="idebugsymbols2.htm"><b>IDebugSymbols2</b></a></dt>
+<dt><a href="idebugsymbols3.htm"><b>IDebugSymbols3</b></a></dt>
+<dt><a href="getsourcepath.htm"><b>GetSourcePath</b></a></dt>
+<dt><a href="setsourcepath.htm"><b>SetSourcePath</b></a></dt>
+<dt><a href="getsourcepathelement.htm"><b>GetSourcePathElement</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IDebugSymbols::AppendSourcePath method%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

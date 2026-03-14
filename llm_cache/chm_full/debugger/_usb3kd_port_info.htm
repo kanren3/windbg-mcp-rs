@@ -1,0 +1,105 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !usb3kd.port_info command displays information about a USB port in the USB 3.0 tree."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!usb3kd.port_info</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._usb3kd_port_info"></a>!usb3kd.port_info</h1>
+</div>
+<p>The  <a href="_usb3kd_device_info.htm"><b>!usb3kd.port_info</b></a> command displays information about a USB port in the <a href="usb_3_extensions.htm#usb_3_tree">USB 3.0 tree</a>.</p>
+<pre class="syntax"><b>!usb3kd.port_info </b><i>PortContext</i></pre>
+<h2><a id="ddk__devobj_dbg"></a><a id="DDK__DEVOBJ_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______PortContext______"></a><a id="_______portcontext______"></a><a id="_______PORTCONTEXT______"></a>       <i>PortContext</i>      </dt>
+<dd>
+<p>Address of a _PORT_CONTEXT structure.</p>
+</dd>
+</dl>
+<h2><a id="DLL"></a><a id="dll"></a>DLL</h2>
+<p>Usb3kd.dll
+     </p>
+<h2>Examples</h2>
+<p>To obtain the address of the port context, look at the output of the <a href="_usb3kd_usb_tree.htm"><b>!usb_tree</b></a> command. In the following example, the address of a port context is 0xfffffa8005abe0c0.</p>
+<div class="code"><span codelanguage="cmd"><table>
+<tr>
+<th>cmd</th>
+</tr>
+<tr>
+<td>
+<pre>3: kd&gt; !usb_tree
+
+Dumping HUB Tree - !drvObj 0xfffffa800597f770
+--------------------------------------------
+
+Topology
+--------
+1)  !xhci_info 0xfffffa80051d1940  ... - PCI: VendorId ...
+    !hub_info 0xfffffa8005ad92d0 (ROOT)
+        ...
+        !port_info 0xfffffa8005abe0c0 !device_info 0xfffffa8005abd0c0 Desc: ... USB Flash Drive Speed: Super
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Now you can pass the address of the port context to the <b>!port_info</b> command.</p>
+<div class="code"><span codelanguage="cmd"><table>
+<tr>
+<th>cmd</th>
+</tr>
+<tr>
+<td>
+<pre>
+3: kd&gt; !port_info 0xfffffa8005abe0c0
+
+Dumping Port Context 0xfffffa8005abe0c0
+---------------------------------------
+dt USBHUB3!_PORT_CONTEXT 0xfffffa8005abe0c0
+!hub_info 0xfffffa8005ad92d0 (dt _HUB_FDO_CONTEXT 0xfffffa8005ad92d0)
+!device_info 0xfffffa8005abd0c0 (dt _DEVICE_CONTEXT 0xfffffa8005abd0c0)
+!rcdrlogdump usbhub3 -a 0xfffffa8005abf6b0
+
+PortNumber: 2
+Last Port Status(3.0): Connected Enabled Powered
+Last Port Change: &lt;none&gt;
+
+CurrentPortEvent: PsmEventPortConnectChange
+Current Port(3.0) State: ConnectedEnabled.WaitingForPortChangeEvent
+
+Port(3.0) State History: &lt;Event&gt; NewState (&lt;Operation&gt;(),..) :
+
+    [34] &lt;Push&gt; WaitingForPortChangeEvent 
+    ...
+Port Event History:
+    [ 8] TransferSuccess
+    ...  
+</pre>
+</td>
+</tr>
+</table></span></div>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="usb_3_extensions.htm">USB 3.0 Extensions</a></dt>
+<dt><a href="http://go.microsoft.com/fwlink/p?LinkID=227351">Universal Serial Bus (USB) Drivers</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!usb3kd.port_info%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

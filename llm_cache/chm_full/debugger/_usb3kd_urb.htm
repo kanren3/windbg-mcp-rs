@@ -1,0 +1,100 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !usb3kd.urb extension displays information about a USB request block (URB)."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!usb3kd.urb</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._usb3kd_urb"></a>!usb3kd.urb</h1>
+</div>
+<p>The  <a href="_usb3kd_device_info.htm"><b>!usb3kd.urb</b></a> extension displays information about a USB request block (URB).</p>
+<pre class="syntax"><b>!usb3kd.urb </b><i>UrbAddress</i></pre>
+<h2><a id="ddk__devobj_dbg"></a><a id="DDK__DEVOBJ_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______UrbAddress______"></a><a id="_______urbaddress______"></a><a id="_______URBADDRESS______"></a>       <i>UrbAddress</i>      </dt>
+<dd>
+<p>Address of the URB.</p>
+</dd>
+</dl>
+<h2><a id="DLL"></a><a id="dll"></a>DLL</h2>
+<p>Usb3kd.dll
+     </p>
+<h2>Examples</h2>
+<p>The following example shows the address of a URB (0xfffffa8005a2cbe8) in the output of the <a href="_usb3kd_xhci_deviceslots.htm"><b>!xhci_deviceslots</b></a> command.</p>
+<div class="code"><span codelanguage="cmd"><table>
+<tr>
+<th>cmd</th>
+</tr>
+<tr>
+<td>
+<pre>3: kd&gt; !xhci_deviceslots 0xfffffa800520d2d0
+
+Dumping dt _DEVICESLOT_DATA 0xfffffa8003612e80
+----------------------------------------------
+DeviceContextBase: VA 0xfffffa8005a64000 LA 0x116864000 !wdfcommonbuffer 0x57ffa7ca758 Size 4096
+
+[1] SlotID : dt USBXHCI!_USBDEVICE_DATA 0xfffffa80059027d0 dt _SLOT_CONTEXT32 0xfffffa8005a65000
+------------------------------------------------------------------------------------------------
+    USB\VID_...
+    SlotEnabled IsDevice NumberOfTTs 0 TTThinkTime 0
+    ...
+            PendingTransferList: 
+                [0] dt _TRANSFER_DATA 0xfffffa80059727f0 !urb 0xfffffa8005a2cbe8 !wdfrequest 0x57ffa68d998 TransferState_Pending
+    ...
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The following example passes the address of the URB to the <b>!usb3kd.urb</b> command.</p>
+<div class="code"><span codelanguage="cmd"><table>
+<tr>
+<th>cmd</th>
+</tr>
+<tr>
+<td>
+<pre>3: kd&gt; !urb 0xfffffa8005a2cbe8
+
+Dumping URB 0xfffffa8005a2cbe8
+------------------------------
+Function:         URB_FUNCTION_BULK_OR_INTERRUPT_TRANSFER (0x9)
+UsbdDeviceHandle: 
+    !ucx_device 0xfffffa8005901840
+    !xhci_deviceslots 0xfffffa800520d2d0 1
+
+Status:           USBD_STATUS_PENDING (0x40000000)
+UsbdFlags:        (0x0)
+dt _URB_BULK_OR_INTERRUPT_TRANSFER 0xfffffa8005a2cbe8
+PipeHandle:            0xfffffa800596f720
+TransferFlags:         (0x1) USBD_TRANSFER_DIRECTION_IN
+TransferBufferLength:  0x0
+TransferBuffer:        0xfffffa8005a2cc88
+TransferBufferMDL:     0xfffffa8005848930</pre>
+</td>
+</tr>
+</table></span></div>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="usb_3_extensions.htm">USB 3.0 Extensions</a></dt>
+<dt><a href="http://go.microsoft.com/fwlink/p?LinkID=227351">Universal Serial Bus (USB) Drivers</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!usb3kd.urb%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

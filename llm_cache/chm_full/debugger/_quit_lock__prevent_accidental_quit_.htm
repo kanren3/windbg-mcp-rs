@@ -1,0 +1,86 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .quit_lock command sets a password to prevent you from accidentally ending the debugging session."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.quit_lock (Prevent Accidental Quit)</title>
+
+<meta name="MS-HAID" content="r21_metacmds_L_6dd9ea99-39d7-4415-81bd-4b242e62883f.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._quit_lock__prevent_accidental_quit_"></a>.quit_lock (Prevent Accidental Quit)</h1>
+</div>
+<p>The <b>.quit_lock</b> command sets a password to prevent you from accidentally ending the debugging session.</p>
+<pre class="syntax"><b>.quit_lock /s </b><i>NewPassword</i> 
+<b>.quit_lock /q </b><i>Password</i> 
+<b>.quit_lock</b> 
+</pre>
+<h2><a id="ddk_meta_prevent_accidental_quit_dbg"></a><a id="DDK_META_PREVENT_ACCIDENTAL_QUIT_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="________s_NewPassword_____________"></a><a id="________s_newpassword_____________"></a><a id="________S_NEWPASSWORD_____________"></a>       <b>/s</b><b> </b><i>NewPassword</i>             </dt>
+<dd>
+<p>Prevents the debugging session from ending and stores <i>NewPassword</i>. You cannot end the debugger session until you use the <b>.quit_lock /q</b> command together with this same password. <i>NewPassword</i> can be any string. If it contains spaces, you must enclose <i>NewPassword</i> in quotation marks.</p>
+</dd>
+<dt><a id="________q_Password______________"></a><a id="________q_password______________"></a><a id="________Q_PASSWORD______________"></a>       <b>/q</b><b> </b><i>Password</i>              </dt>
+<dd>
+<p>Enables the debugging session to end. <i>Password</i> must match the password that you set with the <b>.quit_lock /s</b> command.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes
+         </b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets</b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Platforms
+         </b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>Without parameters, <b>.quit_lock</b> displays the current lock status, including the full text of the password.</p>
+<p>You can repeat the <b>.quit_lock /s</b> command to change an existing password.</p>
+<p>When you use <b>.quit_lock /q</b>, the lock is removed. This command does not close the debugger. Instead, the command only enables you to exit the session in the typical manner when you want to.</p>
+<div class="alert"><b>Note</b>    The password is not "secret". Any remote user who is attached to the debugging session can use <b>.quit_lock</b> to determine the password. The purpose of this command is to prevent accidental use of the <a href="q__qq__quit_.htm"><b>q (Quit)</b></a> command. This command is especially useful if restarting the debugging session might be difficult (for example, during remote debugging).</div>
+<div> </div>
+<p>You cannot use the <b>.quit_lock /s</b> command in <a href="activating_secure_mode.htm">Secure Mode</a>. If you use this command before Secure Mode is activated, the password protection remains, but you cannot change or remove the password.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.quit_lock (Prevent Accidental Quit)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

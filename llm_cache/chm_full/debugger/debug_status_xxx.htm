@@ -1,0 +1,230 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="DEBUG_STATUS_XXX"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>DEBUG_STATUS_XXX</title>
+
+<meta name="MS-HAID" content="Structures_c68bce96-5dba-43bb-a3dd-3f8f3b11520e.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.debug_status_xxx"></a>DEBUG_STATUS_XXX</h1>
+</div>
+<h2><a id="ddk_debug_status_xxx_dbx"></a><a id="DDK_DEBUG_STATUS_XXX_DBX"></a></h2>
+<p>The DEBUG_STATUS_<i>XXX</i> status codes have two purposes. They instruct the engine on how execution in the target should proceed, and they are used by the engine to report the execution status of the target.</p>
+<p>After an event occurs, the engine can receive several instructions that tell it how execution in the target should proceed. In this case, it acts on the instruction with the highest precedence.  Typically, the higher precedence status codes represent less execution for the target.</p>
+<p>The values in the following table are reverse ordered by precedence; the values that appear earlier in the table have higher precedence.</p>
+<table>
+<tr>
+<th>Status Code</th>
+<th>When reporting</th>
+<th>When instructing</th>
+<th>Precedence</th>
+</tr>
+<tr>
+<td>
+<p>DEBUG_STATUS_NO_DEBUGGEE</p>
+</td>
+<td>
+<p>No debugging session is active.</p>
+</td>
+<td>
+<p>N/A</p>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_STATUS_OUT_OF_SYNC</p>
+</td>
+<td>
+<p>The debugger communications channel is out of sync.</p>
+</td>
+<td>
+<p>N/A</p>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_STATUS_WAIT_INPUT</p>
+</td>
+<td>
+<p>The target is awaiting input from the user.</p>
+</td>
+<td>
+<p>N/A</p>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_STATUS_TIMEOUT</p>
+</td>
+<td>
+<p>The debugger communications channel has timed out.</p>
+</td>
+<td>
+<p>N/A</p>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_STATUS_BREAK</p>
+</td>
+<td>
+<p>The target is suspended.</p>
+</td>
+<td>
+<p>Suspend the target.</p>
+</td>
+<td>
+<p>Highest precedence</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_STATUS_STEP_INTO</p>
+</td>
+<td>
+<p>The target is executing a single instruction.</p>
+</td>
+<td>
+<p>Continue execution of the target for a single instruction.</p>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_STATUS_STEP_BRANCH</p>
+</td>
+<td>
+<p>The target is executing until the next branch instruction.</p>
+</td>
+<td>
+<p>Continue execution of the target until the next branch instruction.</p>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_STATUS_STEP_OVER</p>
+</td>
+<td>
+<p>The target is executing a single instruction or--if that instruction is a subroutine call--subroutine.</p>
+</td>
+<td>
+<p>Continue execution of the target for a single instruction.  If the instruction is a subroutine call, the call is entered and the target is allowed to run until the subroutine returns.</p>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_STATUS_GO_NOT_HANDLED</p>
+</td>
+<td>
+<p>N/A</p>
+</td>
+<td>
+<p>Continue execution of the target, flagging the event as not handled.</p>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_STATUS_GO_HANDLED</p>
+</td>
+<td>
+<p>N/A</p>
+</td>
+<td>
+<p>Continue execution of the target, flagging the event as handled.</p>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_STATUS_GO</p>
+</td>
+<td>
+<p>The target is executing normally.</p>
+</td>
+<td>
+<p>Continue normal execution of the target.</p>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_STATUS_IGNORE_EVENT</p>
+</td>
+<td>
+<p>N/A</p>
+</td>
+<td>
+<p>Continue previous execution of the target, ignoring the event.</p>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_STATUS_RESTART_REQUESTED</p>
+</td>
+<td>
+<p>The target is restarting.</p>
+</td>
+<td>
+<p>Restart the target.</p>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_STATUS_NO_CHANGE</p>
+</td>
+<td>
+<p>N/A</p>
+</td>
+<td>
+<p>No instruction.  This value is returned by an event callback method when it does not wish to instruct the engine how to proceed with execution in the target.</p>
+</td>
+<td>
+<p>Lowest precedence</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<div class="alert"><b>Note</b>    The precedence of the status codes does not follow the numeric values of the constants.</div>
+<div> </div>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>DbgEng.h (include DbgEng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20DEBUG_STATUS_XXX%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,84 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .createdir command controls the starting directory and handle inheritance for any processes created by the debugger."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.createdir (Set Created Process Directory)</title>
+
+<meta name="MS-HAID" content="r19_metacmds_A_58ea59c5-e3aa-4ec4-b8cc-ec1dcd9db978.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._createdir__set_created_process_directory_"></a>.createdir (Set Created Process Directory)</h1>
+</div>
+<p>The <b>.createdir</b> command controls the starting directory and handle inheritance for any processes created by the debugger.</p>
+<pre class="syntax">
+    <b>.createdir </b>[<b>-i</b> | <b>-I</b>] [<i>Path</i>] 
+</pre>
+<h2><a id="ddk_meta_set_created_process_directory_dbg"></a><a id="DDK_META_SET_CREATED_PROCESS_DIRECTORY_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______-i______"></a><a id="_______-I______"></a>       <b>-i</b>      </dt>
+<dd>
+<p>Causes processes created by the debugger to inherit handles from the debugger. This is the default.</p>
+</dd>
+<dt><a id="_______-I______"></a><a id="_______-i______"></a>       <b>-I</b>      </dt>
+<dd>
+<p>Prevents processes created by the debugger from inheriting handles from the debugger.</p>
+</dd>
+<dt><a id="_______Path______"></a><a id="_______path______"></a><a id="_______PATH______"></a>       <i>Path</i>      </dt>
+<dd>
+<p>Specifies the starting directory for all child processes created by any target process. If <i>Path</i> contains spaces, it must be enclosed in quotation marks.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>user mode only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets</b></p>
+</td>
+<td>
+<p>live debugging only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms
+         </b></p>
+</td>
+<td>
+<p>all </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>If <b>.createdir</b> is used with no parameters, the current starting directory and handle inheritance status are displayed.</p>
+<p>If <b>.createdir</b> has never been used, any created process will use its usual default directory as its starting directory. If you have already set a path with <b>.createdir</b> and want to return to the default status, use <b>.createdir ""</b> with nothing inside the quotation marks.</p>
+<p>The <b>.createdir</b> setting affects all processes created by <a href="_create__create_process_.htm"><b>.create (Create Process)</b></a>. It also affects processes created by WinDbg's <a href="file___open_executable.htm">File | Open Executable</a> menu command, unless the <b>Start directory</b> text box is used to override this setting.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.createdir (Set Created Process Directory)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

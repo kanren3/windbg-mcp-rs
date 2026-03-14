@@ -1,0 +1,94 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The NO_PAGES_AVAILABLE bug check has a value of 0x0000004D. This indicates that no free pages are available to continue operations."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0x4D: NO_PAGES_AVAILABLE</title>
+
+<meta name="MS-HAID" content="t04_bugs_00_b0cefb2e-2489-43ca-b95e-5a01070abfe7.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0x4d__no_pages_available"></a>Bug Check 0x4D: NO_PAGES_AVAILABLE</h1>
+</div>
+<p>The NO_PAGES_AVAILABLE bug check has a value of 0x0000004D. This indicates that no free pages are available to continue operations. </p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2> NO_PAGES_AVAILABLE Parameters</h2>
+<p>The following parameters are displayed on the blue screen.</p>
+<table>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>1</p>
+</td>
+<td>
+<p>The total number of dirty pages </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>2</p>
+</td>
+<td>
+<p>The number of dirty pages destined for the page file </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>3</p>
+</td>
+<td>
+<p><b>Windows XP and Windows 2000:</b>  The size of the nonpaged pool available at the time the bug check occurred </p>
+<p><b>Windows Server 2003 and later:</b>  Reserved </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>4</p>
+</td>
+<td>
+<p><b>Windows 2000:</b>  The number of transition pages that are currently stranded </p>
+<p><b>Windows XP and later:</b>  The most recent modified write error status.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Cause</h2>
+<p>To see general memory statistics, use the <a href="_vm.htm"><b>!vm 3</b></a> extension.</p>
+<p>This bug check can occur for any of the following reasons: </p>
+<ul>
+<li>A driver has blocked, deadlocking the modified or mapped page writers. Examples of this include mutex deadlocks or accesses to paged out memory in file system drivers or filter drivers. This indicates a driver bug. <p>If Parameter 1 or Parameter 2 is large, then this is a possibility. Use <a href="_vm.htm"><b>!vm 3</b></a>.</p>
+</li>
+<li>A storage driver is not processing requests. Examples of this are stranded queues and non-responding drives. This indicates a driver bug. <p>If Parameter 1 or Parameter 2 is large, then this is a possibility. Use  <a href="_vm.htm"><b>!vm 8</b></a>, followed by  <a href="_process.htm"><b>!process 0 7</b></a>.</p>
+</li>
+<li>A high-priority realtime thread has starved the balance set manager from trimming pages from the working set, or starved the modified page writer from writing them out. This indicates a bug in the component that created this thread. <p>This situation is difficult to analyze. Try using <a href="_ready.htm"><b>!ready</b></a>.  Try also  <a href="_process.htm"><b>!process 0 7</b></a> to list all threads and see if any have accumulated excessive kernel time as well as what their current priorities are.  Such processes may have blocked out the memory management threads from making pages available.</p>
+</li>
+<li><b>Windows XP and Windows 2000:</b>  Not enough pool is available for the storage stack to write out modified pages. This indicates a driver bug. <p>If Parameter 3 is small, then this is a possibility. Use <a href="_vm.htm"><b>!vm</b></a> and <a href="_poolused.htm"><b>!poolused 2</b></a>.</p>
+</li>
+<li><b>Windows 2000:</b>  All the processes have been trimmed to their minimums and all modified pages written, but still no memory is available. The freed memory must be stuck in transition pages with non-zero reference counts -- thus they cannot be put on the freelist. <p>A driver is neglecting to unlock the pages preventing the reference counts from going to zero which would free the pages. This may be due to transfers that never finish, causing the driver routines to run endlessly, or to other driver bugs. </p>
+<p>If Parameter 4 is large, then this is a possibility. But it is very hard to find the driver. Try the <a href="_process.htm"><b>!process 0 1</b></a> extension and look for any drivers that have a lot of locked pages. </p>
+</li>
+</ul>
+<p>If the problem cannot be found, then try booting with a kernel debugger attached from the beginning, and monitor the situation.</p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

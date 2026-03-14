@@ -1,0 +1,121 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="In WinDbg, you can view and edit registers by entering commands, by using the Registers window, or by using the Watch Window."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Viewing and Editing Registers in WinDbg</title>
+
+<meta name="MS-HAID" content="r36_gui_1_1cc07c74-c19c-41ff-954e-8d74472ff458.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.registers_window"></a>Viewing and Editing Registers in WinDbg</h1>
+</div>
+<p>
+     Registers are small volatile memory units that are located on the CPU. Many registers are dedicated to specific uses, and other registers are available for user-mode applications to use. The x86-based and x64-based processors have different collections of registers available. For more information about the registers on each processor, see <a href="processor_architecture.htm">Processor Architecture</a>.</p>
+<p>In WinDbg, you can view and edit registers by entering commands, by using the Registers window, or by using the Watch Window.</p>
+<h2><a id="Commands"></a><a id="commands"></a><a id="COMMANDS"></a>Commands</h2>
+<p>You can view and edit registers by entering the <a href="r__registers_.htm"><b>r (Registers)</b></a> command in the Debugger Command window.  You can customize the display by using several options or by using the <a href="rm__register_mask_.htm"><b>rm (Register Mask)</b></a> command.</p>
+<p>Registers are also automatically displayed every time that the target stops. If you are stepping through your code with the <a href="p__step_.htm"><b>p (Step)</b></a> or <a href="t__trace_.htm"><b>t (Trace)</b></a> commands, you see a register display at every step. To stop this display, use the <b>r</b> option when you use these commands.</p>
+<p>On an x86-based processor, the <b>r</b> option also controls several one-bit registers known as flags. To change these flags, you use a slightly different syntax than when changing regular registers. For more information about these flags and an explanation of this syntax, see <a href="x86_architecture.htm#x86_flags">x86 Flags</a>.</p>
+<h2><a id="The_Registers_Window"></a><a id="the_registers_window"></a><a id="THE_REGISTERS_WINDOW"></a>The Registers Window</h2>
+<h3><a id="Opening_the_Registers_Window"></a><a id="opening_the_registers_window"></a><a id="OPENING_THE_REGISTERS_WINDOW"></a>Opening the Registers Window</h3>
+<p>To open or switch to the Registers window, choose <b>Registers</b> from the <b>View</b> menu. (You can also press ALT+4 or click the <b>Registers</b> button (<img src="images/tbreg.png" alt="Screen shot of the Registers button"/>) on the toolbar.  ALT+SHIFT+4 closes the Registers window.)</p>
+<p>The following screen shot shows an example of a Registers window.</p><img src="images/window-registers.png" alt="Screen shot of the Registers window"/><p>The Registers window contains two columns. The <b>Reg</b> column lists all of the registers for the target processor. The <b>Value</b> column displays the current value of each register. This window also contains a <b>Customize</b> button on the toolbar that opens the <b>Customize Register List</b> dialog box.</p>
+<h3><a id="Using_the_Registers_Window"></a><a id="using_the_registers_window"></a><a id="USING_THE_REGISTERS_WINDOW"></a>Using the Registers Window</h3>
+<p>In the Registers window, you can do the following:</p>
+<ul>
+<li>The <b>Value</b> column displays the current value of each register. The value of the most recently changed register is displayed in red text.<ul>
+<li>To enter a new value, double-click a <b>Value</b> cell, and then type a new value or edit the old value. (The cut, copy, and paste commands are available to use for editing.)</li>
+<li>To save the new value, press ENTER. </li>
+<li>To discard the new value, press ESC. </li>
+<li>If you type an invalid value, the old value will reappear when you press ENTER.</li>
+</ul>
+</li>
+<li>
+<p>Register values are displayed in the current radix, and you must type new values in the same radix. To change the current radix, use the <a href="n__set_number_base_.htm"><b>n (Set Number Base)</b></a> command in the Debugger Command window.</p>
+</li>
+<li>
+<p>In user mode, the Registers window displays the registers that are associated with the current thread. For more information about the current thread, see <a href="controlling_processes_and_threads.htm">Controlling Processes and Threads</a>.</p>
+</li>
+<li>
+<p>In kernel mode, the Registers window displays the registers that are associated with the current <a href="changing_contexts.htm#register_context">register context</a>. You can set the register context to match a specific thread, context record, or trap frame. Only the most important registers for the specified register context are actually displayed; you cannot change their values.</p>
+</li>
+</ul>
+<p>The Registers window has a toolbar that contains a <b>Customize</b> button and has a shortcut menu with additional commands. To access the menu, right-click the title bar or click the icon near the upper-right corner of the window (<img src="images/tbreg.png" alt="Screen shot of the button icon for displaying the Registers window shortcut menu"/>). The toolbar and menu contain the following button and commands:</p>
+<ul>
+<li>
+<p>
+       (Toolbar and menu) 
+       <b>Customize</b> opens the <b>Customize Register List</b> dialog box, which is described in the following section within this topic.</p>
+</li>
+<li>
+<p>
+       (Menu only)
+       <b>Toolbar</b> turns the toolbar on and off.</p>
+</li>
+<li>
+<p>
+       (Menu only)
+       <b>Dock</b> or <b>Undock</b> causes the window to enter or leave the docked state.</p>
+</li>
+<li>
+<p>
+       (Menu only)
+       <b>Move to new dock</b> closes the Registers window and opens it in a new dock.</p>
+</li>
+<li>
+<p>
+       (Menu only)
+       <b>Set as tab-dock target for window type</b> is unavailable for the Registers window.  This option is only available for Source or Memory windows.</p>
+</li>
+<li>
+<p>
+       (Menu only)
+       <b>Always floating</b> causes the window to remain undocked even if it is dragged to a docking location.</p>
+</li>
+<li>
+<p>
+       (Menu only)
+       <b>Move with frame</b> causes the window to move when the WinDbg frame is moved, even if the window is undocked. For more information about docked, tabbed, and floating windows, see <a href="positioning_the_windows.htm">Positioning the Windows</a>.</p>
+</li>
+<li>
+<p>
+       (Menu only)
+       <b>Help</b> opens this topic in the Debugging Tools for Windows documentation.</p>
+</li>
+<li>
+<p>
+       (Menu only)
+       <b>Close</b> closes this window.</p>
+</li>
+</ul>
+<h3><a id="customize_register_list_dialog_box"></a><a id="CUSTOMIZE_REGISTER_LIST_DIALOG_BOX"></a>Customize Register List Dialog Box</h3>
+<p>To change the list of registers that are displayed, click the <b>Customize</b> button. The <b>Customize Register List</b> dialog box will appear.</p>
+<p>In this dialog box, you can edit the list of registers to change the order in which registers are displayed. (You cannot actually delete a register from the list; if you do, it will reappear at the end.) There must be a space between register names.</p>
+<p>If you select the <b>Display modified register values first</b> check box, the register whose values have been changed most recently appears at the top.  </p>
+<p>If you select the <b>Do not display subregisters</b> check box, subregisters are not displayed. For example, <b>eax</b> will be displayed, but not <b>ax</b>, <b>ah</b>, or <b>al</b>.</p>
+<p>Click <b>OK</b> to save your changes or <b>Cancel</b> to discard your changes.</p>
+<p>If you are debugging a multi-processor computer with more than one kind of processor, WinDbg stores the customization settings for each processor type separately. This separation enables you to customize the display of each processor's registers simultaneously.</p>
+<h2><a id="ddk_debugging_bios_code_dbg"></a><a id="DDK_DEBUGGING_BIOS_CODE_DBG"></a>The Watch Window</h2>
+<p>In WinDbg, you can use the Watch window to display registers. You cannot use the Watch window to alter the values of registers.</p>
+<p>To open the Watch window, choose <b>Watch</b> from the <b>View</b> menu. You can also press ALT+2 or click the <b>Watch</b> button on the toolbar: <img src="images/tbwatch.png" alt="Screen shot of the Watch button"/>. ALT+SHIFT+2 closes the Watch window.</p>
+<p>The following screen shot shows an example of a Watch window.</p><img src="images/window-watch.png" alt="Screen shot of the Watch window "/><h2><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h2>
+<p> For more information about the register context and other context settings, see <a href="changing_contexts.htm">Changing Contexts</a>. </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Viewing and Editing Registers in WinDbg%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

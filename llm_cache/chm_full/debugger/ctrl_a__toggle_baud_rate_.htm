@@ -1,0 +1,79 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The CTRL+A key toggles the baud rate used in the kernel debugging connection."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>CTRL+A (Toggle Baud Rate)</title>
+
+<meta name="MS-HAID" content="r23_keys_5e94e92d-e89a-40df-8030-190b68a181e5.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.ctrl_a__toggle_baud_rate_"></a>CTRL+A (Toggle Baud Rate)</h1>
+</div>
+<p>The CTRL+A key toggles the baud rate used in the kernel debugging connection.</p>
+<p>KD Syntax</p>
+<pre class="syntax">CTRL+A  ENTER 
+</pre>
+<p>WinDbg Syntax</p>
+<pre class="syntax">CTRL+ALT+A 
+</pre>
+<h2><a id="ddk_meta_ctrl_a_dbg"></a><a id="DDK_META_CTRL_A_DBG"></a></h2>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Debuggers</b></p>
+</td>
+<td>
+<p>KD and WinDbg only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>kernel mode only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>live debugging only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>all </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>This will cycle through all available baud rates for the kernel debugging connection.</p>
+<p>Supported baud rates are 19200, 38400, 57600, and 115200. Each time this control key is used, the next baud rate will be selected. If the baud rate is already at 115200, it will be reduced to 19200.</p>
+<p>In WinDbg, this can also be accomplished by selecting <a href="debug___kernel_connection___cycle_baud_rate.htm">Debug | Kernel Connection | Cycle Baud Rate</a>.</p>
+<p>You cannot actually use this control key to change the baud rate at which you are debugging. The baud rate of the host computer and the target computer must match, and the baud rate of the target computer cannot be changed without rebooting. Therefore, you only need to toggle through the baud rates if the two computers are attempting to communicate at different rates. In this case, you must change the host computer's baud rate to match that of the target computer.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20CTRL+A (Toggle Baud Rate)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

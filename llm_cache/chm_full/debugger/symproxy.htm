@@ -1,0 +1,139 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="SymProxy"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>SymProxy</title>
+
+<meta name="MS-HAID" content="r09_symbols_cec36ec3-cb6f-4e9b-bc90-341a12f18995.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.symproxy"></a>SymProxy</h1>
+</div>
+<h2><a id="ddk_using_other_symbol_stores_dbg"></a><a id="DDK_USING_OTHER_SYMBOL_STORES_DBG"></a></h2>
+<p>You can configure your HTTP-based symbol store to act as a proxy between client computers and other symbol stores.  The implementation is through an Internet Server Application Programming Interface (ISAPI) filter called SymProxy (Symproxy.dll).  The SymProxy server can be used as a gateway computer to the Internet or other sources within your company network.  The following diagram shows an example SymProxy configuration.</p><img src="images/symproxy_configuration.png" alt="Diagram of an example SymProxy configuration"/><p>SymProxy is useful in many situations. For example: </p>
+<ul>
+<li>
+<p>You are debugging many systems within a lab environment in which the computers are not attached to the company network, but the symbols are stored in the network and must be accessed using Integrated Windows Authentication (IWA).</p>
+</li>
+<li>
+<p>Your corporate computing environment includes a firewall that prevents access to the Internet from computers that are debugging and you must obtain symbols from an internet Web site.</p>
+</li>
+<li>
+<p>You want to present a single symbol path for all users in your company so that they  need not  know or care about where symbols are located, and  you can add new symbol stores without user intervention.</p>
+</li>
+<li>
+<p>You have a remote site that is physically far from the rest of your company resources, and network access is slow.  This system can be used to acquire symbols and cache them to the remote site.</p>
+</li>
+</ul>
+<p>To install SymProxy, you must manually copy the files to the correct location, configure the registry, choose network security credentials, and configure Internet Information Services (IIS).  To ensure that your HTTP symbol store is properly configured, see <a href="http_symbol_stores.htm">HTTP Symbol Stores</a>. </p>
+<p></p>
+<h3><a id="Multiple_Symbol_Server_Performance_Considerations"></a><a id="multiple_symbol_server_performance_considerations"></a><a id="MULTIPLE_SYMBOL_SERVER_PERFORMANCE_CONSIDERATIONS"></a>Multiple Symbol Server Performance Considerations</h3>
+<p>Each Virtual Directory can be associated with multiple (upstream) symbol stores. Each symbol store is queried independently. For performance, local SMB servers should be processed before internet HTTP servers. Unlike a debugger symbol path, multiple HTTP symbol stores can be specified in a SymProxy symbol path. A maximum of 10 entries are supported per Virtual Directory.</p>
+<h3><a id="SymProxy_Symbol_Path"></a><a id="symproxy_symbol_path"></a><a id="SYMPROXY_SYMBOL_PATH"></a>SymProxy Symbol Path</h3>
+<p>SymProxy splits the (registry defined) symbol path value up in to the individual entries and uses each entry to generate a SRV* based symbol path to retrieve the file. It uses the Virtual Directory’s folder as the downstream store in each of the queries – in effect, merging the upstream stores in to a single downstream symbol store.</p>
+<p>The (generated) symbol path used by SymProxy is equivalent to this:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>SRV*&lt;Virtual Directory Folder&gt;*&lt;SymbolPath Entry #N&gt;</pre>
+</td>
+</tr>
+</table></span></div>
+<p>In this example, a UNC path and two HTTP paths are associated with a Virtual Directory to merge the symbols from a corporate symbol server, Microsoft and a 3rd party (Contoso). The SymProxy SymbolPath would be set like this: </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>\\MainOffice\Symbols;https://msdl.microsoft.com/download/symbols;
+http://symbols.contoso.com/symbols
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The Main Office Symbol file share is queried first using a (generated) symbol path of:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>SRV*D:\SymStore\Symbols*\\MainOffice\Symbols</pre>
+</td>
+</tr>
+</table></span></div>
+<p>If the symbol file is not found, the Microsoft Symbol Store is queried using a (generated) symbol path of:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>SRV*D:\SymStore\Symbols*https://msdl.microsoft.com/download/symbols</pre>
+</td>
+</tr>
+</table></span></div>
+<p>If the file is still not found, the Contoso Symbol Store (http://symbols.contoso.com/symbols) is queried using a (generated) symbol path of:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>SRV*D:\SymStore\Symbols*http://symbols.contoso.com/symbols</pre>
+</td>
+</tr>
+</table></span></div>
+<p>This section includes:</p>
+<dl>
+<dd>
+<p><a href="installing_symproxy.htm">Installing SymProxy</a></p>
+</dd>
+<dd>
+<p><a href="configuring_the_registry.htm">Configuring the Registry</a></p>
+</dd>
+<dd>
+<p><a href="choosing_network_security_credentials.htm">Choosing Network Security Credentials</a></p>
+</dd>
+<dd>
+<p><a href="configuring_iis_for_symproxy.htm">Configuring IIS for SymProxy</a></p>
+</dd>
+<dd>
+<p><a href="setting_up_exclusion_lists.htm">Setting Up Exclusion Lists</a></p>
+</dd>
+<dd>
+<p><a href="dealing_with_unavailable_symbol_stores.htm">Dealing with Unavailable Symbol Stores</a></p>
+</dd>
+<dd>
+<p><a href="checking_and_updating_status.htm">Checking and Updating Status</a></p>
+</dd>
+<dd>
+<p><a href="handling_file_pointers.htm">Handling File Pointers</a></p>
+</dd>
+<dd>
+<p><a href="caching_acquired_symbol_files.htm">Caching Acquired Symbol Files</a></p>
+</dd>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20SymProxy%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,84 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .opendump command opens a dump file for debugging."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.opendump (Open Dump File)</title>
+
+<meta name="MS-HAID" content="r21_metacmds_L_7e3720ef-d5f9-4717-ac69-9aa308d9b576.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._opendump__open_dump_file_"></a>.opendump (Open Dump File)</h1>
+</div>
+<p>The <b>.opendump</b> command opens a dump file for debugging.</p>
+<pre class="syntax"><b>.opendump </b><i>DumpFile</i> 
+<b>.opendump /c "</b><i>DumpFileInArchive</i><b>" </b>[<i>CabFile</i>] 
+</pre>
+<h2><a id="ddk_meta_open_dump_file_dbg"></a><a id="DDK_META_OPEN_DUMP_FILE_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______DumpFile______"></a><a id="_______dumpfile______"></a><a id="_______DUMPFILE______"></a>       <i>DumpFile</i>      </dt>
+<dd>
+<p>Specifies the name of the dump file to open.  <i>DumpFile</i> should include the file name extension (typically .dmp or .mdmp) and can include an absolute or relative path.  Relative paths are relative to the directory that you started the debugger in.</p>
+</dd>
+<dt><a id="________c__DumpFileInArchive_"></a><a id="________c__dumpfileinarchive_"></a><a id="________C__DUMPFILEINARCHIVE_"></a>       <b>/c</b><b> "</b><i>DumpFileInArchive</i><b>"</b></dt>
+<dd>
+<p>Specifies the name of a dump file to debug.  This dump file must be contained in the archive file that <i>CabFile</i> specifies.  You must enclose the <i>DumpFileInArchive</i> file in quotation marks.</p>
+</dd>
+<dt><a id="_______CabFile______"></a><a id="_______cabfile______"></a><a id="_______CABFILE______"></a>       <i>CabFile</i>      </dt>
+<dd>
+<p>Specifies the name of an archive file to open.  <i>CabFile</i>should include the file name extension (typically .cab) and can include an absolute or relative path.  Relative paths are relative to the directory that you started the debugger in.  If you use the <b>/c</b> switch to specify a dump file in an archive but you omit <i>CabFile</i>, the debugger reuses the archive file that you most recently opened.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>Crash dump only (but you can use this command if other sessions are running)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Platforms
+         </b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>After you use the <b>.opendump</b> command, you must use the <a href="g__go_.htm"><b>g (Go)</b></a> command to finish loading the dump file.</p>
+<p>When you are opening an archive file (such as a CAB file), you should use the <b>/c</b> switch.  If you do not use this switch and you specify an archive for <i>DumpFile</i>, the debugger opens the first file that has an .mdmp or .dmp file name extension within this archive.</p>
+<p>You can use <b>.opendump</b> even if a debugging session is already in progress. This feature enables you to debug more than one crash dump at the same time. For more information about how to control a multiple-target session, see <a href="debugging_multiple_targets.htm">Debugging Multiple Targets</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.opendump (Open Dump File)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

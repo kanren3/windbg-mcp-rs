@@ -1,0 +1,53 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Register Syntax"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Register Syntax</title>
+
+<meta name="MS-HAID" content="r13_syntax_8242fa24-3682-487d-99d6-4aa7ef8d9bf8.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.register_syntax"></a>Register Syntax</h1>
+</div>
+<h2><a id="ddk_register_syntax_dbg"></a><a id="DDK_REGISTER_SYNTAX_DBG"></a></h2>
+<p>The debugger can control registers and floating-point registers.</p>
+<p>When you use a register in an expression, you should add an at sign ( <b>@</b> ) before the register. This at sign tells the debugger that the following text is the name of a register.</p>
+<p>If you are using MASM expression syntax, you can omit the at sign for certain very common registers. On x86-based systems, you can omit the at sign for the <b>eax</b>, <b>ebx</b>, <b>ecx</b>, <b>edx</b>, <b>esi</b>, <b>edi</b>, <b>ebp</b>, <b>eip</b>, and <b>efl</b> registers. However, if you specify a less common register without an at sign, the debugger first tries to interpret the text as a hexadecimal number. If the text contains non-hexadecimal characters, the debugger next interprets the text as a symbol. Finally, if the debugger does not find a symbol match, the debugger interprets the text as a register.</p>
+<p>If you are using C++ expression syntax, the at sign is <u>always</u> required.</p>
+<p>The <a href="r__registers_.htm"><b>r (Registers)</b></a> command is an exception to this rule. The debugger always interprets its first argument as a register. (An at sign is not required or permitted.) If there is a second argument for the <b>r</b> command, it is interpreted according to the default expression syntax. If the default expression syntax is C++, you must use the following command to copy the <b>ebx</b> register to the <b>eax</b> register.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; r eax = @ebx</pre>
+</td>
+</tr>
+</table></span></div>
+<p>For more information about the registers and instructions that are specific to each processor, see <a href="processor_architecture.htm">Processor Architecture</a>.</p>
+<h3><a id="flags_on_an_x86_based_processor"></a><a id="FLAGS_ON_AN_X86_BASED_PROCESSOR"></a>Flags on an x86-based Processor</h3>
+<p>x86-based processors also use several 1-bit registers known as <i>flags</i>. For more information about these flags and the syntax that you can use to view or change them, see <a href="x86_architecture.htm#x86_flags">x86 Flags</a>.</p>
+<h3><a id="registers_and_threads"></a><a id="REGISTERS_AND_THREADS"></a>Registers and Threads</h3>
+<p>Each thread has its own register values. These values are stored in the CPU registers when the thread is executing and in memory when another thread is executing.</p>
+<p>In user mode, any reference to a register is interpreted as the register that is associated with the current thread. For more information about the current thread, see <a href="controlling_processes_and_threads.htm">Controlling Processes and Threads</a>.</p>
+<p>In kernel mode, any reference to a register is interpreted as the register that is associated with the current register context. You can set the register context to match a specific thread, context record, or trap frame. You can display only the most important registers for the specified register context, and you cannot change their values.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Register Syntax%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

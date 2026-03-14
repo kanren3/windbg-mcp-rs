@@ -1,0 +1,68 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Using the Command Browser Window in WinDbg"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Using the Command Browser Window in WinDbg</title>
+
+<meta name="MS-HAID" content="r36_gui_1_b3a3067c-62b2-4d66-99c7-e48cd026d6ba.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.command_browser_window"></a>Using the Command Browser Window in WinDbg</h1>
+</div>
+<p>A Command Browser window displays and stores the text results of a debugger command. This window creates a command reference that enables you to view the results of a specific command without re-entering the command. A Command Browser window also provides navigation through the stored commands, so you can more quickly access commands than with the <a href="debugger_command_window.htm">Debugger Command window</a>.</p>
+<h3><a id="opening_the_command_browser_window"></a><a id="OPENING_THE_COMMAND_BROWSER_WINDOW"></a>Opening the Command Browser Window</h3>
+<p>You can open multiple Command Browser windows at one time. To open a Command Browser window, choose <b>Command Browser</b> from the <b>View</b> menu. (You can also press CTRL+N or click the<b> Command Browser</b>   button (<img src="images/window-command-browser-icon.PNG" alt="Screen shot of the Command Browser button"/>) on the toolbar.  ALT+SHIFT+N closes the Command Browser window.)</p>
+<p>You can also open a Command Browser window by entering <a href="_browse__display_command_in_browser_.htm"><b>.browse (Display Command in Browser)</b></a> in the regular Debugger Command window.</p>
+<p>The following screen shot shows an example of a Command Browser window.</p><img src="images/window-commandbrowser.png" alt="Screen shot of the Command Browser window"/><h3><a id="using_the_command_browser_window"></a><a id="USING_THE_COMMAND_BROWSER_WINDOW"></a>Using the Command Browser Window</h3>
+<p>In the Command Browser window, you can do the following:</p>
+<ul>
+<li>
+<p>To enter a command, type it in the <b>Command</b> box.</p>
+</li>
+<li>
+<p>To view the results of a previously entered command, use the <b>Start</b>, <b>Prev</b>, and <b>Next</b> buttons to scroll through the command list, or select one of the preceding 20 commands from the <b>Command</b> menu. To find a command that is not one of the preceding 20 commands, use the <b>Next</b> button.</p>
+</li>
+</ul>
+<p>The Command Browser window has a shortcut menu with additional commands. To access the menu, right-click the title bar or click the icon near the upper-right corner of the window (<img src="images/window-command-browser-icon.PNG" alt="Screen shot of the button that displays the Command Browser window toolbar shortcut menu"/>). The following list describes some of the menu commands:</p>
+<ul>
+<li>
+<p><b>Start</b>, <b>Prev</b>, and <b>Next</b> move the cursor to the start of the command history or to the previous or next command, respectively. </p>
+</li>
+<li>
+<p><b>Add to Recent Commands</b> puts the current command into the <b>Recent Commands</b> menu of the <b>View</b> menu in the WinDbg window. Recent commands are saved in the workspace.</p>
+</li>
+<li>
+<p><b>Toolbar</b> turns the toolbar on and off.</p>
+</li>
+<li>
+<p><b>Move to new dock</b> closes the Command Browser window and opens it in a new dock.</p>
+</li>
+<li>
+<p><b>Always floating</b> causes the window to remain undocked even if it is dragged to a docking location.</p>
+</li>
+<li>
+<p><b>Move with frame</b> causes the window to move when the WinDbg frame is moved, even if the window is undocked. For more information about docked, tabbed, and floating windows, see <a href="positioning_the_windows.htm">Positioning the Windows</a>.</p>
+</li>
+</ul>
+<p>Commands that you enter in a Command Browser window are executed by the debugger engine, not by the WinDbg user interface.  This means that you cannot enter user interface commands like <a href="_cls__clear_screen_.htm"><b>.cls </b></a> in a Command Browser window. If the user interface is a remote client, the server (not the client) executes the command.</p>
+<p>A command that you enter in a Command Browser window executes synchronously, so it does not display output until it has completed. </p>
+<p>Command Browser windows are saved in the WinDbg workspace, but the command histories are not saved. Only the current command for each Command Browser window is saved in the workspace.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Using the Command Browser Window in WinDbg%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

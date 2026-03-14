@@ -1,0 +1,90 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Using a Source Server"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Using a Source Server</title>
+
+<meta name="MS-HAID" content="r06_use_gui_9f858c04-aa3a-4c3b-a747-45d9d46c3a62.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.using_a_source_server"></a>Using a Source Server</h1>
+</div>
+<p>A source server enables the debugger to automatically retrieve the source files that match the current target. To use a source server, you must be debugging binaries that have been source indexed at build time and whose source file locations are embedded in the PDB files. </p>
+<p>Debugging Tools for Windows includes the source server <a href="srcsrv.htm">SrcSrv</a> (Srcsrv.exe).</p>
+<h3><a id="using_srcsrv_with_a_debugger"></a><a id="USING_SRCSRV_WITH_A_DEBUGGER"></a>Using SrcSrv with a Debugger</h3>
+<p><a href="srcsrv.htm">SrcSrv</a> can be used with WinDbg, KD, NTSD, or CDB.</p>
+<p>To use <a href="srcsrv.htm">SrcSrv</a> with the debugger, enter the following command to set the source path to srv*. </p>
+<div class="code"><span codelanguage="cmd"><table>
+<tr>
+<th>cmd</th>
+</tr>
+<tr>
+<td>
+<pre>.srcfix</pre>
+</td>
+</tr>
+</table></span></div>
+<p>You can get the same result by entering the following command.</p>
+<div class="code"><span codelanguage="cmd"><table>
+<tr>
+<th>cmd</th>
+</tr>
+<tr>
+<td>
+<pre>.srcpath srv*</pre>
+</td>
+</tr>
+</table></span></div>
+<p> Setting the source path to srv* tells the debugger that it should retrieve source files from locations specified in the target modules' symbol files.</p>
+<p>If you want to use <a href="srcsrv.htm">SrcSrv</a> and also include a list of directories in your source path, use semicolons to separate <code>srv*</code> from any directories that are in the path.</p>
+<p>For example:</p>
+<div class="code"><span codelanguage="cmd"><table>
+<tr>
+<th>cmd</th>
+</tr>
+<tr>
+<td>
+<pre>.srcpath srv*;c:\someSourceCode </pre>
+</td>
+</tr>
+</table></span></div>
+<p>If the source path is set as shown in the preceding example, the debugger first uses <a href="srcsrv.htm">SrcSrv</a> to retrieve source files from locations specified in the target modules' symbol files. If SrcSrv is unable to retrieve a source file, the debugger attempts to retrieve it from c:\someSourceCode. Regardless of whether srv* is the first element in the path or appears later, the debugger always uses SymSrv before it searches any other directories listed in the path.</p>
+<p>You can also use <a href="_srcfix___lsrcfix__use_source_server_.htm"><b>.srcfix+</b></a> to append <code>srv*</code> to your existing source path, as shown in the following example.</p>
+<div class="code"><span codelanguage="cmd"><table>
+<tr>
+<th>cmd</th>
+</tr>
+<tr>
+<td>
+<pre>3: kd&gt; .srcpath c:\mySource
+Source search path is: c:\mySource
+3: kd&gt; .srcfix+
+Source search path is: c:\mySource;SRV*
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p>If a source file is retrieved by the source server, it will remain on your hard drive after the debugging session is over. Source files are stored locally in the src subdirectory of the home directory (unlike the symbol server, the source server does not specify a local cache in the <code>srv*</code> syntax itself). The home directory defaults to the debugger installation directory; it can be changed by using the <a href="_homedir.htm"><b>!homedir</b></a> extension or by setting the DBGHELP_HOMEDIR environment variable. If this subdirectory does not already exist, it will be created.</p>
+<p>If you use the <a href="_open__open_source_file_.htm"><b>.open (Open Source File)</b></a> command to open a new source file through <a href="srcsrv.htm">SrcSrv</a>, you must include the -m Address parameter.</p>
+<p>For information on how to index your sources, or if you plan to create your own source control provider module, see <a href="srcsrv.htm">SrcSrv</a>.</p>
+<h3><a id="using_agestore_to_reduce_the_cache_size"></a><a id="USING_AGESTORE_TO_REDUCE_THE_CACHE_SIZE"></a>Using AgeStore to Reduce the Cache Size</h3>
+<p>Any source files downloaded by <a href="srcsrv.htm">SrcSrv</a> will remain on your hard drive after the debugging session is over.  To control the size of the source cache, the AgeStore tool can be used to delete cached files that are older than a specified date, or to reduce the contents of the cache below a specified size.  For details, see <a href="agestore.htm">AgeStore</a>. </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Using a Source Server%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

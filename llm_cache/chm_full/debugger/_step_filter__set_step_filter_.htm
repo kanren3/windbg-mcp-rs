@@ -1,0 +1,107 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .step_filter command creates a list of functions that are skipped (stepped over) when tracing."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.step_filter (Set Step Filter)</title>
+
+<meta name="MS-HAID" content="r22_metacmds_S_92a2c292-9ad3-45b9-8f46-2b229c1e98d9.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._step_filter__set_step_filter_"></a>.step_filter (Set Step Filter)</h1>
+</div>
+<p>The <b>.step_filter</b> command creates a list of functions that are skipped (stepped over) when tracing. This allows you to trace through code and skip only certain functions. It can also be used in source mode to control stepping when there are multiple function calls on one line.</p>
+<pre class="syntax"><b>.step_filter "</b><i>FilterList</i><b>"</b> 
+<b>.step_filter /c</b> 
+<b>.step_filter</b> 
+</pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_FilterList_"></a><a id="_filterlist_"></a><a id="_FILTERLIST_"></a><b>"</b><i>FilterList</i><b>"</b></dt>
+<dd>
+<p>Specifies the symbols associated with functions to be stepped over. <i>FilterList</i> can contain any number of text patterns separated by semicolons. Each of these patterns may contain a variety of wildcards and specifiers; see <a href="string_wildcard_syntax.htm">String Wildcard Syntax</a> for details. A function whose symbol matches at least one of these patterns will be stepped over during tracing. Each time <b>"</b><i>FilterList</i><b>"</b> is used, any previous filter list is discarded and completely replaced with the new list. </p>
+</dd>
+<dt><a id="________c______"></a><a id="________C______"></a>       <b>/c      </b></dt>
+<dd>
+<p>Clears the filter list. </p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes
+         </b></p>
+</td>
+<td>
+<p>user mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets</b></p>
+</td>
+<td>
+<p>live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>all </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>Without any parameters, <b>.step_filter</b> displays the current filter list.</p>
+<p>Typically, a trace command (for example, <a href="t__trace_.htm"><b>t</b></a> or the WinDbg <a href="debug___step_into.htm">Debug | Step Into</a> button <img src="images/tbinto.png" alt="Screen shot of the Step Into button"/>) traces into a function call. However, if the symbol associated with the function being called matches a pattern specified by <i>FilterList</i>, the function will be stepped over -- as if a step command (for example, <a href="p__step_.htm"><b>p</b></a>) had been used.</p>
+<p>If the instruction pointer is located within code that is listed in the filter list, any trace or step commands will step out of this function, like the <a href="gu__go_up_.htm"><b>gu</b></a> command or the WinDbg <b>Step Out</b> button. Of course, this filter would prevent such code from having been traced into in the first place, so this will only happen if you have changed the filter or hit a breakpoint.</p>
+<p>For example, the following command will cause trace commands to skip over all CRT calls:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>.step_filter "msvcrt!*" </pre>
+</td>
+</tr>
+</table></span></div>
+<p>The <b>.step_filter</b> command is most useful when you are debugging in source mode, because there can be multiple function calls on a single source line. The <a href="p__step_.htm"><b>p</b></a> and <a href="t__trace_.htm"><b>t</b></a> commands cannot be used to separate these function calls.</p>
+<p>For example, in the following line, the <a href="t__trace_.htm"><b>t</b></a> command will step into both GetTickCount and printf, while the <a href="p__step_.htm"><b>p</b></a> command will step over both function calls:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>printf( "%x\n", GetTickCount() );</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The <b>.step_filter</b> command allows you to filter out one of these calls while still tracing into the other.</p>
+<p>Because the functions are identified by symbol, a single filter can include an entire module. This lets you filter out framework functions -- for example, Microsoft Foundation Classes (MFC) or Active Template Library (ATL) calls.</p>
+<p>When debugging in assembly mode, each call is on a different line, so you can choose whether to step or trace line-by-line. So <b>.step_filter</b> is not very useful in assembly mode.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.step_filter (Set Step Filter)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

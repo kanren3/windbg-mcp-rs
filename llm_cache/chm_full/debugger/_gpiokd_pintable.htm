@@ -1,0 +1,85 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !gpiokd.pintable command displays information about an array of GPIO pins."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!gpiokd.pintable</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._gpiokd_pintable"></a>!gpiokd.pintable</h1>
+</div>
+<p>The  <b>!gpiokd.pintable</b> command displays information about an array of GPIO pins.</p>
+<pre class="syntax"><b>!gpiokd.pintable </b><i>PinBase</i><b> </b><i>PinCount</i><b> </b>[<i>Flags</i>]</pre>
+<h2><a id="ddk__devobj_dbg"></a><a id="DDK__DEVOBJ_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______PinBase______"></a><a id="_______pinbase______"></a><a id="_______PINBASE______"></a>       <i>PinBase</i>      </dt>
+<dd>
+<p>Address of an array of <a href="gpio_extensions.htm#data_structures_used_by_the_gpio_commands">_GPIO_PIN_INFORMATION_ENTRY</a> structures.</p>
+</dd>
+<dt><a id="_______PinCount______"></a><a id="_______pincount______"></a><a id="_______PINCOUNT______"></a>       <i>PinCount</i>      </dt>
+<dd>
+<p>The number of pins to display.</p>
+</dd>
+<dt><a id="_______Flags______"></a><a id="_______flags______"></a><a id="_______FLAGS______"></a>       <i>Flags</i>      </dt>
+<dd>
+<p>Flags that specify which information is displayed. This parameter is a bitwise OR of one or more of the following flags.</p>
+<p></p>
+<table>
+<tr>
+<th>Flag</th>
+<th>Description</th>
+</tr>
+<tr>
+<td width="40%">
+<p><a id="0x1"></a><a id="0X1"></a>0x1</p>
+</td>
+<td width="60%">
+<p>Not used by this command.</p>
+</td>
+</tr>
+<tr>
+<td width="40%">
+<p><a id="0x2"></a><a id="0X2"></a>0x2</p>
+</td>
+<td width="60%">
+<p>Not used by this command.</p>
+</td>
+</tr>
+<tr>
+<td width="40%">
+<p><a id="0x4"></a><a id="0X4"></a>0x4</p>
+</td>
+<td width="60%">
+<p>The display includes unconfigured pins.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+</dd>
+</dl>
+<h2><a id="DLL"></a><a id="dll"></a>DLL</h2>
+<p>Gpiokd.dll</p>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="gpio_extensions.htm">GPIO Extensions</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!gpiokd.pintable%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

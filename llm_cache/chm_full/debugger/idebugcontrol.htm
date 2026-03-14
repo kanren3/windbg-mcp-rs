@@ -1,0 +1,680 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="IDebugControl interface"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IDebugControl interface</title>
+
+<meta name="MS-HAID" content="IDebugControl_ce0030b2-73a7-49a8-9d21-942922a69184.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.idebugcontrol"></a>IDebugControl interface</h1>
+</div>
+<h2>Members</h2>
+<p>The <b xmlns:loc="http://microsoft.com/wdcml/l10n">IDebugControl</b> interface inherits from the <b>IUnknown</b> interface. <b>IDebugControl</b> also has these types of members:</p>
+<ul>
+<li><a href="#methods">Methods</a></li>
+</ul>
+<h3><a id="methods"></a>Methods</h3>
+<p>The <b>IDebugControl</b> interface has these methods.</p>
+<table id="memberListMethods" class="members">
+<tr>
+<th align="left" width="37%">Method</th>
+<th align="left" width="63%">Description</th>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="addbreakpoint.htm"><b>AddBreakpoint</b></a></td>
+<td align="left" width="63%">
+<p>Creates a new breakpoint for the current target.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="addengineoptions.htm"><b>AddEngineOptions</b></a></td>
+<td align="left" width="63%">
+<p> Turns on some of the debugger engine's options.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="addextension.htm"><b>AddExtension</b></a></td>
+<td align="left" width="63%">
+<p>Loads an extension library into the debugger engine.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="assemble.htm"><b>Assemble</b></a></td>
+<td align="left" width="63%">
+<p>Assembles a single processor instruction. The assembled instruction is placed in the target's memory.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="callextension.htm"><b>CallExtension</b></a></td>
+<td align="left" width="63%">
+<p>Calls a debugger extension.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="closelogfile.htm"><b>CloseLogFile</b></a></td>
+<td align="left" width="63%">
+<p>Closes the currently-open log file.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="coercevalue.htm"><b>CoerceValue</b></a></td>
+<td align="left" width="63%">
+<p>Converts a value of one type into a value of another type.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="coercevalues.htm"><b>CoerceValues</b></a></td>
+<td align="left" width="63%">
+<p>Converts an array of values into an array of values of different types.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="controlledoutput.htm"><b>ControlledOutput</b></a></td>
+<td align="left" width="63%">
+<p>Formats a string and sends the result to output callbacks that were registered with some of the engine's clients.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="controlledoutputvalist.htm"><b>ControlledOutputVaList</b></a></td>
+<td align="left" width="63%">
+<p>Formats a string and sends the result to output callbacks that were registered with some of the engine's clients.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="disassemble.htm"><b>Disassemble</b></a></td>
+<td align="left" width="63%">
+<p>Disassembles a processor instruction in the target's memory.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="evaluate.htm"><b>Evaluate</b></a></td>
+<td align="left" width="63%">
+<p>Evaluates an expression, returning the result.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="execute.htm"><b>Execute</b></a></td>
+<td align="left" width="63%">
+<p>Executes the specified debugger commands.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="executecommandfile.htm"><b>ExecuteCommandFile</b></a></td>
+<td align="left" width="63%">
+<p>Opens the specified file and executes the debugger commands that are contained within.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getactualprocessortype.htm"><b>GetActualProcessorType</b></a></td>
+<td align="left" width="63%">
+<p>Returns the processor type of the physical processor of the computer that is running the target.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getbreakpointbyid.htm"><b>GetBreakpointById</b></a></td>
+<td align="left" width="63%">
+<p>Returns the breakpoint with the specified breakpoint ID.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getbreakpointbyindex.htm"><b>GetBreakpointByIndex</b></a></td>
+<td align="left" width="63%">
+<p>Returns the breakpoint located at the specified index.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getbreakpointparameters.htm"><b>GetBreakpointParameters</b></a></td>
+<td align="left" width="63%">
+<p>Returns the parameters of one or more breakpoints.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getcodelevel.htm"><b>GetCodeLevel</b></a></td>
+<td align="left" width="63%">
+<p>Returns the current code level and is mainly used when stepping through code.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getdebuggeetype.htm"><b>GetDebuggeeType</b></a></td>
+<td align="left" width="63%">
+<p>Describes the nature of the current target.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getdisassembleeffectiveoffset.htm"><b>GetDisassembleEffectiveOffset</b></a></td>
+<td align="left" width="63%">
+<p>Returns the address of the last instruction disassembled using Disassemble.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="geteffectiveprocessortype.htm"><b>GetEffectiveProcessorType</b></a></td>
+<td align="left" width="63%">
+<p>Returns the effective processor type of the processor of the computer that is running the target.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getengineoptions.htm"><b>GetEngineOptions</b></a></td>
+<td align="left" width="63%">
+<p>Returns the engine's options.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="geteventfiltercommand.htm"><b>GetEventFilterCommand</b></a></td>
+<td align="left" width="63%">
+<p>Returns the debugger command that the engine will execute when a specified event occurs.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="geteventfiltertext.htm"><b>GetEventFilterText</b></a></td>
+<td align="left" width="63%">
+<p>Returns a short description of an event for a specific filter.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getexceptionfilterparameters.htm"><b>GetExceptionFilterParameters</b></a></td>
+<td align="left" width="63%">
+<p>Returns the parameters for exception filters specified by exception codes or by index.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getexceptionfiltersecondcommand.htm"><b>GetExceptionFilterSecondCommand</b></a></td>
+<td align="left" width="63%">
+<p>Returns the command that will be executed by the debugger engine upon the second chance of a specified exception.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getexecutingprocessortype.htm"><b>GetExecutingProcessorType</b></a></td>
+<td align="left" width="63%">
+<p>Returns the executing processor type for the processor for which the last event occurred.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getexecutionstatus.htm"><b>GetExecutionStatus</b></a></td>
+<td align="left" width="63%">
+<p>Returns information about the execution status of the debugger engine.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getextensionbypath.htm"><b>GetExtensionByPath</b></a></td>
+<td align="left" width="63%">
+<p>Returns the handle for an already loaded extension library.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getextensionfunction.htm"><b>GetExtensionFunction</b></a></td>
+<td align="left" width="63%">
+<p>Returns a pointer to an extension function from an extension library.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getinterrupt.htm"><b>GetInterrupt</b></a></td>
+<td align="left" width="63%">
+<p>Checks whether a user interrupt was issued.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getinterrupttimeout.htm"><b>GetInterruptTimeout</b></a></td>
+<td align="left" width="63%">
+<p>Returns the number of seconds that the engine will wait when requesting a break into the debugger.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getlasteventinformation.htm"><b>GetLastEventInformation</b></a></td>
+<td align="left" width="63%">
+<p>Returns information about the last event that occurred in a target.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getlogfile.htm"><b>GetLogFile</b></a></td>
+<td align="left" width="63%">
+<p>Returns the name of the currently open log file.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getlogmask.htm"><b>GetLogMask</b></a></td>
+<td align="left" width="63%">
+<p>Returns the output mask for the currently open log file.
+
+HRESULT
+
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getnearinstruction.htm"><b>GetNearInstruction</b></a></td>
+<td align="left" width="63%">
+<p>Returns the location of a processor instruction relative to a given location.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getnotifyeventhandle.htm"><b>GetNotifyEventHandle</b></a></td>
+<td align="left" width="63%">
+<p>Receives the handle of the event that will be signaled after the next exception in a target.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getnumberbreakpoints.htm"><b>GetNumberBreakpoints</b></a></td>
+<td align="left" width="63%">
+<p>Returns the number of breakpoints for the current process.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getnumbereventfilters.htm"><b>GetNumberEventFilters</b></a></td>
+<td align="left" width="63%">
+<p>Returns the number of event filters currently used by the engine.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getnumberpossibleexecutingprocessortypes.htm"><b>GetNumberPossibleExecutingProcessorTypes</b></a></td>
+<td align="left" width="63%">
+<p>Returns the number of processor types that are supported by the computer running the current target.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getnumberprocessors.htm"><b>GetNumberProcessors</b></a></td>
+<td align="left" width="63%">
+<p>Returns the number of processors on the computer running the current target.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getnumbersupportedprocessortypes.htm"><b>GetNumberSupportedProcessorTypes</b></a></td>
+<td align="left" width="63%">
+<p>Returns the number of processor types supported by the engine.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getpagesize.htm"><b>GetPageSize</b></a></td>
+<td align="left" width="63%">
+<p>Returns the page size for the effective processor mode.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getpossibleexecutingprocessortypes.htm"><b>GetPossibleExecutingProcessorTypes</b></a></td>
+<td align="left" width="63%">
+<p>Returns the processor types that are supported by the computer running the current target.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getprocessortypenames.htm"><b>GetProcessorTypeNames</b></a></td>
+<td align="left" width="63%">
+<p>Returns the full name and abbreviated name of the specified processor type.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getprompttext.htm"><b>GetPromptText</b></a></td>
+<td align="left" width="63%">
+<p>Returns the standard prompt text that will be prepended to the formatted output specified in the <b>OutputPrompt</b> and <b>OutputPromptVaList</b> methods.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getradix.htm"><b>GetRadix</b></a></td>
+<td align="left" width="63%">
+<p>Returns the default radix (number base) used by the debugger engine when it evaluates and displays MASM expressions, and when it displays symbol information.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getreturnoffset.htm"><b>GetReturnOffset</b></a></td>
+<td align="left" width="63%">
+<p> Returns the return address for the current function.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getspecificfilterargument.htm"><b>GetSpecificFilterArgument</b></a></td>
+<td align="left" width="63%">
+<p>Returns the value of filter argument for thespecific filters that have an argument.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getspecificfilterparameters.htm"><b>GetSpecificFilterParameters</b></a></td>
+<td align="left" width="63%">
+<p>Returns the parameters for specific event filters.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getstacktrace.htm"><b>GetStackTrace</b></a></td>
+<td align="left" width="63%">
+<p>Returns the frames at the top of the specified call stack.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getsupportedprocessortypes.htm"><b>GetSupportedProcessorTypes</b></a></td>
+<td align="left" width="63%">
+<p>Returns the processor types supported by the debugger engine. 
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getsystemerrorcontrol.htm"><b>GetSystemErrorControl</b></a></td>
+<td align="left" width="63%">
+<p>Returns the control values for handling system errors.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getsystemversion.htm"><b>GetSystemVersion</b></a></td>
+<td align="left" width="63%">
+<p>Returns information that identifies the operating system on the computer that is running the current target.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="gettextmacro.htm"><b>GetTextMacro</b></a></td>
+<td align="left" width="63%">
+<p>Returns the value of a fixed-name alias.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><b>GetWindbgExtensionApis32</b></td>
+<td align="left" width="63%">
+<p></p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getwindbgextensionapis64.htm"><b>GetWindbgExtensionApis64</b></a></td>
+<td align="left" width="63%">
+<p>returns a structure that facilitates using the WdbgExts API.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="input.htm"><b>Input</b></a></td>
+<td align="left" width="63%">
+<p>Requests an input string from the debugger engine.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="ispointer64bit.htm"><b>IsPointer64Bit</b></a></td>
+<td align="left" width="63%">
+<p>Determines if the effective processor uses 64-bit pointers.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="openlogfile.htm"><b>OpenLogFile</b></a></td>
+<td align="left" width="63%">
+<p>Opens a log file that will receive output from the client objects.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="output.htm"><b>Output</b></a></td>
+<td align="left" width="63%">
+<p>Formats a string and sends the result to output callbacks that have been registered with the engine's clients.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="outputcurrentstate.htm"><b>OutputCurrentState</b></a></td>
+<td align="left" width="63%">
+<p>Prints the current state of the current target to the debugger console.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="outputdisassembly.htm"><b>OutputDisassembly</b></a></td>
+<td align="left" width="63%">
+<p>Disassembles a processor instruction and sends the disassembly to the output callbacks.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="outputdisassemblylines.htm"><b>OutputDisassemblyLines</b></a></td>
+<td align="left" width="63%">
+<p>Disassembles several processor instructions and sends the resulting assembly instructions to the output callbacks.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="outputprompt.htm"><b>OutputPrompt</b></a></td>
+<td align="left" width="63%">
+<p> Formats and sends a user prompt to the output callback objects.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="outputpromptvalist.htm"><b>OutputPromptVaList</b></a></td>
+<td align="left" width="63%">
+<p>Formats and sends a user prompt to the output callback objects.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="outputstacktrace.htm"><b>OutputStackTrace</b></a></td>
+<td align="left" width="63%">
+<p>Outputs either the supplied stack frame or the current stack frames.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="outputvalist.htm"><b>OutputVaList</b></a></td>
+<td align="left" width="63%">
+<p> Formats a string and sends the result to the output callbacks that are registered with the engine's clients.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="outputversioninformation.htm"><b>OutputVersionInformation</b></a></td>
+<td align="left" width="63%">
+<p>Prints version information about the debugger engine to the debugger console.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="readbugcheckdata.htm"><b>ReadBugCheckData</b></a></td>
+<td align="left" width="63%">
+<p>Reads the kernel bug check code and related parameters.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="removebreakpoint.htm"><b>RemoveBreakpoint</b></a></td>
+<td align="left" width="63%">
+<p>Removes a breakpoint.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="removeengineoptions.htm"><b>RemoveEngineOptions</b></a></td>
+<td align="left" width="63%">
+<p>Turns off some of the engine's options.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="removeextension.htm"><b>RemoveExtension</b></a></td>
+<td align="left" width="63%">
+<p>Unloads an extension library.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="returninput.htm"><b>ReturnInput</b></a></td>
+<td align="left" width="63%">
+<p>This method is used by <a href="idebuginputcallbacks.htm"><b>IDebugInputCallbacks</b></a> objects to send an input string to the engine following a request for input.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="setcodelevel.htm"><b>SetCodeLevel</b></a></td>
+<td align="left" width="63%">
+<p>Sets the current code level and is mainly used when stepping through code.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="seteffectiveprocessortype.htm"><b>SetEffectiveProcessorType</b></a></td>
+<td align="left" width="63%">
+<p>Sets the effective processor type of the processor of the computer that is running the target.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="setengineoptions.htm"><b>SetEngineOptions</b></a></td>
+<td align="left" width="63%">
+<p>Changes the engine's options.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="seteventfiltercommand.htm"><b>SetEventFilterCommand</b></a></td>
+<td align="left" width="63%">
+<p>Sets a debugger command for the engine to execute when a specified event occurs.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="setexceptionfilterparameters.htm"><b>SetExceptionFilterParameters</b></a></td>
+<td align="left" width="63%">
+<p>Changes the break status and handling status for some exception filters.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="setexceptionfiltersecondcommand.htm"><b>SetExceptionFilterSecondCommand</b></a></td>
+<td align="left" width="63%">
+<p>Sets the command that will be executed by the debugger engine on the second chance of a specified exception.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="setexecutionstatus.htm"><b>SetExecutionStatus</b></a></td>
+<td align="left" width="63%">
+<p>Requests that the debugger engine enter an executable state. Actual execution will not occur until the next time <b>WaitForEvent</b> is called.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="setinterrupt.htm"><b>SetInterrupt</b></a></td>
+<td align="left" width="63%">
+<p>Registers a user interrupt or breaks into the debugger.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="setinterrupttimeout.htm"><b>SetInterruptTimeout</b></a></td>
+<td align="left" width="63%">
+<p>Sets the number of seconds that the debugger engine should wait when requesting a break into the debugger.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="setlogmask.htm"><b>SetLogMask</b></a></td>
+<td align="left" width="63%">
+<p>Sets the output mask for the currently open log file.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="setnotifyeventhandle.htm"><b>SetNotifyEventHandle</b></a></td>
+<td align="left" width="63%">
+<p>Sets the event that will be signaled after the next exception in a target.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="setradix.htm"><b>SetRadix</b></a></td>
+<td align="left" width="63%">
+<p>Sets the default radix (number base) used by the debugger engine when it evaluates and displays MASM expressions, and when it displays symbol information.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="setspecificfilterargument.htm"><b>SetSpecificFilterArgument</b></a></td>
+<td align="left" width="63%">
+<p>Sets the value of filter argument for the specific filters that can have an argument.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="setspecificfilterparameters.htm"><b>SetSpecificFilterParameters</b></a></td>
+<td align="left" width="63%">
+<p>Changes the break status and handling status for some specific event filters.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="setsystemerrorcontrol.htm"><b>SetSystemErrorControl</b></a></td>
+<td align="left" width="63%">
+<p>Sets the control values for handling system errors.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="settextmacro.htm"><b>SetTextMacro</b></a></td>
+<td align="left" width="63%">
+<p>Sets the value of a fixed-name alias.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="waitforevent.htm"><b>WaitForEvent</b></a></td>
+<td align="left" width="63%">
+<p>Waits for an event that breaks into the debugger engine application.
+</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Dbgeng.h (include Dbgeng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="idebugcontrol2.htm"><b>IDebugControl2</b></a></dt>
+<dt><a href="idebugcontrol3.htm"><b>IDebugControl3</b></a></dt>
+<dt><a href="idebugcontrol4.htm"><b>IDebugControl4</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IDebugControl interface%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

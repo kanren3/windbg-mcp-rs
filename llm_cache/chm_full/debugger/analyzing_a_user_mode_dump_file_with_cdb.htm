@@ -1,0 +1,51 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Analyzing a User-Mode Dump File with CDB"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Analyzing a User-Mode Dump File with CDB</title>
+
+<meta name="MS-HAID" content="r10_dump_files_4f6d2afd-9c77-4b24-8750-75b2b73b92a6.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.analyzing_a_user_mode_dump_file_with_cdb"></a>Analyzing a User-Mode Dump File with CDB</h1>
+</div>
+<h2><a id="ddk_analyzing_a_user_mode_dump_file_with_cdb_dbg"></a><a id="DDK_ANALYZING_A_USER_MODE_DUMP_FILE_WITH_CDB_DBG"></a></h2>
+<p></p>
+<p>User-mode memory dump files can be analyzed by CDB. The processor or Windows version that the dump file was created on does not need to match the platform on which CDB is being run.</p>
+<h3><a id="installing_symbol_files"></a><a id="INSTALLING_SYMBOL_FILES"></a>Installing Symbol Files</h3>
+<p>Before analyzing the memory dump file, you will need to install the symbol files for the version of Windows that generated the dump file. These files will be used by the debugger you choose to use to analyze the dump file. For more information about the proper installation of symbol files, see <a href="installing_windows_symbol_files.htm">Installing Windows Symbol Files</a>.</p>
+<p>You will also need to install all the symbol files for the user-mode process, either an application or system service, that caused the system to generate the dump file. If this code was written by you, the symbol files should have been generated when the code was compiled and linked. If this is commercial code, check on the product CD-ROM or contact the software manufacturer for these particular symbol files.</p>
+<h3><a id="starting_cdb"></a><a id="STARTING_CDB"></a>Starting CDB</h3>
+<p>To analyze a dump file, start CDB with the <b>-z</b> command-line option:</p>
+<p><b>cdb -y </b><i>SymbolPath</i><b> -i </b><i>ImagePath</i><b> -z </b><i>DumpFileName</i></p>
+<p>The <b>-v</b> option (verbose mode) is also useful. For a full list of options, see <a href="cdb_command_line_options.htm"><b>CDB Command-Line Options</b></a>.</p>
+<p>You can also open a dump file after the debugger is running by using the <a href="_opendump__open_dump_file_.htm"><b>.opendump (Open Dump File)</b></a> command, followed with <a href="g__go_.htm"><b>g (Go)</b></a>. This allows you to debug multiple dump files at the same time.</p>
+<p>It is possible to debug multiple dump files at the same time. This can be done by including multiple <b>-z</b> switches on the command line (each followed by a different file name), or by using <a href="_opendump__open_dump_file_.htm"><b>.opendump</b></a> to add additional dump files as debugger targets. For information about how to control a multiple-target session, see <a href="debugging_multiple_targets.htm">Debugging Multiple Targets</a>.</p>
+<p>Dump files generally end with the extension .dmp or .mdmp. You can use network shares or Universal Naming Convention (UNC) file names for the memory dump file.</p>
+<p>It is also common for dump files to be packed into a CAB file. If you specify the file name (including the .cab extension) after the <b>-z</b> option or as the argument to an <a href="_opendump__open_dump_file_.htm"><b>.opendump</b></a> command, the debugger can read the dump files directly out of the CAB. However, if there are multiple dump files stored in a single CAB, the debugger will only be able to read one of them. The debugger will not read any additional files from the CAB, even if they are symbol files or executables associated with the dump file.</p>
+<h3><a id="analyzing_a_full_user_dump_file"></a><a id="ANALYZING_A_FULL_USER_DUMP_FILE"></a>Analyzing a Full User Dump File</h3>
+<p>Analysis of a full user dump file is similar to analysis of a live debugging session. See the <a href="debugger_commands.htm">Debugger Commands</a> reference section for details on which commands are available for debugging dump files in user mode.</p>
+<p></p>
+<h3><a id="analyzing_minidump_files"></a><a id="ANALYZING_MINIDUMP_FILES"></a>Analyzing Minidump Files</h3>
+<p>Analysis of a user-mode minidump file is done in the same way as a full user dump. However, since much less memory has been preserved, you are much more limited in the actions you can perform. Commands that attempt to access memory beyond what is preserved in the minidump file will not function properly.</p>
+<h3><a id="additional_techniques"></a><a id="ADDITIONAL_TECHNIQUES"></a>Additional Techniques</h3>
+<p>For techniques that can be used to read specific kinds of information from a dump file, see <a href="extracting_information_from_a_dump_file.htm">Extracting Information from a Dump File</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Analyzing a User-Mode Dump File with CDB%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,226 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Extensions for Debugging Plug and Play Drivers"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Extensions for Debugging Plug and Play Drivers</title>
+
+<meta name="MS-HAID" content="t12_drivers_fc31c715-123a-4c51-8946-4141d035fcb4.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.extensions_for_debugging_plug_and_play_drivers"></a>Extensions for Debugging Plug and Play Drivers</h1>
+</div>
+<p>When you debug Plug and Play drivers, you may find the following debugger extensions useful.
+
+</p>
+<p></p>
+<dl>
+<dt><a href="_arbiter.htm"><b>!arbiter</b></a></dt>
+<dd>
+<p>Displays the current system resource arbiters. An arbiter is a piece of code that is exposed by the bus driver that arbitrates requests for resources, and attempts to solve the resource conflicts among the devices connected on that bus.</p>
+</dd>
+<dt><a href="_cmreslist.htm"><b>!cmreslist</b></a></dt>
+<dd>
+<p>Displays the CM_RESOURCE_LIST for the specified device object.</p>
+<p>You must know the address of the CM Resource List.</p>
+<p>Here is an example:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !cmreslist 0xe12576e8
+
+CmResourceList at 0xe12576e8  Version 0.0  Interface 0x1  Bus #0
+  Entry 0 - Port (0x1) Device Exclusive (0x1)
+    Flags (0x01) - PORT_MEMORY PORT_IO
+    Range starts at 0x3f8 for 0x8 bytes
+  Entry 1 - Interrupt (0x2) Shared (0x3)
+    Flags (0x01) - LATCHED
+    Level 0x4, Vector 0x4, Affinity 0xffffffff</code></pre>
+<p>This shows that the device with this CM resource list is using I/O Range 3F8-3FF and IRQ 4.</p>
+</dd>
+<dt><a href="_dcs.htm"><b>!dcs</b></a></dt>
+<dd>
+<p>This extension is obsolete -- its functionality has been subsumed by <a href="_pci.htm"><b>!pci</b></a>. See the !pci 100 example later in this section.</p>
+</dd>
+<dt><a href="_devext.htm"><b>!devext</b></a></dt>
+<dd>
+<p>Displays bus-specific device extension information for a variety of devices.</p>
+</dd>
+<dt><a href="_devnode.htm"><b>!devnode</b></a></dt>
+<dd>
+<p>Displays information about a node in the device tree.</p>
+<p>Device node 0 (zero) is the root of the device tree.</p>
+<p>Here is an example:</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !devnode 0xfffffa8003634af0
+DevNode 0xfffffa8003634af0 for PDO 0xfffffa8003658590
+  Parent 0xfffffa8003604010   Sibling 0xfffffa80036508e0   Child 0000000000
+  InstancePath is "ROOT\SYSTEM\0000"
+  ServiceName is "swenum"
+  State = DeviceNodeStarted (0x308)
+  Previous State = DeviceNodeEnumerateCompletion (0x30d)
+  StateHistory[09] = DeviceNodeEnumerateCompletion (0x30d)
+  StateHistory[08] = DeviceNodeEnumeratePending (0x30c)
+  StateHistory[07] = DeviceNodeStarted (0x308)
+  StateHistory[06] = DeviceNodeStartPostWork (0x307)
+  StateHistory[05] = DeviceNodeStartCompletion (0x306)
+  StateHistory[04] = DeviceNodeStartPending (0x305)
+  ...
+  Flags (0x6c000131)  DNF_MADEUP, DNF_ENUMERATED, 
+                      DNF_IDS_QUERIED, DNF_NO_RESOURCE_REQUIRED, 
+                      DNF_NO_LOWER_DEVICE_FILTERS, DNF_NO_LOWER_CLASS_FILTERS, 
+                      DNF_NO_UPPER_DEVICE_FILTERS, DNF_NO_UPPER_CLASS_FILTERS
+  UserFlags (0x00000008)  DNUF_NOT_DISABLEABLE
+  DisableableDepends = 1 (including self)</code></pre>
+</dd>
+<dt><a href="_devobj.htm"><b>!devobj</b></a></dt>
+<dd>
+<p>Displays detailed information about a DEVICE_OBJECT.</p>
+<p>Here is an example:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !devobj 0xff0d4af0
+
+Device object (ff0d4af0) is for:
+ 00252d \Driver\PnpManager DriverObject ff0d9030
+Current Irp 00000000 RefCount 0 Type 00000004 Flags 00001040AttachedDev ff0b59e0
+
+DevExt ff0d4ba8 DevNode ff0d4a08
+Device queue is not busy.</code></pre>
+</dd>
+<dt><a href="_drivers.htm"><b>!drivers</b></a></dt>
+<dd>
+<p>The <a href="_drivers.htm"><b>!drivers</b></a> command is no longer supported. Please use the <a href="lm__list_loaded_modules_.htm"><b>lm t n</b></a>  command instead.
+
+</p>
+</dd>
+<dt><a href="_drvobj.htm"><b>!drvobj</b></a></dt>
+<dd>
+<p>Displays detailed information about a DRIVER_OBJECT.</p>
+<p>Lists all the device objects created by the specified driver.</p>
+<p>Here is an example:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !drvobj serial
+
+Driver object (ff0ba630) is for:
+ \Driver\Serial
+Driver Extension List: (id , addr)
+
+Device Object list:
+ffba3040  ff0b4040  ff0b59e0  ff0b5040</code></pre>
+</dd>
+<dt><a href="_ecb___ecd___ecw.htm"><b>!ecb, !ecd, !ecw</b></a></dt>
+<dd>
+<p>(x86 target computers only) Writes a sequence of values into the PCI configuration space.</p>
+</dd>
+<dt><a href="_ib___id___iw.htm"><b>ib, iw, id</b></a></dt>
+<dd>
+<p>Reads data from an I/O port.</p>
+<p>These three commands are useful for determining whether a certain I/O range is claimed by a device other than the driver being debugged. A byte value of 0xFF at a port indicates that the port is not in use.</p>
+</dd>
+<dt><a href="_ioreslist.htm"><b>!ioreslist</b></a></dt>
+<dd>
+<p>Displays the specified IO_RESOURCE_REQUIREMENTS_LIST.</p>
+</dd>
+<dt><a href="_irp.htm"><b>!irp</b></a></dt>
+<dd>
+<p>Displays information about an IRP.</p>
+</dd>
+<dt><a href="_irpfind.htm"><b>!irpfind</b></a></dt>
+<dd>
+<p>Displays information about all IRPs currently allocated in the target system, or information about those IRPs whose fields match the specified search criteria.</p>
+</dd>
+<dt><a href="_pci.htm"><b>!pci</b></a></dt>
+<dd>
+<p>(x86 target computers only) Displays the current status of the PCI buses and any devices attached to them. It can also display the PCI configuration space.</p>
+<p>The following example displays the devices on the primary bus:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !pci
+PCI Bus 0
+00:0  8086:1237.02  Cmd[0106:.mb..s]  Sts[2280:.....]  Device  Host bridge
+0d:0  8086:7000.01  Cmd[0007:imb...]  Sts[0280:.....]  Device  ISA bridge
+0d:1  8086:7010.00  Cmd[0005:i.b...]  Sts[0280:.....]  Device  IDE controller
+0e:0  1011:0021.01  Cmd[0107:imb..s]  Sts[0280:.....]  PciBridge 0-&gt;1-1  PCI-PCI
+ bridge
+10:0  5333:8811.43  Cmd[0023:im.v..]  Sts[0200:.....]  Device  VGA compatible controller
+
+
+
+The following example displays the devices for the secondary bus, with verbose output:
+
+kd&gt; !pci 1 1
+
+PCI Bus 1
+08:0  10b7:5900.00  Cmd[0107:imb..s]  Sts[0200:.....]  Device  Ethernet
+      cf8:80014000  IntPin:1  IntLine:f  Rom:fa000000  cis:0  cap:0
+      IO[0]:fce1
+
+09:0  9004:8178.00  Cmd[0117:imb..s]  Sts[0280:.....]  Device  SCSI controller
+      cf8:80014800  IntPin:1  IntLine:f  Rom:fa000000  cis:0  cap:0
+      IO[0]:f801       MEM[1]:f9fff000
+
+0b:0  9004:5800.10  Cmd[0116:.mb..s]  Sts[0200:.....]  Device  SubID:9004:8940
+1394 host controller
+      cf8:80015800  IntPin:1  IntLine:e  Rom:fa000000  cis:0  cap:0
+      MEM[0]:f9ffec00</code></pre>
+<p>The following example displays the PCI configuration space for the SCSI controller (bus 1, device 9, function 0):</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !pci 100 1 9 0 
+00: 9004    ;VendorID=9004
+02: 8178    ;DeviceID=8178
+04: 0117    ;Command=SERREnable,MemWriteEnable,BusInitiate,MemSpaceEnable,IOSpac
+eEnable
+06: 0280    ;Status=FB2BCapable,DEVSELTiming:1
+08: 00      ;RevisionID=00
+09: 00      ;ProgIF=00 (SCSI bus controller)
+0a: 00      ;SubClass=00
+0b: 01      ;BaseClass=01 (Mass storage controller)
+0c: 08      ;CacheLineSize=Burst8DW
+0d: 20      ;LatencyTimer=20
+0e: 00      ;HeaderType=00
+0f: 00      ;BIST=00
+10: 0000f801;BAR0=0000f801
+14: f9fff000;BAR1=f9fff000
+18: 00000000;BAR2=00000000
+1c: 00000000;BAR3=00000000
+20: 00000000;BAR4=00000000
+24: 00000000;BAR5=00000000
+28: 00000000;CBCISPtr=00000000
+2c: 0000    ;SubSysVenID=0000
+2e: 0000    ;SubSysID=0000
+30: fa000000;ROMBAR=fa000000
+34: 00000000;Reserved=00000000
+38: 00000000;Reserved=00000000
+3c: 0f      ;IntLine=0f
+3d: 01      ;IntPin=01
+3e: 08      ;MinGnt=08
+3f: 08      ;MaxLat=08
+40: 00001580,00001580,00000000,00000000,00000000,00000000,00000000,00000000
+60: 00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000
+80: 00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000
+a0: 00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000
+c0: 00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000
+e0: 00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000</code></pre>
+</dd>
+<dt><a href="_pcitree.htm"><b>!pcitree</b></a></dt>
+<dd>
+<p>Displays information about PCI device objects, including child PCI buses and CardBus buses, as well as the devices attached to them.</p>
+</dd>
+<dt><a href="_pnpevent.htm"><b>!pnpevent</b></a></dt>
+<dd>
+<p>Displays the PnP device event queue.</p>
+</dd>
+<dt><a href="_rellist.htm"><b>!rellist</b></a></dt>
+<dd>
+<p>Displays a PnP relation list and any related CM_RESOURCE_LIST and IO_RESOURCE_LIST structures.</p>
+</dd>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Extensions for Debugging Plug and Play Drivers%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

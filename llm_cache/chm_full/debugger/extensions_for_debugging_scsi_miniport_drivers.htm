@@ -1,0 +1,233 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Extensions for Debugging SCSI Miniport Drivers"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Extensions for Debugging SCSI Miniport Drivers</title>
+
+<meta name="MS-HAID" content="t11~d_scsi_9e343bd5-db44-4003-b6ce-3ab61e456ea6.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.extensions_for_debugging_scsi_miniport_drivers"></a>Extensions for Debugging SCSI Miniport Drivers</h1>
+</div>
+<p>When you debug SCSI miniport drivers, you may find the following debugger extensions useful. General debugger extensions are listed first, followed by those specific to SCSI miniport debugging. <p></p>
+<dl>
+<dt><a href="_devobj.htm"><b>!devobj</b></a></dt>
+<dd>
+<p>The <b>!devobj</b> extension displays detailed information about a DEVICE_OBJECT. If the <b>Current Irp</b> field is nonnull, this could be caused by the SCSI driver waiting for map registers.</p>
+<p>Here is an example:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0: kd&gt; !devobj 8633da70
+Device object (8633da70) is for:
+ adpu160m1 \Driver\adpu160m DriverObject 8633eeb8
+Current Irp 860ef008 RefCount 0 Type 00000004 Flags 00000050
+Dacl e129871c DevExt 8633db28 DevObjExt 8633dfd0
+ExtensionFlags (0000000000)
+AttachedTo (Lower) 863b2978 \Driver\PCI
+Device queue is not busy. </pre>
+</td>
+</tr>
+</table></span></div>
+</dd>
+<dt><a href="_errlog.htm"><b>!errlog</b></a></dt>
+<dd>
+<p>The <b>!errlog</b> extension displays the contents of any pending entries in the I/O system's error log.</p>
+</dd>
+<dt><a href="_object.htm"><b>!object</b></a></dt>
+<dd>
+<p>The <b>!object</b> extension displays information about a system object. This extension displays all SCSI devices.</p>
+<p>For example:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0: kd&gt; !object \device\scsi
+Object: e12a2520  Type: (863d12c8) Directory
+    ObjectHeader: e12a2508
+    HandleCount: 0  PointerCount: 9
+    Directory Object: e1001100  Name: Scsi
+
+    Hash Address  Type          Name
+    ---- -------  ----          ----
+     04  86352040 Device        adpu160m1Port3Path0Target6Lun0
+     11  86353040 Device        adpu160m1Port3Path0Target1Lun0
+     13  86334a70 Device        lp6nds351
+     22  862e6040 Device        adpu160m1Port3Path0Target0Lun0
+     24  8633da70 Device        adpu160m1
+     25  86376040 Device        adpu160m2
+     34  862e5040 Device        adpu160m1Port3Path0Target2Lun0 </pre>
+</td>
+</tr>
+</table></span></div>
+</dd>
+<dt><a href="_pcr.htm"><b>!pcr</b></a></dt>
+<dd>
+<p>The <b>!pcr</b> extension displays detailed information about the Processor Control Region (PCR) on a processor. The information includes the items in the DPC queue, which can be useful. when you are debugging a stalled driver or a time-out.</p>
+</dd>
+<dt><a href="_minipkd_help.htm"><b>!minipkd.help</b></a></dt>
+<dd>
+<p>The <b>!minipkd.help</b> extension displays a list of all of the Minipkd.dll extension commands.</p>
+<p>If an error message similar to the following appears, it indicates that the symbol path is incorrect and does not point to the correct version of the Scsiport.sys symbols. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>minipkd error (0) &lt;path&gt; ... \minipkd\minipkd.c @ line 435</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The <a href="_sympath__set_symbol_path_.htm"><b>.sympath (Set Symbol Path)</b></a> command can be used to display the current path and to change the path. The <a href="_reload__reload_module_.htm"><b>.reload (Reload Module)</b></a> command will reload symbols from the current path.</p>
+</dd>
+<dt><a href="_minipkd_adapter.htm"><b>!minipkd.adapter Adapter</b></a></dt>
+<dd>
+<p>The <b>!minipkd.adapter</b> extension displays detailed information about a specified adapter. The <b>Adapter</b> can be found by looking at the <b>DevExt</b> field in the <b>!minipkd.adapters</b> display.</p>
+</dd>
+<dt><a href="_minipkd_adapters.htm"><b>!minipkd.adapters</b></a></dt>
+<dd>
+<p>The <b>!minipkd.adapters</b> extension displays all the adapters that work with the SCSI Port driver that have been identified by Windows, and the individual devices associated with each adapter. </p>
+<p>Here is an example:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0: kd&gt; !minipkd.adapters
+Adapter \Driver\lp6nds35     DO 86334a70         DevExt 86334b28
+Adapter \Driver\adpu160m     DO 8633da70         DevExt 8633db28
+ LUN 862e60f8 @(0,0,0) c ev     pnp(00/ff) pow(0,0) DevObj 862e6040
+ LUN 863530f8 @(0,1,0) c ev p d pnp(00/ff) pow(0,0) DevObj 86353040
+ LUN 862e50f8 @(0,2,0) c ev     pnp(00/ff) pow(0,0) DevObj 862e5040
+ LUN 863520f8 @(0,6,0)   ev     pnp(00/ff) pow(0,0) DevObj 86352040
+Adapter \Driver\adpu160m     DO 86376040         DevExt 863760f8 </pre>
+</td>
+</tr>
+</table></span></div>
+<p>An error message similar to the following indicates that either the symbol path is incorrect and does not point to the correct version of the Scsiport.sys symbols, or that Windows has not identified any adapters that work with the SCSI Port driver:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>minipkd error (0) &lt;path&gt; ... \minipkd\minipkd.c @ line 435</pre>
+</td>
+</tr>
+</table></span></div>
+<p>If the <a href="_minipkd_help.htm"><b>!minipkd.help</b></a> extension command returns help information successfully, the SCSI Port symbols are correct. </p>
+</dd>
+<dt><a href="_minipkd_exports.htm"><b>!minipkd.exports Adapter</b></a></dt>
+<dd>
+<p>The <b>!minipkd.exports</b> extension displays the addresses of the miniport exports for the specified adapter.</p>
+</dd>
+<dt><a href="_minipkd_lun.htm"><b>!minipkd.lun {LUN | Device}</b></a></dt>
+<dd>
+<p>The <b>!minipkd.lun</b> extension displays detailed information about a specified Logical Unit Extension (LUN). The LUN can be specified either by its address (which can be found by looking at the <b>LUN</b> field in the <b>!minipkd.adapters</b> display) or by its physical device object (which can be found in the <b>DevObj</b> field of the <b>!minipkd.adapters</b> display).</p>
+</dd>
+<dt><a href="_minipkd_portconfig.htm"><b>!minipkd.portconfig PortConfig</b></a></dt>
+<dd>
+<p>The <b>!minipkd.portconfig</b> extension displays detailed information about a specified PORT_CONFIGURATION_DATA. The <b>PortConfig</b> can be found in the <b>Port Config Info</b> field of the <b>!minipkd.adapter</b> display.</p>
+</dd>
+<dt><a href="_minipkd_req.htm"><b>!minipkd.req {Adapter | Device}</b></a></dt>
+<dd>
+<p>The <b>!minipkd.req</b> extension displays information about all of the currently active requests on the specified adapter or LUN device.</p>
+</dd>
+<dt><a href="_minipkd_srb.htm"><b>!minipkd.srb SRB</b></a></dt>
+<dd>
+<p>The <b>!minipkd.srb</b> extension displays detailed information about a specified SCSI request block (SRB). The SRB is specified by address. The addresses of all currently active requests can be found in the <b>SRB</b> fields of the output from the <b>!minipkd.req</b> command.</p>
+</dd>
+<dt><a href="_scsikd_classext.htm"><b>!scsikd.classext [Device [Level]]</b></a></dt>
+<dd>
+<p>The <b>!scsikd.classext</b> extension displays detailed information about a specified class Plug and Play (PnP) device or a list of all such devices. The <i>Device</i> is the device object or device extension of the class PnP device. If <i>Device</i> is omitted, a list of all class PnP extensions is displayed.</p>
+<p>Here is an example:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0: kd&gt; !scsikd.classext 
+
+ ' !scsikd.classext 8633e3f0 '   (             ) "IBM     " / "DDYS-T09170M    " / "S93E" / "        XBY45906"
+ ' !scsikd.classext 86347b48 '   (paging device) "IBM     " / "DDYS-T09170M    " / "S80D" / "        VDA60491"
+  ' !scsikd.classext 86347360 '   (             ) "UNISYS  " / "003451ST34573WC " / "5786" / "HN0220750000181300L6"
+  ' !scsikd.classext 861d1898 '   (             ) "" / "MATSHITA CD-ROM CR-177" / "7T03" / ""
+
+ usage: !classext &lt;class fdo&gt; &lt;level [0-2]&gt; </pre>
+</td>
+</tr>
+</table></span></div>
+</dd>
+<dt><a href="_scsikd_scsiext.htm"><b>!scsikd.scsiext Device</b></a></dt>
+<dd>
+<p>The <b>!scsikd.scsiext</b> extension displays detailed information about a specified SCSI port extension. The <i>Device</i> can be the device object or device extension of either the adapter or the LUN.</p>
+<p>Here are some examples:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0: kd&gt; !scsikd.scsiext 86353040
+Common Extension:
+   &lt; ..omitted.. &gt;
+Logical Unit Extension:
+  Address (3, 0, 1, 0) Claimed  Enumerated Visible
+  LuFlags (0x00000000):
+  Retry 0x00          Key 0x008889ff
+  Lock 0x00000000  Pause 0x00000000   CurrentLock: 0x00000000
+  HwLuExt 0x862e6f00  Adapter 0x8633db28  Timeout 0x0000000a
+  NextLun 0x00000000  ReadyLun 0x00000000
+  Pending 0x00000000  Busy 0x00000000     Untagged 0x00000000
+  &lt; ..omitted.. &gt;
+Request list @0x86353200:
+      Tick count is 2526
+      SrbData 8615d700  Srb 8611f4fc  Irp 8611f2b8   Key 60197  &lt;1s
+      SrbData 85e72868  Srb 86100c3c Irp 861009f8   Key e29dc7  &lt;1s
+
+0: kd&gt; !scsikd.scsiext 8633da70 
+Common Extension:
+   &lt; ..omitted.. &gt;
+Adapter Extension:
+  Port 3     IsPnp VirtualSlot HasInterrupt
+  LowerPdo 0x84f9fb68   HwDevExt 0x84634004   Active Requests 0x00000000
+  MaxBus 0x03   MaxTarget 0x40   MaxLun 0x08
+  Port Flags (0x00001000): PD_DISCONNECT_RUNNING
+  NonCacheExt 0x850d4000  IoBase 0xd80f0000   Int 0x23  &lt; ..omitted.. &gt; </pre>
+</td>
+</tr>
+</table></span></div>
+</dd>
+<dt><a href="_scsikd_srbdata.htm"><b>!scsikd.srbdata Address</b></a></dt>
+<dd>
+<p>The <b>!scsikd.srbdata</b> extension displays detailed information about a specified SRB_DATA tracking block.</p>
+</dd>
+</dl>
+</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Extensions for Debugging SCSI Miniport Drivers%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

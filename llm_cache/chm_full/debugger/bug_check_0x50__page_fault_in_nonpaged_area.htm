@@ -1,0 +1,96 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The PAGE_FAULT_IN_NONPAGED_AREA bug check has a value of 0x00000050. This indicates that invalid system memory has been referenced. Typically the memory address is wrong or the memory address is pointing at freed memory."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0x50: PAGE_FAULT_IN_NONPAGED_AREA</title>
+
+<meta name="MS-HAID" content="t04_bugs_00_20573727-d089-4689-8362-83185301cb13.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0x50__page_fault_in_nonpaged_area"></a>Bug Check 0x50: PAGE_FAULT_IN_NONPAGED_AREA</h1>
+</div>
+<p>The PAGE_FAULT_IN_NONPAGED_AREA bug check has a value of 0x00000050. This indicates that invalid system memory has been referenced. Typically the memory address is wrong or the memory address  is pointing at freed memory.</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2> PAGE_FAULT_IN_NONPAGED_AREA Parameters</h2>
+<p>The following parameters are displayed on the blue screen.</p>
+<table>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>1</p>
+</td>
+<td>
+<p>Memory address referenced</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>2</p>
+</td>
+<td>
+<p><b>0:</b> Read operation</p>
+<p><b>1:</b> Write operation</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>3</p>
+</td>
+<td>
+<p>Address that referenced memory (if known)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>4</p>
+</td>
+<td>
+<p>Reserved  </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>If the driver responsible for the error can be identified, its name is printed on the blue screen and stored in memory at the location (PUNICODE_STRING) <b>KiBugCheckDriver</b>.</p>
+<h2>Cause</h2>
+<p>Bug check 0x50 can occur after the installation of faulty hardware or in the event of failure of installed hardware (usually related to defective RAM, be it main memory, L2 RAM cache, or video RAM).</p>
+<p>Another possible cause is the installation of a faulty system service or faulty driver code.</p>
+<p>Antivirus software can also trigger this error, as can a corrupted NTFS volume.</p>
+<h2>Resolution</h2>
+<p><b>Gather Information</b></p>
+<p>Examine the name of the driver if that was listed on the blue screen.</p>
+<p>Check the System Log in Event Viewer for additional error messages that might help pinpoint the device or driver that is causing the error. For more information, see <a href="http://windows.microsoft.com/en-us/windows/what-information-event-logs-event-viewer#1TC=windows-7">Open Event Viewer</a>. Look for critical errors in the system log that occurred in the same time window as the blue screen.</p>
+<p><b>Windows Memory Diagnostics</b></p>
+<p>Run the Windows Memory Diagnostics tool, to test the memory. Click the Start button, and then clicking Control Panel. In the search box, type Memory, and then click <b>Diagnose your computer's memory problems</b>.‌ After the test is run,  use Event viewer to view the results under  the System log. Look for the <i>MemoryDiagnostics-Results</i>
+entry to view the results.</p>
+<p><b>Resolving a faulty hardware problem:</b> If hardware has been added to the system recently, remove it to see if the error recurs. If existing hardware has failed, remove or replace the faulty component. You should run hardware diagnostics supplied by the system manufacturer. For details on these procedures, see the owner's manual for your computer. </p>
+<p><b>Resolving a faulty system service problem:</b> Disable the service and confirm that this resolves the error. If so, contact the manufacturer of the system service about a possible update. If the error occurs during system startup, investigate the Windows repair options. For more information, see <a href="http://windows.microsoft.com/en-us/windows-10/windows-10-recovery-options">Recovery options in Windows 10</a>.</p>
+<p><b>Resolving an antivirus software problem:</b> Disable the program and confirm that this resolves the error. If it does, contact the manufacturer of the program about a possible update. </p>
+<p><b>Resolving a corrupted NTFS volume problem:</b> Run <b>Chkdsk /f /r</b> to detect and repair disk errors. You must restart the system before the disk scan begins on a system partition. Contact the manufacture of the hard driver system to locate any diagnostic tools that they provide for the hard drive sub system. </p>
+<p>For general blue screen troubleshooting information, see <a href="blue_screen_data.htm"><b>Blue Screen Data</b></a>.</p>
+<h2>Remarks</h2>
+<p>Typically, this address is in freed memory or is simply invalid.</p>
+<p>This cannot be protected by a <b>try - except</b> handler -- it can only be protected by a probe.</p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

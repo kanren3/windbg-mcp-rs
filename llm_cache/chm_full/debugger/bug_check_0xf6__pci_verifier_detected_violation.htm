@@ -1,0 +1,69 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The PCI_VERIFIER_DETECTED_VIOLATION bug check has a value of 0x000000F6. This indicates that an error occurred in the BIOS or another device being verified by the PCI driver."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0xF6: PCI_VERIFIER_DETECTED_VIOLATION</title>
+
+<meta name="MS-HAID" content="t07_bugs_E0_2486b047-d29c-4cdc-a5ed-8f166259b0bc.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0xf6__pci_verifier_detected_violation"></a>Bug Check 0xF6: PCI_VERIFIER_DETECTED_VIOLATION</h1>
+</div>
+<p>The PCI_VERIFIER_DETECTED_VIOLATION bug check has a value of 0x000000F6. This indicates that an error occurred in the BIOS or another device being verified by the PCI driver.</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2> PCI_VERIFIER_DETECTED_VIOLATION Parameters</h2>
+<p>The following parameters are displayed on the blue screen. Parameter 1 is the only parameter of interest; this identifies the nature of the failure detected.</p>
+<table>
+<tr>
+<th>Parameter 1</th>
+<th>Cause of Error</th>
+</tr>
+<tr>
+<td>
+<p>0x01</p>
+</td>
+<td>
+<p>An active bridge was reprogrammed by the BIOS during a docking event. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x02</p>
+</td>
+<td>
+<p>The PMCSR register was not updated within the spec-mandated time. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x03</p>
+</td>
+<td>
+<p>A driver has written to Windows-controlled portions of a PCI device's configuration space. </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Cause</h2>
+<p>The PCI driver detected an error in a device or BIOS being verified. </p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

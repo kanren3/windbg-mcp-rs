@@ -1,0 +1,157 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The TIMER_OR_DPC_INVALID bug check has a value of 0x000000C7. This is issued if a kernel timer or delayed procedure call (DPC) is found somewhere in memory where it is not permitted."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0xC7: TIMER_OR_DPC_INVALID</title>
+
+<meta name="MS-HAID" content="t06_bugs_B0_1c5c2ecf-17a8-4e7d-82f6-6f4ae708aac1.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0xc7__timer_or_dpc_invalid"></a>Bug Check 0xC7: TIMER_OR_DPC_INVALID</h1>
+</div>
+<p>The TIMER_OR_DPC_INVALID bug check has a value of 0x000000C7. This is issued if a kernel timer or delayed procedure call (DPC) is found somewhere in memory where it is not permitted.</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2> TIMER_OR_DPC_INVALID Parameters</h2>
+<p>The following parameters are displayed on the blue screen.</p>
+<table>
+<tr>
+<th>Parameter 1</th>
+<th>Parameter 2</th>
+<th>Parameter 3</th>
+<th>Parameter 4</th>
+<th>Cause of error</th>
+</tr>
+<tr>
+<td>
+<p>0x0</p>
+</td>
+<td>
+<p>Address of the timer object</p>
+</td>
+<td>
+<p>Start of memory range being checked </p>
+</td>
+<td>
+<p>End of memory range being checked</p>
+</td>
+<td>
+<p>The timer object was found in a block of memory where a timer object is not permitted. .</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x1</p>
+</td>
+<td>
+<p>Address of the DPC object</p>
+</td>
+<td>
+<p>Start of memory range being checked</p>
+</td>
+<td>
+<p>End of memory range being checked</p>
+</td>
+<td>
+<p>The DPC object was found in a block of memory where a DPC object is not permitted.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x2</p>
+</td>
+<td>
+<p>Address of the DPC routine</p>
+</td>
+<td>
+<p>Start of memory range being checked</p>
+</td>
+<td>
+<p>End of memory range being checked</p>
+</td>
+<td>
+<p>The DPC routine was found in a block of memory where a DPC object is not permitted.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x3</p>
+</td>
+<td>
+<p>Address of the DPC object</p>
+</td>
+<td>
+<p>Processor number</p>
+</td>
+<td>
+<p>Number of processors in the system</p>
+</td>
+<td>
+<p>The processor number for the DPC object is not correct.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x4</p>
+</td>
+<td>
+<p>Address of the DPC routine</p>
+</td>
+<td>
+<p>The thread's APC disable count before the kernel calls the DPC routine</p>
+</td>
+<td>
+<p>The thread's APC disable count after the DPC routine is called</p>
+</td>
+<td>
+<p>The thread's APC disable count was changed during DPC routine execution.</p>
+<p>The APC disable count is decremented each time a driver calls <b>KeEnterCriticalRegion</b>, <b>FsRtlEnterFileSystem</b>, or acquires a mutex. </p>
+<p>The APC disable count is incremented each time a driver calls <b>KeLeaveCriticalRegion</b>, <b>KeReleaseMutex</b>, or <b>FsRtlExitFileSystem</b>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x5</p>
+</td>
+<td>
+<p>Address of the DPC routine</p>
+</td>
+<td>
+<p>The thread's APC disable count before the kernel calls the DPC routine</p>
+</td>
+<td>
+<p>The thread's APC disable count after the DPC routine is called</p>
+</td>
+<td>
+<p>The thread's APC disable count was changed during the execution of timer DPC routine.</p>
+<p>The APC disable count is decremented each time a driver calls <b>KeEnterCriticalRegion</b>, <b>FsRtlEnterFileSystem</b>, or acquires a mutex. </p>
+<p>The APC disable count is incremented each time a driver calls <b>KeLeaveCriticalRegion</b>, <b>KeReleaseMutex</b>, or <b>FsRtlExitFileSystem</b>.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Cause</h2>
+<p>This condition is usually caused by a driver failing to cancel a timer or DPC before freeing the memory where it resides. </p>
+<h2>Resolution</h2>
+<p>If you are the driver writer, use the information obtained through this bug check to fix the bugs in your code.</p>
+<p>If you are a system administrator, you should unload the driver if the problem persists.</p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

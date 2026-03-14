@@ -1,0 +1,66 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Starting a Remote.exe Session"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Starting a Remote.exe Session</title>
+
+<meta name="MS-HAID" content="r08_use_remote_d4e686df-d04a-42e7-a1cc-d32674f50cd5.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.starting_a_remote_exe_session"></a>Starting a Remote.exe Session</h1>
+</div>
+<h2><a id="ddk_starting_a_remote_exe_session_dbg"></a><a id="DDK_STARTING_A_REMOTE_EXE_SESSION_DBG"></a></h2>
+<p>There are two ways to start a remote.exe session with KD or CDB. Only the second of these methods works with NTSD.</p>
+<h3><a id="customizing_your_command_prompt_window"></a><a id="CUSTOMIZING_YOUR_COMMAND_PROMPT_WINDOW"></a>Customizing Your Command Prompt Window</h3>
+<p>The Remote.exe Client and Remote.exe Server run in Command Prompt windows.</p>
+<p>To prepare for the remote session, you should customize this window to increase its usability. Open a Command Prompt window. Right-click the title bar and select <b>Properties</b>. Select the <b>Layout</b> tab. Go to the section titled "Screen Buffer Size" and type <b>90</b> in the <b>Width</b> box and a value between <b>4000</b> and <b>9999</b> in the <b>Height</b> box. This enables scroll bars in the remote session on the kernel debugger.</p>
+<p>Change the values for the height and width of the "Windows Size" section if you want to alter the shape of the command prompt. Select the <b>Options</b> tab. Enable the <b>Edit Options</b> quickedit mode and insert mode. This allows you to cut and paste information in the command prompt session. Click <b>OK</b> to apply the changes. Select the option to apply the changes to all future sessions when prompted.</p>
+<h3><a id="starting_the_remote_exe_server__first_method"></a><a id="STARTING_THE_REMOTE_EXE_SERVER__FIRST_METHOD"></a>Starting the Remote.exe Server: First Method</h3>
+<p>The general syntax for starting a Remote.exe Server is as follows:</p>
+<pre class="syntax" xml:space="preserve"><code>remote /s "Command_Line" Unique_Id [/f Foreground_Color] [/b Background_Color] </code></pre>
+<p>This can be used to start KD or CDB on the remote computer, as in the following examples:</p>
+<pre class="syntax" xml:space="preserve"><code>remote /s "KD [options]" MyBrokenBox 
+
+remote /s "CDB [options]" MyBrokenApp </code></pre>
+<p>This starts the Remote.exe Server in the Command Prompt window, and starts the debugger.</p>
+<p>You cannot use this method to start NTSD directly, because the NTSD process runs in a different window than the one in which it was invoked.</p>
+<h3><a id="starting_the_remote_exe_server__second_method"></a><a id="STARTING_THE_REMOTE_EXE_SERVER__SECOND_METHOD"></a>Starting the Remote.exe Server: Second Method</h3>
+<p>There is an alternate method that can start a Remote.exe Server. This method involves first starting the debugger, and then using the <a href="_remote__create_remote_exe_server_.htm"><b>.remote (Create Remote.exe Server)</b></a> command to start the server.</p>
+<p>Since the <b>.remote</b> command is issued after the debugger has started, this method works equally well with KD, CDB, and NTSD.</p>
+<p>Here is an example. First, start the debugger in the normal fashion:</p>
+<pre class="syntax" xml:space="preserve"><code>KD [options] </code></pre>
+<p>Once the debugger is running, use the <b>.remote</b> command:</p>
+<pre class="syntax" xml:space="preserve"><code>.remote MyBrokenBox </code></pre>
+<p>This results in a KD process that is also a Remote.exe Server with an ID of "MyBrokenBox", exactly as in the first method.</p>
+<p>One advantage of this method is that you do not have to decide in advance if you intend to use remote debugging. If you are debugging with one of the console debuggers and then decide that you would prefer someone in a remote location to take over, you can use the <b>.remote</b> command and then they can connect to your session.</p>
+<h3><a id="starting_the_remote_exe_client"></a><a id="STARTING_THE_REMOTE_EXE_CLIENT"></a>Starting the Remote.exe Client</h3>
+<p>The general syntax for starting a Remote.exe Client is as follows:</p>
+<pre class="syntax" xml:space="preserve"><code>remote /c ServerNetBIOSName Unique_ID [/l Lines_to_Get] [/f Foreground_Color] [/b Background_Color] </code></pre>
+<p>For example, if the "MyBrokenBox" session, described above, was started on a local host computer whose network name was "Server2", you can connect to it with the command:</p>
+<pre class="syntax" xml:space="preserve"><code>remote /c server2 MyBrokenBox </code></pre>
+<p>Anyone on the network with appropriate permission can connect to this debug session, as long as they know your machine name and the session ID.</p>
+<p></p>
+<h3><a id="issuing_commands"></a><a id="ISSUING_COMMANDS"></a>Issuing Commands</h3>
+<p>Commands are issued through the Remote.exe Client and are sent to the Remote.exe Server. You can enter any command into the client as if you were directly entering it into the debugger.</p>
+<p></p>
+<p>To exit from the remote.exe session on the Remote.exe Client, enter the <b>@Q</b> command. This leaves the Remote.exe Server and the debugger running.</p>
+<p>To end the server session, enter the <b>@K</b> command on the Remote.exe Server.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Starting a Remote.exe Session%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

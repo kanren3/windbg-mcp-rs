@@ -1,0 +1,107 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="You arrive at an interesting breakpoint while debugging your driver, only to have the debugger pause for a very long time while it attempts to load symbols for drivers that you don't own and that don't even matter for the debugging task at hand."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Avoiding debugger searches for unneeded symbols</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.avoiding_debugger_searches_for_unneeded_symbols"></a>Avoiding debugger searches for unneeded symbols</h1>
+</div>
+<div class="nav_sidebar" style="background: #ebeff0; border: 1px #e3e3e3 solid; padding: 5px; float: right; margin-left: 10px; width: 290px;"><span class="sidebar_heading" style="font-weight: bold;">Last updated:</span><div class="sidebar_summary">
+<p>
+<ul>
+<li>May 27, 2007</li>
+</ul>
+</p>
+</div>
+</div>
+<p>You arrive at an interesting breakpoint while debugging your driver, only to have the debugger pause for a very long time while it attempts to load symbols for drivers that you don't own and that don't even matter for the debugging task at hand. What's going on?</p>
+<p></p>
+<p>By default, symbols are loaded by the debugger as they are needed. (This is called deferred symbol loading or lazy symbol loading.) The debugger looks for symbols whenever it executes a command that calls for the display of symbols. This can happen at a breakpoint if you have set a watch variable that is not valid in the current context, such as a function parameter or local variable that doesn't exist in the current stack frame, because they become invalid when the context changes. It can also happen if you simply mistype a symbol name or execute an invalid debugger command-the debugger starts looking for a matching symbol.
+
+</p>
+<p>Why does this sometimes take so long? That depends on whether the symbol name is qualified or unqualified. A qualified symbol name is preceded with the name of the module that contains the symbol-for example, myModule!myVar. An unqualified symbol name does not specify a module name-for example, myOtherVar.
+</p>
+<p>In the case of the qualified name, the debugger looks for the symbol in the specified module and, if the module is not already loaded, loads the module (assuming the module exists and contains the symbol). This happens fairly quickly.
+
+</p>
+<p>In the case of an unqualified name, the debugger doesn't "know" which module contains the symbol, so it must look in all of them. The debugger first checks all loaded modules for the symbol and then, if it cannot match the symbol in any loaded module, the debugger continues its search by loading all unloaded modules, starting with the downstream store and ending with the symbol server, if you're using one. Obviously, this can take a lot of time.
+</p>
+<h2><a id="How_to_prevent_automatic_loading_for_unqualified_symbols_"></a><a id="how_to_prevent_automatic_loading_for_unqualified_symbols_"></a><a id="HOW_TO_PREVENT_AUTOMATIC_LOADING_FOR_UNQUALIFIED_SYMBOLS_"></a>How to prevent automatic loading for unqualified symbols </h2>
+<p>The <b>SYMOPT_NO_UNQUALIFIED_LOADS</b> option disables or enables the debugger's automatic loading of modules when it searches for an unqualified symbol. When <b>SYMOPT_NO_UNQUALIFIED_LOADS</b> is set and the debugger attempts to match an unqualified symbol, it searches only modules that have already been loaded, and stops searching when it cannot match the symbol, instead of loading unloaded modules to continue its search. This option does not affect searching for qualified names.</p>
+<p><b>SYMOPT_NO_UNQUALIFIED_LOADS</b> is off by default. To activate this option, use the <b>-snul</b> command-line option or, while the debugger is running, use <b>.symopt+0x100</b> or <b>.symopt-0x100</b> to turn the option on or off, respectively.
+
+</p>
+<p>To see the effect of <b>SYMOPT_NO_UNQUALIFIED_LOADS</b>, try this experiment:
+</p>
+<ol>
+<li>Activate noisy symbol loading (<b>SYMOPT_DEBUG</b>) by using the <b>-n</b> command-line option or, if the debugger is already running, use <b>.symopt+0x80000000</b> or the <b>!sym noisy</b> debugger extension command.
+
+<b>SYMOPT_DEBUG</b> instructs the debugger to display information about its search for symbols, such as the name of each module as it is loaded or an error message if the debugger cannot find a file.
+
+
+</li>
+<li>Instruct the debugger to evaluate a nonexistent symbol (for example, type <b>?asdasdasd</b>).
+
+The debugger should report numerous errors while it searches for the nonexistent symbol.
+
+
+</li>
+<li>Activate <b>SYMOPT_NO_UNQUALIFIED_LOADS</b> by using <b>.symopt+0x100</b>.
+
+
+</li>
+<li>Repeat step 2.
+
+The debugger should search only loaded modules for the nonexistent symbol, and it should finish the task much faster.
+
+
+</li>
+<li>To disable <b>SYMOPT_DEBUG</b>, use <b>.symopt-0x80000000</b> or the <b>!sym quiet</b> debugger extension command.
+
+</li>
+</ol>
+<p>A number of options are available to control how the debugger loads and uses symbols. For a complete list of symbol options and how to use them, see "Setting Symbol Options" in the online documentation provided with Debugging Tools for Windows. The latest release of the Debugging Tools for Windows package is available as a free download from the web, or you can install the package from the Windows DDK, Platform SDK, or Customer Support Diagnostics CD.</p>
+<h2><a id="What_should_you_do__"></a><a id="what_should_you_do__"></a><a id="WHAT_SHOULD_YOU_DO__"></a>What should you do? </h2>
+<ul>
+<li>To speed up symbol searching, use qualified names in breakpoints and debugger commands whenever possible. If you want to see a symbol from a known module, qualify it with the module name; if you don't know where the symbol is, use an unqualified name. For local variables and function arguments, use <b>$</b> as the module name (for example, <i>$!MyVar</i>).
+
+
+</li>
+<li>To diagnose the causes of slow symbol loading, activate noisy symbol loading (<b>SYMOPT_DEBUG</b>) by using the <b>-n</b> command-line option or, if the debugger is already running, by using <b>.symopt+0x80000000</b> or the <b>!sym noisy</b> debugger extension command.
+
+
+</li>
+<li>To prevent the debugger from searching for symbols in unloaded modules, activate <b>SYMOPT_NO_UNQUALIFIED_LOADS</b> by using the <b>-snul</b> command-line option or, if the debugger is already running, by using <b>.symopt+0x100</b>.
+
+
+</li>
+<li>To explicitly load the modules you need for your debugging session, use debugger commands such as <b>.reload</b> or <b>ld</b>.
+
+</li>
+</ul>
+<h2><a id="related_topics"></a>Related topics</h2>
+<dl>
+<dt><a href="https://go.microsoft.com/fwlink/p/?LinkId=733614">WDK and WinDbg downloads</a></dt>
+<dt><a href="http://msdn.microsoft.com/en-us/library/windows/hardware/ff551063(v=vs.85).aspx">Windows Debugging</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Avoiding debugger searches for unneeded symbols%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,164 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !sprocess extension displays information about the specified session process, or about all processes in the specified session."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!sprocess</title>
+
+<meta name="MS-HAID" content="r29_exts_kernel_Q_088de6b3-0f38-40ca-bba9-e5dfc68e7183.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._sprocess"></a>!sprocess</h1>
+</div>
+<p>The <b>!sprocess</b> extension displays information about the specified session process, or about all processes in the specified session.</p>
+<pre class="syntax"><b>!sprocess </b><i>Session</i><b> [</b><i>Flags</i><b> [</b><i>ImageName</i><b>]]</b> 
+<b>!sprocess -?</b></pre>
+<h2><a id="ddk__sprocess_dbg"></a><a id="DDK__SPROCESS_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Session______"></a><a id="_______session______"></a><a id="_______SESSION______"></a>       <i>Session</i>      </dt>
+<dd>
+<p>Specifies the session that owns the desired process. <i>Session</i> is always interpreted as a decimal number. </p>
+<p><i>Session</i> can have the following values:</p>
+<table>
+<tr>
+<td>
+<p>-1</p>
+</td>
+<td>
+<p>Use current session. This is the default.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>-2</p>
+</td>
+<td>
+<p>Use <a href="changing_contexts.htm#session_context">session context</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>-4</p>
+</td>
+<td>
+<p>Display all processes by session.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+</dd>
+<dt><a id="_______Flags______"></a><a id="_______flags______"></a><a id="_______FLAGS______"></a>       <i>Flags</i>      </dt>
+<dd>
+<p>Specifies the level of detail in the display. <i>Flags</i> can be any combination of the following bits. The default is 0. </p>
+<table>
+<tr>
+<td>
+<p>0x0</p>
+</td>
+<td>
+<p>Display minimal information.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Bit 0 (0x1)</p>
+</td>
+<td>
+<p>Display time and priority statistics.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Bit 1 (0x2)</p>
+</td>
+<td>
+<p>Adds to the display a list of threads and events associated with the process and the wait states of the threads.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Bit 2 (0x4)</p>
+</td>
+<td>
+<p>Adds to the display a list of threads associated with the process. If this bit is used without Bit 1 (0x2), each thread is displayed on a single line. If this is included with Bit 1, each thread is displayed with a stack trace.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Bit 3 (0x8)</p>
+</td>
+<td>
+<p>Adds to the display of each function the return address, the stack pointer and, on Itanium-based systems, the <b>bsp</b> register value. It suppresses the display of function arguments.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Bit 4 (0x10)</p>
+</td>
+<td>
+<p>Display only the return address of each function. Suppress the arguments and stack pointers.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+</dd>
+<dt><a id="_______ImageName______"></a><a id="_______imagename______"></a><a id="_______IMAGENAME______"></a>       <i>ImageName</i>      </dt>
+<dd>
+<p>Specifies the name of the process to be displayed. All processes whose executable image names match <i>ImageName</i> are displayed. The image name must match that in the EPROCESS block. In general, this is the executable name that was invoked to start the process, including the file extension (usually .exe), and truncated after the fifteenth character. There is no way to specify an image name that contains a space. </p>
+</dd>
+<dt><a id="_______-_______"></a>       <b>-?</b>      </dt>
+<dd>
+<p>Displays help for this extension in the Debugger Command window. This help text has some omissions. </p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Windows 2000
+         </b></p>
+</td>
+<td>
+<p>Unavailable </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Kdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For information about sessions and processes in kernel mode, see <a href="changing_contexts.htm">Changing Contexts</a>. For more information about analyzing processes and threads, see <i>Microsoft Windows Internals</i>, by Mark Russinovich and David Solomon. (This book may not be available in some languages and 
+
+countries.)</p>
+<h2>Remarks</h2>
+<p>The output of this extension is similar to that of <a href="_process.htm"><b>!process</b></a>, except that the addresses of _MM_SESSION_SPACE and _MMSESSION are displayed as well.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!sprocess%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

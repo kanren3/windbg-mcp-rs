@@ -1,0 +1,167 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="When Microsoft Windows encounters a condition that compromises safe system operation, the system halts. This condition is called a bug check. It is also commonly referred to as a system crash, a kernel error, or a stop error."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Blue Screen Data</title>
+
+<meta name="MS-HAID" content="t03_bug_intro_3a1b95cb-f99f-4b5d-b09f-f41befff84d0.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.blue_screen_data"></a>Blue Screen Data</h1>
+</div>
+<div class="alert"><b>Note</b>  This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see  <a href="http://go.microsoft.com/fwlink/p/?linkid=183646">Troubleshoot blue screen errors</a>.</div>
+<div> </div>
+<p>When Microsoft Windows encounters a condition that compromises safe system operation, the system halts. This condition is called a <i>bug check</i>. It is also commonly referred to as a <i>system crash</i>, a <i>kernel error</i>, or a <i>stop error</i>.</p>
+<p>If the OS were allowed to continue to run after the operating system integrity is compromised, it could corrupt data or compromise the security of the system.</p>
+<p>If crash dumps are enabled on the system, a crash dump file is created.</p>
+<p>If a kernel debugger is attached and active, the system causes a break so that the debugger can be used to investigate the crash.</p>
+<p>If no debugger is attached, a blue text screen appears with information about the error. This screen is called a <i>blue screen</i>, a <i>bug check screen</i>, or a <i>stop screen</i>.</p>
+<p>The exact appearance of the blue screen depends on the cause of the error. </p>
+<p>The following is an example of one possible blue screen:</p><img src="images/bug-check-example-blue-screen-page-fault.png" alt="Bug check example Windows 10  blue screen with QR Code"/><p>The stop code is displayed such as <a href="bug_check_0x50__page_fault_in_nonpaged_area.htm"><b>PAGE_FAULT_IN_NONPAGED_AREA</b></a>. When it is available, the module name of the code that was being executed is also displayed, such as AcmeVideo.sys. </p>
+<p> If a <a href="kernel_mode_dump_files.htm">kernel-mode dump file</a> has been written, this will be indicated as well with a percentage complete count down as the dump is being written.</p>
+<p>There is a stop code hex value associated with each stop code as listed in <a href="bug_check_code_reference2.htm">Bug Check Code Reference</a>.</p>
+<h2><a id="ddk_blue_screen_data_dbg"></a><a id="DDK_BLUE_SCREEN_DATA_DBG"></a></h2>
+<h3><a id="Gathering_the_Stop_Code_Parameters"></a><a id="gathering_the_stop_code_parameters"></a><a id="GATHERING_THE_STOP_CODE_PARAMETERS"></a>Gathering the Stop Code Parameters</h3>
+<p>Each bug check code has four associated parameters that provide additional information. The parameters are described in <a href="bug_check_code_reference2.htm">Bug Check Code Reference</a> for each stop code.</p>
+<p></p>
+<p>There are multiple ways to gather the four stop code parameters.</p>
+<ul>
+<li>
+<p>Examine the Windows system log in the event viewer. The event properties for the BugCheck will list the  four stop code parameters. For more information, see <a href="http://windows.microsoft.com/en-us/windows/what-information-event-logs-event-viewer#1TC=windows-7">Open Event Viewer</a>.</p>
+</li>
+<li>
+<p>Load the generated dump file and use the <a href="_analyze.htm"><b>!analyze</b></a> command with the debugger attached. For more information, see <a href="analyzing_a_kernel_mode_dump_file_with_windbg.htm">Analyzing a Kernel-Mode Dump File with WinDbg</a>.</p>
+</li>
+<li>
+<p>Attach a kernel debugger to the faulting PC. When the stop code occurs, the debugger output will include the four parameters after the stop code hex value.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>*******************************************************************************
+*                                                                             *
+*                        Bugcheck Analysis                                    *
+*                                                                             *
+*******************************************************************************
+
+Use !analyze -v to get detailed debugging information.
+
+BugCheck 9F, {3, ffffe000f38c06a0, fffff803c596cad0, ffffe000f46a1010}
+
+Implicit thread is now ffffe000`f4ca3040
+Probably caused by : hidusb.sys</pre>
+</td>
+</tr>
+</table></span></div>
+</li>
+</ul>
+<h3><a id="bug_check_symbolic_names"></a><a id="BUG_CHECK_SYMBOLIC_NAMES"></a>Bug Check Symbolic Names</h3>
+<p><a href="bug_check_0x9f__driver_power_state_failure.htm"><b> DRIVER_POWER_STATE_FAILURE</b></a> is the  Bug Check Symbolic Name, with an associated bug check code of 9F. The stop code hex value associated with the Bug Check Symbolic Name is listed in the <a href="bug_check_code_reference2.htm">Bug Check Code Reference</a>.</p>
+<p></p>
+<h3><a id="reading_bug_check_information_from_the_debugger"></a><a id="READING_BUG_CHECK_INFORMATION_FROM_THE_DEBUGGER"></a>Reading Bug Check Information from the Debugger</h3>
+<p>If a debugger is attached, a bug check will cause the target computer to break into the debugger. In this case, the blue screen may not appear immediately, the full details on this crash will be sent to the debugger and appear in the debugger window. To see this information a second time, use the <a href="_bugcheck__display_bug_check_data_.htm"><b>.bugcheck (Display Bug Check Data)</b></a> command or the <a href="_analyze.htm"><b>!analyze</b></a> extension command.</p>
+<p><b>Kernel Debugging and Crash Dump Analysis</b></p>
+<p>Kernel debugging is especially useful when other troubleshooting techniques fail, or for a recurring problem. Remember to capture the exact text in the bug check information section of the error message. To isolate a complex problem and develop a viable workaround, it is useful to record the exact actions that lead to the failure.</p>
+<p>The <a href="_analyze.htm"><b>!analyze</b></a> debug extension displays information about  the bug check and can be very helpful in determining the root cause.</p>
+<p>You can also set a breakpoint in the code leading up to this stop code and attempt to single step forward into the faulting code.</p>
+<p>For more information see the following topics:</p>
+<p><a href="crash_dump_files.htm">Crash dump analysis using the Windows debuggers (WinDbg)</a></p>
+<p><a href="analyzing_a_kernel_mode_dump_file_with_windbg.htm">Analyzing a Kernel-Mode Dump File with WinDbg</a></p>
+<p><a href="using_the__analyze_extension.htm">Using the !analyze Extension</a> and <a href="_analyze.htm">!analyze</a></p>
+<p>The Defrag Tools show on Channel 9 - <a href="https://channel9.msdn.com/Shows/Defrag-Tools">https://channel9.msdn.com/Shows/Defrag-Tools</a></p>
+<p></p>
+<h3><a id="Using_Driver_Verifier_to_Gather_Information"></a><a id="using_driver_verifier_to_gather_information"></a><a id="USING_DRIVER_VERIFIER_TO_GATHER_INFORMATION"></a>Using Driver Verifier to Gather Information</h3>
+<p>It is estimated that about three quarters of blue screens are caused by faulting drivers. Driver Verifier is a tool that runs in real time to examine the behavior of drivers. For example, Driver Verifier checks the use of memory resources, such as memory pools. If it see errors in the execution of driver code, it proactively creates an exception to allow that part of the driver code to be further scrutinized. The driver verifier manager is built into Windows and is available on all Windows PCs. To start  the driver verifier manager, type <i>Verifer</i> at a command prompt. You can configure which drivers you would like to verify. The code that verifies drivers adds overhead as it runs, so try and verify the smallest number of drivers as possible.  For more information, see Driver Verifier.</p>
+<p></p>
+<h2><a id="Tips_for_Software_Engineers"></a><a id="tips_for_software_engineers"></a><a id="TIPS_FOR_SOFTWARE_ENGINEERS"></a>Tips for Software Engineers</h2>
+<p>When a bug check occurs as a result of code you have written, you should use the kernel debugger to analyze the problem, and then fix the bugs in your code.   For full details, see the individual bug check code in the <a href="bug_check_code_reference2.htm">Bug Check Code Reference</a> section.  </p>
+<p>However, you might also encounter bug checks that are not caused by your own code. In this case, you probably will not be able to fix the actual cause of the problem, so your goal should be to work around the problem, and if possible isolate and remove the hardware or software component that is at fault.</p>
+<p>Many problems can be resolved through basic troubleshooting procedures, such as verifying instructions, reinstalling key components, and verifying file dates. Also, the Event Viewer, the Sysinternals diagnostic tools and network monitoring tools might isolate and resolve these issues.</p>
+<p>For general troubleshooting of Windows bug check codes, follow these suggestions:</p>
+<ul>
+<li>
+<p>If you recently added hardware to the system, try removing or replacing it. Or check with the manufacturer to see if any patches are available.</p>
+</li>
+<li>
+<p>If new device drivers or system services have been added recently, try removing or updating them. Try to determine what changed in the system that caused the new bug check code to appear.</p>
+</li>
+<li>
+<p>Look in <b>Device Manager</b> to see if any devices are marked with the exclamation point (!). Review the events log displayed in driver properties for any faulting driver.  Try updating the related driver.  </p>
+</li>
+<li>
+<p>Check the System Log in Event Viewer for additional error messages that might help pinpoint the device or driver that is causing the error. For more information, see <a href="http://windows.microsoft.com/en-us/windows/what-information-event-logs-event-viewer#1TC=windows-7">Open Event Viewer</a>. Look for critical errors in the system log that occurred in the same time window as the blue screen.</p>
+</li>
+<li>
+<p>You can try running the hardware diagnostics supplied by the system manufacturer. </p>
+</li>
+<li>
+<p>Run the Windows Memory Diagnostics tool, to test the memory. In the control panel search box, type Memory, and then click <b>Diagnose your computer's memory problems</b>.‌ After the test is run,  use Event viewer to view the results under  the System log. Look for the <i>MemoryDiagnostics-Results</i>
+entry to view the results.</p>
+</li>
+<li>
+<p>Confirm that any new hardware that is installed is compatible with the installed version of Windows. For example, you can get information about required hardware at <a href="https://www.microsoft.com/en-us/windows/windows-10-specifications">Windows 10
+
+Specifications</a>.</p>
+</li>
+<li>
+<p>Run a virus detection program. Viruses can infect all types of hard disks formatted for Windows, and resulting disk corruption can generate system bug check codes. Make sure the virus detection program checks the Master Boot Record for infections.</p>
+</li>
+<li>Use the scan disk utility to confirm that there are no file system errors. Right click on the drive you want to scan and select <b>Properties</b>. Click on <b>Tools</b>. Click the <b>Check now</b> button. </li>
+<li>
+<p>Use the System File Checker tool to repair missing or corrupted system files. The System File Checker is a utility in Windows that allows users to scan for corruptions in Windows system files and restore corrupted files. Use the following command to run the    
+
+System File Checker tool (SFC.exe).</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>SFC /scannow</pre>
+</td>
+</tr>
+</table></span></div>
+<p>For more information, see <a href="https://support.microsoft.com/kb/929833">Use the System File Checker tool to repair missing or corrupted system files</a>.</p>
+</li>
+<li>
+<p>Confirm that there is sufficient free space on the hard drive. The operating system and some applications require sufficient free space to create swap files and for other functions.   Based on the system configuration, the exact requirement varies,  but it is normally a good idea to have 10% to 15% free space available.</p>
+</li>
+<li>
+<p>Verify that the system has the latest Service Pack installed. To detect which Service Pack, if any, is installed on your system, click <b>Start</b>, click <b>Run</b>, type <b>winver</b>, and then press ENTER. The <b>About Windows</b> dialog box displays the Windows version number and the version number of the Service Pack, if one has been installed.</p>
+</li>
+<li>
+<p>Check with the manufacturer to see if an updated system BIOS or firmware is available. </p>
+</li>
+<li>
+<p>Disable BIOS memory options such as caching or shadowing.</p>
+</li>
+<li>
+<p>For PCs, make sure that all expansion boards are  is properly seated and all cables are completely connected.</p>
+</li>
+</ul>
+<p><b>Using Safe Mode</b></p>
+<p>Consider using Safe Mode when removing or disabling components. Using Safe Mode loads only the minimum required drivers and system services during the Windows startup. To enter Safe Mode, use <b>Update and Security</b> in Settings. Select <b>Recovery</b>-&gt;<b>Advanced startup</b> to  boot to maintenance mode. At the resulting menu, choose <b>Troubleshoot</b>-&gt; <b>Advanced Options</b> -&gt; <b>Startup Settings</b> -&gt; <b>Restart</b>. After Windows restarts to the <b>Startup Settings</b> screen, select option, 4, 5 or 6 to boot to Safe Mode. </p>
+<p>Safe Mode may be available by pressing a function key on boot, for example F8. Refer to information from the manufacturer for specific startup options.</p>
+<h2><a id="Forced_KeBugCheck"></a><a id="forced_kebugcheck"></a><a id="FORCED_KEBUGCHECK"></a>Forced KeBugCheck</h2>
+<p>To deliberately cause a bug check from a kernel-mode driver, you need to pass the bug check's symbolic name to the <b>KeBugCheck</b> or <b>KeBugCheckEx</b> function. This should only be done in circumstances where no other option is available. For more details on these functions, see the Windows Driver Kit.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Blue Screen Data%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

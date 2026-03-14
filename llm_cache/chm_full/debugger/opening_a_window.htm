@@ -1,0 +1,168 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Opening a Window"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Opening a Window</title>
+
+<meta name="MS-HAID" content="r06_use_gui_b8ef5a3a-721e-4cc5-9c27-ea45a968c688.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.opening_a_window"></a>Opening a Window</h1>
+</div>
+<h2><a id="ddk_opening_a_window_dbg"></a><a id="DDK_OPENING_A_WINDOW_DBG"></a></h2>
+<p>When WinDbg begins a debugging session, the <a href="debugger_command_window.htm">Debugger Command window</a> automatically opens. The <a href="disassembly_window.htm">Disassembly window</a> also automatically opens, unless you deselect <a href="window___automatically_open_disassembly.htm">Automatically Open Disassembly</a> on the <b>Window </b>menu.</p>
+<p>Whenever WinDbg discovers a source file that corresponds to the current program counter, WinDbg opens a <a href="source_window.htm">Source window</a> for that file. For other ways to open Source windows, see <a href="source_path.htm">Source Path</a>.</p>
+<p>You can use the following menu commands, toolbar buttons, and shortcut keys to switch to these windows. That is, if a window is not open, it opens. If a window is open but inactive, it becomes active. If a window is docked and there is a floating window in front of it, the docked window becomes active but the floating window stays in front of the docked window.</p>
+<table>
+<tr>
+<th>Window</th>
+<th>Menu command</th>
+<th>Button</th>
+<th>Shortcut keys</th>
+</tr>
+<tr>
+<td>
+<p><a href="debugger_command_window.htm">Debugger Command window</a></p>
+</td>
+<td>
+<p><b>View | Command</b></p>
+</td>
+<td><img src="images/tbcmd.png" alt="Screen shot of the Debugger Command window button"/></td>
+<td>
+<p>ALT+1</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+        Watch window
+       </p>
+</td>
+<td>
+<p><b>View | Watch</b></p>
+</td>
+<td><img src="images/tbwatch.png" alt="Screen shot of the Watch button"/></td>
+<td>
+<p>ALT+2</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="locals_window.htm">Locals window</a></p>
+</td>
+<td>
+<p><b>View | Locals</b></p>
+</td>
+<td><img src="images/tblocal.png" alt="Screen shot of the Locals button"/></td>
+<td>
+<p>ALT+3</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="registers_window.htm">Registers window</a></p>
+</td>
+<td>
+<p><b>View | Registers</b></p>
+</td>
+<td><img src="images/tbreg.png" alt="Screen shot of the Registers button"/></td>
+<td>
+<p>ALT+4</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="memory_window.htm">Memory window</a></p>
+</td>
+<td>
+<p><b>View | Memory</b></p>
+</td>
+<td><img src="images/tbmem.png" alt="Screen shot of the Memory button"/></td>
+<td>
+<p>ALT+5</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="calls_window.htm">Calls window</a></p>
+</td>
+<td>
+<p><b>View | Call Stack</b></p>
+</td>
+<td><img src="images/tbcall.png" alt="Screen shot of the Call Stack button"/></td>
+<td>
+<p>ALT+6</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="disassembly_window.htm">Disassembly window</a></p>
+</td>
+<td>
+<p><b>View | Disassembly</b></p>
+</td>
+<td><img src="images/tbdisasm2.png" alt="Screen shot of the Disassembly button"/></td>
+<td>
+<p>ALT+7</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+        Scratch Pad window
+       </p>
+</td>
+<td>
+<p><b>View | Scratch Pad</b></p>
+</td>
+<td><img src="images/tbspad.png" alt="Screen shot of the Scratch Pad button"/></td>
+<td>
+<p>ALT+8</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="processes_and_threads_window.htm">Processes and Threads window</a></p>
+</td>
+<td>
+<p><b>View | Processes and Threads</b></p>
+</td>
+<td><img src="images/window-processes-threads.png" alt="Screen shot of the Processes and Threads button"/></td>
+<td>
+<p>ALT+9</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="source_window.htm">Source window</a></p>
+</td>
+<td>
+<p>Click <a href="file___open_source_file.htm">File | Open Source File</a> and then select a source file.</p>
+</td>
+<td><img src="images/tbopen.png" alt="Screen shot of the Open Source File button"/></td>
+<td>
+<p>CTRL+O</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>You can also activate a window by selecting it from the <a href="list_of_open_windows.htm">list of open windows</a> at the bottom of the <b>Window</b> menu.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Opening a Window%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

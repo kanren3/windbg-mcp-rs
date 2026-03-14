@@ -1,0 +1,144 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The GetDescriptionWide method returns the description of a register."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IDebugRegisters2::GetDescriptionWide method</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.getdescriptionwide"></a>IDebugRegisters2::GetDescriptionWide method</h1>
+</div>
+<p>The <b>GetDescriptionWide</b>  method returns the description of a register.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>HRESULT GetDescriptionWide(
+  [in]            ULONG                       Register,
+  [out, optional] PWSTR                       NameBuffer,
+  [in]            ULONG                       NameBufferSize,
+  [out, optional] PULONG                      NameSize,
+  [out, optional] PDEBUG_REGISTER_DESCRIPTION Desc
+);</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Parameters</h2>
+<dl>
+<dt><i>Register</i> [in]</dt>
+<dd>
+<p>Specifies the index of the register for which the description is requested.</p>
+</dd>
+<dt><i>NameBuffer</i> [out, optional]</dt>
+<dd>
+<p>Specifies the buffer in which to store the name of the register.  If <i>NameBuffer</i> is <b>NULL</b>, this information is not returned.</p>
+</dd>
+<dt><i>NameBufferSize</i> [in]</dt>
+<dd>
+<p>Specifies the size, in characters, of the buffer that  <i>NameBuffer</i> specifies.</p>
+</dd>
+<dt><i>NameSize</i> [out, optional]</dt>
+<dd>
+<p>Receives the size, in characters, of the register's name in <i>NameBuffer</i> buffer.  If <i>NameSize</i> is <b>NULL</b>, this information is not returned.</p>
+</dd>
+<dt><i>Desc</i> [out, optional]</dt>
+<dd>
+<p>Receives the description of the register.  See <a href="debug_register_description.htm"><b>DEBUG_REGISTER_DESCRIPTION</b></a> for more details.</p>
+</dd>
+</dl>
+<h2>Return value</h2>
+<p>This list does not contain all the errors that might occur.  For a list of possible errors, see <a href="hresult_values.htm"><b>HRESULT Values</b></a>.</p>
+<table>
+<tr>
+<th>Return code</th>
+<th>Description</th>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>S_OK</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>The method was successful.</p>
+</td>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>S_FALSE</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>The method was successful. However, the buffer was not large enough to hold the register's name, so it was truncated.</p>
+</td>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>E_UNEXPECTED</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>No target machine has been specified, or a description of the register could not be found.</p>
+</td>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>E_INVALIDARG</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>The index of the register requested is greater than the total number of registers on the target's machine.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>For an overview of the <a href="idebugregisters.htm"><b>IDebugRegisters</b></a> interface and other register-related methods, see <a href="registers.htm">Registers</a>.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Target platform</p>
+</th>
+<td width="70%">
+<dl>
+<dt></dt>
+</dl>
+</td>
+</tr>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Dbgeng.h (include DbgEng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IDebugRegisters2::GetDescriptionWide method%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

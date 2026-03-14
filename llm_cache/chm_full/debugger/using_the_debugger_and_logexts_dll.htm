@@ -1,0 +1,74 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Using the Debugger and Logexts.dll"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Using the Debugger and Logexts.dll</title>
+
+<meta name="MS-HAID" content="Logger+LogViewer_bcae557f-6dac-4a31-9553-bff0731b94ee.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.using_the_debugger_and_logexts_dll"></a>Using the Debugger and Logexts.dll</h1>
+</div>
+<h2><a id="ddk_using_the_debugger_and_logexts_dll_dtoolq"></a><a id="DDK_USING_THE_DEBUGGER_AND_LOGEXTS_DLL_DTOOLQ"></a></h2>
+<p>One way to activate Logger is to start CDB or WinDbg and attach to a user-mode target application as usual. Then, use the <a href="_logexts_logi.htm"><b>!logexts.logi</b></a> or <a href="_logexts_loge.htm"><b>!logexts.loge</b></a> extension command.</p>
+<p>This will insert code at the current breakpoint that will jump off to a routine that loads and initializes Logexts.dll in the target application process. This is referred to as "injecting Logger into the target application."</p>
+<p>There will actually be two instances of Logexts.dll running, since this module is both a debugger extension DLL and the program that is injected into the target application. The debugger and target instances of Logexts.dll communicate through a shared section of memory that includes the output file handles, current category mask, and a pointer to the log output buffer.</p>
+<h3><a id="attaching_to_the_target_application"></a><a id="ATTACHING_TO_THE_TARGET_APPLICATION"></a>Attaching to the Target Application</h3>
+<p>For information about attaching the debugger to the target application, see <a href="debugging_a_user-mode_process_using_windbg.htm">Debugging a User-Mode Process Using WinDbg</a> or <a href="debugging_a_user-mode_process_using_cdb.htm">Debugging a User-Mode Process Using CDB</a>.</p>
+<h3><a id="using_the_logger_extension_commands"></a><a id="USING_THE_LOGGER_EXTENSION_COMMANDS"></a>Using the Logger Extension Commands</h3>
+<p>For the full syntax of each extension, see its reference page.</p>
+<p></p>
+<dl>
+<dt><a id="_logexts.logi"></a><a id="_LOGEXTS.LOGI"></a><a href="_logexts_logi.htm"><b>!logexts.logi</b></a></dt>
+<dd>
+<p>Injects Logger into the target application. This initializes logging, but does not enable it.</p>
+</dd>
+<dt><a id="_logexts.loge"></a><a id="_LOGEXTS.LOGE"></a><a href="_logexts_loge.htm"><b>!logexts.loge</b></a></dt>
+<dd>
+<p>Enables logging. If 
+       <a href="_logexts_logi.htm"><b>!logexts.logi</b></a> has not been used, this extension will initialize and then enable logging.</p>
+</dd>
+<dt><a id="_logexts.logd"></a><a id="_LOGEXTS.LOGD"></a><a href="_logexts_logd.htm"><b>!logexts.logd</b></a></dt>
+<dd>
+<p>Disables logging. This will cause all API hooks to be removed in an effort to allow the program to run freely. COM hooks are not removed because they cannot be re-enabled at will.</p>
+</dd>
+<dt><a id="_logexts.logo"></a><a id="_LOGEXTS.LOGO"></a><a href="_logexts_logo.htm"><b>!logexts.logo</b></a></dt>
+<dd>
+<p>Displays or modifies output options. Three types of output are possible: messages sent directly to the debugger, a text file, or an .lgv file. The .lgv file contains much more information than the other two; it can be read with <a href="logviewer.htm">LogViewer</a>.</p>
+<p>If you disable the text file output, a .txt file of size zero will still be created. This may overwrite a previously-saved text file in the same location.  </p>
+</dd>
+<dt><a id="_logexts.logc"></a><a id="_LOGEXTS.LOGC"></a><a href="_logexts_logc.htm"><b>!logexts.logc</b></a></dt>
+<dd>
+<p>Displays available API categories, controls which categories will be logged and which will not, and displays the APIs that are contained in any category.</p>
+<p>If a category is disabled, the hooks for all APIs in that category will be removed so that there is no longer any performance overhead. COM hooks are not removed because they cannot be re-enabled at will.</p>
+<p>Enabling only certain categories can be useful when you are only interested in a particular type of interaction that the program is having with Windows -- for example, file operations. This reduces the log file size and also reduces the effect that Logger has on the execution speed of the process.</p>
+</dd>
+<dt><a id="_logexts.logb"></a><a id="_LOGEXTS.LOGB"></a><a href="_logexts_logb.htm"><b>!logexts.logb</b></a></dt>
+<dd>
+<p>Displays or flushes the current output buffer. As a performance consideration, log output is flushed to disk only when the output buffer is full. By default, the buffer is 2144 bytes.</p>
+<p>Since the buffer memory is managed by the target application, the automatic writing of the buffer to the log files on the disk will not occur if there is an access violation or some other non-recoverable error in the target application. In such cases, you should use this command to manually flush the buffer to the disk, or else the most recently-logged APIs may not appear in the log files.</p>
+</dd>
+<dt><a id="_logexts.logm"></a><a id="_LOGEXTS.LOGM"></a><a href="_logexts_logm.htm"><b>!logexts.logm</b></a></dt>
+<dd>
+<p>Displays or creates a module inclusion/exclusion list. It is often desirable to only log those API calls that are made from a certain module or set of modules. To facilitate that, Logger allows you to specify a module inclusion list or, alternatively, a module exclusion list. For instance, you would use an inclusion list if you only wanted to log calls from one or two modules. If you wanted to log calls made from all modules except a short list of modules, you would use an exclusion list. The modules Logexts.dll and Kernel32.dll are always excluded, since Logger is not permitted to log itself.</p>
+</dd>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Using the Debugger and Logexts.dll%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

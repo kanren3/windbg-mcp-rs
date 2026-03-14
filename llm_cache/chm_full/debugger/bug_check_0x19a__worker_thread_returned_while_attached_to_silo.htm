@@ -1,0 +1,62 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The WORKER_THREAD_RETURNED_WHILE_ATTACHED_TO_SILO bug check has a value of 0x0000019A. This indicates that a worker thread attached to a silo and did not detach before returning."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0x19A: WORKER_THREAD_RETURNED_WHILE_ATTACHED_TO_SILO</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0x19a__worker_thread_returned_while_attached_to_silo"></a>Bug Check 0x19A: WORKER_THREAD_RETURNED_WHILE_ATTACHED_TO_SILO</h1>
+</div>
+<p>The WORKER_THREAD_RETURNED_WHILE_ATTACHED_TO_SILO bug check has a value of 0x0000019A. This indicates that a worker thread attached to a silo and did not detach before returning.</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2>WORKER_THREAD_RETURNED_WHILE_ATTACHED_TO_SILO Parameters</h2>
+<p>The following parameters are displayed on the blue screen.</p>
+<table>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>1</td>
+<td>Address of worker routine
+        </td>
+</tr>
+<tr>
+<td>2</td>
+<td>Workitem parameter
+        </td>
+</tr>
+<tr>
+<td>3</td>
+<td>Workitem address </td>
+</tr>
+<tr>
+<td>4</td>
+<td>Reserved</td>
+</tr>
+</table>
+<p> </p>
+<h2>Cause</h2>
+<p> To investigate use the <a href="ln__list_nearest_symbols_.htm"><b>ln (List Nearest Symbols)</b></a>command on parameter 1  to help identify the mis-behaving driver.</p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

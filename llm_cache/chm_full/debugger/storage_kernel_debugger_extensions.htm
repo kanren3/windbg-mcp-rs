@@ -1,0 +1,115 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The storage kernel debugger extensions (storagekd) are used for debugging the storage drivers on Windows 8 and above operating system (OS) targets."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Storage Kernel Debugger Extensions</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.storage_kernel_debugger_extensions"></a>Storage Kernel Debugger Extensions</h1>
+</div>
+<p>
+<p>The storage kernel debugger extensions (storagekd) are used for debugging the storage drivers on Windows 8 and above operating system (OS) targets.</p>
+</p>
+<p>Extension commands that are useful for debugging storage drivers, via classpnp managed storage class drivers and Storport managed storage miniport drivers, can be found in <b>Storagekd.dll</b>.
+</p>
+<p>Please refer to <a href="scsi_miniport_extensions__scsikd_dll_and_minipkd_dll_.htm">SCSI Miniport Extensions (Scsikd.dll and Minipkd.dll)</a> for debugging needs for Windows 7 and below version of OS targets.
+</p>
+<p>
+<div class="alert"><b>Important</b>  You need special symbols to use this extension. For more information, see <a href="introduction6.htm">Debugging Tools for Windows</a>.</div>
+<div> </div>
+</p>
+<h2><a id="Storage_kernel_debugger_extension_commands"></a><a id="storage_kernel_debugger_extension_commands"></a><a id="STORAGE_KERNEL_DEBUGGER_EXTENSION_COMMANDS"></a>Storage kernel debugger extension commands</h2>
+<p>
+<p></p>
+<table>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+<tr>
+<td width="40%">
+<p><a id="_storagekd.storhelp"></a><a id="_STORAGEKD.STORHELP"></a><a href="_storagekd_storhelp.htm"><b>!storagekd.storhelp</b></a></p>
+</td>
+<td width="60%">
+<p>Displays help text for <b>Storagekd.dll</b> extension commands.</p>
+</td>
+</tr>
+<tr>
+<td width="40%">
+<p><a id="_storagekd.storclass"></a><a id="_STORAGEKD.STORCLASS"></a><a href="_storagekd_storclass.htm"><b>!storagekd.storclass</b></a></p>
+</td>
+<td width="60%">
+<p>Displays information about the specified <i>classpnp</i> device.</p>
+</td>
+</tr>
+<tr>
+<td width="40%">
+<p><a id="_storagekd.storadapter"></a><a id="_STORAGEKD.STORADAPTER"></a><a href="_storagekd_storadapter.htm"><b>!storagekd.storadapter</b></a></p>
+</td>
+<td width="60%">
+<p>Displays information about the specified <i>Storport</i> adapter.</p>
+</td>
+</tr>
+<tr>
+<td width="40%">
+<p><a id="_storagekd.storunit"></a><a id="_STORAGEKD.STORUNIT"></a><a href="_storagekd_storunit.htm"><b>!storagekd.storunit</b></a></p>
+</td>
+<td width="60%">
+<p>Displays information about the specified <i>Storport</i> logical unit.</p>
+</td>
+</tr>
+<tr>
+<td width="40%">
+<p><a id="_storagekd.storloglist"></a><a id="_STORAGEKD.STORLOGLIST"></a><a href="_storagekd_storloglist.htm"><b>!storagekd.storloglist</b></a></p>
+</td>
+<td width="60%">
+<p>Displays the <i>Storport</i> adapter’s internal log entries.</p>
+</td>
+</tr>
+<tr>
+<td width="40%">
+<p><a id="_storagekd.storlogirp"></a><a id="_STORAGEKD.STORLOGIRP"></a><a href="_storagekd_storlogirp.htm"><b>!storagekd.storlogirp</b></a></p>
+</td>
+<td width="60%">
+<p>Displays the <i>Storport’s</i> internal log entries for the adapter filtered for the IRP provided.</p>
+</td>
+</tr>
+<tr>
+<td width="40%">
+<p><a id="_storagekd.storlogsrb"></a><a id="_STORAGEKD.STORLOGSRB"></a><a href="_storagekd_storlogsrb.htm"><b>!storagekd.storlogsrb</b></a></p>
+</td>
+<td width="60%">
+<p>Displays the <i>Storport’s</i> internal log entries for the adapter filtered for the Storage (or SCSI) Request Block (SRB) provided.</p>
+</td>
+</tr>
+<tr>
+<td width="40%">
+<p><a id="_storagekd.storsrb"></a><a id="_STORAGEKD.STORSRB"></a><a href="_storagekd_storsrb.htm"><b>!storagekd.storsrb</b></a></p>
+</td>
+<td width="60%">
+<p>Displays information about the specified Storage (or SCSI) Request Block (SRB).</p>
+</td>
+</tr>
+</table>
+<p> </p>
+</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Storage Kernel Debugger Extensions%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,74 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Global Flags Dialog Box"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Global Flags Dialog Box</title>
+
+<meta name="MS-HAID" content="GFlags_386ff394-9e91-4dd3-b0bf-5cea6e18a02d.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.global_flags_dialog_box"></a>Global Flags Dialog Box</h1>
+</div>
+<h2><a id="ddk_global_flags_dialog_box_dtools"></a><a id="DDK_GLOBAL_FLAGS_DIALOG_BOX_DTOOLS"></a></h2>
+<p>You can use the <b>Global Flags</b> dialog box to set and clear global flags from a user interface that lists all flags by name. There is no need to look up flag abbreviations or hexadecimal values. </p>
+<p>Also, the dialog box provides access to the following features that are not available from the command line:</p>
+<ul>
+<li>
+<p><b>Debugger</b> − Specifies that a particular program always runs in a debugger. </p>
+</li>
+<li>
+<p><b>Launch</b> − Runs a program with the specified debugging settings. </p>
+</li>
+<li>
+<p><b>Kernel Special Pool Tag</b> − Configures the Special Pool feature.</p>
+</li>
+</ul>
+<p>This topic includes instructions for the following procedures:</p>
+<dl>
+<dd>
+<p><a href="opening_the_dialog_box.htm">Opening the Dialog Box</a></p>
+</dd>
+<dd>
+<p><a href="setting_and_clearing_system_wide_flags.htm">Setting and Clearing System-wide Flags</a></p>
+</dd>
+<dd>
+<p><a href="setting_and_clearing_kernel_flags.htm">Setting and Clearing Kernel Flags</a></p>
+</dd>
+<dd>
+<p><a href="setting_and_clearing_image_file_flags.htm">Setting and Clearing Image File Flags</a></p>
+</dd>
+<dd>
+<p><a href="launching_a_program_with_flags.htm">Launching a Program with Flags</a></p>
+</dd>
+<dd>
+<p><a href="running_a_program_in_a_debugger.htm">Running a Program in a Debugger</a></p>
+</dd>
+<dd>
+<p><a href="configuring_special_pool.htm">Configuring Special Pool</a></p>
+</dd>
+<dd>
+<p><a href="configuring_object_reference_tracing.htm">Configuring Object Reference Tracing</a></p>
+</dd>
+</dl>
+<p>Pool tagging is permanently enabled on Windows Server 2003 and later versions of Windows. On these systems, the <b>Enable pool tagging</b> check box on the <b>Global Flags</b> dialog box is dimmed, and commands to enable or disable pool tagging fail. </p>
+<p>Use care in interpreting the <b>Enable page heap</b> check box for an image file in the <b>Global Flags</b> dialog box. This check box indicates that page heap verification is enabled for an image file, but it does not indicate whether it is full or standard page heap verification. If the check results from selecting the check box, then full page heap verification is enabled for the image file. However, if the check results from use of the command-line interface, then the check can represent the enabling of either full or standard page heap verification for the image file.</p>
+<p>To determine whether a full or standard page heap verification is enabled for a program, at the command line, type <b>gflags /p</b>. In the resulting display, <b>traces</b> indicates that standard page heap verification is enabled for the program and <b>full traces</b> indicates that full page heap verification is enabled for the program.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Global Flags Dialog Box%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

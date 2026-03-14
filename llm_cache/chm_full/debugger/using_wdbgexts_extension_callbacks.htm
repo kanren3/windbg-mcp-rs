@@ -1,0 +1,70 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Using WdbgExts Extension Callbacks"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Using WdbgExts Extension Callbacks</title>
+
+<meta name="MS-HAID" content="WdbgExts_DG_7a7d6cab-1b13-46dc-ad0e-ba9a597d2227.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.using_wdbgexts_extension_callbacks"></a>Using WdbgExts Extension Callbacks</h1>
+</div>
+<h2><a id="ddk_using_wdbgexts_extension_callbacks_dbwx"></a><a id="DDK_USING_WDBGEXTS_EXTENSION_CALLBACKS_DBWX"></a></h2>
+<p>When you write a WdbgExts extension DLL, you  can export certain functions:</p>
+<ul>
+<li>
+<p>You must export a function named <a href="windbgextensiondllinit.htm"><i>WinDbgExtensionDllInit</i></a>. When the debugger loads your extension DLL, it first calls <i>WinDbgExtensionDllInit</i> and passes it three arguments.</p>
+<ul>
+<li>A pointer to a <b>WINDBG_EXTENSION_APIS64</b> structure, which contains pointers to functions that are implemented by the debugger and declared in Wdbgexts.h. You must copy the entire structure to a global variable that you create in your DLL.</li>
+<li>A major version number. You must copy the major version number to a global variable that you create in your DLL.</li>
+<li>A minor version number. You must copy the minor version number to a global variable that you create in your DLL.</li>
+</ul>
+<p>For example, you could create global variables named ExtensionApis, SavedMajorVersion, and SavedMinorVersion as shown in the following example.</p>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>WINDBG_EXTENSION_APIS64 ExtensionApis;
+USHORT SavedMajorVersion;
+USHORT SavedMinorVersion;
+
+VOID WinDbgExtensionDllInit(PWINDBG_EXTENSION_APIS64 lpExtensionApis,
+    USHORT MajorVersion, USHORT MinorVersion)
+{
+   ExtensionApis = *lpExtensionApis;
+   SavedMajorVersion = MajorVersion;
+   SavedMinorVersion = MinorVersion;
+    ...
+}</pre>
+</td>
+</tr>
+</table></span></div>
+</li>
+<li>
+<p>You must export a function called <a href="extensionapiversion.htm"><i>ExtensionApiVersion</i></a>. The debugger calls this function and expects back a pointer to an <b>EXT_API_VERSION</b> structure that contains the version number of the extension DLL. The debugger uses this version number when executing commands like <a href="_chain__list_debugger_extensions_.htm"><b>.chain</b></a> and <a href="version__show_debugger_version_.htm"><b>version</b></a> that display the extension version number.</p>
+</li>
+<li>
+<p>You can optionally export a function called <a href="checkversion.htm"><i>CheckVersion</i></a>. The debugger calls this routine every time you use an extension command. You can use this to print out version mismatch warnings when your DLL is of a slightly different version than the debugger, but not different enough to prevent it from running.</p>
+</li>
+</ul>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Using WdbgExts Extension Callbacks%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

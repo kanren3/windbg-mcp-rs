@@ -1,0 +1,56 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !wdfkd.wdfextendwatchdog extension extends the time-out period (from 10 minutes to 24 hours) of the framework's watchdog timer during power transitions."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!wdfkd.wdfextendwatchdog</title>
+
+<meta name="MS-HAID" content="r33~c_exts_WDF_d7ad6843-5cdf-4f18-81da-d0c0a8df2010.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._wdfkd_wdfextendwatchdog"></a>!wdfkd.wdfextendwatchdog</h1>
+</div>
+<p>The <b>!wdfkd.wdfextendwatchdog</b> extension extends the time-out period (from 10 minutes to 24 hours) of the framework's watchdog timer during power transitions.</p>
+<pre class="syntax"><b>!wdfkd.wdfextendwatchdog </b><i>Handle</i><b> </b>[<i>Extend</i>]</pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Handle______"></a><a id="_______handle______"></a><a id="_______HANDLE______"></a>       <i>Handle</i>      </dt>
+<dd>
+<p>A handle to a WDFDEVICE-typed object.</p>
+</dd>
+<dt><a id="_______Extend______"></a><a id="_______extend______"></a><a id="_______EXTEND______"></a>       <i>Extend</i>      </dt>
+<dd>
+<p>Optional. A value that indicates whether to enable or disable extension of the time-out period. If <i>Extend</i> is 0, extension is disabled, and the time-out period is 10 minutes. If <i>Extend</i> is 1, extension is enabled and the time-out period is 24 hours. The default value is 1. </p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<p>
+       Wdfkd.dll
+      </p>
+<h3><a id="Frameworks"></a><a id="frameworks"></a><a id="FRAMEWORKS"></a>Frameworks</h3>
+<p>
+       KMDF 1</p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information, see <a href="kernel_mode_driver_framework_debugging.htm">Kernel-Mode Driver Framework Debugging</a>.</p>
+<h2>Remarks</h2>
+<p>The framework starts an internal watchdog timer every time it calls a power policy or power event callback function for a driver that is not power pageable (that is, the DO_POWER_PAGABLE bit is clear). If the callback function causes paging I/O and therefore blocks, the operating system hangs because no paging device is available to service the request.</p>
+<p>If the time-out period elapses, the framework issues bug check 0x10D (WDF_VIOLATION). For details,  see <a href="bug_check_0x10d___wdf_violation.htm"><b>Bug Check 0x10D</b></a>.  </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!wdfkd.wdfextendwatchdog%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

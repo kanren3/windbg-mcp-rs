@@ -1,0 +1,69 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Types"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Types</title>
+
+<meta name="MS-HAID" content="Engine_DG_20e559a0-525c-4e47-ba69-b70d3576e059.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.types"></a>Types</h1>
+</div>
+<h2><a id="ddk_types_dbx"></a><a id="DDK_TYPES_DBX"></a></h2>
+<p>Type information from a module's symbol file is identified by two pieces of information:  a type ID and the base address of the module to which the type belongs.  The following methods can be used to find a type ID:</p>
+<ul>
+<li>
+<p><a href="gettypeid.htm"><b>GetTypeId</b></a> returns the type ID for a given type name.</p>
+</li>
+<li>
+<p><a href="getsymboltypeid.htm"><b>GetSymbolTypeId</b></a> returns the type ID for the type of a symbol with the given name.</p>
+</li>
+<li>
+<p><a href="getoffsettypeid.htm"><b>GetOffsetTypeId</b></a> returns the type ID for the symbol found at the given location.</p>
+</li>
+</ul>
+<p>The name and size of a type are returned by <a href="gettypename.htm"><b>GetTypeName</b></a> and <a href="gettypesize2.htm"><b>GetTypeSize</b></a>, respectively.</p>
+<p>The following convenience methods can be used for reading and writing typed data in the target's physical and virtual memory:</p>
+<dl>
+<dd>
+<p><a href="readtypeddataphysical.htm"><b>ReadTypedDataPhysical</b></a></p>
+</dd>
+<dd>
+<p><a href="writetypeddataphysical.htm"><b>WriteTypedDataPhysical</b></a></p>
+</dd>
+<dd>
+<p><a href="readtypeddatavirtual.htm"><b>ReadTypedDataVirtual</b></a></p>
+</dd>
+<dd>
+<p><a href="writetypeddatavirtual.htm"><b>WriteTypedDataVirtual</b></a></p>
+</dd>
+</dl>
+<h3><a id="printing_typed_data"></a><a id="PRINTING_TYPED_DATA"></a>Printing Typed Data</h3>
+<p>To format typed data and send it to the output callbacks, use <a href="outputtypeddataphysical.htm"><i>OutputTypedDataPhysical</i></a> and <a href="outputtypeddatavirtual.htm"><i>OutputTypedDataVirtual</i></a> for data in the target's physical and virtual memory respectively.</p>
+<p>The type options described in <a href="debug_typeopts_xxx.htm"><b>DEBUG_TYPEOPTS_XXX</b></a> affect how the engine formats typed data before sending it to the output callbacks.</p>
+<p>The type options may be turned on by using <a href="addtypeoptions.htm"><b>AddTypeOptions</b></a>, and turned off by using <a href="removetypeoptions.htm"><b>RemoveTypeOptions</b></a>.</p>
+<p><a href="gettypeoptions.htm"><b>GetTypeOptions</b></a> returns the current type options.  To set all the type options at once, use <a href="settypeoptions.htm"><b>SetTypeOptions</b></a>.</p>
+<h3><a id="interpreting_raw_data_using_type_information"></a><a id="INTERPRETING_RAW_DATA_USING_TYPE_INFORMATION"></a>Interpreting Raw Data Using Type Information</h3>
+<p>The debugger engine API supports interpreting typed data.  This provides a way to walk object hierarchies on the target, including finding members of structures, dereferencing pointers, and locating array elements.</p>
+<p>Typed data is described by instances of the <a href="debug_typed_data.htm"><b>DEBUG_TYPED_DATA</b></a> structure and represents regions of memory on the target cast to a particular type.  The <a href="debug_request_ext_typed_data_ansi.htm"><b>DEBUG_REQUEST_EXT_TYPED_DATA_ANSI</b></a><b>Request</b> operation is used to manipulate these instances.  They can be initialized to the result of expressions or by casting regions of memory to a specified type.  For a list of all the sub-operations that the DEBUG_REQUEST_EXT_TYPED_DATA_ANSI <b>Request</b> operation supports, see <a href="ext_tdop.htm"><b>EXT_TDOP</b></a>.</p>
+<h3><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For details on output callbacks, see <a href="using_input_and_output.htm">Input and Output</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Types%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,1357 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="x86 Instructions"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>x86 Instructions</title>
+
+<meta name="MS-HAID" content="t09_arch_x86_01c02d25-4f31-4225-a1dc-90372fe95e23.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.x86_instructions"></a>x86 Instructions</h1>
+</div>
+<h2><a id="ddk_x86_instructions_dbg"></a><a id="DDK_X86_INSTRUCTIONS_DBG"></a></h2>
+<p>In the lists in this section, instructions marked with an asterisk (<b>*</b>) are particularly important. Instructions not so marked are not critical.</p>
+<p>On the x86 processor, instructions are variable-sized, so disassembling backward is an exercise in pattern matching. To disassemble backward from an address, you should start disassembling at a point further back than you really want to go, then look forward until the instructions start making sense. The first few instructions may not make any sense because you may have started disassembling in the middle of an instruction. There is a possibility, unfortunately, that  the disassembly will never synchronize with the instruction stream and you will have to try disassembling at a different starting point until you find a starting point that works.</p>
+<p>For well-packed <b>switch</b> statements, the compiler emits data directly into the code stream, so disassembling through a <b>switch</b> statement will usually stumble across instructions that make no sense (because they are really data). Find the end of the data and continue disassembling there.</p>
+<h3><a id="Instruction_Notation"></a><a id="instruction_notation"></a><a id="INSTRUCTION_NOTATION"></a>Instruction Notation</h3>
+<p>The general notation for instructions is to put the destination register on the left and the source on the right. However, there can be some exceptions to this rule.</p>
+<p>Arithmetic instructions are typically two-register with the source and destination registers combining. The result is stored into the destination.</p>
+<p>Some of the instructions have both 16-bit and 32-bit versions, but only the 32-bit versions are listed here. Not listed here are floating-point instructions, privileged instructions, and instructions that are used only in segmented models (which Microsoft Win32 does not use).</p>
+<p>To save space, many of the instructions are expressed in combined form, as shown in the following example.</p>
+<table>
+<tr>
+<td>
+<p><b>*</b></p>
+</td>
+<td>
+<p>MOV</p>
+</td>
+<td>
+<p><b>r1</b>, <b>r</b>/m/#n</p>
+</td>
+<td>
+<p><b>r1</b> = <b>r</b>/m/#n</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>means that the first parameter must be a register, but the second can be a register, a memory reference, or an immediate value.</p>
+<p>To save even more space, instructions can also be expressed as shown in the following.</p>
+<table>
+<tr>
+<td>
+<p><b>*</b></p>
+</td>
+<td>
+<p>MOV</p>
+</td>
+<td>
+<p><b>r1</b>/m, <b>r</b>/m/#n</p>
+</td>
+<td>
+<p><b>r1</b>/m = <b>r</b>/m/#n</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>which means that the first parameter can be a register or a memory reference, and the second can be a register, memory reference, or immediate value.</p>
+<p>Unless otherwise noted, when this abbreviation is used, you cannot choose memory for both source and destination.</p>
+<p>Furthermore, a bit-size suffix (8, 16, 32) can be appended to the source or destination to indicate that the parameter must be of that size. For example, r8 means an 8-bit register.</p>
+<h3><a id="Memory__Data_Transfer__and_Data_Conversion"></a><a id="memory__data_transfer__and_data_conversion"></a><a id="MEMORY__DATA_TRANSFER__AND_DATA_CONVERSION"></a>Memory, Data Transfer, and Data Conversion</h3>
+<p>Memory and data transfer instructions do not affect flags.</p>
+<h3><a id="Effective_Address"></a><a id="effective_address"></a><a id="EFFECTIVE_ADDRESS"></a>Effective Address</h3>
+<table>
+<tr>
+<td>
+<p><b>*</b></p>
+</td>
+<td>
+<p>LEA</p>
+</td>
+<td>
+<p><b>r</b>, m</p>
+</td>
+<td>
+<p>Load effective address.</p>
+<p>(r = address of m)</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>For example, <b>LEA eax, [esi+4]</b> means <b>eax</b> = <b>esi</b> + 4. This instruction is often used to perform arithmetic.</p>
+<h3><a id="Data_Transfer"></a><a id="data_transfer"></a><a id="DATA_TRANSFER"></a>Data Transfer</h3>
+<table>
+<tr>
+<td>
+<p><b>*</b></p>
+</td>
+<td>
+<p>MOV</p>
+</td>
+<td>
+<p><b>r1</b>/m, <b>r2</b>/m/#n</p>
+</td>
+<td>
+<p><b>r1</b>/m = <b>r</b>/m/#n</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>*</b></p>
+</td>
+<td>
+<p>MOVSX</p>
+</td>
+<td>
+<p><b>r1</b>, <b>r</b>/m</p>
+</td>
+<td>
+<p>Move with sign extension.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>*</b></p>
+</td>
+<td>
+<p>MOVZX</p>
+</td>
+<td>
+<p><b>r1</b>, <b>r</b>/m</p>
+</td>
+<td>
+<p>Move with zero extension.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p><b>MOVSX</b> and <b>MOVZX</b> are special versions of the <b>mov</b> instruction that perform sign extension or zero extension from the source to the destination. This is the only instruction that allows the source and destination to be different sizes. (And in fact, they must be different sizes.</p>
+<h3><a id="Stack_Manipulation"></a><a id="stack_manipulation"></a><a id="STACK_MANIPULATION"></a>Stack Manipulation</h3>
+<p>The stack is pointed to by the <b>esp</b> register. The value at <b>esp</b> is the top of the stack (most recently pushed, first to be popped); older stack elements reside at higher addresses.</p>
+<table>
+<tr>
+<td>
+<p><b>*</b></p>
+</td>
+<td>
+<p>PUSH</p>
+</td>
+<td>
+<p><b>r</b>/m/#n</p>
+</td>
+<td>
+<p>Push value onto stack.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>*</b></p>
+</td>
+<td>
+<p>POP</p>
+</td>
+<td>
+<p><b>r</b>/m</p>
+</td>
+<td>
+<p>Pop value from stack.</p>
+</td>
+</tr>
+<tr>
+<td></td>
+<td>
+<p>PUSHFD</p>
+</td>
+<td></td>
+<td>
+<p>Push flags onto stack.</p>
+</td>
+</tr>
+<tr>
+<td></td>
+<td>
+<p>POPFD</p>
+</td>
+<td></td>
+<td>
+<p>Pop flags from stack.</p>
+</td>
+</tr>
+<tr>
+<td></td>
+<td>
+<p>PUSHAD</p>
+</td>
+<td></td>
+<td>
+<p>Push all integer registers.</p>
+</td>
+</tr>
+<tr>
+<td></td>
+<td>
+<p>POPAD</p>
+</td>
+<td></td>
+<td>
+<p>Pop all integer registers.</p>
+</td>
+</tr>
+<tr>
+<td></td>
+<td>
+<p>ENTER</p>
+</td>
+<td>
+<p>#n, #n</p>
+</td>
+<td>
+<p>Build stack frame.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>*</b></p>
+</td>
+<td>
+<p>LEAVE</p>
+</td>
+<td></td>
+<td>
+<p>Tear down stack frame</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>The C/C++ compiler does not use the <b>enter</b> instruction.  (The <b>enter</b> instruction is used to implement nested procedures in languages like Algol or Pascal.)  </p>
+<p>The <b>leave</b> instruction is equivalent to:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>mov esp, ebp
+pop ebp</pre>
+</td>
+</tr>
+</table></span></div>
+<h3><a id="Data_Conversion"></a><a id="data_conversion"></a><a id="DATA_CONVERSION"></a>Data Conversion</h3>
+<table>
+<tr>
+<td>
+<p>CBW</p>
+</td>
+<td>
+<p>Convert byte (<b>al</b>) to word (<b>ax</b>).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>CWD</p>
+</td>
+<td>
+<p>Convert word (<b>ax</b>) to dword (<b>dx</b>:<b>ax</b>).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>CWDE</p>
+</td>
+<td>
+<p>Convert word (<b>ax</b>) to dword (<b>eax</b>).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>CDQ</p>
+</td>
+<td>
+<p>convert dword (<b>eax</b>) to qword (<b>edx</b>:<b>eax</b>).</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>All conversions perform sign extension.</p>
+<h3><a id="Arithmetic_and_Bit_Manipulation"></a><a id="arithmetic_and_bit_manipulation"></a><a id="ARITHMETIC_AND_BIT_MANIPULATION"></a>Arithmetic and Bit Manipulation</h3>
+<p>All arithmetic and bit manipulation instructions modify flags.</p>
+<h3><a id="Arithmetic"></a><a id="arithmetic"></a><a id="ARITHMETIC"></a>Arithmetic</h3>
+<table>
+<tr>
+<td>
+<p><b>*</b></p>
+</td>
+<td>
+<p>ADD</p>
+</td>
+<td>
+<p><b>r1</b>/m, <b>r2</b>/m/#n</p>
+</td>
+<td>
+<p><b>r1</b>/m += <b>r2</b>/m/#n</p>
+</td>
+</tr>
+<tr>
+<td></td>
+<td>
+<p>ADC</p>
+</td>
+<td>
+<p><b>r1</b>/m, <b>r2</b>/m/#n</p>
+</td>
+<td>
+<p><b>r1</b>/m += <b>r2</b>/m/#n + carry</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>*</b></p>
+</td>
+<td>
+<p>SUB</p>
+</td>
+<td>
+<p><b>r1</b>/m, <b>r2</b>/m/#n</p>
+</td>
+<td>
+<p><b>r1</b>/m -= <b>r2</b>/m/#n</p>
+</td>
+</tr>
+<tr>
+<td></td>
+<td>
+<p>SBB</p>
+</td>
+<td>
+<p><b>r1</b>/m, <b>r2</b>/m/#n</p>
+</td>
+<td>
+<p><b>r1</b>/m -= <b>r2</b>/m/#n + carry</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>*</b></p>
+</td>
+<td>
+<p>NEG</p>
+</td>
+<td>
+<p><b>r1</b>/m</p>
+</td>
+<td>
+<p><b>r1</b>/m = -<b>r1</b>/m</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>*</b></p>
+</td>
+<td>
+<p>INC</p>
+</td>
+<td>
+<p><b>r</b>/m</p>
+</td>
+<td>
+<p><b>r</b>/m += 1</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>*</b></p>
+</td>
+<td>
+<p>DEC</p>
+</td>
+<td>
+<p><b>r</b>/m</p>
+</td>
+<td>
+<p><b>r</b>/m -= 1</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>*</b></p>
+</td>
+<td>
+<p>CMP</p>
+</td>
+<td>
+<p><b>r1</b>/m, <b>r2</b>/m/#n</p>
+</td>
+<td>
+<p>Compute <b>r1</b>/m - <b>r2</b>/m/#n</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>The <b>cmp</b> instruction computes the subtraction and sets flags according to the result, but throws the result away. It is typically followed by a conditional <b>jump</b> instruction that tests the result of the subtraction.</p>
+<table>
+<tr>
+<td></td>
+<td>
+<p>MUL</p>
+</td>
+<td>
+<p><b>r</b>/m8</p>
+</td>
+<td>
+<p><b>ax</b> = <b>al</b> * <b>r</b>/m8</p>
+</td>
+</tr>
+<tr>
+<td></td>
+<td>
+<p>MUL</p>
+</td>
+<td>
+<p><b>r</b>/m16</p>
+</td>
+<td>
+<p><b>dx</b>:<b>ax</b> = <b>ax</b> * <b>r</b>/m16</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>*</b></p>
+</td>
+<td>
+<p>MUL</p>
+</td>
+<td>
+<p><b>r</b>/m32</p>
+</td>
+<td>
+<p><b>edx</b>:<b>eax</b> = <b>eax</b> * <b>r</b>/m32</p>
+</td>
+</tr>
+<tr>
+<td></td>
+<td>
+<p>IMUL</p>
+</td>
+<td>
+<p><b>r</b>/m8</p>
+</td>
+<td>
+<p><b>ax</b> = <b>al</b> * <b>r</b>/m8</p>
+</td>
+</tr>
+<tr>
+<td></td>
+<td>
+<p>IMUL</p>
+</td>
+<td>
+<p><b>r</b>/m16</p>
+</td>
+<td>
+<p><b>dx</b>:<b>ax</b> = <b>ax</b> * <b>r</b>/m16</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>*</b></p>
+</td>
+<td>
+<p>IMUL</p>
+</td>
+<td>
+<p><b>r</b>/m32</p>
+</td>
+<td>
+<p><b>edx</b>:<b>eax</b> = <b>eax</b> * <b>r</b>/m32</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>*</b></p>
+</td>
+<td>
+<p>IMUL</p>
+</td>
+<td>
+<p><b>r1</b>, <b>r2</b>/m</p>
+</td>
+<td>
+<p><b>r1</b> *= <b>r2</b>/m</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>*</b></p>
+</td>
+<td>
+<p>IMUL</p>
+</td>
+<td>
+<p><b>r1</b>, <b>r2</b>/m, #n</p>
+</td>
+<td>
+<p><b>r1</b> = <b>r2</b>/m * #n</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>Unsigned and signed multiplication. The state of flags after multiplication is undefined.</p>
+<table>
+<tr>
+<td></td>
+<td>
+<p>DIV</p>
+</td>
+<td>
+<p><b>r</b>/m8</p>
+</td>
+<td>
+<p>(<b>ah</b>, <b>al</b>) = (<b>ax</b> % <b>r</b>/m8, <b>ax</b>  / <b>r</b>/m8)</p>
+</td>
+</tr>
+<tr>
+<td></td>
+<td>
+<p>DIV</p>
+</td>
+<td>
+<p><b>r</b>/m16</p>
+</td>
+<td>
+<p>(<b>dx</b>, <b>ax</b>) = <b>dx</b>:<b>ax</b>  / <b>r</b>/m16</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>*</b></p>
+</td>
+<td>
+<p>DIV</p>
+</td>
+<td>
+<p><b>r</b>/m32</p>
+</td>
+<td>
+<p>(<b>edx</b>, <b>eax</b>) = <b>edx</b>:<b>eax</b>  / <b>r</b>/m32</p>
+</td>
+</tr>
+<tr>
+<td></td>
+<td>
+<p>IDIV</p>
+</td>
+<td>
+<p><b>r</b>/m8</p>
+</td>
+<td>
+<p>(<b>ah</b>, <b>al</b>) = <b>ax</b>  / <b>r</b>/m8</p>
+</td>
+</tr>
+<tr>
+<td></td>
+<td>
+<p>IDIV</p>
+</td>
+<td>
+<p><b>r</b>/m16</p>
+</td>
+<td>
+<p>(<b>dx</b>, <b>ax</b>) = <b>dx</b>:<b>ax</b>  / <b>r</b>/m16</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>*</b></p>
+</td>
+<td>
+<p>IDIV</p>
+</td>
+<td>
+<p><b>r</b>/m32</p>
+</td>
+<td>
+<p>(<b>edx</b>, <b>eax</b>) = <b>edx</b>:<b>eax</b>  / <b>r</b>/m32</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>Unsigned and signed division. The first register in the pseudocode explanation receives the remainder and the second receives the quotient. If the result overflows the destination, a division overflow exception is generated.</p>
+<p>The state of flags after division is undefined.</p>
+<table>
+<tr>
+<td>
+<p>*</p>
+</td>
+<td>
+<p>SET<i>cc</i></p>
+</td>
+<td>
+<p><b>r</b>/m8</p>
+</td>
+<td>
+<p>Set <b>r</b>/m8 to 0 or 1</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>If the condition <i>cc</i> is true, then the 8-bit value is set to 1. Otherwise, the 8-bit value is set to zero.</p>
+<h3><a id="Binary-coded_Decimal"></a><a id="binary-coded_decimal"></a><a id="BINARY-CODED_DECIMAL"></a>Binary-coded Decimal</h3>
+<p>You will not see these instructions unless you are debugging code written in COBOL.</p>
+<table>
+<tr>
+<td></td>
+<td>
+<p>DAA</p>
+</td>
+<td>
+<p>Decimal adjust after addition.</p>
+</td>
+</tr>
+<tr>
+<td></td>
+<td>
+<p>DAS</p>
+</td>
+<td>
+<p>Decimal adjust after subtraction.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>These instructions adjust the <b>al</b> register after performing a packed binary-coded decimal operation.</p>
+<table>
+<tr>
+<td>
+<p>AAA</p>
+</td>
+<td>
+<p>ASCII adjust after addition.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>AAS</p>
+</td>
+<td>
+<p>ASCII adjust after subtraction.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>These instructions adjust the <b>al</b> register after performing an unpacked binary-coded decimal operation.</p>
+<table>
+<tr>
+<td>
+<p>AAM</p>
+</td>
+<td>
+<p>ASCII adjust after multiplication.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>AAD</p>
+</td>
+<td>
+<p>ASCII adjust after division.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>These instructions adjust the <b>al</b> and <b>ah</b> registers after performing an unpacked binary-coded decimal operation.</p>
+<h3><a id="Bits"></a><a id="bits"></a><a id="BITS"></a>Bits</h3>
+<table>
+<tr>
+<td>
+<p><b>*</b></p>
+</td>
+<td>
+<p>AND</p>
+</td>
+<td>
+<p><b>r1</b>/m, <b>r2</b>/m/#n</p>
+</td>
+<td>
+<p><b>r1</b>/m = <b>r1</b>/m and <b>r2</b>/m/#n</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>*</b></p>
+</td>
+<td>
+<p>OR</p>
+</td>
+<td>
+<p><b>r1</b>/m, <b>r2</b>/m/#n</p>
+</td>
+<td>
+<p><b>r1</b>/m = <b>r1</b>/m or <b>r2</b>/m/#n</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>*</b></p>
+</td>
+<td>
+<p>XOR</p>
+</td>
+<td>
+<p><b>r1</b>/m, <b>r2</b>/m/#n</p>
+</td>
+<td>
+<p><b>r1</b>/m = <b>r1</b>/m xor <b>r2</b>/m/#n</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>*</b></p>
+</td>
+<td>
+<p>NOT</p>
+</td>
+<td>
+<p><b>r1</b>/m</p>
+</td>
+<td>
+<p><b>r1</b>/m = bitwise not <b>r1</b>/m</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>*</b></p>
+</td>
+<td>
+<p>TEST</p>
+</td>
+<td>
+<p><b>r1</b>/m, <b>r2</b>/m/#n</p>
+</td>
+<td>
+<p>Compute <b>r1</b>/m and <b>r2</b>/m/#n</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>The <b>test </b>instruction computes the logical AND operator and sets flags according to the result, but throws the result away. It is typically followed by a conditional jump instruction that tests the result of the logical AND.</p>
+<table>
+<tr>
+<td>
+<p><b>*</b></p>
+</td>
+<td>
+<p>SHL</p>
+</td>
+<td>
+<p><b>r1</b>/m, <b>cl</b>/#n</p>
+</td>
+<td>
+<p><b>r1</b>/m &lt;&lt;= <b>cl</b>/#n</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>*</b></p>
+</td>
+<td>
+<p>SHR</p>
+</td>
+<td>
+<p><b>r1</b>/m, <b>cl</b>/#n</p>
+</td>
+<td>
+<p><b>r1</b>/m &gt;&gt;= <b>cl</b>/#n zero-fill</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>*</b></p>
+</td>
+<td>
+<p>SAR</p>
+</td>
+<td>
+<p><b>r1</b>/m, <b>cl</b>/#n</p>
+</td>
+<td>
+<p><b>r1</b>/m &gt;&gt;= <b>cl</b>/#n sign-fill</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>The last bit shifted out is placed in the carry.</p>
+<table>
+<tr>
+<td></td>
+<td>
+<p>SHLD</p>
+</td>
+<td>
+<p><b>r1</b>, <b>r2</b>/m, <b>cl</b>/#n</p>
+</td>
+<td>
+<p>Shift left double.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>Shift <b>r1</b> left by <b>cl</b>/#n, filling with the top bits of <b>r2</b>/m. The last bit shifted out is placed in the carry.</p>
+<table>
+<tr>
+<td>
+<p>SHRD</p>
+</td>
+<td>
+<p><b>r1</b>, <b>r2</b>/m, <b>cl</b>/#n</p>
+</td>
+<td>
+<p>Shift right double.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>Shift <b>r1</b> right by <b>cl</b>/#n, filling with the bottom bits of <b>r2</b>/m. The last bit shifted out is placed in the carry.</p>
+<table>
+<tr>
+<td>
+<p>ROL</p>
+</td>
+<td>
+<p><b>r1</b>, <b>cl</b>/#n</p>
+</td>
+<td>
+<p>Rotate <b>r1</b> left by <b>cl</b>/#n.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>ROR</p>
+</td>
+<td>
+<p><b>r1</b>, <b>cl</b>/#n</p>
+</td>
+<td>
+<p>Rotate <b>r1</b> right by <b>cl</b>/#n.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>RCL</p>
+</td>
+<td>
+<p><b>r1</b>, <b>cl</b>/#n</p>
+</td>
+<td>
+<p>Rotate <b>r1</b>/C left by <b>cl</b>/#n.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>RCR</p>
+</td>
+<td>
+<p><b>r1</b>, <b>cl</b>/#n</p>
+</td>
+<td>
+<p>Rotate <b>r1</b>/C right by <b>cl</b>/#n.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>Rotation is like shifting, except that the bits that are shifted out reappear as the incoming fill bits. The C-language version of the rotation instructions incorporate the carry bit into the rotation.</p>
+<table>
+<tr>
+<td>
+<p>BT</p>
+</td>
+<td>
+<p><b>r1</b>, <b>r2</b>/#n</p>
+</td>
+<td>
+<p>Copy bit <b>r2</b>/#n of <b>r1</b> into carry.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>BTS</p>
+</td>
+<td>
+<p><b>r1</b>, <b>r2</b>/#n</p>
+</td>
+<td>
+<p>Set bit <b>r2</b>/#n of <b>r1</b>, copy previous value into carry.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>BTC</p>
+</td>
+<td>
+<p><b>r1</b>, <b>r2</b>/#n</p>
+</td>
+<td>
+<p>Clear bit <b>r2</b>/#n of <b>r1</b>, copy previous value into carry.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Control_Flow"></a><a id="control_flow"></a><a id="CONTROL_FLOW"></a>Control Flow</h3>
+<table>
+<tr>
+<td>
+<p><b>*</b></p>
+</td>
+<td>
+<p>J<i>cc</i></p>
+</td>
+<td>
+<p>dest</p>
+</td>
+<td>
+<p>Branch conditional.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>*</b></p>
+</td>
+<td>
+<p>JMP</p>
+</td>
+<td>
+<p>dest</p>
+</td>
+<td>
+<p>Jump direct.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>*</b></p>
+</td>
+<td>
+<p>JMP</p>
+</td>
+<td>
+<p><b>r</b>/m</p>
+</td>
+<td>
+<p>Jump indirect.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>*</b></p>
+</td>
+<td>
+<p>CALL</p>
+</td>
+<td>
+<p>dest</p>
+</td>
+<td>
+<p>Call direct.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>*</b></p>
+</td>
+<td>
+<p>CALL</p>
+</td>
+<td>
+<p><b>r</b>/m</p>
+</td>
+<td>
+<p>Call indirect.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>The <b>call </b>instruction pushes the return address onto the stack then jumps to the destination.</p>
+<table>
+<tr>
+<td>
+<p><b>*</b></p>
+</td>
+<td>
+<p>RET</p>
+</td>
+<td>
+<p><i>#n</i></p>
+</td>
+<td>
+<p>Return</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>The <b>ret</b> instruction pops and jumps to the return address on the stack. A nonzero <i>#n</i> in the <b>RET</b> instruction indicates that after popping the return address, the value <i>#n</i> should be added to the stack pointer.</p>
+<table>
+<tr>
+<td>
+<p>LOOP</p>
+</td>
+<td>
+<p>Decrement <b>ecx</b> and jump if result is nonzero.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>LOOPZ</p>
+</td>
+<td>
+<p>Decrement <b>ecx</b> and jump if result is nonzero and <b>zr</b> was set.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>LOOPNZ</p>
+</td>
+<td>
+<p>Decrement <b>ecx</b> and jump if result is nonzero and <b>zr</b> was clear.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>JECXZ</p>
+</td>
+<td>
+<p>Jump if <b>ecx</b> is zero.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>These instructions are remnants of the x86's CISC heritage and in recent processors are actually slower than the equivalent instructions written out the long way.</p>
+<h3><a id="String_Manipulation"></a><a id="string_manipulation"></a><a id="STRING_MANIPULATION"></a>String Manipulation</h3>
+<table>
+<tr>
+<td>
+<p><b>*</b></p>
+</td>
+<td>
+<p>MOVS<i>T</i></p>
+</td>
+<td>
+<p>Move <i>T </i>from <b>esi</b> to <b>edi.</b></p>
+</td>
+</tr>
+<tr>
+<td></td>
+<td>
+<p>CMPS<i>T</i></p>
+</td>
+<td>
+<p>Compare <i>T</i> from <b>esi</b> with <b>edi.</b></p>
+</td>
+</tr>
+<tr>
+<td></td>
+<td>
+<p>SCAS<i>T</i></p>
+</td>
+<td>
+<p>Scan <i>T</i> from <b>edi</b> for acc<i>T.</i></p>
+</td>
+</tr>
+<tr>
+<td></td>
+<td>
+<p>LODS<i>T</i></p>
+</td>
+<td>
+<p>Load <i>T </i>from <b>esi</b> into acc<i>T.</i></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>*</b></p>
+</td>
+<td>
+<p>STOS<i>T</i></p>
+</td>
+<td>
+<p>Store <i>T</i> to <b>edi</b> from acc<i>T.</i></p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>After performing the operation, the source and destination register are incremented or decremented by sizeof(<i>T</i>), according to the setting of the direction flag (up or down).</p>
+<p>The instruction can be prefixed by <b>REP</b> to repeat the operation the number of times specified by the <b>ecx</b> register.</p>
+<p>The <b>rep mov</b> instruction is used to copy blocks of memory.</p>
+<p>The <b>rep stos</b> instruction is used to fill a block of memory with acc<i>T</i>.</p>
+<h3><a id="Flags"></a><a id="flags"></a><a id="FLAGS"></a>Flags</h3>
+<table>
+<tr>
+<td>
+<p>LAHF</p>
+</td>
+<td>
+<p>Load <b>ah</b> from flags.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>SAHF</p>
+</td>
+<td>
+<p>Store <b>ah</b> to flags.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>STC</p>
+</td>
+<td>
+<p>Set carry.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>CLC</p>
+</td>
+<td>
+<p>Clear carry.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>CMC</p>
+</td>
+<td>
+<p>Complement carry.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>STD</p>
+</td>
+<td>
+<p>Set direction to <i>down.</i></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>CLD</p>
+</td>
+<td>
+<p>Set direction to <i>up.</i></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>STI</p>
+</td>
+<td>
+<p>Enable interrupts.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>CLI</p>
+</td>
+<td>
+<p>Disable interrupts.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Interlocked_Instructions"></a><a id="interlocked_instructions"></a><a id="INTERLOCKED_INSTRUCTIONS"></a>Interlocked Instructions</h3>
+<table>
+<tr>
+<td>
+<p>XCHG</p>
+</td>
+<td>
+<p><b>r1</b>, <b>r</b>/m</p>
+</td>
+<td>
+<p>Swap <b>r1</b> and <b>r</b>/m.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>XADD</p>
+</td>
+<td>
+<p><b>r1</b>, <b>r</b>/m</p>
+</td>
+<td>
+<p>Add <b>r1</b> to <b>r</b>/m, put original value in <b>r1.</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>CMPXCHG</p>
+</td>
+<td>
+<p><b>r1</b>, <b>r</b>/m</p>
+</td>
+<td>
+<p>Compare and exchange conditional.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>The <b>cmpxchg</b> instruction is the atomic version of the following:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>   cmp     accT, r/m
+   jz      match
+   mov     accT, r/m
+   jmp     done
+match:
+   mov     r/m, r1
+done:</pre>
+</td>
+</tr>
+</table></span></div>
+<h3><a id="Miscellaneous"></a><a id="miscellaneous"></a><a id="MISCELLANEOUS"></a>Miscellaneous</h3>
+<table>
+<tr>
+<td></td>
+<td>
+<p>INT</p>
+</td>
+<td>
+<p>#n</p>
+</td>
+<td>
+<p>Trap to kernel.</p>
+</td>
+</tr>
+<tr>
+<td></td>
+<td>
+<p>BOUND</p>
+</td>
+<td>
+<p><b>r</b>, m</p>
+</td>
+<td>
+<p>Trap if <b>r</b> not in range.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>*</b></p>
+</td>
+<td>
+<p>NOP</p>
+</td>
+<td></td>
+<td>
+<p>No operation.</p>
+</td>
+</tr>
+<tr>
+<td></td>
+<td>
+<p>XLATB</p>
+</td>
+<td></td>
+<td>
+<p><b>al</b> = [<b>ebx</b> + <b>al</b>]</p>
+</td>
+</tr>
+<tr>
+<td></td>
+<td>
+<p>BSWAP</p>
+</td>
+<td>
+<p><b>r</b></p>
+</td>
+<td>
+<p>Swap byte order in register.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>Here is a special case of the <b>int</b> instruction.</p>
+<table>
+<tr>
+<td>
+<p>INT</p>
+</td>
+<td>
+<p>3</p>
+</td>
+<td>
+<p>Debugger breakpoint trap.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>The opcode for <b>INT 3</b> is 0xCC. The opcode for <b>NOP</b> is 0x90.</p>
+<p>When debugging code, you may need to patch out some code. You can do this by replacing the offending bytes with 0x90. </p>
+<h3><a id="Idioms"></a><a id="idioms"></a><a id="IDIOMS"></a>Idioms</h3>
+<table>
+<tr>
+<td>
+<p><b>*</b></p>
+</td>
+<td>
+<p>XOR</p>
+</td>
+<td>
+<p><b>r</b>, <b>r</b></p>
+</td>
+<td>
+<p><b>r</b> = 0</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>*</b></p>
+</td>
+<td>
+<p>TEST</p>
+</td>
+<td>
+<p><b>r</b>, <b>r</b></p>
+</td>
+<td>
+<p>Check if <b>r</b> = 0.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>*</b></p>
+</td>
+<td>
+<p>ADD</p>
+</td>
+<td>
+<p><b>r</b>, <b>r</b></p>
+</td>
+<td>
+<p>Shift <b>r</b> left by 1.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20x86 Instructions%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

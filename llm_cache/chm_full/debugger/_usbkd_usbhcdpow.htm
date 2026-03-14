@@ -1,0 +1,102 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !usbkd.usbhcdpow command displays the power state history for a USB host controller or root hub."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!usbkd.usbhcdpow</title>
+
+<meta name="MS-HAID" content="debugger._usbhcdpow"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._usbkd_usbhcdpow"></a>!usbkd.usbhcdpow</h1>
+</div>
+<p>The  <b>!usbkd.usbhcdpow</b> command displays the power state history for a USB host controller or root hub.</p>
+<pre class="syntax"><b>!usbkd.usbhcdpow </b><i>DeviceExtension</i></pre>
+<h2><a id="ddk__devobj_dbg"></a><a id="DDK__DEVOBJ_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______DeviceExtension______"></a><a id="_______deviceextension______"></a><a id="_______DEVICEEXTENSION______"></a>       <i>DeviceExtension</i>      </dt>
+<dd>
+<p>Address of one of the following:</p>
+<ul>
+<li>The device extension for the functional device object (FDO) of a USB host controller.</li>
+<li>The device extension for the physical device object (PDO) a USB root hub.</li>
+</ul>
+</dd>
+</dl>
+<h2><a id="DLL"></a><a id="dll"></a>DLL</h2>
+<p>Usbkd.dll
+     </p>
+<h2>Examples</h2>
+<p>Here is one way to find the address of the device extension for the FDO of an EHCI host controller. First enter <a href="_usbkd_usb2tree.htm"><b>!usbkd.usb2tree</b></a>.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !usbkd.usb2tree
+...
+
+2)!ehci_info ffffe00001ca11a0 !devobj ffffe00001ca1050 PCI: VendorId 8086 DeviceId 293c RevisionId 0002 
+     ...</code></pre>
+<p>In the preceding output, the address of the device extension of the FDO is displayed as the argument of the <a href="debugger_markup_language_commands.htm">DML</a> command <b>!ehci_info ffffe00001ca11a0</b>.</p>
+<p>Now pass the address of the device extension to the <b>!usbhcdpow</b> command.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !usbkd.usbhcdpow ffffe00001ca11a0
+
+dt USBPORT!_FDO_EXTENSION ffffe00001ca15a0
+
+State History (latest at bottom)
+----------------------------------------------------------------------------------------------------
+     EVENT                              STATE                              NEXT
+------------------------------------------------------------------------------------------
+[00] FdoPwrEv_D0_DoSetD0_2              FdoPwr_D0_WaitWorker2              FdoPwr_D0_WaitSyncUsb2               dt:0 ms
+[01] FdoPwrEv_SyncUsb2_DoChirp          FdoPwr_D0_WaitSyncUsb2             FdoPwr_D0_WaitSyncUsb2               dt:0 ms
+[02] FdoPwrEv_Rh_SetPowerSys            FdoPwr_D0_WaitSyncUsb2             FdoPwr_D0_WaitSyncUsb2               dt:0 ms
+[03] FdoPwrEv_Rh_SetD0                  FdoPwr_D0_WaitSyncUsb2             FdoPwr_D0_WaitSyncUsb2               dt:0 ms
+[04] FdoPwrEv_SyncUsb2_Complete         FdoPwr_D0_WaitSyncUsb2             FdoPwr_WaitSx                        dt:50 ms
+[05] FdoPwrEv_Rh_Wake                   FdoPwr_WaitSx                      FdoPwr_WaitSx                        dt:3412 ms
+[06] FdoPwrEv_Rh_Wake                   FdoPwr_WaitSx                      FdoPwr_WaitSx                        dt:283872 ms
+[07] FdoPwrEv_Rh_Wake                   FdoPwr_WaitSx                      FdoPwr_WaitSx                        dt:25481267 ms
+</code></pre>
+<p>Here is one way to find the address of the device extension for the PDO of a root hub. First enter <a href="_usbkd_usb2tree.htm"><b>!usbkd.usb2tree</b></a>.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !usbkd.usb2tree
+...
+
+2)!ehci_info ffffe00001ca11a0 !devobj ffffe00001ca1050 PCI: VendorId 8086 DeviceId 293c RevisionId 0002 
+    RootHub !hub2_info ffffe000023201a0 !devstack ffffe00002320050
+        ...</code></pre>
+<p>In the preceding output, you can see the address of the FDO of the root hub displayed as the argument to the command <b>!devstack ffffe00002320050</b>. Use the <a href="_devstack.htm"><b>!devstack</b></a> command to find the address of the PDO and the PDO device extension.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !kdexts.devstack ffffe00002320050
+  !DevObj           !DrvObj            !DevExt           ObjectName
+&gt; ffffe00002320050  \Driver\usbhub     ffffe000023201a0  0000002d
+  ffffe0000213c050  \Driver\usbehci    ffffe0000213c1a0  USBPDO-3
+...</code></pre>
+<p>In the preceding output, you can see that the address of the device extension for the PDO of the root hub is <code>ffffe0000213c1a0</code>.</p>
+<p>Now pass the address of the device extension to the  <b>!usbhcdpow</b> command.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !usbkd.usbhcdpow ffffe0000213c1a0
+
+dt USBPORT!_FDO_EXTENSION ffffe0000213c5a0
+
+State History (latest at bottom)
+----------------------------------------------------------------------------------------------------
+     EVENT                              STATE                              NEXT
+------------------------------------------------------------------------------------------
+...</code></pre>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="usb_2_0_extensions.htm">USB 2.0 Debugger Extensions</a></dt>
+<dt><a href="http://go.microsoft.com/fwlink/p?LinkID=227351">Universal Serial Bus (USB) Drivers</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!usbkd.usbhcdpow%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

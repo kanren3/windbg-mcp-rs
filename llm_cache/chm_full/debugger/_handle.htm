@@ -1,0 +1,243 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !handle extension displays information about a handle or handles that one or all processes in the target system own."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!handle</title>
+
+<meta name="MS-HAID" content="r24_exts_general_A_48ae5bbf-e2df-4d21-835f-9721a17c40dd.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._handle"></a>!handle</h1>
+</div>
+<p>The <b>!handle</b> extension displays information about a handle or handles that one or all processes in the target system own.</p>
+<p>User-Mode </p>
+<pre class="syntax"><b>!handle </b>[<i>Handle</i> [<i>UMFlags</i> [<i>TypeName</i>]]] 
+<b>!handle -?</b></pre>
+<p>Kernel-Mode </p>
+<pre class="syntax">
+    <b>!handle </b>[<i>Handle</i> [<i>KMFlags</i> [<i>Process</i> [<i>TypeName</i>]]]] 
+</pre>
+<h2><a id="ddk__handle_dbg"></a><a id="DDK__HANDLE_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Handle______"></a><a id="_______handle______"></a><a id="_______HANDLE______"></a>       <i>Handle</i>      </dt>
+<dd>
+<p>Specifies the index of the handle to display. If <i>Handle</i> is -1 or if you omit this parameter, the debugger displays data for all handles that are associated with the current process. If <i>Handle</i> is 0, the debugger displays data for all handles.</p>
+</dd>
+<dt><a id="_______UMFlags______"></a><a id="_______umflags______"></a><a id="_______UMFLAGS______"></a>       <i>UMFlags</i>      </dt>
+<dd>
+<p>
+       (User mode only)  Specifies what the display should contain. This parameter can be a sum of any of the following bit values. (The default value is 0x1.)</p>
+<p></p>
+<dl>
+<dt><a id="Bit_0__0x1_"></a><a id="bit_0__0x1_"></a><a id="BIT_0__0X1_"></a>Bit 0 (0x1)</dt>
+<dd>
+<p>Displays handle type information.</p>
+</dd>
+<dt><a id="Bit_1__0x2_"></a><a id="bit_1__0x2_"></a><a id="BIT_1__0X2_"></a>Bit 1 (0x2)</dt>
+<dd>
+<p>Displays basic handle information.</p>
+</dd>
+<dt><a id="Bit_2__0x4_"></a><a id="bit_2__0x4_"></a><a id="BIT_2__0X4_"></a>Bit 2 (0x4)</dt>
+<dd>
+<p>Displays handle name information.</p>
+</dd>
+<dt><a id="Bit_3__0x8_"></a><a id="bit_3__0x8_"></a><a id="BIT_3__0X8_"></a>Bit 3 (0x8)</dt>
+<dd>
+<p>Displays object-specific handle information, when available.</p>
+</dd>
+</dl>
+</dd>
+<dt><a id="_______KMFlags______"></a><a id="_______kmflags______"></a><a id="_______KMFLAGS______"></a>       <i>KMFlags</i>      </dt>
+<dd>
+<p>
+       (Kernel mode only)  Specifies what the display should contain. This parameter can be a sum of any of the following bit values. (The default value is 0x3.)</p>
+<p></p>
+<dl>
+<dt><a id="Bit_0__0x1_"></a><a id="bit_0__0x1_"></a><a id="BIT_0__0X1_"></a>Bit 0 (0x1)</dt>
+<dd>
+<p>Displays basic handle information.</p>
+</dd>
+<dt><a id="Bit_1__0x2_"></a><a id="bit_1__0x2_"></a><a id="BIT_1__0X2_"></a>Bit 1 (0x2)</dt>
+<dd>
+<p>Displays information about objects.</p>
+</dd>
+<dt><a id="Bit_2__0x4_"></a><a id="bit_2__0x4_"></a><a id="BIT_2__0X4_"></a>Bit 2 (0x4)</dt>
+<dd>
+<p>Displays free handle entries. If you do not set this bit and you omit <i>Handle</i> or set it to zero, the list of handles that are displayed does not include free handles. If <i>Handle</i> specifies a single free handle, it is displayed even if you do not set this bit.   </p>
+</dd>
+<dt><a id="Bit_4__0x10_"></a><a id="bit_4__0x10_"></a><a id="BIT_4__0X10_"></a>Bit 4 (0x10)</dt>
+<dd>
+<p>(Windows XP and later)  Displays the handle from the kernel handle table instead of the current process.</p>
+</dd>
+<dt><a id="Bit_5__0x20_"></a><a id="bit_5__0x20_"></a><a id="BIT_5__0X20_"></a>Bit 5 (0x20)</dt>
+<dd>
+<p>(Windows XP and later)  Interprets the handle as a thread ID or process ID and displays information about the corresponding kernel object.</p>
+</dd>
+</dl>
+</dd>
+<dt><a id="_______Process______"></a><a id="_______process______"></a><a id="_______PROCESS______"></a>       <i>Process</i>      </dt>
+<dd>
+<p>
+       (Kernel mode only)  Specifies a process. You can use the process ID or the hexadecimal address of the process object. This parameter must refer to a currently running process on the target system. If this parameter is -1 or if you omit it, the current process is used. If this parameter is 0, handle information from all processes is displayed.</p>
+</dd>
+<dt><a id="_______TypeName______"></a><a id="_______typename______"></a><a id="_______TYPENAME______"></a>       <i>TypeName</i>      </dt>
+<dd>
+<p>Specifies the type of handle that you want to examine. Only handles that match this type are displayed. <i>TypeName</i> is case sensitive. Valid types include Event, Section, File, Port, Directory, SymbolicLink, Mutant, WindowStation, Semaphore, Key, Token, Process, Thread, Desktop, IoCompletion, Timer, Job, and WaitablePort.</p>
+</dd>
+<dt><a id="_______-_______"></a>       <b>-?</b>      </dt>
+<dd>
+<p>
+       (User mode only)  Displays some Help text for this extension in the <a href="debugger_command_window.htm">Debugger Command window</a>.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000
+         </b></p>
+</td>
+<td>
+<p>
+<dl>
+<dt>
+          Kdextx86.dll
+          </dt>
+<dt>Uext.dll
+          </dt>
+<dt>Ntsdexts.dll
+         </dt>
+</dl>
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+<dl>
+<dt>
+          Kdexts.dll
+          </dt>
+<dt>Uext.dll</dt>
+<dt>Ntsdexts.dll</dt>
+</dl>
+</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about handles, see the <a href="_htrace.htm"><b>!htrace</b></a> extension, the Microsoft Windows SDK documentation and <i>Microsoft Windows Internals</i> by Mark Russinovich and David Solomon. (These resources may not be available in some languages 
+
+and countries.)
+</p>
+<h2>Remarks</h2>
+<p>You can use the <b>!handle</b> extension during user-mode and kernel-mode live debugging. You can also use this extension on kernel-mode dump files. However, you cannot use this extension on user-mode dump files, unless you specifically created them with handle information. (You can create create such dump files by using the <a href="_dump__create_dump_file_.htm"><b>.dump /mh (Create Dump File)</b></a> command.)</p>
+<p>During live user-mode debugging, you can use the <a href="_closehandle__close_handle_.htm"><b>.closehandle (Close Handle)</b></a> command to close one or more handles.</p>
+<p>The following examples are user-mode examples of the <b>!handle</b> extension. The following command displays a list of all handles.</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; !handle
+Handle 4
+  Type          Section
+Handle 8
+  Type          Event
+Handle c
+  Type          Event
+Handle 10
+  Type          Event
+Handle 14
+  Type          Directory
+Handle 5c
+  Type          File
+6 Handles
+Type            Count
+Event           3
+Section         1
+File            1
+Directory       1</code></pre>
+<p>The following command displays detailed information about handle 0x8.</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; !handle 8 f
+Handle 8
+  Type          Event
+  Attributes    0
+  GrantedAccess 0x100003:
+         Synch
+         QueryState,ModifyState
+  HandleCount   2
+  PointerCount  3
+  Name          &lt;none&gt;
+  Object Specific Information
+    Event Type Auto Reset
+    Event is Waiting</code></pre>
+<p>The following examples are kernel-mode examples of <b>!handle</b>. The following command lists all handles, including free handles.</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !handle 0 4
+processor number 0
+PROCESS 80559800  SessionId: 0  Cid: 0000    Peb: 00000000  ParentCid: 0000
+    DirBase: 00039000  ObjectTable: e1000d60  TableSize: 380.
+    Image: Idle
+
+New version of handle table at e1002000 with 380 Entries in use
+
+0000: free handle, Entry address e1002000, Next Entry fffffffe
+0004: Object: 80ed5238  GrantedAccess: 001f0fff
+0008: Object: 80ed46b8  GrantedAccess: 00000000
+000c: Object: e1281d00  GrantedAccess: 000f003f
+0010: Object: e1013658  GrantedAccess: 00000000
+......
+0168: Object: ffb6c748  GrantedAccess: 00000003 (Protected)
+016c: Object: ff811f90  GrantedAccess: 0012008b
+0170: free handle, Entry address e10022e0, Next Entry 00000458
+0174: Object: 80dfd5c8  GrantedAccess: 001f01ff
+......</code></pre>
+<p>The following command show detailed information about handle 0x14 in the kernel handle table.</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !handle 14 13
+processor number 0
+PROCESS 80559800  SessionId: 0  Cid: 0000    Peb: 00000000  ParentCid: 0000
+    DirBase: 00039000  ObjectTable: e1000d60  TableSize: 380.
+    Image: Idle
+
+Kernel New version of handle table at e1002000 with 380 Entries in use
+0014: Object: e12751d0  GrantedAccess: 0002001f
+Object: e12751d0  Type: (80ec8db8) Key
+    ObjectHeader: e12751b8
+        HandleCount: 1  PointerCount: 1
+        Directory Object: 00000000  Name: \REGISTRY\MACHINE\SYSTEM\CONTROLSET001\CONTROL\SESSION MANAGER\EXECUTIVE</code></pre>
+<p>The following command shows information about all handles to Section objects in all processes.</p>
+<pre class="syntax" xml:space="preserve"><code>!handle 0 3 0 Section
+...
+PROCESS fffffa8004f48940
+    SessionId: none  Cid: 0138    Peb: 7f6639bf000  ParentCid: 0004
+    DirBase: 10cb74000  ObjectTable: fffff8a00066f700  HandleCount:  39.
+    Image: smss.exe
+
+Handle table at fffff8a00066f700 with 39 entries in use
+
+0040: Object: fffff8a000633f00  GrantedAccess: 00000006 (Inherit) Entry: fffff8a000670100
+Object: fffff8a000633f00  Type: (fffffa80035fef20) Section
+    ObjectHeader: fffff8a000633ed0 (new version)
+        HandleCount: 1  PointerCount: 262144
+...
+</code></pre>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!handle%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

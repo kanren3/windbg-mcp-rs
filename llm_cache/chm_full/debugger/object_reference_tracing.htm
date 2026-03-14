@@ -1,0 +1,60 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Object Reference Tracing"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Object Reference Tracing</title>
+
+<meta name="MS-HAID" content="GFlags_29eddbe3-a557-4bd0-8907-2a58e7b7d9f3.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.object_reference_tracing"></a>Object Reference Tracing</h1>
+</div>
+<p>The <b>Object Reference Tracing</b> feature records sequential stack traces each time that an object reference counter is incremented or decremented. The traces can help you to detect object reference errors, including double-dereferencing, failure to reference, and failure to dereference objects. This feature is supported only in Windows Vista and later versions of Windows.</p>
+<p>For information about configuring the Object Reference Tracing feature in the <b>Global Flags</b> dialog box, see <a href="configuring_object_reference_tracing.htm">Configuring Object Reference Tracing</a>. For information about configuring the Object Reference Tracing feature at the command prompt, see <a href="gflags_commands.htm"><b>GFlags Commands</b></a>. For an example, see <a href="example_15__using_object_reference_tracing.htm">Example 15: Using Object Reference Tracing</a>.</p>
+<p>Object reference traces are most useful when you suspect that a particular object is not being referenced or dereferenced properly, typically because increased pool usage indicates that an object is leaking, or a process or session cannot be ended, even though its handle count is zero. Unlike traces that are recorded in logs for later review, object reference traces are designed to be used in real time, while the process is running and the object is being referenced and dereferenced. You view an object reference trace in the debugger by using the <a href="_obtrace.htm"><b>!obtrace debugger extension</b></a>. Because this extension requires a specified object address, you must know in advance which object is the likely source of the error.</p>
+<p>The following rules apply to Object Reference Tracing:</p>
+<ul>
+<li>
+<p>You can run only one object reference trace at a time.</p>
+</li>
+<li>
+<p>Because a kernel-wide trace is not practical, you must limit the trace to objects that are created with specified pool tags, or to objects that are created by a specified process (indicated by an image file name), or both. </p>
+</li>
+<li>
+<p>You can specify only one image file for each trace. If you specify an image file, the trace is limited to objects that are created by the processes that the image represents. Objects that are referenced by the process, but are created by a different process, are not traced.</p>
+</li>
+<li>
+<p>You can specify a maximum of 16 pool tags for each trace. Objects with any of the specified pool tags are traced.</p>
+</li>
+<li>
+<p>If you specify both an image file and one or more pool tags, the trace is limited to objects that are created by the process and have any of the specified pool tags.</p>
+</li>
+<li>
+<p>Object Reference Tracing cannot trace processes that are already running when a trace is started. The trace includes only the objects of processes that start after the trace begins.</p>
+</li>
+<li>
+<p>Objects marked for tracing are traced until the object is destroyed or tracing is disabled. By default, the traces for an object are maintained only until the object is destroyed, but you can specify a "permanent" trace (<b>/p</b>) where the trace is retained until tracing is disabled.</p>
+</li>
+<li>
+<p>You can store the Object Reference Tracing configuration as a registry setting or a kernel flag (run-time) setting. If you have both registry and kernel flag settings, the run-time settings take precedence, but are lost when you shut down or restart the computer.</p>
+</li>
+</ul>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Object Reference Tracing%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

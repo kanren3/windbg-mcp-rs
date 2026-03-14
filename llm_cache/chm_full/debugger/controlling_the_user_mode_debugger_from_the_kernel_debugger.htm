@@ -1,0 +1,51 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Controlling the User-Mode Debugger from the Kernel Debugger"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Controlling the User-Mode Debugger from the Kernel Debugger</title>
+
+<meta name="MS-HAID" content="r05_use_start_9fcf66d7-d72a-4b94-a1e6-e65a95e688f7.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.controlling_the_user_mode_debugger_from_the_kernel_debugger"></a>Controlling the User-Mode Debugger from the Kernel Debugger</h1>
+</div>
+<h2><a id="ddk_controlling_the_user_mode_debugger_from_the_kernel_debugger_dbg"></a><a id="DDK_CONTROLLING_THE_USER_MODE_DEBUGGER_FROM_THE_KERNEL_DEBUGGER_DBG"></a></h2>
+<p>You can redirect the input and output from a user-mode debugger to a kernel debugger. This redirection enables the kernel debugger to control a specific user-mode debugging session that is occurring on the target computer.</p>
+<p>You can use either KD or WinDbg as the kernel debugger. Note that many of the familiar features of WinDbg are not available in this scenario. For example, you cannot use the Locals window, the Disassembly window, or the Call Stack window, and you cannot step through source code. This is because WinDbg is only acting as a viewer for the debugger (NTSD or CDB) running on the target computer.</p>
+<p>You can use either CDB or NTSD as the user-mode debugger. NTSD is the better choice, because it requires minimal resources from the processor and operating system of the computer whose application is being debugged. In fact, when NTSD is started under the control of the kernel debugger, no NTSD window is created. With NTSD, you can perform user-mode debugging through the serial port early in the boot phase and late into shutdown. </p>
+<div class="alert"><b>Note</b>  The <a href="_shell__command_shell_.htm"><b>.shell</b></a> command is not supported when the output of a user-mode debugger is redirected to the kernel debugger.</div>
+<div> </div>
+<p>This section includes the following:</p>
+<ul>
+<li>
+<p><a href="starting_the_debugging_session.htm">Starting the Debugging Session</a> describes how to begin a session where the user-mode debugger is controlled from the kernel debugger. </p>
+</li>
+<li>
+<p><a href="switching_modes.htm">Switching Modes</a> describes the four different modes that are involved, and how to alternate between them. </p>
+</li>
+<li>
+<p><a href="when_to_use_this_technique.htm">When to Use This Technique</a> describes scenarios where this technique is particularly useful. </p>
+</li>
+<li>
+<p><a href="combining_this_method_with_remote_debugging.htm">Combining This Method with Remote Debugging</a> describes how to control the user-mode debugger from a kernel debugger, and use it as a debugging server at the same time. This combination can be useful if your user-mode symbols are located on a symbol server. </p>
+</li>
+</ul>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Controlling the User-Mode Debugger from the Kernel Debugger%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

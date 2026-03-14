@@ -1,0 +1,157 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The OutputSymbols method prints the specified symbols to the debugger console."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IDebugSymbolGroup::OutputSymbols method</title>
+
+<meta name="MS-HAID" content="ComOther_47d8529f-4fdf-4a79-ae80-61e483c897f2.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.outputsymbols"></a>IDebugSymbolGroup::OutputSymbols method</h1>
+</div>
+<p>The <b>OutputSymbols</b> method prints the specified <a href="symbols.htm#symbols">symbols</a> to the debugger console.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>HRESULT OutputSymbols(
+  [in] ULONG OutputControl,
+  [in] ULONG Flags,
+  [in] ULONG Start,
+  [in] ULONG Count
+);</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Parameters</h2>
+<dl>
+<dt><i>OutputControl</i> [in]</dt>
+<dd>
+<p>The output control to use when printing the symbols' information.  For more information about possible values, see <a href="debug_outctl_xxx.htm"><b>DEBUG_OUTCTL_XXX</b></a>.  For more information about output, see <a href="using_input_and_output.htm">Input and Output</a>.</p>
+</dd>
+<dt><i>Flags</i> [in]</dt>
+<dd>
+<p>The flags that determine what information is printed for each symbol.  By default, the output includes the symbol's name, offset, value, and type.  The format for the output is as follows:</p>
+<p><code>Name**NAME**Offset**OFF**Value**VALUE**Type**TYPE**</code></p>
+<p>You can use the following bit flags to suppress the output of one of these pieces of information together with the corresponding marker.</p>
+<table>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>DEBUG_OUTPUT_SYMBOLS_NO_NAMES</p>
+</td>
+<td>
+<p>Suppress output of the symbol's name.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_OUTPUT_SYMBOLS_NO_OFFSETS</p>
+</td>
+<td>
+<p>Suppress output of the symbol's offset.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_OUTPUT_SYMBOLS_NO_VALUES</p>
+</td>
+<td>
+<p>Suppress output of the symbol's value.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_OUTPUT_SYMBOLS_NO_TYPES</p>
+</td>
+<td>
+<p>Suppress output of the symbol's type.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+</dd>
+<dt><i>Start</i> [in]</dt>
+<dd>
+<p>The index of the first symbol in the symbol group to print.  The index of a symbol is an identification number. This number ranges from zero through the number of symbols in the symbol group minus one.</p>
+</dd>
+<dt><i>Count</i> [in]</dt>
+<dd>
+<p>The number of symbols to print.</p>
+</dd>
+</dl>
+<h2>Return value</h2>
+<table>
+<tr>
+<th>Return code</th>
+<th>Description</th>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>S_OK</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>The method was successful.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>This method can also return error values.  For more information, see <a href="hresult_values.htm"><b>Return Values</b></a>.</p>
+<h2>Remarks</h2>
+<p>For more information about symbol groups, see <a href="scopes_and_symbol_groups.htm">Scopes and Symbol Groups</a>.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Target platform</p>
+</th>
+<td width="70%">
+<dl>
+<dt></dt>
+</dl>
+</td>
+</tr>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Dbgeng.h (include Dbgeng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="idebugsymbolgroup.htm"><b>IDebugSymbolGroup</b></a></dt>
+<dt><a href="idebugsymbolgroup2.htm"><b>IDebugSymbolGroup2</b></a></dt>
+<dt><a href="getnumbersymbols.htm"><b>GetNumberSymbols</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IDebugSymbolGroup::OutputSymbols method%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

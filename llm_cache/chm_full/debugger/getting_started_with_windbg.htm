@@ -1,0 +1,291 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="WinDbg is a kernel-mode and user-mode debugger that is included in Debugging Tools for Windows. Here we provide hands-on exercises that will help you get started using WinDbg as a user-mode debugger."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Getting Started with WinDbg (User-Mode)</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.getting_started_with_windbg"></a>Getting Started with WinDbg (User-Mode)</h1>
+</div>
+<p>WinDbg is a kernel-mode and user-mode debugger that is included in Debugging Tools for Windows. Here we provide hands-on exercises that will help you get started using WinDbg as a user-mode debugger.</p>
+<p>For information about how to get Debugging Tools for Windows, see <a href="http://go.microsoft.com/fwlink/p?linkid=223405">Debugging Tools for Windows (WinDbg, KD, CDB, NTSD)</a>. After you have installed the debugging tools, locate the installation directories for 64-bit (x64) and 32-bit (x86) versions of the tools. For example:</p>
+<ul>
+<li>C:\Program Files (x86)\Windows Kits\8.1\Debuggers\x64</li>
+<li>C:\Program Files (x86)\Windows Kits\8.1\Debuggers\x86</li>
+</ul>
+<h2><a id="Launch_Notepad_and_attach_WinDbg"></a><a id="launch_notepad_and_attach_windbg"></a><a id="LAUNCH_NOTEPAD_AND_ATTACH_WINDBG"></a>Launch Notepad and attach WinDbg</h2>
+<ol>
+<li>
+<p>Navigate to your installation directory, and open WinDbg.exe.</p>
+</li>
+<li>On the <b>Help</b> menu, choose <b>Contents</b>. This opens the debugger documentation CHM file. The debugger documentation is also available on line <a href="http://go.microsoft.com/fwlink/p?linkid=223405">here</a>.</li>
+<li>
+<p>On the <b>File</b> menu, choose <b>Open Executable</b>. In the Open Executable dialog box, navigate to the folder that contains notepad.exe (for example, C:\Windows\System32). For <b>File name</b>, enter notepad.exe. Click <b>Open</b>.</p><img src="images/WinDbgGetStart01.png" alt="Screen shot of WinDbg after starting notepad"/></li>
+<li>
+<p>Near the bottom of the WinDbg window, in the command line, enter this command:</p>
+<p><a href="http://go.microsoft.com/fwlink/p?linkid=399238"><b>.sympath srv*</b></a>. </p>
+<p>The output is similar to this:</p>
+<pre class="syntax" xml:space="preserve"><code>Symbol search path is: srv*
+Expanded Symbol search path is: cache*;SRV*https://msdl.microsoft.com/download/symbols</code></pre>
+<p>The symbol search path tells WinDbg where to look for symbol (PDB) files. The debugger needs symbol files to obtain information about code modules (function names, variable names, and the like). </p>
+<p>Enter this command, which tells WinDbg to do its initial finding and loading of symbol files:</p>
+<p><a href="http://go.microsoft.com/fwlink/p?linkid=399239"><b>.reload</b></a></p>
+</li>
+<li>
+<p>To see the symbols for the Notepad.exe module, enter this command:</p>
+<p><a href="http://go.microsoft.com/fwlink/p?linkid=399240"><b>x notepad!*</b></a></p>
+<div class="alert"><b>Note</b>  If you don't see any output, enter <a href="http://go.microsoft.com/fwlink/p?linkid=399239"><b>.reload</b></a> again.</div>
+<div> </div>
+<p>To see symbols in the Notepad.exe module that contain main, enter this command:</p>
+<p><b>x notepad!*main*</b></p>
+<p>The output is similar to this:</p>
+<pre class="syntax" xml:space="preserve"><code>000000d0`428ff7e8 00007ff6`3282122f notepad!WinMain
+...</code></pre>
+</li>
+<li>
+<p>To put a breakpoint at notepad!WinMain, enter this command:</p>
+<p><a href="http://go.microsoft.com/fwlink/p?linkid=399390"><b>bu notepad!WinMain</b></a></p>
+<p>To verify that your breakpoint was set, enter this command:</p>
+<p><a href="http://go.microsoft.com/fwlink/p?linkid=399391"><b>bl</b></a></p>
+<p>The output is similar to this:</p>
+<pre class="syntax" xml:space="preserve"><code>0 e 00007ff6`32825f64     0001 (0001)  0:**** notepad!WinMain</code></pre>
+</li>
+<li>
+<p>To start Notepad running, enter this command:</p>
+<p><a href="http://go.microsoft.com/fwlink/p?linkid=399388"><b>g</b></a></p>
+<p>Notepad runs until it comes to the <b>WinMain</b> function, and then breaks  in to the debugger.</p>
+<p>To see a list of code modules that are loaded in the Notepad process, enter this command:</p>
+<p><a href="http://go.microsoft.com/fwlink/p?linkid=399237"><b>lm</b></a></p>
+<p>The output is similar to this:</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; lm
+start             end                 module name
+00007ff6`32820000 00007ff6`3285a000   notepad    (pdb symbols)          C:\...\notepad.pdb
+00007ffc`ab7e0000 00007ffc`ab85b000   WINSPOOL   (deferred)             
+00007ffc`aba10000 00007ffc`abc6a000   COMCTL32   (deferred)             
+00007ffc`adea0000 00007ffc`adf3f000   SHCORE     (deferred)             
+00007ffc`af490000 00007ffc`af59f000   KERNELBASE   (deferred)             
+00007ffc`af7d0000 00007ffc`af877000   msvcrt     (deferred)             
+00007ffc`af880000 00007ffc`b0c96000   SHELL32    (deferred)             
+00007ffc`b0e40000 00007ffc`b0ef7000   OLEAUT32   (deferred)             
+00007ffc`b0f00000 00007ffc`b0f57000   sechost    (deferred)             
+00007ffc`b0f60000 00007ffc`b1005000   ADVAPI32   (deferred)             
+00007ffc`b1010000 00007ffc`b1155000   GDI32      (deferred)             
+00007ffc`b1160000 00007ffc`b1296000   RPCRT4     (deferred)             
+00007ffc`b12a0000 00007ffc`b1411000   USER32     (deferred)             
+00007ffc`b1420000 00007ffc`b15f6000   combase    (deferred)             
+00007ffc`b16c0000 00007ffc`b17f9000   MSCTF      (deferred)             
+00007ffc`b1800000 00007ffc`b189a000   COMDLG32   (deferred)             
+00007ffc`b18a0000 00007ffc`b18f1000   SHLWAPI    (deferred)             
+00007ffc`b1b60000 00007ffc`b1cd8000   ole32      (deferred)             
+00007ffc`b1cf0000 00007ffc`b1e2a000   KERNEL32   (pdb symbols)          C:\...\kernel32.pdb
+00007ffc`b1eb0000 00007ffc`b1ee4000   IMM32      (deferred)             
+00007ffc`b1f50000 00007ffc`b20fa000   ntdll      (private pdb symbols)  C:\...\ntdll.pdb</code></pre>
+<p>To see a stack trace, enter this command:</p>
+<p><a href="http://go.microsoft.com/fwlink/p?linkid=399389"><b>k</b></a></p>
+<p>The output is similar to this:</p>
+<pre class="syntax" xml:space="preserve"><code>Breakpoint 0 hit
+notepad!WinMain:
+00007ff6`32825f64 488bc4          mov     rax,rsp
+0:000&gt; k
+Child-SP          RetAddr           Call Site
+00000048`4e0cf6a8 00007ff6`3282122f notepad!WinMain
+00000048`4e0cf6b0 00007ffc`b1cf16ad notepad!WinMainCRTStartup+0x1a7
+00000048`4e0cf770 00007ffc`b1fc4629 KERNEL32!BaseThreadInitThunk+0xd
+00000048`4e0cf7a0 00000000`00000000 ntdll!RtlUserThreadStart+0x1d ...</code></pre>
+</li>
+<li>
+<p>To start Notepad running again, enter this command:</p>
+<p><a href="http://go.microsoft.com/fwlink/p?linkid=399388"><b>g</b></a></p>
+</li>
+<li>
+<p>To break in to Notepad, choose <b>Break</b> from the <b>Debug</b> menu.</p>
+</li>
+<li>
+<p>To set and verify a breakpoint at <b>ZwWriteFile</b>, enter these commands:</p>
+<p><a href="http://go.microsoft.com/fwlink/p?linkid=399390"><b>bu ntdll!ZwWriteFile</b></a></p>
+<p><a href="http://go.microsoft.com/fwlink/p?linkid=399391"><b>bl</b></a></p>
+</li>
+<li>
+<p>Enter <a href="http://go.microsoft.com/fwlink/p?linkid=399388"><b>g</b></a> to start Notepad running again. In the Notepad window, enter some text and choose <b>Save</b> from the <b>File</b> menu. The running code breaks in when it comes to <b>ZwCreateFile</b>. Enter <a href="http://go.microsoft.com/fwlink/p?linkid=399389"><b>k</b></a> to see the stack trace.</p><img src="images/WinDbgGetStart02.png" alt="Screen shot of stack trace in WinDbg"/><p>In the WinDbg window, just to the left of the command line, notice the processor and thread numbers. In this example the current processor number is 0, and the current thread number is 11. So we are looking at the stack trace for thread 11 (which happens to be running on processor 0).</p>
+</li>
+<li>
+<p>To see a list of all threads in the Notepad process, enter this command (the tilde):</p>
+<p><a href="http://go.microsoft.com/fwlink/p?linkid=399392"><b>~</b></a></p>
+<p>The output is similar to this:</p>
+<pre class="syntax" xml:space="preserve"><code>0:011&gt; ~
+   0  Id: 10c8.128c Suspend: 1 Teb: 00007ff6`31cdd000 Unfrozen
+   1  Id: 10c8.1a10 Suspend: 1 Teb: 00007ff6`31cdb000 Unfrozen
+   2  Id: 10c8.1850 Suspend: 1 Teb: 00007ff6`31cd9000 Unfrozen
+   3  Id: 10c8.1774 Suspend: 1 Teb: 00007ff6`31cd7000 Unfrozen
+   4  Id: 10c8.1e80 Suspend: 1 Teb: 00007ff6`31cd5000 Unfrozen
+   5  Id: 10c8.10ac Suspend: 1 Teb: 00007ff6`31cd3000 Unfrozen
+   6  Id: 10c8.13a4 Suspend: 1 Teb: 00007ff6`31bae000 Unfrozen
+   7  Id: 10c8.2b4 Suspend: 1 Teb: 00007ff6`31bac000 Unfrozen
+   8  Id: 10c8.1df0 Suspend: 1 Teb: 00007ff6`31baa000 Unfrozen
+   9  Id: 10c8.1664 Suspend: 1 Teb: 00007ff6`31ba8000 Unfrozen
+  10  Id: 10c8.15e4 Suspend: 1 Teb: 00007ff6`31ba6000 Unfrozen
+. 11  Id: 10c8.8bc Suspend: 1 Teb: 00007ff6`31ba4000 Unfrozen</code></pre>
+<p>In this example, there are 12 threads with indexes 0 through 11.</p>
+</li>
+<li>
+<p>To look at the stack trace for thread 0, enter these commands:</p>
+<p><a href="http://go.microsoft.com/fwlink/p?linkid=399393"><b>~0s</b></a></p>
+<p><a href="http://go.microsoft.com/fwlink/p?linkid=399389"><b>k</b></a></p>
+<p>The output is similar to this:</p>
+<pre class="syntax" xml:space="preserve"><code>0:011&gt; ~0s
+USER32!SystemParametersInfoW:
+00007ffc`b12a4d20 48895c2408      mov     qword ptr [rsp+8], ...
+0:000&gt; k
+Child-SP          RetAddr           Call Site
+00000033`d1e9da48 00007ffc`adfb227d USER32!SystemParametersInfoW
+(Inline Function) --------`-------- uxtheme!IsHighContrastMode+0x1d
+00000033`d1e9da50 00007ffc`adfb2f12 uxtheme!IsThemeActive+0x4d
+...
+00000033`d1e9f810 00007ffc`b1cf16ad notepad!WinMainCRTStartup+0x1a7
+00000033`d1e9f8d0 00007ffc`b1fc4629 KERNEL32!BaseThreadInitThunk+0xd
+00000033`d1e9f900 00000000`00000000 ntdll!RtlUserThreadStart+0x1d</code></pre>
+</li>
+<li>
+<p>To quit debugging and detach from the Notepad process, enter this command:</p>
+<p><a href="http://go.microsoft.com/fwlink/p?linkid=399394"><b>qd</b></a></p>
+</li>
+</ol>
+<h2><a id="Launch_your_own_application_and_attach_WinDbg"></a><a id="launch_your_own_application_and_attach_windbg"></a><a id="LAUNCH_YOUR_OWN_APPLICATION_AND_ATTACH_WINDBG"></a>Launch your own application and attach WinDbg</h2>
+<p>Suppose you have written and built this small console application.</p>
+<pre class="syntax" xml:space="preserve"><code>...
+void MyFunction(long p1, long p2, long p3)
+{
+	long x = p1 + p2 + p3;
+	long y = 0;
+	y = x / p2;
+}
+
+void main ()
+{
+	long a = 2;
+	long b = 0;
+	MyFunction(a, b, 5);
+}</code></pre>
+<p>For this exercise, we will assume that the built application (MyApp.exe) and the symbol file (MyApp.pdb) are in C:\MyApp\x64\Debug. We will also assume that the application source code is in C:\MyApp\MyApp.</p>
+<ol>
+<li>
+<p>Open WinDbg.</p>
+</li>
+<li>On the <b>File</b> menu, choose <b>Open Executable</b>. In the Open Executable dialog box, navigate to C:\MyApp\x64\Debug. For <b>File name</b>, enter MyApp.exe. Click <b>Open</b>.</li>
+<li>
+<p>Enter these commands:</p>
+<p><a href="http://go.microsoft.com/fwlink/p?linkid=399238"><b>.sympath srv*</b></a></p>
+<p><b>.sympath+ C:\MyApp\x64\Debug</b></p>
+<p><a href="http://go.microsoft.com/fwlink/p?linkid=399395"><b>.srcpath C:\MyApp\MyApp</b></a></p>
+<p>Now WinDbg knows where to find symbols and source code for your application.</p>
+</li>
+<li>
+<p>Enter these commands:</p>
+<p><a href="http://go.microsoft.com/fwlink/p?linkid=399239"><b>.reload</b></a></p>
+<p><a href="http://go.microsoft.com/fwlink/p?linkid=399390"><b>bu MyApp!main</b></a></p>
+<p><a href="http://go.microsoft.com/fwlink/p?linkid=399388"><b>g</b></a></p>
+<p>Your application breaks in to the debugger when it comes to its <b>main</b> function.</p>
+<p>WinDbg displays your source code and the Command window.</p><img src="images/WinDbgGetStart03.png" alt="Screen shot of source code in WinDbg"/></li>
+<li>
+<p>On the <b>Debug</b> menu, choose <b>Step Into</b> (or press <b>F11</b>). Continue stepping until you have stepped into <b>MyFunction</b>. When you step into the line <code>y = x / p2</code>, your application will crash and break in to the debugger. The output is similar to this:</p>
+<pre class="syntax" xml:space="preserve"><code>(1450.1424): Integer divide-by-zero - code c0000094 (first chance)
+First chance exceptions are reported before any exception handling.
+This exception may be expected and handled.
+MyApp!MyFunction+0x44:
+00007ff6`3be11064 f77c2428    idiv  eax,dword ptr [rsp+28h] ss:00000063`2036f808=00000000</code></pre>
+</li>
+<li>
+<p>Enter this command:</p>
+<p><a href="http://go.microsoft.com/fwlink/p?linkid=399396"><b>!analyze -v</b></a></p>
+<p>WinDbg displays an analysis of the problem (division by 0 in this case).</p>
+<pre class="syntax" xml:space="preserve"><code>FAULTING_IP: 
+MyApp!MyFunction+44 [c:\myapp\myapp\myapp.cpp @ 7]
+00007ff6`3be11064 f77c2428        idiv    eax,dword ptr [rsp+28h]
+
+EXCEPTION_RECORD:  ffffffffffffffff -- (.exr 0xffffffffffffffff)
+ExceptionAddress: 00007ff63be11064 (MyApp!MyFunction+0x0000000000000044)
+   ExceptionCode: c0000094 (Integer divide-by-zero)
+  ExceptionFlags: 00000000
+NumberParameters: 0
+...
+STACK_TEXT:  
+00000063`2036f7e0 00007ff6`3be110b8 : ... : MyApp!MyFunction+0x44
+00000063`2036f800 00007ff6`3be1141d : ... : MyApp!main+0x38
+00000063`2036f840 00007ff6`3be1154e : ... : MyApp!__tmainCRTStartup+0x19d
+00000063`2036f8b0 00007ffc`b1cf16ad : ... : MyApp!mainCRTStartup+0xe
+00000063`2036f8e0 00007ffc`b1fc4629 : ... : KERNEL32!BaseThreadInitThunk+0xd
+00000063`2036f910 00000000`00000000 : ... : ntdll!RtlUserThreadStart+0x1d
+
+STACK_COMMAND: dt ntdll!LdrpLastDllInitializer BaseDllName ;dt ntdll!LdrpFailureData ;.cxr 0x0 ;kb
+
+FOLLOWUP_IP: 
+MyApp!MyFunction+44 [c:\myapp\myapp\myapp.cpp @ 7]
+00007ff6`3be11064 f77c2428        idiv    eax,dword ptr [rsp+28h]
+
+FAULTING_SOURCE_LINE:  c:\myapp\myapp\myapp.cpp
+
+FAULTING_SOURCE_FILE:  c:\myapp\myapp\myapp.cpp
+
+FAULTING_SOURCE_LINE_NUMBER:  7
+
+FAULTING_SOURCE_CODE:  
+     3: void MyFunction(long p1, long p2, long p3)
+     4: {
+     5: 	long x = p1 + p2 + p3;
+     6: 	long y = 0;
+&gt;    7: 	y = x / p2;
+     8: }
+     9: 
+    10: void main ()
+    11: {
+    12: 	long a = 2;
+...</code></pre>
+</li>
+</ol>
+<h2><a id="Summary_of_commands"></a><a id="summary_of_commands"></a><a id="SUMMARY_OF_COMMANDS"></a>Summary of commands</h2>
+<ul>
+<li><b>Contents</b> command on the <b>Help</b> menu</li>
+<li><a href="http://go.microsoft.com/fwlink/p?linkid=399238">.sympath (Set Symbol Path)</a></li>
+<li><a href="http://go.microsoft.com/fwlink/p?linkid=399239">.reload (Reload Module)</a></li>
+<li><a href="http://go.microsoft.com/fwlink/p?linkid=399240">x (Examine Symbols)</a></li>
+<li><a href="http://go.microsoft.com/fwlink/p?linkid=399388">g (Go)</a></li>
+<li><b>Break</b> command on the <b>Debug</b> menu</li>
+<li><a href="http://go.microsoft.com/fwlink/p?linkid=399237">lm (List Loaded Modules)</a></li>
+<li><a href="http://go.microsoft.com/fwlink/p?linkid=399389">k (Display Stack Backtrace)</a></li>
+<li><a href="http://go.microsoft.com/fwlink/p?linkid=399390">bu (Set Breakpoint)</a></li>
+<li><a href="http://go.microsoft.com/fwlink/p?linkid=399390">bl (Breakpoint List)</a></li>
+<li><a href="http://go.microsoft.com/fwlink/p?linkid=399392">~ (Thread Status)</a></li>
+<li><a href="http://go.microsoft.com/fwlink/p?linkid=399393">~s (Set Current Thread)</a></li>
+<li><a href="http://go.microsoft.com/fwlink/p?linkid=399238">.sympath+ (Set Symbol Path)  append to existing symbol path</a></li>
+<li><a href="http://go.microsoft.com/fwlink/p?linkid=399395">.srcpath (Set Source Path)</a></li>
+<li><b>Step Into</b> command on the <b>Debug </b>menu (<b>F11</b>)</li>
+<li><a href="http://go.microsoft.com/fwlink/p?linkid=399396">!analyze -v</a></li>
+<li><a href="http://go.microsoft.com/fwlink/p?linkid=399394">qd (Quit and Detach)</a></li>
+</ul>
+<h2><a id="related_topics"></a>Related topics</h2>
+<dl>
+<dt><a href="getting_started_with_windbg__kernel-mode_.htm">Getting Started with WinDbg (Kernel-Mode)</a></dt>
+<dt><a href="http://go.microsoft.com/fwlink/p?linkid=399247">Debugger Operation</a></dt>
+<dt><a href="http://go.microsoft.com/fwlink/p?linkid=399248">Debugging Techniques</a></dt>
+<dt><a href="http://go.microsoft.com/fwlink/p?linkid=223405">Debugging Tools for Windows (WinDbg, KD, CDB, NTSD)</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Getting Started with WinDbg (User-Mode)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

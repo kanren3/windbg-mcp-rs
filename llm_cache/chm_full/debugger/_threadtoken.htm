@@ -1,0 +1,129 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !threadtoken extension displays the impersonation state of the current thread."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!threadtoken</title>
+
+<meta name="MS-HAID" content="r31_exts_user_8ea6a001-3fa6-4432-ac0f-455f925c481a.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._threadtoken"></a>!threadtoken</h1>
+</div>
+<p>The <b>!threadtoken</b> extension displays the impersonation state of the current thread.</p>
+<p></p>
+<pre class="syntax"><b>!threadtoken</b></pre>
+<h2><a id="ddk__threadtoken_dbg"></a><a id="DDK__THREADTOKEN_DBG"></a></h2>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000</b></p>
+</td>
+<td>
+<p>
+          Ntsdexts.dll
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>Unavailable </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For information about threads and impersonation, see the Microsoft Windows SDK documentation and <i>Microsoft Windows Internals</i> by Mark Russinovich and David Solomon. (These resources may not be available in some languages and 
+
+countries.)</p>
+<h2>Remarks</h2>
+<p>The <b>!threadtoken</b> extension is obsolete in Windows XP and later versions of Windows. Use <a href="_token.htm"><b>!token</b></a> instead.</p>
+<p>If the current thread is impersonating, the token that this thread is using will be displayed.</p>
+<p>Otherwise, a message reading "Thread is not impersonating" will appear. The process token will then be displayed.</p>
+<p>Tokens will be displayed in the same format that <a href="_handle.htm"><b>!handle</b></a> uses when displaying token handles.</p>
+<p>Here is an example:</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; ~
+.  0  id: 1d0.55c   Suspend: 1 Teb 7ffde000 Unfrozen
+#  1  id: 1d0.1a4   Suspend: 1 Teb 7ffdd000 Unfrozen
+
+0:000&gt; !threadtoken
+
+***Thread is not impersonating, using process token***
+    Auth Id    0 : 0x1c93d
+    Type       Primary
+    Imp Level  Anonymous
+     Token Id  0 : 0x5e8c19
+     Mod Id    0 : 0x5e8c12
+     Dyn Chg   0x1f4
+     Dyn Avail 0x1a4
+     Groups    26
+     Privs     17
+     User      S-1-5-21-2127521184-1604012920-1887927527-74790
+     Groups    26
+               S-1-5-21-2127521184-1604012920-1887927527-513
+               S-1-1-0
+               S-1-5-32-544
+               S-1-5-32-545
+               S-1-5-21-2127521184-1604012920-1887927527-277551
+               S-1-5-21-2127521184-1604012920-1887927527-211604
+               S-1-5-21-2127521184-1604012920-1887927527-10546
+               S-1-5-21-2127521184-1604012920-1887927527-246657
+               S-1-5-21-2127521184-1604012920-1887927527-277552
+               S-1-5-21-2127521184-1604012920-1887927527-416040
+               S-1-5-21-2127521184-1604012920-1887927527-96548
+               S-1-5-21-2127521184-1604012920-1887927527-262644
+               S-1-5-21-2127521184-1604012920-1887927527-155802
+               S-1-5-21-2127521184-1604012920-1887927527-158763
+               S-1-5-21-2127521184-1604012920-1887927527-279132
+               S-1-5-21-2127521184-1604012920-1887927527-443952
+               S-1-5-21-2127521184-1604012920-1887927527-175772
+               S-1-5-21-2127521184-1604012920-1887927527-388472
+               S-1-5-21-2127521184-1604012920-1887927527-443950
+               S-1-5-21-2127521184-1604012920-1887927527-266975
+               S-1-5-21-2127521184-1604012920-1887927527-158181
+               S-1-5-21-2127521184-1604012920-1887927527-279435
+               S-1-5-5-0-116804
+               S-1-2-0
+               S-1-5-4
+               S-1-5-11
+     Privileges    17
+               SeUndockPrivilege ( Enabled Default )
+               SeTakeOwnershipPrivilege ( )
+               SeShutdownPrivilege ( )
+               SeDebugPrivilege ( )
+               SeIncreaseBasePriorityPrivilege ( )
+               SeAuditPrivilege ( )
+               SeSyncAgentPrivilege ( )
+               SeLoadDriverPrivilege ( )
+               SeSystemEnvironmentPrivilege ( Enabled )
+               SeRemoteShutdownPrivilege ( )
+               SeProfileSingleProcessPrivilege ( )
+               SeCreatePagefilePrivilege ( )
+               SeCreatePermanentPrivilege ( )
+               SeSystemProfilePrivilege ( Enabled )
+               SeBackupPrivilege ( )
+               SeMachineAccountPrivilege ( )
+               SeEnableDelegationPrivilege ( Enabled )</code></pre>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!threadtoken%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

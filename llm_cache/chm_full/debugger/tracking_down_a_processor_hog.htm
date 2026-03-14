@@ -1,0 +1,194 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Tracking Down a Processor Hog"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Tracking Down a Processor Hog</title>
+
+<meta name="MS-HAID" content="t01_basic_5b71a690-1b6a-45cc-ae7f-dff9b493b1b9.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.tracking_down_a_processor_hog"></a>Tracking Down a Processor Hog</h1>
+</div>
+<h2><a id="ddk_tracking_down_a_processor_hog_dbg"></a><a id="DDK_TRACKING_DOWN_A_PROCESSOR_HOG_DBG"></a></h2>
+<p>If one application is consuming ("hogging") all the processor's attention, other processes will end up "starving" and unable to run.</p>
+<p>Use the following procedure to correct a bug of this sort.</p>
+<p class="proch"><img src="../common/wedge.gif" alt=""/><b>Debugging an application that is using all the CPU cycles 
+     </b></p>
+<ol>
+<li>
+<p><b>Identify which application is causing this problem:</b> Use <b>Task Manager</b> or <b>Perfmon</b> to find which process is using 99% or 100% of the processor's cycles. This may tell you the offending thread as well.</p>
+</li>
+<li>
+<p>Attach WinDbg, KD, or CDB to this process.</p>
+</li>
+<li><b>Identify which thread is causing the problem:</b> Break into the offending application. Use the <a href="_runaway.htm"><b>!runaway 3</b></a> extension to take a "snapshot" of where all the CPU time is going. Use <a href="g__go_.htm"><b>g (Go)</b></a> and wait a few seconds. Then break in and use <b>!runaway 3</b> again.<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:002&gt; !runaway 3
+ User Mode Time
+ Thread    Time
+ 4e0        0:12:16.0312
+ 268        0:00:00.0000
+ 22c        0:00:00.0000
+ Kernel Mode Time
+ Thread    Time
+ 4e0        0:00:05.0312
+ 268        0:00:00.0000
+ 22c        0:00:00.0000
+
+0:002&gt; g
+
+0:001&gt; !runaway 3
+ User Mode Time
+ Thread    Time
+ 4e0        0:12:37.0609
+ 3d4        0:00:00.0000
+ 22c        0:00:00.0000
+ Kernel Mode Time
+ Thread    Time
+ 4e0        0:00:07.0421
+ 3d4        0:00:00.0000
+ 22c        0:00:00.0000</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Compare the two sets of numbers and look for the thread whose user-mode time or kernel-mode time has increased the most. Because <b>!runaway</b> sorts by descending CPU time, the offending thread is usually the one at the top of the list. In this case, thread 0x4E0 is causing the problem.</p>
+</li>
+<li>Use the <a href="___thread_status_.htm"><b>~ (Thread Status)</b></a> and <a href="_s__set_current_thread_.htm"><b>~s (Set Current Thread)</b></a> commands to make this the current thread:<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:001&gt; ~
+   0  Id: 3f4.3d4 Suspend: 1 Teb: 7ffde000 Unfrozen
+.  1  Id: 3f4.22c Suspend: 1 Teb: 7ffdd000 Unfrozen
+ 2  Id: 3f4.4e0 Suspend: 1 Teb: 7ffdc000 Unfrozen
+
+0:001&gt; ~2s</pre>
+</td>
+</tr>
+</table></span></div>
+</li>
+<li>Use <a href="k__kb__kc__kd__kp__kp__kv__display_stack_backtrace_.htm"><b>kb (Display Stack Backtrace)</b></a> to obtain a stack trace of this thread:<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:002&gt; kb
+FramePtr  RetAddr   Param1   Param2   Param3   Function Name
+0b4ffc74  77f6c600  000000c8.00000000 77fa5ad0 BuggyProgram!CreateMsgFile+0x1b
+0b4ffce4  01836060  0184f440 00000001 0b4ffe20 BuggyProgram!OpenDestFileStream+0xb3
+0b4ffd20  01843eba  02b5b920 00000102 02b1e0e0 BuggyProgram!SaveMsgToDestFolder+0xb3
+0b4ffe20  01855924  0b4ffef0 00145970 0b4ffef0 BuggyProgram!DispatchToConn+0xa4
+0b4ffe5c  77e112e6  01843e16 0b4ffef0 0b4fff34 RPCRT4!DispatchToStubInC+0x34
+0b4ffeb0  77e11215  0b4ffef0 00000000 0b4fff34 RPCRT4!?DispatchToStubWorker@RPC_INTERFACE@@AAEJPAU_RPC_MESSAGE@@IPAJ@Z+0xb0
+0b4ffed0  77e1a3b1  0b4ffef0 00000000 0b4fff34 RPCRT4!?DispatchToStub@RPC_INTERFACE@@QAEJPAU_RPC_MESSAGE@Z+0x41
+0b4fff40  77e181e4  02b1e0b0 00000074 0b4fff90 RPCRT4!?ReceiveOriginalCall@OSF_SCONNECTION@Z+0x14b
+0b4fff60  77e1a5df  02b1e0b0 00000074 00149210 RPCRT4!?DispatchPacket@OSF_SCONNECTION@+0x91
+0b4fff90  77e1ac1c  77e15eaf 00149210 0b4fffec RPCRT4!?ReceiveLotsaCalls@OSF_ADDRESS@@QAEXXZ+0x76</pre>
+</td>
+</tr>
+</table></span></div>
+</li>
+<li>Set a breakpoint on the return address of the currently-running function. In this case, the return address is shown on the first line as 0x77F6C600. The return address is equivalent to the function offset shown on the second line (<b>BuggyProgram!OpenDestFileStream+0xB3</b>). If no symbols are available for the application, the function name may not appear. Use the <a href="g__go_.htm"><b>g (Go)</b></a> command to execute until this return address is reached, using either the symbolic or hexadecimal address:<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:002&gt; g BuggyProgram!OpenDestFileStream+0xb3</pre>
+</td>
+</tr>
+</table></span></div>
+</li>
+<li>If this breakpoint is hit, repeat the process. For example, suppose this breakpoint is hit. The following steps should be taken:<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:002&gt; kb
+FramePtr  RetAddr   Param1   Param2   Param3   Function Name
+0b4ffce4  01836060  0184f440 00000001 0b4ffe20 BuggyProgram!OpenDestFileStream+0xb3
+0b4ffd20  01843eba  02b5b920 00000102 02b1e0e0 BuggyProgram!SaveMsgToDestFolder+0xb3
+0b4ffe20  01855924  0b4ffef0 00145970 0b4ffef0 BuggyProgram!DispatchToConn+0xa4
+0b4ffe5c  77e112e6  01843e16 0b4ffef0 0b4fff34 RPCRT4!DispatchToStubInC+0x34
+0b4ffeb0  77e11215  0b4ffef0 00000000 0b4fff34 RPCRT4!?DispatchToStubWorker@RPC_INTERFACE@@AAEJPAU_RPC_MESSAGE@@IPAJ@Z+0xb0
+0b4ffed0  77e1a3b1  0b4ffef0 00000000 0b4fff34 RPCRT4!?DispatchToStub@RPC_INTERFACE@@QAEJPAU_RPC_MESSAGE@Z+0x41
+0b4fff40  77e181e4  02b1e0b0 00000074 0b4fff90 RPCRT4!?ReceiveOriginalCall@OSF_SCONNECTION@Z+0x14b
+0b4fff60  77e1a5df  02b1e0b0 00000074 00149210 RPCRT4!?DispatchPacket@OSF_SCONNECTION@+0x91
+0b4fff90  77e1ac1c  77e15eaf 00149210 0b4fffec RPCRT4!?ReceiveLotsaCalls@OSF_ADDRESS@@QAEXXZ+0x76
+
+0:002&gt; g BuggyProgram!SaveMsgToDestFolder+0xb3</pre>
+</td>
+</tr>
+</table></span></div>
+<p>If this is hit, continue with:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:002&gt; kb
+FramePtr  RetAddr   Param1   Param2   Param3   Function Name
+0b4ffd20  01843eba  02b5b920 00000102 02b1e0e0 BuggyProgram!SaveMsgToDestFolder+0xb3
+0b4ffe20  01855924  0b4ffef0 00145970 0b4ffef0 BuggyProgram!DispatchToConn+0xa4
+0b4ffe5c  77e112e6  01843e16 0b4ffef0 0b4fff34 RPCRT4!DispatchToStubInC+0x34
+0b4ffeb0  77e11215  0b4ffef0 00000000 0b4fff34 RPCRT4!?DispatchToStubWorker@RPC_INTERFACE@@AAEJPAU_RPC_MESSAGE@@IPAJ@Z+0xb0
+0b4ffed0  77e1a3b1  0b4ffef0 00000000 0b4fff34 RPCRT4!?DispatchToStub@RPC_INTERFACE@@QAEJPAU_RPC_MESSAGE@Z+0x41
+0b4fff40  77e181e4  02b1e0b0 00000074 0b4fff90 RPCRT4!?ReceiveOriginalCall@OSF_SCONNECTION@Z+0x14b
+0b4fff60  77e1a5df  02b1e0b0 00000074 00149210 RPCRT4!?DispatchPacket@OSF_SCONNECTION@+0x91
+0b4fff90  77e1ac1c  77e15eaf 00149210 0b4fffec RPCRT4!?ReceiveLotsaCalls@OSF_ADDRESS@@QAEXXZ+0x76
+
+0:002&gt; g BuggyProgram!DispatchToConn+0xa4</pre>
+</td>
+</tr>
+</table></span></div>
+</li>
+<li>
+<p>Finally you will find a breakpoint that is not hit. In this case, you should assume that the last <b>g</b> command set the target running and it did not break. This means that the <b>SaveMsgToDestFolder()</b> function will never return.</p>
+</li>
+<li>Break into the thread again and set a breakpoint on <b>BuggyProgram!SaveMsgToDestFolder+0xB3</b> with the <a href="bp__bu__bm__set_breakpoint_.htm"><b>bp (Set Breakpoint)</b></a> command. Then use the <b>g</b> command repeatedly. If this breakpoint hits immediately, regardless of how many times you have executed the target, it is very likely that you have identified the offending function:<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:002&gt; bp BuggyProgram!SaveMsgToDestFolder+0xb3
+
+0:002&gt; g 
+
+0:002&gt; g </pre>
+</td>
+</tr>
+</table></span></div>
+</li>
+<li>
+<p>Use the <a href="p__step_.htm"><b>p (Step)</b></a> command to proceed through the function until you identify the place where the looping sequence of instructions are. You can then analyze the application's source code to identify the cause of the spinning thread. The cause will usually turn out to be a problem in the logic of a <b>while</b>, <b>do-while</b>, <b>goto</b>, or <b>for</b> loop.</p>
+</li>
+</ol>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Tracking Down a Processor Hog%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

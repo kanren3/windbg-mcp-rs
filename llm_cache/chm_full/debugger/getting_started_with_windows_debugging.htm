@@ -1,0 +1,85 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="This section covers how to get started with Windows Debugging. If your goal is to use the debugger to analyze a crash dump, see Crash dump analysis using the Windows debuggers (WinDbg)."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Getting Started with Windows Debugging</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.getting_started_with_windows_debugging"></a>Getting Started with Windows Debugging</h1>
+</div>
+<p>This section covers how to get started with Windows Debugging. If your goal is to use the debugger to  analyze a crash dump, see  <a href="crash_dump_files.htm">Crash dump analysis using the Windows debuggers (WinDbg)</a>.</p>
+<p>To get started with Windows Debugging, complete the following tasks. </p>
+<dl>
+<dd>1. Determine which devices will serve as the host system and the target system. <p>The debugger runs on the host system and  the code that you want to debug runs on the target system.</p>
+<p><b>Host &lt;--------------------------------------------------&gt;  Target</b></p><img src="images/TargetHost1.png" alt="Host and target PCs connected with a double arrow"/><p></p>
+<p>Because it is common to stop    instruction execution on the processor during debugging, typically, two  systems are used. In some situations, it is possible that the second  system  is a virtual system, for example, a virtual PC that is running on the same PC. However, if your code is communicating to low level hardware, using a virtual  PC may not be the best approach. For more information, see <a href="setting_up_network_debugging_of_a_virtual_machine_host.htm">Setting Up Network Debugging of a Virtual Machine Host</a>. </p>
+</dd>
+<dd>2. Determine if you will be doing kernel or user mode debugging.<p><i>Kernel mode</i> - Kernel mode is the processor access mode in which the operating system and privileged programs run. Kernel mode code has permission to access any part of the system, and is not restricted like user mode code. It can gain access to any part of any other process running in either user mode or kernel mode.  Much of the core OS functionality and many hardware device drivers run in kernel mode. </p>
+<p><i>User mode</i> - Applications and subsystems run on the computer in user mode. Processes that run in user mode do so within their own virtual address spaces. They are restricted from gaining direct access to many parts of the system, including system hardware, memory that was not allocated for their use, and other portions of the system that might compromise system integrity. Because processes that run in user mode are effectively isolated from the system and other user mode processes, they cannot interfere with these resources.</p>
+<p>If your goal is to debug a driver, determine if the driver is a kernel mode driver (typically described as a WDM or KMDF driver) or a user mode driver (UMDF). </p>
+<p>For some issues, it can be difficult to determine which mode the code is executing in. In that case, you may need to pick one mode and look to see what information is available in that mode. Some issues require using the debugger in both user and kernel mode.</p>
+<p>Depending on what mode you decide to debug in, you will need to configure and use the debuggers in different ways. Some debug commands operate the same, and some commands operate differently in different modes. </p>
+<p>For information  about using the debugger in kernel mode, see  <a href="getting_started_with_windbg__kernel-mode_.htm">Getting Started with WinDbg (Kernel-Mode)</a> and <a href="debug_universal_drivers_-_step_by_step_lab__echo_kernel-mode_.htm">Debug Universal Drivers - Step by Step Lab (Echo Kernel-Mode)</a>. For information  about using the debugger in user mode, see <a href="getting_started_with_windbg.htm">Getting Started with WinDbg (User-Mode)</a>. </p>
+</dd>
+<dd>3. Chose your debugger environment.<p>WinDbg works well in most situations, but there are times when you may want to use another debugger such as  console debuggers for automation or even Visual Studio. For more information, see <a href="debuggers_in_the_debugging_tools_for_windows_package.htm">Debugging Environments</a>. </p>
+</dd>
+<dd>4. Determine how you will connect the target and host system.<p>Typically, an Ethernet network connection is used to connect the target and host system. If you are doing early bring up work, or don't have an  Ethernet connection on the device, other  network connection options are available. For more information, see these topics:</p>
+<ul>
+<li><a href="setting_up_kernel-mode_debugging_in_windbg__cdb__or_ntsd.htm">Setting Up Kernel-Mode Debugging Manually</a></li>
+<li><a href="setting_up_a_network_debugging_connection.htm">Setting Up Kernel-Mode Debugging over a Network Cable Manually</a></li>
+<li><a href="setting_up_kernel-mode_debugging_using_serial_over_usb_manually_.htm">Setting Up Kernel-Mode Debugging using Serial over USB Manually</a></li>
+<li><a href="setting_up_network_debugging_of_a_virtual_machine_host.htm">Setting Up Network Debugging of a Virtual Machine Host</a></li>
+</ul>
+<p>If you wish to debug using Visual Studio, then refer to these topics.</p>
+<ul>
+<li><a href="setting_up_kernel-mode_debugging_in_visual_studio.htm">Setting Up Kernel-Mode Debugging in Visual Studio</a></li>
+<li><a href="setting_up_a_network_debugging_connection_in_visual_studio.htm">Setting Up Kernel-Mode Debugging over a Network Cable in Visual Studio</a></li>
+<li><a href="setting_up_kernel-mode_debugging_using_serial_over_usb_in_visual_studio.htm">Setting Up Kernel-Mode Debugging using Serial over USB in Visual Studio</a></li>
+<li><a href="setting_up_a_connection_to_a_virtual_machine_in_visual_studio.htm">Setting Up Kernel-Mode Debugging of a Virtual Machine in Visual Studio</a></li>
+<li><a href="setting_up_user-mode_debugging_in_visual_studio.htm">Setting Up User-Mode Debugging in Visual Studio</a></li>
+</ul>
+</dd>
+<dd>5. Choose either the 32-bit or 64-bit debugging tools. <p>This choice is dependent on the version of Windows  that is running on the target and host systems and  whether   you are debugging 32-bit or 64-bit code. For more information, see <a href="choosing_a_32_bit_or_64_bit_debugger_package.htm">Choosing the 32-Bit or 64-Bit Debugging Tools</a>.</p>
+</dd>
+<dd>6. Configure symbols. <p>You must load the proper symbols to use all of the advanced functionality that WinDbg provides. If you do not have symbols properly configured, you will receive messages indicating that symbols are not available when you attempt to use functionality that is dependent on symbols. For more information, see <a href="symbols.htm">Symbols for Windows debugging (WinDbg, KD, CDB, NTSD)</a>.</p>
+</dd>
+<dd>7. Configure source code.<p>If your goal is to debug your own source code, you will need to configure a path to your source code.  For more information, see <a href="source_path.htm">Source Path</a>.</p>
+</dd>
+<dd>8. Become familiar with debugger operation.  <p>The <a href="debugger_operation_win8.htm">Debugger Operation</a> section of the documentation describes debugger operation for various tasks. For example,  the  <a href="loading_debugger_extension_dlls.htm">Loading Debugger Extension DLLs</a>  topic  explains how to load  debugger extensions. To learn more about working with WinDbg, see <a href="debugging_using_windbg.htm">Debugging Using WinDbg</a>.</p>
+</dd>
+<dd>9. Become familiar with debugging techniques. <p><a href="standard_debugging_techniques.htm">Standard Debugging Techniques</a> apply to most debugging scenarios, and examples include setting breakpoints, inspecting the call stack, and finding a memory leak. <a href="specialized_debugging_techniques.htm">Specialized Debugging Techniques</a> apply to particular technologies or types of code. Examples are Plug and Play debugging, Kernel Mode Driver Framework debugging, and RPC debugging.</p>
+</dd>
+<dd>10. Use the debugger reference commands. <p>Over time, you will use different debug commands as you work in the debugger.  Use the <a href="_hh__open_html_help_file_.htm">.hh (Open HTML Help File)</a> command in the debugger to display help information about any debug command. For more information about the available commands, see <a href="debugger_reference.htm">Debugger Reference</a>.</p>
+</dd>
+<dd>11. Use debugging extensions for specific technologies.<p>There are a number of debugging extensions that provide parsing of domain specific data structures.  For more information, see <a href="specialized_extensions.htm">Specialized Extensions</a>.  </p>
+</dd>
+</dl>
+<p>This section contains the following topics.</p>
+<ul>
+<li><a href="getting_started_with_windbg__kernel-mode_.htm">Getting Started with WinDbg (Kernel-Mode)</a></li>
+<li><a href="getting_started_with_windbg.htm">Getting Started with WinDbg (User-Mode)</a></li>
+<li><a href="choosing_a_32_bit_or_64_bit_debugger_package.htm">Choosing the 32-Bit or 64-Bit Debugging Tools</a></li>
+<li><a href="debuggers_in_the_debugging_tools_for_windows_package.htm">Debugging Environments</a></li>
+<li><a href="getting_set_up_for_debugging.htm">Setting Up Debugging (Kernel-Mode and User-Mode)</a></li>
+<li><a href="debug_universal_drivers_-_step_by_step_lab__echo_kernel-mode_.htm">Debug Universal Drivers - Step by Step Lab (Echo Kernel-Mode)</a></li>
+</ul>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Getting Started with Windows Debugging%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

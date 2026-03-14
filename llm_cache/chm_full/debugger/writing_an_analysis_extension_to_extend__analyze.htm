@@ -1,0 +1,264 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="You can extend the capabilities of the !analyze debugger command by writing an analysis extension plugin."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Writing an Analysis Extension Plugin to Extend !analyze</title>
+
+<meta name="MS-HAID" content="debugger.writing_an_analysis_plugf-in_to_extend__analyze"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.writing_an_analysis_extension_to_extend__analyze"></a>Writing an Analysis Extension Plugin to Extend !analyze</h1>
+</div>
+<p>You can extend the capabilities of the <a href="_analyze.htm"><b>!analyze</b></a> debugger command by writing an analysis extension plugin. By providing  an analysis extension plugin, you can participate in the analysis of a bug check or an exception in a way that is specific to your own component or application.</p>
+<p>When you write an analysis extension plugin, you also write a metadata file that describes the situations for which you want your plugin to be called. When <a href="_analyze.htm"><b>!analyze</b></a> runs, it locates, loads, and runs the appropriate analysis extension plugins.</p>
+<p>To write an analysis extension plugin and make it available to <a href="_analyze.htm"><b>!analyze</b></a>, follow these steps.</p>
+<ul>
+<li>Create a DLL that exports an <a href="_efn_analyze.htm"><b>_EFN_Analyze</b></a> function.</li>
+<li>Create a metadata file that has the same name as your DLL and an extension of .alz.  For example, if your DLL is named MyAnalyzer.dll, your metadata file must be named MyAnalyzer.alz. For information about how to create a metadata file, see <a href="metadata_files_for_analysis_extensions.htm">Metadata Files for Analysis Extensions</a>. Place the metadata file in the same directory as your DLL. </li>
+<li>In the debugger, use the <a href="_extpath__set_extension_path_.htm"><b>.extpath</b></a> command to add your directory to the extension file path. For example, if your DLL and metadata file are in the folder named c:\MyAnalyzer, enter the command <b>.extpath+ c:\MyAnalyzer</b>.</li>
+</ul>
+<p>When the <a href="_analyze.htm"><b>!analyze</b></a> command runs in the debugger, the analysis engine looks in the extension file path for metadata files that have the .alz extension. The analysis engine reads the metadata files to determine which analysis extension plugins should be loaded. For example, suppose the analysis engine is running in response to Bug Check 0xA IRQL_NOT_LESS_OR_EQUAL, and it reads a metadata file named MyAnalyzer.alz that contains the following entries.</p>
+<pre class="syntax" xml:space="preserve"><code>PluginId       MyPlugin
+DebuggeeClass  Kernel
+BugCheckCode   0xA
+BugCheckCode   0xE2
+</code></pre>
+<p>The entry <code>BugCheckCode  0x0A</code> specifies that this plugin wants to participate in the analysis of Bug Check 0xA, so the analysis engine loads MyAnalyzer.dll (which must be in the same directory as MyAnalyzer.alz) and calls its <a href="_efn_analyze.htm"><b>_EFN_Analyze</b></a> function.</p>
+<div class="alert"><b>Note</b>  The last line of the metadata file must end with a newline character.</div>
+<div> </div>
+<h2><a id="Skeleton_Example"></a><a id="skeleton_example"></a><a id="SKELETON_EXAMPLE"></a>Skeleton Example</h2>
+<p>Here is a skeleton example that you can use as a starting point.</p>
+<ol>
+<li>
+<p>Build a DLL named MyAnalyzer.dll that exports the <a href="_efn_analyze.htm"><b>_EFN_Analyze</b></a> function shown here.</p>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>#include &lt;windows.h&gt;
+#define KDEXT_64BIT
+#include &lt;wdbgexts.h&gt;
+#include &lt;dbgeng.h&gt;
+#include &lt;extsfns.h&gt;
+
+extern "C" __declspec(dllexport) HRESULT _EFN_Analyze(_In_ PDEBUG_CLIENT4 Client, 
+   _In_ FA_EXTENSION_PLUGIN_PHASE CallPhase, _In_ PDEBUG_FAILURE_ANALYSIS2 pAnalysis)
+{ 
+   HRESULT hr = E_FAIL;
+
+   PDEBUG_CONTROL pControl = NULL;
+   hr = Client-&gt;QueryInterface(__uuidof(IDebugControl), (void**)&amp;pControl);
+
+   if(S_OK == hr &amp;&amp; NULL != pControl)
+   {
+      IDebugFAEntryTags* pTags = NULL;
+      pAnalysis-&gt;GetDebugFATagControl(&amp;pTags);
+
+      if(NULL != pTags)
+      {
+         if(FA_PLUGIN_INITILIZATION == CallPhase)
+         { 
+            pControl-&gt;Output(DEBUG_OUTPUT_NORMAL, "My analyzer: initialization\n");  
+         }
+         else if(FA_PLUGIN_STACK_ANALYSIS == CallPhase)
+         {
+            pControl-&gt;Output(DEBUG_OUTPUT_NORMAL, "My analyzer: stack analysis\n"); 
+         }
+         else if(FA_PLUGIN_PRE_BUCKETING == CallPhase)
+         {
+            pControl-&gt;Output(DEBUG_OUTPUT_NORMAL, "My analyzer: prebucketing\n");
+         }
+         else if(FA_PLUGIN_POST_BUCKETING == CallPhase)
+         {
+            pControl-&gt;Output(DEBUG_OUTPUT_NORMAL, "My analyzer: post bucketing\n");    
+            FA_ENTRY_TYPE entryType = pTags-&gt;GetType(DEBUG_FLR_BUGCHECK_CODE);       
+            pControl-&gt;Output(DEBUG_OUTPUT_NORMAL, "The data type for the DEBUG_FLR_BUGCHECK_CODE tag is 0x%x.\n\n", entryType);
+         }
+      }
+
+      pControl-&gt;Release();
+   }
+   return hr;
+}</pre>
+</td>
+</tr>
+</table></span></div>
+</li>
+<li>
+<p>Create a metadata file named MyAnalyzer.alz that has the following entries. </p>
+<div class="code"><span codelanguage="cmd"><table>
+<tr>
+<th>cmd</th>
+</tr>
+<tr>
+<td>
+<pre>PluginId      MyPlugin
+DebuggeeClass Kernel
+BugCheckCode  0xE2
+</pre>
+</td>
+</tr>
+</table></span></div>
+<div class="alert"><b>Note</b>  The last line of the metadata file must end with a newline character.</div>
+<div> </div>
+</li>
+<li>
+<p>Establish a kernel-mode debugging session between a host and target computer.</p>
+</li>
+<li>
+<p>On the host computer, put MyAnalyzer.dll and MyAnalyzer.alz in the folder c:\MyAnalyzer.</p>
+</li>
+<li>
+<p>On the host computer, in the debugger, enter these commands.</p>
+<p><b>.extpath+ c:\MyAnalyzer</b></p>
+<p><b>.crash</b></p>
+</li>
+<li>
+<p>The <a href="_crash__force_system_crash_.htm"><b>.crash</b></a> command generates Bug Check 0xE2 MANUALLY_INITIATED_CRASH
+on the target computer, which causes a break in to the debugger on the host computer. The bug check analysis engine (running in the debugger on the host computer) reads MyAnalyzer.alz and sees that MyAnalyzer.dll is able to participate in analyzing bug check 0xE2. So the analysis engine loads MyAnalyzer.dll and calls its <a href="_efn_analyze.htm"><b>_EFN_Analyze</b></a> function.</p>
+<p>Verify that you see output similar to the following in the debugger.</p>
+<pre class="syntax" xml:space="preserve"><code>
+*                        Bugcheck Analysis                                    *
+*                                                                             *
+*******************************************************************************
+
+Use !analyze -v to get detailed debugging information.
+
+BugCheck E2, {0, 0, 0, 0}
+
+My analyzer: initialization
+My analyzer: stack analysis
+My analyzer: prebucketing
+My analyzer: post bucketing
+The data type for the DEBUG_FLR_BUGCHECK_CODE tag is 0x1.</code></pre>
+</li>
+</ol>
+<p>The preceding debugger output shows that the analysis engine called the <a href="_efn_analyze.htm"><b>_EFN_Analyze</b></a> function four times: once for each phase of the analysis. The analysis engine passes the <b>_EFN_Analyze</b> function two interface pointers. <i>Client</i> is an <a href="idebugclient4.htm"><b>IDebugClient4</b></a> interface, and <i>pAnalysis</i> is an <a href="idebugfailureanalysis2.htm"><b>IDebugFailureAnalysis2</b></a> interface. The code in the preceding skeleton example shows how to obtain two more interface pointers. <code>Client-&gt;QueryInterface</code> gets an <a href="idebugcontrol.htm"><b>IDebugControl</b></a> interface, and <code>pAnalysis-&gt;GetDebugFATagControl</code> gets an <b>IDebugFAEntryTags</b> interface.</p>
+<h2><a id="failure_analysis_entries_tags_and_data_types"></a><a id="FAILURE_ANALYSIS_ENTRIES_TAGS_AND_DATA_TYPES"></a>Failure Analysis Entries, Tags, and Data Types</h2>
+<p>The analysis engine creates a <a href="idebugfailureanalysis2.htm"><b>DebugFailureAnalysis</b></a> object to organize the data related to a particular code failure. A <b>DebugFailureAnalysis</b> object has a collection of <a href="failure_analysis_entries.htm">failure analysis entries</a> (FA entries), each of which is represented by an <b>FA_ENTRY</b> structure. An analysis extension plugin uses the <b>IDebugFailureAnalysis2</b> interface to get access to this collection of FA entries. Each FA entry has a tag that identifies the kind of information that the entry contains. For example, an FA entry might have the tag <b>DEBUG_FLR_BUGCHECK_CODE</b>, which tells us that the entry contains a bug check code. Tags are values in the <b>DEBUG_FLR_PARAM_TYPE</b> enumeration (defined in extsfns.h), which is also called the <b>FA_TAG</b> enumeration.</p>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>typedef enum _DEBUG_FLR_PARAM_TYPE {
+    ...
+    DEBUG_FLR_BUGCHECK_CODE,
+    ...
+    DEBUG_FLR_BUILD_VERSION_STRING,
+    ...
+} DEBUG_FLR_PARAM_TYPE;
+
+typedef DEBUG_FLR_PARAM_TYPE FA_TAG;</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Most <a href="failure_analysis_entries.htm">FA entries</a> have an associated data block. The <b>DataSize</b> member of the <b>FA_ENTRY</b> structure holds the size of the data block. Some FA entries do not have an associated data block; all the information is conveyed by the tag. In those cases, the <b>DataSize</b> member has a value of 0.</p>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>typedef struct _FA_ENTRY
+{
+    FA_TAG Tag;
+    USHORT FullSize;
+    USHORT DataSize;
+} FA_ENTRY, *PFA_ENTRY;</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Each tag has a set of properties: for example, name, description, and data type. A <a href="idebugfailureanalysis2.htm"><b>DebugFailureAnalysis</b></a> object is associated with a <a href="idebugfaentrytags.htm">DebugFailureAnalysisTags</a> object, which contains a collection of tag properties. The following diagram illustrates this association.</p><img src="images/DebugFA01.png" alt="Diagram that shows the analysis engine, a DebugFailureAnalysis object, and a DebugFailureAnalysisTags object"/><p>A <a href="idebugfailureanalysis2.htm"><b>DebugFailureAnalysis</b></a> object has a collection of <a href="failure_analysis_entries.htm">FA entries</a> that belong to a particular analysis session. The associated <a href="idebugfaentrytags.htm">DebugFailureAnalysisTags</a> object has a collection of tag properties that includes only the tags used by that same analysis session. As the preceding diagram shows, the analysis engine has a global tag table that holds limited information about a large set of tags that are generally available for use by analysis sessions.</p>
+<p>Typically most of the tags used by an analysis session are standard tags; that is, the tags are values in the <a href="fa_tag.htm"><b>FA_TAG</b></a> enumeration. However, an analysis extension plug-in can create custom tags. An analysis extension plug-in can add an <a href="failure_analysis_entries.htm">FA entry</a> to a <a href="idebugfailureanalysis2.htm"><b>DebugFailureAnalysis</b></a> object and specify a custom tag for the entry. In that case, properties for the custom tag are added to the collection of tag properties in the associated <a href="idebugfaentrytags.htm">DebugFailureAnalysisTags</a> object.</p>
+<p>You can access a <a href="idebugfaentrytags.htm">DebugFailureAnalysisTags</a> through an IDebugFAEntry tags interface. To get a pointer to an IDebugFAEntry interface, call the <a href="idebugfailureanalysis2_getdebugfatagcontrol.htm"><b>GetDebugFATagControl</b></a> method of the <a href="idebugfailureanalysis2.htm"><b>IDebugFailureAnalysis2</b></a> interface.</p>
+<p>Each tag has a data type property that you can inspect to determine the data type of the data in a failure analysis entry. A data type is represented by a value in the <b>FA_ENTRY_TYPE</b> enumeration.</p>
+<p>The following line of code gets the data type of the <b>DEBUG_FLR_BUILD_VERSION_STRING</b> tag. In this case, the data type is <b>DEBUG_FA_ENTRY_ANSI_STRING</b>. In the code, <code>pAnalysis</code> is a pointer to an <a href="idebugfailureanalysis2.htm"><b>IDebugFailureAnalysis2</b></a> interface.</p>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>
+IDebugFAEntryTags* pTags = pAnalysis-&gt;GetDebugFATagControl(&amp;pTags);
+
+if(NULL != pTags)
+{
+   FA_ENTRY_TYPE entryType = pTags-&gt;GetType(DEBUG_FLR_BUILD_VERSION_STRING);
+}</pre>
+</td>
+</tr>
+</table></span></div>
+<p>If a failure analysis entry has no data block, the data type of the associated tag is <b>DEBUG_FA_ENTRY_NO_TYPE</b>.</p>
+<p>Recall that a <a href="idebugfailureanalysis2.htm"><b>DebugFailureAnalysis</b></a> object has a collection of <a href="failure_analysis_entries.htm">FA entries</a>. To inspect all the FA entries in the collection, use the <b>NextEntry</b> method. The following example shows how to iterate through the entire collection of FA entries. Assume that <i>pAnalysis</i> is a pointer to an <b>IDebugFailureAnalysis2</b> interface. Notice that we get the first entry by passing <b>NULL</b> to <b>NextEntry</b>.</p>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>PFA_ENTRY entry = pAnalysis-&gt;NextEntry(NULL);
+
+while(NULL != entry)
+{
+   // Do something with the entry
+
+   entry = pAnalysis-&gt;NextEntry(entry);
+}</pre>
+</td>
+</tr>
+</table></span></div>
+<p>A tag can have a name and a description. In the following code, <i>pAnalysis</i> is a pointer to an <a href="idebugfailureanalysis2.htm"><b>IDebugFailureAnalysis</b></a> interface,  <i>pControl</i> is a pointer to an <a href="idebugcontrol.htm"><b>IDebugControl</b></a> interface, and <code>pTags</code> is a pointer to an <a href="idebugfaentrytags.htm">IDebugFAEntryTags</a> interface. The code shows how to use the <b>GetProperties</b> method to get the name and description of the tag associated with an <a href="failure_analysis_entries.htm">FA entry</a>.</p>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>
+#define MAX_NAME_LENGTH 64
+#define MAX_DESCRIPTION_LENGTH 512
+
+CHAR name[MAX_NAME_LENGTH] = {0};
+ULONG nameSize = MAX_NAME_LENGTH;
+CHAR desc[MAX_DESCRIPTION_LENGTH] = {0};
+ULONG descSize = MAX_DESCRIPTION_LENGTH;
+                  
+PFA_ENTRY pEntry = pAnalysis-&gt;NextEntry(NULL); 
+pTags-&gt;GetProperties(pEntry-&gt;Tag, name, &amp;nameSize, desc, &amp;descSize, NULL);
+pControl-&gt;Output(DEBUG_OUTPUT_NORMAL, "The name is %s\n", name);
+pControl-&gt;Output(DEBUG_OUTPUT_NORMAL, "The description is %s\n", desc);</pre>
+</td>
+</tr>
+</table></span></div>
+<h2><a id="related_topics"></a>Related topics</h2>
+<dl>
+<dt><a href="writing_custom_analysis_debugger_extensions.htm">Writing Custom Analysis Debugger Extensions</a></dt>
+<dt><a href="_efn_analyze.htm"><b>_EFN_Analyze</b></a></dt>
+<dt><a href="metadata_files_for_analysis_extensions.htm">Metadata Files for Analysis Extension Plug-ins</a></dt>
+<dt><a href="idebugfailureanalysis2.htm"><b>IDebugFailureAnalysis2</b></a></dt>
+<dt><a href="idebugfaentrytags.htm">IDebugFAEntryTags</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Writing an Analysis Extension Plugin to Extend !analyze%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

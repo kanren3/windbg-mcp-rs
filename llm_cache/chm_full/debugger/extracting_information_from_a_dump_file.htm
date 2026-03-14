@@ -1,0 +1,41 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Extracting Information from a Dump File"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Extracting Information from a Dump File</title>
+
+<meta name="MS-HAID" content="t01_basic_256cb03b-5fba-4e9e-a526-4c3f5f93ebc8.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.extracting_information_from_a_dump_file"></a>Extracting Information from a Dump File</h1>
+</div>
+<h2><a id="ddk_extracting_information_from_a_dump_file_dbg"></a><a id="DDK_EXTRACTING_INFORMATION_FROM_A_DUMP_FILE_DBG"></a></h2>
+<p>Certain kinds of information, such as the name of the target computer, are easily available during live debugging. When debugging a dump file it takes a little more work to determine this information.</p>
+<h3><a id="finding_the_computer_name_in_a_kernel_mode_dump_file"></a><a id="FINDING_THE_COMPUTER_NAME_IN_A_KERNEL_MODE_DUMP_FILE"></a>Finding the Computer Name in a Kernel-Mode Dump File</h3>
+<p>If you need to determine the name of the computer on which the crash dump was made, you can use the <a href="_peb.htm"><b>!peb</b></a> extension and look for the value of COMPUTERNAME it its output.  </p>
+<p>Or you can use the following command: </p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; x srv!SrvComputerName
+be8ce2e8  srv!SrvComputerName  = _UNICODE_STRING "AIGM-MYCOMP-PUB01"</code></pre>
+<h3><a id="finding_the_ip_address_in_a_kernel_mode_dump_file"></a><a id="FINDING_THE_IP_ADDRESS_IN_A_KERNEL_MODE_DUMP_FILE"></a>Finding the IP Address in a Kernel-Mode Dump File</h3>
+<p>To determine the IP address of the computer on which the crash dump was made, find a thread stack that shows some send/receive network activity. Open one of the send packets or receive packets. The IP address will be visible in that packet.</p>
+<h3><a id="finding_the_process_id_in_a_user_mode_dump_file"></a><a id="FINDING_THE_PROCESS_ID_IN_A_USER_MODE_DUMP_FILE"></a>Finding the Process ID in a User-Mode Dump File</h3>
+<p>To determine the process ID of the target application from a user-mode dump file, use the <a href="___process_status_.htm"><b>| (Process Status)</b></a> command. This will display all the processes being debugged at the time the dump was written. The process marked with a period (<b>.</b>) is the current process. Its process ID is given in hexadecimal after the <b>id:</b> notation.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Extracting Information from a Dump File%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

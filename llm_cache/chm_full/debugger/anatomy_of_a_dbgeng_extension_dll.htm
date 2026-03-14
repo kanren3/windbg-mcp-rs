@@ -1,0 +1,60 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Anatomy of a DbgEng Extension DLL"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Anatomy of a DbgEng Extension DLL</title>
+
+<meta name="MS-HAID" content="Extensions_DG_188c35a9-449b-47eb-99ac-ffbd69ff5953.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.anatomy_of_a_dbgeng_extension_dll"></a>Anatomy of a DbgEng Extension DLL</h1>
+</div>
+<h2><a id="ddk_anatomy_of_a_dbgeng_extension_dll_dbx"></a><a id="DDK_ANATOMY_OF_A_DBGENG_EXTENSION_DLL_DBX"></a></h2>
+<p>A DbgEng extension DLL exports a number of callback functions, some of which may be implementations of extension commands.</p>
+<p>These extension DLLs are loaded by the <a href="introduction.htm#debugger_engine">debugger engine</a> and can provide extra functionality or automation of tasks while performing user-mode or kernel-mode debugging on Microsoft Windows.</p>
+<p>If you performed a full install of Debugging Tools for Windows, a sample DbgEng extension called "exts" can be found in the sdk\samples\exts subdirectory of the installation directory.</p>
+<h3><a id="extension_commands"></a><a id="EXTENSION_COMMANDS"></a>Extension Commands</h3>
+<p>An extension DLL may export any number of functions that are used to execute extension commands.  Each function is explicitly declared as an export in the .def file, and its name must consist entirely of lowercase letters.</p>
+<p>Functions used to implement extension commands must match the prototype <a href="pdebug_extension_call.htm"><b>PDEBUG_EXTENSION_CALL</b></a>.</p>
+<p>These functions are named according to the standard C++ convention, except that uppercase letters are not permitted. The exported function name and the extension command name are identical, except that the extension command begins with an exclamation point (!). For example, when you load myextension.dll into the debugger and then type <b>!stack</b> into the Debugger Command window, the debugger looks for an exported function named <b>stack</b> in myextension.dll.</p>
+<p>If myextension.dll is not already loaded, or if there may be other extension commands with the same name in other extension DLLs, you can type <b>!myextension.stack</b> into the Debugger Command window to indicate the extension DLL and the extension command in that DLL.</p>
+<h3><a id="other_exported_functions"></a><a id="OTHER_EXPORTED_FUNCTIONS"></a>Other Exported Functions</h3>
+<p>A DbgEng extension DLL must export <a href="debugextensioninitialize.htm"><i>DebugExtensionInitialize</i></a>.  This will be called when the DLL is loaded, to initialize the DLL.  It may be used by the DLL to initialize global variables.</p>
+<p>An extension DLL may export <a href="debugextensionuninitialize.htm"><i>DebugExtensionUninitialize</i></a>.  If this is exported, it will be called before the extension DLL is unloaded.  It may be used by the DLL to clean up before it is unloaded.</p>
+<p>An extension DLL may export <a href="debugextensionnotify.htm"><i>DebugExtensionNotify</i></a>.  If this is exported, it will be called when a session begins or ends, and when a target starts or stops executing.  These notifications are also provided to <a href="idebugeventcallbacks.htm">IDebugEventCallbacks</a> objects registered with a client.</p>
+<p>An extension DLL may export <a href="knownstructoutput.htm"><i>KnownStructOutput</i></a>.  If this is exported, it will be called when the DLL is loaded. This function returns a list of structures that the DLL knows how to print on a single line.  It may be called later to format instances of these structures for printing.</p>
+<h3><a id="engine_procedure_for_loading_a_dbgeng_extension_dll"></a><a id="ENGINE_PROCEDURE_FOR_LOADING_A_DBGENG_EXTENSION_DLL"></a>Engine Procedure for Loading a DbgEng Extension DLL</h3>
+<p>When an extension DLL is loaded, the callback functions are called by the engine in the following order:</p>
+<ol>
+<li>
+<p><b>
+       DebugExtensionInitialize</b> is called so the extension DLL can initialize.</p>
+</li>
+<li>
+<p>If exported, <b>DebugExtensionNotify</b> is called if the engine has an active session, and called again if the session is suspended and accessible.</p>
+</li>
+<li>
+<p>If exported, <b>KnownStructOutput</b> is called to request a list of structures the DLL knows how to print on a single line.</p>
+</li>
+</ol>
+<p>See <a href="loading_debugger_extension_dlls.htm">Loading Debugger Extension DLLs</a> for information about how to use the debugger to load and unload an extension DLL, and see <a href="using_debugger_extension_commands.htm">Using Debugger Extension Commands</a> for information about executing an extension command.</p>
+<p>The debugger engine will place a <b>try / except</b> block around a call to an extension DLL.  This protects the engine from some types of bugs in the extension code; but, since the extension calls are executed in the same thread as the engine, they can still cause it to crash.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Anatomy of a DbgEng Extension DLL%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

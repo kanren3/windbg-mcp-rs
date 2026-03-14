@@ -1,0 +1,518 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="First-time users of CDB or NTSD should begin with the Debugging Using CDB and NTSD section."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>CDB Command-Line Options</title>
+
+<meta name="MS-HAID" content="r12_cmdline_3ec269e8-a2d8-43e4-8758-2201481cd323.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.cdb_command_line_options"></a>CDB Command-Line Options</h1>
+</div>
+<p>
+    First-time users of CDB or NTSD should begin with the 
+    <a href="debugging_using_cdb_and_ntsd.htm">Debugging Using CDB and NTSD</a> section.
+   </p>
+<p>The CDB command line uses the following syntax:</p>
+<pre class="syntax">
+<b>cdb  [ -server </b><i>ServerTransport</i><b> | -remote </b><i>ClientTransport</i><b> ] 
+[ -premote </b><i>SmartClientTransport</i><b> ] [-log{a|au|o|ou} </b><i>LogFile</i><b>]
+[-2] [-d] [-ddefer] [-g] [-G] [-hd] [-lines] [-myob] [-bonc] 
+[-n] [-o] [-s] [-v] [-w] [-cf "</b><i>filename</i><b>"] [-cfr "</b><i>filename</i><b>"] [-c "</b><i>command</i><b>"] 
+[-robp] [-r </b><i>BreakErrorLevel</i><b>]  [-t </b><i>PrintErrorLevel</i><b>] 
+[ -x{e|d|n|i} </b><i>Exception </i><b>] [-x] [-clines </b><i>lines</i><b>] 
+[-i </b><i>ImagePath</i><b>]  [-y </b><i>SymbolPath</i><b>] [-srcpath </b><i>SourcePath</i><b>] 
+[-a</b><i>Extension</i><b>] [-failinc] [-noio] [-noinh] [-noshell] [-nosqm]
+[-sdce] [-ses] [-sicv] [-sins] [-snc] [-snul] [-zp </b><i>PageFile</i><b>] 
+[-sup] [-sflags 0x</b><i>Number</i><b>] [-ee {masm|c++}]
+[-e </b><i>Event</i><b>] [-pb] [-pd] [-pe] [-pr] [-pt </b><i>Seconds</i><b>] [-pv] 
+[ -- | -p </b><i>PID</i><b> | -pn </b><i>Name</i><b> | -psn </b><i>ServiceName</i><b> | -z </b><i>DumpFile</i><b> | </b><i>executable</i><b> ] 
+[-cimp] [-isd] [-kqm] [-pvr] [-version] [-vf] [-vf:&lt;opts&gt;] [-netsyms:{yes|no}]
+
+cdb -iae 
+
+cdb -iaec </b><i>KeyString</i><b> 
+
+cdb -iu </b><i>KeyString</i><b>
+
+cdb -QR </b><i>Server</i><b> 
+
+cdb -wake </b><i>pid</i><b> 
+
+cdb -?</b></pre>
+<p>The NTSD command-line syntax is identical to that of CDB:</p>
+<pre class="syntax">
+<b>ntsd  [ -server </b><i>ServerTransport</i><b> | -remote </b><i>ClientTransport</i><b> ] 
+[ -premote </b><i>SmartClientTransport</i><b> ] [-log{a|au|o|ou} </b><i>LogFile</i><b>]
+[-2] [-d] [-ddefer] [-g] [-G] [-hd] [-lines] [-myob] [-bonc] 
+[-n] [-o] [-s] [-v] [-w] [-cf "</b><i>filename</i><b>"] [-cfr "</b><i>filename</i><b>"] [-c "</b><i>command</i><b>"] 
+[-robp] [-r </b><i>BreakErrorLevel</i><b>]  [-t </b><i>PrintErrorLevel</i><b>] 
+[ -x{e|d|n|i} </b><i>Exception </i><b>] [-x] [-clines </b><i>lines</i><b>] 
+[-i </b><i>ImagePath</i><b>]  [-y </b><i>SymbolPath</i><b>] [-srcpath </b><i>SourcePath</i><b>] 
+[-a</b><i>Extension</i><b>] [-failinc] [-noio] [-noinh] [-noshell] [-nosqm]
+[-sdce] [-ses] [-sicv] [-sins] [-snc] [-snul] [-zp </b><i>PageFile</i><b>] 
+[-sup] [-sflags 0x</b><i>Number</i><b>] [-ee {masm|c++}] 
+[-e </b><i>Event</i><b>] [-pb] [-pd] [-pe] [-pr] [-pt </b><i>Seconds</i><b>] [-pv] 
+[ -- | -p </b><i>PID</i><b> | -pn </b><i>Name</i><b> | -psn </b><i>ServiceName</i><b> | -z </b><i>DumpFile</i><b> | </b><i>executable</i><b> ] 
+[-cimp] [-isd] [-kqm] [-pvr] [-version] [-vf] [-vf:&lt;opts&gt;] [-netsyms:{yes|no}]
+
+ntsd -iae 
+
+ntsd -iaec </b><i>KeyString</i><b> 
+
+ntsd -iu </b><i>KeyString</i><b>
+
+ntsd -QR </b><i>Server</i><b> 
+
+ntsd -wake </b><i>PID</i><b> 
+
+ntsd -?</b></pre>
+<p>The only difference between NTSD and CDB is that NTSD spawns a new console window while CDB inherits the window from which it was invoked. Since the <b>start</b> command can also be used to spawn a new console window, the following two constructions will give the same results:</p>
+<div class="code"><span codelanguage="cmd"><table>
+<tr>
+<th>cmd</th>
+</tr>
+<tr>
+<td>
+<pre>start cdb [parameters]
+ntsd [parameters]</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Descriptions of the CDB and NTSD command-line options follow. Only the <b>-remote</b>, <b>-server</b>, <b>-g</b> and <b>-G</b> options are case-sensitive. The initial hyphen can be replaced with a forward-slash (/). Options that do not take any additional parameters can be concatenated -- so <b>cdb -o -d -G -g winmine</b> can be written as <b>cdb -odGg winmine</b>.</p>
+<p>If the <b>-remote</b> or <b>-server</b> option is used, it must appear before any other options on the command line. If an <i>executable</i> is specified, it must appear last on the command line; any text after the <i>executable</i> name is passed to the executable program as its own command-line parameters.</p>
+<h2><a id="ddk_cdb_command_line_options_dbg"></a><a id="DDK_CDB_COMMAND_LINE_OPTIONS_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______-server_______ServerTransport______"></a><a id="_______-server_______servertransport______"></a><a id="_______-SERVER_______SERVERTRANSPORT______"></a>       <b>-server</b>       <i>ServerTransport</i>      </dt>
+<dd>
+<p>Creates a debugging server that can be accessed by other debuggers. For an explanation of the possible <i>ServerTransport</i> values, see <a href="activating_a_debugging_server.htm"><b>Activating a Debugging Server</b></a>. When this parameter is used, it must be the first parameters on the command line. </p>
+</dd>
+<dt><a id="_______-remote_______ClientTransport______"></a><a id="_______-remote_______clienttransport______"></a><a id="_______-REMOTE_______CLIENTTRANSPORT______"></a>       <b>-remote</b>       <i>ClientTransport</i>      </dt>
+<dd>
+<p>Creates a debugging client, and connects to a debugging server that is already running. For an explanation of the possible <i>ClientTransport</i> values, see <a href="activating_a_debugging_client.htm"><b>Activating a Debugging Client</b></a>. When this parameter is used, it must be the first parameters on the command line. </p>
+</dd>
+<dt><a id="_______-premote_______SmartClientTransport______"></a><a id="_______-premote_______smartclienttransport______"></a><a id="_______-PREMOTE_______SMARTCLIENTTRANSPORT______"></a>       <b>-premote</b>       <i>SmartClientTransport</i>      </dt>
+<dd>
+<p>Creates a smart client, and connects to a process server that is already running. For an explanation of the possible <i>SmartClientTransport</i> values, see <a href="activating_a_smart_client.htm"><b>Activating a Smart Client</b></a>.</p>
+</dd>
+<dt><a id="_______-2______"></a>       <b>-2</b>      </dt>
+<dd>
+<p>If the target application is a <i>console application</i>, this option causes it to live in a new console window. (The default is for a target console application to share the window with CDB or NTSD.)</p>
+</dd>
+<dt><a id="_______--______"></a>       <b>--</b>      </dt>
+<dd>
+<p>Debugs the Client Server Run-Time Subsystem (CSRSS). For details, see <a href="debugging_csrss.htm">Debugging CSRSS</a>. </p>
+</dd>
+<dt><a id="_______-a_______Extension______"></a><a id="_______-a_______extension______"></a><a id="_______-A_______EXTENSION______"></a>       <b>-a</b>       <i>Extension</i>      </dt>
+<dd>
+<p>Sets the default extension DLL. The default is <i>userexts</i>. There must be no space after the "a", and the .dll extension must not be included. For details, and other methods of setting this default, see <a href="loading_debugger_extension_dlls.htm">Loading Debugger Extension DLLs</a>.</p>
+</dd>
+<dt><a id="_______-bonc______"></a><a id="_______-BONC______"></a>       <b>-bonc</b>      </dt>
+<dd>
+<p>If this option is specified, the debugger will break into the target as soon as the session begins. This is especially useful when connecting to a debugging server that might not be currently broken into the target.</p>
+</dd>
+<dt><a id="_______-c_________command______________"></a><a id="_______-C_________COMMAND______________"></a>       <b>-c "</b>       <i>command</i>       <b>"</b>      </dt>
+<dd>
+<p>Specifies the initial debugger command to run at start-up. This command must be surrounded with quotation marks. Multiple commands can be separated with semicolons. (If you have a long command list, it may be easier to put them in a script and then use the <b>-c</b> option with the <a href="_______________________a___run_script_file_.htm"><b>$&lt;, $&gt;&lt;, $&gt;&lt;, $$&gt;&lt; (Run Script File)</b></a> command.) </p>
+<p>If you are starting a debugging client, this command must be intended for the debugging server. Client-specific commands such as <b>.lsrcpath</b> are not allowed.</p>
+</dd>
+<dt><a id="_______-cf_________filename______________"></a><a id="_______-CF_________FILENAME______________"></a>       <b>-cf "</b>       <i>filename</i>       <b>"</b>      </dt>
+<dd>
+<p>Specifies the path and name of a script file. This script file is executed as soon as the debugger is started. If <i>filename</i> contains spaces it must be enclosed in quotation marks. If the path is omitted, the current directory is assumed. If the <b>-cf</b> option is not used, the file ntsd.ini in the current directory is used as the script file. If the file does not exist, no error occurs. For details, see <a href="using_script_files.htm">Using Script Files</a>.</p>
+</dd>
+<dt><a id="_______-cfr_________filename______________"></a><a id="_______-CFR_________FILENAME______________"></a>       <b>-cfr "</b>       <i>filename</i>       <b>"</b>      </dt>
+<dd>
+<p>Specifies the path and name of a script file. This script file is executed as soon as the debugger is started, and any time the target is restarted. If <i>filename</i> contains spaces it must be enclosed in quotation marks. If the path is omitted, the current directory is assumed. If the file does not exist, no error occurs. For details, see <a href="using_script_files.htm">Using Script Files</a>.</p>
+</dd>
+<dt><a id="_______-cimp______"></a><a id="_______-CIMP______"></a>       <b>-cimp</b>      </dt>
+<dd>
+<p>Directs CDB/NTSD to start with a DbgSrv implicit command line instead of an explicit process to run. This option is the client side of dbgsrv -pc.</p>
+</dd>
+<dt><a id="_______-clines________lines______"></a><a id="_______-CLINES________LINES______"></a>       <b>-clines</b>       <i> lines</i>      </dt>
+<dd>
+<p>Sets the approximate number of commands in the command history which can be accessed during remote debugging. For details, and for other ways to change this number, see <a href="using_debugger_commands.htm">Using Debugger Commands</a>.</p>
+</dd>
+<dt><a id="_______-d______"></a><a id="_______-D______"></a>       <b>-d</b>      </dt>
+<dd>
+<p>Passes control of this debugger to the kernel debugger. If you are debugging CSRSS, this control redirection always is active, even if <b>-d</b> is not specified. (This option cannot be used during remote debugging -- use <b>-ddefer</b> instead.) See <a href="controlling_the_user_mode_debugger_from_the_kernel_debugger.htm">Controlling the User-Mode Debugger from the Kernel Debugger</a> for details.  This option cannot be used in conjunction with either the <b>-ddefer</b> option or the <b>-noio</b> option.</p>
+<div class="alert"><b>Note</b>  If you use WinDbg as the kernel debugger, many of the familiar features of WinDbg are not available in this scenario. For example, you cannot use the Locals window, the Disassembly window, or the Call Stack window, and you cannot step through source code. This is because WinDbg is only acting as a viewer for the debugger (NTSD or CDB) running on the target computer.</div>
+<div> </div>
+</dd>
+<dt><a id="_______-ddefer______"></a><a id="_______-DDEFER______"></a>       <b>-ddefer</b>      </dt>
+<dd>
+<p>Passes control of this debugger to the kernel debugger, unless a debugging client is connected. (This is a variation of <b>-d</b> that can be used from a debugging server.) See <a href="controlling_the_user_mode_debugger_from_the_kernel_debugger.htm">Controlling the User-Mode Debugger from the Kernel Debugger</a> for details.  This option cannot be used in conjunction with either the <b>-d</b> option or the <b>-noio</b> option.</p>
+</dd>
+<dt><a id="_______-e_______Event______"></a><a id="_______-e_______event______"></a><a id="_______-E_______EVENT______"></a>       <b>-e</b>       <i>Event</i>      </dt>
+<dd>
+<p>Signals the debugger that the specified event has occurred. This option is only used when starting the debugger programmatically.  </p>
+</dd>
+<dt><a id="_______-ee__masm_c___"></a><a id="_______-EE__MASM_C___"></a>       <b>-ee</b> {<b>masm</b>|<b>c++</b>}</dt>
+<dd>
+<p>Sets the default expression evaluator. If <b>masm</b> is specified, MASM expression syntax will be used. If <b>c++</b> is specified, C++ expression syntax will be used. If the <b>-ee</b> option is omitted, MASM expression syntax is used as the default. See <a href="evaluating_expressions.htm">Evaluating Expressions</a> for details.</p>
+</dd>
+<dt><a id="_______-failinc______"></a><a id="_______-FAILINC______"></a>       <b>-failinc</b>      </dt>
+<dd>
+<p>Causes the debugger to ignore any questionable symbols. When debugging a user-mode or kernel-mode minidump file, this option will also prevent the debugger from loading any modules whose images can't be mapped. For details and for other methods of controlling this, see <a href="symbol_options.htm#symopt_exact_symbols">SYMOPT_EXACT_SYMBOLS</a>.</p>
+</dd>
+<dt><a id="_______-g______"></a><a id="_______-G______"></a>       <b>-g</b>      </dt>
+<dd>
+<p>Ignores the initial breakpoint in target application. This option will cause the target application to continue running after it is started or CDB attaches to it, unless another breakpoint has been set. See <a href="initial_breakpoint.htm">Initial Breakpoint</a> for details.</p>
+</dd>
+<dt><a id="_______-G______"></a><a id="_______-g______"></a>       <b>-G</b>      </dt>
+<dd>
+<p>Ignores the final breakpoint at process termination. By default, CDB stops during the image run-down process. This option will cause CDB to exit immediately when the child terminates. This has the same effect as entering the command <b>sxd epr</b>. For more information, see <a href="controlling_exceptions_and_events.htm">Controlling Exceptions and Events</a>.</p>
+</dd>
+<dt><a id="_______-hd______"></a><a id="_______-HD______"></a>       <b>-hd</b>      </dt>
+<dd>
+<p>(Microsoft Windows XP and later)  Specifies that the debug heap should not be used. See <a href="debugging_a_user-mode_process_using_cdb.htm">Debugging a User-Mode Process Using CDB</a> for details.</p>
+</dd>
+<dt><a id="_______-i_______ImagePath______"></a><a id="_______-i_______imagepath______"></a><a id="_______-I_______IMAGEPATH______"></a>       <b>-i</b>       <i>ImagePath</i>      </dt>
+<dd>
+<p>Specifies the location of the executables that generated the fault. If the path contains spaces, it should be enclosed in quotation marks.</p>
+</dd>
+<dt><a id="_______-iae______"></a><a id="_______-IAE______"></a>       <b>-iae</b>      </dt>
+<dd>
+<p>Installs CDB as the postmortem debugger. For details, see <a href="enabling_postmortem_debugging.htm">Enabling Postmortem Debugging</a>.</p>
+<p> If this action succeeds, no message is displayed; if it fails, an error message is displayed.</p>
+<p>The <b>-iae</b> parameter must not be used with any other parameters. This command will not actually start CDB.</p>
+</dd>
+<dt><a id="_______-iaec_______KeyString______"></a><a id="_______-iaec_______keystring______"></a><a id="_______-IAEC_______KEYSTRING______"></a>       <b>-iaec</b>       <i>KeyString</i>      </dt>
+<dd>
+<p>Installs CDB as the postmortem debugger. The contents of <i>KeyString</i> will be appended to the end of the <b>AeDebug</b> registry key. If <i>KeyString</i> contains spaces, it must be enclosed in quotation marks. For details, see <a href="enabling_postmortem_debugging.htm">Enabling Postmortem Debugging</a>.</p>
+<p> If this action succeeds, no message is displayed; if it fails, an error message is displayed.</p>
+<p>The <b>-iaec</b> parameter must not be used with any other parameters. This command will not actually start CDB.</p>
+</dd>
+<dt><a id="_______-isd______"></a><a id="_______-ISD______"></a>       <b>-isd</b>      </dt>
+<dd>
+<p>Turns on the CREATE_IGNORE_SYSTEM_DEFAULT flag for any process creations.</p>
+</dd>
+<dt><a id="_______-iu________KeyString______"></a><a id="_______-iu________keystring______"></a><a id="_______-IU________KEYSTRING______"></a>       <b>-iu </b>       <i>KeyString</i>      </dt>
+<dd>
+<p>Registers debugger remoting as an URL type so that users can auto-launch a debugger remote client with an URL. <i>KeyString</i> has the format <code>remdbgeng://RemotingOption</code>. <i>RemotingOption</i> is a string that defines the transport protocol as defined in the topic <a href="activating_a_debugging_client.htm"><b>Activating a Debugging Client</b></a>. If this action succeeds, no message is displayed; if it fails, an error message is displayed.</p>
+<p>The <b>-iu</b> parameter must not be used with any other parameters. This command will not actually start CDB.</p>
+</dd>
+<dt><a id="_______-kqm______"></a><a id="_______-KQM______"></a>       <b>-kqm</b>      </dt>
+<dd>
+<p>Starts CDB/NTSD in quiet mode.</p>
+</dd>
+<dt><a id="_______-lines______"></a><a id="_______-LINES______"></a>       <b>-lines</b>      </dt>
+<dd>
+<p>Enables source line debugging. If this option is omitted, the <a href="_lines__toggle_source_line_support_.htm"><b>.lines (Toggle Source Line Support)</b></a> command will have to be used before source debugging will be allowed. For other methods of controlling this, see <a href="symbol_options.htm#symopt_load_lines">SYMOPT_LOAD_LINES</a>.</p>
+</dd>
+<dt><a id="_______-log_a_au_o_ou__LogFile"></a><a id="_______-log_a_au_o_ou__logfile"></a><a id="_______-LOG_A_AU_O_OU__LOGFILE"></a>       <b>-log</b>{<b>a|au|o|ou</b>} <i>LogFile</i></dt>
+<dd>
+<p>Begins logging information to a log file. If the specified file already exists, it will be overwritten if <b>-logo</b> is used, or output will be appended to the file if -loga is used. The <b>-logau</b> and <b>-logou</b> options operate similar to <b>-loga</b> and <b>-logo</b> respectively, except that the log file is a Unicode file. For more details, see <a href="keeping_a_log_file_in_cdb.htm">Keeping a Log File in CDB</a>.</p>
+</dd>
+<dt><a id="_______-myob______"></a><a id="_______-MYOB______"></a>       <b>-myob</b>      </dt>
+<dd>
+<p>If there is a version mismatch with dbghelp.dll, the debugger will continue to run. (Without the <b>-myob</b> switch, this is considered a fatal error.)  </p>
+</dd>
+<dt><a id="_______-n______"></a><a id="_______-N______"></a>       <b>-n</b>      </dt>
+<dd>
+<p><i>Noisy symbol load</i>: Enables verbose output from the symbol handler. For details and for other methods of controlling this, see <a href="symbol_options.htm#symopt_debug">SYMOPT_DEBUG</a>.</p>
+</dd>
+<dt><a id="_______-netsyms__yes_no_______"></a><a id="_______-NETSYMS__YES_NO_______"></a>       <b>-netsyms {yes|no}</b>      </dt>
+<dd>
+<p> Allow or disallow loading symbols from a network path.</p>
+</dd>
+<dt><a id="_______-noinh______"></a><a id="_______-NOINH______"></a>       <b>-noinh</b>      </dt>
+<dd>
+<p>Prevents processes created by the debugger from inheriting handles from the debugger. For other methods of controlling this, see <a href="debugging_a_user-mode_process_using_cdb.htm">Debugging a User-Mode Process Using CDB</a>.</p>
+</dd>
+<dt><a id="_______-noio______"></a><a id="_______-NOIO______"></a>       <b>-noio</b>      </dt>
+<dd>
+<p>Prevents the debugging server from being used for input or output. Input will only be accepted from the debugging client (plus any initial command or command script specified by the <b>-c</b> command-line option). </p>
+<p>  All output will be directed to the debugging client. If NTSD is used for the server, no console window will be created at all. For more details, see <a href="activating_a_debugging_server.htm"><b>Activating a Debugging Server</b></a>.  This option cannot be used in conjunction with either the <b>-d</b> option or the <b>-ddefer</b> option.</p>
+</dd>
+<dt><a id="_______-noshell______"></a><a id="_______-NOSHELL______"></a>       <b>-noshell</b>      </dt>
+<dd>
+<p>Prohibits all <b>.shell</b> commands. This prohibition will last as long as the debugger is running, even if a new debugging session is begun. For details, and for other ways to disable <b>.shell</b> commands, see <a href="using_shell_commands.htm">Using Shell Commands</a>.</p>
+</dd>
+<dt><a id="_______-nosqm______"></a><a id="_______-NOSQM______"></a>       <b>-nosqm</b>      </dt>
+<dd>
+<p>Disables telemetry data collection and upload.</p>
+</dd>
+<dt><a id="_______-o______"></a><a id="_______-O______"></a>       <b>-o</b>      </dt>
+<dd>
+<p>Debugs all processes launched by the target application (child processes). By default, processes created by the one you are debugging will run as they normally do. For other methods of controlling this, see <a href="debugging_a_user-mode_process_using_cdb.htm">Debugging a User-Mode Process Using CDB</a>.</p>
+</dd>
+<dt><a id="_______-p_______PID______"></a><a id="_______-p_______pid______"></a><a id="_______-P_______PID______"></a>       <b>-p</b>       <i>PID</i>      </dt>
+<dd>
+<p>Specifies the decimal process ID to be debugged. This is used to debug a process that is already running. For details, see <a href="debugging_a_user-mode_process_using_cdb.htm">Debugging a User-Mode Process Using CDB</a>.</p>
+</dd>
+<dt><a id="_______-pb______"></a><a id="_______-PB______"></a>       <b>-pb</b>      </dt>
+<dd>
+<p>(Windows XP and later)  Prevents the debugger from requesting an initial break-in when attaching to a target process. This can be useful if the application is already suspended, or if you wish to avoid creating a break-in thread in the target.</p>
+</dd>
+<dt><a id="_______-pd______"></a><a id="_______-PD______"></a>       <b>-pd</b>      </dt>
+<dd>
+<p>(Windows XP and later)  Causes the target application not to be terminated at the end of the debugging session. See <a href="ending_a_debugging_session_in_cdb.htm">Ending a Debugging Session in CDB</a> for details.</p>
+</dd>
+<dt><a id="_______-pe______"></a><a id="_______-PE______"></a>       <b>-pe</b>      </dt>
+<dd>
+<p>(Windows XP and later)  Indicates that the target application is already being debugged. See <a href="reattaching_to_the_target_application.htm">Re-attaching to the Target Application</a> for details.</p>
+</dd>
+<dt><a id="_______-pn_______Name______"></a><a id="_______-pn_______name______"></a><a id="_______-PN_______NAME______"></a>       <b>-pn</b>       <i>Name</i>      </dt>
+<dd>
+<p>Specifies the name of the process to be debugged. (This name must be unique.) This is used to debug a process that is already running. </p>
+</dd>
+<dt><a id="_______-pr______"></a><a id="_______-PR______"></a>       <b>-pr</b>      </dt>
+<dd>
+<p>(Windows XP and later)
+        Causes the debugger to start the target process running when it attaches to it. This can be useful if the application is already suspended and you wish it to resume execution.</p>
+</dd>
+<dt><a id="_______-psn_______ServiceName______"></a><a id="_______-psn_______servicename______"></a><a id="_______-PSN_______SERVICENAME______"></a>       <b>-psn</b>       <i>ServiceName</i>      </dt>
+<dd>
+<p>Specifies the name of a service contained in the process to be debugged. This is used to debug a process that is already running.</p>
+</dd>
+<dt><a id="_______-pt_______Seconds______"></a><a id="_______-pt_______seconds______"></a><a id="_______-PT_______SECONDS______"></a>       <b>-pt</b>       <i>Seconds</i>      </dt>
+<dd>
+<p>Specifies the break time-out, in seconds. The default is 30. See <a href="controlling_the_target.htm">Controlling the Target</a> for details.</p>
+</dd>
+<dt><a id="_______-pv______"></a><a id="_______-PV______"></a>       <b>-pv</b>      </dt>
+<dd>
+<p>Specifies that the debugger should attach to the target process noninvasively. For details, see <a href="noninvasive_debugging__user_mode_.htm">Noninvasive Debugging (User Mode)</a>.</p>
+</dd>
+<dt><a id="_______-pvr______"></a><a id="_______-PVR______"></a>       <b>-pvr</b>      </dt>
+<dd>
+<p>Works like <b>-pv</b> except that the target process is not suspended.</p>
+</dd>
+<dt><a id="_______-QR_______Server______"></a><a id="_______-qr_______server______"></a><a id="_______-QR_______SERVER______"></a>       <b>-QR</b>       <i>Server</i>      </dt>
+<dd>
+<p>Lists all debugging servers running on the specified network server. The double backslash (\\) preceding <i>Server</i> is optional. See <a href="searching_for_debugging_servers.htm"><b>Searching for Debugging Servers</b></a> for details.</p>
+<p>The <b>-QR</b> parameter cannot be used with any other parameters. This command will not actually start CDB.</p>
+</dd>
+<dt><a id="_______-r________BreakErrorLevel______"></a><a id="_______-r________breakerrorlevel______"></a><a id="_______-R________BREAKERRORLEVEL______"></a>       <b>-r</b>       <i> BreakErrorLevel</i>      </dt>
+<dd>
+<p>Specifies the error level that will cause the target to break into the debugger. This is a decimal number equal to 0, 1, 2, or 3. Possible values are as follows:</p>
+<table>
+<tr>
+<th>Value</th>
+<th>Constant</th>
+<th>Meaning</th>
+</tr>
+<tr>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>NONE</p>
+</td>
+<td>
+<p>Do not break on any errors.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>1</p>
+</td>
+<td>
+<p>ERROR</p>
+</td>
+<td>
+<p>Break on ERROR level debugging events.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>2</p>
+</td>
+<td>
+<p>MINORERROR</p>
+</td>
+<td>
+<p>Break on MINORERROR and ERROR level debugging events.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>3</p>
+</td>
+<td>
+<p>WARNING</p>
+</td>
+<td>
+<p>Break on WARNING, MINORERROR, and ERROR level debugging events.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>This error level only has meaning in checked builds of Microsoft Windows. The default value is 1.</p>
+</dd>
+<dt><a id="_______-robp______"></a><a id="_______-ROBP______"></a>       <b>-robp</b>      </dt>
+<dd>
+<p>This allows CDB to set a breakpoint on a read-only memory page. (The default is for such an operation to fail.)  </p>
+</dd>
+<dt><a id="_______-s______"></a><a id="_______-S______"></a>       <b>-s</b>      </dt>
+<dd>
+<p>Disables lazy symbol loading. This will slow down process startup. For details and for other methods of controlling this, see <a href="symbol_options.htm#symopt_deferred_loads">SYMOPT_DEFERRED_LOADS</a>.</p>
+</dd>
+<dt><a id="_______-sdce______"></a><a id="_______-SDCE______"></a>       <b>-sdce</b>      </dt>
+<dd>
+<p>Causes the debugger to display <b>File access error</b> dialog boxes during symbol load. For details and for other methods of controlling this, see <a href="symbol_options.htm#symopt_fail_critical_errors">SYMOPT_FAIL_CRITICAL_ERRORS</a>.</p>
+</dd>
+<dt><a id="_______-ses______"></a><a id="_______-SES______"></a>       <b>-ses</b>      </dt>
+<dd>
+<p>Causes the debugger to perform a strict evaluation of all symbol files and ignore any questionable symbols. For details and for other methods of controlling this, see <a href="symbol_options.htm#symopt_exact_symbols">SYMOPT_EXACT_SYMBOLS</a>.</p>
+</dd>
+<dt><a id="_______-sflags_0x_______Number______"></a><a id="_______-sflags_0x_______number______"></a><a id="_______-SFLAGS_0X_______NUMBER______"></a>       <b>-sflags 0x</b>       <i>Number</i>      </dt>
+<dd>
+<p>Sets all the symbol handler options at once. <i>Number</i> should be a hexadecimal number prefixed with <b>0x</b> -- a decimal without the <b>0x</b> is permitted, but the symbol options are binary flags and therefore hexadecimal is recommended. This option should be used with care, since it will override all the symbol handler defaults. For details, see <a href="symbol_options.htm">Setting Symbol Options</a>.</p>
+</dd>
+<dt><a id="_______-sicv______"></a><a id="_______-SICV______"></a>       <b>-sicv</b>      </dt>
+<dd>
+<p>Causes the symbol handler to ignore the CV record. For details and for other methods of controlling this, see <a href="symbol_options.htm#symopt_ignore_cvrec">SYMOPT_IGNORE_CVREC</a>.</p>
+</dd>
+<dt><a id="_______-sins______"></a><a id="_______-SINS______"></a>       <b>-sins</b>      </dt>
+<dd>
+<p>Causes the debugger to ignore the symbol path and executable image path environment variables. For details, see <a href="symbol_options.htm#symopt_ignore_nt_sympath">SYMOPT_IGNORE_NT_SYMPATH</a>.</p>
+</dd>
+<dt><a id="_______-snc______"></a><a id="_______-SNC______"></a>       <b>-snc</b>      </dt>
+<dd>
+<p>Causes the debugger to turn off C++ translation. For details and for other methods of controlling this, see <a href="symbol_options.htm#symopt_no_cpp">SYMOPT_NO_CPP</a>.</p>
+</dd>
+<dt><a id="_______-snul______"></a><a id="_______-SNUL______"></a>       <b>-snul</b>      </dt>
+<dd>
+<p>Disables automatic symbol loading for unqualified names. For details and for other methods of controlling this, see <a href="symbol_options.htm#symopt_no_unqualified_loads">SYMOPT_NO_UNQUALIFIED_LOADS</a>.</p>
+</dd>
+<dt><a id="_______-srcpath_______SourcePath______"></a><a id="_______-srcpath_______sourcepath______"></a><a id="_______-SRCPATH_______SOURCEPATH______"></a>       <b>-srcpath</b>       <i>SourcePath</i>      </dt>
+<dd>
+<p>Specifies the source file search path. Separate multiple paths with a semicolon (;). If the path contains spaces, it should be enclosed in quotation marks. For details, and for other ways to change this path, see <a href="source_path.htm">Source Path</a>.</p>
+</dd>
+<dt><a id="_______-sup______"></a><a id="_______-SUP______"></a>       <b>-sup</b>      </dt>
+<dd>
+<p>Causes the symbol handler to search the public symbol table during every symbol search. For details and for other methods of controlling this, see <a href="symbol_options.htm#symopt_auto_publics">SYMOPT_AUTO_PUBLICS</a>.  </p>
+</dd>
+<dt><a id="_______-t________PrintErrorLevel______"></a><a id="_______-t________printerrorlevel______"></a><a id="_______-T________PRINTERRORLEVEL______"></a>       <b>-t </b>       <i>PrintErrorLevel</i>      </dt>
+<dd>
+<p>Specifies the error level that will cause the debugger to display an error message. This is a decimal number equal to 0, 1, 2, or 3. Possible values are as follows:</p>
+<table>
+<tr>
+<th>Value</th>
+<th>Constant</th>
+<th>Meaning</th>
+</tr>
+<tr>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>NONE</p>
+</td>
+<td>
+<p>Do not display any errors.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>1</p>
+</td>
+<td>
+<p>ERROR</p>
+</td>
+<td>
+<p>Display ERROR level debugging events.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>2</p>
+</td>
+<td>
+<p>MINORERROR</p>
+</td>
+<td>
+<p>Display MINORERROR and ERROR level debugging events.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>3</p>
+</td>
+<td>
+<p>WARNING</p>
+</td>
+<td>
+<p>Display WARNING, MINORERROR, and ERROR level debugging events.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>This error level only has meaning in checked builds of Microsoft Windows. The default value is 1.</p>
+</dd>
+<dt><a id="_______-v______"></a><a id="_______-V______"></a>       <b>-v</b>      </dt>
+<dd>
+<p>Enables verbose output from the debugger.</p>
+</dd>
+<dt><a id="_______-version______"></a><a id="_______-VERSION______"></a>       <b>-version</b>      </dt>
+<dd>
+<p>Prints the debugger version string.</p>
+</dd>
+<dt><a id="_______-vf______"></a><a id="_______-VF______"></a>       <b>-vf</b>      </dt>
+<dd>
+<p>Enables default ApplicationVerifier settings.</p>
+</dd>
+<dt><a id="_______-vf________opts_"></a><a id="_______-VF________OPTS_"></a>       <b>-vf:</b>      <i>&lt;opts&gt;</i></dt>
+<dd>
+<p> Enables given ApplicationVerifier settings.</p>
+</dd>
+<dt><a id="_______-w______"></a><a id="_______-W______"></a>       <b>-w</b>      </dt>
+<dd>
+<p>Specifies to debug 16-bit applications in a separate VDM.  </p>
+</dd>
+<dt><a id="_______-wake_______PID______"></a><a id="_______-wake_______pid______"></a><a id="_______-WAKE_______PID______"></a>       <b>-wake</b>       <i>PID</i>      </dt>
+<dd>
+<p>Causes sleep mode to end for the user-mode debugger whose process ID is specified by <i>PID</i>. This command must be issued on the target machine during sleep mode. See <a href="controlling_the_user_mode_debugger_from_the_kernel_debugger.htm">Controlling the User-Mode Debugger from the Kernel Debugger</a> for details.</p>
+<p>The <b>-wake</b> parameter should not be used with any other parameters. This command will not actually start CDB. </p>
+</dd>
+<dt><a id="_______-x_e_d_n_i__Exception"></a><a id="_______-x_e_d_n_i__exception"></a><a id="_______-X_E_D_N_I__EXCEPTION"></a>       <b>-x</b>{<b>e</b>|<b>d</b>|<b>n</b>|<b>i</b>} <i>Exception</i></dt>
+<dd>
+<p>Controls the debugger's behavior when the specified event occurs. The <i>Exception</i> can be either an exception number or an event code. You can specify this option multiple times to control different events. See <a href="controlling_exceptions_and_events.htm">Controlling Exceptions and Events</a> for details and for other methods of controlling these settings.</p>
+</dd>
+<dt><a id="_______-x______"></a><a id="_______-X______"></a>       <b>-x</b>      </dt>
+<dd>
+<p>Disables first-chance break on access violation exceptions. The second occurrence of an access violation will break into the debugger. This is the same as <b>-xd av</b>.</p>
+</dd>
+<dt><a id="_______-y_______SymbolPath______"></a><a id="_______-y_______symbolpath______"></a><a id="_______-Y_______SYMBOLPATH______"></a>       <b>-y</b>       <i>SymbolPath</i>      </dt>
+<dd>
+<p>Specifies the symbol search path. Separate multiple paths with a semicolon (;). If the path contains spaces, it should be enclosed in quotation marks. For details, and for other ways to change this path, see <a href="symbol_path.htm">Symbol Path</a>.</p>
+</dd>
+<dt><a id="_______-z_______DumpFile______"></a><a id="_______-z_______dumpfile______"></a><a id="_______-Z_______DUMPFILE______"></a>       <b>-z</b>       <i>DumpFile</i>      </dt>
+<dd>
+<p>Specifies the name of a crash dump file to debug. If the path and file name contain spaces, this must be surrounded by quotation marks. It is possible to open several dump files at once by including multiple <b>-z</b> options, each followed by a different <i>DumpFile</i> value. For details, see <a href="analyzing_a_user_mode_dump_file_with_cdb.htm">Analyzing a User-Mode Dump File with CDB</a>.</p>
+</dd>
+<dt><a id="_______-zp_______PageFile______"></a><a id="_______-zp_______pagefile______"></a><a id="_______-ZP_______PAGEFILE______"></a>       <b>-zp</b>       <i>PageFile</i>      </dt>
+<dd>
+<p>Specifies the name of a modified page file. This is useful if you are debugging a dump file and want to use the <a href="_pagein__page_in_memory_.htm"><b>.pagein (Page In Memory)</b></a> command. You cannot use <b>-zp</b> with a standard Windows page file -- only specially-modified page files can be used.  </p>
+</dd>
+<dt><a id="_______executable______"></a><a id="_______EXECUTABLE______"></a>       <i>executable</i>      </dt>
+<dd>
+<p>Specifies the command line of an executable process. This is used to launch a new process and debug it. This has to be the final item on the command line. All text after the executable name is passed to the executable as its argument string.</p>
+</dd>
+<dt><a id="_______-_______"></a>       <b>-?</b>      </dt>
+<dd>
+<p>Displays command-line help text.</p>
+<p>When you are starting the debugger from <b>Start | Run</b> or from a Command Prompt window, specify arguments for the target application after the application's file name. For instance:</p>
+<pre class="syntax" xml:space="preserve"><code>cdb myexe arg1arg2</code></pre>
+</dd>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20CDB Command-Line Options%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

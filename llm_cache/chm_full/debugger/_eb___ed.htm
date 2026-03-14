@@ -1,0 +1,100 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !eb and !ed extensions write a sequence of values into a specified physical address.These extension commands should not be confused with the e* (Enter Values) command."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!eb, !ed</title>
+
+<meta name="MS-HAID" content="r27_exts_kernel_E_f013ab0d-2301-4fa9-8567-d94677aae8df.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._eb___ed"></a>!eb, !ed</h1>
+</div>
+<p>The <b>!eb</b> and <b>!ed</b> extensions write a sequence of values into a specified physical address.</p>
+<p>These extension commands should not be confused with the <a href="e__ea__eb__ed__ed__ef__ep__eq__eu__ew__eza__ezu__enter_values_.htm"><b>e* (Enter Values)</b></a> command.</p>
+<pre class="syntax"><b>!eb </b>[<i>Flag</i>]<b> </b><i>PhysicalAddress</i><b> </b><i>Data</i><b> </b>[<b> ... </b>] 
+<b>!ed </b>[<i>Flag</i>]<b> </b><i>PhysicalAddress</i><b> </b><i>Data</i><b> </b>[<b> ... </b>]</pre>
+<h2><a id="ddk__e__dbg"></a><a id="DDK__E__DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Flag______"></a><a id="_______flag______"></a><a id="_______FLAG______"></a>       <i>Flag</i>      </dt>
+<dd>
+<p>Can be any one of the following values. The <i>Flag</i> value must be surrounded by square brackets:</p>
+<p></p>
+<dl>
+<dt><a id="_c_"></a><a id="_C_"></a><b>[c]</b></dt>
+<dd>
+<p>Writes to cached memory.</p>
+</dd>
+<dt><a id="_uc_"></a><a id="_UC_"></a><b>[uc]</b></dt>
+<dd>
+<p>Writes to uncached memory.</p>
+</dd>
+<dt><a id="_wc_"></a><a id="_WC_"></a><b>[wc]</b></dt>
+<dd>
+<p>Writes to write-combined memory.</p>
+</dd>
+</dl>
+</dd>
+<dt><a id="_______PhysicalAddress______"></a><a id="_______physicaladdress______"></a><a id="_______PHYSICALADDRESS______"></a>       <i>PhysicalAddress</i>      </dt>
+<dd>
+<p>Specifies the first physical address on the target computer to which the data will be written, in hexadecimal.</p>
+</dd>
+<dt><a id="_______Data______"></a><a id="_______data______"></a><a id="_______DATA______"></a>       <i>Data</i>      </dt>
+<dd>
+<p>Specifies one or more values to be written sequentially into physical memory. Enter these values in hexadecimal format. For the <b>!eb</b> extension, each value must be 1 byte (two hexadecimal digits). For the <b>!ed</b> extension, each value must be one DWORD (eight hexadecimal digits). You can include any number of <i>Data</i> values on one line. To separate multiple values, use commas or spaces.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Windows 2000</b></p>
+</td>
+<td>
+<p>
+<dl>
+<dt>
+          Kext.dll
+          </dt>
+<dt>Kdextx86.dll
+          </dt>
+</dl>
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Kext.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>To read physical memory, use the <a href="_db___dc___dd___dp___dq___du___dw.htm"><b>!d*</b></a> extensions. For an overview of memory manipulation and a description of other memory-related commands, see <a href="reading_and_writing_memory.htm">Reading and Writing Memory</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!eb, !ed%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

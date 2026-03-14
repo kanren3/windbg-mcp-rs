@@ -1,0 +1,74 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The WINSOCK_DETECTED_HUNG_CLOSESOCKET_LIVEDUMP bug check has a value of 0x00000156. This indicates that Winsock detected a hung transport endpoint close request."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0x156: WINSOCK_DETECTED_HUNG_CLOSESOCKET_LIVEDUMP</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0x156__winsock_detected_hung_closesocket_livedump"></a>Bug Check 0x156: WINSOCK_DETECTED_HUNG_CLOSESOCKET_LIVEDUMP</h1>
+</div>
+<p>The WINSOCK_DETECTED_HUNG_CLOSESOCKET_LIVEDUMP bug check has a value of 0x00000156. This indicates that Winsock detected a hung transport endpoint close request.</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2>WINSOCK_DETECTED_HUNG_CLOSESOCKET_LIVEDUMP Parameters</h2>
+<p>The following parameters are displayed on the blue screen.</p>
+<table>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>1</td>
+<td>    AFD endpoint pointer (!afdkd.endp &lt;ptr&gt;)
+    </td>
+</tr>
+<tr>
+<td>2</td>
+<td>
+<p> Transport endpoint type</p>
+<p>0x1 : UDP datagram</p>
+<p>0x2 : RAW datagram
+        </p>
+<p>0x3 : TCP listener
+        </p>
+<p>0x4 : TCP endpoint
+            </p>
+</td>
+</tr>
+<tr>
+<td>3</td>
+<td> Number of buffered send bytes for datagram endpoints
+    </td>
+</tr>
+<tr>
+<td>4</td>
+<td> afd!NETIO_SUPER_TRIAGE_BLOCK</td>
+</tr>
+</table>
+<p> </p>
+<h2>Cause</h2>
+<p>While processing a closesocket request, Winsock detected a hung transport
+endpoint close request. The system generated a live dump for analysis, then
+the closesocket request was completed without waiting for the completion of
+hung transport endpoint close request.</p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

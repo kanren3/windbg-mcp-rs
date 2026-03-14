@@ -1,0 +1,167 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Choosing Which Public Symbols to Remove"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Choosing Which Public Symbols to Remove</title>
+
+<meta name="MS-HAID" content="SymChk_3e06be5d-844d-443b-a813-ccafb5ae33d5.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.choosing_which_public_symbols_to_remove"></a>Choosing Which Public Symbols to Remove</h1>
+</div>
+<p>PDBCopy supplies the -f and -F options so that you can remove an arbitrary set of public symbols from a stripped symbol file, leaving only those symbols that your audience needs to access in order to perform their debugging.</p>
+<p>A common use of PDBCopy is to create a special version of your symbol file for use by Microsoft in its Online Crash Analysis (OCA) program.  OCA can designate certain functions as <i>inert</i>, which means that if the function is found on the stack trace it is ignored.  A function would typically be declared inert if it is simply a wrapper or "pass-through" function that performs no significant computations.  If such a function is found on the stack in a failure analysis, it can be assumed that this function itself was not at fault, and at most it passed on invalid or corrupt data that it received from routines earlier on the stack.  By ignoring such functions, OCA can better determine the actual cause of the error or corruption.</p>
+<p>Naturally, any function that you wish to declare "inert" needs to be included in the public symbol table of the symbol file used by OCA.  However, these are not the only functions that need to be included, as the following example shows.</p>
+<p>Suppose that you write a Windows driver and you use PDBCopy to remove all public symbols from its symbol file, except for <b>FunctionOne</b> and <b>FunctionSix</b>, two inert functions. Your expectation is that if either <b>FunctionOne</b> or <b>FunctionSix</b> are found on the stack after a crash, they will be ignored by OCA. If any other part of your driver is on the stack, Microsoft will supply you with the corresponding memory address and you can use the address to debug your driver.</p>
+<p>However, let us suppose that your driver occupies memory in the following layout:</p>
+<table>
+<tr>
+<th>Address</th>
+<th>Contents of memory</th>
+</tr>
+<tr>
+<td>
+<p>0x1000</p>
+</td>
+<td>
+<p>Base address of the module </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x2000</p>
+</td>
+<td>
+<p>Beginning of <b>FunctionOne</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x203F</p>
+</td>
+<td>
+<p>End of <b>FunctionOne</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x3000</p>
+</td>
+<td>
+<p>Beginning of <b>FunctionSix</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x305F</p>
+</td>
+<td>
+<p>End of <b>FunctionSix</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x7FFF</p>
+</td>
+<td>
+<p>End of the module in memory </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>If the debugger finds an address on the stack, it selects the symbol with the next lower address.  Since the public symbol table contains the address of each symbol but no size information, there is no way for the debugger to know if an address actually falls within the boundaries of any specific symbol.</p>
+<p>Therefore, if a fault occurs at address 0x2031, the debugger run by Microsoft OCA correctly identifies the fault as lying within <b>FunctionOne</b>.  Since this is an inert function, the debugger continues walking the stack to find the cause of the crash.</p>
+<p>However, if a fault occurs at 0x2052, the debugger still matches this address to <b>FunctionOne</b>, even though it lies beyond the actual end of this function (0x203F).</p>
+<p>Consequently, you must include in your stripped symbol file not only the functions you wish to expose, but also the symbols immediately following these functions.  In this example, you would wish to expose <b>FunctionOne</b>, <b>FunctionTwo</b>, <b>FunctionSix</b>, and <b>FunctionSeven</b>:</p>
+<table>
+<tr>
+<th>Address</th>
+<th>Contents of memory</th>
+</tr>
+<tr>
+<td>
+<p>0x1000</p>
+</td>
+<td>
+<p>Base address of the module </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x2000</p>
+</td>
+<td>
+<p>Beginning of <b>FunctionOne</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x203F</p>
+</td>
+<td>
+<p>End of <b>FunctionOne</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x2040</p>
+</td>
+<td>
+<p>Beginning of <b>FunctionTwo</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x3000</p>
+</td>
+<td>
+<p>Beginning of <b>FunctionSix</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x305F</p>
+</td>
+<td>
+<p>End of <b>FunctionSix</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x3060</p>
+</td>
+<td>
+<p>Beginning of <b>FunctionSeven</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x7FFF</p>
+</td>
+<td>
+<p>End of the module in memory </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>If you include all four of these functions in the stripped symbol file, then the Microsoft OCA analysis will not mistakenly treat the address 0x2052 as part of <b>FunctionOne</b>.  In this example it will assume that this address is part of <b>FunctionTwo</b>, but that is not important because you have not registered <b>FunctionTwo</b> with OCA as an inert function.  The important thing is that the address 0x2052 is recognized as not falling within an inert function, and therefore OCA will recognize this as a meaningful fault within your driver and can inform you of the fault.  </p>
+<p>If you do not wish to publicize the names of the functions following each inert function, you can insert unimportant functions into your code following each inert function so that the names of these functions can be included in your public symbol file. Be sure to verify that these added functions do indeed follow your inert functions in your binary's address space, since some optimization routines may alter this, or even remove some functions entirely.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Choosing Which Public Symbols to Remove%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

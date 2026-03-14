@@ -1,0 +1,78 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .wtitle command sets the title in the main WinDbg window or in the NTSD, CDB, or KD window."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.wtitle (Set Window Title)</title>
+
+<meta name="MS-HAID" content="r22_metacmds_S_4545597b-8952-46bc-9870-d1e8e7a17648.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._wtitle__set_window_title_"></a>.wtitle (Set Window Title)</h1>
+</div>
+<p>The <b>.wtitle</b> command sets the title in the main WinDbg window or in the NTSD, CDB, or KD window.</p>
+<pre class="syntax">
+    <b>.wtitle </b><i>Title</i> 
+</pre>
+<h2><a id="ddk_meta_set_window_title_dbg"></a><a id="DDK_META_SET_WINDOW_TITLE_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Title______"></a><a id="_______title______"></a><a id="_______TITLE______"></a>       <i>Title</i>      </dt>
+<dd>
+<p>The title to use for the window.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<p>This command cannot be used in script files.</p>
+<table>
+<tr>
+<td>
+<p><b>
+          Modes</b></p>
+</td>
+<td>
+<p>user mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets</b></p>
+</td>
+<td>
+<p>live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>all </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>For CDB, NTSD, or KD, if the <b>.wtitle</b> command has not been used, the window title matches the command line used to launch the debugger.</p>
+<p>For WinDbg, if <b>.wtitle</b> has not been used, the main window title includes the name of the target. If a debugging server is active, its connection string is displayed as well. If multiple debugging servers are active, only the most recent one is displayed.</p>
+<p>When <b>.wtitle</b> is used, <i>Title</i> replaces all this information. Even if a debugging server is started later, <i>Title</i> will not change.</p>
+<p>The WinDbg version number is always displayed in the window title bar, regardless of whether this command is used.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.wtitle (Set Window Title)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

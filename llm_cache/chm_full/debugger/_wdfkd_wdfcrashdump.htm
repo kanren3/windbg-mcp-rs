@@ -1,0 +1,139 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !wdfkd.wdfcrashdump extension displays error log information and other crash dump information from a minidump file, if the data is present."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!wdfkd.wdfcrashdump</title>
+
+<meta name="MS-HAID" content="r33~c_exts_WDF_cd751746-4ee3-4cd0-84a9-e3e726c8242c.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._wdfkd_wdfcrashdump"></a>!wdfkd.wdfcrashdump</h1>
+</div>
+<p>The <b>!wdfkd.wdfcrashdump</b> extension displays error log information and other crash dump information from a minidump file, if the data is present.</p>
+<p>KMDF</p>
+<pre class="syntax"><b>!wdfkd.wdfcrashdump </b>[<i>InfoType</i>]</pre>
+<p>UMDF</p>
+<pre class="syntax"><b>!wdfkd.wdfcrashdump </b>[<i>DriverName.dll</i>][<b>-d</b> | <b>-f</b> | <b>-m</b>]</pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______InfoType______"></a><a id="_______infotype______"></a><a id="_______INFOTYPE______"></a>       <i>InfoType</i>      </dt>
+<dd>
+<p>Specifies the kind of information to display. <i>InfoType</i> is optional and can be any one of the following values: </p>
+<p></p>
+<dl>
+<dt><a id="log"></a><a id="LOG"></a><b>log</b></dt>
+<dd>
+<p>Displays error log information, if available in the crash dump file. This is the default value.</p>
+</dd>
+<dt><a id="loader"></a><a id="LOADER"></a><b>loader</b></dt>
+<dd>
+<p>Displays the minidump's dynamic-bound drivers. </p>
+</dd>
+</dl>
+</dd>
+<dt><a id="DriverName.dll"></a><a id="drivername.dll"></a><a id="DRIVERNAME.DLL"></a><i>DriverName</i>.dll</dt>
+<dd>
+<p>Specifies the name of a UMDF driver. You must include the .dll file suffix. If this optional parameter is omitted, output includes metadata, the loaded module list, and available logs.</p>
+</dd>
+<dt><a id="-d"></a><a id="-D"></a><b>-d</b></dt>
+<dd>
+<p>Displays only the driver logs.</p>
+</dd>
+<dt><a id="-f"></a><a id="-F"></a><b>-f</b></dt>
+<dd>
+<p>Displays only the framework logs.</p>
+</dd>
+<dt><a id="-m"></a><a id="-M"></a><b>-m</b></dt>
+<dd>
+<p>Merges framework and driver logs in their recorded order.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<p>
+       Wdfkd.dll
+      </p>
+<h3><a id="Frameworks"></a><a id="frameworks"></a><a id="FRAMEWORKS"></a>Frameworks</h3>
+<p>
+       KMDF</p>
+<p>UMDF 2.15</p>
+<h2>Remarks</h2>
+<p>This example shows how to use <b>!wdfkd.wdfcrashdump</b> to view information about KMDF drivers.  If you specify <b>loader</b> for <i>InfoType</i>, the output includes dynamic-bound drivers in the minidump file.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0: kd&gt; !wdfcrashdump loader 
+Retrieving crashdump loader information...
+Local buffer 0x002B4D00, bufferSize 720
+----------------------------------------------
+  ImageName      Version    FxGlobals
+
+  Wdf01000       v1.9(6902)
+  msisadrv       v1.9(6913) 0x84deb260
+  vdrvroot       v1.9(6913) 0x860e8260
+  storflt        v1.5(6000) 0x861dfe90
+  cdrom          v1.9(6913) 0x84dca008
+  intelppm       v1.9(6913) 0x864704a8
+  HDAudBus       v1.7(6001) 0x86101c98
+  1394ohci       v1.7(6001) 0x8610d2e8
+  CompositeBus   v1.9(6913) 0x86505b98
+  ObjTestClassExt v1.9(6902) 0x865b7f00
+  mqfilter       v1.9(6902) 0x865b8008
+  mqueue         v1.9(6902) 0x865b6910
+  umbus          v1.9(6913) 0x8618aea0
+  monitor        v1.9(6913) 0x86aac1d8
+  PEAUTH         v1.5(6000) 0x854e5350
+----------------------------------------------</pre>
+</td>
+</tr>
+</table></span></div>
+<p>This example shows how to use <b>!wdfkd.wdfcrashdump</b> to view information about UMDF drivers.  If you issue <b>!wdfkd.wdfcrashdump</b> with no parameters, the output includes the driver that caused the crash and a list of all loaded drivers in the host process that failed.   You can click on drivers in this list that have associated logs.</p>
+<pre class="syntax" xml:space="preserve"><code>0:001&gt; !wdfkd.wdfcrashdump
+Opening minidump at location C:\temp\WudfHost_ext__1312.dmp
+
+Faulting driver: wpptest.dll
+Failure type: Unhandled Exception (WUDFUnhandledException)
+Faulting thread ID: 2840
+
+Listing all drivers loaded in this host process at the time of the failure:
+
+  ServiceName
+  wpptest 
+  CoverageCx0102
+  coverage
+  WUDFVhidmini
+  ToastMon
+  WUDFOsrUsbFilter
+</code></pre>
+<p>In the example above, output includes failure type, which is the event type in the WER report.  Here, it can be <b>WUDFVerifierFailure</b> or <b>WUDFUnhandledException</b>. For more information, see Accessing UMDF Metadata in WER Reports.  The output for UMDF includes an error code, if event type is <b>WUDFVerifierFailure</b>.</p>
+<p>To display the framework's error log records from a <a href="complete_memory_dump.htm">complete memory dump</a>, a <a href="kernel_memory_dump.htm">kernel memory dump</a>, or a <a href="live_kernel_mode_targets.htm">live kernel-mode target</a>, you can also try the <a href="_wdfkd_wdflogdump.htm"><b>!wdfkd.wdflogdump</b></a> extension.</p>
+<p><b>Additional Information</b></p>
+<p>
+For  information about  enabling the inflight trace recorder  for your driver,  see Using Inflight Trace Recorder (IFR) in KMDF and UMDF 2 Drivers. For more information about debugging WDF drivers, see Debugging WDF Drivers. For information about KMDF debugging, see <a href="kernel_mode_driver_framework_debugging.htm">Kernel-Mode Driver Framework Debugging</a>.</p>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="_wdfkd_wdflogdump.htm"><b>!wdfkd.wdflogdump</b></a></dt>
+<dt><a href="_wdfkd_wdfsettraceprefix.htm"><b>!wdfkd.wdfsettraceprefix</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!wdfkd.wdfcrashdump%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

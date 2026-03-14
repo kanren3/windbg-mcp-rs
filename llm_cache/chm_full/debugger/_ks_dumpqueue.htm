@@ -1,0 +1,107 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !ks.dumpqueue extension displays information about the queues associated with a given AVStream object, or the stream associated with a port class object."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!ks.dumpqueue</title>
+
+<meta name="MS-HAID" content="r33~b_exts_KS_206e511d-6a33-4478-8466-edb1509eb826.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._ks_dumpqueue"></a>!ks.dumpqueue</h1>
+</div>
+<p>The <b>!ks.dumpqueue</b> extension displays information about the queues associated with a given AVStream object, or the stream associated with a port class object.</p>
+<pre class="syntax">
+    <b>!ks.dumpqueue </b><i>Object</i><b> </b>[<i>Level</i>] 
+</pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Object______"></a><a id="_______object______"></a><a id="_______OBJECT______"></a>       <i>Object</i>      </dt>
+<dd>
+<p>Specifies a pointer to the object for which to display the queue. <i>Object</i> must be of type PKSPIN, PKSFILTER, CKsPin*, CKsFilter*, CKsQueue*, CPortPin*, or CPortFilter*. </p>
+</dd>
+<dt><a id="_______Level______"></a><a id="_______level______"></a><a id="_______LEVEL______"></a>       <i>Level</i>      </dt>
+<dd>
+<p>Optional. Specifies the level of detail to display on a 0-7 scale with progressively more information displayed for higher values.  To display all available details, supply a value of 7.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Windows 2000</b></p>
+</td>
+<td>
+<p>
+          winxp\Ks.dll 
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Ks.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information, see <a href="kernel_streaming_debugging.htm">Kernel Streaming Debugging</a>.</p>
+<h2>Remarks</h2>
+<p><i>
+     Object</i> must be a filter or a pin. For a pin, a single queue is displayed. For a filter, multiple queues are displayed.</p>
+<p>This command can take some time to execute.</p>
+<p>Here is an example of the <b>!ks.dumpqueue</b> display:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; !dumpqueue 829493c4
+Filter 829493c4: Output Queue 82990e20:
+ Queue 82990e20:
+        Frames Received  : 1889
+        Frames Waiting   : 3
+        Frames Cancelled : 0
+        And Gate 82949464 : count = 1, next = 00000000
+    Frame Gate NULL
+        Frame Header 82aaef78:
+ NextFrameHeaderInIrp = 00000000
+            OriginalIrp = 82169e48
+            Mdl = 8292e358
+            Irp = 82169e48
+ StreamHeader = 8298dea0
+            FrameBuffer = edba3000
+            StreamHeaderSize = 00000000
+            FrameBufferSize = 00025800
+            Context = 00000000
+            Refcount = 1</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!ks.dumpqueue%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

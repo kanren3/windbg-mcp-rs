@@ -1,0 +1,194 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Conditional breakpoints in WinDbg and other Windows debuggers are useful when you need to break in only if a specific condition is satisfied."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Conditional breakpoints in WinDbg and other Windows debuggers</title>
+
+<meta name="MS-HAID" content="t01_basic_a4ebd4e7-bb0c-4d6b-b04a-11e823bae62c.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.setting_a_conditional_breakpoint"></a>Conditional breakpoints in WinDbg and other Windows debuggers</h1>
+</div>
+<p>
+<p>Conditional breakpoints in WinDbg and other Windows debuggers are useful when you need to break in only if a specific condition is satisfied.</p>
+</p>
+<h2><a id="ddk_setting_a_conditional_breakpoint_dbg"></a><a id="DDK_SETTING_A_CONDITIONAL_BREAKPOINT_DBG"></a></h2>
+<p>A conditional breakpoint is created by combining a breakpoint command with either the <a href="j__execute_if___else_.htm"><b>j (Execute If - Else)</b></a> command or the <a href="_if.htm"><b>.if</b></a> token, followed by the <a href="gc__go_from_conditional_breakpoint_.htm"><b>gc (Go from Conditional Breakpoint)</b></a> command. This breakpoint causes a break to occur only if a specific condition is satisfied.</p>
+<p>The basic syntax for a conditional breakpoint using the <b>j</b> command is as follows:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; bp Address "j (Condition) 'OptionalCommands'; 'gc' "</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The basic syntax for a conditional breakpoint using the <b>.if</b> token is as follows:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; bp Address ".if (Condition) {OptionalCommands} .else {gc}"</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Conditional breakpoints are best illustrated with an example.  The following command sets a breakpoint at line 143 of the Mysource.cpp source file. When this breakpoint is hit, the variable <b>MyVar</b> is tested. If this variable is less than or equal to 20, execution continues; if it is greater than 20, execution stops.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; bp `mysource.cpp:143` "j (poi(MyVar)&gt;0n20) ''; 'gc' " 
+0:000&gt; bp `mysource.cpp:143` ".if (poi(MyVar)&gt;0n20) {} .else {gc}"</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The preceding command has a fairly complicated syntax that contains the following elements:</p>
+<ul>
+<li>
+<p>The <a href="bp__bu__bm__set_breakpoint_.htm"><b>bp (Set Breakpoint)</b></a> command sets breakpoints. Although the preceding example uses the bp command, you could also use the <b>bu (Set Unresolved Breakpoint)</b> command. For more information about the differences between <b>bp</b> and <b>bu</b>, and for a basic introduction to breakpoints, see <a href="using_breakpoints.htm">Using Breakpoints</a>.</p>
+</li>
+<li>
+<p>Source line numbers are specified by using grave accents ( <b>` </b>). For details, see <a href="source_line_syntax.htm">Source Line Syntax</a>.</p>
+</li>
+<li>
+<p>When the breakpoint is hit, the command in straight quotation marks ( <b>"</b> ) is executed. In this example, this command is a <a href="j__execute_if___else_.htm"><b>j (Execute If - Else)</b></a> command or an <a href="_if.htm"><b>.if</b></a> token, which tests the expression in parentheses.</p>
+</li>
+<li>
+<p>In the source program, <b>MyVar</b> is an integer. If you are using C++ expression syntax, <b>MyVar</b> is interpreted as an integer. However, in this example (and in the default debugger configuration), MASM expression syntax is used. In a MASM expression, <b>MyVar</b> is treated as an address. Thus, you need to use the <b>poi</b> operator to dereference it. (If your variable actually is a C pointer, you will need to dereference it twice--for example, <b>poi(poi(MyPtr))</b>.) The <b>0n</b> prefix specifies that this number is decimal. For syntax details, see <a href="masm_numbers_and_operators.htm">MASM Numbers and Operators</a>.</p>
+</li>
+<li>
+<p>The expression in parentheses is followed by two commands, surrounded by single quotation marks ( <b>'</b> ) for the <b>j</b> command and curly brackets ( {} ) for the <b>.if</b> token. If the expression is true, the first of these commands is executed. In this example, there is no first command, so command execution will end and control will remain with the debugger. If the expression in parentheses is false, the second command will execute. The second command should almost always be a <a href="gc__go_from_conditional_breakpoint_.htm"><b>gc (Go from Conditional Breakpoint)</b></a> command, because this command causes execution to resume in the same manner that was occurring before the breakpoint was hit (stepping, tracing, or free execution).</p>
+</li>
+</ul>
+<p>If you want to see a message each time the breakpoint is passed or when it is finally hit, you can use additional commands in the single quotation marks or curly brackets. For example:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; bp `:143` "j (poi(MyVar)&gt;5) '.echo MyVar Too Big'; '.echo MyVar Acceptable; gc' " 
+0:000&gt; bp `:143` ".if (poi(MyVar)&gt;5) {.echo MyVar Too Big} .else {.echo MyVar Acceptable; gc} " </pre>
+</td>
+</tr>
+</table></span></div>
+<p>These comments are especially useful if you have several such breakpoints running at the same time, because the debugger does not display its standard "Breakpoint <i>n</i> Hit" messages when you are using a command string in the <b>bp</b> command.</p>
+<h3><a id="Conditional_Breakpoint_Based_on_String_Comparison"></a><a id="conditional_breakpoint_based_on_string_comparison"></a><a id="CONDITIONAL_BREAKPOINT_BASED_ON_STRING_COMPARISON"></a>Conditional Breakpoint Based on String Comparison</h3>
+<p>In some situations you might want to break into the debugger only if a string variable matches a pattern. For example, suppose you want to break at kernel32!CreateEventW only if the <i>lpName</i> argument points to a string that matches the pattern "Global*". The following example shows how to create the conditional breakpoint.</p>
+<div class="code"><span codelanguage="cmd"><table>
+<tr>
+<th>cmd</th>
+</tr>
+<tr>
+<td>
+<pre>bp kernel32!CreateEventW "$$&lt;c:\\commands.txt"</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The preceding <a href="bp__bu__bm__set_breakpoint_.htm"><b>bp</b></a> command creates a breakpoint based on conditions and optional commands that are in a script file named commands.txt. The script file contains the following statements.</p>
+<div class="code"><span codelanguage="cmd"><table>
+<tr>
+<th>cmd</th>
+</tr>
+<tr>
+<td>
+<pre>.if (@r9 != 0) { as /mu ${/v:EventName} @r9 } .else { ad /q ${/v:EventName} }
+.if ($spat(@"${EventName}", "Global*") == 0)  { gc } .else { .echo EventName }</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The <i>lpName</i> argument passed to the <b>CreateEventW</b> function is the fourth argument, so it is stored in the r9 register (x64 processor). The script performs the following steps:</p>
+<ol>
+<li>
+<p>If <i>lpName</i> is not NULL, use <a href="as__as__set_alias_.htm"><b>as</b></a> and <a href="_______alias_interpreter_.htm"><b>${}</b></a> to create an alias named EventName. Assign to EventName the null-terminated Unicode string beginning at the address pointed to by <i>lpName</i>. On the other hand, if <i>lpName</i> is NULL, use <a href="ad__delete_alias_.htm"><b>ad</b></a> to delete any existing alias named EventName.</p>
+</li>
+<li>
+<p>Use <a href="masm_numbers_and_operators.htm"><b>$spat</b></a> to compare the string represented by EventName to the pattern "Global*". If the string does not match the pattern, use <a href="gc__go_from_conditional_breakpoint_.htm"><b>gc</b></a> to continue without breaking. If the string does match the pattern, break and display the string represented by EventName.<div class="alert"><b>Note</b>  <a href="masm_numbers_and_operators.htm"><b>$spat</b></a> performs a case-insensitive match.</div>
+<div> </div>
+<div class="alert"><b>Note</b>  The ampersand ( @ ) character in $spat(@"${EventName}" specifies that the string represented by EventName is to be interpreted literally; that is, a backslash ( \ ) is treated as a backslash rather than an escape character.</div>
+<div> </div>
+</p>
+</li>
+</ol>
+<h3><a id="conditional_breakpoints_and_register_sign_extension"></a><a id="CONDITIONAL_BREAKPOINTS_AND_REGISTER_SIGN_EXTENSION"></a>Conditional Breakpoints and Register Sign Extension</h3>
+<p>You can set a breakpoint that is conditional on a register value.</p>
+<p>The following command will break at the beginning of the <b>myFunction</b> function if the <b>eax</b> register is equal to 0xA3:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; bp mydriver!myFunction "j @eax = 0xa3  '';'gc'" 
+0:000&gt; bp mydriver!myFunction ".if @eax = 0xa3  {} .else {gc}"</pre>
+</td>
+</tr>
+</table></span></div>
+<p>However, the following similar command will <u>not</u> necessarily break when <b>eax</b> equals 0xC0004321:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; bp mydriver!myFunction "j @eax = 0xc0004321  '';'gc'" 
+0:000&gt; bp mydriver!myFunction ".if @eax = 0xc0004321  {} .else {gc}"</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The reason the preceding command will fail is that the MASM expression evaluator sign-extends registers whose high bit equals one. When <b>eax</b> has the value 0xC0004321, it will be treated as 0xFFFFFFFF`C0004321 in computations--even though <b>eax</b> will still be <u>displayed</u> as 0xC0004321.  However, the numeral <b>0xc0004321</b> is sign-extended in kernel mode, but not in user mode.  Therefore, the preceding command will not work properly in user mode.  If you mask the high bits of <b>eax</b>, the command will work properly in kernel mode--but now it will fail in user mode.</p>
+<p>You should formulate your commands defensively against sign extension in both modes.  In the preceding command, you can make the command defensive by masking the high bits of a 32-bit register by using an AND operation to combine it with 0x00000000`FFFFFFFF and by masking the high bits of a numeric constant by including a grave accent ( <b>` </b>) in its syntax.  </p>
+<p>The following command will work properly in user mode and kernel mode:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; bp mydriver!myFunction "j (@eax &amp; 0x0`ffffffff) = 0x0`c0004321  '';'gc'" 
+0:000&gt; bp mydriver!myFunction ".if (@eax &amp; 0x0`ffffffff) = 0x0`c0004321  {} .else {gc}"</pre>
+</td>
+</tr>
+</table></span></div>
+<p>For more information about which numbers are sign-extended by the debugger, see <a href="sign_extension.htm">Sign Extension</a>.</p>
+<h3><a id="conditional_breakpoints_in_windbg"></a><a id="CONDITIONAL_BREAKPOINTS_IN_WINDBG"></a>Conditional Breakpoints in WinDbg</h3>
+<p>In WinDbg, you can create a conditional breakpoint by clicking <a href="edit___breakpoints.htm">Breakpoints</a> from the <b>Edit</b> menu, entering a new breakpoint address into the <b>Command</b> box, and entering a condition into the <b>Condition</b> box.</p>
+<p>For example, typing <b>mymod!myFunc+0x3A</b> into the <b>Command</b> box and <b>myVar &lt; 7</b> into the <b>Condition</b> box is equivalent to issuing the following command:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; bu mymod!myFunc+0x3A "j(myVar&lt;7) '.echo "Breakpoint hit, condition myVar&lt;7"'; 'gc'" 
+0:000&gt; bu mymod!myFunc+0x3A ".if(myVar&lt;7) {.echo "Breakpoint hit, condition myVar&lt;7"} .else {gc}" </pre>
+</td>
+</tr>
+</table></span></div>
+<h3><a id="restrictions_on_conditional_breakpoints"></a><a id="RESTRICTIONS_ON_CONDITIONAL_BREAKPOINTS"></a>Restrictions on Conditional Breakpoints</h3>
+<p>If you are <a href="controlling_the_user_mode_debugger_from_the_kernel_debugger.htm">controlling the user-mode debugger from the kernel debugger</a>, you cannot use conditional breakpoints or any other breakpoint command string that contains the <a href="gc__go_from_conditional_breakpoint_.htm"><b>gc (Go from Conditional Breakpoint)</b></a> or <a href="g__go_.htm"><b>g (Go)</b></a> commands. If you use these commands, the serial interface might not be able to keep up with the number of breakpoint passes, and you will be unable to break back into CDB.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Conditional breakpoints in WinDbg and other Windows debuggers%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

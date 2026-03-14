@@ -1,0 +1,80 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !for_each_local extension executes a debugger command one time for each local variable in the current frame."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!for_each_local</title>
+
+<meta name="MS-HAID" content="r24_exts_general_A_d01e96cf-88a5-4cbd-94a4-14a9f308eff2.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._for_each_local"></a>!for_each_local</h1>
+</div>
+<p>The <b>!for_each_local</b> extension executes a debugger command one time for each local variable in the current frame.</p>
+<p></p>
+<p></p>
+<pre class="syntax"><b>!for_each_local </b>["<i>CommandString</i>"] 
+<b>!for_each_local -?</b> 
+</pre>
+<h2><a id="ddk__for_each_local_dbg"></a><a id="DDK__FOR_EACH_LOCAL_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______CommandString______"></a><a id="_______commandstring______"></a><a id="_______COMMANDSTRING______"></a>       <i>CommandString</i>      </dt>
+<dd>
+<p>Specifies the debugger commands to execute one time for each local variable in the current stack frame. If <i>CommandString</i> includes multiple commands, you must separate them with semicolons and enclose <i>CommandString</i> in quotation marks. If you include multiple commands, the individual commands in <i>CommandString</i> cannot contain quotation marks.</p>
+<p>Within <i>CommandString</i>, or within any script that the commands in <i>CommandString</i> execute, you can use the <b>@#Local</b> alias. This alias is replaced by the name of the local variable. This replacement occurs before <i>CommandString</i> is executed and before any other parsing occurs. This alias is case sensitive, and you must add a space before it and add a space after it, even if you enclose the alias in parentheses. If you use C++ expression syntax, you must reference this alias as <b>@@( @#Local )</b>. </p>
+<p>This alias is available only during the lifetime of the call to <b>!for_each_local</b>. Do not confuse this alias with pseudo-registers, fixed-name aliases, or user-named aliases.</p>
+</dd>
+<dt><a id="_______-_______"></a>       <b>-?</b>      </dt>
+<dd>
+<p>Displays some Help text for this extension in the <a href="debugger_command_window.htm">Debugger Command window</a>.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000</b></p>
+</td>
+<td>
+<p>
+          Ext.dll
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Ext.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about how to display and change local variables and a description of other memory-related commands, see <a href="reading_and_writing_memory.htm">Reading and Writing Memory</a>.</p>
+<h2>Remarks</h2>
+<p>If you do not specify any arguments, the <b>!for_each_local</b> extension lists local variables. For more information about the local variables, use the <a href="dv__display_local_variables_.htm"><b>dv (Display Local Variables)</b></a> command.</p>
+<p>If you enable verbose debugger output, the display includes the total number of local variables when the extension is called, and every time that <i>CommandString</i> is executed for a local variable, that variable and the text of <i>CommandString</i> are echoed.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!for_each_local%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,69 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Debugging Multiple Targets"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Debugging Multiple Targets</title>
+
+<meta name="MS-HAID" content="r07_use_operation_6930fe2c-a632-474c-9f8c-5bdd3aa9349d.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.debugging_multiple_targets"></a>Debugging Multiple Targets</h1>
+</div>
+<h2><a id="ddk_debugging_multiple_targets_dbg"></a><a id="DDK_DEBUGGING_MULTIPLE_TARGETS_DBG"></a></h2>
+<p>You can debug multiple dump files or live user-mode applications at the same time. Each target contains one or more processes, and each process contains one or more threads.</p>
+<p>These targets are also grouped into <i>systems</i>. Systems are sets of targets that are grouped together for easy identification and manipulation. Systems are defined as follows:</p>
+<ul>
+<li>
+<p>Each kernel-mode or user-mode dump file is a separate system.</p>
+</li>
+<li>
+<p>When you are debugging live user-mode applications on different computers (by using a <a href="process_servers__user_mode_.htm">process server</a>, such as Dbgsrv), each application is a separate system.</p>
+</li>
+<li>
+<p>When you are debugging live user-mode applications on the local computer, the applications are combined into a single system.</p>
+</li>
+</ul>
+<p>The <i>current</i> or <i>active</i> system is the system that you are currently debugging.</p>
+<h3><a id="acquiring_multiple_targets"></a><a id="ACQUIRING_MULTIPLE_TARGETS"></a>Acquiring Multiple Targets</h3>
+<p>The first target is acquired in the usual manner.</p>
+<p>You can debug additional live user-mode applications by using the <a href="_attach__attach_to_process_.htm"><b>.attach (Attach to Process)</b></a> or <a href="_create__create_process_.htm"><b>.create (Create Process)</b></a> command, followed by the <b>g (Go)</b> command.</p>
+<p>You can debug additional dump files by using the <a href="_opendump__open_dump_file_.htm"><b>.opendump (Open Dump File)</b></a> command, followed by the <b>g (Go)</b> command. You can also open multiple dump files when the debugger is started. To open multiple dump files, include multiple <b>-z</b> switches in the command, each followed by a different file name.</p>
+<p>You can use the preceding commands even if the processes are on different systems. You must start a process server on each system and then use the -premote parameter with <b>.attach</b> or <b>.create</b> to identify the proper process server. If you use the <b>.attach</b> or <b>.create</b> command again without specifying the -premote parameter, the debugger attaches to, or creates, a process on the current system. </p>
+<h3><a id="manipulating_systems_and_targets"></a><a id="MANIPULATING_SYSTEMS_AND_TARGETS"></a>Manipulating Systems and Targets</h3>
+<p>When debugging begins, the current system is the one that the debugger most recently attached to. If an exception occurs, the current system switches to the system that this exception occurred on.</p>
+<p>To close one target and continue to debug the other targets, use the <a href="_kill__kill_process_.htm"><b>.kill (Kill Process)</b></a> command. On Microsoft Windows XP and later versions of Windows, you can use the <a href="_detach__detach_from_process_.htm"><b>.detach (Detach from Process)</b></a> command or WinDbg's <a href="debug___detach_debuggee.htm">Debug | Detach Debuggee</a> menu command instead. These commands detach the debugger from the target but leave the target running.</p>
+<p>To control the debugging of multiple systems, you can use the following methods:</p>
+<ul>
+<li>
+<p>The <a href="____system_status_.htm"><b>|| (System Status)</b></a> command displays information about one or more systems</p>
+</li>
+<li>
+<p>The <a href="__s__set_current_system_.htm"><b>||s (Set Current System)</b></a> command enables you to select the current system</p>
+</li>
+<li>
+<p>(WinDbg only)  The <a href="processes_and_threads_window.htm">Processes and Threads window</a> enables you display or select systems, processes, and threads </p>
+</li>
+</ul>
+<p>By using these commands to select the current system, and by using the standard commands to <a href="controlling_processes_and_threads.htm">select the current process and thread</a>, you can determine the context of commands that display memory and registers.</p>
+<p>However, you cannot separate execution of these processes. The <a href="g__go_.htm"><b>g (Go)</b></a> command always causes all targets to execute together.</p>
+<div class="alert"><b>Note</b>    We recommend that you do not debug live targets and dump targets together, because commands behave differently for each type of debugging. For example, if you use the <b>g (Go)</b> command when the current system is a dump file, the debugger begins executing, but you cannot break back into the debugger, because the break command is not recognized as valid for dump file debugging.  </div>
+<div> </div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Debugging Multiple Targets%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,106 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Cutting and Pasting Text"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Cutting and Pasting Text</title>
+
+<meta name="MS-HAID" content="r06_use_gui_fdf2a717-eee7-4bd1-8b43-f575545f3808.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.cutting_and_pasting_text"></a>Cutting and Pasting Text</h1>
+</div>
+<h2><a id="ddk_cutting_and_pasting_text_dbg"></a><a id="DDK_CUTTING_AND_PASTING_TEXT_DBG"></a></h2>
+<p>WinDbg uses many common methods of manipulating text and several methods that are less familiar.</p>
+<h3><a id="selecting_text"></a><a id="SELECTING_TEXT"></a>Selecting Text</h3>
+<p>To select text in a <a href="source_window.htm">Source window</a>, in the <a href="disassembly_window.htm">Disassembly window</a>, in either pane of the <a href="debugger_command_window.htm">Debugger Command window</a>, or in a dialog box, point to one end of the text, press and hold the left mouse button, and drag the pointer to the other end of the text.</p>
+<p>To select all of the text in a window, you can also click <a href="edit___select_all.htm">Select All</a> on the <b>Edit</b> menu or press CTRL+A.</p>
+<p>In the <a href="calls_window.htm">Calls window</a>, Watch window, <a href="locals_window.htm">Locals window</a>, <a href="registers_window.htm">Registers window</a>, and <a href="memory_window.htm">Memory window</a>, you cannot select an arbitrary span of text, but you can select a whole line or cell. Click in the desired line or cell to select its text.</p>
+<p>While you are entering text, press the DELETE and BACKSPACE keys to delete the text to the right or left of the cursor, respectively. If you select text, you can press these keys to delete the selection. If you select text and then type any characters, the new characters replace what you selected.</p>
+<h3><a id="copying_text"></a><a id="COPYING_TEXT"></a>Copying Text</h3>
+<p>To copy text, select that text and then do one of the following:</p>
+<ul>
+<li>
+<p>Press the right mouse button. (This method works only in some locations. For more information about how to use the right mouse button, see The Right Mouse Button.)</p>
+</li>
+<li>
+<p>Press CTRL+C.</p>
+</li>
+<li>
+<p>Press CTRL+INSERT.</p>
+</li>
+<li>
+<p>(Docked and tabbed windows only)  Click <b>Copy</b> on the <b>Edit </b>menu.</p>
+</li>
+<li>
+<p>Click the <b>Copy (Ctrl+C) </b>button (<img src="images/tbcopy.png" alt="Screen shot of the Copy button"/>) on the toolbar.</p>
+</li>
+</ul>
+<h3><a id="cutting_text"></a><a id="CUTTING_TEXT"></a>Cutting Text</h3>
+<p>To cut text and move it to the clipboard, select the text and then do one of the following:</p>
+<ul>
+<li>
+<p>Press CTRL+X.</p>
+</li>
+<li>
+<p>Press SHIFT+DELETE.</p>
+</li>
+<li>
+<p>(Docked and tabbed windows only)  Click<b> Cut</b> on the <b>Edit </b>menu.</p>
+</li>
+<li>
+<p>Click the <b>Cut (Ctrl+X) </b>button (<img src="images/tbcut.png" alt="Screen shot of the Cut button"/>) on the toolbar.</p>
+</li>
+</ul>
+<p>You can cut text from the bottom pane of the Debugger Command window, from the left column of the Watch window, and from any dialog box (that is, from any location that supports text entry).</p>
+<h3><a id="pasting_text"></a><a id="PASTING_TEXT"></a>Pasting Text</h3>
+<p>To paste text from the clipboard, put the cursor where you want to insert the text (or select the text that you want to replace) and then do one of the following:</p>
+<ul>
+<li>
+<p>Press the right mouse button. (This method works only in some locations, and you cannot use this method to replace text. For more inormation about how to use this method, see The Right Mouse Button.)</p>
+</li>
+<li>
+<p>Press CTRL+V.</p>
+</li>
+<li>
+<p>Press SHIFT+INSERT.</p>
+</li>
+<li>
+<p>(Docked and tabbed windows only)  Click<b> Paste</b> on the <b>Edit </b>menu.</p>
+</li>
+<li>
+<p>Click the <b>Paste (Ctrl+V) </b>button (<img src="images/tbpaste.png" alt="Screen shot of the Paste button"/>) on the tooblar.</p>
+</li>
+</ul>
+<p>You can paste text into the bottom pane of the Debugger Command window, into the left column of the Watch window, and into any dialog box (that is, into any location that supports text entry).</p>
+<h3><a id="right_mouse_button"></a><a id="RIGHT_MOUSE_BUTTON"></a>Right Mouse Button</h3>
+<p>The right mouse button has several effects that can make copying and pasting much quicker:</p>
+<ul>
+<li>
+<p>If you select text in either pane of the Debugger Command window, in the Scratch Pad, in the Disassembly window, or in any Source window, and then you press the right mouse button, the text is copied to the clipboard.  However, if <b>QuickEdit Mode</b> has been deselected in <a href="view___options.htm">View | Options</a>, right-clicking in these locations will pop up the menu most relevant to the current location. </p>
+</li>
+<li>
+<p>If you put the cursor (without selecting any text) in either pane of the Debugger Command window, in the Scratch Pad, or in the text entry space of the Watch window, and then you press the right mouse button, the contents of the clipboard are pasted into the window. However, if <b>QuickEdit Mode</b> has been deselected in <a href="view___options.htm">View | Options</a>, right-clicking in these locations will pop up the menu most relevant to the current location. </p>
+</li>
+<li>
+<p>If you put the cursor in any box and then press the right mouse button, a menu with <b>Undo</b>, <b>Cut</b>, <b>Copy</b>, <b>Paste</b>, and <b>Select All</b> options appears. You can choose any of these options.</p>
+</li>
+</ul>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Cutting and Pasting Text%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

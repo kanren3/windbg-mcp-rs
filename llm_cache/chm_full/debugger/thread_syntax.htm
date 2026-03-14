@@ -1,0 +1,96 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Thread Syntax"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Thread Syntax</title>
+
+<meta name="MS-HAID" content="r13_syntax_5bebd798-3782-4d86-8a4f-33b8f2488b7a.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.thread_syntax"></a>Thread Syntax</h1>
+</div>
+<h2><a id="ddk_thread_syntax_dbg"></a><a id="DDK_THREAD_SYNTAX_DBG"></a></h2>
+<p>Many debugger commands have thread identifiers as their parameters. A tilde ( ~ ) appears before the thread identifier. </p>
+<p>The thread identifier can be one of the following values.</p>
+<table>
+<tr>
+<th>Thread identifier</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p><b>~.</b></p>
+</td>
+<td>
+<p>The current thread.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>~#</b></p>
+</td>
+<td>
+<p>The thread that caused the current exception or debug event.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>~*</b></p>
+</td>
+<td>
+<p>All threads in the process.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>~</b><i>Number</i></p>
+</td>
+<td>
+<p>The thread whose index is <i>Number</i>. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>~~</b>[<i>TID</i>]</p>
+</td>
+<td>
+<p>The thread whose thread ID is <i>TID</i>. (The brackets are required And you cannot add a space between the second tilde and the opening bracket.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>~</b>[<i>Expression</i>]</p>
+</td>
+<td>
+<p>The thread whose thread ID is the integer to which the numerical <i>Expression</i> resolves.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>Threads are assigned indexes as they are created. Note that this number differs from the thread ID that the Microsoft Windows operating system uses.</p>
+<p>When debugging begins, the current thread is the one that caused the present exception or debug event (or the active thread when the debugger attached to the process). That thread remains the current thread until you specify a new one by using a <a href="_s__set_current_thread_.htm"><b>~s (Set Current Thread)</b></a> command or by using the <a href="processes_and_threads_window.htm">Processes and Threads window</a> in WinDbg.</p>
+<p>Thread identifiers typically appear as command prefixes. Note that not all wildcard characters are available in all commands that use thread identifiers. </p>
+<p>An example of the ~[<i>Expression</i>] syntax would be <code>~[@$t0]</code>.  In this example, the thread changes depending on the value of a user-defined pseudo-register.  This syntax allows debugger scripts to programmatically select a thread.</p>
+<h3><a id="controlling_threads_in_kernel_mode"></a><a id="CONTROLLING_THREADS_IN_KERNEL_MODE"></a>Controlling Threads in Kernel Mode</h3>
+<p>In kernel mode, you cannot control threads by using thread identifiers. For more information about how to access thread-specific information in kernel mode, see <a href="changing_contexts.htm">Changing Contexts</a>.</p>
+<div class="alert"><b>Note</b>  You can use the tilde character ( ~ ) to specify threads during user-mode debugging. In kernel-mode debugging, you can use the tilde to specify processors. For more information about how to specify processors, see <a href="multiprocessor_syntax.htm">Multiprocessor Syntax</a>.</div>
+<div> </div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Thread Syntax%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,89 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !wdfkd.wdflogdump extension displays the WDF In-flight Recorder log records, if available, for a KMDF driver or a UMDF 2 driver. You can use this command with a complete memory dump, a kernel memory dump, or a live kernel-mode target."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!wdfkd.wdflogdump</title>
+
+<meta name="MS-HAID" content="r33~c_exts_WDF_b04c0ea2-3c82-41c1-abd2-61e5e57d29da.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._wdfkd_wdflogdump"></a>!wdfkd.wdflogdump</h1>
+</div>
+<p>The <b>!wdfkd.wdflogdump</b> extension displays the WDF In-flight Recorder log records, if available, for a KMDF driver or a UMDF 2 driver. You can use this command with a <a href="complete_memory_dump.htm">complete memory dump</a>, a <a href="kernel_memory_dump.htm">kernel memory dump</a>, or a <a href="live_kernel_mode_targets.htm">live kernel-mode target</a>.</p>
+<p>KMDF</p>
+<pre class="syntax"><b>!wdfkd.wdflogdump </b>[<i>DriverName</i>][<i>WdfDriverGlobals</i>][<b>-d</b> | <b>-f</b> | <b>-a</b> <i>LogAddress</i>]</pre>
+<p>UMDF</p>
+<pre class="syntax"><b>!wdfkd.wdflogdump  </b>[<i>DriverName.dll</i>][<i>HostProcessId</i>][<b>-d</b> | <b>-f</b> | <b>-m</b>]</pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______DriverName______"></a><a id="_______drivername______"></a><a id="_______DRIVERNAME______"></a>       <i>DriverName</i>      </dt>
+<dd>
+<ul>
+<li>KMDF: The name of a KMDF driver. The name must not include the .sys filename extension.</li>
+<li>UMDF: The name of a UMDF 2 driver. The name must include the .dll filename extension.</li>
+</ul>
+</dd>
+<dt><a id="_______Parameter2______"></a><a id="_______parameter2______"></a><a id="_______PARAMETER2______"></a>       <i>Parameter2</i>      </dt>
+<dd>
+<ul>
+<li>KMDF: <i>WdfDriverGlobals</i> - The address of the <i>WdfDriverGlobals</i> structure. You can determine this address by running <a href="_wdfkd_wdfldr.htm"><b>!wdfkd.wdfldr</b></a> and looking for the field labeled "WdfGlobals". Or, you can supply @@(Driver!WdfDriverGlobals) as the address value, where <i>Driver</i> is the name of the driver.  If any <i>WdfDriverGlobals</i> address is supplied, <i>DriverName</i> is ignored (although it must nevertheless be supplied).</li>
+<li>
+<p>UMDF: <i>HostProcessId</i> -  The process ID  of an instance of wudfhost.exe. If you supply the process ID, this command displays the log records for that process. If you do not supply the process ID, this command displays a list of commands in this form:</p><b>!wdflogdump </b><i>DriverName</i><b>  </b><i>ProcessID</i><p>If a single process can be determined
+     it will automatically be chosen.</p>
+</li>
+</ul>
+</dd>
+<dt><a id="_______Options______"></a><a id="_______options______"></a><a id="_______OPTIONS______"></a>       <i>Options</i>      </dt>
+<dd>
+<p>KMDF:</p>
+<p></p>
+<p><b>-d</b> Displays only the driver logs.</p>
+<p><b>-f</b> Displays only the framework logs.</p>
+<p><b>-a</b><i> LogAddress</i>Displays a specific driver log. If this option  is used, the LogAddress must be provided.</p>
+<p></p>
+<p>UMDF:</p>
+<p><b>-d</b> Displays only the driver logs.</p>
+<p><b>-f</b> Displays only the framework logs.</p>
+<p><b>-m</b> Merges framework and driver logs in their recorded order.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<p>
+       Wdfkd.dll
+      </p>
+<h3><a id="Frameworks"></a><a id="frameworks"></a><a id="FRAMEWORKS"></a>Frameworks</h3>
+<p>
+       KMDF 1, UMDF 2</p>
+<h2>Remarks</h2>
+<p>If you omit the <i>DriverName</i> parameter, the default driver name is used. Use the <a href="_wdfkd_wdfgetdriver.htm"><b>!wdfkd.wdfgetdriver</b></a> extension to display the default driver name, and use the <a href="_wdfkd_wdfsetdriver.htm"><b>!wdfkd.wdfsetdriver</b></a> extension to set the default driver name. </p>
+<p>To display the framework's error log records from a <a href="small_memory_dump.htm">small memory dump</a>, use the <a href="_wdfkd_wdfcrashdump.htm"><b>!wdfkd.wdfcrashdump</b></a> extension.  </p>
+<p>For information about setting information that the debugger needs to format WPP tracing messages, see <a href="_wdfkd_wdftmffile.htm"><b>!wdfkd.wdftmffile</b></a> and <a href="_wdfkd_wdfsettraceprefix.htm"><b>!wdfkd.wdfsettraceprefix</b></a>. </p>
+<p><b>Additional Information</b></p>
+<p>
+For  information about  enabling the inflight trace recorder  for your driver,  see Using Inflight Trace Recorder (IFR) in KMDF and UMDF 2 Drivers. For more information about debugging WDF drivers, see Debugging WDF Drivers. For information about KMDF debugging, see <a href="kernel_mode_driver_framework_debugging.htm">Kernel-Mode Driver Framework Debugging</a>.</p>
+<p></p>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="_wdfkd_wdfcrashdump.htm"><b>!wdfkd.wdfcrashdump</b></a></dt>
+<dt><a href="_wdfkd_wdfsettraceprefix.htm"><b>!wdfkd.wdfsettraceprefix</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!wdfkd.wdflogdump%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

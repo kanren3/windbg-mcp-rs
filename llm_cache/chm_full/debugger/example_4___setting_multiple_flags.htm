@@ -1,0 +1,82 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Example 4: Setting Multiple Flags"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Example 4:  Setting Multiple Flags</title>
+
+<meta name="MS-HAID" content="GFlags_de8650ae-f519-445c-bd5f-94f5f5cf4c17.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.example_4___setting_multiple_flags"></a>Example 4:  Setting Multiple Flags</h1>
+</div>
+<h2><a id="ddk_example_4___setting_multiple_flags_dtools"></a><a id="DDK_EXAMPLE_4___SETTING_MULTIPLE_FLAGS_DTOOLS"></a></h2>
+<p>The following command sets these three flags for the current session:</p>
+<ul>
+<li>
+<p><a href="enable_heap_free_checking.htm">Enable heap free checking</a> (hfc, 0x20) </p>
+</li>
+<li>
+<p><a href="enable_heap_parameter_checking.htm">Enable heap parameter checking</a> (hpc, 0x40) </p>
+</li>
+<li>
+<p><a href="enable_heap_validation_on_call.htm">Enable heap validation on call</a> (hvc, 0x80) </p>
+</li>
+</ul>
+<p>This command uses the <b>/k</b> parameter to specify kernel mode (session only). It sets the value for kernel mode to <b>E0</b> (0xE0), the sum of the hexadecimal values of the selected flags (0x20 + 0x40 + 0x80).</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>gflags /k e0 </pre>
+</td>
+</tr>
+</table></span></div>
+<p>In response, GFlags displays the revised value of flags set for the session. The display indicates that the command is successful and that the three flags specified in the command are set.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>Current Running Kernel Settings are: 000000e0
+    hfc - Enable heap free checking
+    hpc - Enable heap parameter checking
+    hvc - Enable heap validation on call</pre>
+</td>
+</tr>
+</table></span></div>
+<p>You can use several different GFlags commands to set flags. Each of the following commands has the same effect as the command used in this example and the methods can be used interchangeably: </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>gflags /k +20 +40 +80 
+gflags /k +E0 
+gflags /k +hfc +hpc +hvc </pre>
+</td>
+</tr>
+</table></span></div>
+<p>Kernel (run time) flags are effective immediately and remain effective until Windows shuts down.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Example 4:  Setting Multiple Flags%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

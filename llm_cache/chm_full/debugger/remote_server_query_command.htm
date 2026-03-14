@@ -1,0 +1,73 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="To display a list of available sessions on a local or Remote Server, use the following syntax."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Remote Server Query Command</title>
+
+<meta name="MS-HAID" content="Remote_fa2adaef-530c-458f-836e-cf35373d36fc.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.remote_server_query_command"></a>Remote Server Query Command</h1>
+</div>
+<p>To display a list of available sessions on a local or Remote Server, use the following syntax.</p>
+<pre class="syntax">
+    <b>remote /q </b><i>Computer</i><b>
+</b>
+   </pre>
+<h2><a id="ddk_remote_server_query_command_dtools"></a><a id="DDK_REMOTE_SERVER_QUERY_COMMAND_DTOOLS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="________q______"></a><a id="________Q______"></a>       <b>/q</b>      </dt>
+<dd>
+<p>Query. Displays the visible remote sessions on the specified computer. </p>
+</dd>
+<dt><a id="_______Computer______"></a><a id="_______computer______"></a><a id="_______COMPUTER______"></a>       <i>Computer</i>      </dt>
+<dd>
+<p>Specifies the name of the computer. This parameter is required (even on the local computer).</p>
+</dd>
+</dl>
+<h3><a id="comments"></a><a id="COMMENTS"></a>Comments</h3>
+<p>The query display includes only server sessions; it does not display client connections to remote sessions.</p>
+<p>The query display includes only visible sessions. There is no command to display invisible sessions.</p>
+<p>The query display includes all visible sessions, including those that restrict users (<b>/u</b> and <b>/ud</b>). The user might not have permission to connect to all of the sessions in the list.</p>
+<p>When there are no remote sessions running on the server, the Remote tool displays the following message:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>No Remote servers running on \\Computer</pre>
+</td>
+</tr>
+</table></span></div>
+<p>However, when the only remote sessions running on the computer are invisible remote sessions, the Remote tool displays the following message:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>No visible sessions on server \\Computer</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Remote Server Query Command%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

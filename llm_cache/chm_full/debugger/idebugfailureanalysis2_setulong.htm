@@ -1,0 +1,92 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The SetUlong method searches a DebugFailureAnalysis object for the first FA entry that has a specified tag. If it finds an FA entry with the specified tag, it sets (overwrites) the data block of the FA entry to a specified ULONG value."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IDebugFailureAnalysis2::SetUlong method</title>
+
+<meta name="MS-HAID" content="debugger.idebugfailureanalysis2_setextensionulong"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.idebugfailureanalysis2_setulong"></a>IDebugFailureAnalysis2::SetUlong method</h1>
+</div>
+<p>The <b>SetUlong</b> method searches a <a href="idebugfailureanalysis2.htm"><b>DebugFailureAnalysis</b></a> object for the first <a href="failure_analysis_entries.htm">FA entry</a> that has a specified tag. If it finds an FA entry with the specified tag, it sets (overwrites) the data block of the FA entry to a specified <b>ULONG</b> value. If this method does not find an <a href="failure_analysis_entries.htm">FA entry</a> that has the specified tag, it creates a new FA entry with that tag and sets the data block of the new FA entry to the specified <b>ULONG</b> value.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>FA_ENTRY SetUlong(
+       FA_TAG Tag,
+  [in] ULONG  Value
+);</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Parameters</h2>
+<dl>
+<dt><i>Tag</i> </dt>
+<dd>
+<p>A value in the <a href="fa_tag.htm"><b>FA_TAG</b></a> enumeration.</p>
+</dd>
+<dt><i>Value</i> [in]</dt>
+<dd>
+<p>The <b>ULONG</b> value to be written to the data block of the new or existing <a href="failure_analysis_entries.htm">FA entry</a>.</p>
+</dd>
+</dl>
+<h2>Return value</h2>
+<p>If this method succeeds, it returns a pointer to the new or existing <a href="fa_entry.htm"><b>FA_ENTRY</b></a> structure. Otherwise, it returns <b>NULL</b>.</p>
+<h2>Remarks</h2>
+<p>If this method finds an <a href="failure_analysis_entries.htm">FA entry</a> with the specified tag, it checks to see whether the data type associated with that tag is <b>DEBUG_FA_ENTRY_ULONG</b>. If the data type associated with the tag is not <b>DEBUG_FA_ENTRY_ULONG</b>, this method returns NULL and does not overwrite the entry's data block.</p>
+<p>If this method does not find an <a href="failure_analysis_entries.htm">FA entry</a> with the specified tag, it creates a new FA entry with that tag, and it associates the tag with the data type  <b>DEBUG_FA_ENTRY_ULONG</b>.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Target platform</p>
+</th>
+<td width="70%">
+<dl>
+<dt></dt>
+</dl>
+</td>
+</tr>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Extsfns.h</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="idebugfailureanalysis2.htm"><b>IDebugFailureAnalysis2</b></a></dt>
+<dt><a href="writing_an_analysis_extension_to_extend__analyze.htm">Writing an Analysis Extension Plug-in to Extend !analyze</a></dt>
+<dt><a href="idebugfailureanalysis2_getulong.htm"><b>GetUlong</b></a></dt>
+<dt><a href="idebugfailureanalysis2_addulong.htm"><b>AddUlong</b></a></dt>
+<dt><a href="_efn_analyze.htm"><b>_EFN_Analyze</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IDebugFailureAnalysis2::SetUlong method%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

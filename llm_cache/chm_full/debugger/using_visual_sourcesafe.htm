@@ -1,0 +1,143 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Using Visual SourceSafe"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Using Visual SourceSafe</title>
+
+<meta name="MS-HAID" content="SymChk_31a3896b-b22d-459b-b75a-9ec46ef5c8fa.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.using_visual_sourcesafe"></a>Using Visual SourceSafe</h1>
+</div>
+<p>Visual SourceSafe is an x86-based application, and the source indexing scripts and tools associated with it are installed only with the x86 package of Debugging Tools for Windows.</p>
+<p>To successfully use Visual SourceSafe with SrcSrv, several defaults must be set in the system, including the Visual SourceSafe default database, the current project, and the working folder.  You must also stamp each build project with a label so that Visual SourceSafe can differentiate between versions of a given file.  Finally, you must set up any credentials needed to access the Visual SourceSafe database.</p>
+<h3><a id="visual_sourcesafe_database"></a><a id="VISUAL_SOURCESAFE_DATABASE"></a>Visual SourceSafe Database</h3>
+<p>The default Visual SourceSafe database can be set with the SSDIR environment variable.  If it is not set there, the SrcSrv indexing script can usually determine this from the registry.  If it cannot, the script prompts you to set SSDIR.  Regardless, this database value must be listed in your <a href="the_srcsrv_ini_file.htm">Srcsrv.ini</a> file along with a simple alias to identify the database.  More instructions can be found in the comments in Srcsrv.ini.  You should add the entry in the variables section of Srcsrv.ini using the following syntax:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>MYDATABASE=\\server\VssShare</pre>
+</td>
+</tr>
+</table></span></div>
+<h3><a id="current_project"></a><a id="CURRENT_PROJECT"></a>Current Project</h3>
+<p>Visual SourceSafe uses the concept of a <i>current project</i>.  The SrcSrv indexing script respects this value and limits processing to those source files that are part of the current project.  To display the current project, use the following command:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>ss.exe project</pre>
+</td>
+</tr>
+</table></span></div>
+<p>To change the current project, use the following command:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>ss.exe cp Project</pre>
+</td>
+</tr>
+</table></span></div>
+<p>where <i>Project</i> indicates the current project.  For example, to process all projects, set the current project to the root:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>ss.exe cp $/</pre>
+</td>
+</tr>
+</table></span></div>
+<h3><a id="working_folder"></a><a id="WORKING_FOLDER"></a>Working Folder</h3>
+<p>Visual SourceSafe projects are associated with <i>working folders</i>.  A working folder is the location on the client computer that corresponds to the root of a project.  However it is possible for such a computer to obtain and build source without a working folder being specified, usually when creating projects through the Visual Studio interface or by using the command:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>ss.exe get -R</pre>
+</td>
+</tr>
+</table></span></div>
+<p>However, this mode of operation is incompatible with SrcSrv indexing.  SrcSrv requires that a working folder be specified. To set the working folder, use the command:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>ss.exe workfold Project Folder</pre>
+</td>
+</tr>
+</table></span></div>
+<p>where <i>Project</i> indicates the current project and <i>Folder</i> indicates the location corresponding to the root of the project.</p>
+<h3><a id="labels"></a><a id="LABELS"></a>Labels</h3>
+<p>Visual SourceSafe cannot determine what version of a file exists within the working directory of a build machine.  Consequently, you must use labels to stamp the project with an identifier that is used to extract source files on the debugger client.  Thus, before indexing, you must verify that all changes are checked into the database and then apply a label to the project.  Labels can be applied using the command:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>ss.exe label Project</pre>
+</td>
+</tr>
+</table></span></div>
+<p>where <i>Project</i> indicates the current project.</p>
+<p>In the following example, the label "VERSION_3" is applied to a project called "$/sdktools":</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>E:\nt\user&gt;ss.exe label $/sdktools
+ Label for $/sdktools: VERSION_3
+ Comment for $/sdktools:
+ This is a comment.</pre>
+</td>
+</tr>
+</table></span></div>
+<p>After the label is applied, you can specify this label to the SrcSrv indexing script by setting the environment variable, SSLABEL, or by passing it as a command-line parameter, as in the following example:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>vssindex.cmd -label=VERSION_3</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Again, this label is required for SrcSrv indexing to work.  Note that if you pass a label that does not exist in the project, it can take a long time for the script to complete and the results are of no use.</p>
+<h3><a id="credentials"></a><a id="CREDENTIALS"></a>Credentials</h3>
+<p>If your Visual SourceSafe database requires a user and optional password for access, these values must be set through the SSUSER and SSPWD environment variables.  This applies not only at the time the build is indexed, but also on the debugger client.  </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Using Visual SourceSafe%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,94 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .logopen command sends a copy of the events and commands from the Debugger Command window to a new log file."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.logopen (Open Log File)</title>
+
+<meta name="MS-HAID" content="r21_metacmds_L_ffa5a430-48cf-43b6-a6b3-2bd5692337c2.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._logopen__open_log_file_"></a>.logopen (Open Log File)</h1>
+</div>
+<p>The <b>.logopen</b> command sends a copy of the events and commands from the <a href="debugger_command_window.htm">Debugger Command window</a> to a new log file.</p>
+<pre class="syntax"><b>.logopen </b>[<i>Options</i>]<b> </b>[<i>FileName</i>] 
+<b>.logopen /d</b></pre>
+<h2><a id="ddk_meta_open_log_file_dbg"></a><a id="DDK_META_OPEN_LOG_FILE_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Options______"></a><a id="_______options______"></a><a id="_______OPTIONS______"></a>       <i>Options</i>      </dt>
+<dd>
+<p>Any of the following options:</p>
+<p></p>
+<dl>
+<dt><a id="_t"></a><a id="_T"></a><b>/t</b></dt>
+<dd>
+<p>Appends the process ID with the current date and time to the log file name. This data is inserted after the file name and before the file name extension.</p>
+</dd>
+<dt><a id="_u"></a><a id="_U"></a><b>/u</b></dt>
+<dd>
+<p>Writes the log file in Unicode format. If you omit this option, the debugger writes the log file in ASCII (ANSI) format.</p>
+</dd>
+</dl>
+</dd>
+<dt><a id="_______FileName______"></a><a id="_______filename______"></a><a id="_______FILENAME______"></a>       <i>FileName</i>      </dt>
+<dd>
+<p>Specifies the name of the log file. You can specify a full path or only the file name. If the file name contains spaces, enclose <i>FileName</i> in quotation marks. If you do not specify a path, the debugger uses the current directory. If you omit <i>FileName</i>, the debugger names the file Dbgeng.log.  </p>
+</dd>
+<dt><a id="________d______"></a><a id="________D______"></a>       <b>/d</b>      </dt>
+<dd>
+<p>Automatically chooses a file name based on the name of the target process or target computer and the state of the target. The file always has the .log file name extension.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets</b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>If you already have a log file open when you run the <b>.logopen</b> command, the debugger closes it. If you specify a file name that already exists, the file's contents are overwritten.</p>
+<p>The <b>.logopen /t</b> command appends the process ID, date, and time to the log file name.  In the following example, the process ID in hexadecimal is 0x02BC, the date is February 28, 2005, and the time is 9:05:50.935.</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; .logopen /t c:\logs\mylogfile.txt
+Opened log file 'c:\logs\mylogfile_02BC_2005-02-28_09-05-50-935.txt'</code></pre>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.logopen (Open Log File)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

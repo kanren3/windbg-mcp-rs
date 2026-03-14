@@ -1,0 +1,70 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The CLUSTER_SVHDX_LIVEDUMP bug check has a value of 0x0000019D. This indicates that SVHDX initiated this livedump to help debug an inconsistent state."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0x19D: CLUSTER_SVHDX_LIVEDUMP</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0x19d__cluster_svhdx_livedump"></a>Bug Check 0x19D: CLUSTER_SVHDX_LIVEDUMP</h1>
+</div>
+<p>The CLUSTER_SVHDX_LIVEDUMP bug check has a value of 0x0000019D. This indicates that SVHDX initiated this livedump to help debug an inconsistent state. </p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2>CLUSTER_SVHDX_LIVEDUMP Parameters</h2>
+<p>The following parameters are displayed on the blue screen.</p>
+<table>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>1</td>
+<td>
+<p>Reason code</p>
+<p>0x1 : Mounting a Shared Virtual disk has failed</p>
+<dl>
+<dd>2 - Address of Svhdxflt!_SVHDX_VIRTUALDISK_CONTEXT</dd>
+<dd>3 - Address of nt!_FILE_OBJECT</dd>
+<dd>4 - NTSTATUS</dd>
+</dl>
+</td>
+</tr>
+<tr>
+<td>2</td>
+<td>See parameter 1</td>
+</tr>
+<tr>
+<td>3</td>
+<td>See parameter 1</td>
+</tr>
+<tr>
+<td>4</td>
+<td>See parameter 1</td>
+</tr>
+</table>
+<p> </p>
+<h2>Cause</h2>
+<p>When SVHDX detects that current state might cause some sort of inconsistency it will
+generate live dump with this status code. Parameter1 has code pointing to what scenario this live dump
+is created for. Other parameters should be interpreted in context of the reason code.</p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

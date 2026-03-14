@@ -1,0 +1,199 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="IDebugBreakpoint interface"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IDebugBreakpoint interface</title>
+
+<meta name="MS-HAID" content="ComOther_93345db9-13c0-4b46-be4a-d3fbb6039cc7.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.idebugbreakpoint"></a>IDebugBreakpoint interface</h1>
+</div>
+<h2>Members</h2>
+<p>The <b xmlns:loc="http://microsoft.com/wdcml/l10n">IDebugBreakpoint</b> interface inherits from the <b>IUnknown</b> interface. <b>IDebugBreakpoint</b> also has these types of members:</p>
+<ul>
+<li><a href="#methods">Methods</a></li>
+</ul>
+<h3><a id="methods"></a>Methods</h3>
+<p>The <b>IDebugBreakpoint</b> interface has these methods.</p>
+<table id="memberListMethods" class="members">
+<tr>
+<th align="left" width="37%">Method</th>
+<th align="left" width="63%">Description</th>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="addflags.htm"><b>AddFlags</b></a></td>
+<td align="left" width="63%">
+<p>Adds flags to a breakpoint.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getadder.htm"><b>GetAdder</b></a></td>
+<td align="left" width="63%">
+<p>Returns the client that owns the breakpoint.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getcommand.htm"><b>GetCommand</b></a></td>
+<td align="left" width="63%">
+<p>Returns the command string that is executed when a breakpoint is triggered.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getcurrentpasscount.htm"><b>GetCurrentPassCount</b></a></td>
+<td align="left" width="63%">
+<p>Returns the remaining number of times that the target must reach the breakpoint location before the breakpoint is triggered.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getdataparameters.htm"><b>GetDataParameters</b></a></td>
+<td align="left" width="63%">
+<p>Returns the parameters for a processor breakpoint.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getflags.htm"><b>GetFlags</b></a></td>
+<td align="left" width="63%">
+<p>Returns the flags for a breakpoint.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getid.htm"><b>GetId</b></a></td>
+<td align="left" width="63%">
+<p>Returns a breakpoint ID, which is the engine's unique identifier for a breakpoint.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getmatchthreadid.htm"><b>GetMatchThreadId</b></a></td>
+<td align="left" width="63%">
+<p>Returns the engine thread ID of the thread that can trigger a breakpoint.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getoffset.htm"><b>GetOffset</b></a></td>
+<td align="left" width="63%">
+<p>Returns the location that triggers a breakpoint.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getoffsetexpression.htm"><b>GetOffsetExpression</b></a></td>
+<td align="left" width="63%">
+<p>Returns the expression string that evaluates to the location that triggers a breakpoint.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getparameters.htm"><b>GetParameters</b></a></td>
+<td align="left" width="63%">
+<p>Returns the parameters for a breakpoint.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getpasscount.htm"><b>GetPassCount</b></a></td>
+<td align="left" width="63%">
+<p>Returns the number of times that the target was originally required to reach the breakpoint location before the breakpoint is triggered.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="gettype.htm"><b>GetType</b></a></td>
+<td align="left" width="63%">
+<p>Returns the type of the breakpoint and the type of the processor that a breakpoint is set for.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="removeflags.htm"><b>RemoveFlags</b></a></td>
+<td align="left" width="63%">
+<p>Removes flags from a breakpoint.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="setcommand.htm"><b>SetCommand</b></a></td>
+<td align="left" width="63%">
+<p>Sets the command that is executed when a breakpoint is triggered.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="setdataparameters.htm"><b>SetDataParameters</b></a></td>
+<td align="left" width="63%">
+<p>Sets the parameters for a processor breakpoint.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="setflags.htm"><b>SetFlags</b></a></td>
+<td align="left" width="63%">
+<p>Sets the flags for a breakpoint.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="setmatchthreadid.htm"><b>SetMatchThreadId</b></a></td>
+<td align="left" width="63%">
+<p>Sets the engine thread ID of the thread that can trigger a breakpoint.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="setoffset.htm"><b>SetOffset</b></a></td>
+<td align="left" width="63%">
+<p>Sets the location that triggers a breakpoint.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="setoffsetexpression.htm"><b>SetOffsetExpression</b></a></td>
+<td align="left" width="63%">
+<p>Sets an expression string that evaluates to the location that triggers a breakpoint.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="setpasscount.htm"><b>SetPassCount</b></a></td>
+<td align="left" width="63%">
+<p>Sets the number of times that the target must reach the breakpoint location before the breakpoint is triggered.
+</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>Although <b>IDebugBreakpoint</b> implements the <b>IUnknown</b> interface, the <b>IUnknown::AddRef</b> and <b>IUnknown::Release</b> methods are not used to control the lifetime of the breakpoint. Instead, an <b>IDebugBreakpoint</b> object is deleted after the method <a href="removebreakpoint.htm"><b>RemoveBreakpoint</b></a> is called.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Dbgeng.h (include Dbgeng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="idebugbreakpoint2.htm"><b>IDebugBreakpoint2</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IDebugBreakpoint interface%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

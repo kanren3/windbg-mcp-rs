@@ -1,0 +1,82 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Source Path"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Source Path</title>
+
+<meta name="MS-HAID" content="r06_use_gui_b85f4b8e-eb5f-4502-9a0e-92d84cd3d8f1.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.source_path"></a>Source Path</h1>
+</div>
+<h2><a id="ddk_source_path_dbg"></a><a id="DDK_SOURCE_PATH_DBG"></a></h2>
+<p>The <i>source path</i> specifies the directories where the C and C++ source files are located.</p>
+<p>If you are debugging a user-mode process on the computer where the executable file was built, and if the source files are still in their original location, the debugger can automatically locate the source files.</p>
+<p>In most other situations, you have to set the source path or load the individual source files.</p>
+<p>When you are performing <a href="remote_debugging_through_the_debugger.htm">remote debugging through the debugger</a>, the debugging server uses the source path. If you are using WinDbg as your debugger, each debugging client also has its own <i>local source path</i>. All source-related commands access the source files on the local computer. You have to set the proper paths on any client or server that you want to use source commands.</p>
+<p>This multiple-path system also enables a debugging client to use source-related commands without actually sharing the source files with other clients or with the server. This system is useful if there are private or confidential source files that one of the users has access to.</p>
+<p>You can also load source files at any time, regardless of the source path.</p>
+<h3><a id="source_path_syntax"></a><a id="SOURCE_PATH_SYNTAX"></a>Source Path Syntax</h3>
+<p>The debugger's source path is a string that consists of multiple directory paths, separated by semicolons. </p>
+<p>Relative paths are supported. However, unless you always start the debugger from the same directory, you should add a drive letter or a network share before each path. Network shares are also supported.</p>
+<div class="alert"><b>Note</b>    If you are connected to a corporate network, the most efficient way to access source files is to use a source server. You can use a source server by using the <b>srv*</b> string within your source path. For more information about source servers, see <a href="using_a_source_server.htm">Using a Source Server</a>. </div>
+<div> </div>
+<h3><a id="controlling_the_source_path"></a><a id="CONTROLLING_THE_SOURCE_PATH"></a>Controlling the Source Path</h3>
+<p>To control the source path and local source path, you can do one of the following:</p>
+<ul>
+<li>
+<p>Before you start the debugger, use the _NT_SOURCE_PATH <a href="environment_variables.htm">environment variable</a> to set the source path. If you try to add an invalid directory through this environment variable, the debugger ignores this directory.</p>
+</li>
+<li>
+<p>When you start the debugger, use the <b>-srcpath</b><a href="command_line_options.htm">command-line option</a> to set the source path.</p>
+</li>
+<li>
+<p>Use the <a href="_srcpath___lsrcpath__set_source_path_.htm"><b>.srcpath (Set Source Path)</b></a> command to display, set, change, or append to the source path. If you are using a source server, <a href="_srcfix___lsrcfix__use_source_server_.htm"><b>.srcfix (Use Source Server)</b></a> is slightly easier.</p>
+</li>
+<li>
+<p>(WinDbg only)  Use the <a href="_srcpath___lsrcpath__set_source_path_.htm"><b>.lsrcpath (Set Local Source Path)</b></a> command to display, set, change, or append to the local source path. If you are using a source server, <a href="_srcfix___lsrcfix__use_source_server_.htm"><b>.lsrcfix (Use Local Source Server)</b></a> is slightly easier. You can also use the WinDbg Command-Line with the parameter -lscrpath. For more information, see <a href="windbg_command_line_options.htm"><b>WinDbg Command-Line Options</b></a>.</p>
+</li>
+<li>
+<p>(WinDbg only)  Use the <a href="file___source_file_path.htm">File | Source File Path</a> command or press CTRL+P to display, set, change, or append to the source path or the local source path.</p>
+</li>
+</ul>
+<p>You can also directly open or close a source file by doing one of the following:</p>
+<ul>
+<li>
+<p>Use the <a href="lsf__lsf___load_or_unload_source_file_.htm"><b>lsf (Load or Unload Source File)</b></a> command to open or close a source file.</p>
+</li>
+<li>
+<p>(WinDbg only)  Use the <a href="_open__open_source_file_.htm"><b>.open (Open Source File)</b></a> command to open a source file.</p>
+</li>
+<li>
+<p>(WinDbg only)  Use the <a href="file___open_source_file.htm">File | Open Source File</a> command or press CTRL+O to open a source file. You can also use the <b>Open source file (Ctrl+O)</b>  button (<img src="images/tbopen.png" alt="Screen shot of the Open Source File button"/>) on the toolbar.</p>
+<div class="alert"><b>Note</b>    When you use <b>File | Open Source File</b> (or its shortcut menu or button equivalents) to open a source file, the path of that file is automatically appended to the source path.</div>
+<div> </div>
+</li>
+<li>
+<p>(WinDbg only)  Use the <a href="file___recent_files.htm">File | Recent Files</a> command to open one of the four source files that you most recently opened in WinDbg.</p>
+</li>
+<li>
+<p>(WinDbg only)  Use the <a href="file___close_current_window.htm">File | Close Current Window</a> command or click the <b>Close</b> button in the corner of the <a href="source_window.htm">Source window</a> to close a source file.</p>
+</li>
+</ul>
+<p>For more information about how to use source files, see <a href="debugging_in_source_mode.htm">Debugging in Source Mode</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Source Path%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

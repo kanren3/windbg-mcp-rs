@@ -1,0 +1,55 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="This section describes the RCDRKD debugger extension commands. These commands display WPP trace messages created by drivers."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>RCDRKD Extensions</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.rcdrkd_extensions"></a>RCDRKD Extensions</h1>
+</div>
+<p>This section describes the RCDRKD debugger extension commands. These commands display WPP trace messages created by drivers. Starting with Windows 8, you no longer need a separate trace message format (TMF) file to parse WPP messages. The TMF information is stored in the regular symbol file (PDB file). </p>
+<p>Starting in Windows 10, kernel-mode and user-mode drivers can use Inflight Trace Recorder (IFR) for logging traces. Your kernel-mode driver can use the RCDRKD  commands to read messages from the circular buffers, format the messages, and display the messages in the debugger. <div class="alert"><b>Note</b>  You cannot use the RCDRKD  commands to view UMDF driver logs, UMDF framework logs, and KMDF framework logs. To view those logs, use <a href="kernel_mode_driver_framework_extensions__wdfkd_dll_.htm">Windows Driver Framework Extensions (Wdfkd.dll)</a> commands.</div>
+<div> </div>
+</p>
+<p>The RCDRKD debugger extension commands are implemented in Rcdrkd.dll. To load the RCDRKD commands, enter <b>.load rcdrkd.dll</b> in the debugger.</p>
+<p>The following two commands are the primary commands for displaying trace messages.</p>
+<ul>
+<li><a href="_rcdrkd_rcdrlogdump.htm"><b>!rcdrkd.rcdrlogdump</b></a></li>
+<li><a href="_rcdrkd_rcdrcrashdump.htm"><b>!rcdrkd.rcdrcrashdump</b></a></li>
+</ul>
+<p>The following auxiliary commands provide services related to displaying and saving trace messages.</p>
+<ul>
+<li><a href="_rcdrkd_rcdrloglist.htm"><b>!rcdrkd.rcdrloglist</b></a></li>
+<li><a href="_rcdrkd_rcdrlogsave.htm"><b>!rcdrkd.rcdrlogsave</b></a></li>
+<li><a href="_rcdrkd_rcdrsearchpath.htm"><b>!rcdrkd.rcdrsearchpath</b></a></li>
+<li><a href="_rcdrkd_rcdrsettraceprefix.htm"><b>!rcdrkd.rcdrsettraceprefix</b></a></li>
+<li><a href="_rcdrkd_rcdrtmffile.htm"><b>!rcdrkd.rcdrtmffile</b></a></li>
+<li><a href="_rcdrkd_rcdrtraceprtdebug.htm"><b>!rcdrkd.rcdrtraceprtdebug</b></a></li>
+</ul>
+<p>The <a href="_rcdrkd_rcdrhelp.htm"><b>!rcdrkd.rcdrhelp</b></a> displays help for the RCDRKD commands in the debugger.</p>
+<h2><a id="related_topics"></a>Related topics</h2>
+<dl>
+<dt><a href="http://go.microsoft.com/fwlink/p?LinkID=251984">WPP Software Tracing</a></dt>
+<dt><a href="http://go.microsoft.com/fwlink/p?LinkID=251985">Using the Framework's Event Logger</a></dt>
+<dt><a href="usb_3_extensions.htm">USB 3.0 Extensions</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20RCDRKD Extensions%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

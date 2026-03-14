@@ -1,0 +1,80 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The DRIVER_USED_EXCESSIVE_PTES bug check has a value of 0x000000D8. This indicates that there are no more system page table entries (PTE) remaining."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0xD8: DRIVER_USED_EXCESSIVE_PTES</title>
+
+<meta name="MS-HAID" content="t06_bugs_B0_36940fb9-208d-4455-9f83-2d24fb643457.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0xd8__driver_used_excessive_ptes"></a>Bug Check 0xD8: DRIVER_USED_EXCESSIVE_PTES</h1>
+</div>
+<p>The DRIVER_USED_EXCESSIVE_PTES bug check has a value of 0x000000D8. This indicates that there are no more system page table entries (PTE) remaining.</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2> DRIVER_USED_EXCESSIVE_PTES Parameters</h2>
+<p>The following parameters are displayed on the blue screen.</p>
+<table>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>1</p>
+</td>
+<td>
+<p>Pointer to the name of the driver that caused the error (Unicode string), or zero</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>2</p>
+</td>
+<td>
+<p>Number of PTEs used by the driver that caused the error (if Parameter 1 is nonzero)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>3</p>
+</td>
+<td>
+<p>Total free system PTEs</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>4</p>
+</td>
+<td>
+<p>Total system PTEs</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>If the driver responsible for the error can be identified, its name is printed on the blue screen and stored in memory at the location (PUNICODE_STRING) <b>KiBugCheckDriver</b>.</p>
+<h2>Cause</h2>
+<p>This is usually caused by a driver not cleaning up its memory use properly. Parameter 1 shows the driver which has consumed the most PTEs. The call stack will reveal which driver actually caused the bug check.</p>
+<h2>Resolution</h2>
+<p>Both drivers may need to be fixed. The total number of system PTEs may also need to be increased.</p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

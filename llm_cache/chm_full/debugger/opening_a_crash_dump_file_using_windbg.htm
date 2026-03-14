@@ -1,0 +1,45 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="There are several ways you can use WinDbg to open a dump file."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Opening a Dump File Using WinDbg</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.opening_a_crash_dump_file_using_windbg"></a>Opening a Dump File Using WinDbg</h1>
+</div>
+<p>There are several ways you can use WinDbg to open a dump file.</p>
+<h3><a id="WinDbg_Menu"></a><a id="windbg_menu"></a><a id="WINDBG_MENU"></a>WinDbg Menu</h3>
+<p>If WinDbg is already running and is in dormant mode, you can open a  dump by choosing <b>Open Crash Dump</b> from the <b>File</b> menu or by pressing CTRL+D. When the Open Crash Dump dialog box appears, enter the full path and name of the crash dump file in the <b>File name</b> box, or use the dialog box to select the proper path and file name. When the proper file has been chosen, click <b>Open</b>.</p>
+<h3><a id="Command_Prompt"></a><a id="command_prompt"></a><a id="COMMAND_PROMPT"></a>Command Prompt</h3>
+<p>In a Command Prompt window, you can open a dump file when you launch WinDbg. Use the following command:</p>
+<p><b>
+
+windbg -y </b><i>SymbolPath</i><b> -i </b><i>ImagePath</i><b> -z </b><i>DumpFileName</i></p>
+<p>The <b>-v</b> option (verbose mode) is also useful. For more information about the command-line syntax, see <a href="windbg_command_line_options.htm"><b>WinDbg Command-Line Options</b></a>.</p>
+<h3><a id="Debugger_Command_Window"></a><a id="debugger_command_window"></a><a id="DEBUGGER_COMMAND_WINDOW"></a>Debugger Command Window</h3>
+<p>If WinDbg is already in a kernel-mode debugging session, you can open a dump file by using the <a href="_opendump__open_dump_file_.htm"><b>.opendump (Open Dump File)</b></a> command, followed by <a href="g__go_.htm"><b>g (Go)</b></a>.
+
+
+    
+    
+    </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Opening a Dump File Using WinDbg%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,72 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Analyzing a Kernel-Mode Dump File with KD"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Analyzing a Kernel-Mode Dump File with KD</title>
+
+<meta name="MS-HAID" content="r10_dump_files_ab12dbc9-be98-4005-83dc-e8103d58344a.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.analyzing_a_kernel_mode_dump_file_with_kd"></a>Analyzing a Kernel-Mode Dump File with KD</h1>
+</div>
+<h2><a id="ddk_analyzing_a_kernel_mode_dump_file_with_kd_dbg"></a><a id="DDK_ANALYZING_A_KERNEL_MODE_DUMP_FILE_WITH_KD_DBG"></a></h2>
+<p></p>
+<p>Kernel-mode memory dump files can be analyzed by KD. The processor or Windows version that the dump file was created on does not need to match the platform on which KD is being run.</p>
+<h3><a id="starting_kd"></a><a id="STARTING_KD"></a>Starting KD</h3>
+<p>To analyze a dump file, start KD with the <b>-z</b> command-line option:</p>
+<p><b>kd -y </b><i>SymbolPath</i><b> -i </b><i>ImagePath</i><b> -z </b><i>DumpFileName</i></p>
+<p>The <b>-v</b> option (verbose mode) is also useful. For a full list of options, see <a href="kd_command_line_options.htm"><b>KD Command-Line Options</b></a>.</p>
+<p>You can also open a dump file after the debugger is running by using the <a href="_opendump__open_dump_file_.htm"><b>.opendump (Open Dump File)</b></a> command, followed with <a href="g__go_.htm"><b>g (Go)</b></a>.</p>
+<p>It is possible to debug multiple dump files at the same time. This can be done by including multiple <b>-z</b> switches on the command line (each followed by a different file name), or by using <a href="_opendump__open_dump_file_.htm"><b>.opendump</b></a> to add additional dump files as debugger targets. For information about how to control a multiple-target session, see <a href="debugging_multiple_targets.htm">Debugging Multiple Targets</a>.</p>
+<p>Dump files generally end with the extension .dmp or .mdmp. You can use network shares or Universal Naming Convention (UNC) file names for the memory dump file.</p>
+<p>It is also common for dump files to be packed into a CAB file. If you specify the file name (including the .cab extension) after the <b>-z</b> option or as the argument to an <a href="_opendump__open_dump_file_.htm"><b>.opendump</b></a> command, the debugger can read the dump files directly out of the CAB. However, if there are multiple dump files stored in a single CAB, the debugger will only be able to read one of them. The debugger will not read any additional files from the CAB, even if they were symbol files or other files associated with the dump file.</p>
+<h3><a id="analyzing_the_dump_file"></a><a id="ANALYZING_THE_DUMP_FILE"></a>Analyzing the Dump File</h3>
+<p>If you are analyzing a Kernel Memory Dump or a Small Memory Dump, you may need to set the executable image path to point to any executable files which may have been loaded in memory at the time of the crash.</p>
+<p>Analysis of a dump file is similar to analysis of a live debugging session. See the <a href="debugger_commands.htm">Debugger Commands</a> reference section for details on which commands are available for debugging dump files in kernel mode.</p>
+<p>In most cases, you should begin by using <a href="_analyze.htm"><b>!analyze</b></a>. This extension command performs automatic analysis of the dump file and can often result in a lot of useful information.</p>
+<p>The <a href="_bugcheck__display_bug_check_data_.htm"><b>.bugcheck (Display Bug Check Data)</b></a> shows the bug check code and its parameters.   Look up this bug check in the <a href="bug_check_code_reference2.htm">Bug Check Code Reference</a>  for information about the specific error.</p>
+<p>The following debugger extensions are especially useful for analyzing a kernel-mode crash dump:</p>
+<dl>
+<dd>
+<p><a href="_drivers.htm"><b>!drivers</b></a></p>
+</dd>
+<dd>
+<p><a href="_locks___kdext__locks_.htm"><b>!kdext*.locks</b></a></p>
+</dd>
+<dd>
+<p><a href="_memusage.htm"><b>!memusage</b></a></p>
+</dd>
+<dd>
+<p><a href="_vm.htm"><b>!vm</b></a></p>
+</dd>
+<dd>
+<p><a href="_errlog.htm"><b>!errlog</b></a></p>
+</dd>
+<dd>
+<p><a href="_process.htm"><b>!process 0 0</b></a></p>
+</dd>
+<dd>
+<p><a href="_process.htm"><b>!process 0 7</b></a></p>
+</dd>
+</dl>
+<p></p>
+<p>For techniques that can be used to read specific kinds of information from a dump file, see <a href="extracting_information_from_a_dump_file.htm">Extracting Information from a Dump File</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Analyzing a Kernel-Mode Dump File with KD%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

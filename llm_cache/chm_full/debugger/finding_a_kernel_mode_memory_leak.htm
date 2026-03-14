@@ -1,0 +1,44 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Finding a Kernel-Mode Memory Leak"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Finding a Kernel-Mode Memory Leak</title>
+
+<meta name="MS-HAID" content="t13_advanced_c71b8c4d-746f-427e-b2e9-ecb8e8f1081d.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.finding_a_kernel_mode_memory_leak"></a>Finding a Kernel-Mode Memory Leak</h1>
+</div>
+<p>Use the following techniques to determine the cause of a kernel-mode memory leak:</p>
+<dl>
+<dd>
+<p><a href="using_poolmon_to_find_a_kernel_mode_memory_leak.htm">Using PoolMon to Find a Kernel-Mode Memory Leak</a></p>
+</dd>
+<dd>
+<p><a href="using_the_kernel_debugger_to_find_a_kernel_mode_memory_leak.htm">Using the Kernel Debugger to Find a Kernel-Mode Memory Leak</a></p>
+</dd>
+<dd>
+<p><a href="using_driver_verifier_to_find_a_kernel_mode_memory_leak.htm">Using Driver Verifier to Find a Kernel-Mode Memory Leak</a></p>
+</dd>
+</dl>
+<p>If you do not know which kernel-mode driver or component is responsible for the leak, you should use the PoolMon technique first. This technique reveals the pool tag associated with the memory leak; the driver or component that uses this pool tag is responsible for the leak.</p>
+<p>If you have already identified the responsible driver or component, use the second and third techniques in the preceding list to determine the cause of the leak more specifically. </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Finding a Kernel-Mode Memory Leak%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

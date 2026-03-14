@@ -1,0 +1,87 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !wdfkd.wdfumdevstacks extension displays information about all UMDF device stacks in the implicit process."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!wdfkd.wdfumdevstacks</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._wdfkd_wdfumdevstacks"></a>!wdfkd.wdfumdevstacks</h1>
+</div>
+<p>The <b>!wdfkd.wdfumdevstacks</b> extension displays information about all UMDF device stacks in the <a href="controlling_threads_and_processes.htm">implicit process</a>.</p>
+<pre class="syntax"><b>!wdfkd.wdfumdevstacks </b>[<i>Flags</i>] </pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Flags______"></a><a id="_______flags______"></a><a id="_______FLAGS______"></a>       <i>Flags</i>      </dt>
+<dd>
+<p>Optional. Specifies the type of information to be displayed. <i>Flags</i> can be any combination of the following bits. The default value is 0x01.</p>
+<p></p>
+<dl>
+<dt><a id="Bit_0__0x01_"></a><a id="bit_0__0x01_"></a><a id="BIT_0__0X01_"></a>Bit 0 (0x01)</dt>
+<dd>
+<p>Displays detailed information about each device stack.</p>
+</dd>
+<dt><a id="Bit_7__0x80_"></a><a id="bit_7__0x80_"></a><a id="BIT_7__0X80_"></a>Bit 7 (0x80)</dt>
+<dd>
+<p>Displays information about the internal framework.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h2><a id="DLL"></a><a id="dll"></a>DLL</h2>
+<p>
+      Wdfkd.dll</p>
+<h2><a id="Frameworks"></a><a id="frameworks"></a><a id="FRAMEWORKS"></a>Frameworks</h2>
+<p>
+       UMDF 2</p>
+<h2><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h2>
+<p>For more information, see <a href="kernel_mode_driver_framework_debugging.htm">Kernel-Mode Driver Framework Debugging</a>.</p>
+<h2>Remarks</h2>
+<p>You can use this command in a kernel-mode debugging session or in a user-mode debugging session that is attached to the UMDF host process (wudfhost.exe).</p>
+<p>This command displays the same information as the user-mode command <a href="_wudfext_umdevstacks.htm"><b>!wudfext.umdevstacks</b></a>.</p>
+<p>Before you use this command, use <a href="_process.htm"><b>!process</b></a> to get a list of all UMDF host processes.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !process 0 0 wudfhost.exe
+PROCESS ffffe00000c32900
+    SessionId: 0  Cid: 079c    Peb: 7ff782537000  ParentCid: 037c
+    DirBase: 607af000  ObjectTable: ffffc00009807940  HandleCount: &lt;Data Not Accessible&gt;
+    Image: WUDFHost.exe</code></pre>
+<p>The preceding output shows that there is one UMDF host process; that is, there is one instance of wudfhost.exe.</p>
+<p>Next use <a href="_process__set_process_context_.htm"><b>.process</b></a> to set the implicit process to wudfhost.exe.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; .process /P ffffe00000c32900
+Implicit process is now ffffe000`00c32900
+.cache forcedecodeptes done</code></pre>
+<p>Now use <b>!wdfkd.wdfumdevstacks</b> to display the UMDF device stacks in the implicit process (wudfhost.exe).</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !wdfkd.wdfumdevstacks
+Number of device stacks: 1
+  Device Stack: 0x000000a5a3ab5f70     Pdo Name: \Device\00000052
+    Active: Yes
+    Number of UM devices: 1
+    Device 0
+      Driver Config Registry Path: MyUmdf2Driver
+      UMDriver Image Path: C:\WINDOWS\System32\drivers\UMDF\MyUmdf2Driver.dll
+      FxDriver: 0xa5a3acaaa0
+      FxDevice: 0xa5a3ac4fc0
+      Open UM files (use !wdfumfile &lt;addr&gt; for details): &lt;None&gt;
+      Device XFerMode: Deferred RW: Buffered CTL: Buffered
+      DevStack XFerMode: Deferred RW: Buffered CTL: Buffered</code></pre>
+<p>The preceding output shows that there is one UMDF device stack in the implicit process. You can also see that the device stack has one device object (Number of UM devices: 1).</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!wdfkd.wdfumdevstacks%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

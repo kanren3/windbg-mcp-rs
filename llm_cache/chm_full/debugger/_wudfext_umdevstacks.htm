@@ -1,0 +1,105 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !wudfext.umdevstacks extension displays information about all device stacks in the current host process."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!wudfext.umdevstacks</title>
+
+<meta name="MS-HAID" content="r33~e_exts_umdf_a5326621-e8ae-4c14-91c3-4cb79fc4f618.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._wudfext_umdevstacks"></a>!wudfext.umdevstacks</h1>
+</div>
+<p>The <b>!wudfext.umdevstacks</b> extension displays information about all device stacks in the current host process.</p>
+<pre class="syntax"><b>!wudfext.umdevstacks [</b><i>Flags</i><b>] </b>
+</pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Flags______"></a><a id="_______flags______"></a><a id="_______FLAGS______"></a>       <i>Flags</i>      </dt>
+<dd>
+<p>Optional. Specifies the type of information to be displayed. <i>Flags</i> can be any combination of the following bits. The default value is 0x01.</p>
+<p></p>
+<dl>
+<dt><a id="Bit_0__0x01_"></a><a id="bit_0__0x01_"></a><a id="BIT_0__0X01_"></a>Bit 0 (0x01)</dt>
+<dd>
+<p>Displays detailed information about each device stack.</p>
+</dd>
+<dt><a id="Bit_8__0x80_"></a><a id="bit_8__0x80_"></a><a id="BIT_8__0X80_"></a>Bit 8 (0x80)</dt>
+<dd>
+<p>Displays information about the internal framework. </p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000</b></p>
+</td>
+<td>
+<p>Unavailable </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later</b></p>
+</td>
+<td>
+<p>
+          Wudfext.dll</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information, see <a href="user_mode_driver_framework_debugging.htm">User-Mode Driver Framework Debugging</a>.</p>
+<h2>Remarks</h2>
+<p>The <b>!wudfext.umdevstacks</b> extension displays the framework interface objects that are associated with each device stack. For more information about using the output from <b>!wudfext.umdevstacks</b>, see <a href="_wudfext_umdevstack.htm"><b>!wudfext.umdevstack</b></a>.</p>
+<p>The <b>!wudfext.umdevstacks</b> output includes two fields entitled "Object Tracking" and "Refcount Tracking".  These indicate whether the object tracking option (<b>TrackObjects</b>) and the reference count tracking option (<b>TrackRefCounts</b>) have been enabled in WDF Verifier, respectively. If the object tracking option has been enabled, the display includes the object tracker address; this address can be passed to <a href="_wudfext_wudfdumpobjects.htm"><b>!wudfext.wudfdumpobjects</b></a> to display tracking information. </p>
+<p>Here is an example of the <b>!wudfext.umdevstacks</b> display:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0: kd&gt; !umdevstacks 
+Number of device stacks: 1
+  Device Stack: 0x038c6f08    Pdo Name: \Device\USBPDO-11
+    Number of UM devices: 1
+    Device 0
+      Driver Config Registry Path: WUDFOsrUsbFx2
+      UMDriver Image Path: D:\Windows\system32\DRIVERS\UMDF\WUDFOsrUsbFx2.dll
+      Fx Driver: IWDFDriver 0x3076ff0
+      Fx Device: IWDFDevice 0x3082e70
+        IDriverEntry: WUDFOsrUsbFx2!CMyDriver 0x0306eff8
+      Open UM files (use !umfile &lt;addr&gt; for details): 
+        0x04a8ef84
+      Device XFerMode: CopyImmediately RW: Buffered CTL: Buffered
+      Object Tracker Address: 0x03074fd8
+        Object   Tracking ON
+        Refcount Tracking OFF
+    DevStack XFerMode: CopyImmediately RW: Buffered CTL: Buffered</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!wudfext.umdevstacks%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

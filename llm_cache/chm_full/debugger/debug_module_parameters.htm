@@ -1,0 +1,225 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The DEBUG_MODULE_PARAMETERS structure contains most of the parameters for describing a module."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>DEBUG_MODULE_PARAMETERS structure</title>
+
+<meta name="MS-HAID" content="Structures_6e7366d2-9f49-4b7e-a277-d788808e4c40.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.debug_module_parameters"></a>DEBUG_MODULE_PARAMETERS structure</h1>
+</div>
+<p>The DEBUG_MODULE_PARAMETERS structure contains most of the parameters for describing a module.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>typedef struct _DEBUG_MODULE_PARAMETERS {
+  ULONG64 Base;
+  ULONG   Size;
+  ULONG   TimeDateStamp;
+  ULONG   Checksum;
+  ULONG   Flags;
+  ULONG   SymbolType;
+  ULONG   ImageNameSize;
+  ULONG   ModuleNameSize;
+  ULONG   LoadedImageNameSize;
+  ULONG   SymbolFileNameSize;
+  ULONG   MappedImageNameSize;
+  ULONG64 Reserved[2];
+} DEBUG_MODULE_PARAMETERS, *PDEBUG_MODULE_PARAMETERS;</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Members</h2>
+<dl>
+<dt><b>Base</b></dt>
+<dd>
+<p>The location in the target's virtual address space of the module's base.  If the value of <b>Base</b> is DEBUG_INVALID_OFFSET, the structure is invalid.</p>
+</dd>
+<dt><b>Size</b></dt>
+<dd>
+<p>The size, in bytes, of the memory range that is occupied by the module.</p>
+</dd>
+<dt><b>TimeDateStamp</b></dt>
+<dd>
+<p>The date and time stamp of the module's executable file.  This is the number of seconds elapsed since midnight (00:00:00), January 1, 1970 Coordinated Universal Time (UTC) as stored in the image file header.</p>
+</dd>
+<dt><b>Checksum</b></dt>
+<dd>
+<p>The checksum of the image.  This value can be zero.</p>
+</dd>
+<dt><b>Flags</b></dt>
+<dd>
+<p>A bit-set that contains the module's flags.  The bit-flags that can be present are as follows. </p>
+<table>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>DEBUG_MODULE_UNLOADED</p>
+</td>
+<td>
+<p>The module was unloaded.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_MODULE_USER_MODE</p>
+</td>
+<td>
+<p>The module  is a user-mode module.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_MODULE_SYM_BAD_CHECKSUM</p>
+</td>
+<td>
+<p>The checksum in the symbol file did not match the checksum for the module image.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+</dd>
+<dt><b>SymbolType</b></dt>
+<dd>
+<p>The type of symbols that are loaded for the module.  This member can have one of the following values.</p>
+<table>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>DEBUG_SYMTYPE_NONE</p>
+</td>
+<td>
+<p>No symbols are loaded.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_SYMTYPE_COFF</p>
+</td>
+<td>
+<p>The symbols are in common object file format (COFF).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_SYMTYPE_CODEVIEW</p>
+</td>
+<td>
+<p>The symbols are in Microsoft CodeView format. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_SYMTYPE_PDB</p>
+</td>
+<td>
+<p>Symbols in PDB format have been loaded through the pre-Debug Interface Access (DIA) interface.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_SYMTYPE_EXPORT</p>
+</td>
+<td>
+<p>No actual symbol files were found; symbol information was extracted from the binary file's export table.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_SYMTYPE_DEFERRED</p>
+</td>
+<td>
+<p>The module was loaded, but the engine has deferred its loading of the symbols.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_SYMTYPE_SYM</p>
+</td>
+<td>
+<p>Symbols in SYM format have been loaded.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_SYMTYPE_DIA</p>
+</td>
+<td>
+<p>Symbols in PDB format have been loaded through the DIA interface. </p>
+</td>
+</tr>
+</table>
+<p> </p>
+</dd>
+<dt><b>ImageNameSize</b></dt>
+<dd>
+<p>The size of the file name for the module. The size is measured in characters, including the terminator.</p>
+</dd>
+<dt><b>ModuleNameSize</b></dt>
+<dd>
+<p>The size of the module name of the module. The size is measured in characters, including the terminator.</p>
+</dd>
+<dt><b>LoadedImageNameSize</b></dt>
+<dd>
+<p>The size of the loaded image name for the module. The size is measured in characters, including the terminator.</p>
+</dd>
+<dt><b>SymbolFileNameSize</b></dt>
+<dd>
+<p>The size of the symbol file name for the module. The size is measured in characters, including the terminator.</p>
+</dd>
+<dt><b>MappedImageNameSize</b></dt>
+<dd>
+<p>The size of the mapped image name of the module. The size is measured in characters, including the terminator.</p>
+</dd>
+<dt><b>Reserved</b></dt>
+<dd>
+<p>Reserved for system use.</p>
+</dd>
+</dl>
+<h2>Remarks</h2>
+<p>This structure is returned by <a href="getmoduleparameters.htm"><b>GetModuleParameters</b></a>.</p>
+<p>To locate the different names for the module, use <a href="getmodulenamestring.htm"><b>GetModuleNameString</b></a>.</p>
+<p>For more information about modules, see <a href="modules.htm">Modules</a>.  For details about the different names for the module, see <a href="getmodulenamestring.htm"><b>GetModuleNameString</b></a>.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>DbgEng.h (include DbgEng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20DEBUG_MODULE_PARAMETERS structure%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,51 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Setting Up Local Kernel Debugging of a Single Computer Manually"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Setting Up Local Kernel Debugging of a Single Computer Manually</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.setting_up_local_kernel_debugging_of_a_single_computer_manually"></a>Setting Up Local Kernel Debugging of a Single Computer Manually</h1>
+</div>
+<p>Debugging Tools for Windows supports <i>local kernel debugging</i>. This is kernel-mode debugging on a single computer. In other words, the debugger runs on the same computer that is being debugged. With local debugging you can examine state, but not break into kernel mode processes that would cause the OS to stop running. </p>
+<p>The <i>local</i> bcdedit option is available in Windows 8.0 and Windows Server 2012 and later.</p>
+<p></p>
+<h2><a id="starting_local_kernel_debugging"></a><a id="STARTING_LOCAL_KERNEL_DEBUGGING"></a>Setting Up Local Kernel-Mode Debugging</h2>
+<ol>
+<li>Open a Command Prompt window as Administrator. Enter <b>bcdedit /debug on</b></li>
+<li>If the computer is not already configured as the target of a debug transport, enter <b>bcdedit /dbgsettings local</b></li>
+<li>Reboot the computer.</li>
+</ol>
+<h2><a id="Starting_the_Debugging_Session"></a><a id="starting_the_debugging_session"></a><a id="STARTING_THE_DEBUGGING_SESSION"></a>Starting the Debugging Session</h2>
+<h3><a id="Using_WinDbg"></a><a id="using_windbg"></a><a id="USING_WINDBG"></a>Using WinDbg</h3>
+<p>Open WinDbg as Administrator. On the <b>File</b> menu, choose <b>Kernel Debug</b>. In the Kernel Debugging dialog box, open the <b>Local</b> tab. Click <b>OK</b>.</p>
+<p>You can also start a session with WinDbg by opening a Command Prompt window as Administrator and entering the following command:</p>
+<p><b>windbg -kl</b></p>
+<h3><a id="Using_KD"></a><a id="using_kd"></a><a id="USING_KD"></a>Using KD</h3>
+<p>Open a Command Prompt window as Administrator, and enter the following command:</p>
+<p><b>kd -kl</b></p>
+<h2><a id="related_topics"></a>Related topics</h2>
+<dl>
+<dt><a href="performing_local_kernel_debugging.htm">Local Kernel-Mode Debugging</a></dt>
+<dt><a href="setting_up_kernel-mode_debugging_in_windbg__cdb__or_ntsd.htm">Setting Up Kernel-Mode Debugging Manually</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Setting Up Local Kernel Debugging of a Single Computer Manually%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

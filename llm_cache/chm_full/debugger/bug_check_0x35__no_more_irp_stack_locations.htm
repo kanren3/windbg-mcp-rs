@@ -1,0 +1,78 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The NO_MORE_IRP_STACK_LOCATIONS bug check has a value of 0x00000035. This bug check occurs when the IoCallDriver packet has no more stack locations remaining."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0x35: NO_MORE_IRP_STACK_LOCATIONS</title>
+
+<meta name="MS-HAID" content="t04_bugs_00_cf4b062c-d51b-4e4c-8b72-cc7add0e7257.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0x35__no_more_irp_stack_locations"></a>Bug Check 0x35: NO_MORE_IRP_STACK_LOCATIONS</h1>
+</div>
+<p>The NO_MORE_IRP_STACK_LOCATIONS bug check has a value of 0x00000035. This bug check occurs when the <b>IoCallDriver</b> packet has no more stack locations remaining.</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2> NO_MORE_IRP_STACK_LOCATIONS Parameters</h2>
+<p>The following parameters are displayed on the blue screen.</p>
+<table>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>1</p>
+</td>
+<td>
+<p>Address of the IRP</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>2</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>3</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>4</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Cause</h2>
+<p>A higher-level driver has attempted to call a lower-level driver through the <b>IoCallDriver</b> interface, but there are no more stack locations in the packet. This will prevent the lower-level driver from accessing its parameters.</p>
+<p>This is a disastrous situation, since the higher level driver is proceeding as if it has filled in the parameters for the lower level driver (as required). But since there is no stack location for the latter driver, the former has actually written off the end of the packet. This means that some other memory has been corrupted as well.</p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,44 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Loading a Theme"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Loading a Theme</title>
+
+<meta name="MS-HAID" content="r06_use_gui_ccdc8ef7-6bcc-4c38-92fa-e69c424ede8f.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.loading_a_theme"></a>Loading a Theme</h1>
+</div>
+<p>Before loading a theme, we recommend that you clear all of your workspace data.  This can be done in three ways:</p>
+<dl>
+<dd>
+<p>By using the WinDbg user-interface.   Under the <b>File</b> menu, select <b>Clear Workspace...  </b>Select <b>Clear All</b> in the pop-up window and then click <b>OK</b>.</p>
+</dd>
+<dd>
+<p>By deleting the registry key under <b>HKCU\Software\Microsoft\Windbg\Workspaces</b>.</p>
+</dd>
+<dd>
+<p>By running the command <b>reg delete HKCU\Software\Microsoft\Windbg</b>.</p>
+</dd>
+</dl>
+<p>After all of your workspace data has been cleared, run one of the themes.  These are stored as .reg files in the Themes directory of your Debugging Tools for Windows installation.  Running a theme imports its settings into the registry, redefining your base workspace.</p>
+<p>After you have loaded a theme, you may alter it to more closely suit your preferences.  For more details on some common options, see <a href="customizing_a_theme.htm">Customizing a Theme</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Loading a Theme%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

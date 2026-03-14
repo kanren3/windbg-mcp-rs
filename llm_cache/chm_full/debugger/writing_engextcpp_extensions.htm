@@ -1,0 +1,37 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Writing EngExtCpp Extensions"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Writing EngExtCpp Extensions</title>
+
+<meta name="MS-HAID" content="EngExtCpp_DG_76c4f780-fe4d-4906-a0da-2d74b8ec9886.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.writing_engextcpp_extensions"></a>Writing EngExtCpp Extensions</h1>
+</div>
+<h2><a id="ddk_writing_dbgeng_extension_code_dbx"></a><a id="DDK_WRITING_DBGENG_EXTENSION_CODE_DBX"></a></h2>
+<p>The EngExtCpp extension library can include any standard C++ code. It can also include the C++ interfaces that appear in the engextcpp.h and dbgeng.h header files, in addition to the C functions that appear in the wdbgexts.h header file.  Both dbgeng.h and wdbgexts.h are included from engextcpp.h.</p>
+<p>For a full list of interfaces in dbgeng.h that can be used in an extension command, see <a href="debugger_engine_reference.htm">Debugger Engine Reference</a>.</p>
+<p>For a full list of functions in wdbgexts.h that can be used in an extension command, see <a href="wdbgexts_functions.htm">WdbgExts Functions</a>. A number of these functions appear in 32-bit versions and 64-bit versions. Typically, the 64-bit versions end in "64" and the 32-bit versions have no numerical ending -- for example, <b>ReadIoSpace64</b> and <b>ReadIoSpace</b>. When calling a wdbgexts.h function from a DbgEng extension, you should always use the function name ending in "64". This is because the <a href="introduction.htm#debugger_engine">debugger engine</a> always uses 64-bit pointers internally, regardless of the target platform.  When including wdbgexts.h, engextcpp.h selects the 64-bit version of the API.  The <b>ExtensionApis</b> global variable used by the WDbgExts API is automatically initialized on entry to a EngExtCpp method and cleared on exit.</p>
+<p>When an EngExtCpp extension is used with remote DbgEng interfaces, the WDbgExts interfaces will not be available and the <b>ExtensionApis</b> structure can be zeroed.  If an EngExtCpp extension is expected to function in such an environment, it should avoid using the WDbgExts API.</p>
+<div class="alert"><b>Note</b>    You must not attempt to call any DbgHelp or ImageHlp routines from any debugger extension. Calling these routines is not supported and may cause a variety of problems.</div>
+<div> </div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Writing EngExtCpp Extensions%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,58 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Using Input and Output"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Using Input and Output</title>
+
+<meta name="MS-HAID" content="Engine_DG_ce5dd9cd-7068-4ca7-95d9-f4985a9812c2.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.using_input_and_output"></a>Using Input and Output</h1>
+</div>
+<h2><a id="ddk_input_and_output_dbx"></a><a id="DDK_INPUT_AND_OUTPUT_DBX"></a></h2>
+<p>For an overview of the input and output streams in the debugger engine, see <a href="input_and_output.htm">Input and Output</a>.</p>
+<h3><a id="input"></a><a id="INPUT"></a>Input</h3>
+<p>The engine will ask for input from all its clients if the <a href="input.htm"><b>Input</b></a> method is called on a client.  The input is returned to the caller of <b>Input</b>.</p>
+<h3><a id="input_callbacks"></a><a id="INPUT_CALLBACKS"></a>Input Callbacks</h3>
+<p>When the engine asks for input from a client, it uses the <a href="idebuginputcallbacks.htm">IDebugInputCallbacks</a> object registered with that client.  An <b>IDebugInputCallbacks</b> object may be registered with a client using <a href="setinputcallbacks.htm"><i>SetInputCallbacks</i></a>.  Each client can have at most one <b>IDebugInputCallbacks</b> object registered with it.</p>
+<p>The request for input begins with the engine calling the <a href="idebuginputcallbacks_startinput.htm"><b>IDebugInputCallbacks::StartInput</b></a> method.  This informs the <b>IDebugInputCallbacks</b> object that the engine is now waiting for input.</p>
+<p>If the <b>IDebugInputCallbacks</b> object has some input for the engine, it can call the <a href="returninput.htm"><b>ReturnInput</b></a> method of <u>any</u> client.  Once the <b>ReturnInput</b> method has been called, the engine will not take any more input.  Subsequent callers of this method will be informed that the input was not received.</p>
+<p>The engine will then call <a href="idebuginputcallbacks_endinput.htm"><b>IDebugInputCallbacks::EndInput</b></a> to indicate that it has stopped waiting for input.</p>
+<p>Finally, the engine will echo this input to the registered <b>IDebugOutputCallbacks</b> object of every client (except the one used to provide the input) by using <a href="idebugoutputcallbacks_output.htm"><b>IDebugOutputCallbacks::Output</b></a> with the bit-mask set to DEBUG_OUTPUT_PROMPT.</p>
+<h3><a id="output"></a><a id="OUTPUT"></a>Output</h3>
+<p>Output may be sent to the engine using several client methods -- for example <a href="output.htm"><i>Output</i></a> and <a href="outputvalist.htm"><i>OutputVaList</i></a>.  Upon receiving output, the engine sends it to some clients.</p>
+<p>Clients use an <i>output mask</i> to indicate which types of output they are interested in.  Whenever output is produced by the engine, it is accompanied by a mask specifying its output type.  If the type of output matches the output mask of the client, the client will receive the output.  The output mask may be set by calling <a href="setoutputmask.htm"><b>SetOutputMask</b></a> and queried using <a href="getoutputmask.htm"><b>GetOutputMask</b></a>.  See <a href="debug_output_xxx.htm"><b>DEBUG_OUTPUT_XXX</b></a> for details of the output mask values.</p>
+<p>The list of clients that the engine will send output to is controlled by the <i>output control</i>.  Typically, the output control is set to send output to all clients; however, it can be temporarily changed using <a href="controlledoutput.htm"><i>ControlledOutput</i></a> and <a href="controlledoutputvalist.htm"><i>ControlledOutputVaList</i></a>.  See <a href="debug_outctl_xxx.htm"><b>DEBUG_OUTCTL_XXX</b></a> for details about output control values.</p>
+<p>Output may be buffered by the engine.  If multiple pieces of output are passed to the engine, it may collect them and send them to the clients in one large piece.  To flush this buffer, use <a href="flushcallbacks.htm"><b>FlushCallbacks</b></a>.  </p>
+<p>Each client object has an <i>output width</i>, which is the width of the output display for the client object.  While this width is only used as a hint, some commands and extension functions format their output based on this width.  The width is returned by the GetOutputWidth method and can be set using the SetOutputWidth method.</p>
+<h3><a id="output_callbacks"></a><a id="OUTPUT_CALLBACKS"></a>Output Callbacks</h3>
+<p>When the engine sends output to a client, it uses the <a href="idebugoutputcallbacks.htm">IDebugOutputCallbacks</a> object registered with the client.  An <b>IDebugOutputCallbacks</b> object may be registered with a client using <a href="setoutputcallbacks.htm"><i>SetOutputCallbacks</i></a>.  Each client can have at most one <b>IDebugInputCallbacks</b> object registered with it.</p>
+<p>To send the output, the engine calls the <a href="idebugoutputcallbacks_output.htm"><b>IDebugOutputCallbacks::Output</b></a> method.</p>
+<h3><a id="output_line_prefix"></a><a id="OUTPUT_LINE_PREFIX"></a>Output Line Prefix</h3>
+<p>Each client object has an <i>output line prefix</i> which is prepended to every line of output sent to the output callback associated with the client object.  This can be used for indentation or to place identifying marks on each line of output.</p>
+<p>The output line prefix is returned by GetOutputLinePrefix and can be set using SetOutputLinePrefix.  To temporarily change the output line prefix and later change it back again, use PushOutputLinePrefix and PopOutputLinePrefix.</p>
+<h3><a id="log_files"></a><a id="LOG_FILES"></a>Log Files</h3>
+<p>The debugger engine supports opening a log file to record a debugging session.  At most, one log file can be open at a time.  Output sent to the output callbacks is also sent to this log file (unless it is flagged to not be logged).</p>
+<p>To open a log file, use <a href="openlogfile2.htm"><b>OpenLogFile2</b></a> (or <a href="openlogfile.htm"><b>OpenLogFile</b></a>).  The method <a href="getlogfile2.htm"><b>GetLogFile2</b></a> (or <a href="getlogfile.htm"><b>GetLogFile</b></a>) returns the currently open log file.  To close the log file, use <a href="closelogfile.htm"><b>CloseLogFile</b></a>.</p>
+<p>The method <a href="setlogmask.htm"><b>SetLogMask</b></a> can be used to filter the output sent to the log file, and <a href="getlogmask.htm"><b>GetLogMask</b></a> will return the current log file filter.</p>
+<h3><a id="prompt"></a><a id="PROMPT"></a>Prompt</h3>
+<p>In an interactive debugging session, a prompt can be used to indicate to the user that the debugger is waiting for user input.  The prompt is sent to the output callbacks using the <a href="outputprompt.htm"><i>OutputPrompt</i></a> and <a href="outputpromptvalist.htm"><i>OutputPromptVaList</i></a> methods.  The contents of the standard prompt are returned by  <a href="getprompttext.htm"><b>GetPromptText</b></a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Using Input and Output%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

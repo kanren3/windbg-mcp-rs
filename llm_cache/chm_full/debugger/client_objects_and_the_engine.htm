@@ -1,0 +1,250 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Client Objects and the Engine"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Client Objects and the Engine</title>
+
+<meta name="MS-HAID" content="EngExtCpp_DG_42d89746-845e-4b92-a7b0-362d1a7e57bb.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.client_objects_and_the_engine"></a>Client Objects and the Engine</h1>
+</div>
+<h2><a id="ddk_using_clients_and_the_engine_dbx"></a><a id="DDK_USING_CLIENTS_AND_THE_ENGINE_DBX"></a></h2>
+<p>An EngExtCpp extension interacts with the <a href="introduction.htm#debugger_engine">debugger engine</a> through a client object.  Interface pointers to the client object are available to the extension through members of the <a href="extextension.htm"><b>ExtExtension</b></a> base class.  The following members provide access to the first version of the engine API interfaces.</p>
+<table>
+<tr>
+<th>Engine API interface</th>
+<th>ExtExtension member</th>
+</tr>
+<tr>
+<td>
+<p><a href="idebugadvanced.htm">IDebugAdvanced</a></p>
+</td>
+<td>
+<p><b>m_Advanced</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="idebugclient.htm">IDebugClient</a></p>
+</td>
+<td>
+<p><b>m_Client</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="idebugcontrol.htm">IDebugControl</a></p>
+</td>
+<td>
+<p><b>m_Control</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="idebugdataspaces.htm">IDebugDataSpaces</a></p>
+</td>
+<td>
+<p><b>m_Data</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="idebugregisters.htm">IDebugRegisters</a></p>
+</td>
+<td>
+<p><b>m_Registers</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="idebugsymbols.htm">IDebugSymbols</a></p>
+</td>
+<td>
+<p><b>m_Symbols</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="idebugsystemobjects.htm">IDebugSystemObjects</a></p>
+</td>
+<td>
+<p><b>m_System</b></p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>The following members provide access to later versions of the engine API interfaces.  These interfaces may not be available in all versions of the debugger engine.  If they are not available, any attempt to use them will result in a exception being thrown.</p>
+<table>
+<tr>
+<th>Engine API interface</th>
+<th>ExtExtension member</th>
+</tr>
+<tr>
+<td>
+<p><b>IDebugAdvanced2</b></p>
+</td>
+<td>
+<p><b>m_Advanced2</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>IDebugAdvanced3</b></p>
+</td>
+<td>
+<p><b>m_Advanced3</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>IDebugClient2</b></p>
+</td>
+<td>
+<p><b>m_Client2</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>IDebugClient3</b></p>
+</td>
+<td>
+<p><b>m_Client3</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>IDebugClient4</b></p>
+</td>
+<td>
+<p><b>m_Client4</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>IDebugClient5</b></p>
+</td>
+<td>
+<p><b>m_Client5</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>IDebugControl2</b></p>
+</td>
+<td>
+<p><b>m_Control2</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>IDebugControl3</b></p>
+</td>
+<td>
+<p><b>m_Control3</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>IDebugControl4</b></p>
+</td>
+<td>
+<p><b>m_Control4</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>IDebugData2</b></p>
+</td>
+<td>
+<p><b>m_Data2</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>IDebugData3</b></p>
+</td>
+<td>
+<p><b>m_Data3</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>IDebugData4</b></p>
+</td>
+<td>
+<p><b>m_Data4</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>IDebugRegisters2</b></p>
+</td>
+<td>
+<p><b>m_Registers2</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>IDebugSymbols2</b></p>
+</td>
+<td>
+<p><b>m_Symbols2</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>IDebugSymbols3</b></p>
+</td>
+<td>
+<p><b>m_Symbols3</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>IDebugSystemObjects2</b></p>
+</td>
+<td>
+<p><b>m_System2</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>IDebugSystemObjects3</b></p>
+</td>
+<td>
+<p><b>m_System3</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>IDebugSystemObjects4</b></p>
+</td>
+<td>
+<p><b>m_System4</b></p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>The members in these tables are initialized each time the extension library is used to execute an extension command or format a structure for output.  Once a task is completed, these members are uninitialized.  Consequently, extensions should not cache the values of these members and should use the <b>ExtExtension</b> members directly.</p>
+<p>An extension library can also create its own client objects using the method <a href="createclient.htm"><b>IDebugClient::CreateClient</b></a> or the functions <a href="debugcreate.htm"><b>DebugCreate</b></a> or <a href="debugconnect.htm"><b>DebugConnect</b></a>.</p>
+<p>For an overview of client objects, see <a href="client_objects.htm">Client Objects</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Client Objects and the Engine%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

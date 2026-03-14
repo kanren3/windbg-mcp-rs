@@ -1,0 +1,36 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Matching Symbol Names"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Matching Symbol Names</title>
+
+<meta name="MS-HAID" content="r09_symbols_3dda96c3-bcd7-41c7-9905-a4e8685af077.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.matching_symbol_names"></a>Matching Symbol Names</h1>
+</div>
+<p>In certain situations, the actual name of a symbol is replaced with an alternative form which can then result in symbol matching problems.  This most commonly happens when changing between public and private symbols or when using MS-DOS compatibility 8.3 short names for files.</p>
+<h3><a id="public_vs__private_symbol_matching"></a><a id="PUBLIC_VS__PRIVATE_SYMBOL_MATCHING"></a>Public vs. Private Symbol Matching</h3>
+<p>Switching between public symbols and private symbols can sometimes cause symbol matching problems. Typically, a public symbol and the corresponding private symbol have the same name with different symbol decorations. But in some cases, they may have entirely different names. In such cases, you might have to explicitly reference both names. For example, you could set up two breakpoints: one on the public symbol, and a second one on the private symbol.  For more details, see <a href="public_and_private_symbols.htm">Public and Private Symbols</a>. </p>
+<h3><a id="ms_dos_compatability_8_3_short_name_symbol_matching"></a><a id="MS_DOS_COMPATABILITY_8_3_SHORT_NAME_SYMBOL_MATCHING"></a>MS-DOS Compatibility 8.3 Short Name Symbol Matching</h3>
+<p>Files that have very long names are sometimes given auto-generated MS-DOS compatibility 8.3 short names.  Depending on the tools and options used for creating symbol files and for debugging, the file name stored in the image's debug record can be either the long name or one of these short names.  If the short names is used, this can cause symbol matching problems because the short name assigned is system dependent.</p>
+<p>For example, suppose there are two files, Longfilename1.pdb and Longfilename2.pdb.  If they are put in the same directory one will have an MS-DOS compatibility 8.3 name of Longfi~1.pdb and the other will be Longfi~2.pdb.  If they are not put in the same directory they will both be Longfi~1.pdb.  Thus, if the associated .pdb files are copied carelessly, the short filenames can change, causing symbol matching problems. For more details, see <a href="file_system_references_and_symbol_files.htm">File System References and Symbol Files</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Matching Symbol Names%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

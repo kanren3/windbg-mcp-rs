@@ -1,0 +1,39 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Controlling a Process Server Session"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Controlling a Process Server Session</title>
+
+<meta name="MS-HAID" content="r08_use_remote_38b8a8af-6279-489c-8b76-e52c9eb9bb1c.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.controlling_a_process_server_session"></a>Controlling a Process Server Session</h1>
+</div>
+<h2><a id="ddk_controlling_a_process_server_session_dbg"></a><a id="DDK_CONTROLLING_A_PROCESS_SERVER_SESSION_DBG"></a></h2>
+<p>Once the remote session has been started, the smart client can be used as if it were debugging a target application on a single machine. All commands will behave as they would in this situation, except that paths are relative to the smart client's computer.</p>
+<h3><a id="using_windbg_as_a_smart_client"></a><a id="USING_WINDBG_AS_A_SMART_CLIENT"></a>Using WinDbg as a Smart Client</h3>
+<p>After WinDbg is started as a smart client for a user-mode process server, it will remain attached to the process server permanently. If the debugging session is ended, the <a href="file___attach_to_a_process.htm">File | Attach to a Process</a> menu command or the <a href="_tlist__list_process_ids_.htm"><b>.tlist (List Process IDs)</b></a> command will display all processes running on the computer running the process server. WinDbg can attach to any of these processes.</p>
+<p>The <a href="file___open_executable.htm">File | Open Executable</a> command cannot be used. A new process can only be spawned if it is included on the WinDbg command line.</p>
+<p>In this situation, WinDbg will not be able to debug processes on the computer where it is running, nor will it be able to start a kernel debugging session.</p>
+<h3><a id="ending_the_session"></a><a id="ENDING_THE_SESSION"></a>Ending the Session</h3>
+<p>CDB or WinDbg can exit or end the debugging session in the normal fashion. See <a href="ending_a_debugging_session_in_windbg.htm">Ending a Debugging Session in WinDbg</a> for details. The process server will remain in operation and can be re-used as many times as desired. (It can also be used by for any number of simultaneous debugging sessions.)</p>
+<p>The process server can be terminated from either computer.  To terminate it from the smart client, use the <a href="_endpsrv__end_process_server_.htm"><b>.endpsrv (End Process Server)</b></a> command.  To terminate the process server from the computer it is running on, use Task Manager to end the dbgsrv.exe process.  </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Controlling a Process Server Session%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

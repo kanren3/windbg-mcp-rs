@@ -1,0 +1,146 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="IDebugSymbolGroup2 interface"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IDebugSymbolGroup2 interface</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.idebugsymbolgroup2"></a>IDebugSymbolGroup2 interface</h1>
+</div>
+<h2>Members</h2>
+<p>The <b xmlns:loc="http://microsoft.com/wdcml/l10n">IDebugSymbolGroup2</b> interface inherits from <a href="idebugsymbolgroup.htm"><b>IDebugSymbolGroup</b></a>. <b>IDebugSymbolGroup2</b> also has these types of members:</p>
+<ul>
+<li><a href="#methods">Methods</a></li>
+</ul>
+<h3><a id="methods"></a>Methods</h3>
+<p>The <b>IDebugSymbolGroup2</b> interface has these methods.</p>
+<table id="memberListMethods" class="members">
+<tr>
+<th align="left" width="37%">Method</th>
+<th align="left" width="63%">Description</th>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="addsymbolwide.htm"><b>AddSymbolWide</b></a></td>
+<td align="left" width="63%">
+<p>Adds a symbol to a symbol group.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getsymbolentryinformation.htm"><b>GetSymbolEntryInformation</b></a></td>
+<td align="left" width="63%">
+<p>Returns information about a symbol in a symbol group.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getsymbolnamewide.htm"><b>GetSymbolNameWide</b></a></td>
+<td align="left" width="63%">
+<p>Returns the name of a symbol in a symbol group.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getsymboloffset.htm"><b>GetSymbolOffset</b></a></td>
+<td align="left" width="63%">
+<p>Retrieves the location in the process's virtual address space of a symbol in a symbol group, if the symbol has an absolute address.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getsymbolregister.htm"><b>GetSymbolRegister</b></a></td>
+<td align="left" width="63%">
+<p>Returns the register that contains the value or a pointer to the value of a symbol in a symbol group.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getsymbolsize.htm"><b>GetSymbolSize</b></a></td>
+<td align="left" width="63%">
+<p>Returns the size of a symbol's value.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getsymboltypename.htm"><b>GetSymbolTypeName</b></a></td>
+<td align="left" width="63%">
+<p>Returns the name of the specified symbol's type.
+(ANSI version)</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getsymboltypenamewide.htm"><b>GetSymbolTypeNameWide</b></a></td>
+<td align="left" width="63%">
+<p>Returns the name of the specified symbol's type.
+(Unicode version)</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getsymbolvaluetext.htm"><b>GetSymbolValueText</b></a></td>
+<td align="left" width="63%">
+<p>Returns a string that represents the value of a symbol.
+(ANSI version)</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getsymbolvaluetextwide.htm"><b>GetSymbolValueTextWide</b></a></td>
+<td align="left" width="63%">
+<p>Returns a string that represents the value of a symbol.
+(Unicode version)</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="outputastypewide.htm"><b>OutputAsTypeWide</b></a></td>
+<td align="left" width="63%">
+<p>Changes the type of a symbol in a symbol group. The symbol's entry is updated to represent the new type.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="removesymbolbynamewide.htm"><b>RemoveSymbolByNameWide</b></a></td>
+<td align="left" width="63%">
+<p>Removes the specified symbol from a symbol group.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="writesymbolwide.htm"><b>WriteSymbolWide</b></a></td>
+<td align="left" width="63%">
+<p>Sets the value of the specified symbol.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Dbgeng.h (include Dbgeng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="idebugsymbolgroup.htm"><b>IDebugSymbolGroup</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IDebugSymbolGroup2 interface%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

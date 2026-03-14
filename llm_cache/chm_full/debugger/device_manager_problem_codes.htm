@@ -1,0 +1,71 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Device Manager Problem Codes"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Device Manager Problem Codes</title>
+
+<meta name="MS-HAID" content="t12_drivers_344ae4e6-4038-4352-b783-92eacd28f7a8.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.device_manager_problem_codes"></a>Device Manager Problem Codes</h1>
+</div>
+<p>The Device Manager marks a device with a yellow exclamation mark (!) when the device has a problem. The problem codes are in the form CM_PROB_<i>XXX</i> and are defined in the header file cfg.h. The most important are explained here, together with their mapping to the <a href="device_node_status_flags.htm">Device Node Status Flags</a>.</p>
+<p></p>
+<dl>
+<dt><a id="Code_1__CM_PROB_NOT_CONFIGURED_"></a><a id="code_1__cm_prob_not_configured_"></a><a id="CODE_1__CM_PROB_NOT_CONFIGURED_"></a><b>Code 1 (CM_PROB_NOT_CONFIGURED)</b></dt>
+<dd>
+<p>Indicates that the device is not installed and was not installed previously. (Corresponds to DNF_NOT_CONFIGURED.)</p>
+</dd>
+<dt><a id="Code_10__CM_PROB_FAILED_START_"></a><a id="code_10__cm_prob_failed_start_"></a><a id="CODE_10__CM_PROB_FAILED_START_"></a><b>Code 10 (CM_PROB_FAILED_START)</b></dt>
+<dd>
+<p>Indicates that the device did not start for some reason, but the I/O Manager attempted to start it with a set of resources. (Corresponds to DNF_START_FAILED.)</p>
+</dd>
+<dt><a id="Code_12__CM_PROB_NORMAL_CONFLICT_"></a><a id="code_12__cm_prob_normal_conflict_"></a><a id="CODE_12__CM_PROB_NORMAL_CONFLICT_"></a><b>Code 12 (CM_PROB_NORMAL_CONFLICT)</b></dt>
+<dd>
+<p>Indicates that there were not sufficient resources to start this device. (Corresponds to DNF_INSUFFICIENT_RESOURCES.)</p>
+</dd>
+<dt><a id="Code_14__CM_PROB_NEED_RESTART_"></a><a id="code_14__cm_prob_need_restart_"></a><a id="CODE_14__CM_PROB_NEED_RESTART_"></a><b>Code 14 (CM_PROB_NEED_RESTART)</b></dt>
+<dd>
+<p>Indicates that user mode reconfigured the device and a reboot is required for the changes to take effect. (Corresponds to DNF_NEED_RESTART.)</p>
+</dd>
+<dt><a id="Code_18__CM_PROB_REINSTALL_"></a><a id="code_18__cm_prob_reinstall_"></a><a id="CODE_18__CM_PROB_REINSTALL_"></a><b>Code 18 (CM_PROB_REINSTALL)</b></dt>
+<dd>
+<p>Indicates that the device needs to be installed and was installed previously. (Corresponds to DNF_REINSTALL.)</p>
+</dd>
+<dt><a id="Code_21__CM_PROB_WILL_BE_REMOVED_"></a><a id="code_21__cm_prob_will_be_removed_"></a><a id="CODE_21__CM_PROB_WILL_BE_REMOVED_"></a><b>Code 21 (CM_PROB_WILL_BE_REMOVED)</b></dt>
+<dd>
+<p>Indicates that the user mode uninstalled this device. (Corresponds to DNF_WILL_BE_REMOVED.)</p>
+</dd>
+<dt><a id="Code_22__CM_PROB_DISABLED_"></a><a id="code_22__cm_prob_disabled_"></a><a id="CODE_22__CM_PROB_DISABLED_"></a><b>Code 22 (CM_PROB_DISABLED)</b></dt>
+<dd>
+<p>Indicates that the device is disabled. (Corresponds to DNF_DISABLED.)</p>
+</dd>
+<dt><a id="Code_28__CM_PROB_FAILED_INSTALL_"></a><a id="code_28__cm_prob_failed_install_"></a><a id="CODE_28__CM_PROB_FAILED_INSTALL_"></a><b>Code 28 (CM_PROB_FAILED_INSTALL)</b></dt>
+<dd>
+<p>Indicates that the installation failed and there is no driver selected for this device, although the kernel did not report a problem (and there is no DNF_XXX match for this the problem). This problem can be the result of an on-board system device (ISA timer, ISA RTC, RAM Memory, and so forth) that does not yet have an INF file.</p>
+</dd>
+<dt><a id="Code_31__CM_FAILED_ADD_"></a><a id="code_31__cm_failed_add_"></a><a id="CODE_31__CM_FAILED_ADD_"></a><b>Code 31 (CM_FAILED_ADD)</b></dt>
+<dd>
+<p>Indicates that the device was not added. Reasons for the failure may include: a driver's <b>AddDevice</b> routine returned an error, there is no service listed for the device in the registry, there is more than one service listed, or the controlling driver could not be loaded. (Corresponds to DNF_ADD_FAILED.)</p>
+</dd>
+</dl>
+<p></p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Device Manager Problem Codes%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

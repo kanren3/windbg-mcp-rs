@@ -1,0 +1,97 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="IDebugFAEntryTags"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IDebugFAEntryTags</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.idebugfaentrytags"></a>IDebugFAEntryTags</h1>
+</div>
+<p> When the <a href="_analyze.htm"><b>!analyze</b></a> debugger command runs, the analysis engine can load and run extension analysis plug-ins. The analysis engine creates a <b>DebugFailureAnalysisTags</b> object to organize information about the tags that are used by a particular analysis session.</p>
+<p>An extension analysis plug-in accesses a <b>DebugFailureAnalysisTags</b> object through an <b>IDebugFAEntryTags</b> interface. For more information, see <a href="writing_an_analysis_extension_to_extend__analyze.htm#failure_analysis_entries_tags_and_data_types">Failure Analysis Entries, Tags, and Data Types</a></p>
+<p>The <b>IDebugFAEntryTags</b> interface is not a COM interface; that is, it does not inherit from <b>IUnknown</b></p>
+<p>To get an <b>IDebugFAEntryTags</b> interface, call the <b>GetDebugFATagControl</b> method of the <a href="idebugfailureanalysis2.htm"><b>IDebugFailureAnalysis2</b></a> interface.</p>
+<p>
+<h2><a id="in_this_section"></a>In this section</h2>
+<table>
+<tr>
+<th>Topic</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p><a href="idebugfaentrytags_getproperties.htm"><b>GetProperties method</b></a></p>
+</td>
+<td>
+<p>The <a href="idebugfaentrytags_getproperties.htm"><b>GetProperties</b></a> method gets the name or description (or both) of a tag in a DebugFailureAnalysisTags object.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="idebugfaentrytags_gettagbyname.htm"><b>GetTagByName method</b></a></p>
+</td>
+<td>
+<p>The <a href="idebugfaentrytags_gettagbyname.htm"><b>GetTagByName</b></a> method searches for a tag that has a specified name.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="idebugfaentrytags_gettype.htm"><b>GetType method</b></a></p>
+</td>
+<td>
+<p>The <a href="idebugfaentrytags_gettype.htm"><b>GetType</b></a> method gets the data type that is associated with a tag in a DebugFailureAnalysisTags object.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="idebugfaentrytags_isvalidtagtoset.htm"><b>IsValidTagToSet method</b></a></p>
+</td>
+<td>
+<p>The <a href="idebugfaentrytags_isvalidtagtoset.htm"><b>IsValidTagToSet</b></a> method determines whether it is OK to set the data of a specified tag.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="idebugfaentrytags_setproperties.htm"><b>SetProperties method</b></a></p>
+</td>
+<td>
+<p>The <a href="idebugfaentrytags_setproperties.htm"><b>SetProperties</b></a> method sets the name or description (or both) of a tag in a DebugFailureAnalysisTags object. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="idebugfaentrytags_settype.htm"><b>SetType method</b></a></p>
+</td>
+<td>
+<p>The <a href="idebugfaentrytags_settype.htm"><b>SetType</b></a> method sets the data type that is associated with a tag in a DebugFailureAnalysisTags object.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+</p>
+<h2><a id="related_topics"></a>Related topics</h2>
+<dl>
+<dt><a href="writing_an_analysis_extension_to_extend__analyze.htm">Writing an Analysis Extension Plug-in to Extend !analyze</a></dt>
+<dt><a href="idebugfailureanalysis2.htm"><b>IDebugFailureAnalysis2</b></a></dt>
+<dt><a href="_efn_analyze.htm"><b>_EFN_Analyze</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IDebugFAEntryTags%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

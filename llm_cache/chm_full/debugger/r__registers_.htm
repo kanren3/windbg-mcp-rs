@@ -1,0 +1,465 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The r command displays or modifies registers, floating-point registers, flags, pseudo-registers, and fixed-name aliases."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>r (Registers)</title>
+
+<meta name="MS-HAID" content="r17_cmds_I_68e6eb67-255f-4e2b-8017-183bb0be5f58.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.r__registers_"></a>r (Registers)</h1>
+</div>
+<p>The <b>r</b> command displays or modifies registers, floating-point registers, flags, pseudo-registers, and fixed-name aliases.</p>
+<p>User-Mode</p>
+<pre class="syntax">[<b>~</b>Thread] <b>r</b>[<b>M</b> Mask|<b>F</b>|<b>X</b>|<b>?</b>] [ Register[<b>:</b>[Num]Type] [= [Value]] ] 
+<b>r.</b>
+</pre>
+<p>Kernel-Mode</p>
+<pre class="syntax">[Processor] <b>r</b>[<b>M</b> Mask|<b>F</b>|<b>X</b>|<b>Y</b>|<b>YI</b>|<b>?</b>] [ Register[<b>:</b>[Num]Type] [= [Value]] ] 
+<b>r.</b>
+</pre>
+<h2><a id="ddk_cmd_registers_dbg"></a><a id="DDK_CMD_REGISTERS_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Processor______"></a><a id="_______processor______"></a><a id="_______PROCESSOR______"></a>       <i>Processor</i>      </dt>
+<dd>
+<p>Specifies the processor that the registers are read from. The default value is zero. If you specify <i>Processor</i>, you cannot include the <i>Register</i> parameter--all registers are displayed. For more information about the syntax, see <a href="multiprocessor_syntax.htm">Multiprocessor Syntax</a>. You can specify processors only in kernel mode.</p>
+</dd>
+<dt><a id="_______Thread______"></a><a id="_______thread______"></a><a id="_______THREAD______"></a>       <i>Thread</i>      </dt>
+<dd>
+<p>Specifies the thread that the registers are read from. If you do not specify a thread, the current thread is used. For more information about the syntax, see <a href="thread_syntax.htm">Thread Syntax</a>. You can specify threads only in user mode.</p>
+</dd>
+<dt><a id="_______M_______Mask______"></a><a id="_______m_______mask______"></a><a id="_______M_______MASK______"></a>       <b>M</b>       <i>Mask</i>      </dt>
+<dd>
+<p>Specifies the mask to use when the debugger displays the registers. The "M" must be an uppercase letter. <i>Mask</i> is a sum of bits that indicate something about the register display. The meaning of the bits depends on the processor and the mode (see the tables in the following Remarks section for more information). If you omit <b>M</b>, the default mask is used. You can set or display the default mask by using the <a href="rm__register_mask_.htm"><b>Rm (Register Mask)</b></a> command.</p>
+</dd>
+<dt><a id="_______F______"></a><a id="_______f______"></a>       <b>F</b>      </dt>
+<dd>
+<p>Displays the floating-point registers. The "F" must be an uppercase letter. This option is equivalent to <b>M 0x4</b>.</p>
+</dd>
+<dt><a id="_______X______"></a><a id="_______x______"></a>       <b>X</b>      </dt>
+<dd>
+<p>Displays the SSE XMM registers. This option is equivalent to <b>M 0x40</b>.</p>
+</dd>
+<dt><a id="_______Y______"></a><a id="_______y______"></a>       <b>Y</b>      </dt>
+<dd>
+<p>Displays the AVX YMM registers.  This option is equivalent to <b>M 0x200</b>.</p>
+</dd>
+<dt><a id="_______YI______"></a><a id="_______yi______"></a>       <b>YI</b>      </dt>
+<dd>
+<p>Displays the AVX YMM integer registers.  This option is equivalent to <b>M 0x400</b>.</p>
+</dd>
+<dt><a id="______________"></a>       <b>?</b>      </dt>
+<dd>
+<p>(Pseudo-register assignment only)  Causes the pseudo-register to acquire typed information. Any type is permitted. For more information about the <b>r?</b> syntax, see <a href="debugger_command_program_examples.htm">Debugger Command Program Examples</a>.</p>
+</dd>
+<dt><a id="_______Register______"></a><a id="_______register______"></a><a id="_______REGISTER______"></a>       <i>Register</i>      </dt>
+<dd>
+<p>Specifies the register, flag, pseudo-register, or fixed-name alias to display or modify. You must not precede this parameter with at (<b>@</b>) sign. For more information about the syntax, see <a href="register_syntax.htm">Register Syntax</a>.</p>
+</dd>
+<dt><a id="_______Num______"></a><a id="_______num______"></a><a id="_______NUM______"></a>       <i>Num</i>      </dt>
+<dd>
+<p>Specifies the number of elements to display. If you omit this parameter but you include <i>Type</i>, the full register length is displayed.</p>
+</dd>
+<dt><a id="_______Type______"></a><a id="_______type______"></a><a id="_______TYPE______"></a>       <i>Type</i>      </dt>
+<dd>
+<p>Specifies the data format to display each register element in. You can use <i>Type</i> only with 64-bit and 128-bit vector registers. You can specify multiple types. </p>
+<p> You can specify one or more of the following values.</p>
+<table>
+<tr>
+<th><i>Type</i></th>
+<th>Display format</th>
+</tr>
+<tr>
+<td>
+<p><b>ib</b></p>
+</td>
+<td>
+<p>Signed byte</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>ub</b></p>
+</td>
+<td>
+<p>Unsigned byte</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>iw</b></p>
+</td>
+<td>
+<p>Signed word</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>uw</b></p>
+</td>
+<td>
+<p>Unsigned word</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>id</b></p>
+</td>
+<td>
+<p>Signed DWORD</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>ud</b></p>
+</td>
+<td>
+<p>Unsigned DWORD</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>iq</b></p>
+</td>
+<td>
+<p>Signed quad-word</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>uq</b></p>
+</td>
+<td>
+<p>Unsigned quad-word</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>f</b></p>
+</td>
+<td>
+<p>32-bit floating-point</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>d</b></p>
+</td>
+<td>
+<p>64-bit floating-point</p>
+</td>
+</tr>
+</table>
+<p> </p>
+</dd>
+<dt><a id="_______Value______"></a><a id="_______value______"></a><a id="_______VALUE______"></a>       <i>Value</i>      </dt>
+<dd>
+<p>Specifies the value to assign to the register. For more information about the syntax, see <a href="numerical_expression_syntax.htm">Numerical Expression Syntax</a>. </p>
+</dd>
+<dt><a id="_______.______"></a>       <b>.</b>      </dt>
+<dd>
+<p>Displays the registers used in the current instruction.  If no registers are used, no output is displayed.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about the register context and other context settings, see <a href="changing_contexts.htm">Changing Contexts</a>.</p>
+<h2>Remarks</h2>
+<p>If you do not specify <i>Register</i>, the <b>r</b> command displays all the non-floating-point registers, and the <b>rF</b> command displays all the floating-point registers. You can change this behavior by using the <a href="rm__register_mask_.htm"><b>rm (Register Mask)</b></a> command.</p>
+<p>If you specify <i>Register </i>but you omit the equal sign (=) and the <i>Value</i> parameter, the command displays the current value of the register.</p>
+<p>If you specify <i>Register </i>and an equal sign (=) but you omit <i>Value</i>, the command displays the current value of the register and prompts for a new value.</p>
+<p>If you specify <i>Register</i>, the equal sign (=), and <i>Value</i>, the command changes the register to contain the value. (If <i>quiet mode</i> is active, you can omit the equal sign. You can turn on quiet mode by using the <a href="sq__set_quiet_mode_.htm"><b>sq (Set Quiet Mode)</b></a> command. In kernel mode, you can also turn on quiet mode by using the KDQUIET <a href="kernel_mode_environment_variables.htm">environment variable</a>.)</p>
+<p>You can specify multiple registers, separated by commas.</p>
+<p>In user mode, the <b>r </b>command displays registers that are associated with the current thread. For more information about the threads, see <a href="controlling_processes_and_threads.htm">Controlling Processes and Threads</a>.</p>
+<p>In kernel mode, the <b>r </b>command displays registers that are associated with the current <i>register context</i>. You can set the register context to match a specific thread, context record, or trap frame. Only the most important registers for the specified register context are actually displayed, and you cannot change their values. For more information about register context, see <a href="changing_contexts.htm#register_context">Register Context</a>.</p>
+<p>When you specify a floating-point register by name, the <b>F</b> option is not required. When you specify a single floating-point register, the raw hexadecimal value is displayed in addition to the decimal value.</p>
+<p>The following <i>Mask</i> bits are supported for an x86-based processor or an x64-based processor.</p>
+<table>
+<tr>
+<th>Bit</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>
+<dl>
+<dt>0</dt>
+<dt>1</dt>
+</dl>
+</p>
+</td>
+<td>
+<p>
+<dl>
+<dt>0x1</dt>
+<dt>0x2</dt>
+</dl>
+</p>
+</td>
+<td>
+<p>Displays the basic integer registers. (Setting one or both of these bits has the same effect.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>2</p>
+</td>
+<td>
+<p>0x4</p>
+</td>
+<td>
+<p>Displays the floating-point registers.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>3</p>
+</td>
+<td>
+<p>0x8</p>
+</td>
+<td>
+<p>Displays the segment registers.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>4</p>
+</td>
+<td>
+<p>0x10</p>
+</td>
+<td>
+<p>Displays the MMX registers.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>5</p>
+</td>
+<td>
+<p>0x20</p>
+</td>
+<td>
+<p>Displays the debug registers. In kernel mode, setting this bit also displays the CR4 register.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>6</p>
+</td>
+<td>
+<p>0x40</p>
+</td>
+<td>
+<p>Displays the SSE XMM registers.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>7</p>
+</td>
+<td>
+<p>0x80</p>
+</td>
+<td>
+<p>(Kernel mode only)  Displays the control registers, for example CR0, CR2, CR3 and CR8.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>8</p>
+</td>
+<td>
+<p>0x100</p>
+</td>
+<td>
+<p>(Kernel mode only)  Displays the descriptor and task state registers.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>9</p>
+</td>
+<td>
+<p>0x200</p>
+</td>
+<td>
+<p>Displays the AVX YMM registers in floating point.
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>10</p>
+</td>
+<td>
+<p>0x400</p>
+</td>
+<td>
+<p>Displays the AVX YMM registers in decimal integers.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>11</p>
+</td>
+<td>
+<p>0x800</p>
+</td>
+<td>
+<p>Displays the AVX XMM registers in decimal integers.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>The following <i>Mask</i> bits are supported for an Itanium-based processor.</p>
+<table>
+<tr>
+<th>Bit</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>
+<dl>
+<dt>0</dt>
+<dt>1</dt>
+</dl>
+</p>
+</td>
+<td>
+<p>
+<dl>
+<dt>0x1</dt>
+<dt>0x2</dt>
+</dl>
+</p>
+</td>
+<td>
+<p>Displays the basic integer registers. (Setting one or both of these bits has the same effect.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>2</p>
+</td>
+<td>
+<p>0x4</p>
+</td>
+<td>
+<p>Displays the floating-point registers.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>3</p>
+</td>
+<td>
+<p>0x8</p>
+</td>
+<td>
+<p>Displays the high, floating-point registers (<b>f32</b> to <b>f127</b>).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>4</p>
+</td>
+<td>
+<p>0x10</p>
+</td>
+<td>
+<p>Displays the user debug registers.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>5</p>
+</td>
+<td>
+<p>0x20</p>
+</td>
+<td>
+<p>(Kernel mode only)  Displays the KSPECIAL_REGISTERS.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>The following code examples show <b>r </b>commands for an x86-based processor.</p>
+<p>In kernel mode, the following command shows the registers for processor 2.</p>
+<pre class="syntax" xml:space="preserve"><code>1: kd&gt; 2r </code></pre>
+<p>In user mode, the following command shows the registers for thread 2.</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; ~2 r </code></pre>
+<p>In user mode, the following command displays all of the <b>eax</b> registers that are associated with all threads (in thread index order).</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; ~* r eax</code></pre>
+<p>The following command sets the <b>eax</b> register for the current thread to 0x000000FF.</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; r eax=0x000000FF</code></pre>
+<p>The following command sets the <b>st0</b> register to 1.234e+10 (the <b>F</b> is optional).</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; rF st0=1.234e+10</code></pre>
+<p>The following command displays the zero flag.</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; r zf </code></pre>
+<p>The following command displays the <b>xmm0</b> register as 16 unsigned bytes and then displays the full contents of the <b>xmm1</b> register in double-precision floating-point format.</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; r xmm0:16ub, xmm1:d </code></pre>
+<p>If the current syntax is C++, you must precede registers by an at sign (<b>@</b>). Therefore, you could use the following command to copy the <b>ebx</b> register to the <b>eax</b> register.</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; r eax = @ebx</code></pre>
+<p>The following command displays pseudo-registers in the same way that the <b>r </b>command displays registers.</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; r $teb</code></pre>
+<p>You can also use the <b>r</b> command to create <i>fixed-name aliases</i>. These aliases are not registers or pseudo-registers, even though they are associated with the <b>r</b> command. For more information about these aliases, see <a href="using_aliases.htm">Using Aliases</a>.</p>
+<p>Here is an example of the <b>r.</b> command on an x86-based processor.  The last entry of the call stack precedes the command itself.</p>
+<pre class="syntax" xml:space="preserve"><code>01004af3 8bec            mov     ebp,esp
+0:000&gt; r.
+ebp=0006ffc0  esp=0006ff7c</code></pre>
+<p>Here is an example of the <b>r.</b> command on an Itanium-based processor.</p>
+<pre class="syntax" xml:space="preserve"><code>e0000000`83066cf0        ld8.acq r25 = [r45] e0000000`ffff0b18=????????????????
+1: kd&gt; r.
+r25=ffffffff`d0000006  r45=e0000000`ffff0b18</code></pre>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20r (Registers)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

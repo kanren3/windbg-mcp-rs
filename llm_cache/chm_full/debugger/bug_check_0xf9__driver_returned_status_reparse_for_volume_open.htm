@@ -1,0 +1,77 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The DRIVER_RETURNED_STATUS_REPARSE_FOR_VOLUME_OPEN bug check has a value of 0x000000F9. This indicates that a driver returned STATUS_REPARSE to an IRP_MJ_CREATE request with no trailing names."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0xF9: DRIVER_RETURNED_STATUS_REPARSE_FOR_VOLUME_OPEN</title>
+
+<meta name="MS-HAID" content="t07_bugs_E0_c84114df-30a0-4627-b43f-0c9d6abd0489.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0xf9__driver_returned_status_reparse_for_volume_open"></a>Bug Check 0xF9: DRIVER_RETURNED_STATUS_REPARSE_FOR_VOLUME_OPEN</h1>
+</div>
+<p>The DRIVER_RETURNED_STATUS_REPARSE_FOR_VOLUME_OPEN bug check has a value of 0x000000F9. This indicates that a driver returned STATUS_REPARSE to an IRP_MJ_CREATE request with no trailing names.</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2> DRIVER_RETURNED_STATUS_REPARSE_FOR_VOLUME_OPEN Parameters</h2>
+<p>The following parameters are displayed on the blue screen.</p>
+<table>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>1</p>
+</td>
+<td>
+<p>The device object that was opened</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>2</p>
+</td>
+<td>
+<p>The device object to which the IRP_MJ_CREATE request was issued</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>3</p>
+</td>
+<td>
+<p>Address of the Unicode string containing the new name of the file (to be reparsed)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>4</p>
+</td>
+<td>
+<p>Information returned by the driver for the IRP_MJ_CREATE request</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>STATUS_REPARSE should be returned only for IRP_MJ_CREATE requests with trailing names, as that indicates the driver is supporting name spaces.</p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

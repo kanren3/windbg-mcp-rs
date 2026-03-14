@@ -1,0 +1,155 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !deadlock extension displays information about deadlocks collected by the Deadlock Detection option of Driver Verifier."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!deadlock</title>
+
+<meta name="MS-HAID" content="r26_exts_kernel_A_e10a3a85-32de-4854-b6ea-c877b0650ea6.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._deadlock"></a>!deadlock</h1>
+</div>
+<p>The <b>!deadlock</b> extension displays information about deadlocks collected by the <b>Deadlock Detection</b> option of Driver Verifier.</p>
+<pre class="syntax"><b>!deadlock</b> 
+<b>!deadlock 1</b></pre>
+<p></p>
+<h2><a id="ddk__deadlock_dbg"></a><a id="DDK__DEADLOCK_DBG"></a></h2>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000
+         </b></p>
+</td>
+<td>
+<p>Unavailable </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later</b></p>
+</td>
+<td>
+<p>
+          Kdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For information about Driver Verifier, see the Windows Driver Kit (WDK) documentation.</p>
+<h2>Remarks</h2>
+<p>This extension will only provide useful information if Driver Verifier's <b>Deadlock Detection</b> option has detected a lock hierarchy violation and  issued <a href="bug_check_0xc4__driver_verifier_detected_violation.htm"><b>bug check 0xC4</b></a> (DRIVER_VERIFIER_DETECTED_VIOLATION).  </p>
+<p>Without any arguments, the <b>!deadlock</b> extension causes the basic lock hierarchy topology to be displayed. If the problem is not a simple cyclical deadlock, this command will describe the situation that has occurred.</p>
+<p>The <b>!deadlock 1</b> extension causes stack traces to be displayed. The stacks displayed will be the ones active at the time the locks were acquired.</p>
+<p>Here is an example:</p>
+<pre class="syntax" xml:space="preserve"><code>0:kd&gt; !deadlock
+
+Deadlock detected (2 resources in 2 threads):
+
+Thread 0: A B
+Thread 1: B A
+
+Where:
+Thread 0 = 8d3ba030
+Thread 1 = 8d15c030
+Lock A =   bba2af30 Type 'Spinlock'
+Lock B =   dummy!GlobalLock Type 'Spinlock'</code></pre>
+<p>This tells you which threads and which locks are involved. However, it is intended to be a summary and may not be enough information to adequately debug the situation.</p>
+<p>Use <b>!deadlock 1</b> to print out the contents of the call stacks at the time that each lock participating in the deadlock was acquired. Because these are run-time stack traces, they will be more complete if a checked build is being used. On a free build, they may be truncated after as little as one line.</p>
+<p></p>
+<pre class="syntax" xml:space="preserve"><code>0:kd&gt; !deadlock 1
+
+Deadlock detected (2 resources in 2 threads):
+
+Thread 0 (8D14F750) took locks in the following order:
+
+    Lock A -- b7906f30 (Spinlock)
+    Stack:   dummy!DummyActivateVcComplete+0x63
+             dummy!dummyOpenVcChannels+0x2E1
+             dummy!DummyAllocateRecvBufferComplete+0x436
+             dummy!DummyAllocateComplete+0x55
+             NDIS!ndisMQueuedAllocateSharedHandler+0xC9
+             NDIS!ndisWorkerThread+0xEE
+
+    Lock B -- dummy!GlobalLock (Spinlock)
+    Stack:   dummy!dummyQueueRecvBuffers+0x2D
+             dummy!DummyActivateVcComplete+0x90
+             dummy!dummyOpenVcChannels+0x2E1
+             dummy!DummyAllocateRecvBufferComplete+0x436
+             dummy!DummyAllocateComplete+0x55
+
+Thread 1 (8D903030) took locks in the following order:
+
+    Lock B -- dummy!GlobalLock (Spinlock)
+    Stack:   dummy!dummyRxInterruptOnCompletion+0x25D
+             dummy!DummyHandleInterrupt+0x32F
+             NDIS!ndisMDpcX+0x3C
+             ntkrnlpa!KiRetireDpcList+0x5D
+
+    Lock A -- b7906f30 (Spinlock)
+    Stack:   &lt;&lt; Current stack &gt;&gt;</code></pre>
+<p>With this information, you have almost everything you need, except the current stack:</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; k
+ChildEBP RetAddr
+f78aae6c 80664c58 ntkrnlpa!DbgBreakPoint
+f78aae74 8066523f ntkrnlpa!ViDeadlockReportIssue+0x2f
+f78aae9c 806665df ntkrnlpa!ViDeadlockAnalyze+0x253
+f78aaee8 8065d944 ntkrnlpa!VfDeadlockAcquireResource+0x20b
+f78aaf08 bfd6df46 ntkrnlpa!VerifierKeAcquireSpinLockAtDpcLevel+0x44
+f78aafa4 b1bf2d2d dummy!dummyRxInterruptOnCompletion+0x2b5
+f78aafc4 bfde9d8c dummy!DummyHandleInterrupt+0x32f
+f78aafd8 804b393b NDIS!ndisMDpcX+0x3c
+f78aaff4 804b922b ntkrnlpa!KiRetireDpcList+0x5d</code></pre>
+<p>From this you can see which locks were involved and where they were acquired. This should be enough information for you to debug the deadlock. If the source code is available, you can use the debugger to see exactly where the problem occurred:</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; .lines
+Line number information will be loaded
+
+0: kd&gt; u dummy!DummyActivateVcComplete+0x63 l1
+dummy!DummyActivateVcComplete+63 [d:\nt\drivers\dummy\vc.c @ 2711]:
+b1bfe6c9 837d0c00         cmp     dword ptr [ebp+0xc],0x0
+
+0: kd&gt; u dummy!dummyQueueRecvBuffers+0x2D l1
+dummy!dummyQueueRecvBuffers+2d [d:\nt\drivers\dummy\receive.c @ 2894]:
+b1bf4e39 807d0c01         cmp     byte ptr [ebp+0xc],0x1
+
+0: kd&gt; u dummy!dummyRxInterruptOnCompletion+0x25D l1
+dummy!dummyRxInterruptOnCompletion+25d [d:\nt\drivers\dummy\receive.c @ 1424]:
+b1bf5d05 85f6             test    esi,esi
+
+0: kd&gt; u dummy!dummyRxInterruptOnCompletion+0x2b5 l1
+dummy!dummyRxInterruptOnCompletion+2b5 [d:\nt\drivers\dummy\receive.c @ 1441]:
+b1bf5d5d 8b4648           mov     eax,[esi+0x48]</code></pre>
+<p>Now you know the name of the source file and the line number where the acquisition took place. In this case, the source files will show that the threads behaved as follows:</p>
+<ul>
+<li>
+<p>
+       Thread 1: <b>DummyActivateVcComplete</b> took the <b>dummy</b> miniport lock. It then called <b>dummyQueueRecvBuffers</b>, which took the <b>dummy</b> global lock.</p>
+</li>
+<li>
+<p>
+       Thread 2: 
+       <b>dummyRxInterruptOnCompletion</b> took the global lock. Then, a few lines later, it took the miniport lock.</p>
+</li>
+</ul>
+<p>At this point, the deadlock becomes entirely clear.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!deadlock%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

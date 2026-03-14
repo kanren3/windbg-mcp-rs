@@ -1,0 +1,82 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .ignore_missing_pages command suppresses the error messages when a Kernel Memory Dump has missing pages."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.ignore_missing_pages (Suppress Missing Page Errors)</title>
+
+<meta name="MS-HAID" content="r20_metacmds_E_86da1eae-eba8-43f4-bebc-a35a7ddf7803.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._ignore_missing_pages__suppress_missing_page_errors_"></a>.ignore_missing_pages (Suppress Missing Page Errors)</h1>
+</div>
+<p>The <b>.ignore_missing_pages</b> command suppresses the error messages when a Kernel Memory Dump has missing pages.</p>
+<pre class="syntax"><b>.ignore_missing_pages 0</b>
+<b>.ignore_missing_pages 1</b>
+<b>.ignore_missing_pages </b>
+</pre>
+<h2><a id="ddk_meta_suppress_missing_page_errors_dbg"></a><a id="DDK_META_SUPPRESS_MISSING_PAGE_ERRORS_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______0______"></a>       <b>0</b>      </dt>
+<dd>
+<p>Displays all missing page errors while debugging a Kernel Memory Dump.  This is the default behavoir of the debugger.</p>
+</dd>
+<dt><a id="_______1"></a>       <b>1</b></dt>
+<dd>
+<p>Suppresses the display of missing page errors while debugging a Kernel Memory Dump.  </p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Modes</b></p>
+</td>
+<td>
+<p>Kernel mode only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets</b></p>
+</td>
+<td>
+<p>Dump file debugging only </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Platforms</b></p>
+</td>
+<td>
+<p>All</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about how to debug these dump files, see <a href="kernel_memory_dump.htm">Kernel Memory Dump</a>.</p>
+<h2>Remarks</h2>
+<p>Without parameters, <b>.ignore_missing_pages</b> displays the current status of this setting.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.ignore_missing_pages (Suppress Missing Page Errors)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

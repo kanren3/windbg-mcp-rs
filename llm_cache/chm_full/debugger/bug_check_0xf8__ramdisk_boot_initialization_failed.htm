@@ -1,0 +1,80 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The RAMDISK_BOOT_INITIALIZATION_FAILED bug check has a value of 0x000000F8. This indicates that an initialization failure occurred while attempting to boot from the RAM disk."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0xF8: RAMDISK_BOOT_INITIALIZATION_FAILED</title>
+
+<meta name="MS-HAID" content="t07_bugs_E0_f1a900ab-6c5e-47f8-8a8c-3dece1ff3096.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0xf8__ramdisk_boot_initialization_failed"></a>Bug Check 0xF8: RAMDISK_BOOT_INITIALIZATION_FAILED</h1>
+</div>
+<p>The RAMDISK_BOOT_INITIALIZATION_FAILED bug check has a value of 0x000000F8. This indicates that an initialization failure occurred while attempting to boot from the RAM disk.</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2> RAMDISK_BOOT_INITIALIZATION_FAILED Parameters</h2>
+<p>The following parameters are displayed on the blue screen.</p>
+<table>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>1</p>
+</td>
+<td>
+<p>Indicates the cause of the failure.</p>
+<p><b>1:</b>  No LoaderXIPRom descriptor was found in the loader memory list.</p>
+<p><b>2:</b>  Unable to open the RAM disk driver (ramdisk.sys or \Device\Ramdisk).</p>
+<p><b>3:</b>  FSCTL_CREATE_RAM_DISK failed.</p>
+<p><b>4:</b>  Unable to create GUID string from binary GUID.</p>
+<p><b>5:</b>  Unable to create symbolic link pointing to the RAM disk device.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>2</p>
+</td>
+<td>
+<p>NTSTATUS code</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>3</p>
+</td>
+<td>
+<p>0</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>4</p>
+</td>
+<td>
+<p>0</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

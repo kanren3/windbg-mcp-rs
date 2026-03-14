@@ -1,0 +1,76 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The ~m command resumes execution of the specified thread.Do not confuse this command with the m (Move Memory) command."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>~m (Resume Thread)</title>
+
+<meta name="MS-HAID" content="r15_cmds_A_ead644bb-5361-45bb-9d42-0b17adf19347.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._m__resume_thread_"></a>~m (Resume Thread)</h1>
+</div>
+<p>The <b>~m</b> command resumes execution of the specified thread.</p>
+<p>Do not confuse this command with the <a href="m__move_memory_.htm"><b>m (Move Memory)</b></a> command.</p>
+<pre class="syntax"><b>~</b><i>Thread</i><b> m</b> 
+</pre>
+<h2><a id="ddk_cmd_resume_thread_dbg"></a><a id="DDK_CMD_RESUME_THREAD_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Thread______"></a><a id="_______thread______"></a><a id="_______THREAD______"></a>       <i>Thread</i>      </dt>
+<dd>
+<p>Specifies the thread or threads to resume. For more information about the syntax, see <a href="thread_syntax.htm">Thread Syntax</a>.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets</b></p>
+</td>
+<td>
+<p>Live debugging only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about the suspend count and how suspended threads behave and for a list of other commands that control the suspending and freezing of threads, see <a href="controlling_processes_and_threads.htm">Controlling Processes and Threads</a>.</p>
+<h2>Remarks</h2>
+<p>You can specify threads only in user mode. In kernel mode, the tilde (~) refers to a processor.</p>
+<p>Every time that you use the <b>~m</b> command, the thread's suspend count is decreased by one.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20~m (Resume Thread)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

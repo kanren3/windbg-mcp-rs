@@ -1,0 +1,36 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Synchronizing with the Target Computer"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Synchronizing with the Target Computer</title>
+
+<meta name="MS-HAID" content="r07_use_operation_0852c58a-21b9-435f-b95a-da31251d1517.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.synchronizing_with_the_target_computer"></a>Synchronizing with the Target Computer</h1>
+</div>
+<h2><a id="ddk_synchronizing_with_the_target_computer_dbg"></a><a id="DDK_SYNCHRONIZING_WITH_THE_TARGET_COMPUTER_DBG"></a></h2>
+<p>Sometimes during kernel-mode debugging, the target computer stops responding to the debugger.</p>
+<p>In KD, you can press <a href="ctrl_r__re_synchronize_.htm"><b>CTRL+R (Re-synchronize)</b></a> and then press ENTER to synchronize with the target computer. In WinDbg, use <a href="debug___kernel_connection___resynchronize.htm">CTRL+ALT+R</a> or Debug | Kernel Connection | Resynchronize. </p>
+<p>These commands frequently restore communication between the host and the target. However, resynchronization might not always be successful, especially if you are using a 1394 kernel connection.</p>
+<p>The <a href="_restart__restart_kernel_connection_.htm"><b>.restart (Restart Kernel Connection)</b></a> command provides a more powerful method of resynchronization. This command is equivalent to exiting the debugger and then attaching a new debugger to the existing session. This command is available only in KD, not in WinDbg.</p>
+<p>The <b>.restart</b> command is most useful when you are performing <a href="remote_debugging_through_remote_exe.htm">remote debugging through remote.exe</a>. (In this kind of debugging, it might be difficult to end and restart the debugger.) However, you cannot use <b>.restart</b> from a debugging client if you are performing remote debugging through the debugger.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Synchronizing with the Target Computer%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

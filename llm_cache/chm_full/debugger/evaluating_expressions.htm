@@ -1,0 +1,92 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Evaluating Expressions"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Evaluating Expressions</title>
+
+<meta name="MS-HAID" content="r05_use_start_21325f4c-38a6-4965-821e-4f8f424a486d.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.evaluating_expressions"></a>Evaluating Expressions</h1>
+</div>
+<h2><a id="ddk_evaluating_expressions_dbg"></a><a id="DDK_EVALUATING_EXPRESSIONS_DBG"></a></h2>
+<p>The debugger understands two different forms of expressions: <i>MASM expressions</i> and <i>C++ expressions</i>.</p>
+<p>Microsoft Macro Assembler (MASM) expressions are used in the examples in this Help documentation, except when otherwise noted. In MASM expressions, all symbols are treated as addresses.</p>
+<p>C++ expressions are the same as those used in actual C++ code. In these expressions, symbols are understood as the appropriate data types.</p>
+<h3><a id="when_each_syntax_is_used"></a><a id="WHEN_EACH_SYNTAX_IS_USED"></a>When Each Syntax is Used</h3>
+<p>You can select the default expression evaluator in one of the following ways:</p>
+<ul>
+<li>
+<p>Use the _NT_EXPR_EVAL <a href="general_environment_variables.htm">environment variable</a> before the debugger is started.</p>
+</li>
+<li>
+<p>Use the <b>-ee</b> {<b>masm</b>|<b>c++</b>} <a href="command_line_options.htm">command-line option</a> when the debugger is started.</p>
+</li>
+<li>
+<p>Use the <a href="_expr__choose_expression_evaluator_.htm"><b>.expr (Choose Expression Evaluator)</b></a> command to display or change the expression evaluator after the debugger is running.</p>
+</li>
+</ul>
+<p>If you do not use one of the preceding methods, the debugger uses the MASM expression evaluator.</p>
+<p>If you want to evaluate an expression without changing the debugger state, you can use the <a href="___evaluate_expression_.htm"><b>? (Evaluate Expression)</b></a> command.</p>
+<p>All commands and debugging information windows interpret their arguments through the default expression evaluator, with the following exceptions:</p>
+<ul>
+<li>
+<p>The <a href="____evaluate_c___expression_.htm"><b>?? (Evaluate C++ Expression)</b></a> command always uses the C++ expression evaluator.</p>
+</li>
+<li>
+<p>The Watch window always uses the C++ expression evaluator.</p>
+</li>
+<li>
+<p>The <a href="locals_window.htm">Locals window</a> always uses the C++ expression evaluator.</p>
+</li>
+<li>
+<p>Some extension commands always use the MASM expression evaluator (and other extension commands accept only numeric arguments instead of full expressions).</p>
+</li>
+<li>
+<p>If any part of an expression is enclosed in parentheses and you insert two at signs (<b>@@</b>) before the expression, the expression is evaluated by the expression evaluator that would <u>not</u> typically be used in this case.</p>
+</li>
+</ul>
+<p>The two at signs (<b>@@</b>) enable you to use two different evaluators for different parameters of a single command. It also enables you to evaluate different pieces of a long expression by different methods. You can nest the two at signs. Each appearance of the two at signs switches to the other expression evaluator.</p>
+<div class="alert"><b>Warning</b>    C++ expression syntax is useful for manipulating structures and variables, but it is not well-suited as a parser for the parameters of debugger commands. When you are using debugger commands for general purposes or you are using debugger extensions, you should set MASM expression syntax as the default expression evaluator. If you must have a specific parameter use C++ expression syntax, use the two at sign (<b>@@</b>) syntax.</div>
+<div> </div>
+<p>For more information about the two different expression types, see <a href="numerical_expression_syntax.htm">Numerical Expression Syntax</a>.</p>
+<h3><a id="numbers_in_expressions"></a><a id="NUMBERS_IN_EXPRESSIONS"></a>Numbers in Expressions</h3>
+<p>Numbers in MASM expressions are interpreted according to the current radix. The <a href="n__set_number_base_.htm"><b>n (Set Number Base)</b></a> command can be used to set the default radix to 16, 10, or 8. All un-prefixed numbers will be interpreted in this base. The default radix can be overridden by specifying the <b>0x</b> prefix (hexadecimal), the <b>0n</b> prefix (decimal), the <b>0t</b> prefix (octal), or the <b>0y</b> prefix (binary).</p>
+<p>Numbers in C++ expressions are interpreted as decimal numbers unless you specify differently. To specify a hexadecimal integer, add <b>0x</b> before the number. To specify an octal integer, add <b>0</b> (zero) before the number. (However, in the debugger's <i>output</i>, the <b>0n</b> decimal prefix is sometimes used.)</p>
+<p>If you want to display a number in several bases at the same time, use the <a href="_formats__show_number_formats_.htm"><b>.formats (Show Number Formats)</b></a> command.</p>
+<h3><a id="symbols_in_expressions"></a><a id="SYMBOLS_IN_EXPRESSIONS"></a>Symbols in Expressions</h3>
+<p>The two types of expressions interpret symbols differently:</p>
+<ul>
+<li>
+<p>In MASM expressions, each symbol is interpreted as an address. Depending on what the symbol refers to, this address is the address of a global variable, local variable, function, segment, module, or any other recognized label.</p>
+</li>
+<li>
+<p>In C++ expressions, each symbol is interpreted according to its type. Depending on what the symbol refers to, it might be interpreted as an integer, a data structure, a function pointer, or any other data type. A symbol that does not correspond to a C++ data type (such as an unmodified module name) creates a syntax error.</p>
+</li>
+</ul>
+<p>If a symbol might be ambiguous, precede it with the module name and an exclamation point ( <b>!</b> ). If the symbol name could be interpreted as a hexadecimal number, precede it with the module name and an exclamation point ( <b>!</b> ) or only an exclamation point. In order to specify that a symbol is meant to be local, omit the module name, and include a dollar sign and an exclamation point ( <b>$!</b> ) before the symbol name. For more information about interpreting symbols, see <a href="symbol_syntax_and_symbol_matching.htm">Symbol Syntax and Symbol Matching</a>.</p>
+<h3><a id="operators_in_expressions"></a><a id="OPERATORS_IN_EXPRESSIONS"></a>Operators in Expressions</h3>
+<p>Each expression type uses a different collection of operators.</p>
+<p>For more information about the operators that you can use in MASM expressions and their precedence rules, see <a href="masm_numbers_and_operators.htm">MASM Numbers and Operators</a>.</p>
+<p>For more information about the operators that you can use in C++ expressions and their precedence rules, see <a href="c___numbers_and_operators.htm">C++ Numbers and Operators</a>.</p>
+<p>Remember that MASM operations are always byte-based, and C++ operations follow C++ type rules (including the scaling of pointer arithmetic).</p>
+<p>For some examples of the different syntaxes, see <a href="expression_examples.htm">Expression Examples</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Evaluating Expressions%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

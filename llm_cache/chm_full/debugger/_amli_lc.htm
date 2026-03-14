@@ -1,0 +1,158 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !amli lc extension lists all active ACPI contexts."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!amli lc</title>
+
+<meta name="MS-HAID" content="r33_exts_ACPI_916a102a-d94c-4152-adfc-e6bfdf9071c0.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._amli_lc"></a>!amli lc</h1>
+</div>
+<p>The <b>!amli lc</b> extension lists all active ACPI contexts.</p>
+<p>Syntax</p>
+<pre class="syntax"><b>!amli lc</b></pre>
+<h2><a id="ddk__amli_lc_dbg"></a><a id="DDK__AMLI_LC_DBG"></a></h2>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<p>
+          Kdexts.dll</p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For information about related commands and their uses, see <a href="the_amli_debugger.htm">The AMLI Debugger</a>.</p>
+<h2>Remarks</h2>
+<p>Each context corresponds to a method currently running in the AML interpreter.</p>
+<p>Here is an example:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>AMLI(? for help)-&gt; lc
+ Ctxt=80e3f000, ThID=00000000, Flgs=A--C-----, pbOp=00000000, Obj=\_SB.LNKA._STA
+ Ctxt=80e41000, ThID=00000000, Flgs=A--C-----, pbOp=00000000, Obj=\_SB.LNKB._STA
+ Ctxt=80e9a000, ThID=00000000, Flgs=A--C-----, pbOp=00000000, Obj=\_SB.LNKC._STA
+ Ctxt=80ea8000, ThID=00000000, Flgs=A--C-----, pbOp=00000000, Obj=\_SB.LNKD._STA
+*Ctxt=80e12000, ThID=80e6eda8, Flgs=---CR----, pbOp=80e5d5ac, Obj=\_SB.LNKA._STA</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The <b>Obj</b> field gives the full path and name of the method as it appears in the ACPI tables.</p>
+<p>The <b>Ctxt</b> field gives the address of the context block. The asterisk (<b>*</b>) indicates the <i>current context</i>. This is the context that was being executed by the interpreter when the break occurred.</p>
+<p>The abbreviation <b>pbOp</b> indicates the instruction pointer (pointer to binary op codes).</p>
+<p>There are nine flags that can be displayed in the <b>Flgs</b> section. If a flag is not set, a hyphen is displayed instead. The full list of flags is as follows:</p>
+<table>
+<tr>
+<th>Flag</th>
+<th>Meaning</th>
+</tr>
+<tr>
+<td>
+<p>
+        A
+       </p>
+</td>
+<td>
+<p>Asynchronous evaluation </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+        N
+       </p>
+</td>
+<td>
+<p>Nested evaluation </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+        Q
+       </p>
+</td>
+<td>
+<p>In the ready queue </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+        C
+       </p>
+</td>
+<td>
+<p>Needs a callback </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+        R
+       </p>
+</td>
+<td>
+<p>Running</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+        W
+       </p>
+</td>
+<td>
+<p>Ready </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+        T
+       </p>
+</td>
+<td>
+<p>Time-out </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+        D
+       </p>
+</td>
+<td>
+<p>Timer dispatch </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+        P
+       </p>
+</td>
+<td>
+<p>Timer pending </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!amli lc%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

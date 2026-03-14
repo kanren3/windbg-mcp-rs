@@ -1,0 +1,99 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The EXT_COMMAND macro is used to define an extension command that was declared by using the EXT_COMMAND_METHOD macro.An extension command is defined as follows:"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>EXT_COMMAND function</title>
+
+<meta name="MS-HAID" content="EngExtCpp_Ref_a6dc21d7-b0c2-4e13-add5-ecfe3c38a94a.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.ext_command"></a>EXT_COMMAND function</h1>
+</div>
+<p>The EXT_COMMAND macro is used to define an extension command that was declared by using the <a href="ext_command_method.htm"><b>EXT_COMMAND_METHOD</b></a> macro.</p>
+<p>An extension command is defined as follows:</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre> EXT_COMMAND(
+    _Name,
+    _Desc,
+    _Args
+);</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Parameters</h2>
+<dl>
+<dt><i>_Name</i> </dt>
+<dd>
+<p>The name of the extension command.  This must be the same as the <i>_Name</i> parameter that is used to declare the extension command by using <a href="ext_command_method.htm"><b>EXT_COMMAND_METHOD</b></a>.</p>
+<p>Because EXT_COMMAND is a macro, <i>_Name</i> must be the bare name of the extension command and should not be enclosed in quotation marks or be a variable.</p>
+</dd>
+<dt><i>_Desc</i> </dt>
+<dd>
+<p>A string describing the extension command.</p>
+</dd>
+<dt><i>_Args</i> </dt>
+<dd>
+<p>A string describing the arguments that are expected by the extension command.   For information about how the <i>_Args</i> string is formatted, see <a href="parsing_extension_arguments.htm">Parsing Extension Arguments</a>.</p>
+<div class="alert"><b>Note</b>     As an alternative to supplying a string that describes the arguments, you can use  the string "{{custom}}" to indicate that the extension command will parse the arguments itself.  The method <a href="getrawargstr.htm"><b>GetRawArgStr</b></a> can be used to fetch the raw argument for parsing.</div>
+<div> </div>
+</dd>
+</dl>
+<h2>Remarks</h2>
+<p>The body of the extension command does not take any arguments.  However, because the extension command is declared as a method of the <a href="ext_class.htm"><b>EXT_CLASS</b></a> class, it has access to all the members of the <a href="extextension.htm"><b>ExtExtension</b></a> base class, some of which are initialized for the execution of the extension command.</p>
+<p>The macro <a href="ext_command_method.htm"><b>EXT_COMMAND_METHOD</b></a> should be used to declare the extension command.  As with all C++ declarations, the EXT_COMMAND_METHOD declaration should appear in the source files before the EXT_COMMAND definition.</p>
+<p>When the debugger engine calls an extension command method, it wraps the call in a <b>try / except</b> block.  This protects the engine from some types of bugs in the extension code; but, since the extension calls are executed in the same thread as the engine, they can still cause it to crash.</p>
+<p>This macro also creates a function called <i>_Name</i> (which calls the method defined by the macro).  In order for the engine to call the extension, this function must be exported from the extension library DLL.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Target platform</p>
+</th>
+<td width="70%">
+<dl>
+<dt></dt>
+</dl>
+</td>
+</tr>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Engextcpp.h (include Engextcpp.hpp)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="ext_class.htm"><b>EXT_CLASS</b></a></dt>
+<dt><a href="ext_command_method.htm"><b>EXT_COMMAND_METHOD</b></a></dt>
+<dt><a href="extextension.htm"><b>ExtExtension</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20EXT_COMMAND function%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

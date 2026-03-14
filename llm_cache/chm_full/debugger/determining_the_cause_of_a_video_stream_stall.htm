@@ -1,0 +1,68 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Determining the Cause of a Video Stream Stall"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Determining the Cause of a Video Stream Stall</title>
+
+<meta name="MS-HAID" content="t11~b_ks_2cdae838-f139-482c-ba01-57ce07f7bdac.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.determining_the_cause_of_a_video_stream_stall"></a>Determining the Cause of a Video Stream Stall</h1>
+</div>
+<p>There are two basic causes for a video stream stall:</p>
+<ul>
+<li>
+<p><b>A hang.  </b>Either a user-mode thread or a kernel-mode thread is not being released by the driver.</p>
+</li>
+<li><b>A stall.  </b>This is the result of a problem with a component in the streaming path.  Some possibilities include:<ul>
+<li>  The capture driver is not completing packets.  In this case, either a driver component or the hardware might be the source of the stall.</li>
+<li>  The capture driver has no packets to complete.  In this case, the buffers might be stalled in a codec or other downstream component.</li>
+</ul>
+</li>
+</ul>
+<p>If you can reproduce the problem, attach a debugger at this point to determine which is the actual cause.  </p>
+<p class="proch"><img src="../common/wedge.gif" alt=""/><b>To determine if the problem is a hang
+     </b></p>
+<ol>
+<li>
+<p>Attach a user-mode debugger to the application and look for blocked user-mode threads. </p>
+</li>
+<li>
+<p>Determine whether the application is responsive.  Can the graph be paused?  Can the graph be stopped?  Does streaming restart if the graph is stopped and restarted?</p>
+</li>
+<li>
+<p>If the application is non-responsive, attempt to end the task by using Task Manager.  If this fails, there is a kernel-mode hang.</p>
+</li>
+</ol>
+<p class="proch"><img src="../common/wedge.gif" alt=""/><b>To determine if the problem is a stall
+     </b></p>
+<ol>
+<li>
+<p>Determine where the samples are in the graph.  This can be done locally or in a kernel-mode debugging session.</p>
+</li>
+<li>
+<p>Determine whether samples are flowing downstream. If you can reproduce the bug in <a href="http://go.microsoft.com/fwlink/p/?linkid=9230">GraphEdit</a>, place an intermediate filter in the graph to display samples.</p>
+</li>
+<li>
+<p>Determine if the processing routine is being called.  This can be done by attaching a kernel-mode debugger and setting a breakpoint in this routine. </p>
+</li>
+</ol>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Determining the Cause of a Video Stream Stall%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="UMDH"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>UMDH</title>
+
+<meta name="MS-HAID" content="UMDH_dad64a92-11c2-4bda-842a-ebfddd61ca41.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.umdh"></a>UMDH</h1>
+</div>
+<h2><a id="ddk_umdh_dtools"></a><a id="DDK_UMDH_DTOOLS"></a></h2>
+<p>The User-Mode Dump Heap (UMDH) tool, Umdh.exe, analyzes the Microsoft Windows heap memory allocations for a given process. UMDH has the following modes.</p>
+<ul>
+<li>
+<p><b>Analyze a running process</b> ("Mode 1"). UMDH captures and analyzes the heap memory allocations for a process. For each allocation, UMDH displays the size of the allocation, the size of the overhead, the pointer to the allocation and the allocation stack. If a process has more than one active memory heap, UMDH captures all heaps. This analysis can be displayed in realtime or saved in a log file. </p>
+</li>
+<li>
+<p><b>Analyze UMDH log files</b> ("Mode 2"). UMDH analyzes the log files it has previously created. UMDH can compare two logs created for the same process at different times, and display the calls in which the allocation size increased the most. This technique can be used to find memory leaks. </p>
+</li>
+</ul>
+<p>This section includes:</p>
+<dl>
+<dd>
+<p><a href="preparing_to_use_umdh.htm">Preparing to Use UMDH</a></p>
+</dd>
+<dd>
+<p><a href="umdh_commands.htm">UMDH Commands</a></p>
+</dd>
+<dd>
+<p><a href="interpreting_a_umdh_log.htm">Interpreting a UMDH Log</a></p>
+</dd>
+<dd>
+<p><a href="interpreting_a_log_comparison.htm">Interpreting a Log Comparison</a></p>
+</dd>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20UMDH%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

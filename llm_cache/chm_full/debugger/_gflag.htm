@@ -1,0 +1,451 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !gflag extension sets or displays the global flags."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!gflag</title>
+
+<meta name="MS-HAID" content="r24_exts_general_A_b1bd8a19-65c6-417e-8ab9-99255bbf4890.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._gflag"></a>!gflag</h1>
+</div>
+<p>The <b>!gflag</b> extension sets or displays the global flags.</p>
+<p></p>
+<pre class="syntax"><b>!gflag </b>[<b>+|-</b>]<b> </b><i>Value</i> 
+<b>!gflag </b>{<b>+|-</b>}<b> </b><i>Abbreviation</i> 
+<b>!gflag -?</b> 
+<b>!gflag</b> 
+</pre>
+<h2><a id="ddk__gflag_dbg"></a><a id="DDK__GFLAG_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Value______"></a><a id="_______value______"></a><a id="_______VALUE______"></a>       <i>Value</i>      </dt>
+<dd>
+<p>Specifies a 32-bit hexadecimal number. If you do not use a plus sign (<b>+</b>) or minus sign (<b>-</b>), this number becomes the new value of the global flag bit field. If you add a plus sign (<b>+</b>) before this number, the number specifies one or more global flag bits to set to 1. If you add a minus sign (<b>-</b>) before this number, the number specifies one or more global flag bits to set to zero.</p>
+</dd>
+<dt><a id="_______Abbreviation______"></a><a id="_______abbreviation______"></a><a id="_______ABBREVIATION______"></a>       <i>Abbreviation</i>      </dt>
+<dd>
+<p>Specifies a single global flag. <i>Abbreviation</i> is a three-letter abbreviation for a global flag that is set to 1  (<b>+</b>) or to zero (<b>-</b>).</p>
+</dd>
+<dt><a id="_______-_______"></a>       <b>-?</b>      </dt>
+<dd>
+<p>Displays some Help text for this extension, including a list of global flag abbreviations, in the <a href="debugger_command_window.htm">Debugger Command window</a>.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000
+         </b></p>
+</td>
+<td>
+<p>
+<dl>
+<dt>
+          Kdextx86.dll
+          </dt>
+<dt>Ntsdexts.dll
+         </dt>
+</dl>
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Exts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>You can also set these flags by using the Global Flags utility (Gflags.exe).</p>
+<h2>Remarks</h2>
+<p>If you do not specify any arguments, the <b>!gflag</b> extension displays the current global flag settings.</p>
+<p>The following table contains the abbreviations that you can use for the <i>Abbreviation</i> parameter.</p>
+<table>
+<tr>
+<th>Value</th>
+<th>Name</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>0x00000001</p>
+</td>
+<td>
+<p>"soe"</p>
+</td>
+<td>
+<p>Stop on exception.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x00000002</p>
+</td>
+<td>
+<p>"sls"</p>
+</td>
+<td>
+<p>Show loader snaps.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x00000004</p>
+</td>
+<td>
+<p>"dic"</p>
+</td>
+<td>
+<p>Debug initial command.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x00000008</p>
+</td>
+<td>
+<p>"shg"</p>
+</td>
+<td>
+<p>Stop if the GUI stops responding (that is, hangs).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x00000010</p>
+</td>
+<td>
+<p>"htc"</p>
+</td>
+<td>
+<p>Enable heap tail checking.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x00000020</p>
+</td>
+<td>
+<p>"hfc"</p>
+</td>
+<td>
+<p>Enable heap free checking.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x00000040</p>
+</td>
+<td>
+<p>"hpc"</p>
+</td>
+<td>
+<p>Enable heap parameter checking.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x00000080</p>
+</td>
+<td>
+<p>"hvc"</p>
+</td>
+<td>
+<p>Enable heap validation on call.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x00000100</p>
+</td>
+<td>
+<p>"ptc"</p>
+</td>
+<td>
+<p>Enable pool tail checking.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x00000200</p>
+</td>
+<td>
+<p>"pfc"</p>
+</td>
+<td>
+<p>Enable pool free checking.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x00000400</p>
+</td>
+<td>
+<p>"ptg"</p>
+</td>
+<td>
+<p>Enable pool tagging.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x00000800</p>
+</td>
+<td>
+<p>"htg"</p>
+</td>
+<td>
+<p>Enable heap tagging.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x00001000</p>
+</td>
+<td>
+<p>"ust"</p>
+</td>
+<td>
+<p>Create a user-mode stack trace DB.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x00002000</p>
+</td>
+<td>
+<p>"kst"</p>
+</td>
+<td>
+<p>Create a kernel-mode stack trace DB.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x00004000</p>
+</td>
+<td>
+<p>"otl"</p>
+</td>
+<td>
+<p>Maintain a list of objects for each type.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x00008000</p>
+</td>
+<td>
+<p>"htd"</p>
+</td>
+<td>
+<p>Enable heap tagging by DLL.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x00010000</p>
+</td>
+<td>
+<p>"idp"</p>
+</td>
+<td>
+<p>Unused.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x00020000</p>
+</td>
+<td>
+<p>"d32"</p>
+</td>
+<td>
+<p>Enable debugging of the Microsoft Win32 subsystem.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x00040000</p>
+</td>
+<td>
+<p>"ksl"</p>
+</td>
+<td>
+<p>Enable loading of kernel debugger symbols.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x00080000</p>
+</td>
+<td>
+<p>"dps"</p>
+</td>
+<td>
+<p>Disable paging of kernel stacks.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x00100000</p>
+</td>
+<td>
+<p>"scb"</p>
+</td>
+<td>
+<p>Enable critical system breaks.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x00200000</p>
+</td>
+<td>
+<p>"dhc"</p>
+</td>
+<td>
+<p>Disable heap coalesce on free.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x00400000</p>
+</td>
+<td>
+<p>"ece"</p>
+</td>
+<td>
+<p>Enable close exception.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x00800000</p>
+</td>
+<td>
+<p>"eel"</p>
+</td>
+<td>
+<p>Enable exception logging.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x01000000</p>
+</td>
+<td>
+<p>"eot"</p>
+</td>
+<td>
+<p>Enable object handle type tagging.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x02000000</p>
+</td>
+<td>
+<p>"hpa"</p>
+</td>
+<td>
+<p>Put heap allocations at the end of pages.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x04000000</p>
+</td>
+<td>
+<p>"dwl"</p>
+</td>
+<td>
+<p>Debug WINLOGON.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x08000000</p>
+</td>
+<td>
+<p>"ddp"</p>
+</td>
+<td>
+<p>Disable kernel-mode <b>DbgPrint</b> and <b>KdPrint</b> output.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x10000000</p>
+</td>
+<td>
+<p>NULL</p>
+</td>
+<td>
+<p>Unused.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x20000000</p>
+</td>
+<td>
+<p>"sue"</p>
+</td>
+<td>
+<p>Stop on unhandled user-mode exception</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x40000000</p>
+</td>
+<td>
+<p>NULL</p>
+</td>
+<td>
+<p>Unused.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x80000000</p>
+</td>
+<td>
+<p>"dpd"</p>
+</td>
+<td>
+<p>Disable protected DLL verification.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p></p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!gflag%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

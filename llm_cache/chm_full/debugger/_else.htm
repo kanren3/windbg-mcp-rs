@@ -1,0 +1,46 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .else token behaves like the else keyword in C."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.else</title>
+
+<meta name="MS-HAID" content="r14_tokens_b9798daf-9fab-4557-95b5-429cc6d23ddb.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._else"></a>.else</h1>
+</div>
+<p>The <b>.else</b> token behaves like the <b>else</b> keyword in C.</p>
+<pre class="syntax">
+<b>.if (</b><i>Condition</i><b>) { </b><i>Commands</i><b> } .else { </b><i>Commands</i><b> }</b> 
+
+<b>.if (</b><i>Condition</i><b>) { </b><i>Commands</i><b> } .elsif (</b><i>Condition</i><b>) { </b><i>Commands</i><b> } .else { </b><i>Commands</i><b> }</b> 
+</pre>
+<h2><a id="ddk_token_else_dbg"></a><a id="DDK_TOKEN_ELSE_DBG"></a>Syntax Elements</h2>
+<p></p>
+<dl>
+<dt><a id="_______Commands______"></a><a id="_______commands______"></a><a id="_______COMMANDS______"></a>       <i>Commands</i>      </dt>
+<dd>
+<p>Specifies one or more commands that will be executed conditionally. This block of commands needs to be enclosed in braces, even if it consists of a single command. Multiple commands should be separated by semicolons, but the final command before the closing brace does not need to be followed by a semicolon.</p>
+</dd>
+</dl>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For information about other control flow tokens and their use in debugger command programs, see <a href="using_debugger_command_programs.htm">Using Debugger Command Programs</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.else%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,95 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .ocommand command enables the target application to send commands to the debugger."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.ocommand (Expect Commands from Target)</title>
+
+<meta name="MS-HAID" content="r21_metacmds_L_9c3a182e-e8b9-4baa-a8cd-aea4cd4d0ae6.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._ocommand__expect_commands_from_target_"></a>.ocommand (Expect Commands from Target)</h1>
+</div>
+<p>The <b>.ocommand</b> command enables the target application to send commands to the debugger.</p>
+<pre class="syntax"><b>.ocommand  </b><i>String</i> 
+<b>.ocommand -d</b> 
+<b>.ocommand</b> 
+</pre>
+<h2><a id="ddk_meta_expect_commands_from_target_dbg"></a><a id="DDK_META_EXPECT_COMMANDS_FROM_TARGET_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______String______"></a><a id="_______string______"></a><a id="_______STRING______"></a>       <i>String</i>      </dt>
+<dd>
+<p>Specifies the command prefix string. <i>String</i> can include spaces, but you cannot use C-style control characters such as <b>\"</b> and <b>\n</b>. You can also enclose <i>String</i> in quotation marks. However, if <i>String</i> includes a semicolon, leading spaces, or trailing spaces, you must enclose <i>String</i> in quotation marks.</p>
+</dd>
+<dt><a id="_______-d______"></a><a id="_______-D______"></a>       <b>-d</b>      </dt>
+<dd>
+<p>Deletes the command prefix string.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>Live debugging only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Platforms
+         </b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about <b>OutputDebugString</b> and other user-mode functions that communicate with a debugger, see the Microsoft Windows SDK documentation.</p>
+<h2>Remarks</h2>
+<p>If you use the <b>.ocommand</b> command without parameters, the debugger displays the current command prefix string. To clear the existing string, use <b>.ocommand -d</b>.</p>
+<p>When you have set a command prefix string, any target output (such as the contents of an <b>OutputDebugString</b> command) is scanned. If this output begins with the command prefix string, the text of the output that follows the prefix string is treated as a debugger command string and is run. When this text is executed, the command string is not displayed. </p>
+<p>The target can include an <a href="_echo__echo_comment_.htm"><b>.echo (Echo Comment)</b></a> command in the output string if you want additional messages. Target output that does not begin with the prefix string is displayed in the typical manner.</p>
+<p>After the commands within the command string have been executed, the target remains broken into the debugger, unless the final command is <a href="g__go_.htm"><b>g (Go)</b></a>.</p>
+<p>The comparison between the command prefix string and the target output is not case sensitive. (However, subsequent uses of <b>.ocommand</b> display the string that you entered with the case preserved).</p>
+<p>For this example, assume that you enter the following command in the debugger.</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; .ocommand magiccommand</code></pre>
+<p>Then, the target application executes the following line.</p>
+<pre class="syntax" xml:space="preserve"><code>OutputDebugString("MagicCommand kb;g");</code></pre>
+<p>The debugger recognizes the command string prefix and executes <b>kb;g</b> immediately.</p>
+<p>However, the following line does not cause any commands to be executed.</p>
+<pre class="syntax" xml:space="preserve"><code>OutputDebugString("Command on next line.\nmagiccommand kb;g");</code></pre>
+<p>There are no commands executed from the preceding example because the command string prefix is not at the beginning of the output, even though it does begin a new line.</p>
+<div class="alert"><b>Note</b>    You should choose a command string prefix that will not likely appear in any target output other than your own commands.</div>
+<div> </div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.ocommand (Expect Commands from Target)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

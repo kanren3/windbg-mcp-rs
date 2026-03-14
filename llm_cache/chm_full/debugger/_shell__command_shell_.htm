@@ -1,0 +1,110 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .shell command launches a shell process and redirects its output to the debugger, or to a specified file."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.shell (Command Shell)</title>
+
+<meta name="MS-HAID" content="r22_metacmds_S_6a45ee2d-cc3f-4f6b-a649-87dde063d5ca.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._shell__command_shell_"></a>.shell (Command Shell)</h1>
+</div>
+<p>The <b>.shell</b> command launches a shell process and redirects its output to the debugger, or to a specified file.</p>
+<p></p>
+<p></p>
+<pre class="syntax"><b>.shell [</b><i>Options</i><b>] [</b><i>ShellCommand</i><b>]</b> 
+<b>.shell -i </b><i>InFile</i><b> [-o </b><i>OutFile</i><b> [-e </b><i>ErrFile</i><b>]] [</b><i>Options</i><b>] </b><i>ShellCommand</i></pre>
+<h2><a id="ddk_meta_command_shell_dbg"></a><a id="DDK_META_COMMAND_SHELL_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______InFile______"></a><a id="_______infile______"></a><a id="_______INFILE______"></a>       <i>InFile</i>      </dt>
+<dd>
+<p>Specifies the path and file name of a file to be used for input. If you intend to offer no input after the initial command, you can specify a single hyphen (-) instead of <i>InFile</i>, with no space before the hyphen.</p>
+</dd>
+<dt><a id="_______OutFile______"></a><a id="_______outfile______"></a><a id="_______OUTFILE______"></a>       <i>OutFile</i>      </dt>
+<dd>
+<p>Specifies the path and file name of a file to be used for standard output. If <b>-o</b><b> </b><i>OutFile</i> is omitted, output is sent to the Debugger Command window. If you do not want this output displayed or saved in a file, you can specify a single hyphen (-) instead of <i>OutFile</i>, with no space before the hyphen.</p>
+</dd>
+<dt><a id="_______ErrFile______"></a><a id="_______errfile______"></a><a id="_______ERRFILE______"></a>       <i>ErrFile</i>      </dt>
+<dd>
+<p>Specifies the path and file name of a file to be used for error output. If -e ErrFile is omitted, error output is sent to the same place as standard output. If you do not want this output displayed or saved in a file, you can specify a single hyphen (-) instead of <i>ErrFile</i>, with no space before the hyphen.</p>
+</dd>
+<dt><a id="_______Options______"></a><a id="_______options______"></a><a id="_______OPTIONS______"></a>       <i>Options</i>      </dt>
+<dd>
+<p>Can be any number of the following options:</p>
+<p></p>
+<dl>
+<dt><a id="-ci__Commands_"></a><a id="-ci__commands_"></a><a id="-CI__COMMANDS_"></a><b>-ci "</b><i>Commands</i><b>"</b></dt>
+<dd>
+<p>Processes the specified debugger commands, and then passes their output as an input file to the process being launched. <i>Commands</i> can be any number of debugger commands, separated by semicolons, and enclosed in quotation marks.</p>
+</dd>
+<dt><a id="-x"></a><a id="-X"></a><b>-x</b></dt>
+<dd>
+<p>Causes any process being spawned to be completely detached from the debugger. This allows you to create processes which will continue running even after the debugging session ends.</p>
+</dd>
+</dl>
+</dd>
+<dt><a id="_______ShellCommand______"></a><a id="_______shellcommand______"></a><a id="_______SHELLCOMMAND______"></a>       <i>ShellCommand</i>      </dt>
+<dd>
+<p>Specifies the application command line or Microsoft MS-DOS command to be executed.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>user mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets</b></p>
+</td>
+<td>
+<p>live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>all </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For other ways of accessing the command shell, see <a href="using_shell_commands.htm">Using Shell Commands</a>.</p>
+<h2>Remarks</h2>
+<p>The <b>.shell</b> command is not supported when the output of a user-mode debugger is redirected to the kernel debugger. For more information about redirecting output to the kernel debugger (sometimes called NTSD over KD), see <a href="controlling_the_user_mode_debugger_from_the_kernel_debugger.htm">Controlling the User-Mode Debugger from the Kernel Debugger</a>.</p>
+<p>The entire line after the <b>.shell</b> command will be interpreted as a Windows command (even if it contains a semicolon). This line should not be enclosed in quotation marks. There must be a space between <b>.shell</b> and the <i>ShellCommand</i> (additional leading spaces are ignored).</p>
+<p>The output from the command will appear in the Debugger Command window, unless the <b>-o</b><b> </b><i>OutFile</i> parameter is used.</p>
+<p>Issuing a <b>.shell</b> command with no parameters will activate the shell and leave it open. All subsequent commands will be interpreted as Windows commands. During this time, the debugger will display messages reading <b>&lt;.shell process may need input&gt;</b>, and the WinDbg prompt will be replaced with an <b>Input&gt;</b> prompt. Sometimes,  a separate Command Prompt window will appear when the debugger leaves the shell open. This window should be ignored; all input and output will be done through the Debugger Command window.</p>
+<p>To close this shell and return to the debugger itself, type <b>exit</b> or <b>.shell_quit</b>. (The <b>.shell_quit</b> command is more powerful, because it works even if the shell is frozen.)  </p>
+<p>This command cannot be used while debugging CSRSS, because new processes cannot be created without CSRSS being active.</p>
+<p>You can use the -ci flag to run one or more debugger commands and then pass their output to a shell process. For example, you could pass the output from the <a href="_process.htm"><b>!process 0 7</b></a> command to a Perl script by using the following command:</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; .shell -ci "!process 0 7" perl.exe parsemyoutput.pl </code></pre>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.shell (Command Shell)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

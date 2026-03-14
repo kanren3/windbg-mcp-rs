@@ -1,0 +1,145 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The GetFunctionEntryByOffset method returns the function entry information for a function."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IDebugSymbols3::GetFunctionEntryByOffset method</title>
+
+<meta name="MS-HAID" content="IDebugSymbols_2f48c855-76e5-421c-8890-9a96a0468783.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.getfunctionentrybyoffset"></a>IDebugSymbols3::GetFunctionEntryByOffset method</h1>
+</div>
+<p>The <b>GetFunctionEntryByOffset</b> method returns the function entry information for a function.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>HRESULT GetFunctionEntryByOffset(
+  [in]            ULONG64 Offset,
+  [in]            ULONG   Flags,
+  [out, optional] PVOID   Buffer,
+  [in]            ULONG   BufferSize,
+  [out, optional] PULONG  BufferNeeded
+);</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Parameters</h2>
+<dl>
+<dt><i>Offset</i> [in]</dt>
+<dd>
+<p>Specifies a location in the current process's virtual address space of the function's implementation.  This is the value returned in the <i>Offset</i> parameter of <a href="getnextsymbolmatch.htm"><b>GetNextSymbolMatch</b></a> and <a href="getsymboloffset.htm"><b>IDebugSymbolGroup::GetSymbolOffset</b></a>, and the value of the <b>Offset</b> field in the <a href="debug_symbol_entry.htm"><b>DEBUG_SYMBOL_ENTRY</b></a> structure.</p>
+</dd>
+<dt><i>Flags</i> [in]</dt>
+<dd>
+<p>Specifies a bit-flag which alters the behavior of this method.  If the bit DEBUG_GETFNENT_RAW_ENTRY_ONLY is not set, the engine will provide artificial entries for well known cases.  If this bit is set the artificial entries are not used.</p>
+</dd>
+<dt><i>Buffer</i> [out, optional]</dt>
+<dd>
+<p>Receives the function entry information.  If the effective processor is an x86, this is the FPO_DATA structure for the function.  For all other architectures, this is the IMAGE_FUNCTION_ENTRY structure for that architecture.</p>
+</dd>
+<dt><i>BufferSize</i> [in]</dt>
+<dd>
+<p>Specifies the size of the buffer <i>Buffer</i>.</p>
+</dd>
+<dt><i>BufferNeeded</i> [out, optional]</dt>
+<dd>
+<p>Specifies the size of the function entry information.</p>
+</dd>
+</dl>
+<h2>Return value</h2>
+<p>This method may also return error values.  See <a href="hresult_values.htm"><b>Return Values</b></a> for more details.</p>
+<table>
+<tr>
+<th>Return code</th>
+<th>Description</th>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>S_OK</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>The method was successful.</p>
+</td>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>S_FALSE</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>The method was successful, but the buffer was not large enough to hold the function entry information and so the information was truncated to fit.</p>
+</td>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>E_NOINTERFACE</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>No function entry information was found for the location <i>Offset</i>.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>The structures FPO_DATA and IMAGE_FUNCTION_ENTRY are documented in "Image Help Library" which is included in Debugging Tools For Windows in the DbgHelp.chm file. </p>
+<div class="alert"><b>Note</b>  The functions in "Image Help Library" and "Debug Help Library", documented in DbgHelp.chm, should not be called by any extension or debugger engine application.</div>
+<div> </div>
+<p>For more information about symbols, see <a href="using_symbols.htm">Symbols</a>.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Target platform</p>
+</th>
+<td width="70%">
+<dl>
+<dt></dt>
+</dl>
+</td>
+</tr>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Dbgeng.h (include Dbgeng.h or Winnt.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="idebugsymbols3.htm"><b>IDebugSymbols3</b></a></dt>
+<dt><a href="getnextsymbolmatch.htm"><b>GetNextSymbolMatch</b></a></dt>
+<dt><a href="getsymboloffset.htm"><b>IDebugSymbolGroup::GetSymbolOffset</b></a></dt>
+<dt><a href="debug_symbol_entry.htm"><b>DEBUG_SYMBOL_ENTRY</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IDebugSymbols3::GetFunctionEntryByOffset method%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

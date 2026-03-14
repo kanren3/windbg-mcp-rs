@@ -1,0 +1,255 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The IG_GET_KERNEL_VERSION Ioctl operation receives information related to the operating system version of the target. When calling Ioctl with IoctlType set to IG_GET_KERNEL_VERSION, IpvData should contain an instance of the DBGKD_GET_VERSION64 structure."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IG_GET_KERNEL_VERSION</title>
+
+<meta name="MS-HAID" content="WdbgExts_Ref_33e7f185-3831-439b-9e92-8d942627f66b.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.ig_get_kernel_version"></a>IG_GET_KERNEL_VERSION</h1>
+</div>
+<p>The IG_GET_KERNEL_VERSION <a href="ioctl.htm"><b>Ioctl</b></a> operation receives information related to the operating system version of the target.  When calling <b>Ioctl</b> with <i>IoctlType</i> set to IG_GET_KERNEL_VERSION, <i>IpvData</i> should contain an instance of the DBGKD_GET_VERSION64 structure.</p>
+<pre class="syntax" xml:space="preserve"><code>typedef struct _DBGKD_GET_VERSION64 {
+    USHORT  MajorVersion;
+    USHORT  MinorVersion;
+    UCHAR  ProtocolVersion;
+    UCHAR  KdSecondaryVersion;
+    USHORT  Flags;
+    USHORT  MachineType;
+    UCHAR  MaxPacketType;
+    UCHAR  MaxStateChange;
+    UCHAR  MaxManipulate;
+    UCHAR  Simulation;
+    USHORT  Unused[1];
+    ULONG64  KernBase;
+    ULONG64  PsLoadedModuleList;
+    ULONG64  DebuggerDataList;
+} DBGKD_GET_VERSION64, *PDBGKD_GET_VERSION64;</code></pre>
+<h2><a id="Members"></a><a id="members"></a><a id="MEMBERS"></a>Members</h2>
+<p></p>
+<dl>
+<dt><a id="MajorVersion"></a><a id="majorversion"></a><a id="MAJORVERSION"></a><b>MajorVersion</b></dt>
+<dd>
+<p>Receives 0xF if the target's operating system is a free build, and 0xC if it is a checked build.</p>
+</dd>
+<dt><a id="MinorVersion"></a><a id="minorversion"></a><a id="MINORVERSION"></a><b>MinorVersion</b></dt>
+<dd>
+<p>Receives the build number for the target's operating system.</p>
+</dd>
+<dt><a id="ProtocolVersion"></a><a id="protocolversion"></a><a id="PROTOCOLVERSION"></a><b>ProtocolVersion</b></dt>
+<dd>
+<p>Receives the version of the debugger protocol that is used to communicate between the debugger and the target.</p>
+</dd>
+<dt><a id="KdSecondaryVersion"></a><a id="kdsecondaryversion"></a><a id="KDSECONDARYVERSION"></a><b>KdSecondaryVersion</b></dt>
+<dd>
+<p>Receives a secondary version number that is used to distinguish among older, deprecated contexts.</p>
+</dd>
+<dt><a id="Flags"></a><a id="flags"></a><a id="FLAGS"></a><b>Flags</b></dt>
+<dd>
+<p>Receives a set of bit flags for the current debugging session.  The following flags can be present.</p>
+<table>
+<tr>
+<th>Flag</th>
+<th>Meaning when set</th>
+</tr>
+<tr>
+<td>
+<p>DBGKD_VERS_FLAG_MP</p>
+</td>
+<td>
+<p>The target kernel was compiled with support for multiple processors.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DBGKD_VERS_FLAG_DATA</p>
+</td>
+<td>
+<p>The list <b>DebuggerDataList</b> is valid.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DBGKD_VERS_FLAG_PTR64</p>
+</td>
+<td>
+<p>The target uses 64-bit pointers.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DBGKD_VERS_FLAG_NOMM</p>
+</td>
+<td>
+<p>The debugger's memory cache is active.  If this is not set, the debugger will convert all virtual addresses into physical address before accessing the target's memory.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DBGKD_VERS_FLAG_HSS</p>
+</td>
+<td>
+<p>The target supports hardware stepping.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DBGKD_VERS_FLAG_PARTITIONS</p>
+</td>
+<td>
+<p>Multiple operating system partitions exist.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+</dd>
+<dt><a id="MachineType"></a><a id="machinetype"></a><a id="MACHINETYPE"></a><b>MachineType</b></dt>
+<dd>
+<p>Receives the type of the target's processor.  Possible processor types are listed in the following table.</p>
+<table>
+<tr>
+<th>Value</th>
+<th>Processor</th>
+</tr>
+<tr>
+<td>
+<p>IMAGE_FILE_MACHINE_I386</p>
+</td>
+<td>
+<p>x86 architecture</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>IMAGE_FILE_MACHINE_ARM</p>
+</td>
+<td>
+<p>ARM architecture</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>IMAGE_FILE_MACHINE_IA64</p>
+</td>
+<td>
+<p>Intel Itanium architecture</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>IMAGE_FILE_MACHINE_AMD64</p>
+</td>
+<td>
+<p>x64 architecture</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>IMAGE_FILE_MACHINE_EBC</p>
+</td>
+<td>
+<p>EFI byte code architecture</p>
+</td>
+</tr>
+</table>
+<p> </p>
+</dd>
+<dt><a id="MaxPacketType"></a><a id="maxpackettype"></a><a id="MAXPACKETTYPE"></a><b>MaxPacketType</b></dt>
+<dd>
+<p>Receives one plus the highest number for a debugger packet type recognized by the target.</p>
+</dd>
+<dt><a id="MaxStateChange"></a><a id="maxstatechange"></a><a id="MAXSTATECHANGE"></a><b>MaxStateChange</b></dt>
+<dd>
+<p>Receives one plus the highest number for a state change generated by the target.</p>
+</dd>
+<dt><a id="MaxManipulate"></a><a id="maxmanipulate"></a><a id="MAXMANIPULATE"></a><b>MaxManipulate</b></dt>
+<dd>
+<p>Receives one more that the highest number, recognized by the target, for a command to manipulate the target.</p>
+</dd>
+<dt><a id="Simulation"></a><a id="simulation"></a><a id="SIMULATION"></a><b>Simulation</b></dt>
+<dd>
+<p>Receives an indication if the target is in simulated execution.  Possible values are listed in the following table.</p>
+<table>
+<tr>
+<th>Value</th>
+<th>Processor</th>
+</tr>
+<tr>
+<td>
+<p>DBGKD_SIMULATION_NONE</p>
+</td>
+<td>
+<p>No simulation is used.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DBGKD_SIMULATION_EXDI</p>
+</td>
+<td>
+<p>EXDI simulation is used.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+</dd>
+<dt><a id="Unused"></a><a id="unused"></a><a id="UNUSED"></a><b>Unused</b></dt>
+<dd>
+<p>Unused.</p>
+</dd>
+<dt><a id="KernBase"></a><a id="kernbase"></a><a id="KERNBASE"></a><b>KernBase</b></dt>
+<dd>
+<p>Receives the base address of the kernel image.</p>
+</dd>
+<dt><a id="PsLoadedModuleList"></a><a id="psloadedmodulelist"></a><a id="PSLOADEDMODULELIST"></a><b>PsLoadedModuleList</b></dt>
+<dd>
+<p>Receives the value of the kernel variable <b>PsLoadedModuleList</b>.</p>
+</dd>
+<dt><a id="DebuggerDataList"></a><a id="debuggerdatalist"></a><a id="DEBUGGERDATALIST"></a><b>DebuggerDataList</b></dt>
+<dd>
+<p>Receives the value of the kernel variable <b>KdDebuggerDataBlock</b>.  This a pointer to either a KDDEBUGGER_DATA64 structure or a KDDEBUGGER_DATA32 structure.  Use the function <a href="getdebuggerdata.htm"><b>GetDebuggerData</b></a> to fetch this structure.</p>
+</dd>
+</dl>
+<h2><a id="Return_Value"></a><a id="return_value"></a><a id="RETURN_VALUE"></a>Return Value</h2>
+<p>If this <b>Ioctl</b> operation succeeds, the return value from <b>Ioctl</b> is <b>TRUE</b>; otherwise, it is <b>FALSE</b>.</p>
+<h2>Remarks</h2>
+<p>The parameters for the IG_GET_KERNEL_VERSION <a href="ioctl.htm"><b>Ioctl</b></a> operation are the members of the DBGKD_GET_VERSION64 structure.</p>
+<p>This operation is only available in kernel-mode debugging.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Wdbgexts.h (include Wdbgexts.h or Dbgeng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="ioctl.htm"><b>Ioctl</b></a></dt>
+<dt><a href="getdebuggerdata.htm"><b>GetDebuggerData</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IG_GET_KERNEL_VERSION%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

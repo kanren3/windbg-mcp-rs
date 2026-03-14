@@ -1,0 +1,1242 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="This topic describes how to use JavaScript to create scripts that understand debugger objects and extend and customize the capabilities of the debugger."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>JavaScript Debugger Scripting</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.javascript_debugger_scripting"></a>JavaScript Debugger Scripting</h1>
+</div>
+<p>This topic describes how to use JavaScript to create scripts that understand debugger objects and extend and customize the capabilities of the debugger.</p>
+<h2><a id="Overview_of_JavaScript_Debugger_Scripting_"></a><a id="overview_of_javascript_debugger_scripting_"></a><a id="OVERVIEW_OF_JAVASCRIPT_DEBUGGER_SCRIPTING_"></a>Overview of JavaScript Debugger Scripting </h2>
+<p></p>
+<p>Script providers bridge a scripting language to the debugger's internal object model. The JavaScript debugger scripting provider, allows the for use of JavaScript  with the debugger.</p>
+<p>When a JavaScript is loaded via the .scriptload command, the root code of the script is executed, the names which are present in the script are bridged into the root namespace of the debugger (dx Debugger) and the script stays resident in memory until it is unloaded and all references to its objects are released. The script can provide new functions to the debugger's expression evaluator, modify the object model of the debugger, or can act as a visualizer in much the same way that a NatVis visualizer does.  </p>
+<p>This topic describes some of what you can do with JavaScript debugger scripting.</p>
+<dl>
+<dd>
+<p><a href="#Provider">Load The Debugger JavaScript Provider</a></p>
+</dd>
+<dd>
+<p><a href="#Commands">Use the JavaScript Scripting  Meta Commands</a></p>
+</dd>
+<dd>
+<p><a href="#Started">Get Started with JavaScript Debugger Scripting</a></p>
+</dd>
+<dd>
+<p><a href="#Automate">Automate Debugger Commands</a></p>
+</dd>
+<dd>
+<p><a href="#Breakpoints">Set Conditional Breakpoints with JavaScript</a></p>
+</dd>
+<dd>
+<p><a href="#Visualizer">Create a Debugger Visualizer in JavaScript</a></p>
+</dd>
+<dd>
+<p><a href="#BitValues">Work With 64-Bit Values in JavaScript Extensions</a></p>
+</dd>
+<dd>
+<p><a href="#Resources">JavaScript Resources</a></p>
+</dd>
+</dl>
+<p>These two topics provide additional information about working with JavaScript in the debugger. </p>
+<dl>
+<dd>
+<p><a href="javascript_debugger_example_scripts.htm">JavaScript Debugger Example Scripts</a></p>
+</dd>
+<dd>
+<p><a href="native_objects_in_javascript_extensions.htm">Native Objects in JavaScript Extensions</a></p>
+</dd>
+</dl>
+<h2><a id="Provider"></a><a id="provider"></a><a id="PROVIDER"></a>The Debugger JavaScript Provider</h2>
+<p>The JavaScript provider included with the debugger takes full advantage of the latest ECMAScript6 object and class enhancements. For more information, see <a href="http://es6-features.org/">ECMAScript 6 — New Features: Overview &amp; Comparison</a>.  </p>
+<p><b>JsProvider.dll </b></p>
+<p>JsProvider.dll is the JavaScript provider that is loaded to support JavaScript Debugger Scripting. </p>
+<p><b>Requirements</b></p>
+<p>JavaScript Debugger Scripting is designed to work with all supported versions of Windows.</p>
+<h2><a id="Loading_the_JavaScript_Scripting_Provider"></a><a id="loading_the_javascript_scripting_provider"></a><a id="LOADING_THE_JAVASCRIPT_SCRIPTING_PROVIDER"></a>Loading the JavaScript Scripting Provider</h2>
+<p>Before using any of the .script commands, a scripting provider needs to be loaded using the <a href="_load___loadby__load_extension_dll_.htm"><b>.load (Load Extension DLL)</b></a> command. To load the JavaScript provider, use the following command.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; .load jsprovider.dll
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Use the .scriptproviders command to confirm that the JavaScript provider is loaded.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; .scriptproviders
+Available Script Providers:
+    NatVis (extension '.NatVis')
+    JavaScript (extension '.js')</pre>
+</td>
+</tr>
+</table></span></div>
+<h2><a id="Commands"></a><a id="commands"></a><a id="COMMANDS"></a>JavaScript Scripting  Meta Commands</h2>
+<p>The following commands are available to work with JavaScript Debugger Scripting.</p>
+<ul>
+<li><a href="_scriptproviders__list_script_providers_.htm"><b>.scriptproviders (List Script Providers)</b></a></li>
+<li><a href="_scriptload__load_script_.htm"><b>.scriptload (Load Script)</b></a></li>
+<li><a href="_scriptunload__unload_script_.htm"><b>.scriptunload (Unload Script)</b></a></li>
+<li><a href="_scriptrun__run_script_.htm"><b>.scriptrun (Run Script)</b></a></li>
+<li><a href="_scriptlist__list_loaded_scripts_.htm"><b>.scriptlist (List Loaded Scripts)</b></a></li>
+</ul>
+<p><b>Requirements</b></p>
+<p>Before using any of the .script commands, a scripting provider needs to be loaded using the <a href="_load___loadby__load_extension_dll_.htm"><b>.load (Load Extension DLL)</b></a> command. To load the JavaScript provider, use the following command.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; .load jsprovider.dll
+</pre>
+</td>
+</tr>
+</table></span></div>
+<h2><a id=".scriptproviders__List_Script_Providers_"></a><a id=".scriptproviders__list_script_providers_"></a><a id=".SCRIPTPROVIDERS__LIST_SCRIPT_PROVIDERS_"></a>.scriptproviders (List Script Providers)</h2>
+<p>The .scriptproviders command will list all the script languages which are presently understood by the debugger and the extension under which they are registered.  </p>
+<p>In the example below, the JavaScript and NatVis providers are loaded.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; .scriptproviders
+Available Script Providers:
+    NatVis (extension '.NatVis')
+    JavaScript (extension '.js')</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Any file ending in ".NatVis" is understood as a NatVis script and any file ending in ".js" is understood as a JavaScript script. Either type of script can be loaded with the .scriptload command. 
+
+</p>
+<p>For more information, see  <a href="_scriptproviders__list_script_providers_.htm"><b>.scriptproviders (List Script Providers)</b></a></p>
+<h2><a id=".scriptload__Load_Script_"></a><a id=".scriptload__load_script_"></a><a id=".SCRIPTLOAD__LOAD_SCRIPT_"></a>.scriptload (Load Script)</h2>
+<p>The .scriptload command will load a script and execute the root code of a script and the <i>initializeScript</i> function. If there are any errors in the initial load and execution of the script, the errors will be displayed to console. The following command shows the successful load of TestScript.js. 
+</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; .scriptload C:\WinDbg\Scripts\TestScript.js
+JavaScript script successfully loaded from 'C:\WinDbg\Scripts\TestScript.js'
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p> Any object model manipulations made by the script will stay in place until the script is subsequently unloaded or is run again with different content. </p>
+<p>For more information, see <a href="_scriptload__load_script_.htm"><b>.scriptload (Load Script)</b></a></p>
+<h2><a id=".scriptrun"></a><a id=".SCRIPTRUN"></a>.scriptrun</h2>
+<p>The .scriptrun command will load a script, execute the root code of the script, the <i>initializeScript</i> and the <i>invokeScript</i> function. If there are any errors in the initial load and execution of the script, the errors will be displayed to console.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; .scriptrun C:\WinDbg\Scripts\helloWorld.js
+JavaScript script successfully loaded from 'C:\WinDbg\Scripts\helloWorld.js'
+Hello World!  We are in JavaScript!</pre>
+</td>
+</tr>
+</table></span></div>
+<p> Any debugger object model manipulations made by the script will stay in place until the script is subsequently unloaded or is run again with different content. </p>
+<p>For more information, see <a href="_scriptrun__run_script_.htm"><b>.scriptrun (Run Script)</b></a>.</p>
+<h2><a id=".scriptunload__Unload_Script_"></a><a id=".scriptunload__unload_script_"></a><a id=".SCRIPTUNLOAD__UNLOAD_SCRIPT_"></a>.scriptunload (Unload Script)</h2>
+<p></p>
+<p>The .scriptunload command unloads a loaded script and calls the <i>uninitializeScript</i> function.  Use the following command syntax to unload a script</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000:x86&gt; .scriptunload C:\WinDbg\Scripts\TestScript.js
+JavaScript script unloaded from 'C:\WinDbg\Scripts\TestScript.js'</pre>
+</td>
+</tr>
+</table></span></div>
+<p>For more information, see <a href="_scriptunload__unload_script_.htm"><b>.scriptunload (Unload Script)</b></a>.</p>
+<h2><a id=".scriptlist__List_Loaded_Scripts_"></a><a id=".scriptlist__list_loaded_scripts_"></a><a id=".SCRIPTLIST__LIST_LOADED_SCRIPTS_"></a>.scriptlist
+(List Loaded Scripts)</h2>
+<p>The .scriptlist command will list any scripts which have been loaded via the .scriptload or the .scriptrun command. If the TestScript was successfully loaded using .scriptload, the .scriptlist command would display the name of the loaded script. 
+</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; .scriptlist
+Command Loaded Scripts:
+    JavaScript script from 'C:\WinDbg\Scripts\TestScript.js'</pre>
+</td>
+</tr>
+</table></span></div>
+<p>For more information, see <a href="_scriptlist__list_loaded_scripts_.htm"><b>.scriptlist (List Loaded Scripts)</b></a>.</p>
+<h2><a id="Started"></a><a id="started"></a><a id="STARTED"></a>Get Started with JavaScript Debugger Scripting</h2>
+<h3><a id="HelloWorld_Example_Script"></a><a id="helloworld_example_script"></a><a id="HELLOWORLD_EXAMPLE_SCRIPT"></a>HelloWorld Example Script</h3>
+<p>This section describes how to create and execute a simple  JavaScript debugger script that prints out, Hello World.</p>
+<p></p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>// WinDbg JavaScript sample
+// Prints Hello World
+function initializeScript()
+{
+    host.diagnostics.debugLog("***&gt; Hello World! \n");
+}</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Use a text editor such as Notepad to create a text file named <i>HelloWorld.js</i> that contains the JavaScript code shown above.</p>
+<p>Use the <a href="_load___loadby__load_extension_dll_.htm"><b>.load (Load Extension DLL)</b></a> command to load the JavaScript provider. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; .load jsprovider.dll</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Use the .scriptload command to load and execute the script. Because we used the function name <i>initializeScript</i>, the code in the function is run when the script is loaded. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; .scriptload c:\WinDbg\Scripts\HelloWorld.js
+JavaScript script successfully loaded from 'c:\WinDbg\Scripts\HelloWorld.js'
+***&gt; Hello World! 
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p>After the script is loaded the additional functionality is available in the debugger. Use the <a href="dx__display_visualizer_variables_.htm"><b>dx (Display NatVis Expression)</b></a> command to display <i>Debugger.State.Scripts</i> to see that our script is now resident. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; dx Debugger.State.Scripts
+Debugger.State.Scripts                
+    HelloWorld </pre>
+</td>
+</tr>
+</table></span></div>
+<p>In the next example, we will add and call a  named function.</p>
+<h3><a id="Adding_Two_Values_Example_Script"></a><a id="adding_two_values_example_script"></a><a id="ADDING_TWO_VALUES_EXAMPLE_SCRIPT"></a>Adding Two Values Example Script</h3>
+<p>This section describes how to create and execute a simple  JavaScript debugger script that adds takes input and adds two numbers.</p>
+<p> 
+
+This simple script provides a single function, addTwoValues.  
+</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>// WinDbg JavaScript sample
+// Adds two functions
+function addTwoValues(a, b)
+ {
+     return a + b;
+ }</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Use a text editor such as Notepad to create a text file named <i>FirstSampleFunction.js </i></p>
+<p>Use the <a href="_load___loadby__load_extension_dll_.htm"><b>.load (Load Extension DLL)</b></a> command to load the JavaScript provider. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; .load jsprovider.dll</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Use the .scriptload command to load the script.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; .scriptload c:\WinDbg\Scripts\FirstSampleFunction.js
+JavaScript script successfully loaded from 'c:\WinDbg\Scripts\FirstSampleFunction.js'
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p>After the script is loaded the additional functionality is available in the debugger. Use the <a href="dx__display_visualizer_variables_.htm"><b>dx (Display NatVis Expression)</b></a> command to display <i>Debugger.State.Scripts</i> to see that our script is now resident. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; dx Debugger.State.Scripts
+Debugger.State.Scripts                
+    FirstSampleFunction    </pre>
+</td>
+</tr>
+</table></span></div>
+<p>We can click on the <i>FirstSampleFunction</i>, to see what functions it provides.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; dx -r1 Debugger.State.Scripts.FirstSampleFunction.Contents
+Debugger.State.Scripts.FirstSampleFunction.Contents                 : [object Object]
+    host             : [object Object]
+    addTwoValues   </pre>
+</td>
+</tr>
+</table></span></div>
+<p>To make the script  a bit more convenient to work with, assign a variable in the debugger to hold the contents of the script using the dx command. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; dx @$myScript = Debugger.State.Scripts.FirstSampleFunction.Contents</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Use the dx expression evaluator to call the addTwoValues function.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; dx @$myScript.addTwoValues(10, 41),d
+@$myScript.addTwoValues(10, 41),d : 51</pre>
+</td>
+</tr>
+</table></span></div>
+<p>You can also use the <i>@$scriptContents</i> built in alias to work with the scripts. The <i>@$scriptContents</i> alias merges all of the .Content of all of the scripts that are loaded. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:001&gt; dx @$scriptContents.addTwoValues(10, 40),d
+@$scriptContents.addTwoValues(10, 40),d : 50
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p>When you are done working with the script use the .scriptunload command to unload the script.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; .scriptunload c:\WinDbg\Scripts\FirstSampleFunction.js
+JavaScript script successfully unloaded from 'c:\WinDbg\Scripts\FirstSampleFunction.js'</pre>
+</td>
+</tr>
+</table></span></div>
+<h3><a id="Automate"></a><a id="automate"></a><a id="AUTOMATE"></a>Debugger Command Automation</h3>
+<p>This section describes how to create and execute a simple  JavaScript debugger script that automates the sending of the <a href="u__unassemble_.htm"><b>u (Unassemble)</b></a> command. The sample also shows how to gather and display command output in a loop.</p>
+<p> 
+
+This script provides a single function, RunCommands().  
+</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>// WinDbg JavaScript sample
+// Shows how to call a debugger command and display results
+"use strict";
+
+function RunCommands()
+{
+var ctl = host.namespace.Debugger.Utility.Control;   
+var output = ctl.ExecuteCommand("u");
+host.diagnostics.debugLog("***&gt; Displaying command ouput \n");
+
+for (var line of output)
+   {
+   host.diagnostics.debugLog("  ", line, "\n");
+   }
+
+host.diagnostics.debugLog("***&gt; Exiting RunCommands Function \n");
+
+}</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Use a text editor such as Notepad to create a text file named <i>RunCommands.js </i></p>
+<p>Use the <a href="_load___loadby__load_extension_dll_.htm"><b>.load (Load Extension DLL)</b></a> command to load the JavaScript provider. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; .load jsprovider.dll</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Use the .scriptload command to load the RunCommands script.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; .scriptload c:\WinDbg\Scripts\RunCommands.js 
+JavaScript script successfully loaded from 'c:\WinDbg\Scripts\RunCommands.js'
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p>After the script is loaded the additional functionality is available in the debugger. Use the <a href="dx__display_visualizer_variables_.htm"><b>dx (Display NatVis Expression)</b></a> command to display <i>Debugger.State.Scripts.RunCommands</i> to see that our script is now resident. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt;dx -r3 Debugger.State.Scripts.RunCommands
+Debugger.State.Scripts.RunCommands                
+    Contents         : [object Object]
+        host             : [object Object]
+            diagnostics      : [object Object]
+            namespace       
+            currentSession   : Live user mode: &lt;Local&gt;
+            currentProcess   : notepad.exe
+            currentThread    : ntdll!DbgUiRemoteBreakin (00007ffd`87f2f440) 
+            memory           : [object Object]</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Use the dx command to call the RunCommands function in the RunCommands script.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; dx Debugger.State.Scripts.RunCommands.Contents.RunCommands()
+  ***&gt; Displaying command ouput
+  ntdll!ExpInterlockedPopEntrySListEnd+0x17 [d:\rs1\minkernel\ntos\rtl\amd64\slist.asm @ 196]:
+  00007ffd`87f06e67 cc              int     3
+  00007ffd`87f06e68 cc              int     3
+  00007ffd`87f06e69 0f1f8000000000  nop     dword ptr [rax]
+  ntdll!RtlpInterlockedPushEntrySList [d:\rs1\minkernel\ntos\rtl\amd64\slist.asm @ 229]:
+  00007ffd`87f06e70 0f0d09          prefetchw [rcx]
+  00007ffd`87f06e73 53              push    rbx
+  00007ffd`87f06e74 4c8bd1          mov     r10,rcx
+  00007ffd`87f06e77 488bca          mov     rcx,rdx
+  00007ffd`87f06e7a 4c8bda          mov     r11,rdx
+***&gt; Exiting RunCommands Function</pre>
+</td>
+</tr>
+</table></span></div>
+<h2><a id="Special_JavaScript_Debugger_Functions"></a><a id="special_javascript_debugger_functions"></a><a id="SPECIAL_JAVASCRIPT_DEBUGGER_FUNCTIONS"></a>Special JavaScript Debugger Functions</h2>
+<p>There are several special functions in a JavaScript script called by the script provider itself. </p>
+<h3><a id="initializeScript"></a><a id="initializescript"></a><a id="INITIALIZESCRIPT"></a>initializeScript</h3>
+<p>When a JavaScript script loads and is executed, it goes through a series of steps before the variables, functions, and other objects in the script affect the object model of the debugger.</p>
+<ul>
+<li>The script is loaded into memory and parsed. </li>
+<li>The root code in the script is executed. </li>
+<li>If the script has a method called initializeScript, that method is called. </li>
+<li>The return value from initializeScript is used to determine how to automatically modify the object model of the debugger. </li>
+<li>The names in the script are bridged to the debugger's namespace. </li>
+</ul>
+<p>As mentioned, initializeScript will be called immediately after the root code of the script is executed. Its job is to return a JavaScript array of registration objects to the provider indicating how to modify the object model of the debugger. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>function initializeScript()
+{
+    // Add code here that you want to run everytime the script is loaded. 
+    // We will just send a message to indicate that function was called.
+    host.diagnostics.debugLog("***&gt; initializeScript was called\n");
+}</pre>
+</td>
+</tr>
+</table></span></div>
+<p></p>
+<h3><a id="invokeScript"></a><a id="invokescript"></a><a id="INVOKESCRIPT"></a>invokeScript</h3>
+<p>The invokeScript method is the primary script method and is called when .scriptload and .scriptrun are run.  </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>function invokeScript()
+{
+    // Add code here that you want to run everytime the script is executed. 
+    // We will just send a message to indicate that function was called.
+    host.diagnostics.debugLog("***&gt; invokeScript was called\n");
+}</pre>
+</td>
+</tr>
+</table></span></div>
+<p></p>
+<h3><a id="uninitializeScript"></a><a id="uninitializescript"></a><a id="UNINITIALIZESCRIPT"></a>uninitializeScript</h3>
+<p>The uninitializeScript method is the behavioral opposite of initializeScript. It is called when a script is unlinked and is getting ready to unload. Its job is to undo any changes to the object model which the script made imperatively during execution and/or to destroy any objects which the script cached.  </p>
+<p>If a script neither makes imperative manipulations to the object model nor caches results, it does not need to have an uninitializeScript method. Any changes to the object model performed as indicated by the return value of initializeScript are undone automatically by the provider. Such changes do not require an explicit uninitializeScript method.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>function uninitializeScript()
+{
+    // Add code here that you want to run everytime the script is unloaded. 
+    // We will just send a message to indicate that function was called.
+    host.diagnostics.debugLog("***&gt; uninitialize was called\n");
+}</pre>
+</td>
+</tr>
+</table></span></div>
+<h2><a id="Summary_of_Functions_Called_by_Script_Commands"></a><a id="summary_of_functions_called_by_script_commands"></a><a id="SUMMARY_OF_FUNCTIONS_CALLED_BY_SCRIPT_COMMANDS"></a>Summary of Functions Called by Script Commands</h2>
+<p>This table summarizes which functions are called by the script commands</p>
+<table>
+<tr>
+<td></td>
+<td>.<a href="_scriptload__load_script_.htm"><b>.scriptload</b></a></td>
+<td><a href="_scriptrun__run_script_.htm"><b>.scriptrun (Run Script)</b></a></td>
+<td><a href="_scriptunload__unload_script_.htm"><b>.scriptunload (Unload Script)</b></a></td>
+</tr>
+<tr>
+<td>root</td>
+<td>yes</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>initializeScript</td>
+<td>yes</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>invokeScript</td>
+<td></td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>uninitializeScript</td>
+<td></td>
+<td></td>
+<td>yes</td>
+</tr>
+</table>
+<p> </p>
+<p>Use this sample code to see when each function is called as the script is loaded, executed and unloaded.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>// Root of Script
+host.diagnostics.debugLog("***&gt;; Code at the very top (root) of the script is always run \n");
+
+
+function initializeScript()
+{
+    // Add code here that you want to run everytime the script is loaded. 
+    // We will just send a message to indicate that function was called.
+    host.diagnostics.debugLog("***&gt;; initializeScript was called \n");
+}
+
+function invokeScript()
+{
+    // Add code here that you want to run everytime the script is executed. 
+    // We will just send a message to indicate that function was called.
+    host.diagnostics.debugLog("***&gt;; invokeScript was called \n");
+}
+
+
+function uninitializeScript()
+{
+    // Add code here that you want to run everytime the script is unloaded. 
+    // We will just send a message to indicate that function was called.
+    host.diagnostics.debugLog("***&gt;; uninitialize was called\n");
+}
+
+
+function main()
+{
+    // main is just another function name in JavaScript
+    // main is not called by .scriptload or .scriptrun	
+    host.diagnostics.debugLog("***&gt;; main was called \n");
+}</pre>
+</td>
+</tr>
+</table></span></div>
+<h2><a id="Visualizer"></a><a id="visualizer"></a><a id="VISUALIZER"></a>Creating a Debugger Visualizer in JavaScript</h2>
+<p>Custom visualization files allow you to group and organize data in a visualization structure that better reflects the data relationships and content.  You can use the JavaScript debugger extensions to write debugger visualizers which act in a way very similar to NatVis. This is accomplished via authoring a JavaScript prototype object (or an ES6 class) which acts as the visualizer for a given data type.  For more information about NatVis and the debugger see <a href="dx__display_visualizer_variables_.htm"><b>dx (Display NatVis Expression)</b></a>.</p>
+<p><b>Example class - Simple1DArray</b></p>
+<p>Consider an example of a C++ class which represents a single dimensional array. This class has two members, m_size which is the overall size of the array, and m_pValues which is a pointer to a number of ints in memory equal to the m_size field. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>class Simple1DArray
+{
+private:
+ 
+    ULONG64 m_size;
+    int *m_pValues;
+};</pre>
+</td>
+</tr>
+</table></span></div>
+<p>We can use the dx command to look at the default data structure rendering.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; dx g_array1D
+g_array1D                 [Type: Simple1DArray]
+    [+0x000] m_size           : 0x5 [Type: unsigned __int64]
+    [+0x008] m_pValues        : 0x8be32449e0 : 0 [Type: int *]</pre>
+</td>
+</tr>
+</table></span></div>
+<p><b>JavaScript Visualizer</b></p>
+<p>In order to visualize this type, we need to author a prototype (or ES6) class which has all the fields and properties we want the debugger to show.  We also need to have the initializeScript method return an object which tells the JavaScript provider to link our prototype as a visualizer for the given type. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>function initializeScript()
+{
+    //
+    // Define a visualizer class for the object.
+    //
+    class myVisualizer
+    {
+        //
+        // Create an ES6 generator function which yields back all the values in the array.
+        //
+        *[Symbol.iterator]()
+        {
+            var size = this.m_size;
+            var ptr = this.m_pValues;
+            for (var i = 0; i &lt; size; ++i)
+            {
+                yield ptr.dereference();
+ 
+                //
+                // Note that the .add(1) method here is effectively doing pointer arithmetic on
+                // the underlying pointer.  It is moving forward by the size of 1 object.
+                //
+                ptr = ptr.add(1);
+            }
+        }
+    }
+ 
+    return [new host.typeSignatureRegistration(myVisualizer, "Simple1DArray")];
+}</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Save the script in a file named arrayVisualizer.js.</p>
+<p>Use the <a href="_load___loadby__load_extension_dll_.htm"><b>.load (Load Extension DLL)</b></a> command to load the JavaScript provider. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; .load C:\ScriptProviders\jsprovider.dll</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Use .scriptload to load the array visualizer script. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; .scriptload c:\WinDbg\Scripts\arrayVisualizer.js
+JavaScript script successfully loaded from 'c:\WinDbg\Scripts\arrayVisualizer.js'</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Now, when the dx command is used the script visualizer will display rows of array content. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; dx g_array1D
+g_array1D                 : [object Object] [Type: Simple1DArray]
+    [&lt;Raw View&gt;]     [Type: Simple1DArray]
+    [0x0]            : 0x0
+    [0x1]            : 0x1
+    [0x2]            : 0x2
+    [0x3]            : 0x3
+    [0x4]            : 0x4</pre>
+</td>
+</tr>
+</table></span></div>
+<p>In addition, this JavaScript visualization provides  LINQ functionality, such as Select. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; dx g_array1D.Select(n =&gt; n * 3),d
+g_array1D.Select(n =&gt; n * 3),d                
+    [0]              : 0
+    [1]              : 3
+    [2]              : 6
+    [3]              : 9
+    [4]              : 12</pre>
+</td>
+</tr>
+</table></span></div>
+<p><b>What Affects the Visualization</b></p>
+<p>A prototype or class which is made the visualizer for a native type through a return of a host.typeSignatureRegistration object from initializeScript will have all of the properties and methods within JavaScript added to the native type. In addition, the following semantics apply: </p>
+<ul>
+<li>
+<p>Any name which does not start with two underscores (__) will be available in the visualization. 
+ </p>
+</li>
+<li>
+<p>Names which are part of standard JavaScript objects or are part of protocols which the JavaScript provider creates will not show up in the visualization. 
+ </p>
+</li>
+<li>
+<p>An object can be made iterable via the support of [Symbol.iterator]. 
+ </p>
+</li>
+<li>
+<p>An object can be made indexable via the support of a custom protocol consisting of several functions: getDimensionality, getValueAt, and optionally setValueAt. 
+</p>
+</li>
+</ul>
+<p><b>Native and JavaScript Object Bridge</b></p>
+<p>The bridge between JavaScript and the object model of the debugger is two-way. Native objects can be passed into JavaScript and JavaScript objects can be passed into the Debugger's expression evaluator. As an example of this, consider the addition of the following method in our script: </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>function multiplyBySeven(val)
+{
+    return val * 7;
+}</pre>
+</td>
+</tr>
+</table></span></div>
+<p>This method can now be utilized in the example LINQ query above. First we load the JavaScript visualization.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; .scriptload c:\WinDbg\Scripts\arrayVisualizer2.js
+JavaScript script successfully loaded from 'c:\WinDbg\Scripts\arrayVisualizer2.js'
+
+0:000&gt; dx @$myScript = Debugger.State.Scripts.arrayVisualizer2.Contents</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Then we can use the multiplyBySeven function inline as shown below.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; dx g_array1D.Select(@$myScript.multiplyBySeven),d
+g_array1D.Select(@$myScript.multiplyBySeven),d                
+    [0]              : 0
+    [1]              : 7
+    [2]              : 14
+    [3]              : 21
+    [4]              : 28</pre>
+</td>
+</tr>
+</table></span></div>
+<h2><a id="Breakpoints"></a><a id="breakpoints"></a><a id="BREAKPOINTS"></a>Conditional Breakpoints with JavaScript</h2>
+<p>You can use JavaScript to do supplemental processing after a breakpoint is hit. For example, script can be used to examine other run time values and then determine if you want to automatically continue code execution or stop and do additional manual debugging. </p>
+<p>For general information on working with  breakpoints, see <a href="methods_of_controlling_breakpoints.htm">Methods of Controlling Breakpoints</a>.</p>
+<p><b> DebugHandler.js Example Breakpoint Processing Script</b></p>
+<p>This example will evaluate notepad's open and save dialog: <i>notepad!ShowOpenSaveDialog</i>. This script will evaluate the pszCaption variable to determine if the current dialog is an "Open" dialog or if it is a "Save As" dialog. If it's an open dialog, code execution will  continue. If it's a save as dialog, code execution will stop, and the debugger will break in. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre> // Use JavaScript stric mode 
+"use strict";
+ 
+// Define the invokeScript method to handle breakpoints
+ 
+ function invokeScript()
+ {
+    var ctl = host.namespace.Debugger.Utility.Control;
+ 
+    //Get the address of my string
+    var address = host.evaluateExpression("pszCaption");
+ 
+    //The open and save dialogs use the same function
+        //When we hit the open dialog, continue.
+        //When we hit the save dialog, break.
+    if(host.memory.readWideString(address)=="Open"){
+        //host.diagnostics.debugLog("We're opening, let's continue!\n");
+        ctl.ExecuteCommand("gc");
+    }else{
+        //host.diagnostics.debugLog("We're saving, let's break!\n");
+    }
+ 
+ }</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Use the <a href="_load___loadby__load_extension_dll_.htm"><b>.load (Load Extension DLL)</b></a> command to load the JavaScript provider. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; .load jsprovider.dll</pre>
+</td>
+</tr>
+</table></span></div>
+<p>This command sets a breakpoint on notepad!ShowOpenSaveDialog, and will run the script above whenever that breakpoint is hit. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>bp notepad!ShowOpenSaveDialog ".scriptrun C:\\WinDbg\\Scripts\\DebugHandler.js"
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Then when the File &gt; Save option is selected in notepad, the script is run, the g command is not sent, and a break in code execution occurs.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>JavaScript script successfully loaded from 'C:\WinDbg\Scripts\DebugHandler.js'
+notepad!ShowOpenSaveDialog:
+00007ff6`f9761884 48895c2408      mov     qword ptr [rsp+8],rbx ss:000000db`d2a9f2f0=0000021985fe2060</pre>
+</td>
+</tr>
+</table></span></div>
+<p></p>
+<p></p>
+<h2><a id="BitValues"></a><a id="bitvalues"></a><a id="BITVALUES"></a>Work With 64-Bit Values in JavaScript Extensions</h2>
+<p>This section describes how 64-bit values passed into a JavaScript debugger extension behave. This issue arises as JavaScript only has the ability to store numbers using 53-bits.</p>
+<p><b>64-Bit and JavaScript 53-Bit Storage</b></p>
+<p>Ordinal values passed into JavaScript are normally marshaled as JavaScript numbers. The problem with this is that JavaScript numbers are 64-bit double precision floating point values. Any ordinal over 53-bits would lose precision on entry into JavaScript. This presents an issue for 64-bit pointers and other 64-bit ordinal values which may have flags in the highest bytes. In order to deal with this, any 64-bit native value (whether from native code or the data model) which enters JavaScript enters as a library type -- not as a JavaScript number. This library type will round trip back to native code without losing numeric precision. </p>
+<p><b>Auto-Conversion</b></p>
+<p>The library type for 64-bit ordinal values supports the standard JavaScript valueOf conversion. If the object is used in a math operation or other construct which requires value conversion, it will automatically convert to a JavaScript number. If loss of precision were to occur (the value utilizes more than 53-bits of ordinal precision), the JavaScript provider will throw an exception. </p>
+<p>Note that if you use bitwise operators in JavaScript, you are further limited to 32-bits of ordinal precision. </p>
+<p>This sample code sums two numbers and will be used to test the conversion of 64 bit values.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>function playWith64BitValues(a64, b64)
+{
+    // Sum two numbers to demonstrate 64-bit behavior.
+    //
+    // Imagine a64==100, b64==1000
+    // The below would result in sum==1100 as a JavaScript number.  No exception is thrown.  The values auto-convert.
+    //
+    // Imagine a64==2^56, b64=1
+    // The below will **Throw an Exception**.  Conversion to numeric results in loss of precision!
+    //
+    var sum = a64 + b64;
+    host.diagnostics.debugLog("Sum   &gt;&gt; ", sum, "\n");
+ 
+}
+
+function performOp64BitValues(a64, b64, op)
+{
+    //
+    // Call a data model method passing 64-bit value.  There is no loss of precision here.  This round trips perfectly.
+    // For example:
+    //  0:000&gt; dx @$myScript.playWith64BitValues(0x4444444444444444ull, 0x3333333333333333ull, (x, y) =&gt; x + y)
+    //  @$myScript.playWith64BitValues(0x4444444444444444ull, 0x3333333333333333ull, (x, y) =&gt; x + y) : 0x7777777777777777
+    //
+    return op(a64, b64);
+}</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Use a text editor such as Notepad to create a text file named <i>PlayWith64BitValues.js </i></p>
+<p>Use the <a href="_load___loadby__load_extension_dll_.htm"><b>.load (Load Extension DLL)</b></a> command to load the JavaScript provider. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; .load jsprovider.dll</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Use the .scriptload command to load the script.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; .scriptload c:\WinDbg\Scripts\PlayWith64BitValues.js
+JavaScript script successfully loaded from 'c:\WinDbg\Scripts\PlayWith64BitValues.js'
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p>To make the script  a bit more convenient to work with, assign a variable in the debugger to hold the contents of the script using the dx command. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; dx @$myScript = Debugger.State.Scripts.PlayWith64BitValues.Contents</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Use the dx expression evaluator to call the addTwoValues function.</p>
+<p>First we will calculate the value of 2^53 =9007199254740992 (Hex 0x20000000000000). </p>
+<p>First to test, we will  use  (2^53) - 2 and see that it returns the correct value for the sum.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; dx @$myScript.playWith64BitValues(9007199254740990, 9007199254740990)
+Sum   &gt;&gt; 18014398509481980
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Then we will calculate (2^53) -1  =9007199254740991. This returns the error indicating that the conversion process will lose precision, so this is the largest value that can be used with the sum method in JavaScript code. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; dx @$myScript.playWith64BitValues(9007199254740990, 9007199254740991)
+Error: 64 bit value loses precision on conversion to number</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Call a data model method passing 64-bit values.  There is no loss of precision here. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:001&gt; dx @$myScript.performOp64BitValues( 0x7FFFFFFFFFFFFFFF,  0x7FFFFFFFFFFFFFFF, (x, y) =&gt; x + y)
+@$myScript.performOp64BitValues( 0x7FFFFFFFFFFFFFFF,  0x7FFFFFFFFFFFFFFF, (x, y) =&gt; x + y) : 0xfffffffffffffffe
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p><b>Comparison</b></p>
+<p>The 64-bit library type is a JavaScript object and not a value type such as a JavaScript number. This has some implications for comparison operations. Normally, equality (==) on an object would indicate that operands refer to the same object and not the same value. The JavaScript provider mitigates this by tracking live references to 64-bit values and returning the same "immutable" object for non-collected 64-bit value. This means that for comparison, the following would occur.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>// Comparison with 64 Bit Values
+
+function comparisonWith64BitValues(a64, b64)
+{
+    //
+    // No auto-conversion occurs here.  This is an *EFFECTIVE* value comparison.  This works with ordinals with above 53-bits of precision.
+    //
+    var areEqual = (a64 == b64);
+    host.diagnostics.debugLog("areEqual   &gt;&gt; ", areEqual, "\n");
+    var areNotEqual = (a64 != b64);
+    host.diagnostics.debugLog("areNotEqual   &gt;&gt; ", areNotEqual, "\n");
+
+    //
+    // Auto-conversion occurs here.  This will throw if a64 does not pack into a JavaScript number with no loss of precision.
+    //
+    var isEqualTo42 = (a64 == 42);
+    host.diagnostics.debugLog("isEqualTo42   &gt;&gt; ", isEqualTo42, "\n");
+    var isLess = (a64 &lt; b64);
+    host.diagnostics.debugLog("isLess   &gt;&gt; ", isLess, "\n");
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Use a text editor such as Notepad to create a text file named <i>ComparisonWith64BitValues.js </i></p>
+<p>Use the <a href="_load___loadby__load_extension_dll_.htm"><b>.load (Load Extension DLL)</b></a> command to load the JavaScript provider. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; .load jsprovider.dll</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Use the .scriptload command to load the script.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; .scriptload c:\WinDbg\Scripts\ComparisonWith64BitValues.js
+JavaScript script successfully loaded from 'c:\WinDbg\Scripts\ComparisonWith64BitValues.js'
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p>To make the script  a bit more convenient to work with, assign a variable in the debugger to hold the contents of the script using the dx command. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; dx @$myScript = Debugger.State.Scripts.comparisonWith64BitValues.Contents</pre>
+</td>
+</tr>
+</table></span></div>
+<p>First to test, we will  use  (2^53) - 2 and see that it returns the expected values.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:001&gt; dx @$myScript.comparisonWith64BitValues(9007199254740990, 9007199254740990)
+areEqual   &gt;&gt; true
+areNotEqual   &gt;&gt; false
+isEqualTo42   &gt;&gt; false
+isLess   &gt;&gt; false</pre>
+</td>
+</tr>
+</table></span></div>
+<p>We will also try the number 42 as the first value to validate the comparison operator is working as it should.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:001&gt; dx @$myScript.comparisonWith64BitValues(42, 9007199254740990)
+areEqual   &gt;&gt; false
+areNotEqual   &gt;&gt; true
+isEqualTo42   &gt;&gt; true
+isLess   &gt;&gt; true</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Then we will calculate (2^53) -1  =9007199254740991. This value returns the error indicating that the conversion process will lose precision, so this is the largest value that can be used with the comparison operators in JavaScript code. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; dx @$myScript.playWith64BitValues(9007199254740990, 9007199254740991)
+Error: 64 bit value loses precision on conversion to number</pre>
+</td>
+</tr>
+</table></span></div>
+<p></p>
+<p><b>Maintaining Precision in Operations</b></p>
+<p>In order to allow a debugger extension to maintain precision, a set of math functions are projected on top of the 64-bit library type. If the extension needs (or may possibly) need precision above 53-bits for incoming 64-bit values, the following methods should be utilized instead of relying on standard operators: </p>
+<table>
+<tr>
+<td><b>Method Name</b></td>
+<td><b>Signature</b></td>
+<td><b>Description</b></td>
+</tr>
+<tr>
+<td>asNumber </td>
+<td>.asNumber() </td>
+<td>Converts the 64-bit value to a JavaScript number. If loss of precision occurs, **AN EXCEPTION IS THROWN** </td>
+</tr>
+<tr>
+<td>convertToNumber </td>
+<td>.convertToNumber()</td>
+<td> Converts the 64-bit value to a JavaScript number. If loss of precision occurs, **NO EXCEPTION IS THROWN** </td>
+</tr>
+<tr>
+<td>getLowPart </td>
+<td>.getLowPart()</td>
+<td> Converts the lower 32-bits of the 64-bit value to a JavaScript number </td>
+</tr>
+<tr>
+<td>getHighPart</td>
+<td>.getHighPart()</td>
+<td> Converts the high 32-bits of the 64-bit value to a JavaScript number </td>
+</tr>
+<tr>
+<td>add </td>
+<td>.add(value) </td>
+<td>Adds a value to the 64-bit value and returns the result </td>
+</tr>
+<tr>
+<td>subtract </td>
+<td>.subtract(value) </td>
+<td>Subtracts a value from the 64-bit value and returns the result </td>
+</tr>
+<tr>
+<td>multiply </td>
+<td>.multiply(value) </td>
+<td>Multiplies the 64-bit value by the supplied value and returns the result </td>
+</tr>
+<tr>
+<td>divide </td>
+<td>.divide(value)</td>
+<td> Divides the 64-bit value by the supplied value and returns the result </td>
+</tr>
+<tr>
+<td>bitwiseAnd </td>
+<td>.bitwiseAnd(value) </td>
+<td>Computes the bitwise and of the 64-bit value with the supplied value and returns the result </td>
+</tr>
+<tr>
+<td>bitwiseOr </td>
+<td>.bitwiseOr(value)  </td>
+<td>Computes the bitwise or of the 64-bit value with the supplied value and returns the result</td>
+</tr>
+<tr>
+<td>bitwiseXor </td>
+<td>.bitwiseXor(value) </td>
+<td>Computes the bitwise xor of the 64-bit value with the supplied value and returns the result </td>
+</tr>
+<tr>
+<td>bitwiseShiftLeft </td>
+<td>.bitwiseShiftLeft(value) </td>
+<td>Shifts the 64-bit value left by the given amount and returns the result </td>
+</tr>
+<tr>
+<td>bitwiseShiftRight </td>
+<td>.bitwiseShiftRight(value) </td>
+<td>Shifts the 64-bit value right by the given amount and returns the result </td>
+</tr>
+<tr>
+<td>toString </td>
+<td>.toString([radix]) </td>
+<td>Converts the 64-bit value to a display string in the default radix (or the optionally supplied radix) </td>
+</tr>
+</table>
+<p> </p>
+<p></p>
+<h2><a id="Resources"></a><a id="resources"></a><a id="RESOURCES"></a>JavaScript Resources</h2>
+<p>The following are JavaScript resources that may be useful as you develop JavaScript debugging extensions.</p>
+<ul>
+<li>
+<p><a href="https://msdn.microsoft.com/library/cte3c772(v=vs.85).aspx">Writing JavaScript Code</a></p>
+<p></p>
+</li>
+<li>
+<p><a href="https://msdn.microsoft.com/library/t895bwkh(v=vs.100).aspx">JScript Language Tour</a></p>
+</li>
+<li>
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript">Mozilla JavaScript Reference</a></p>
+</li>
+<li>
+<p><a href="https://developer.microsoft.com/windows/develop/winjs">WinJS: The Windows library for JavaScript</a></p>
+</li>
+<li>
+<p><a href="http://es6-features.org/">ECMAScript 6 — New Features: Overview &amp; Comparison</a></p>
+</li>
+</ul>
+<p></p>
+<h2><a id="related_topics"></a>Related topics</h2>
+<dl>
+<dt><a href="javascript_debugger_example_scripts.htm">JavaScript Debugger Example Scripts</a></dt>
+<dt><a href="native_objects_in_javascript_extensions.htm">Native Objects in JavaScript Extensions</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20JavaScript Debugger Scripting%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

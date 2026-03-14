@@ -1,0 +1,129 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The CRITICAL_PROCESS_DIED bug check has a value of 0x000000EF. This indicates that a critical system process died."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>(Developer Content) Bug Check 0xEF: CRITICAL_PROCESS_DIED</title>
+
+<meta name="MS-HAID" content="t07_bugs_E0_31d42b9c-8c9b-48ae-9990-0740db16f4cf.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0xef__critical_process_died"></a>(Developer Content) Bug Check 0xEF: CRITICAL_PROCESS_DIED</h1>
+</div>
+<p>The CRITICAL_PROCESS_DIED bug check has a value of 0x000000EF. This indicates that a critical system process died.</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2> CRITICAL_PROCESS_DIED Parameters</h2>
+<p>The following parameters are displayed on the blue screen.</p>
+<table>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>1</p>
+</td>
+<td>
+<p>The process object</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>2</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>3</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>4</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Resolution</h2>
+<p>Determining the cause of this issues typically requires the use of the debugger to gather additional information. Multiple dump files should be examined to see if this stop code has similar characteristics, such as the code that is running when the stop code appears.</p>
+<p>For more information,  see <a href="crash_dump_files.htm">Crash dump analysis using the Windows debuggers (WinDbg)</a>,  <a href="using_the__analyze_extension.htm">Using the !analyze Extension</a> and <a href="_analyze.htm">!analyze</a>. </p>
+<p>Use the event log to see if there are higher level events that occur leading up to this stop code.</p>
+<p>These general troubleshooting tips may be helpful.</p>
+<ul>
+<li>
+<p>If you recently added hardware to the system, try removing or replacing it. Or check with the manufacturer to see if any patches are available.</p>
+</li>
+<li>
+<p>If new device drivers or system services have been added recently, try removing or updating them. Try to determine what changed in the system that caused the new bug check code to appear.</p>
+</li>
+<li>
+<p>Check the System Log in Event Viewer for additional error messages that might help pinpoint the device or driver that is causing the error. For more information, see <a href="http://windows.microsoft.com/en-us/windows/what-information-event-logs-event-viewer#1TC=windows-7">Open Event Viewer</a>. Look for critical errors in the system log that occurred in the same time window as the blue screen.</p>
+</li>
+<li>
+<p>Check with the manufacturer to see if an updated system BIOS or firmware is available. </p>
+</li>
+<li>
+<p>You can try running the hardware diagnostics supplied by the system manufacturer. </p>
+</li>
+<li>
+<p>Confirm that any new hardware that is installed is compatible with the installed version of Windows. For example, you can get information about required hardware at <a href="https://www.microsoft.com/en-us/windows/windows-10-specifications">Windows 10
+
+Specifications</a>.</p>
+</li>
+<li>
+<p>Run a virus detection program. Viruses can infect all types of hard disks formatted for Windows, and resulting disk corruption can generate system bug check codes. Make sure the virus detection program checks the Master Boot Record for infections.</p>
+</li>
+<li>
+<p>Use the System File Checker tool to repair missing or corrupted system files. The System File Checker is a utility in Windows that allows users to scan for corruptions in Windows system files and restore corrupted files. Use the following command to run the    
+
+System File Checker tool (SFC.exe).</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>SFC /scannow</pre>
+</td>
+</tr>
+</table></span></div>
+<p>For more information, see <a href="https://support.microsoft.com/kb/929833">Use the System File Checker tool to repair missing or corrupted system files</a>.</p>
+</li>
+<li>
+<p>Look in <b>Device Manager</b> to see if any devices are marked with the exclamation point (!). Review the events log displayed in driver properties for any faulting driver.  Try updating the related driver.  </p>
+</li>
+</ul>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="crash_dump_files.htm">Crash dump analysis using the Windows debuggers (WinDbg)</a></dt>
+<dt><a href="analyzing_a_kernel_mode_dump_file_with_windbg.htm">Analyzing a Kernel-Mode Dump File with WinDbg</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

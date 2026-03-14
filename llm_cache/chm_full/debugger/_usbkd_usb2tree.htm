@@ -1,0 +1,54 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !usbkd.usb2tree command displays USB 2.0 tree."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!usbkd.usb2tree</title>
+
+<meta name="MS-HAID" content="debugger._usb2tree"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._usbkd_usb2tree"></a>!usbkd.usb2tree</h1>
+</div>
+<p>The  <b>!usbkd.usb2tree</b> command displays <a href="usb_2_0_extensions.htm#usb_2_tree">USB 2.0  tree</a>.</p>
+<pre class="syntax"><b>!usbkd.usb2tree</b></pre>
+<h2><a id="Examples"></a><a id="examples"></a><a id="EXAMPLES"></a>Examples</h2>
+<p>This screen shot shows and example of the output of the <b>!usb2tree</b> command.</p><img src="images/usb2tree01.png" alt="Output of the !usbkd.usb2tree command showing UHCI EHCI information and an enumerated hub list"/><p>The output shows one EHCI execution unit and two UHCI execution units. The execution units shown in this example happen to be on a single USB host controller device. The output also shows the root hubs and connected devices.</p>
+<p>The output uses <a href="debugger_markup_language_commands.htm">Using Debugger Markup Language (DML)</a>  to provide links. The links execute commands that give detailed information related to objects in the tree. For example, you could click one of the <a href="_devobj.htm"><b>!devobj</b></a> links to get information about the functional device object associated with the EHCI execution unit. As an alternative to clicking the link, you could enter the command manually: <b>!devobj ffffe00001ca7050</b></p>
+<div class="alert"><b>Note</b>  The DML feature is available in WinDbg, but not in Visual Studio or KD.</div>
+<div> </div>
+<h2><a id="DLL"></a><a id="dll"></a>DLL</h2>
+<p>Usb3kd.dll
+     </p>
+<h2>Remarks</h2>
+<p>The <b>!usb2tree</b> command is the parent command for many of the <a href="usb_2_0_extensions.htm">USB 2.0 debugger extensions commands.</a> The information displayed by these commands is based on data structures maintained by these drivers:</p>
+<ul>
+<li>usbehci.sys (miniport driver for USB 2 host controller)</li>
+<li>usbuhci.sys (miniport driver for USB 2 host controller)</li>
+<li>usbport.sys (port driver for USB 2 host controller)</li>
+<li>usbhub.sys (USB 2 hub driver)</li>
+</ul>
+<p>For more information about these drivers, see <a href="http://go.microsoft.com/fwlink/p/?LinkId=251983">USB Driver Stack Architecture</a>.</p>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="usb_2_0_extensions.htm">USB 2.0 Debugger Extensions</a></dt>
+<dt><a href="http://go.microsoft.com/fwlink/p?LinkID=227351">Universal Serial Bus (USB) Drivers</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!usbkd.usb2tree%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,84 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="When a thread reaches a breakpoint, the .bpsync command freezes all other threads, until the thread to which the breakpoint applies has stepped through the breakpoint."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.bpsync (Synchronize Threads at Breakpoint)</title>
+
+<meta name="MS-HAID" content="r19_metacmds_A_1f20df03-332b-4abc-b513-db12a008b009.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._bpsync__synchronize_threads_at_breakpoint_"></a>.bpsync (Synchronize Threads at Breakpoint)</h1>
+</div>
+<p>When a thread reaches a breakpoint, the <b>.bpsync</b> command freezes all other threads, until the thread to which the breakpoint applies has stepped through the breakpoint.</p>
+<pre class="syntax">
+    <b>.bpsync 1</b>
+<b>.bpsync 0</b>
+<b>.bpsync</b> 
+</pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______1______"></a>       <b>1</b>      </dt>
+<dd>
+<p>Causes all threads to freeze when one thread has reached a breakpoint. After the thread to which the breakpoint applies has stepped through the breakpoint, the other threads are unfrozen. </p>
+</dd>
+<dt><a id="_______0______"></a>       <b>0</b>      </dt>
+<dd>
+<p>Allows other threads to continue executing when one thread has reached a breakpoint. This is the default behavior. </p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>user mode only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets
+         </b></p>
+</td>
+<td>
+<p>live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>all </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>With no parameters. the <b>.bpsync</b> command displays the current rule governing breakpoint synchronization behavior. </p>
+<p>The <b>.bpsync</b> command applies both to software breakpoints (set with <a href="bp__bu__bm__set_breakpoint_.htm"><b>bp</b></a>, <b>bu</b>, or <b>bm</b>) and to processor breakpoints (set with <a href="ba__break_on_access_.htm"><b>ba</b></a>).</p>
+<p>If there is a possibility of multiple threads running through the same code, the <b>.bpsync 1</b> command can be useful for capturing all breakpoint occurrences. Without this command, a breakpoint occurrence could be missed because the first thread to reach the breakpoint always causes the debugger to temporarily remove the breakpoint. In the short period when the breakpoint is removed, other threads could reach the same place in the code and not trigger the breakpoint as intended.</p>
+<p>The temporary removal of breakpoints is a normal aspect of debugger operation. When the target reaches a breakpoint and is resumed, the debugger has to remove the breakpoint temporarily so that the target can execute the real code. After the real instruction has been executed, the debugger reinserts the break. To do this, the debugger restores the code (or turns off data breaks), does a single-step, and then puts the break back.</p>
+<p>Note that if you use <b>.bpsync 1</b>, there is a risk of deadlocks among the threads that have been frozen. </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.bpsync (Synchronize Threads at Breakpoint)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

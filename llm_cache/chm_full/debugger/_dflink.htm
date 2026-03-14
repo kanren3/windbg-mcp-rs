@@ -1,0 +1,78 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !dflink extension displays a linked list in the forward direction."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!dflink</title>
+
+<meta name="MS-HAID" content="r26_exts_kernel_A_2941ded1-64eb-486b-89ad-6023ce4d2f5e.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._dflink"></a>!dflink</h1>
+</div>
+<p>The <b>!dflink</b> extension displays a linked list in the forward direction.</p>
+<pre class="syntax">
+    <b>!dflink </b><i>Address</i><b> </b>[<i>Count</i>]<b> </b>[<i>Bias</i>]<b> </b> 
+</pre>
+<h2><a id="ddk__dflink_dbg"></a><a id="DDK__DFLINK_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Address______"></a><a id="_______address______"></a><a id="_______ADDRESS______"></a>       <i>Address</i>      </dt>
+<dd>
+<p>Specifies the address of a LIST_ENTRY structure. The display will begin with this node.</p>
+</dd>
+<dt><a id="_______Count______"></a><a id="_______count______"></a><a id="_______COUNT______"></a>       <i>Count</i>      </dt>
+<dd>
+<p>Specifies the maximum number of list entries to display. If this is omitted, the default is 32.</p>
+</dd>
+<dt><a id="_______Bias______"></a><a id="_______bias______"></a><a id="_______BIAS______"></a>       <i>Bias</i>      </dt>
+<dd>
+<p>Specifies a mask of bits to ignore in each pointer. Each <b>Flink</b> address is ANDed with (NOT <i>Bias</i>) before following it to the next location. The default is zero (in other words, do not ignore any bits).</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Windows 2000</b></p>
+</td>
+<td>
+<p>
+          Kdextx86.dll
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later</b></p>
+</td>
+<td>
+<p>
+          Kdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>The <b>!dflink</b> extension traverses the <b>Flink</b> fields of the LIST_ENTRY structure and displays up to four ULONGs at each address. To go in the other direction, use <a href="_dblink.htm"><b>!dblink</b></a>.</p>
+<p>The <a href="dl__display_linked_list_.htm"><b>dl (Display Linked List)</b></a> command is more versatile than <a href="_dblink.htm"><b>!dblink</b></a> and <b>!dflink</b>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!dflink%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,191 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="x64 Instructions"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>x64 Instructions</title>
+
+<meta name="MS-HAID" content="t09_arch_x86_9c7d3f73-9a54-4958-a3bc-c74105d8447a.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.x64_instructions"></a>x64 Instructions</h1>
+</div>
+<h2><a id="ddk_x64_instructions_dbg"></a><a id="DDK_X64_INSTRUCTIONS_DBG"></a></h2>
+<p>Most x86 instructions continue to be valid for x64 in 64-bit mode.  Some rarely-used operations are no longer supported in 64-bit mode, such as:</p>
+<ul>
+<li>
+<p>binary-coded decimal arithmetic instructions: AAA, AAD, AAM, AAS, DAA, DAS</p>
+</li>
+<li>
+<p>BOUND</p>
+</li>
+<li>
+<p>PUSHAD and POPAD</p>
+</li>
+<li>
+<p>most operations that dealt with segment registers, such as PUSH DS and POP DS.  (Operations that use the FS or GS segment registers are still valid.)</p>
+</li>
+</ul>
+<p>The x64 instruction set includes recent additions to the x86, such as SSE 2.  Programs compiled for x64 can freely use these instructions.</p>
+<h3><a id="Data_Transfer"></a><a id="data_transfer"></a><a id="DATA_TRANSFER"></a>Data Transfer</h3>
+<p>The x64 provides new variants of the MOV instruction that can handle 64-bit immediate constants or memory addresses.</p>
+<table>
+<tr>
+<td>
+<p>MOV</p>
+</td>
+<td>
+<p><b>r</b>,#n</p>
+</td>
+<td>
+<p><b>r</b> = #n</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>MOV</p>
+</td>
+<td>
+<p><b>rax</b>, m</p>
+</td>
+<td>
+<p>Move contents at 64-bit address to <b>rax</b>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>MOV</p>
+</td>
+<td>
+<p>m, <b>rax</b></p>
+</td>
+<td>
+<p>Move contents of <b>rax</b> to 64-bit address.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>The x64 also provides a new instruction to sign-extend 32-bit operands to 64 bits.</p>
+<table>
+<tr>
+<td>
+<p>MOVSXD</p>
+</td>
+<td>
+<p><b>r1</b>, <b>r</b>/m</p>
+</td>
+<td>
+<p>Move DWORD with sign extension to QWORD.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>Ordinary MOV operations into 32-bit subregisters automatically zero extend to 64 bits, so there is no MOVZXD instruction.</p>
+<p>Two SSE instructions can be used to move 128-bit values (such as GUIDs) from memory to an <b>xmm</b><i>n</i> register or vice versa.</p>
+<table>
+<tr>
+<td>
+<p>MOVDQA</p>
+</td>
+<td>
+<p><b>r1</b>/m, <b>r2</b>/m</p>
+</td>
+<td>
+<p>Move 128-bit aligned value to <b>xmm</b><i>n</i> register, or vice versa.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>MOVDQU</p>
+</td>
+<td>
+<p><b>r1</b>/m, <b>r2</b>/m</p>
+</td>
+<td>
+<p>Move 128-bit value (not necessarily aligned) to register, or vice versa.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Data_Conversion"></a><a id="data_conversion"></a><a id="DATA_CONVERSION"></a>Data Conversion</h3>
+<table>
+<tr>
+<td>
+<p>CDQE</p>
+</td>
+<td>
+<p>Convert dword (<b>eax</b>) to qword (<b>rax</b>).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>CQO</p>
+</td>
+<td>
+<p>convert qword (<b>rax</b>) to oword (<b>rdx</b>:<b>rax</b>).</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="String_Manipulation"></a><a id="string_manipulation"></a><a id="STRING_MANIPULATION"></a>String Manipulation</h3>
+<table>
+<tr>
+<td>
+<p>MOVSQ</p>
+</td>
+<td>
+<p>Move qword from <b>rsi</b> to <b>rdi.</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>CMPSQ</p>
+</td>
+<td>
+<p>Compare qword at <b>rsi</b> with <b>rdi.</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>SCASQ</p>
+</td>
+<td>
+<p>Scan qword at <b>rdi</b>. Compares qword at <b>rdi</b> to <b>rax</b>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>LODSQ</p>
+</td>
+<td>
+<p>Load qword from <b>rsi</b> into <b>rax</b><i>.</i></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>STOSQ</p>
+</td>
+<td>
+<p>Store qword to <b>rdi</b> from <b>rax</b><i>.</i></p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20x64 Instructions%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

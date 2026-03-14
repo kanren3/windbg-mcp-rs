@@ -1,0 +1,84 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The ~s command sets which processor is debugged on a multiprocessor system.In kernel mode, ~s changes the current processor."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>~s (Change Current Processor)</title>
+
+<meta name="MS-HAID" content="r15_cmds_A_32745f90-8ccb-4de2-b340-2bd8f129c260.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._s__change_current_processor_"></a>~s (Change Current Processor)</h1>
+</div>
+<p>The <b>~s</b> command sets which processor is debugged on a multiprocessor system.</p>
+<p>In kernel mode, <b>~s</b> changes the current processor. Do not confuse this command with the <a href="_s__set_current_thread_.htm"><b>~s (Set Current Thread)</b></a> command (which works only in user mode), the <a href="_s__set_current_process_.htm"><b>|s (Set Current Process)</b></a> command, the <a href="__s__set_current_system_.htm"><b>||s (Set Current System)</b></a> command, or the <a href="s__search_memory_.htm"><b>s (Search Memory)</b></a> command.</p>
+<pre class="syntax"><b>~</b><i>Processor </i><b>s</b></pre>
+<p></p>
+<h2><a id="ddk_cmd_change_current_processor_dbg"></a><a id="DDK_CMD_CHANGE_CURRENT_PROCESSOR_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Processor______"></a><a id="_______processor______"></a><a id="_______PROCESSOR______"></a>       <i>Processor</i>      </dt>
+<dd>
+<p>Specifies the number of the processor to debug.  </p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>Kernel mode only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets</b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>You can specify processors only in kernel mode. In user mode, the tilde (~) refers to a thread.</p>
+<p></p>
+<p>You can immediately tell when you are working on a multiple processor system by the shape of the kernel debugging prompt. In the following example, 0: means that you are debugging the first processor in the computer.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt;</code></pre>
+<p>Use the following command to switch between processors:</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; ~1s
+1: kd&gt;</code></pre>
+<p>Now the second processor in the computer that is being debugged.</p>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="multiprocessor_syntax.htm">Multiprocessor Syntax</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20~s (Change Current Processor)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

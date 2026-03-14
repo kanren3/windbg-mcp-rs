@@ -1,0 +1,87 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !rebase extension searches in a rebase.log file for a specified address or symbol."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!rebase</title>
+
+<meta name="MS-HAID" content="r25_exts_general_He_e44e5aad-9e17-4bdf-a822-55dc1942d565.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._rebase"></a>!rebase</h1>
+</div>
+<p></p>
+<p>The <b>!rebase</b> extension searches in a rebase.log file for a specified address or symbol.</p>
+<pre class="syntax"><b>!rebase </b>[<b>-r</b>]<b> </b><i>Address</i><b> </b>[<i>Path</i>]
+<b>!rebase </b><i>Symbol</i><b> </b>[<i>Path</i>]
+<b>!rebase -stack </b>[<i>Path</i>]
+<b>!rebase -?</b></pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______-r______"></a><a id="_______-R______"></a>       <b>-r</b>      </dt>
+<dd>
+<p>Attempts to load any module found in rebase.log. </p>
+</dd>
+<dt><a id="_______Address______"></a><a id="_______address______"></a><a id="_______ADDRESS______"></a>       <i>Address</i>      </dt>
+<dd>
+<p>Specifies an address in standard hexadecimal format.  The extension will search for DLLs near this address.</p>
+</dd>
+<dt><a id="_______Path______"></a><a id="_______path______"></a><a id="_______PATH______"></a>       <i>Path</i>      </dt>
+<dd>
+<p>Specifies the file path to the rebase.log.  If <i>Path</i> is not specified, then the extension tries to guess the path to the rebase.log or, failing that, tries to read a rebase.log file from the current working directory.</p>
+</dd>
+<dt><a id="_______Symbol______"></a><a id="_______symbol______"></a><a id="_______SYMBOL______"></a>       <i>Symbol</i>      </dt>
+<dd>
+<p>Specifies the symbol or image name.  The extension will search for DLLs that contain this substring.</p>
+</dd>
+<dt><a id="_______-stack______"></a><a id="_______-STACK______"></a>       <b>-stack</b>      </dt>
+<dd>
+<p>Displays all modules in the current stack.</p>
+</dd>
+<dt><a id="_______-_______"></a>       <b>-?</b>      </dt>
+<dd>
+<p>Displays a brief help text for this extension in the Debugger Command window.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000</b></p>
+</td>
+<td>
+<p>Unavailable</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Ext.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!rebase%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

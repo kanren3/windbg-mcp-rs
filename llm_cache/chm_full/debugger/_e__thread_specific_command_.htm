@@ -1,0 +1,89 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The ~e command executes one or more commands for a specific thread or for all threads in the target process.Do not confuse this command with the e (Enter Values) command."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>~e (Thread-Specific Command)</title>
+
+<meta name="MS-HAID" content="r15_cmds_A_717bf87c-c880-4b3d-9c78-d5e4d80b5ff3.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._e__thread_specific_command_"></a>~e (Thread-Specific Command)</h1>
+</div>
+<p>The <b>~e</b> command executes one or more commands for a specific thread or for all threads in the target process.</p>
+<p>Do not confuse this command with the <a href="e__ea__eb__ed__ed__ef__ep__eq__eu__ew__eza__ezu__enter_values_.htm"><b>e (Enter Values)</b></a> command.</p>
+<pre class="syntax"><b>~</b><i>Thread</i><b> e </b><i>CommandString</i></pre>
+<h2><a id="ddk_cmd_thread_specific_command_dbg"></a><a id="DDK_CMD_THREAD_SPECIFIC_COMMAND_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Thread______"></a><a id="_______thread______"></a><a id="_______THREAD______"></a>       <i>Thread</i>      </dt>
+<dd>
+<p>Specifies the thread or threads that the debugger will execute <i>CommandString</i> for. For more information about the syntax, see <a href="thread_syntax.htm">Thread Syntax</a>.</p>
+</dd>
+<dt><a id="_______CommandString______"></a><a id="_______commandstring______"></a><a id="_______COMMANDSTRING______"></a>       <i>CommandString</i>      </dt>
+<dd>
+<p>Specifies one or more commands to execute. You should separate multiple commands by using semicolons. <i>CommandString</i> includes the rest of the input line. All of the text that follows the letter "e" is interpreted as part of this string. Do not enclose <i>CommandString</i> in quotation marks.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Modes</b></p>
+</td>
+<td>
+<p>User mode only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets</b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about other commands that control threads, see <a href="controlling_processes_and_threads.htm">Controlling Processes and Threads</a>.</p>
+<h2>Remarks</h2>
+<p>You can specify threads only in user mode. In kernel mode, the tilde (~) refers to a processor.</p>
+<p>When you use the <b>~e</b> command together with one thread, the <b>~e</b> command only saves some typing. For example, the following two commands are equivalent.</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; ~2e r; k; kd 
+
+0:000&gt; ~2r; ~2k; ~2kd </code></pre>
+<p>However, you can use the <b>~e</b> qualifier to repeat a command or extension command several times. When you use the qualifier in this manner, it can eliminate extra typing. For example, the following command repeats the <a href="_gle.htm"><b>!gle</b></a> extension command for every thread that you are debugging.</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; ~*e !gle </code></pre>
+<p>If an error occurs in the execution of one command, execution continues with the next command.</p>
+<p>You cannot use the <b>~e</b> qualifier together with execution commands (<a href="g__go_.htm"><b>g</b></a>, <a href="gh__go_with_exception_handled_.htm"><b>gh</b></a>, <a href="gn__gn__go_with_exception_not_handled_.htm"><b>gn</b></a>, <b>gN</b>, <a href="gu__go_up_.htm"><b>gu</b></a>, <a href="p__step_.htm"><b>p</b></a>, <a href="pa__step_to_address_.htm"><b>pa</b></a>, <a href="pc__step_to_next_call_.htm"><b>pc</b></a>, <a href="t__trace_.htm"><b>t</b></a>, <a href="ta__trace_to_address_.htm"><b>ta</b></a>, <a href="tb__trace_to_next_branch_.htm"><b>tb</b></a>, <a href="tc__trace_to_next_call_.htm"><b>tc</b></a>, <a href="wt__trace_and_watch_data_.htm"><b>wt</b></a>).</p>
+<p>You cannot use the <b>~e</b> qualifier together with the <a href="j__execute_if___else_.htm"><b>j (Execute If-Else)</b></a> or <a href="z__execute_while_.htm"><b>z (Execute While)</b></a> conditional commands.</p>
+<p>If you are debugging more than one process, you cannot use the <b>~e</b> command to access the virtual memory space for a inactive process.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20~e (Thread-Specific Command)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

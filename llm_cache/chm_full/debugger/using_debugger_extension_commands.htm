@@ -1,0 +1,98 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Using Debugger Extension Commands"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Using Debugger Extension Commands</title>
+
+<meta name="MS-HAID" content="r08_use_remote_8493d413-185c-4d40-be6b-bd00cb61cc03.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.using_debugger_extension_commands"></a>Using Debugger Extension Commands</h1>
+</div>
+<h2><a id="ddk_using_debugger_extension_commands_dbg"></a><a id="DDK_USING_DEBUGGER_EXTENSION_COMMANDS_DBG"></a></h2>
+<p>The use of debugger extension commands is very similar to the use of <a href="using_debugger_commands.htm">debugger commands</a>. The command is typed in the Debugger Command window, producing either output in this window or a change in the target application or target computer.</p>
+<p>An actual debugger extension command is an entry point in a DLL called by the debugger.</p>
+<p>Debugger extensions are invoked by the following syntax:</p>
+<p><b>![</b><i>module</i><b>.]</b><i>extension</i><b> [</b><i>arguments</i><b>]</b></p>
+<p>The module name should not be followed with the .dll file name extension. If <i>module</i> includes a full path, the default string size limit is 255 characters.</p>
+<p>If the module has not already been loaded, it will be loaded into the debugger using a call to <b>LoadLibrary</b>(<i>module</i>). After the debugger has loaded the extension library, it calls the <b>GetProcAddress</b> function to locate the extension name in the extension module. The extension name is case-sensitive and must be entered exactly as it appears in the extension module's .def file. If the extension address is found, the extension is called.</p>
+<h3><a id="search_order"></a><a id="SEARCH_ORDER"></a>Search Order</h3>
+<p>If the module name is not specified, the debugger will search the loaded extension modules for this export.</p>
+<p>The default search order is as follows:</p>
+<ol>
+<li>
+<p>The extension modules that work with all operating systems and in both modes: Dbghelp.dll and winext\ext.dll.</p>
+</li>
+<li>
+<p>The extension module that works in all modes but is operating-system-specific. For Windows XP and later versions of Windows, this is winxp\exts.dll. There is no corresponding module for Windows 2000.</p>
+</li>
+<li>
+<p>The extension module that works with all operating systems but is mode-specific. For kernel mode, this is winext\kext.dll. For user mode, this is winext\uext.dll.</p>
+</li>
+<li>
+<p>The extension module that is both operating-system-specific and mode-specific. The following table specifies this module.<table>
+<tr>
+<th>Windows Build</th>
+<th>User Mode</th>
+<th>Kernel Mode</th>
+</tr>
+<tr>
+<td>
+<p>Windows 2000 (free build)</p>
+</td>
+<td>
+<p>w2kfre \ ntsdexts.dll</p>
+</td>
+<td>
+<p>w2kfre \ kdextx86.dll</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Windows 2000 (checked build)</p>
+</td>
+<td>
+<p>w2kchk \ ntsdexts.dll</p>
+</td>
+<td>
+<p>w2kchk \ kdextx86.dll</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Windows XP and later</p>
+</td>
+<td>
+<p>winxp \ ntsdexts.dll</p>
+</td>
+<td>
+<p>winxp \ kdexts.dll</p>
+</td>
+</tr>
+</table>
+<p> </p>
+</p>
+</li>
+</ol>
+<p>When an extension module is unloaded, it is removed from the search chain. When an extension module is loaded, it is added to the beginning of the search order. The <a href="_setdll__set_default_extension_dll_.htm"><b>.setdll (Set Default Extension DLL)</b></a> command can be used to promote any module to the top of the search chain. By using this command repeatedly, you can completely control the search chain.</p>
+<p>Use the <a href="_chain__list_debugger_extensions_.htm"><b>.chain (List Debugger Extensions)</b></a> command to display a list of all loaded extension modules in their current search order.</p>
+<p>If you attempt to execute an extension command that is not in any of the loaded extension modules, you will get an Export Not Found error message.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Using Debugger Extension Commands%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

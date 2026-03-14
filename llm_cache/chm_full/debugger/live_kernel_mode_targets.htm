@@ -1,0 +1,36 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Live Kernel-Mode Targets"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Live Kernel-Mode Targets</title>
+
+<meta name="MS-HAID" content="Engine_DG_d08297b5-3efa-4b7b-864b-c76133c62431.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.live_kernel_mode_targets"></a>Live Kernel-Mode Targets</h1>
+</div>
+<h2><a id="ddk_live_kernel_mode_targets_dbx"></a><a id="DDK_LIVE_KERNEL_MODE_TARGETS_DBX"></a></h2>
+<p>To attach the <a href="introduction.htm#debugger_engine">debugger engine</a> to a target computer for kernel-mode debugging, use the method <a href="attachkernel.htm"><b>AttachKernel</b></a>.</p>
+<div class="alert"><b>Note</b>    The engine doesn't completely attach to the kernel until the <a href="waitforevent.htm"><b>WaitForEvent</b></a> method has been called.  Only after the kernel has generated an event -- for example, the <a href="initial_breakpoint.htm">initial breakpoint</a> -- does it become available in the debugger session.  See <a href="debugging_session_and_execution_model.htm">Debugging Session and Execution Model</a> for more details.</div>
+<div> </div>
+<p>If the debugger engine is attached to a kernel which is not the local kernel and the connection is not an eXDI connection, the connection options used to find the target computer can be queried using <a href="getkernelconnectionoptions.htm"><b>GetKernelConnectionOptions</b></a>.  The connection can also be re-synchronized or the connection speed changed using <a href="setkernelconnectionoptions.htm"><b>SetKernelConnectionOptions</b></a>.</p>
+<p>The debugger can attach to the local kernel, but only in a limited way and only if the computer was booted with the <b>/debug</b> boot switch. (In some Windows installations, local kernel debugging is supported when other switches are used, such as <b>/debugport</b>, but this is not a guaranteed feature of Windows and should not be relied on.)  <a href="iskerneldebuggerenabled.htm"><b>IsKernelDebuggerEnabled</b></a> is used to determine if the local computer is available for debugging.  For more information about kernel debugging on a single machine, see <a href="performing_local_kernel_debugging.htm">Performing Local Kernel Debugging</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Live Kernel-Mode Targets%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

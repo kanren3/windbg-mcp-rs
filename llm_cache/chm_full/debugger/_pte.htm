@@ -1,0 +1,391 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !pte extension displays the page table entry (PTE) and page directory entry (PDE) for the specified address."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!pte</title>
+
+<meta name="MS-HAID" content="r28_exts_kernel_N_e725171f-0c6a-44bc-84dd-a0cdd2aa8764.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._pte"></a>!pte</h1>
+</div>
+<p>The <b>!pte</b> extension displays the page table entry (PTE) and page directory entry (PDE) for the specified address.</p>
+<p>Syntax</p>
+<pre class="syntax"><b>!pte </b><i>VirtualAddress</i> 
+<b>!pte </b><i>PTE</i> 
+<b>!pte </b><i>LiteralAddress</i><b> 1</b> 
+</pre>
+<h2><a id="ddk__pte_dbg"></a><a id="DDK__PTE_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______VirtualAddress______"></a><a id="_______virtualaddress______"></a><a id="_______VIRTUALADDRESS______"></a>       <i>VirtualAddress</i>      </dt>
+<dd>
+<p>Specifies the virtual address whose page table is desired.</p>
+</dd>
+<dt><a id="_______PTE______"></a><a id="_______pte______"></a>       <i>PTE</i>      </dt>
+<dd>
+<p>Specifies the address of an actual PTE.</p>
+</dd>
+<dt><a id="_______LiteralAddress_______1______"></a><a id="_______literaladdress_______1______"></a><a id="_______LITERALADDRESS_______1______"></a>       <i>LiteralAddress</i><b>       </b><b>1</b>      </dt>
+<dd>
+<p>Specifies the address of an actual PTE or PDE.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<p>
+          Kdexts.dll
+         </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For information about page tables, page directories, and an explanation of the status bits, see <i>Microsoft Windows Internals</i>, by Mark Russinovich and David Solomon. (This book may not be available in some languages 
+
+and countries.)</p>
+<h2>Remarks</h2>
+<p>If one parameter is supplied and this parameter is an address in the region of memory where the page tables are stored, the debugger treats this as the <i>PTE</i> parameter. This parameter is taken as the actual address of the desired PTE, and the debugger will display this PTE and the corresponding PDE.</p>
+<p>If one parameter is supplied and this parameter is not an address in this region, the debugger treats this as the <i>VirtualAddress</i> parameter. The PTE and PDE that hold the mapping for this address are displayed.</p>
+<p>If two parameters are supplied and the second parameter is <b>1</b> (or any other small number), the debugger treats the first parameter as <i>LiteralAddress</i>. This address is interpreted as the actual address of a PTE and also as the actual address of a PDE, and the corresponding (and possibly invalid) data will be shown.</p>
+<p>
+     (x86 or x64 target computer only)  If two parameters are supplied and the second parameter is greater than the first, the debugger treats the two parameters as <i>StartAddress</i> and <i>EndAddress</i>. The command then displays the PTEs for each page in the specified memory range.</p>
+<p>For a list of all system PTEs, use the <a href="_sysptes.htm"><b>!sysptes</b></a> extension.</p>
+<p></p>
+<p>Here is an example from an x86 target computer:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !pte 801544f4
+801544F4  - PDE at C0300800        PTE at C0200550
+          contains 0003B163      contains 00154121
+        pfn 3b G-DA--KWV    pfn 154 G--A--KRV</code></pre>
+<p>The first line of this example restates the virtual address being investigated. It then gives the virtual address of the PDE and the PTE, which contain information about the virtual-physical mapping of this address.</p>
+<p>The second line gives the actual contents of the PDE and the PTE.</p>
+<p>The third line takes these contents and analyzes them, breaking them into the page frame number (PFN) and the status bits.</p>
+<p>See the <a href="_pfn.htm"><b>!pfn</b></a> extension or the <a href="converting_virtual_addresses_to_physical_addresses.htm">Converting Virtual Addresses to Physical Addresses</a> section for information about how to interpret and use the PFN.</p>
+<p>On an x86 or x64 target computer, the status bits for the PDE and the PTE are shown in the following table. The <b>!pte</b> display indicates these bits with capital letters or dashes, and adds additional information as well.</p>
+<table>
+<tr>
+<th>Bit</th>
+<th>Display when set</th>
+<th>Display when clear</th>
+<th>Meaning</th>
+</tr>
+<tr>
+<td>
+<p>0x200</p>
+</td>
+<td>
+<p>
+        C
+       </p>
+</td>
+<td>
+<p>
+        -
+       </p>
+</td>
+<td>
+<p>Copy on write.  </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x100 </p>
+</td>
+<td>
+<p>
+        G
+       </p>
+</td>
+<td>
+<p>
+        -
+       </p>
+</td>
+<td>
+<p>Global.  </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x80 </p>
+</td>
+<td>
+<p>
+        L
+       </p>
+</td>
+<td>
+<p>
+        -
+       </p>
+</td>
+<td>
+<p>Large page. This only occurs in PDEs, never in PTEs. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x40 </p>
+</td>
+<td>
+<p>
+        D
+       </p>
+</td>
+<td>
+<p>
+        -
+       </p>
+</td>
+<td>
+<p>Dirty.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x20 </p>
+</td>
+<td>
+<p>
+        A
+       </p>
+</td>
+<td>
+<p>
+        -
+       </p>
+</td>
+<td>
+<p>Accessed.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x10 </p>
+</td>
+<td>
+<p>
+        N
+       </p>
+</td>
+<td>
+<p>
+        -
+       </p>
+</td>
+<td>
+<p>Cache disabled.  </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x8 </p>
+</td>
+<td>
+<p>
+        T
+       </p>
+</td>
+<td>
+<p>
+        -
+       </p>
+</td>
+<td>
+<p>Write-through.  </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x4 </p>
+</td>
+<td>
+<p>
+        U
+       </p>
+</td>
+<td>
+<p>
+        K
+       </p>
+</td>
+<td>
+<p>Owner (user mode or kernel mode).  </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x2 </p>
+</td>
+<td>
+<p>
+        W
+       </p>
+</td>
+<td>
+<p>
+        R
+       </p>
+</td>
+<td>
+<p>Writeable or read-only. Only on multiprocessor computers and any computer running Windows Vista or later.  </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x1 </p>
+</td>
+<td>
+<p>
+        V
+       </p>
+</td>
+<td></td>
+<td>
+<p>Valid.  </p>
+</td>
+</tr>
+<tr>
+<td></td>
+<td>
+<p>
+        E
+       </p>
+</td>
+<td>
+<p>
+        -
+       </p>
+</td>
+<td>
+<p>Executable page. For platforms that do not support a hardware execute/noexecute bit, including many x86 systems, the E is always displayed.  </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p></p>
+<p>On an Itanium target computer, the status bits for the PDE and the PTE are slightly different from those of the PPE. The Itanium PPE bits are as follows:</p>
+<table>
+<tr>
+<th>Display when set</th>
+<th>Display when clear</th>
+<th>Meaning</th>
+</tr>
+<tr>
+<td>
+<p>
+        V
+       </p>
+</td>
+<td></td>
+<td>
+<p>Valid.  </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+        U
+       </p>
+</td>
+<td>
+<p>
+        K
+       </p>
+</td>
+<td>
+<p>Owner (user mode or kernel mode). </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+        D
+       </p>
+</td>
+<td>
+<p>
+        -
+       </p>
+</td>
+<td>
+<p>Dirty. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+        A
+       </p>
+</td>
+<td>
+<p>
+        -
+       </p>
+</td>
+<td>
+<p>Accessed. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+        W
+       </p>
+</td>
+<td>
+<p>
+        R
+       </p>
+</td>
+<td>
+<p>Writeable or read-only. Only on multiprocessor computers and any computer running Windows Vista or later. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+        E
+       </p>
+</td>
+<td>
+<p>
+        -
+       </p>
+</td>
+<td>
+<p>Execute. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+        C
+       </p>
+</td>
+<td>
+<p>
+        -
+       </p>
+</td>
+<td>
+<p>Copy on write. </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p></p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!pte%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

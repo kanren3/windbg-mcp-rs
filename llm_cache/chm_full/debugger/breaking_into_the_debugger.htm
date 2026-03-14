@@ -1,0 +1,58 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Breaking Into the Debugger"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Breaking Into the Debugger</title>
+
+<meta name="MS-HAID" content="t02_debugfns_5c3e007d-5d9d-4531-8392-495c1d9750af.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.breaking_into_the_debugger"></a>Breaking Into the Debugger</h1>
+</div>
+<h2><a id="ddk_breaking_into_the_debugger_dbg"></a><a id="DDK_BREAKING_INTO_THE_DEBUGGER_DBG"></a></h2>
+<p>User-mode and kernel-mode code use different routines to break into the debugger.</p>
+<h3><a id="user_mode_break_routines"></a><a id="USER_MODE_BREAK_ROUTINES"></a>User-Mode Break Routines</h3>
+<p>A break routine causes an exception to occur in the current process, so that the calling thread can signal the debugger associated with the calling process.</p>
+<p>To break into a debugger from a user-mode program, use the <b>DebugBreak</b> routine. For complete documentation of this routine, see the Microsoft Windows SDK.</p>
+<p>When a user-mode program calls <b>DebugBreak</b>, the following possible actions will occur:</p>
+<ol>
+<li>
+<p>If a user-mode debugger is attached, the program will break into the debugger. This means that the program will pause and the debugger will become active.</p>
+</li>
+<li>
+<p>If no user-mode debugger is attached, but kernel-mode debugging was enabled at boot time, the entire computer will break into the kernel debugger. If no kernel debugger is attached, the computer will freeze and await a kernel debugger.</p>
+</li>
+<li>
+<p>If no user-mode debugger is attached, and kernel-mode debugging is not enabled, the program will terminate with an unhandled exception, and the post-mortem (just-in-time) debugger will be activated. For more information, see <a href="enabling_postmortem_debugging.htm">Enabling Postmortem Debugging</a>.</p>
+</li>
+</ol>
+<h3><a id="kernel_mode_break_routines"></a><a id="KERNEL_MODE_BREAK_ROUTINES"></a>Kernel-Mode Break Routines</h3>
+<p>When a kernel-mode program breaks into the debugger, the entire operating system freezes until the kernel debugger allows execution to resume. If no kernel debugger is present, this is treated as a bug check.</p>
+<p>The <b>DbgBreakPoint</b> routine works in kernel-mode code, but is otherwise similar to the <b>DebugBreak</b> user-mode routine.</p>
+<p><b>DbgBreakPointWithStatus</b> also causes a break, but it additionally sends a 32-bit status code to the debugger.</p>
+<p><b>KdBreakPoint</b> and <b>KdBreakPointWithStatus</b> are identical to <b>DbgBreakPoint</b> and <b>DbgBreakPointWithStatus</b>, respectively, when compiled in the checked build environment. When compiled in the free build environment, they have no effect.</p>
+<p>For complete documentation of these routines, as well as the build environment, see the Windows Driver Kit.</p>
+<h3><a id="kernel_mode_conditional_break_routines"></a><a id="KERNEL_MODE_CONDITIONAL_BREAK_ROUTINES"></a>Kernel-Mode Conditional Break Routines</h3>
+<p>Two conditional break routines are available for kernel-mode code. These routines test a logical expression. If the expression is false, execution halts and the debugger becomes active.</p>
+<p>The <b>ASSERT</b> macro causes the debugger to display the failed expression and its location in the program. The <b>ASSERTMSG</b> macro is similar, but allows an additional message to be sent to the debugger.</p>
+<p><b>ASSERT</b> and <b>ASSERTMSG</b> are only active when compiled in the checked build environment. When compiled in the free build environment, they have no effect.</p>
+<p>For complete documentation of these routines, as well as the build environment, see the Windows Driver Kit.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Breaking Into the Debugger%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

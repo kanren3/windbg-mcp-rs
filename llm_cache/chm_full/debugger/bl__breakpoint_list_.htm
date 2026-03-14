@@ -1,0 +1,144 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The bl command lists information about existing breakpoints."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>bl (Breakpoint List)</title>
+
+<meta name="MS-HAID" content="r15_cmds_A_4239e89a-bfe7-423f-ab96-4f0725cef52a.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bl__breakpoint_list_"></a>bl (Breakpoint List)</h1>
+</div>
+<p>The <b>bl</b> command lists information about existing breakpoints. </p>
+<pre class="syntax">bl [/L] [Breakpoints]
+</pre>
+<h2><a id="ddk_cmd_breakpoint_list_dbg"></a><a id="DDK_CMD_BREAKPOINT_LIST_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="________L______"></a><a id="________l______"></a>       <b>/L</b>      </dt>
+<dd>
+<p>Forces <b>bl</b> to always display breakpoint addresses instead of showing source file and line numbers.</p>
+</dd>
+<dt><a id="_______Breakpoints______"></a><a id="_______breakpoints______"></a><a id="_______BREAKPOINTS______"></a>       <i>Breakpoints</i>      </dt>
+<dd>
+<p>Specifies the ID numbers of the breakpoints to list. If you omit <i>Breakpoints</i>, the debugger lists all breakpoints. You can specify any number of breakpoints. You must separate multiple IDs by spaces or commas. You can specify a range of breakpoint IDs by using a hyphen (-). You can use an asterisk (<b>*</b>) to indicate all breakpoints. If you want to use a <a href="numerical_expression_syntax.htm">numeric expression</a> for an ID, enclose it in brackets (<b>[]</b>). If you want to use a <a href="string_wildcard_syntax.htm">string with wildcard characters</a> to match a breakpoint's symbolic name, enclose it in quotation marks ( <b>" "</b> ). </p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>Live debugging only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about and examples of how to use breakpoints, other breakpoint commands and methods of controlling breakpoints, and how to set breakpoints in user space from a kernel debugger, see <a href="using_breakpoints.htm">Using Breakpoints</a>. For more information about conditional breakpoints, see <a href="setting_a_conditional_breakpoint.htm">Setting a Conditional Breakpoint</a>.</p>
+<h2>Remarks</h2>
+<p>For each breakpoint, the command displays the following information: </p>
+<ul>
+<li>
+<p>The breakpoint ID. This ID is a decimal number that you can use to refer to the breakpoint in later commands.</p>
+</li>
+<li>
+<p>The breakpoint status. The status can be <b>e</b> (enabled) or <b>d</b> (disabled). </p>
+</li>
+<li>
+<p>(Unresolved breakpoints only)  The letter "u" appears if the breakpoint is unresolved. That is, the breakpoint does not match a symbolic reference in any currently loaded module. For information about these breakpoints, see <a href="unresolved_breakpoints___bu_breakpoints_.htm">Unresolved Breakpoints (bu Breakpoints)</a>. </p>
+</li>
+<li>
+<p>The virtual address or symbolic expression that makes up the breakpoint location. If you enabled source line number loading, the <b>bl</b> command displays file and line number information instead of address offsets. If the breakpoint is unresolved, the address is omitted here and appears at the end of the listing instead.</p>
+</li>
+<li>
+<p>(Data breakpoints only)  Type and size information are displayed for data breakpoints. The types can be <b>e</b> (execute), <b>r</b> (read/write), <b>w</b> (write), or <b>i</b> (input/output). These types are followed with the size of the block, in bytes. For information about these breakpoints, see <a href="processor_breakpoints___ba_breakpoints_.htm">Processor Breakpoints (ba Breakpoints)</a>. </p>
+</li>
+<li>
+<p>The number of passes that remain until the breakpoint is activated, followed by the initial number of passes in parentheses. For more information about this kind of breakpoint, see the description of the <i>Passes</i> parameter in <a href="bp__bu__bm__set_breakpoint_.htm"><b>bp, bu, bm (Set Breakpoint)</b></a>. </p>
+</li>
+<li>
+<p>The associated process and thread. If thread is given as three asterisks ("<b>***</b>"), this breakpoint is not a thread-specific breakpoint.</p>
+</li>
+<li>
+<p>The module and function, with offset, that correspond to the breakpoint address. If the breakpoint is unresolved, the breakpoint address appears here instead, in parentheses. If the breakpoint is set on a valid address but symbol information is missing, this field is blank.</p>
+</li>
+<li>
+<p>The command that is automatically executed when this breakpoint is hit. This command is displayed in quotation marks.</p>
+</li>
+</ul>
+<p>If you are not sure what command was used to set an existing breakpoint, use <a href="_bpcmds__display_breakpoint_commands_.htm"><b>.bpcmds (Display Breakpoint Commands)</b></a> to list all breakpoints along with the commands that were used to create them.</p>
+<p>The following example shows the output of a <b>bl</b> command.</p>
+<p>Example</p>
+<div class="code"><span codelanguage="cmd"><table>
+<tr>
+<th>cmd</th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; bl
+ 0 e 010049e0     0001 (0001)  0:**** stst!main</pre>
+</td>
+</tr>
+</table></span></div>
+<p>This output contains the following information:</p>
+<ul>
+<li>
+<p>The breakpoint ID is <b>0</b>.</p>
+</li>
+<li>
+<p>The breakpoint status is <b>e</b> (enabled).</p>
+</li>
+<li>
+<p>The breakpoint is not unresolved (there is no <b>u</b> in the output).</p>
+</li>
+<li>
+<p>The virtual address of the breakpoint is <b>010049e0</b>. </p>
+</li>
+<li>
+<p>The breakpoint is active on the first pass through the code and the code has not yet been executed under the debugger. This information is indicated by a value of 1 (<b>0001</b>) in the "passes remaining" counter and a value of 1 (<b>(0001)</b>) in the initial passes counter.</p>
+</li>
+<li>
+<p>This breakpoint is not a thread-specific breakpoint (<b>****</b>).</p>
+</li>
+<li>
+<p>The breakpoint is set on <b>main</b> in the <b>stst</b> module.</p>
+</li>
+</ul>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20bl (Breakpoint List)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

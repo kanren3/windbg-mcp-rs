@@ -1,0 +1,112 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="0x00000001."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0x1: APC_INDEX_MISMATCH</title>
+
+<meta name="MS-HAID" content="t04_bugs_00_e141dda1-ecb3-48fd-805e-54d740acd136.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0x1__apc_index_mismatch"></a>Bug Check 0x1: APC_INDEX_MISMATCH</h1>
+</div>
+<p>The APC_INDEX_MISMATCH bug check has a value of 0x00000001. This indicates that there has been a mismatch in the APC (asynchronous procedure calls) state index.</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2> APC_INDEX_MISMATCH Parameters</h2>
+<p>The following parameters are displayed on the blue screen.</p>
+<table>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>1</p>
+</td>
+<td>
+<p>The address of the system function (system call) or worker routine.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>2</p>
+</td>
+<td>
+       The value  of the current thread's <b>ApcStateIndex</b> field. 
+      </td>
+</tr>
+<tr>
+<td>
+<p>3</p>
+</td>
+<td>
+<p>The value of current thread's CombinedApcDisable field. This field consists of two separate 16-bit
+fields: (<i>Thread</i>-&gt;<b>SpecialApcDisable</b> &lt;&lt; 16) | <i>Thread</i>-&gt;<b>KernelApcDisable</b>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>4</p>
+</td>
+<td>
+<p>Call type (0 - system call, 1 - worker routine).</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Cause</h2>
+<p>The most common cause of this
+bug check is when a file system or  driver has a mismatched sequence of
+calls to disable and re-enable APCs. The key data item is the
+<i>Thread</i>-&gt;<b>CombinedApcDisable</b> field. The <b>CombinedApcDisable</b> field consists of two separate 16-bit
+fields:  <b>SpecialApcDisable</b> and  <b>KernelApcDisable</b>. A negative value
+of either field indicates that a driver has disabled special or normal APCs
+(respectively) without re-enabling them. 
+A positive value indicates that
+a driver has enabled special or normal APCs too many times.
+</p>
+<h2>Resolution</h2>
+<p>The <a href="_analyze.htm"><b>!analyze</b></a> debug extension displays information about  the bug check and can be very helpful in determining the root cause.</p>
+<p>You can use the <a href="_apc.htm"><b>!apc</b></a> extension to displays the contents of one or more asynchronous procedure calls (APCs).</p>
+<p>You can also set a breakpoint in the code leading up to this stop code and attempt to single step forward into the faulting code.</p>
+<p>For more information see the following topics:</p>
+<p><a href="crash_dump_files.htm">Crash dump analysis using the Windows debuggers (WinDbg)</a></p>
+<p>If you are not equipped to use the Windows debugger to work on   this problem, you can use some basic troubleshooting techniques. </p>
+<ul>
+<li>
+<p>Check the System Log in Event Viewer for additional error messages that might help identify the device or driver that is causing this bug check. </p>
+</li>
+<li>
+<p>If a driver is identified in the bug check message, disable the driver or check with the manufacturer for driver updates. </p>
+</li>
+<li>
+<p>Confirm that any new hardware that is installed is compatible with the installed version of Windows. For example, you can get information about required hardware at <a href="https://www.microsoft.com/en-us/windows/windows-10-specifications">Windows 10
+
+Specifications</a>.</p>
+</li>
+<li>
+<p>For additional general troubleshooting information, see <a href="blue_screen_data.htm"><b>Blue Screen Data</b></a>. </p>
+</li>
+</ul>
+<h2>Remarks</h2>
+<p>This is a kernel internal error. This error occurs on exit from a system call. A possible cause for this bug check is when a file system or driver has a mismatched sequence of system calls to  enter or leave guarded or critical regions. For example,  each call to <b>KeEnterCriticalRegion</b> must have a matching call to <b>KeLeaveCriticalRegion</b>. If you are developing a driver, you can use Static Driver Verifier, a static analysis tool available in the Windows Driver Kit, to detect problems in your code before you ship your driver. Run Static Driver Verifier with the CriticalRegions rule to verify that your source code uses these system calls in correct sequence.  </p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

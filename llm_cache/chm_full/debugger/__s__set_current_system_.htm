@@ -1,0 +1,77 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The ||s command sets or displays the current system number.Do not confuse this command with the s (Search Memory), ~s (Change Current Processor), ~s (Set Current Thread), or |s (Set Current Process) command."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>||s (Set Current System)</title>
+
+<meta name="MS-HAID" content="r15_cmds_A_71ad20ba-2731-457c-aa06-e7c6f2cfaee2.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.__s__set_current_system_"></a>||s (Set Current System)</h1>
+</div>
+<p>The <b>||s</b> command sets or displays the current system number.</p>
+<p>Do not confuse this command with the <a href="s__search_memory_.htm"><b>s (Search Memory)</b></a>, <a href="_s__change_current_processor_.htm"><b>~s (Change Current Processor)</b></a>, <a href="_s__set_current_thread_.htm"><b>~s (Set Current Thread)</b></a>, or <a href="_s__set_current_process_.htm"><b>|s (Set Current Process)</b></a> command.</p>
+<pre class="syntax"><b>||</b><i>System</i><b> s 
+|| s</b> 
+</pre>
+<h2><a id="ddk_cmd_set_current_system_dbg"></a><a id="DDK_CMD_SET_CURRENT_SYSTEM_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______System______"></a><a id="_______system______"></a><a id="_______SYSTEM______"></a>       <i>System</i>      </dt>
+<dd>
+<p>Specifies the system to activate. For more information about the syntax, see <a href="system_syntax.htm">System Syntax</a>.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>Multiple target debugging</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets</b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Platforms</b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>The <b>||s</b> command is useful only when you are debugging multiple targets. Many, but not all, multiple-target debugging sessions involve multiple systems. For more information about these kinds of sessions, see <a href="debugging_multiple_targets.htm">Debugging Multiple Targets</a>.</p>
+<p>If you use the <b>||s</b> syntax, the debugger displays information about the current system.</p>
+<p>This command also disassembles the current instruction for the current system, process, and thread.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20||s (Set Current System)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

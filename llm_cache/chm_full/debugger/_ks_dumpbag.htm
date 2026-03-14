@@ -1,0 +1,91 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !ks.dumpbag extension displays the contents of the object bag for the specified object."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!ks.dumpbag</title>
+
+<meta name="MS-HAID" content="r33~b_exts_KS_f52fe751-ca0d-42df-94f9-035b98148e8d.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._ks_dumpbag"></a>!ks.dumpbag</h1>
+</div>
+<p>The <b>!ks.dumpbag</b> extension displays the contents of the object bag for the specified object.</p>
+<pre class="syntax">
+    <b>!ks.dumpbag </b><i>Object </i>[<i>Level</i>]  
+</pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Object______"></a><a id="_______object______"></a><a id="_______OBJECT______"></a>       <i>Object</i>      </dt>
+<dd>
+<p>Specifies a pointer to a valid client viewable object structure, or to the private class object.</p>
+</dd>
+<dt><a id="_______Level______"></a><a id="_______level______"></a><a id="_______LEVEL______"></a>       <i>Level</i>      </dt>
+<dd>
+<p>Optional. Specifies the level of detail to display on a 0-7 scale with progressively more information displayed for higher values.  To display all available details, supply a value of 7.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Windows 2000</b></p>
+</td>
+<td>
+<p>
+          winxp\Ks.dll 
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Ks.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information, see <a href="kernel_streaming_debugging.htm">Kernel Streaming Debugging</a>.</p>
+<h2>Remarks</h2>
+<p>Here is an example of the <b>!ks.dumpbag</b> display for a filter:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; !dumpbag 829493c4
+Filter 829493c4 [CKsFilter = 82949350]:
+    Object Bag 829493d0:
+        Object Bag Item 829dce28:
+            Reference Count        : 1
+            Item Cleanup Handler   : f7a21730</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!ks.dumpbag%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

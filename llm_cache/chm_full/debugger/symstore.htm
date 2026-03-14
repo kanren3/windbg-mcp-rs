@@ -1,0 +1,49 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="SymStore"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>SymStore</title>
+
+<meta name="MS-HAID" content="r09_symbols_d033164e-0b4c-4e3b-b534-b39437bc4d3b.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.symstore"></a>SymStore</h1>
+</div>
+<h2><a id="ddk_using_symstore_dbg"></a><a id="DDK_USING_SYMSTORE_DBG"></a></h2>
+<p>SymStore (symstore.exe) is a tool for creating symbol stores. It is included in the Debugging Tools for Windows package.</p>
+<p>SymStore stores symbols in a format that enables the debugger to look up the symbols based on the time stamp and size of the image (for a .dbg or executable file), or signature and age (for a .pdb file). The advantage of the symbol store over the traditional symbol storage format is that all symbols can be stored or referenced on the same server and retrieved by the debugger without any prior knowledge of which product contains the corresponding symbol. </p>
+<p>Note that multiple versions of .pdb symbol files (for example, public and private versions) cannot be stored on the same server, because they each contain the same signature and age.</p>
+<p>This section includes:</p>
+<dl>
+<dd>
+<p><a href="symstore_transactions.htm">SymStore Transactions</a></p>
+</dd>
+<dd>
+<p><a href="file_system_references_and_symbol_files.htm">File System References and Symbol Files</a></p>
+</dd>
+<dd>
+<p><a href="symstore_compressed_files.htm">SymStore Compressed Files</a></p>
+</dd>
+<dd>
+<p><a href="symbol_storage_format.htm">Symbol Storage Format</a></p>
+</dd>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20SymStore%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,151 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .cordll command controls managed code debugging and the Microsoft .NET common language runtime (CLR)."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.cordll (Control CLR Debugging)</title>
+
+<meta name="MS-HAID" content="r19_metacmds_A_219f5977-3a08-4ca8-a088-b3ebb4546072.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._cordll__control_clr_debugging_"></a>.cordll (Control CLR Debugging)</h1>
+</div>
+<p>The <b>.cordll</b> command controls managed code debugging and the Microsoft .NET common language runtime (CLR).</p>
+<pre class="syntax"><b>.cordll </b>[<i>Options</i>]</pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Options______"></a><a id="_______options______"></a><a id="_______OPTIONS______"></a>       <i>Options</i>      </dt>
+<dd>
+<p>One or more of the following options:</p>
+<p></p>
+<dl>
+<dt><a id="-l___lower-case_L_"></a><a id="-l___lower-case_l_"></a><a id="-L___LOWER-CASE_L_"></a><b>-l</b>  (lower-case L)</dt>
+<dd>
+<p>Loads the CLR debugging modules.</p>
+</dd>
+<dt><a id="-I_Module___upper-case_i__"></a><a id="-i_module___upper-case_i__"></a><a id="-I_MODULE___UPPER-CASE_I__"></a><b>-I</b><b> </b><i>Module</i>  (upper-case i) </dt>
+<dd>
+<p>Specifies the name or base address of the CLR module to be debugged. For more information, see Remarks.</p>
+</dd>
+<dt><a id="-u"></a><a id="-U"></a><b>-u</b></dt>
+<dd>
+<p>Unloads the CLR debugging modules.</p>
+</dd>
+<dt><a id="-e"></a><a id="-E"></a><b>-e</b></dt>
+<dd>
+<p>Enables CLR debugging.</p>
+</dd>
+<dt><a id="-d"></a><a id="-D"></a><b>-d</b></dt>
+<dd>
+<p>Disables CLR debugging.</p>
+</dd>
+<dt><a id="-D"></a><a id="-d"></a><b>-D</b></dt>
+<dd>
+<p>Disables CLR debugging and unloads the CLR debugging modules.</p>
+</dd>
+<dt><a id="-N"></a><a id="-n"></a><b>-N</b></dt>
+<dd>
+<p>Reloads the CLR debugging modules.</p>
+</dd>
+<dt><a id="-lp_Path"></a><a id="-lp_path"></a><a id="-LP_PATH"></a><b>-lp</b><b> </b><i>Path</i></dt>
+<dd>
+<p>Specifies the directory path of the CLR debugging modules.</p>
+</dd>
+<dt><a id="-se"></a><a id="-SE"></a><b>-se</b></dt>
+<dd>
+<p>Enables using the short name of the CLR debugging module, mscordacwks.dll.</p>
+</dd>
+<dt><a id="-sd"></a><a id="-SD"></a><b>-sd</b></dt>
+<dd>
+<p>Disables using the short name of the CLR debugging module, mscordacwks.dll. Instead, the debugger uses the long name of the CLR debugging module, mscordacwks_&lt;spec&gt;.dll. Turning off short name usage enables you to avoid having your local CLR used if you are concerned about mismatches.</p>
+</dd>
+<dt><a id="-ve"></a><a id="-VE"></a><b>-ve</b></dt>
+<dd>
+<p>Turns on verbose mode for CLR module loading.</p>
+</dd>
+<dt><a id="-vd"></a><a id="-VD"></a><b>-vd</b></dt>
+<dd>
+<p>Turns off verbose mode for CLR module loading.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets
+         </b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>To debug a managed application, the debugger must load a data access component (DAC) that corresponds to the CLR that the application has loaded. However, in some cases, the application loads more than one CLR. In that case, you can use the <b>I</b> parameter to specify which DAC the debugger should load. Version 2 of the CLR is named Mscorwks.dll, and version 4 of the CLR is named Clr.dll. The following example shows how to specify that the debugger should load the DAC for version 2 (mscorwks).</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>.cordll -I mscorwks -lp c:\dacFolder</pre>
+</td>
+</tr>
+</table></span></div>
+<p>If you omit the <b>I</b> parameter, the debugger uses version 4 by default. For example, the following two commands are equivalent.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>.cordll -lp c:\dacFolder
+.cordll -I clr -lp c:\dacFolder</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Sos.dll is a component that is used for debugging managed code. The current version of Debugging Tools for Windows does not include any version of sos.dll. For information about how to get sos.dll, see <a href="debugging_managed_code.htm#getting_the_sos_debugging_extension">Getting the SOS Debugging Extension (sos.dll)</a>.</p>
+<p>The <b>.cordll</b> command is supported in kernel-mode debugging. However, this command might not work unless the necessary memory is paged in. </p>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="debugging_managed_code.htm">Debugging Managed Code Using the Windows Debugger</a></dt>
+<dt><a href="http://go.microsoft.com/fwlink/p/?linkid=223345">SOS Debugging Extension</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.cordll (Control CLR Debugging)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

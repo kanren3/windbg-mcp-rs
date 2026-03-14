@@ -1,0 +1,94 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !usbkd.usbep command displays information about a USB endpoint."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!usbkd.usbep</title>
+
+<meta name="MS-HAID" content="debugger._usbep"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._usbkd_usbep"></a>!usbkd.usbep</h1>
+</div>
+<p>The <b>!usbkd.usbep</b> command displays information about a USB endpoint.</p>
+<pre class="syntax"><b>!usbkd.usbep </b><i>StructAddr</i></pre>
+<h2><a id="ddk__devobj_dbg"></a><a id="DDK__DEVOBJ_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______StructAddr______"></a><a id="_______structaddr______"></a><a id="_______STRUCTADDR______"></a>       <i>StructAddr</i>      </dt>
+<dd>
+<p>Address of a <b>usbport!_HCD_ENDPOINT</b> structure. To get the endpoint list for a USB host controller, use the <a href="_usbkd_usbhcdext.htm"><b>!usbkd.usbhcdext</b></a> command.</p>
+</dd>
+</dl>
+<h2><a id="DLL"></a><a id="dll"></a>DLL</h2>
+<p>Usbkd.dll
+     </p>
+<h2>Examples</h2>
+<p>Here is one way to find the address of a <b>usbport!_HCD_ENDPOINT</b> structure. First enter <a href="_usbkd_usb2tree.htm"><b>!usbkd.usb2tree</b></a>.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !usbkd.usb2tree
+...
+2)!ehci_info ffffe00001ca11a0 !devobj ffffe00001ca1050 PCI: VendorId 8086 DeviceId 293c RevisionId 0002 
+     ...</code></pre>
+<p>In the preceding output, the address of the device extension of the FDO is displayed as the argument of the <a href="debugger_markup_language_commands.htm">DML</a> command <b>!ehci_info ffffe00001ca11a0</b>.</p>
+<p>Either click the DML command  or pass the address of the device extension to <b>!usbhcdext</b> to get the global endpoint list.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !usbkd.usbhcdext ffffe00001ca11a0
+...
+DeviceHandleList: !usblist ffffe00001ca23b8, DL 
+DeviceHandleDeletedList: !usblist ffffe00001ca23c8, DL [Empty]
+GlobalEndpointList: !usblist ffffe00001ca2388, EP 
+...</code></pre>
+<p>Now use the <a href="_usbkd_usblist.htm"><b>!usbkd.usblist</b></a> command to get the addresses of <b>_HCD_ENDPOINT</b> structures.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !usblist ffffe00001ca2388, EP
+
+list: ffffe00001ca2388 EP
+----------
+dt usbport!_HCD_ENDPOINT ffffe000020f6970  !usbep ffffe000020f6970
+Device Address: 0x00, ep 0x00 Control  Flags: 00000002 dt _USB_ENDPOINT_FLAGS ffffe000020f6990
+dt usbport!_ENDPOINT_PARAMETERS ffffe000020f6b18	RootHub Endpoint
+...</code></pre>
+<p>In the preceding output, <code>ffffe000020f6970 </code>is the address of an <b>_HCD_ENDPOINT</b>structure. Pass this address to <b>!usbkd.usbep</b>.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !usbep ffffe000020f6970
+Device Address: 0x00, Endpoint Address 0x00 Endpoint Type: Control 
+dt USBPORT!_HCD_ENDPOINT ffffe000020f6970
+dt USBPORT!_ENDPOINT_PARAMETERS ffffe000020f6b18
+RootHub Endpoint
+
+Transfer(s) List: (HwPendingListHead)
+--------------------------------------------------------------------------------
+    [EMPTY]
+
+Endpoint Reference List: (EpRefListHead)
+--------------------------------------------------------------------------------
+[00] dt USBPORT!_USBOBJ_REF ffffe000021a64a0 Object ffffe000020f6970 Tag:EPop Endpoint:ffffe000020f6970
+[01] dt USBPORT!_USBOBJ_REF ffffe000021264a0 Object ffffe000020f95e0 Tag:EPpi Endpoint:ffffe000020f6970
+
+GEP HISTORY (latest at bottom)
+----------------------------------------------------------------------------------------------------
+     EVENT                   STATE                     NEXT                      HwEpState
+----------------------------------------------------------------------------------------------------
+[01] Ev_gEp_Open             GEp_Init                  GEp_Paused                ENDPOINT_PAUSE
+[02] Ev_gEp_ReqActive        GEp_Paused                GEp_Active                ENDPOINT_ACTIVE
+</code></pre>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="usb_2_0_extensions.htm">USB 2.0 Debugger Extensions</a></dt>
+<dt><a href="http://go.microsoft.com/fwlink/p?LinkID=227351">Universal Serial Bus (USB) Drivers</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!usbkd.usbep%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

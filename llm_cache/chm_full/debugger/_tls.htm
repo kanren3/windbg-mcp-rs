@@ -1,0 +1,75 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !tls extension displays a thread local storage (TLS) slot."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!tls</title>
+
+<meta name="MS-HAID" content="r25_exts_general_He_e085dccb-d30a-47af-bd97-335587699ce6.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._tls"></a>!tls</h1>
+</div>
+<p>The <b>!tls</b> extension displays a thread local storage (TLS) slot.</p>
+<pre class="syntax"><b>!tls </b><i>Slot</i><b> </b>[<i>TEB</i>]</pre>
+<h2><a id="ddk__tls_dbg"></a><a id="DDK__TLS_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Slot______"></a><a id="_______slot______"></a><a id="_______SLOT______"></a>       <i>Slot</i>      </dt>
+<dd>
+<p>Specifies the TLS slot. This can be any value between 0 and 1088 (decimal). If <i>Slot</i> is -1, all slots are displayed.</p>
+</dd>
+<dt><a id="_______TEB______"></a><a id="_______teb______"></a>       <i>TEB</i>      </dt>
+<dd>
+<p>Specifies the thread environment block (TEB). If this is 0 or omitted, the current thread is used.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000</b></p>
+</td>
+<td>
+<p>Unavailable </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Exts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>Here is an example:</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; !tls -1
+TLS slots on thread: c08.f54
+0x0000 : 00000000
+0x0001 : 003967b8
+0:000&gt; !tls 0
+c08.f54: 00000000</code></pre>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!tls%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

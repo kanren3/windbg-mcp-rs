@@ -1,0 +1,56 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Interpreting a UMDH Log"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Interpreting a UMDH Log</title>
+
+<meta name="MS-HAID" content="UMDH_ec44fde0-3091-4322-89fb-a1fdbc9318b4.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.interpreting_a_umdh_log"></a>Interpreting a UMDH Log</h1>
+</div>
+<h2><a id="ddk_interpreting_a_umdh_log_dtools"></a><a id="DDK_INTERPRETING_A_UMDH_LOG_DTOOLS"></a></h2>
+<p>User-Mode Dump Heap (UMDH) log files display the list of heap allocations in the process and the stacks where the allocations were made.</p>
+<p>This example shows how to generate a log for a process that has ID 1204. The log is written to the file log1.txt.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>umdh -p:1204 -f:log1.txt</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The log file is not readable because the symbols are not resolved. UMDH resolves symbols when you analyze the log. This example shows how to analyze log1.txt and store the result in result.txt.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>umdh -v log1.txt  &gt; result.txt</pre>
+</td>
+</tr>
+</table></span></div>
+<h2><a id="Symbol_Files_for_Analyzing_a_Log_File"></a><a id="symbol_files_for_analyzing_a_log_file"></a><a id="SYMBOL_FILES_FOR_ANALYZING_A_LOG_FILE"></a>Symbol Files for Analyzing a Log File</h2>
+<p>Suppose you have two computers: a <i>logging computer</i> where you create a UMDH log and an <i>analysis computer</i> where you analyze the UMDH log. The symbol path on your analysis computer must point to the symbols for the version of Windows that was loaded on the logging computer at the time the log was made. Do not point the symbol path on the analysis computer to a symbol server. If you do, UMDH will retrieve symbols for the version of Windows that is running on the analysis computer, and UMDH will not display meaningful results.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Interpreting a UMDH Log%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

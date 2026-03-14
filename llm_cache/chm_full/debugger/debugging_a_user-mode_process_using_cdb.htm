@@ -1,0 +1,70 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="You can use CDB to attach to a running process or to spawn and attach to new process."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Debugging a User-Mode Process Using CDB</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.debugging_a_user-mode_process_using_cdb"></a>Debugging a User-Mode Process Using CDB</h1>
+</div>
+<p>You can use CDB to attach to a running process or to spawn and attach to new process.</p>
+<h2><a id="Attaching_to_a_Running_Process"></a><a id="attaching_to_a_running_process"></a><a id="ATTACHING_TO_A_RUNNING_PROCESS"></a>Attaching to a Running Process</h2>
+<h3><a id="command_prompt1"></a><a id="COMMAND_PROMPT1"></a>Command Prompt</h3>
+<p>In a Command Prompt window, you can attach to a running process when you launch CDB. Use one of the following commands:</p>
+<ul>
+<li><b>cdb -p </b><i>ProcessID</i></li>
+<li><b>cdb -pn </b><i>ProcessName</i></li>
+</ul>
+<p>where <i>ProcessID</i> is the Process ID of a running process or <i>ProcessName</i> is the name of a running process.</p>
+<p>For more information about the command-line syntax, see <a href="cdb_command_line_options.htm"><b>CDB Command-Line Options</b></a>.</p>
+<h3><a id="cdb_command_window1"></a><a id="CDB_COMMAND_WINDOW1"></a>CDB Command Window</h3>
+<p>If the debugger is already debugging one or more processes, you can attach to a running process by using the <a href="_attach__attach_to_process_.htm"><b>.attach (Attach to Process)</b></a> command.</p>
+<p>The debugger always starts multiple target processes simultaneously, unless some of their threads are frozen or suspended. </p>
+<p>If the <a href="_attach__attach_to_process_.htm"><b>.attach</b></a> command is successful, the debugger attaches to the specified process the next time that the debugger issues an execution command. If you use this command several times in a row, execution has to be requested by the debugger as many times as you use this command.</p>
+<h2><a id="Attaching_to_a_Running_Process_Noninvasively"></a><a id="attaching_to_a_running_process_noninvasively"></a><a id="ATTACHING_TO_A_RUNNING_PROCESS_NONINVASIVELY"></a>Attaching to a Running Process Noninvasively</h2>
+<p>If you want to debug a running process and interfere only minimally in its execution, you should debug the process <a href="noninvasive_debugging__user_mode_.htm">noninvasively</a>.</p>
+<h3><a id="command_prompt2"></a><a id="COMMAND_PROMPT2"></a>Command Prompt</h3>
+<p>To noninvasively debug a running process from the CDB command line, specify the <b>-pv</b> option, the <b>-p</b> option, and the process ID, in the following syntax.</p>
+<p><b>cdb -pv -p </b><i>ProcessID</i></p>
+<p>Or, to noninvasively debug a running process by specifying the process name, use the following syntax instead.</p>
+<p><b>cdb -pv -pn </b><i>ProcessName</i></p>
+<p>There are several other useful command-line options. For more information about the command-line syntax, see <a href="cdb_command_line_options.htm"><b>CDB Command-Line Options</b></a>.</p>
+<h3><a id="cdb_command_window2"></a><a id="CDB_COMMAND_WINDOW2"></a>CDB Command Window</h3>
+<p>If the debugger is already active, you can noninvasively debug a running process by entering the <a href="_attach__attach_to_process_.htm"><b>.attach -v (Attach to Process)</b></a> command.</p>
+<p>You can use the <b>.attach</b> command if the debugger is already debugging one or more processes invasively.</p>
+<p>If the <b>.attach -v</b> command is successful, the debugger debugs the specified process the next time that the debugger issues an execution command. Because execution is not permitted during noninvasive debugging, the debugger cannot noninvasively debug more than one process at a time. This restriction also means that using the <b>.attach -v</b> command might make an existing invasive debugging session less useful.</p>
+<h2><a id="Spawning_a_New_Process"></a><a id="spawning_a_new_process"></a><a id="SPAWNING_A_NEW_PROCESS"></a>Spawning a New Process</h2>
+<p>CDB  can start a user-mode application and then debug the application. The application is specified by name. The debugger can also automatically attach to child processes (additional processes that the original target process started).</p>
+<p>Processes that the debugger creates (also known as spawned processes) behave slightly differently than processes that the debugger does not create.</p>
+<p>Instead of using the standard heap API, processes that the debugger creates use a special debug heap. You can force a spawned process to use the standard heap instead of the debug heap by using the _NO_DEBUG_HEAP <a href="general_environment_variables.htm">environment variable</a> or the <b>-hd</b> command-line option.</p>
+<p>Also, because the target application is a child process of the debugger, it inherits the debugger's permissions. This permission might enable the target application to perform certain actions that it could not perform otherwise. For example, the target application might be able to affect protected processes.</p>
+<p>In a Command Prompt window, you can spawn a new process when you launch CDB. Enter the following command.</p>
+<p><b>cdb [-o] </b><i>ProgramName</i><b> [</b><i>Arguments</i><b>]</b></p>
+<p>The <b>-o</b> option causes the debugger to attach to child processes. There are several other useful command-line options. For more information about the command-line syntax, see <a href="cdb_command_line_options.htm"><b>CDB Command-Line Options</b></a>.</p>
+<p>If the debugger is already debugging one or more processes, you can create a new process by entering the <a href="_create__create_process_.htm"><b>.create (Create Process)</b></a> command.</p>
+<p>The debugger will always start multiple target processes simultaneously, unless some of their threads are frozen or suspended. </p>
+<p>If the <a href="_create__create_process_.htm"><b>.create</b></a> command is successful, the debugger creates the specified process the next time that the debugger issues an execution command. If you use this command several times in a row, execution has to be requested by the debugger as many times as you use this command.</p>
+<p>You can control the application's starting directory by using the <a href="_createdir__set_created_process_directory_.htm"><b>.createdir (Set Created Process Directory)</b></a> command before <a href="_create__create_process_.htm"><b>.create</b></a>. You can use the <b>.createdir -I</b> command or the <b>-noinh</b> command-line option to control whether the target application inherits the debugger's handles.</p>
+<p>You can activate or deactivate the debugging of child processes by using the <a href="_childdbg__debug_child_processes_.htm"><b>.childdbg (Debug Child Processes)</b></a> command.</p>
+<h2><a id="Reattaching_to_a_Process"></a><a id="reattaching_to_a_process"></a><a id="REATTACHING_TO_A_PROCESS"></a>Reattaching to a Process</h2>
+<p>If the debugger stops responding or freezes, you can attach a new debugger to the target process. For more information about how to attach a debugger in this situation, see <a href="reattaching_to_the_target_application.htm">Reattaching to the Target Application</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Debugging a User-Mode Process Using CDB%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

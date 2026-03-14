@@ -1,0 +1,120 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !storagekd.storclass extension displays information about the specified classpnp device."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!storagekd.storclass</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._storagekd_storclass"></a>!storagekd.storclass</h1>
+</div>
+<p>The <b>!storagekd.storclass</b> extension displays information about the specified <i>classpnp</i> device.</p>
+<pre class="syntax">
+    <b>!storagekd.storclass </b>[<i>Address</i> [<i>Level</i>]] 
+</pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Address"></a><a id="_______address"></a><a id="_______ADDRESS"></a>       <i>Address</i></dt>
+<dd>
+<p>Specifies the address to the device object or device extension of a classpnp device. If <i>Address</i> is omitted, a list of all classpnp extensions is displayed.</p>
+</dd>
+<dt><a id="_______Level"></a><a id="_______level"></a><a id="_______LEVEL"></a>       <i>Level</i></dt>
+<dd>
+<p>Specifies the amount of detail to display. This parameter can be set to 0, 1, or 2, with 2 giving the most detail and 0 the least. The default is 0.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 8 and later</b></p>
+</td>
+<td>
+<p>
+          Storagekd.dll</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>Here is an example of the <b>!storagekd.storclass</b> display:</p>
+<p><b>1: kd&gt; !storagekd.storclass</b></p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>
+Storage class devices:
+
+* !storclass fffffa80043dc060 [1,2] ST3160812AS Paging Disk       
+  !storclass fffffa8006581740 [1,2] Msft Virtual Disk Disk       
+
+Usage: !storclass &lt;class device&gt; &lt;level [0-2]&gt;
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p><b>1: kd&gt; !storagekd.storclass fffffa80043dc060 1</b></p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>
+Storage class device fffffa80043dc060 with extension at fffffa80043dc1b0
+
+Classpnp Internal Information at fffffa8003bec360
+
+    Transfer Packet Engine:
+
+     Packet          Status  DL Irp          Opcode  Sector/ListId   UL Irp 
+    --------         ------ --------         ------ --------------- --------
+
+    Pending Idle Requests: 0x0
+
+
+    -- dt classpnp!_CLASS_PRIVATE_FDO_DATA fffffa8003bec360 --
+
+Classpnp External Information at fffffa80043dc1b0
+
+    ST3160812AS 3.ADH             9LS20QRL 
+
+    Minidriver information at fffffa80043dc670
+    Attached device object at fffffa800410a060
+    Physical device object at fffffa800410a060
+
+    Media Geometry:
+
+        Bytes in a Sector = 512
+        Sectors per Track = 63
+        Tracks / Cylinder = 255
+        Media Length      = 160000000000 bytes = ~149 GB
+
+    -- dt classpnp!_FUNCTIONAL_DEVICE_EXTENSION fffffa80043dc1b0 --
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!storagekd.storclass%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

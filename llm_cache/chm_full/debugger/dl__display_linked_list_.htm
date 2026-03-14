@@ -1,0 +1,88 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The dl command displays a LIST_ENTRY or SINGLE_LIST_ENTRY linked list."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>dl (Display Linked List)</title>
+
+<meta name="MS-HAID" content="r16_cmds_C_637e6a63-a643-4ce5-8e4b-e4ddc70f49cb.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.dl__display_linked_list_"></a>dl (Display Linked List)</h1>
+</div>
+<p>The <b>dl</b> command displays a LIST_ENTRY or SINGLE_LIST_ENTRY linked list.</p>
+<pre class="syntax">dl[b] Address MaxCount Size</pre>
+<h2><a id="ddk_cmd_display_linked_list_dbg"></a><a id="DDK_CMD_DISPLAY_LINKED_LIST_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______b______"></a><a id="_______B______"></a>       <b>b</b>      </dt>
+<dd>
+<p>If this is included, the list is dumped in reverse order. (In other words, the debugger follows the <b>Blink</b>s instead of the <b>Flink</b>s.) This cannot be used with a SINGLE_LIST_ENTRY.</p>
+</dd>
+<dt><a id="_______Address______"></a><a id="_______address______"></a><a id="_______ADDRESS______"></a>       <i>Address</i>      </dt>
+<dd>
+<p>The starting address of the list. For more syntax details, see <a href="address_and_address_range_syntax.htm">Address and Address Range Syntax</a>.</p>
+</dd>
+<dt><a id="_______MaxCount______"></a><a id="_______maxcount______"></a><a id="_______MAXCOUNT______"></a>       <i>MaxCount</i>      </dt>
+<dd>
+<p>Maximum number of elements to dump.</p>
+</dd>
+<dt><a id="_______Size______"></a><a id="_______size______"></a><a id="_______SIZE______"></a>       <i>Size</i>      </dt>
+<dd>
+<p>Size of each element. This is the number of consecutive ULONG_PTRs that will be displayed for each element in the list.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>user mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>all </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For an overview of memory manipulation and a description of other memory-related commands, see <a href="reading_and_writing_memory.htm">Reading and Writing Memory</a>.</p>
+<h2>Remarks</h2>
+<p>This list must be a LIST_ENTRY or SINGLE_LIST_ENTRY structure. If this is embedded in a larger structure, be sure that <i>Address</i> points to the linked list structure and not to the beginning of the outer structure.</p>
+<p>The display begins with <i>Address</i>. Therefore, if you are supplying the address of a pointer that points to the beginning of the list, you should disregard the first element printed.</p>
+<p>The <i>Address</i>, <i>MaxCount</i>, and <i>Size</i> parameters are in the current default radix. You can use the <a href="n__set_number_base_.htm"><b>n (Set Number Base)</b></a> command or the <b>0x</b> prefix to change the radix.</p>
+<p>If the list loops back on itself, the dump will stop. If a null pointer is encountered, the dump will stop.</p>
+<p>If you want to execute some command for each element of the list, use the <a href="_list.htm"><b>!list</b></a> extension.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20dl (Display Linked List)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

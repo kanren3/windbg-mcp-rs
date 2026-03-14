@@ -1,0 +1,83 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !pcitree extension displays information about PCI device objects, including child PCI buses and CardBus buses, and the devices attached to them."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!pcitree</title>
+
+<meta name="MS-HAID" content="r28_exts_kernel_N_e3bde835-eb06-4fdd-9310-48edf83c58f6.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._pcitree"></a>!pcitree</h1>
+</div>
+<p>The <b>!pcitree</b> extension displays information about PCI device objects, including child PCI buses and CardBus buses, and the devices attached to them.</p>
+<p></p>
+<pre class="syntax"><b>!pcitree</b></pre>
+<h2><a id="ddk__pcitree_dbg"></a><a id="DDK__PCITREE_DBG"></a></h2>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Windows 2000</b></p>
+</td>
+<td>
+<p>
+          Kdextx86.dll
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Kdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>See <a href="plug_and_play_debugging.htm">Plug and Play Debugging</a> for applications of this extension command. For information about PCI buses and PCI device objects, see the Windows Driver Kit (WDK) documentation. </p>
+<h2>Remarks</h2>
+<p>Here is an example:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !pcitree
+
+Bus 0x0 (FDO Ext fe517338)
+  0600 12378086 (d=0,  f=0) devext fe4f4ee8 Bridge/HOST to PCI
+  0601 70008086 (d=d,  f=0) devext fe4f4ce8 Bridge/PCI to ISA
+  0101 70108086 (d=d,  f=1) devext fe4f4ae8 Mass Storage Controller/IDE
+  0604 00211011 (d=e,  f=0) devext fe4f4788 Bridge/PCI to PCI
+
+Bus 0x1 (FDO Ext fe516998)
+  0200 905010b7 (d=8,  f=0) devext fe515ee8 Network Controller/Ethernet
+  0100 81789004 (d=9,  f=0) devext fe515ce8 Mass Storage Controller/SCSI
+  0300 0519102b (d=10, f=0) devext fe4f4428 Display Controller/VGA
+
+Total PCI Root busses processed = 1</code></pre>
+<p>To understand this display, consider the final device shown. Its base class is 03, its subclass is 00, its Device ID is 0x0519, and its Vendor ID is 0x102B. These values are all intrinsic to the device itself.</p>
+<p>The number after "d=" is the device number; the number after "f=" is the function number. After "devext" is the device extension address, 0xFE4F4428. Finally, the base class name and the subclass name appear.</p>
+<p>To obtain more information about a device, use the <a href="_devext.htm"><b>!devext</b></a> extension command with the device extension address as the argument. For this particular device, the command to use would be:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !devext fe4f4428 pci </code></pre>
+<p>If the <b>!pcitree</b> extension generates an error, this often means that your PCI symbols were not loaded properly. Use <a href="_reload__reload_module_.htm"><b>.reload pci.sys</b></a> to fix this problem.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!pcitree%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,150 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The GetSourceFileInformationWide method returns specified information about a source file."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IDebugAdvanced3::GetSourceFileInformationWide method</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.getsourcefileinformationwide"></a>IDebugAdvanced3::GetSourceFileInformationWide method</h1>
+</div>
+<p>The <b>GetSourceFileInformationWide</b> method returns specified information about a source file.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>HRESULT GetSourceFileInformationWide(
+  [in]            ULONG   Which,
+  [in]            PWSTR   SourceFile,
+  [in]            ULONG64 Arg64,
+  [in]            ULONG   Arg32,
+  [out, optional] PVOID   Buffer,
+  [in]            ULONG   BufferSize,
+  [out, optional] PULONG  InfoSize
+);</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Parameters</h2>
+<dl>
+<dt><i>Which</i> [in]</dt>
+<dd>
+<p>Specifies the piece of information to return.  The <i>Which</i> parameter can take one of the values in the following table.</p>
+<p></p>
+<dl>
+<dt><a id="DEBUG_SRCFILE_SYMBOL_TOKEN_"></a><a id="debug_srcfile_symbol_token_"></a>DEBUG_SRCFILE_SYMBOL_TOKEN </dt>
+<dd>
+<p>Returns a token representing the specified source file on a source server.  This token can be passed to <a href="findsourcefileandtoken.htm"><b>FindSourceFileAndToken</b></a> to retrieve information about the file. The token is returned to the <i>Buffer</i> buffer as an array of bytes.  The size of this token is a reflection of the size of the SrcSrv token. </p>
+</dd>
+<dt><a id="DEBUG_SRCFILE_SYMBOL_TOKEN_SOURCE_COMMAND_WIDE_"></a><a id="debug_srcfile_symbol_token_source_command_wide_"></a>DEBUG_SRCFILE_SYMBOL_TOKEN_SOURCE_COMMAND_WIDE </dt>
+<dd>
+<p>Queries a source server for the command to extract the source file from source control.  This includes the name of the executable file and its command-line parameters. The command is returned to the <i>Buffer</i> buffer as a Unicode string. </p>
+</dd>
+</dl>
+</dd>
+<dt><i>SourceFile</i> [in]</dt>
+<dd>
+<p>Specifies the source file whose information is being requested.  The source file is looked up on all the source servers in the source path. </p>
+</dd>
+<dt><i>Arg64</i> [in]</dt>
+<dd>
+<p>Specifies a 64-bit argument.  The value of <i>Which</i> specifies the module whose symbol token is requested.  Regardless of the value of <i>Which</i>, <i>Arg64</i> is a location within the memory allocation of the module.  </p>
+</dd>
+<dt><i>Arg32</i> [in]</dt>
+<dd>
+<p>Specifies a 32-bit argument.  This parameter is currently unused.   </p>
+</dd>
+<dt><i>Buffer</i> [out, optional]</dt>
+<dd>
+<p>Receives the requested symbol information.  The type of the data returned depends on the value of <i>Which</i>.  If <i>Buffer</i> is <b>NULL</b>, this information is not returned.</p>
+</dd>
+<dt><i>BufferSize</i> [in]</dt>
+<dd>
+<p>Specifies the size in bytes of the <i>Buffer</i> buffer. If <i>Buffer</i> is <b>NULL</b>, <i>BufferSize</i> must also be <b>NULL</b>.</p>
+</dd>
+<dt><i>InfoSize</i> [out, optional]</dt>
+<dd>
+<p>Specifies the size in bytes of the information returned to the <i>Buffer</i> buffer. This parameter can be NULL if the data is not required.</p>
+</dd>
+</dl>
+<h2>Return value</h2>
+<p>This method may also return error values.  See <a href="hresult_values.htm"><b>Return Values</b></a> for more details.</p>
+<table>
+<tr>
+<th>Return code</th>
+<th>Description</th>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>S_OK</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>The method was successful.</p>
+</td>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>S_FALSE</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>The method was successful. However, the information would not fit in the <i>Buffer</i> buffer, so the information or name was truncated.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>For more information about source files, see <a href="using_source_files.htm">Using Source Files</a>.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Target platform</p>
+</th>
+<td width="70%">
+<dl>
+<dt></dt>
+</dl>
+</td>
+</tr>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Dbgeng.h (include Dbgeng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="idebugadvanced3.htm"><b>IDebugAdvanced3</b></a></dt>
+<dt><a href="findsourcefileandtoken.htm"><b>FindSourceFileAndToken</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IDebugAdvanced3::GetSourceFileInformationWide method%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,76 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Calling Extensions and Extension Functions"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Calling Extensions and Extension Functions</title>
+
+<meta name="MS-HAID" content="Engine_DG_d73e4097-bf61-439b-9a14-6b0f445de761.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.calling_extensions_and_extension_functions"></a>Calling Extensions and Extension Functions</h1>
+</div>
+<p>To load an extension library (or to obtain a handle for an already loaded extension library), use <a href="addextension.htm"><b>AddExtension</b></a>.  An extension library can be unloaded with <a href="removeextension.htm"><b>RemoveExtension</b></a>.</p>
+<p>Extension commands can be called using <a href="callextension.htm"><b>CallExtension</b></a>.</p>
+<h3><a id="extension_functions"></a><a id="EXTENSION_FUNCTIONS"></a>Extension Functions</h3>
+<p><i>Extension functions</i> are functions that are exported by extension libraries.  They can use any function prototype and are called directly using C function pointers.</p>
+<p>They are not extension commands and are not available via debugger commands.  Extension functions cannot be called remotely; they must be called directly.  Hence they cannot be used from debugging clients.  They can only be called when the client object is inside the host engine -  when not remotely debugging or when using a smart client.</p>
+<p>Extension functions are identified within extension libraries by the "_EFN_" prepended to their names.</p>
+<p>To obtain a pointer to an extension function, use <a href="getextensionfunction.htm"><b>GetExtensionFunction</b></a>.  The type of this function pointer should match the prototype of the extension function.  The extension function can now be called just like any other function pointer in C.</p>
+<h3><a id="example"></a><a id="EXAMPLE"></a>Example</h3>
+<p>If the following extension function was included in an extension library and loaded into the debugger engine:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>HRESULT CALLBACK
+_EFN_GetObject(IDebugClient * client, SomeObject * obj);</pre>
+</td>
+</tr>
+</table></span></div>
+<p>It could be called using:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>typedef ULONG (CALLBACK * GET_OBJECT)(IDebugClient * client, SomeObject * obj);
+
+
+
+HRESULT status = S_OK;
+GET_OBJECT extFn = NULL;
+SomeObject myObj;
+
+if (g_DebugControl-&gt;
+        GetExtensionFunction(0,
+                             "GetObject",
+                             (FARPROC *) &amp;extFn ) == S_OK &amp;&amp;
+    extFn)
+{
+    status = (*extFn)(client, &amp;myObj);
+}</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Calling Extensions and Extension Functions%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

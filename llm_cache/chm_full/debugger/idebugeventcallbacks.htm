@@ -1,0 +1,145 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="IDebugEventCallbacks interface"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IDebugEventCallbacks interface</title>
+
+<meta name="MS-HAID" content="ComCallbacks_72745555-ec34-41fa-9305-cf23357bcd17.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.idebugeventcallbacks"></a>IDebugEventCallbacks interface</h1>
+</div>
+<h2>Members</h2>
+<p>The <b xmlns:loc="http://microsoft.com/wdcml/l10n">IDebugEventCallbacks</b> interface inherits from the <b>IUnknown</b> interface. <b>IDebugEventCallbacks</b> also has these types of members:</p>
+<ul>
+<li><a href="#methods">Methods</a></li>
+</ul>
+<h3><a id="methods"></a>Methods</h3>
+<p>The <b>IDebugEventCallbacks</b> interface has these methods.</p>
+<table id="memberListMethods" class="members">
+<tr>
+<th align="left" width="37%">Method</th>
+<th align="left" width="63%">Description</th>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="idebugeventcallbacks_breakpoint.htm"><b>Breakpoint</b></a></td>
+<td align="left" width="63%">
+<p> This method is called by the engine when the target issues a breakpoint exception.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="idebugeventcallbacks_changedebuggeestate.htm"><b>ChangeDebuggeeState</b></a></td>
+<td align="left" width="63%">
+<p>This method is called by the engine when it makes or detects changes to the target.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="idebugeventcallbacks_changeenginestate.htm"><b>ChangeEngineState</b></a></td>
+<td align="left" width="63%">
+<p>This method is called by the engine when its state has changed.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="idebugeventcallbacks_changesymbolstate.htm"><b>ChangeSymbolState</b></a></td>
+<td align="left" width="63%">
+<p>This method is called by the engine when the symbol state changes.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="idebugeventcallbacks_createprocess.htm"><b>CreateProcess</b></a></td>
+<td align="left" width="63%">
+<p>This method is called by the engine when a create-process debugging event occurs in the target.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="idebugeventcallbacks_createthread.htm"><b>CreateThread</b></a></td>
+<td align="left" width="63%">
+<p>This method is called by the engine when a create-thread debugging event occurs in the target.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="idebugeventcallbacks_exception.htm"><b>Exception</b></a></td>
+<td align="left" width="63%">
+<p>This method is called by the engine when an exception debugging event occurs in the target.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="idebugeventcallbacks_exitprocess.htm"><b>ExitProcess</b></a></td>
+<td align="left" width="63%">
+<p>This method is called by the engine when an exit-process debugging event occurs in the target.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="idebugeventcallbacks_exitthread.htm"><b>ExitThread</b></a></td>
+<td align="left" width="63%">
+<p>This method is called by the engine when an exit-thread debugging event occurs in the target.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="idebugeventcallbacks_getinterestmask.htm"><b>GetInterestMask</b></a></td>
+<td align="left" width="63%">
+<p>This method is called to determine which events the <b>IDebugEventCallbacks</b> object is interested in.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="idebugeventcallbacks_loadmodule.htm"><b>LoadModule</b></a></td>
+<td align="left" width="63%">
+<p>This method is called by the engine when a module-load debugging event occurs in the target.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="idebugeventcallbacks_sessionstatus.htm"><b>SessionStatus</b></a></td>
+<td align="left" width="63%">
+<p>This method is called by the engine when a change occurs in the debugger session.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="idebugeventcallbacks_systemerror.htm"><b>SystemError</b></a></td>
+<td align="left" width="63%">
+<p>This method is called by the engine when a system error occurs in the target.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="idebugeventcallbacks_unloadmodule.htm"><b>UnloadModule</b></a></td>
+<td align="left" width="63%">
+<p>This method is called by the engine when a module-unload debugging event occurs in the target.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>The <a href="idebugeventcallbackswide.htm"><b>IDebugEventCallbacksWide</b></a> interface includes Unicode versions of these methods; the Unicode methods share the same names as those used by the methods in <b>IDebugEventCallbacks</b>.
+
+</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Dbgeng.h (include Dbgeng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IDebugEventCallbacks interface%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

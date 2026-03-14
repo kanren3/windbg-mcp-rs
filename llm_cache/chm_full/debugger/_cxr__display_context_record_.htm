@@ -1,0 +1,98 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .cxr command displays the context record saved at the specified address. It also sets the register context."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.cxr (Display Context Record)</title>
+
+<meta name="MS-HAID" content="r19_metacmds_A_a174b7ab-942b-4703-85e7-a391e4b5dfdf.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._cxr__display_context_record_"></a>.cxr (Display Context Record)</h1>
+</div>
+<p>The <b>.cxr</b> command displays the context record saved at the specified address. It also sets the register context.</p>
+<p></p>
+<pre class="syntax">
+    <b>.cxr </b>[<i>Options</i>]<b> </b>[<i>Address</i>]<b> </b> 
+</pre>
+<h2><a id="ddk_meta_display_context_record_dbg"></a><a id="DDK_META_DISPLAY_CONTEXT_RECORD_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Options______"></a><a id="_______options______"></a><a id="_______OPTIONS______"></a>       <i>Options</i>      </dt>
+<dd>
+<p>Can be any combination of the following options:</p>
+<p></p>
+<dl>
+<dt><a id="_f_Size"></a><a id="_f_size"></a><a id="_F_SIZE"></a><b>/f</b><b> </b><i>Size</i></dt>
+<dd>
+<p>Forces the context size to equal the value of <i>Size</i>, in bytes. This can be useful when the context does not match the actual target -- for example, when using an x86 context on a 64-bit target during <i>WOW64</i> debugging.  If an invalid or inconsistent size is specified, the error "Unable to convert context to canonical form" will be displayed.</p>
+</dd>
+<dt><a id="_w"></a><a id="_W"></a><b>/w</b></dt>
+<dd>
+<p>Writes the current context to memory, and displays the address of the location where it was written.</p>
+</dd>
+</dl>
+</dd>
+<dt><a id="_______Address______"></a><a id="_______address______"></a><a id="_______ADDRESS______"></a>       <i>Address</i>      </dt>
+<dd>
+<p>Address of the system context record.</p>
+<p> Omitting the address does not display any context record information, but it does reset the register context.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Modes</b></p>
+</td>
+<td>
+<p>user mode, kernel mode  </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets</b></p>
+</td>
+<td>
+<p>live, crash dump  </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms
+         </b></p>
+</td>
+<td>
+<p>all </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about the register context and other context settings, see <a href="changing_contexts.htm">Changing Contexts</a>.</p>
+<h2>Remarks</h2>
+<p>The information from a context record can be used to assist in debugging a system halt where an unhandled exception has occurred and an exact stack trace is not available. The <b>.cxr</b> command displays the important registers for the specified context record.</p>
+<p></p>
+<p>This command also instructs the debugger to use the specified context record as the register context. After this command is executed, the debugger will have access to the most important registers and the stack trace for this thread. This register context persists until you allow the target to execute or use another register context command (<a href="_thread__set_register_context_.htm"><b>.thread</b></a>, <a href="_ecxr__display_exception_context_record_.htm"><b>.ecxr</b></a>, <a href="_trap__display_trap_frame_.htm"><b>.trap</b></a> , or <b>.cxr</b> again). In user mode, it will also be reset if you change the current process or thread. See <a href="changing_contexts.htm#register_context">Register Context</a> for details.</p>
+<p>The <b>.cxr</b> command is often used to debug bug check 0x1E.   For more information and an example, see <a href="bug_check_0x1e__kmode_exception_not_handled.htm"><b>Bug Check 0x1E</b></a> (KMODE_EXCEPTION_NOT_HANDLED).  </p>
+<p>The <b>.cxr /w</b> command writes the context to memory and displays the address where it has been stored. This address can be passed to <a href="_apply_dbp__apply_data_breakpoint_to_context_.htm"><b>.apply_dbp (Apply Data Breakpoint to Context)</b></a> if you need to apply data breakpoints to this context. </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.cxr (Display Context Record)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

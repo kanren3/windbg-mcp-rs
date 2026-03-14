@@ -1,0 +1,85 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !usbkd.usbpdos command displays information about all physical device objects (PDOs) created by the USB hub driver."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!usbkd.usbpdos</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._usbkd_usbpdos"></a>!usbkd.usbpdos</h1>
+</div>
+<p>The  <b>!usbkd.usbpdos</b> command displays information about all physical device objects (PDOs) created by the USB hub driver.</p>
+<pre class="syntax"><b>!usbkd.usbpdos</b></pre>
+<h2><a id="DLL"></a><a id="dll"></a>DLL</h2>
+<p>Usbkd.dll
+     </p>
+<h2>Examples</h2>
+<p>Here's an example of the output of the <b>!usbpdos</b> command.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !usbkd.usbpdos
+
+ext ffffe00006c513f0
+VID 0a12 PID 0001 REV 0309 
+ dt USBHUB!_USB_DEVICE_DESCRIPTOR ffffe00006c51960
+Vendor: Xxxx
+ Xxxx Corporation
+ dd Class: (224)(e0)
+ (224)(e0)
+HubFdo: ffffe00000d94050, port: 2
+&lt;null&gt;
+SystemWake 5 SystemHibernate(S4)
+wake_irp_list_head = ffffe00006c51cb0
+wake_irp = ffffe00006c51cb0
+PDO Times:
+	Stat_PdoCreatedAt: 0d29bbd58
+	Stat_PdoEnumeratedAt: b65ace75d29bbd58
+	Stat: Enumeration Time: 0xa7d3842a(-1479310294) ms
+	Stat_Pdo_SetD0_StartAt: 0d29bbd58
+	Stat_Pdo_SetD0_CompleteAt: 0d29bbd58
+	Stat: PDO Set_D0 time: 0x0(0) ms
+
+
+----------------------------------------------------------
+ext ffffe00007c883f0
+VID 0781 PID 5530 REV 0100 
+ dt USBHUB!_USB_DEVICE_DESCRIPTOR ffffe00007c88960
+Vendor: Xxxx
+ Xxxx Corporation
+ dd Class: (0)(0)
+ (8)Class_UsbStorage
+HubFdo: ffffe00002320050, port: 3
+:Xxxx  
+SystemWake 5 SystemHibernate(S4)
+wake_irp_list_head = ffffe00007c88cb0
+wake_irp = ffffe00007c88cb0
+PDO Times:
+	Stat_PdoCreatedAt: 0d29bbd58
+	Stat_PdoEnumeratedAt: 2380af52d29bbd58
+	Stat: Enumeration Time: 0x9a24226c(-1708907924) ms
+	Stat_Pdo_SetD0_StartAt: 0d29bbd58
+	Stat_Pdo_SetD0_CompleteAt: 0d29bbd58
+	Stat: PDO Set_D0 time: 0x0(0) ms
+----------------------------------------------------------</code></pre>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="usb_2_0_extensions.htm">USB 2.0 Debugger Extensions</a></dt>
+<dt><a href="http://go.microsoft.com/fwlink/p?LinkID=227351">Universal Serial Bus (USB) Drivers</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!usbkd.usbpdos%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

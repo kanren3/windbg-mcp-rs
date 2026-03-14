@@ -1,0 +1,312 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .printf token behaves like the printf statement in C."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.printf</title>
+
+<meta name="MS-HAID" content="r14_tokens_d4857356-9e8f-4007-800d-335e18de8cfd.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._printf"></a>.printf</h1>
+</div>
+<p>The <b>.printf</b> token behaves like the <b>printf</b> statement in C.</p>
+<pre class="syntax"><b>.printf [/D] [</b><i>Option</i><b>] "</b><i>FormatString</i><b>" [, </b><i>Argument</i><b> , ...]</b> 
+</pre>
+<h2><a id="Syntax_Elements"></a><a id="syntax_elements"></a><a id="SYNTAX_ELEMENTS"></a>Syntax Elements</h2>
+<p></p>
+<dl>
+<dt><a id="_D"></a><a id="_d"></a><b>/D</b></dt>
+<dd>
+<p>Specifies that the format string contains <a href="debugger_markup_language_commands.htm">Debugger Markup Language</a> (DML).</p>
+</dd>
+<dt><a id="_______Option______"></a><a id="_______option______"></a><a id="_______OPTION______"></a>       <i>Option</i>      </dt>
+<dd>
+<p>(WinDbg only)  Specifies the type of text message that WinDbg should interpret the FormatString as.  WinDbg assigns each type of Debugger Command window message a background and text color; choosing one of these options causes the message to be displayed in the appropriate colors.  The default is to display the text as a normal-level message.  For more information on message colors and how to set them, see <a href="view___options.htm">View | Options</a>.</p>
+<p>The following options are available.</p>
+<table>
+<tr>
+<th>Option</th>
+<th>Type of message</th>
+<th>Title of colors in Options dialog box</th>
+</tr>
+<tr>
+<td>
+<p>/od</p>
+</td>
+<td>
+<p>debuggee</p>
+</td>
+<td>
+<p>Debuggee level command window</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>/oD</p>
+</td>
+<td>
+<p>debuggee prompt</p>
+</td>
+<td>
+<p>Debuggee prompt level command window</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>/oe</p>
+</td>
+<td>
+<p>error</p>
+</td>
+<td>
+<p>Error level command window</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>/on</p>
+</td>
+<td>
+<p>normal</p>
+</td>
+<td>
+<p>Normal level command window</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>/op</p>
+</td>
+<td>
+<p>prompt</p>
+</td>
+<td>
+<p>Prompt level command window</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>/oP</p>
+</td>
+<td>
+<p>prompt registers</p>
+</td>
+<td>
+<p>Prompt registers level command window</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>/os</p>
+</td>
+<td>
+<p>symbols</p>
+</td>
+<td>
+<p>Symbol message level command window</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>/ov</p>
+</td>
+<td>
+<p>verbose</p>
+</td>
+<td>
+<p>Verbose level command window</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>/ow</p>
+</td>
+<td>
+<p>warning</p>
+</td>
+<td>
+<p>Warning level command window</p>
+</td>
+</tr>
+</table>
+<p> </p>
+</dd>
+<dt><a id="_______FormatString______"></a><a id="_______formatstring______"></a><a id="_______FORMATSTRING______"></a>       <i>FormatString</i>      </dt>
+<dd>
+<p>Specifies the format string, as in <b>printf</b>.  In general, conversion characters work exactly as in C. For the floating-point conversion characters, the 64-bit argument is interpreted as a 32-bit floating-point number unless the <b>l</b>  modifier is used.</p>
+<p>The %p conversion character is supported, but it represents a pointer in the target's virtual address space.  It must not have any modifiers and it uses the debugger's internal address formatting.  The following additional conversion characters are supported.</p>
+<table>
+<tr>
+<th>Character</th>
+<th>Argument type</th>
+<th>Argument</th>
+<th>Text printed</th>
+</tr>
+<tr>
+<td>
+<p>%p</p>
+</td>
+<td>
+<p>ULONG64 </p>
+</td>
+<td>
+<p>A pointer in the target's virtual address space. </p>
+</td>
+<td>
+<p>The value of the pointer. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>%N</p>
+</td>
+<td>
+<p>DWORD_PTR (32 or 64 bits, depending on the host's architecture) </p>
+</td>
+<td>
+<p>A pointer in the host's virtual address space. </p>
+</td>
+<td>
+<p>The value of the pointer.  (This is equivalent to the standard C %p character.) </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>%I</p>
+</td>
+<td>
+<p>ULONG64 </p>
+</td>
+<td>
+<p>Any 64-bit value. </p>
+</td>
+<td>
+<p>The specified value.  If this is greater than 0xFFFFFFFF, it is printed as a 64-bit address; otherwise it is printed as a 32-bit address.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>%ma</p>
+</td>
+<td>
+<p>ULONG64 </p>
+</td>
+<td>
+<p>The address of a NULL-terminated ASCII string in the target's virtual address space. </p>
+</td>
+<td>
+<p>The specified string.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>%mu</p>
+</td>
+<td>
+<p>ULONG64 </p>
+</td>
+<td>
+<p>The address of a NULL-terminated Unicode string in the target's virtual address space. </p>
+</td>
+<td>
+<p>The specified string.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>%msa</p>
+</td>
+<td>
+<p>ULONG64 </p>
+</td>
+<td>
+<p>The address of an ANSI_STRING structure in the target's virtual address space.</p>
+</td>
+<td>
+<p>The specified string.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>%msu</p>
+</td>
+<td>
+<p>ULONG64 </p>
+</td>
+<td>
+<p>The address of a UNICODE_STRING structure in the target's virtual address space. </p>
+</td>
+<td>
+<p>The specified string.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>%y</p>
+</td>
+<td>
+<p>ULONG64 </p>
+</td>
+<td>
+<p>The address of a debugger symbol in the target's virtual address space. </p>
+</td>
+<td>
+<p>A string containing the name of the specified symbol (and displacement, if any). </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>%ly</p>
+</td>
+<td>
+<p>ULONG64 </p>
+</td>
+<td>
+<p>The address of a debugger symbol in the target's virtual address space. </p>
+</td>
+<td>
+<p>A string containing the name of the specified symbol (and displacement, if any), as well as any available source line information. </p>
+</td>
+</tr>
+</table>
+<p> </p>
+</dd>
+<dt><a id="_______Arguments______"></a><a id="_______arguments______"></a><a id="_______ARGUMENTS______"></a>       <i>Arguments</i>      </dt>
+<dd>
+<p>Specifies arguments for the format string, as in <b>printf</b>. The number of arguments that are specified should match the number of conversion characters in <i>FormatString</i>. Each argument is an expression that will be evaluated by the default expression evaluator (MASM or C++). For details, see <a href="numerical_expression_syntax.htm">Numerical Expression Syntax</a>.</p>
+</dd>
+</dl>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For information about other control flow tokens and their use in debugger command programs, see <a href="using_debugger_command_programs.htm">Using Debugger Command Programs</a>.</p>
+<h2>Remarks</h2>
+<p>The color settings that you can choose by using the <i>Options</i> parameter are by default all set to black text on a white background. To make best use of these options, you must first use <a href="view___options.htm">View | Options</a> to open the Options dialog box and change the color settings for Debugger Command window messages.</p>
+<p>The following example shows how to include a DML tag in the format string.</p>
+<div class="code"><span codelanguage="cmd"><table>
+<tr>
+<th>cmd</th>
+</tr>
+<tr>
+<td>
+<pre>.printf /D "Click &lt;link cmd=\".chain /D\"&gt;here&lt;/link&gt; to see extensions DLLs."</pre>
+</td>
+</tr>
+</table></span></div><img src="images/Printf01.png" alt="Screen shot of DML link in Command Browser window"/><p>The output shown in the preceding image has a link that you can click to execute the command specified in the <code>&lt;link&gt;</code> tag. The following image shows the result of clicking the link.</p><img src="images/Printf02.png" alt="Screen shot of DML output in Command Browser window"/><p>For information about DML tags, see dml.doc in the installation folder for Debugging Tools for Windows.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.printf%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

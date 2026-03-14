@@ -1,0 +1,98 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The DEBUG_FIND_SOURCE_XXX bit-flags are used to control the behavior of the methods FindSourceFile and FindSourceFileAndToken when searching for source files."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>DEBUG_FIND_SOURCE_XXX</title>
+
+<meta name="MS-HAID" content="Structures_9f59ac34-a07a-4b08-a783-367ee98a4782.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.debug_find_source_xxx"></a>DEBUG_FIND_SOURCE_XXX</h1>
+</div>
+<p>The DEBUG_FIND_SOURCE_<i>XXX</i> bit-flags are used to control the behavior of the methods <a href="findsourcefile.htm"><b>FindSourceFile</b></a> and <a href="findsourcefileandtoken.htm"><b>FindSourceFileAndToken</b></a> when searching for source files.</p>
+<p>
+<p>The flags can be any combination of values from the following table.</p>
+</p>
+<table>
+<tr>
+<th>Constant</th>
+<th>Description</th>
+</tr>
+<tr VALIGN="top">
+<td align="left" width="40%"><a id="DEBUG_FIND_SOURCE_FULL_PATH"></a><a id="debug_find_source_full_path"></a><dl>
+<dt><b>DEBUG_FIND_SOURCE_FULL_PATH</b></dt>
+</dl>
+</td>
+<td align="left" width="60%">
+<p>Always return the full canonical path name for the found file.</p>
+<p>If not set and the source path contains relative directories, relative path names can be returned.</p>
+</td>
+</tr>
+<tr VALIGN="top">
+<td align="left" width="40%"><a id="DEBUG_FIND_SOURCE_BEST_MATCH"></a><a id="debug_find_source_best_match"></a><dl>
+<dt><b>DEBUG_FIND_SOURCE_BEST_MATCH</b></dt>
+</dl>
+</td>
+<td align="left" width="60%">
+<p>Continue searching after a match has been found to look for a better match.</p>
+</td>
+</tr>
+<tr VALIGN="top">
+<td align="left" width="40%"><a id="DEBUG_FIND_SOURCE_NO_SRCSRV"></a><a id="debug_find_source_no_srcsrv"></a><dl>
+<dt><b>DEBUG_FIND_SOURCE_NO_SRCSRV</b></dt>
+</dl>
+</td>
+<td align="left" width="60%">
+<p>Do not include source servers in the search.</p>
+</td>
+</tr>
+<tr VALIGN="top">
+<td align="left" width="40%"><a id="DEBUG_FIND_SOURCE_TOKEN_LOOKUP"></a><a id="debug_find_source_token_lookup"></a><dl>
+<dt><b>DEBUG_FIND_SOURCE_TOKEN_LOOKUP</b></dt>
+</dl>
+</td>
+<td align="left" width="60%">
+<p>Return a variable associated with a file token.</p>
+<p>If this flag is set, the other flags are ignored. This flag cannot be used in the <a href="findsourcefile.htm"><b>FindSourceFile</b></a> method.</p>
+</td>
+</tr>
+</table>
+<h2>Remarks</h2>
+<p>The value DEBUG_FIND_SOURCE_DEFULT defines the default set of flags, which means that all of the flags in the previous table are turned off.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>DbgEng.h (include DbgEng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="findsourcefile.htm"><b>FindSourceFile</b></a></dt>
+<dt><a href="findsourcefileandtoken.htm"><b>FindSourceFileAndToken</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20DEBUG_FIND_SOURCE_XXX%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

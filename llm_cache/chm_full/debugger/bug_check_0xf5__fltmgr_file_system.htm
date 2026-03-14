@@ -1,0 +1,191 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The FLTMGR_FILE_SYSTEM bug check has a value of 0x000000F5. This indicates that an unrecoverable failure occurred in the Filter Manager."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0xF5: FLTMGR_FILE_SYSTEM</title>
+
+<meta name="MS-HAID" content="t07_bugs_E0_e653e2fb-53e2-4ce3-807e-acf239d13bbf.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0xf5__fltmgr_file_system"></a>Bug Check 0xF5: FLTMGR_FILE_SYSTEM</h1>
+</div>
+<p>The FLTMGR_FILE_SYSTEM bug check has a value of 0x000000F5. This indicates that an unrecoverable failure occurred in the Filter Manager.</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2> FLTMGR_FILE_SYSTEM Parameters</h2>
+<p>The following parameters are displayed on the blue screen. Parameter 1 indicates the type of violation. The meaning of the other parameters depends on the value of Parameter 1.</p>
+<table>
+<tr>
+<th>Parameter 1</th>
+<th>Parameter 2</th>
+<th>Parameter 3</th>
+<th>Parameter 4</th>
+<th>Cause of error</th>
+</tr>
+<tr>
+<td>
+<p>0x66</p>
+</td>
+<td>
+<p>Pointer to the callback data structure for the operation.</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>The minifilter returned FLT_PREOP_SUCCESS_WITH_CALLBACK or FLT_PREOP_SYNCHRONIZE from a preoperation callback, but did not register a corresponding postoperation callback.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x67</p>
+</td>
+<td>
+<p>Pointer to the callback data structure for the operation.</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>Error NTSTATUS code for the operation</p>
+</td>
+<td>
+<p>An internal object ran out of space, and the system is unable to allocate new space.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x68</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>Address of the FLT_FILE_NAME_INFORMATIONN structure</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>A FLT_FILE_NAME_INFORMATION structure was dereferenced too many times.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x6A</p>
+</td>
+<td>
+<p>File object pointer for the file.</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>The file-open or file-create request could not be canceled, because one or more handles have been created for the file.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x6B</p>
+</td>
+<td>
+<p>Frame ID</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>Thread</p>
+</td>
+<td>
+<p>Invalid BACKPOCKET IRPCTRL state.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x6C</p>
+</td>
+<td>
+<p>Frame ID</p>
+</td>
+<td>
+<p>BackPocket List</p>
+</td>
+<td>
+<p>Thread</p>
+</td>
+<td>
+<p>Too many nested PageFaults for BACKPOCKETED IRPCTR.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x6D</p>
+</td>
+<td>
+<p>Address of the minifilter's context structure</p>
+</td>
+<td>
+<p>Address of the CONTEXT_NODE structure</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>The context structure was dereferenced too many times. This means that the reference count on the Filter Manager's CONTEXT_NODE structure went to zero while it was still attached to its associated object.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x6E</p>
+</td>
+<td>
+<p>Address of the minifilter's context structure</p>
+</td>
+<td>
+<p>Address of the CONTEXT_NODE structure</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>The context structure was referenced after being freed.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Cause</h2>
+<p>The cause of the problem is indicated by the value of Parameter 1.  See the table in the Parameters section.</p>
+<h2>Resolution</h2>
+<p>If Parameter 1 equals <b>0x66</b>, you can debug this problem by verifying that your minifilter driver has registered a post-operation callback for this operation. The current operation can be found in the callback data structure. (See Parameter 2.) Use the <b>!fltkd.cbd</b> debugger extension. </p>
+<p>If Parameter 1 equals <b>0x67</b>, you should verify that you do not have a nonpaged pool leak somewhere in the system. </p>
+<p>If Parameter 1 equals <b>0x6A</b>, make sure that your minifilter driver does not reference this file object (see Parameter 2) to get a handle at any point during your minifilter's processing of this operation.</p>
+<p>If Parameter 1 equals <b>0x6B</b> or <b>0x6C</b>, then a non-recoverable internal state error has occurred which will cause the operating system to bug check.</p>
+<p>If Parameter 1 equals <b>0x6D</b>, make sure that your minifilter driver does not call <b>FltReleaseContext</b> too many times for the given context (see Parameter 2). </p>
+<p>If Parameter 1 equals 0x6E, make sure that your minifilter driver does not call <b>FltReferenceContext</b> after the given context has been deleted (see Parameter 2).</p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

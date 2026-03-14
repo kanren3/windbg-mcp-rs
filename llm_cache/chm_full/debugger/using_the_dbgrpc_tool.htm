@@ -1,0 +1,55 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Using the DbgRpc Tool"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Using the DbgRpc Tool</title>
+
+<meta name="MS-HAID" content="t11_rpc_acpi_ffe18735-edab-4192-8bb2-17cbfc9a0ad7.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.using_the_dbgrpc_tool"></a>Using the DbgRpc Tool</h1>
+</div>
+<h2><a id="ddk_using_the_dbgrpc_tool_dbg"></a><a id="DDK_USING_THE_DBGRPC_TOOL_DBG"></a></h2>
+<p>The DbgRpc tool (Dbgrpc.exe) is located in the root directory of the Debugging Tools for Windows installation and must be started in a Command Prompt window. Double-clicking the icon will not start this tool.</p>
+<p>The Command Prompt window must be running under an account with administrative privileges on the local computer, or with domain administrative privileges.</p>
+<p>DbgRpc makes no calls to any system services (such as LSASS). This makes it useful for debugging even if a system service has crashed, as long as the kernel is still running.</p>
+<h3><a id="using_dbgrpc_on_a_remote_computer"></a><a id="USING_DBGRPC_ON_A_REMOTE_COMPUTER"></a>Using DbgRpc on a Remote Computer</h3>
+<p>DbgRpc can also be used to examine information from a remote machine. For this to work, the remote machine must be able to accept remote connections and authenticate remote users. If the remote machine's RPCSS (RPC Endpoint Mapper) service has crashed, DbgRpc will not be able to work. Administrative or domain administrative privileges on the remote machine are required.</p>
+<p>The <b>-s</b> command-line option is used to specify the server name, and the <b>-p</b> parameter is used to specify the transport protocol. Both TCP and named pipe protocols are available. TCP is the recommended protocol; it should work in almost every situation.</p>
+<p>Here is an example:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>G:\&gt;dbgrpc -s MyServer -p ncacn_ip_tcp -l -P 1e8 -L 0.1
+Getting remote cell info ...
+Endpoint
+Status: Active
+Protocol Sequence: LRPC
+Endpoint name: OLE18</pre>
+</td>
+</tr>
+</table></span></div>
+<h3><a id="dbgrpc_command_line"></a><a id="DBGRPC_COMMAND_LINE"></a>DbgRpc Command Line</h3>
+<p>For a description of the full command syntax, see <a href="dbgrpc_command_line_options.htm"><b>DbgRpc Command-Line Options</b></a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Using the DbgRpc Tool%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

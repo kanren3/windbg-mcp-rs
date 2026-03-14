@@ -1,0 +1,55 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="A DebugFailureAnalysis object has a collection of failure analysis entries."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Failure Analysis Entries</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.failure_analysis_entries"></a>Failure Analysis Entries</h1>
+</div>
+<p>A <a href="idebugfailureanalysis2.htm"><b>DebugFailureAnalysis</b></a> object has a collection of failure analysis entries. For more information, see <a href="writing_an_analysis_extension_to_extend__analyze.htm#failure_analysis_entries_tags_and_data_types">Failure Analysis Entries, Tags, and Data Types</a>.</p>
+<p>A <i>failure analysis entry</i> (also called an <i>FA entry</i>) is one of the following:
+
+   </p>
+<ul>
+<li>An <a href="fa_entry.htm"><b>FA_ENTRY</b></a> structure</li>
+<li>An <a href="fa_entry.htm"><b>FA_ENTRY</b></a> structure followed by a data block</li>
+</ul>
+<p>The <b>DataSize</b> member of the <a href="fa_entry.htm"><b>FA_ENTRY</b></a> structure holds the size, in bytes, of the data block. If there is no data block, <b>DataSize</b> is equal to 0.
+
+The <b>Tag</b> member of an <b>FA_ENTRY</b> structure identifies the kind of information that is stored in the FA entry. For example, the tag <b>DEBUG_FLR_BUGCHECK_CODE</b> indicates that the data block of the <b>FA_ENTRY</b> holds a bug check code.
+
+</p>
+<p>In some cases, there is no need for a data block; all the information is conveyed by the tag. For example, an  <a href="fa_entry.htm"><b>FA_ENTRY</b></a> with tag <b>DEBUG_FLR_KERNEL_VERIFIER_ENABLED</b>  has no data block.</p>
+<p>
+   
+
+
+Each tag is associated with one of the data types in the <a href="fa_entry_type.htm"><b>FA_ENTRY_TYPE</b></a> enumeration. For example, the tag <b>DEBUG_FLR_BUGCHECK_CODE</b> is associated with the data type <b>DEBUG_FA_ENTRY_ULONG</b>. To determine the data type of a tag, call the <a href="idebugfaentrytags_gettype.htm"><b>GetType</b></a> method of the <a href="idebugfaentrytags.htm">IDebugFAEntryTags</a> interface. 
+</p>
+<p>To get or set the data block of an FA entry, use the <a href="idebugfailureanalysis2.htm"><b>IDebugFailureAnalysis2</b></a> interface.</p>
+<h2><a id="related_topics"></a>Related topics</h2>
+<dl>
+<dt><a href="writing_an_analysis_extension_to_extend__analyze.htm">Writing an Analysis Extension Plug-in to Extend !analyze</a></dt>
+<dt><a href="fa_entry.htm"><b>FA_ENTRY</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Failure Analysis Entries%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

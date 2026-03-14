@@ -1,0 +1,48 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Using CVS"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Using CVS</title>
+
+<meta name="MS-HAID" content="SymChk_e0a42899-cb48-4ee2-a80c-bf69c34ba59c.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.using_cvs"></a>Using CVS</h1>
+</div>
+<p>The CVS module for Source Server was developed using Concurrent Versions System (CVS) 1.11.17 (client).  It has not been tested with any other versions of CVS.  Furthermore, the current version of the module is a beta version.  </p>
+<h3><a id="cvsroot"></a><a id="CVSROOT"></a>CVSROOT</h3>
+<p>On the computer on which you source index the build, CVSROOT cannot contain password and user information.  Use cvs.exe to set your credentialing information. </p>
+<p>To prepare the <a href="the_srcsrv_ini_file.htm">Srcsrv.ini</a> file for CVS indexing you must enter an alias for your repository that uniquely distinguishes it from any others in your network.  This repository must match the value of CVSROOT in your environment.  There is no need to set this value in the copy of Srcsrv.ini that you keep with your debugger clients because the alias is defined in the source indexed .pdb file.</p>
+<h3><a id="client_computer"></a><a id="CLIENT_COMPUTER"></a>Client Computer</h3>
+<p>The client computer that extracts files during debugging does not need a CVS sandbox or CVSROOT set.  It does need CVS binaries in the path, and if the repository is locked, you must set the username and password with Cvs.exe.</p>
+<h3><a id="revision_tags"></a><a id="REVISION_TAGS"></a>Revision Tags</h3>
+<p>CVS is unable to extract a file by its version number.  Instead, it must be done using what is known as a <i>tag</i>.  When indexing a CVS-based system, you must ensure that all changes are checked into the repository and then apply a tag using the "cvs tag" command.  Then, when indexing the file, make certain you use the "label" command-line parameter to specify the tag that you want to associate with the build you are indexing. You can achieve the same result by setting CVS_LABEL in the environment.  Other values can be set from the environment or the command line.  Use the <b>-??</b> command-line option with SSIndex to examine your choices and to verify that all was configured correctly:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>ssindex.cmd -system=cvs -??</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Using CVS%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,359 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="IDebugSymbols interface"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IDebugSymbols interface</title>
+
+<meta name="MS-HAID" content="IDebugSymbols_4046a7ad-b8ed-4a10-991e-f7d63f9e35d0.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.idebugsymbols"></a>IDebugSymbols interface</h1>
+</div>
+<h2>Members</h2>
+<p>The <b xmlns:loc="http://microsoft.com/wdcml/l10n">IDebugSymbols</b> interface inherits from the <b>IUnknown</b> interface. <b>IDebugSymbols</b> also has these types of members:</p>
+<ul>
+<li><a href="#methods">Methods</a></li>
+</ul>
+<h3><a id="methods"></a>Methods</h3>
+<p>The <b>IDebugSymbols</b> interface has these methods.</p>
+<table id="memberListMethods" class="members">
+<tr>
+<th align="left" width="37%">Method</th>
+<th align="left" width="63%">Description</th>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="addsymboloptions.htm"><b>AddSymbolOptions</b></a></td>
+<td align="left" width="63%">
+<p>Turns on some of the engine's global symbol options.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="appendimagepath.htm"><b>AppendImagePath</b></a></td>
+<td align="left" width="63%">
+<p>Appends directories to the executable image path.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="appendsourcepath.htm"><b>AppendSourcePath</b></a></td>
+<td align="left" width="63%">
+<p>Appends directories to the source path.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="appendsymbolpath.htm"><b>AppendSymbolPath</b></a></td>
+<td align="left" width="63%">
+<p>Appends directories to the symbol path.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="createsymbolgroup.htm"><b>CreateSymbolGroup</b></a></td>
+<td align="left" width="63%">
+<p>Creates a new symbol group.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="endsymbolmatch.htm"><b>EndSymbolMatch</b></a></td>
+<td align="left" width="63%">
+<p>Releases the resources used by a symbol search.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="findsourcefile.htm"><b>FindSourceFile</b></a></td>
+<td align="left" width="63%">
+<p>Searches the source path for a specified source file.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getfieldoffset2.htm"><b>GetFieldOffset</b></a></td>
+<td align="left" width="63%">
+<p>Returns the offset of a field from the base address of an instance of a type.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getimagepath.htm"><b>GetImagePath</b></a></td>
+<td align="left" width="63%">
+<p>Returns the executable image path.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getlinebyoffset.htm"><b>GetLineByOffset</b></a></td>
+<td align="left" width="63%">
+<p>Returns the source filename and the line number within the source file of an instruction in the target.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getmodulebyindex.htm"><b>GetModuleByIndex</b></a></td>
+<td align="left" width="63%">
+<p>Returns the location of the module with the specified index.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getmodulebymodulename.htm"><b>GetModuleByModuleName</b></a></td>
+<td align="left" width="63%">
+<p>Searches through the target's modules for one with the specified name.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getmodulebyoffset.htm"><b>GetModuleByOffset</b></a></td>
+<td align="left" width="63%">
+<p> Searches through the target's modules for one whose memory allocation includes the specified location.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getmodulenames.htm"><b>GetModuleNames</b></a></td>
+<td align="left" width="63%">
+<p>Returns the names of the specified module.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getmoduleparameters.htm"><b>GetModuleParameters</b></a></td>
+<td align="left" width="63%">
+<p>Returns parameters for modules in the target.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getnamebyoffset.htm"><b>GetNameByOffset</b></a></td>
+<td align="left" width="63%">
+<p>Returns the name of the symbol at the specified location in the target's virtual address space.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getnearnamebyoffset.htm"><b>GetNearNameByOffset</b></a></td>
+<td align="left" width="63%">
+<p>Returns the name of a symbol that is located near the specified location.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getnextsymbolmatch.htm"><b>GetNextSymbolMatch</b></a></td>
+<td align="left" width="63%">
+<p>Returns the next symbol found in a symbol search.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getnumbermodules.htm"><b>GetNumberModules</b></a></td>
+<td align="left" width="63%">
+<p>Returns the number of modules in the current process's module list.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getoffsetbyline.htm"><b>GetOffsetByLine</b></a></td>
+<td align="left" width="63%">
+<p>Returns the location of the instruction that corresponds to a specified line in the source code.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getoffsetbyname.htm"><b>GetOffsetByName</b></a></td>
+<td align="left" width="63%">
+<p>Returns the location of a symbol identified by name.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getoffsettypeid.htm"><b>GetOffsetTypeId</b></a></td>
+<td align="left" width="63%">
+<p>Returns the type ID of the symbol closest to the specified memory location.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getscope.htm"><b>GetScope</b></a></td>
+<td align="left" width="63%">
+<p>Returns information about the current scope.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getscopesymbolgroup.htm"><b>GetScopeSymbolGroup</b></a></td>
+<td align="left" width="63%">
+<p>Returns a symbol group containing the symbols in the current target's scope.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getsourcefilelineoffsets.htm"><b>GetSourceFileLineOffsets</b></a></td>
+<td align="left" width="63%">
+<p>Maps each line in a source file to a location in the target's memory.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getsourcepath.htm"><b>GetSourcePath</b></a></td>
+<td align="left" width="63%">
+<p>Returns the source path.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getsourcepathelement.htm"><b>GetSourcePathElement</b></a></td>
+<td align="left" width="63%">
+<p>Returns an element from the source path.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getsymbolmodule.htm"><b>GetSymbolModule</b></a></td>
+<td align="left" width="63%">
+<p>Returns the base address of module which contains the specified symbol.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getsymboloptions.htm"><b>GetSymbolOptions</b></a></td>
+<td align="left" width="63%">
+<p>Returns the engine's global symbol options.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getsymbolpath.htm"><b>GetSymbolPath</b></a></td>
+<td align="left" width="63%">
+<p>Returns the symbol path.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getsymboltypeid.htm"><b>GetSymbolTypeId</b></a></td>
+<td align="left" width="63%">
+<p>Returns the type ID and module of the specified symbol.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="gettypeid.htm"><b>GetTypeId</b></a></td>
+<td align="left" width="63%">
+<p>Looks up the specified type and return its type ID.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="gettypename.htm"><b>GetTypeName</b></a></td>
+<td align="left" width="63%">
+<p>Returns the name of the type symbol specified by its type ID and module.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="gettypesize2.htm"><b>GetTypeSize</b></a></td>
+<td align="left" width="63%">
+<p>Returns the number of bytes of memory an instance of the specified type requires.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="outputtypeddataphysical.htm"><b>OutputTypedDataPhysical</b></a></td>
+<td align="left" width="63%">
+<p>Formats the contents of a variable in the target computer's physical memory, and then sends this to the output callbacks.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="outputtypeddatavirtual.htm"><b>OutputTypedDataVirtual</b></a></td>
+<td align="left" width="63%">
+<p>Formats the contents of a variable in the target's virtual memory, and then sends this to the output callbacks.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="readtypeddataphysical.htm"><b>ReadTypedDataPhysical</b></a></td>
+<td align="left" width="63%">
+<p>Reads the value of a variable from the target computer's physical memory.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="readtypeddatavirtual.htm"><b>ReadTypedDataVirtual</b></a></td>
+<td align="left" width="63%">
+<p>Reads the value of a variable in the target's virtual memory.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="reload.htm"><b>Reload</b></a></td>
+<td align="left" width="63%">
+<p>Deletes the engine's symbol information for the specified module and reload these symbols as needed.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="removesymboloptions.htm"><b>RemoveSymbolOptions</b></a></td>
+<td align="left" width="63%">
+<p>Turns off some of the engine's global symbol options.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="resetscope.htm"><b>ResetScope</b></a></td>
+<td align="left" width="63%">
+<p>Resets the current scope to the default scope of the current thread.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="setimagepath.htm"><b>SetImagePath</b></a></td>
+<td align="left" width="63%">
+<p>Sets the executable image path.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="setscope.htm"><b>SetScope</b></a></td>
+<td align="left" width="63%">
+<p>Sets the current scope.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="setsourcepath.htm"><b>SetSourcePath</b></a></td>
+<td align="left" width="63%">
+<p>Sets the source path.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="setsymboloptions.htm"><b>SetSymbolOptions</b></a></td>
+<td align="left" width="63%">
+<p>Changes the engine's global symbol options.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="setsymbolpath.htm"><b>SetSymbolPath</b></a></td>
+<td align="left" width="63%">
+<p>Sets the symbol path.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="startsymbolmatch.htm"><b>StartSymbolMatch</b></a></td>
+<td align="left" width="63%">
+<p>Initializes a search for symbols whose names match a given pattern.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="writetypeddataphysical.htm"><b>WriteTypedDataPhysical</b></a></td>
+<td align="left" width="63%">
+<p>Writes the value of a variable in the target computer's physical memory.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="writetypeddatavirtual.htm"><b>WriteTypedDataVirtual</b></a></td>
+<td align="left" width="63%">
+<p>Writes data to the target's virtual address space.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Dbgeng.h (include Dbgeng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="idebugsymbols2.htm"><b>IDebugSymbols2</b></a></dt>
+<dt><a href="idebugsymbols3.htm"><b>IDebugSymbols3</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IDebugSymbols interface%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

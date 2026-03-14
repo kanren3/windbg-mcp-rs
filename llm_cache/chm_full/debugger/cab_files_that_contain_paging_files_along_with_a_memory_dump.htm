@@ -1,0 +1,86 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="A memory dump file can be placed in a cabinet (CAB) file along with paging files."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>CAB Files that Contain Paging Files Along with a Memory Dump</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.cab_files_that_contain_paging_files_along_with_a_memory_dump"></a>CAB Files that Contain Paging Files Along with a Memory Dump</h1>
+</div>
+<p>A memory dump file can be placed in a cabinet (CAB) file along with paging files. When a Windows debugger analyzes the memory dump file, it can use the paging files to present a full view memory, including  memory that was paged out when the dump file was created.</p>
+<p>Suppose a CAB file named MyCab.cab contains these files:</p>
+<dl>
+<dd>Memory.dmp</dd>
+<dd>Cabmanifest.xml</dd>
+<dd>Pagefile.sys</dd>
+</dl>
+<p>Also suppose Cabmanifest.xml looks like this:</p>
+<div class="code"><span codelanguage="XML"><table>
+<tr>
+<th>XML</th>
+</tr>
+<tr>
+<td>
+<pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;WatsonPageFileManifest&gt;
+  &lt;Pagefiles&gt;
+    &lt;Pagefile Name="pagefile.sys"&gt;&lt;/Pagefile&gt;
+  &lt;/Pagefiles&gt;
+&lt;/WatsonPageFileManifest&gt;</pre>
+</td>
+</tr>
+</table></span></div>
+<p>You can open the CAB file by entering one of these commands:</p>
+<ul>
+<li><b>windbg /z MyCab.cab</b></li>
+<li><b>kd /z MyCab.cab</b></li>
+</ul>
+<p>The debugger reads Cabmanifest.xml for a list of paging files that are to be included in the debugging session. In this example, there is only one paging file. The debugger converts the paging file to a Target Information File (TIF) file that it can use during the debugging session. Because the debugger has access to the TIF, it can display memory that was paged out at the time the dump file was created.</p>
+<p>Regardless of how many paging files are in the CAB file, the debugger uses only the paging files that are listed in Cabmanifest.xml. Here's an example of a CAB manifest file that lists three paging files.</p>
+<div class="code"><span codelanguage="XML"><table>
+<tr>
+<th>XML</th>
+</tr>
+<tr>
+<td>
+<pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;WatsonPageFileManifest&gt;
+  &lt;Pagefiles&gt;
+    &lt;Pagefile Name="pagefile1.sys"&gt;&lt;/Pagefile&gt;
+    &lt;Pagefile Name="pagefile2.sys"&gt;&lt;/Pagefile&gt;
+    &lt;Pagefile Name="swapfile.sys"&gt;&lt;/Pagefile&gt;
+  &lt;/Pagefiles&gt;
+&lt;/WatsonPageFileManifest&gt;</pre>
+</td>
+</tr>
+</table></span></div>
+<p>In Cabmanifest.xml, the paging files must be listed in the same order that Windows uses them. That is, they must be listed in the order that they appear in the Registry.</p>
+<p>The memory dump file that you put in the CAB file must be a complete memory dump. You can use Control Panel to configure Windows to create a complete memory dump when there is a crash. For example, in Windows 8 you can go to <b>Control Panel &gt; System and Security &gt; System &gt; Advanced System Settings &gt; Startup and Recovery</b>. As an alternative to using Control Panel, you can set the value of this registry entry to 1.</p>
+<p>
+<p><b>HKLM</b>\<b>SYSTEM</b>\<b>CurrentControlSet</b>\<b>Control</b>\<b>CrashControl</b>\<b>CrashDumpEnabled</b></p>
+</p>
+<p>Starting in Windows 8.1, you can configure Windows to preserve the contents of paging files when Windows restarts.</p>
+<p>To specify that you want paging files to be saved when Windows restarts, set the value of this registry entry to 1.</p>
+<p>
+<p><b>HKLM</b>\<b>SYSTEM</b>\<b>CurrentControlSet</b>\<b>Control</b>\<b>CrashControl</b>\<b>SavePageFileContents</b></p>
+</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20CAB Files that Contain Paging Files Along with a Memory Dump%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

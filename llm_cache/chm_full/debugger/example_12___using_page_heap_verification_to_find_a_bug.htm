@@ -1,0 +1,238 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Example 12: Using Page Heap Verification to Find a Bug"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Example 12:  Using Page Heap Verification to Find a Bug</title>
+
+<meta name="MS-HAID" content="GFlags_3c716d5f-7582-48e7-b2f2-6c7c8957ddb6.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.example_12___using_page_heap_verification_to_find_a_bug"></a>Example 12:  Using Page Heap Verification to Find a Bug</h1>
+</div>
+<h2><a id="ddk_example_12___using_page_heap_verification_to_find_a_bug_dtools"></a><a id="DDK_EXAMPLE_12___USING_PAGE_HEAP_VERIFICATION_TO_FIND_A_BUG_DTOOLS"></a></h2>
+<p>The following series of commands demonstrates how to use the page heap verification features of GFlags and the NTSD debugger to detect an error in heap memory use. In this example, the programmer suspects that a fictitious application, pheap-buggy.exe, has a heap error, and proceeds through a series of tests to identify the error.</p>
+<p>For details on NTSD, see <a href="debugging_using_cdb_and_ntsd.htm">Debugging Using CDB and NTSD</a>.</p>
+<h3><a id="Step_1__Enable_standard_page_heap_verification"></a><a id="step_1__enable_standard_page_heap_verification"></a><a id="STEP_1__ENABLE_STANDARD_PAGE_HEAP_VERIFICATION"></a>Step 1: Enable standard page heap verification</h3>
+<p>The following command enables standard page heap verification for pheap-buggy.exe:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>gflags /p /enable pheap-buggy.exe</pre>
+</td>
+</tr>
+</table></span></div>
+<h3><a id="Step_2__Verify_that_page_heap_is_enabled"></a><a id="step_2__verify_that_page_heap_is_enabled"></a><a id="STEP_2__VERIFY_THAT_PAGE_HEAP_IS_ENABLED"></a>Step 2: Verify that page heap is enabled</h3>
+<p>The following command lists the image files for which page heap verification is enabled:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>gflags /p</pre>
+</td>
+</tr>
+</table></span></div>
+<p>In response, GFlags displays the following list of programs. In this display, <b>traces</b> indicates standard page heap verification, and <b>full traces</b> indicates full page heap verification. In this case, pheap-buggy.exe is listed with <b>traces</b>, indicating that standard page heap verification is enabled, as intended.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>pheap-buggy.exe: page heap enabled with flags (traces )</pre>
+</td>
+</tr>
+</table></span></div>
+<h3><a id="Step_3__Run_the_debugger"></a><a id="step_3__run_the_debugger"></a><a id="STEP_3__RUN_THE_DEBUGGER"></a>Step 3: Run the debugger</h3>
+<p>The following command runs the <b>CorruptAfterEnd</b> function of pheap-buggy.exe in NTSD with the <b>-g</b> (ignore initial breakpoint) and <b>-x</b> (set second-chance break on access violation exceptions) parameters:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>ntsd -g -x pheap-buggy /CorruptAfterEnd</pre>
+</td>
+</tr>
+</table></span></div>
+<p>When the application fails, NTSD generates the following display, which indicates that it detected an error in pheap-buggy.exe:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>===========================================================
+VERIFIER STOP 00000008: pid 0xAA0: corrupted suffix pattern
+
+        00C81000 : Heap handle 
+        00D81EB0 : Heap block 
+        00000100 : Block size 
+        00000000 :
+===========================================================
+
+Break instruction exception - code 80000003 (first chance)
+eax=00000000 ebx=00d81eb0 ecx=77f7e257 edx=0006fa18 esi=00000008 edi=00c81000
+eip=77f7e098 esp=0006fc48 ebp=0006fc5c iopl=0         nv up ei pl zr na po nc
+cs=001b  ss=0023  ds=0023  es=0023  fs=0038  gs=0000             efl=00000246
+ntdll!DbgBreakPoint:
+77f7e098 cc               int     3</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The header information includes the address of the heap with the corrupted block (00C81000 : Heap handle), the address of the corrupted block (00D81EB0 : Heap block), and the size of the allocation (00000100 : Block size).</p>
+<p>The "corrupted suffix pattern" message indicates that the application violated the data integrity pattern that GFlags inserted after the end of the pheap-buggy.exe heap allocation.</p>
+<h3><a id="Step_4__Display_the_call_stack"></a><a id="step_4__display_the_call_stack"></a><a id="STEP_4__DISPLAY_THE_CALL_STACK"></a>Step 4: Display the call stack</h3>
+<p>In the next step, use the addresses that NTSD reported to locate the function that caused the error. The next two commands turn on line number dumping in the debugger and display the call stack with line numbers.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>C:\&gt;.lines
+
+Line number information will be loaded 
+
+C:\&gt;kb
+
+ChildEBP RetAddr  Args to Child
+WARNING: Stack unwind information not available. Following frames may be wrong.
+0006fc5c 77f9e6dd 00000008 77f9e3e8 00c81000 ntdll!DbgBreakPoint
+0006fcd8 77f9f3c8 00c81000 00000004 00d81eb0 ntdll!RtlpNtEnumerateSubKey+0x2879
+0006fcfc 77f9f5bb 00c81000 01001002 00000010 ntdll!RtlpNtEnumerateSubKey+0x3564
+0006fd4c 77fa261e 00c80000 01001002 00d81eb0 ntdll!RtlpNtEnumerateSubKey+0x3757
+0006fdc0 77fc0dc2 00c80000 01001002 00d81eb0 ntdll!RtlpNtEnumerateSubKey+0x67ba
+0006fe78 77fbd87b 00c80000 01001002 00d81eb0 ntdll!RtlSizeHeap+0x16a8
+0006ff24 010013a4 00c80000 01001002 00d81eb0 ntdll!RtlFreeHeap+0x69
+0006ff3c 01001450 00000000 00000001 0006ffc0 pheap-buggy!TestCorruptAfterEnd+0x2b [d:\nttest\base\testsrc\kernel\rtl\pageheap\pheap-buggy.cxx @ 185]
+0006ff4c 0100157f 00000002 00c65a68 00c631d8 pheap-buggy!main+0xa9 [d:\nttest\base\testsrc\kernel\rtl\pageheap\pheap-buggy.cxx @ 69]
+0006ffc0 77de43fe 00000000 00000001 7ffdf000 pheap-buggy!mainCRTStartup+0xe3 [crtexe.c @ 349]
+0006fff0 00000000 0100149c 00000000 78746341 kernel32!DosPathToSessionPathA+0x204</pre>
+</td>
+</tr>
+</table></span></div>
+<p>As a result, the debugger displays the call stack for pheap-buggy.exe with line numbers. The call stack display shows that the error occurred when the <b>TestCorruptAfterEnd</b> function in pheap-buggy.exe tried to free an allocation at 0x00c80000 by calling <b>HeapFree</b>, a redirect to <b>RtlFreeHeap</b>.</p>
+<p>The most likely cause of this error is that the program wrote past the end of the buffer that it allocated in this function.</p>
+<h3><a id="Step_5__Enable_full_page_heap_verification"></a><a id="step_5__enable_full_page_heap_verification"></a><a id="STEP_5__ENABLE_FULL_PAGE_HEAP_VERIFICATION"></a>Step 5: Enable full page heap verification</h3>
+<p>Unlike standard page heap verification, full page heap verification can catch the misuse of this heap buffer as soon as it occurs. The following command enables full page heap verification for pheap-buggy.exe:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>gflags /p /enable pheap-buggy.exe /full</pre>
+</td>
+</tr>
+</table></span></div>
+<h3><a id="Step_6__Verify_that_full_page_heap_is_enabled"></a><a id="step_6__verify_that_full_page_heap_is_enabled"></a><a id="STEP_6__VERIFY_THAT_FULL_PAGE_HEAP_IS_ENABLED"></a>Step 6: Verify that full page heap is enabled</h3>
+<p>The following command lists the programs for which page heap verification is enabled:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>gflags /p</pre>
+</td>
+</tr>
+</table></span></div>
+<p>In response, GFlags displays the following list of programs. In this display, <b>traces</b> indicates standard page heap verification, and <b>full traces</b> indicates full page heap verification. In this case, pheap-buggy.exe is listed with <b>full traces</b>, indicating that full page heap verification is enabled, as intended.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>pheap-buggy.exe: page heap enabled with flags (full traces )</pre>
+</td>
+</tr>
+</table></span></div>
+<h3><a id="Step_7__Run_the_debugger_again"></a><a id="step_7__run_the_debugger_again"></a><a id="STEP_7__RUN_THE_DEBUGGER_AGAIN"></a>Step 7: Run the debugger again</h3>
+<p>The following command runs the <b>CorruptAfterEnd</b> function of pheap-buggy.exe in the NTSD debugger with the <b>-g</b> (ignore initial breakpoint) and <b>-x</b> (set second-chance break on access violation exceptions) parameters:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>ntsd -g -x pheap-buggy /CorruptAfterEnd</pre>
+</td>
+</tr>
+</table></span></div>
+<p>When the application fails, NTSD generates the following display, which indicates that it detected an error in pheap-buggy.exe:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>Page heap: process 0x5BC created heap @ 00880000 (00980000, flags 0x3)
+ModLoad: 77db0000 77e8c000   kernel32.dll
+ModLoad: 78000000 78046000   MSVCRT.dll
+Page heap: process 0x5BC created heap @ 00B60000 (00C60000, flags 0x3)
+Page heap: process 0x5BC created heap @ 00C80000 (00D80000, flags 0x3)
+Access violation - code c0000005 (first chance)
+Access violation - code c0000005 (!!! second chance !!!)
+eax=00c86f00 ebx=00000000 ecx=77fbd80f edx=00c85000 esi=00c80000 edi=00c16fd0
+eip=01001398 esp=0006ff2c ebp=0006ff4c iopl=0         nv up ei pl nz na po nc
+cs=001b  ss=0023  ds=0023  es=0023  fs=0038  gs=0000             efl=00000206
+pheap-buggy!TestCorruptAfterEnd+1f:
+01001398 889801010000     mov     [eax+0x101],bl          ds:0023:00c87001=??</pre>
+</td>
+</tr>
+</table></span></div>
+<p>With full page heap verification enabled, the debugger breaks at an access violation. To find the precise location of the access violation, turn on line number dumping and display the call stack trace.</p>
+<p>The numbered call stack trace appears as follows: The line displaying the problem appears in bold text.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>ChildEBP RetAddr  Args to Child
+0006ff3c 01001450 00000000 00000001 0006ffc0 pheap-buggy!TestCorruptAfterEnd+0x1f [d:\nttest\base\testsrc\kernel\rtl\pageheap\pheap-buggy.cxx @ 184]
+0006ff4c 0100157f 00000002 00c16fd0 00b70eb0 pheap-buggy!main+0xa9 [d:\nttest\base\testsrc\kernel\rtl\pageheap\pheap-buggy.cxx @ 69]
+0006ffc0 77de43fe 00000000 00000001 7ffdf000 pheap-buggy!mainCRTStartup+0xe3 [crtexe.c @ 349]
+WARNING: Stack unwind information not available. Following frames may be wrong.
+0006fff0 00000000 0100149c 00000000 78746341 kernel32!DosPathToSessionPathA+0x204</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The stack trace shows that the problem occurs in line 184 of pheap-buggy.exe. Because full page heap verification is enabled, the call stack starts in the program code, not in a system DLL. As a result, the violation was caught where it happened, instead of when the heap block was freed.</p>
+<h3><a id="Step_8__Locate_the_error_in_the_code"></a><a id="step_8__locate_the_error_in_the_code"></a><a id="STEP_8__LOCATE_THE_ERROR_IN_THE_CODE"></a>Step 8: Locate the error in the code</h3>
+<p>A quick inspection reveals the cause of the problem: The program tries to write to the 257th byte (0x101) of a 256-byte (0x100) buffer, a common off-by-one error.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>*((PCHAR)Block + 0x100) = 0;</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Example 12:  Using Page Heap Verification to Find a Bug%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

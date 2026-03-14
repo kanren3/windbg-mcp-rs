@@ -1,0 +1,110 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !mui extension displays the Multilingual User Interface (MUI) cache information. The implementation of MUI was vastly improved in Windows Vista. As a result, the behavior of this extension on earlier implementations is undefined."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!mui</title>
+
+<meta name="MS-HAID" content="r25_exts_general_He_7d0b8440-41bb-4caf-af38-dc4e9499bf55.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._mui"></a>!mui</h1>
+</div>
+<p>The <b>!mui</b> extension displays the Multilingual User Interface (MUI) cache information. The implementation of MUI was vastly improved in Windows Vista. As a result, the behavior of this extension on earlier implementations is undefined.</p>
+<pre class="syntax"><b>!mui -c</b>
+<b>!mui -s</b>
+<b>!mui -r </b><i>ModuleAddress</i>
+<b>!mui -i</b>
+<b>!mui -f</b>
+<b>!mui -t</b>
+<b>!mui -u</b>
+<b>!mui -d </b><i>ModuleAddress</i>
+<b>!mui -e </b><i>ModuleAddress</i>
+<b>!mui -?</b></pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______-c______"></a><a id="_______-C______"></a>       <b>-c</b>      </dt>
+<dd>
+<p>Causes the output to include the language identifier (ID), a pointer to the module, a pointer to the resource configuration data, and a pointer to the associated MUI DLL for each module.  </p>
+</dd>
+<dt><a id="_______-s______"></a><a id="_______-S______"></a>       <b>-s</b>      </dt>
+<dd>
+<p>(Kernel Mode Only)  Causes the display to include the full file paths for the module and associated MUI DLL for each module. </p>
+</dd>
+<dt><a id="_______-r________ModuleAddress______"></a><a id="_______-r________moduleaddress______"></a><a id="_______-R________MODULEADDRESS______"></a>       <b>-r</b><b>        </b><i>ModuleAddress</i>      </dt>
+<dd>
+<p>Causes the resource configuration data for the module at <i>ModuleAddress</i> to be displayed.  This includes the file type, the checksum value, and the resource types.  </p>
+</dd>
+<dt><a id="_______-i______"></a><a id="_______-I______"></a>       <b>-i</b>      </dt>
+<dd>
+<p>Causes the output to include the installed and licensed MUI languages and their associated information.</p>
+</dd>
+<dt><a id="_______-f______"></a><a id="_______-F______"></a>       <b>-f</b>      </dt>
+<dd>
+<p>Causes the output to include the loader merged language fallback list.</p>
+</dd>
+<dt><a id="_______-t______"></a><a id="_______-T______"></a>       <b>-t</b>      </dt>
+<dd>
+<p>Causes the output to include the thread preference language.</p>
+</dd>
+<dt><a id="_______-u______"></a><a id="_______-U______"></a>       <b>-u</b>      </dt>
+<dd>
+<p>Causes the output to include the current thread user UI language setting.</p>
+</dd>
+<dt><a id="_______-d_ModuleAddress______"></a><a id="_______-d_moduleaddress______"></a><a id="_______-D_MODULEADDRESS______"></a>       <b>-d</b><b> </b><i>ModuleAddress</i>      </dt>
+<dd>
+<p>Causes the output to include contained resources for the module at <i>ModuleAddress</i>.</p>
+</dd>
+<dt><a id="_______-e_ModuleAddress______"></a><a id="_______-e_moduleaddress______"></a><a id="_______-E_MODULEADDRESS______"></a>       <b>-e</b><b> </b><i>ModuleAddress</i>      </dt>
+<dd>
+<p>Causes the output to include contained resource types for the module at <i>ModuleAddress</i>.</p>
+</dd>
+<dt><a id="_______-_______"></a>       <b>-?</b>      </dt>
+<dd>
+<p>Displays some brief Help text for this extension in the Debugger Command window.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows XP</b></p>
+</td>
+<td>
+<p>Unavailable</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows Vista and later
+         </b></p>
+</td>
+<td>
+<p>
+          Exts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For information about MUI and resource configuration data format, see the Microsoft Windows SDK documentation.  </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!mui%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,99 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The symbol path specifies locations where the Windows debuggers (WinDbg, KD, CDB, NTST) look for symbol files. For more information about symbols and symbol files, see Symbols."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Symbol path for Windows debuggers</title>
+
+<meta name="MS-HAID" content="r06_use_gui_b967bbbf-bd93-420d-b653-e8aac55a402c.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.symbol_path"></a>Symbol path for Windows debuggers</h1>
+</div>
+<p>
+<p>The symbol path specifies locations where the Windows debuggers (WinDbg, KD, CDB, NTST) look for symbol files. For more information about symbols and symbol files, see <a href="symbols.htm">Symbols</a>.</p>
+</p>
+<p>Some compilers (such as Microsoft Visual Studio) put symbol files in the same directory as the binary files. The symbol files and the checked binary files contain path and file name information. This information frequently enables the debugger to find the symbol files automatically. If you are debugging a user-mode process on the computer where the executable was built, and if the symbol files are still in their original location, the debugger can locate the symbol files without you setting the symbol path.</p>
+<p>In most other situations, you have to set the symbol path to point to your symbol file locations.</p>
+<h2><a id="Symbol_Path_Syntax"></a><a id="symbol_path_syntax"></a><a id="SYMBOL_PATH_SYNTAX"></a>Symbol Path Syntax</h2>
+<p>The debugger's symbol path is a string that consists of multiple directory paths, separated by semicolons. </p>
+<p>Relative paths are supported. However, unless you always start the debugger from the same directory, you should add a drive letter or a network share before each path. Network shares are also supported.</p>
+<p>For each directory in the symbol path, the debugger looks in three directories. For example, if the symbol path includes the c:\MyDir directory, and the debugger is looking for symbol information for a DLL, the debugger first looks in c:\MyDir\symbols\dll, then in c:\MyDir\dll, and finally in c:\MyDir. The debugger then repeats this process for each directory in the symbol path. Finally, the debugger looks in the current directory and then in the current directory with \dll appended to it. (The debugger appends \dll, \exe, or \sys, depending on which binaries it is debugging.)</p>
+<p>Symbol files have date and time stamps.  You do not have to worry that the debugger will use the wrong symbols that it may find first in this sequence. It always looks for the symbols that match the time stamp on the binary files that it is debugging. For more information about responses when symbols files are not available, see <a href="matching_symbol_names.htm">Compensating for Symbol-Matching Problems</a>.</p>
+<p>One way to set the symbol path is by entering the <a href="_sympath__set_symbol_path_.htm"><b>.sympath</b></a> command. For other ways to set the symbol path, see <a href="#controlling_the_symbol_path">Controlling the Symbol Path</a> later in this topic.</p>
+<h2><a id="Caching_Symbols_Locally"></a><a id="caching_symbols_locally"></a><a id="CACHING_SYMBOLS_LOCALLY"></a>Caching Symbols Locally</h2>
+<p>We strongly recommend that you always cache your symbols locally. One way to cache symbols locally is to include <b>cache*;</b> or <b>cache*</b><i>localsymbolcache</i><b>;</b> in your symbol path.</p>
+<p>If you include the string <b>cache*;</b> in your symbol path, symbols loaded from any element that appears to the right of this string are stored in the default symbol cache directory on the local computer. For example, the following command tells the debugger to get symbols from the network share \\someshare and cache the symbols in the default location on the local computer.</p>
+<pre class="syntax" xml:space="preserve"><code>.sympath cache*;\\someshare</code></pre>
+<p></p>
+<p>If you include the string <b>cache*</b><i>localsymbolcache</i><b>;</b> in your symbol path, symbols loaded from any element that appears to the right of this string are stored in the <i>localsymbolcache</i> directory.</p>
+<p>For example, the following command tells the debugger to obtain symbols from the network share \\someshare and cache the symbols in the c:\MySymbols directory.</p>
+<pre class="syntax" xml:space="preserve"><code>.sympath cache*c:\MySymbols;\\someshare</code></pre>
+<h2><a id="Using_a_Symbol_Server"></a><a id="using_a_symbol_server"></a><a id="USING_A_SYMBOL_SERVER"></a>Using a Symbol Server</h2>
+<p>If you are connected to the Internet or a corporate network, the most efficient way to access symbols is to use a symbol server. You can use a symbol server by using the <b>srv*</b>,  <b>srv*</b><i>symbolstore</i>, or  <b>srv*</b><i>localsymbolcache</i><b>*</b><i>symbolstore</i> string in your symbol path.</p>
+<p>If you include the string <b>srv*</b> in your symbol path, the debugger uses a symbol server to get symbols from the default symbol store. For example, the following command tells the debugger to use a symbol server to get symbols from the default symbol store. These symbols are not cached on the local computer.</p>
+<pre class="syntax" xml:space="preserve"><code>.sympath srv*</code></pre>
+<p>If you include the string <b>srv*</b><i>symbolstore</i> in your symbol path, the debugger uses a symbol server to get symbols from the <i>symbolstore</i> store. For example, the following command tells the debugger to use a symbol server to get symbols from the symbol store at https://msdl.microsoft.com/download/symbols. These symbols are not cached on the local computer.</p>
+<pre class="syntax" xml:space="preserve"><code>.sympath srv*https://msdl.microsoft.com/download/symbols</code></pre>
+<p>If you include the string <b>srv*</b><i>localcache</i><b>*</b><i>symbolstore</i> in your symbol path, the debugger uses a symbol server to get symbols from the <i>symbolstore</i> store and caches them in the <i>localcache</i> directory. For example, the following command tells the debugger to use a symbol server to get symbols from the symbol store at https://msdl.microsoft.com/download/symbols and cache the symbols in c:\MyServerSymbols.</p>
+<pre class="syntax" xml:space="preserve"><code>.sympath srv*c:\MyServerSymbols*https://msdl.microsoft.com/download/symbols</code></pre>
+<p>If you have a directory on your computer where you manually place symbols, do not use that directory as the cache for symbols obtained from a symbol server. Instead, use two separate directories. For example, you can manually place symbols in c:\MyRegularSymbols and then designate c:\MyServerSymbols as a cache for symbols obtained from a server. The following example shows how to specify both directories in your symbol path.</p>
+<pre class="syntax" xml:space="preserve"><code>.sympath c:\MyRegularSymbols;srv*c:\MyServerSymbols*https://msdl.microsoft.com/download/symbols</code></pre>
+<p> For more information about symbol servers, see <a href="symbol_stores_and_symbol_servers.htm">Symbol Stores and Symbol Servers</a>.</p>
+<h2><a id="Combining_cache__and_srv_"></a><a id="combining_cache__and_srv_"></a><a id="COMBINING_CACHE__AND_SRV_"></a>Combining cache* and srv*</h2>
+<p>If you include the string <b>cache*;</b> in your symbol path, symbols loaded from any element that appears to the right of this string are stored in the default symbol cache directory on the local computer. For example, the following command tells the debugger to use a symbol server to get symbols from the store at https://msdl.microsoft.com/download/symbols and cache them in the default symbol cache directory.</p>
+<p></p>
+<pre class="syntax" xml:space="preserve"><code>.sympath cache*;srv*https://msdl.microsoft.com/download/symbols</code></pre>
+<p>If you include the string <b>cache*</b><i>localsymbolcache</i><b>;</b> in your symbol path, symbols loaded from any element that appears to the right of this string are stored in the <i>localsymbolcache</i> directory.</p>
+<p>For example, the following command tells the debugger to use a symbol server to get symbols from the store at https://msdl.microsoft.com/download/symbols and cache the symbols in the c:\MySymbols directory.</p>
+<pre class="syntax" xml:space="preserve"><code>.sympath cache*c:\MySymbols;srv*https://msdl.microsoft.com/download/symbols</code></pre>
+<h2><a id="using_agestore_to_reduce_the_cache_size"></a><a id="USING_AGESTORE_TO_REDUCE_THE_CACHE_SIZE"></a>Using AgeStore to Reduce the Cache Size</h2>
+<p>You can use the AgeStore tool to delete cached files that are older than a specified date, or to delete enough old files that the resulting size of the cache is less than a specified amount.  This can be useful if your downstream store is too large.  For details, see <a href="agestore.htm">AgeStore</a>. </p>
+<p>For more information about symbol servers and symbol stores, see <a href="symbol_stores_and_symbol_servers.htm">Symbol Stores and Symbol Servers</a>. </p>
+<h2><a id="lazy_symbol_loading"></a><a id="LAZY_SYMBOL_LOADING"></a>Lazy Symbol Loading</h2>
+<p>The debugger's default behavior is to use <i>lazy symbol loading</i> (also known as <i>deferred symbol loading</i>). This kind of loading means that symbols are not loaded until they are required. </p>
+<p>When the symbol path is changed, for example by using the <a href="_sympath__set_symbol_path_.htm"><b>.sympath</b></a> command, all loaded modules with export symbols are lazily reloaded.</p>
+<p> Symbols of modules with full PDB symbols will be lazily reloaded if the new path no longer includes the original path that was used to load the PDB symbols. If the new path still includes the original path to the PDB symbol file, those symbols will not be lazily reloaded.  </p>
+<p>For more information about lazy symbol loading, see <a href="deferred_symbol_loading.htm">Deferred Symbol Loading</a>.</p>
+<p>You can turn off lazy symbol loading in CDB and KD by using the <b>-s</b><a href="command_line_options.htm"> command-line option</a>. You can also force symbol loading by using the <a href="ld__load_symbols_.htm"><b>ld (Load Symbols)</b></a> command or by using the <a href="_reload__reload_module_.htm"><b>.reload (Reload Module)</b></a> command together with the <b>/f</b> option.</p>
+<h2><a id="ddk_symbol_path_dbg"></a><a id="DDK_SYMBOL_PATH_DBG"></a></h2>
+<h3><a id="controlling_the_symbol_path"></a><a id="CONTROLLING_THE_SYMBOL_PATH"></a>Controlling the Symbol Path</h3>
+<p>To control the symbol path, you can do one of the following:</p>
+<ul>
+<li>
+<p>Use the <a href="_sympath__set_symbol_path_.htm"><b>.sympath</b></a> command to display, set, change, or append to the path. The <a href="_symfix__set_symbol_store_path_.htm"><b>.symfix (Set Symbol Store Path)</b></a> command is similar to <b>.sympath</b> but saves you some typing.</p>
+</li>
+<li>
+<p>Before you start the debugger, use the _NT_SYMBOL_PATH and _NT_ALT_SYMBOL_PATH <a href="environment_variables.htm">environment variables</a> to set the path. The symbol path is created by appending _NT_SYMBOL_PATH after _NT_ALT_SYMBOL_PATH. (Typically, the path is set through the _NT_SYMBOL_PATH. However, you might want to use _NT_ALT_SYMBOL_PATH to override these settings in special cases, such as if you have private versions of shared symbol files.) If you try to add an invalid directory through these environment variables, the debugger ignores this directory.</p>
+</li>
+<li>
+<p>When you start the debugger, use the <b>-y</b><a href="command_line_options.htm"> command-line option</a> to set the path.</p>
+</li>
+<li>
+<p>
+       (WinDbg only)  Use the <a href="file___symbol_file_path.htm">File | Symbol File Path</a> command or press <b>CTRL+S</b> to display, set, change, or append to the path.</p>
+</li>
+</ul>
+<p>If you use the <b>-sins</b><a href="command_line_options.htm"> command-line option</a>, the debugger ignores the symbol path environment variable.</p>
+<h2><a id="related_topics"></a>Related topics</h2>
+<dl>
+<dt><a href="advanced_symsrv_use.htm">Advanced SymSrv Use</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Symbol path for Windows debuggers%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

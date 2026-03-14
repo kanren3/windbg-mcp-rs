@@ -1,0 +1,91 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The DEBUG_SPECIFIC_FILTER_PARAMETERS structure contains the parameters for a specific event filter."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>DEBUG_SPECIFIC_FILTER_PARAMETERS structure</title>
+
+<meta name="MS-HAID" content="Structures_b0152b9b-4809-46c8-81a7-5f571720eca1.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.debug_specific_filter_parameters"></a>DEBUG_SPECIFIC_FILTER_PARAMETERS structure</h1>
+</div>
+<p>The DEBUG_SPECIFIC_FILTER_PARAMETERS structure contains the parameters for a <a href="debug_filter_xxx.htm#specific_event_filter">specific event filter</a>.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>typedef struct _DEBUG_SPECIFIC_FILTER_PARAMETERS {
+  ULONG ExecutionOption;
+  ULONG ContinueOption;
+  ULONG TextSize;
+  ULONG CommandSize;
+  ULONG ArgumentSize;
+} DEBUG_SPECIFIC_FILTER_PARAMETERS, *PDEBUG_SPECIFIC_FILTER_PARAMETERS;</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Members</h2>
+<dl>
+<dt><b>ExecutionOption</b></dt>
+<dd>
+<p>The <a href="debug_filter_xxx.htm#break_status">break status</a> of the specific event filter.  For possible values, see <b>DEBUG_FILTER_XXX</b>.</p>
+</dd>
+<dt><b>ContinueOption</b></dt>
+<dd>
+<p>The <a href="debug_filter_xxx.htm#handling_status">handling status</a> of the specific event filter.  For possible values, see <b>DEBUG_FILTER_XXX</b>.</p>
+</dd>
+<dt><b>TextSize</b></dt>
+<dd>
+<p>The size, in characters (including the terminator), of the name of the specific event filter.</p>
+</dd>
+<dt><b>CommandSize</b></dt>
+<dd>
+<p>The size, in characters, of the command (including the terminator), to execute when the event occurs.</p>
+</dd>
+<dt><b>ArgumentSize</b></dt>
+<dd>
+<p>Specifies the size, in characters, of the specific event filter argument.  This size includes the NULL terminator.  If the specific event filter does not take an argument, <b>ArgumentSize</b> is zero.</p>
+<div class="alert"><b>Note</b>  If the filter does take an argument, but the argument is empty, <b>ArgumentSize</b> will be one, reflecting the NULL terminator.</div>
+<div> </div>
+</dd>
+</dl>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>DbgEng.h (include DbgEng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="getspecificfilterparameters.htm"><b>GetSpecificFilterParameters</b></a></dt>
+<dt><a href="setspecificfilterparameters.htm"><b>SetSpecificFilterParameters</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20DEBUG_SPECIFIC_FILTER_PARAMETERS structure%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

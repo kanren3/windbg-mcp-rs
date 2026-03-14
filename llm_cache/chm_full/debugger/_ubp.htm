@@ -1,0 +1,81 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !ubp extension sets a breakpoint in user space."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!ubp</title>
+
+<meta name="MS-HAID" content="r30_exts_kernel_U_8b0bf882-3ee6-49ac-876f-107a5e602779.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._ubp"></a>!ubp</h1>
+</div>
+<p>The <b>!ubp</b> extension sets a breakpoint in user space.</p>
+<pre class="syntax">
+    <b>!ubp </b><i>Address</i> 
+</pre>
+<h2><a id="ddk__ubp_dbg"></a><a id="DDK__UBP_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Address______"></a><a id="_______address______"></a><a id="_______ADDRESS______"></a>       <i>Address</i>      </dt>
+<dd>
+<p>Specifies the hexadecimal virtual address of the location in user space where the breakpoint is to be set.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000</b></p>
+</td>
+<td>
+<p>
+          Kdextx86.dll
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Kdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>The <b>!ubp</b> extension sets a breakpoint in user space. The breakpoint is set on the actual physical page, not just the virtual page.</p>
+<p>Setting a physical breakpoint will simultaneously modify every virtual copy of a page, with unpredictable results. One possible consequence is corruption of the system state, possibly followed by a bug check or other system crash. Therefore, these breakpoints should be used cautiously, if at all.</p>
+<p>This extension cannot be used to set breakpoints on pages that have been swapped out of memory. If a page is swapped out of memory after a breakpoint is set, the breakpoint ceases to exist.</p>
+<p>It is not possible to set a breakpoint inside a page table or a page directory.</p>
+<p>Each breakpoint is assigned a <i>breakpoint number</i>. To find out the breakpoint number assigned, use <a href="_ubl.htm"><b>!ubl</b></a>. Breakpoints are enabled upon creation. To step over a breakpoint, you must first disable it by using <a href="_ubd.htm"><b>!ubd</b></a>. To clear a breakpoint, use <a href="_ubc.htm"><b>!ubc</b></a>.</p>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="_ubc.htm"><b>!ubc</b></a></dt>
+<dt><a href="_ubd.htm"><b>!ubd</b></a></dt>
+<dt><a href="_ube.htm"><b>!ube</b></a></dt>
+<dt><a href="_ubl.htm"><b>!ubl</b></a></dt>
+<dt><a href="user_space_and_system_space.htm">User Space and System Space</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!ubp%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

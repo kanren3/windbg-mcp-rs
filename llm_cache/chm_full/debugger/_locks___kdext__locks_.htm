@@ -1,0 +1,134 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !locks extension in Kdextx86.dll and Kdexts.dll displays information about kernel ERESOURCE locks."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!locks (!kdext*.locks)</title>
+
+<meta name="MS-HAID" content="r27_exts_kernel_E_0a5e2949-f4ab-488f-bf59-72c3e15d7643.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._locks___kdext__locks_"></a>!locks (!kdext*.locks)</h1>
+</div>
+<p></p>
+<p>The <b>!locks</b> extension in Kdextx86.dll and Kdexts.dll displays information about kernel ERESOURCE locks.</p>
+<p>This extension command should not be confused with the <a href="_locks___ntsdexts_locks_.htm"><b>!ntsdexts.locks</b></a> extension command.</p>
+<pre class="syntax"><b>!locks </b>[<i>Options</i>]<b> </b>[<i>Address</i>]</pre>
+<h2><a id="ddk__kdext__locks_dbg"></a><a id="DDK__KDEXT__LOCKS_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Options______"></a><a id="_______options______"></a><a id="_______OPTIONS______"></a>       <i>Options</i>      </dt>
+<dd>
+<p>Specifies the amount of information to be displayed. Any combination of the following options can be used:</p>
+<p></p>
+<dl>
+<dt><a id="-v"></a><a id="-V"></a><b>-v</b></dt>
+<dd>
+<p>Displays detailed information about each lock.</p>
+</dd>
+<dt><a id="-p"></a><a id="-P"></a><b>-p</b></dt>
+<dd>
+<p>Display all available information about the locks, including performance statistics.</p>
+</dd>
+<dt><a id="-d"></a><a id="-D"></a><b>-d</b></dt>
+<dd>
+<p>Display information about all locks. Otherwise, only locks with contention are displayed.)</p>
+</dd>
+</dl>
+</dd>
+<dt><a id="_______Address______"></a><a id="_______address______"></a><a id="_______ADDRESS______"></a>       <i>Address</i>      </dt>
+<dd>
+<p>Specifies the hexadecimal address of the ERESOURCE lock to be displayed. If <i>Address</i> is 0 or omitted, information about all ERESOURCE locks in the system will be displayed.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Windows 2000</b></p>
+</td>
+<td>
+<p>
+          Kdextx86.dll
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Kdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>The <b>!locks</b> extension displays all locks held on resources by threads. A lock can be shared or exclusive, which means no other threads can gain access to that resource. This information is useful when a deadlock occurs on a system. A deadlock is caused by one non-executing thread holding an exclusive lock on a resource that the executing thread needs. </p>
+<p>You can usually pinpoint a deadlock in Microsoft Windows 2000 by finding one non-executing thread that holds an exclusive lock on a resource that is required by an executing thread. Most of the locks are shared.</p>
+<p>Here is an example of the basic <b>!locks</b> output:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !locks
+**** DUMP OF ALL RESOURCE OBJECTS ****
+KD: Scanning for held locks......
+
+Resource @ 0x80e97620    Shared 4 owning threads
+     Threads: ff688da0-01&lt;*&gt; ff687da0-01&lt;*&gt; ff686da0-01&lt;*&gt; ff685da0-01&lt;*&gt; 
+KD: Scanning for held locks.......................................................
+
+Resource @ 0x80e23f38    Shared 1 owning threads
+     Threads: 80ed0023-01&lt;*&gt; *** Actual Thread 80ed0020
+KD: Scanning for held locks.
+
+Resource @ 0x80d8b0b0    Shared 1 owning threads
+     Threads: 80ed0023-01&lt;*&gt; *** Actual Thread 80ed0020
+2263 total locks, 3 locks currently held</code></pre>
+<p>Note that the address for each thread displayed is followed by its thread count (for example, "-01"). If a thread is followed by "&lt;*&gt;", that thread is one of the owners of the lock. In some instances, the initial thread address contains an offset. In that case, the actual thread address is displayed as well.</p>
+<p>If you want to find more information about one of these resource objects, use the address that follows "Resource @" as an argument for future commands. To investigate the second resource shown in the preceding example, you could use <a href="dt__display_type_.htm"><b>dt ERESOURCE 80d8b0b0</b></a> or <a href="_thread.htm"><b>!thread 80ed0020</b></a>. Or you could use the <b>!locks</b> extension again with the <b>-v</b> option:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !locks -v 80d8b0b0
+
+Resource @ 0x80d8b0b0    Shared 1 owning threads
+     Threads: 80ed0023-01&lt;*&gt; *** Actual Thread 80ed0020
+
+     THREAD 80ed0020  Cid 4.2c  Teb: 00000000 Win32Thread: 00000000 WAIT: (WrQueue) KernelMode Non-Alertable
+         8055e100  Unknown
+     Not impersonating
+GetUlongFromAddress: unable to read from 00000000
+     Owning Process 80ed5238
+     WaitTime (ticks)          44294977
+     Context Switch Count      147830             
+     UserTime                  0:00:00.0000
+     KernelTime                0:00:02.0143
+     Start Address nt!ExpWorkerThread (0x80506aa2)
+     Stack Init fafa4000 Current fafa3d18 Base fafa4000 Limit fafa1000 Call 0
+     Priority 13 BasePriority 13 PriorityDecrement 0
+ChildEBP RetAddr  
+fafa3d30 804fe997 nt!KiSwapContext+0x25 (FPO: [EBP 0xfafa3d48] [0,0,4]) [D:\NT\base\ntos\ke\i386\ctxswap.asm @ 139]
+fafa3d48 80506a17 nt!KiSwapThread+0x85 (FPO: [Non-Fpo]) (CONV: fastcall) [d:\nt\base\ntos\ke\thredsup.c @ 1960]
+fafa3d78 80506b36 nt!KeRemoveQueue+0x24c (FPO: [Non-Fpo]) (CONV: stdcall) [d:\nt\base\ntos\ke\queueobj.c @ 542]
+fafa3dac 805ad8bb nt!ExpWorkerThread+0xc6 (FPO: [Non-Fpo]) (CONV: stdcall) [d:\nt\base\ntos\ex\worker.c @ 1130]
+fafa3ddc 8050ec72 nt!PspSystemThreadStartup+0x2e (FPO: [Non-Fpo]) (CONV: stdcall) [d:\nt\base\ntos\ps\create.c @ 2164]
+00000000 00000000 nt!KiThreadStartup+0x16 [D:\NT\base\ntos\ke\i386\threadbg.asm @ 81]
+
+1 total locks, 1 locks currently held</code></pre>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!locks (!kdext*.locks)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

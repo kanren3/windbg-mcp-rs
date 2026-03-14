@@ -1,0 +1,100 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !wsle extension displays all working set list entries (WSLEs)."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!wsle</title>
+
+<meta name="MS-HAID" content="r30_exts_kernel_U_39cfa571-c551-4849-9c70-a2549a72f30f.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._wsle"></a>!wsle</h1>
+</div>
+<p>The <b>!wsle</b> extension displays all working set list entries (WSLEs).</p>
+<p>Syntax</p>
+<pre class="syntax">
+    <b>!wsle </b>[<i>Flags</i> [<i>Address</i>]] 
+</pre>
+<h2><a id="ddk__wsle_dbg"></a><a id="DDK__WSLE_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Flags______"></a><a id="_______flags______"></a><a id="_______FLAGS______"></a>       <i>Flags</i>      </dt>
+<dd>
+<p>Specifies the information to include in the display. This can be any combination of the following bits. The default is zero. If this is used, only basic information about the working set is displayed.</p>
+<p></p>
+<dl>
+<dt><a id="Bit_0__0x1_"></a><a id="bit_0__0x1_"></a><a id="BIT_0__0X1_"></a>Bit 0 (0x1)</dt>
+<dd>
+<p>Causes the display to include information about each WSLE's address, age, lock status, and reference count. If a WSLE has an invalid page table entry (PTE) or page directory entry (PDE) associated with it, this is also displayed.</p>
+</dd>
+<dt><a id="Bit_1__0x2_"></a><a id="bit_1__0x2_"></a><a id="BIT_1__0X2_"></a>Bit 1 (0x2)</dt>
+<dd>
+<p>Causes the display to include the total number of valid WSLEs, the index of the last WSLE, and the index of the first free WSLE.</p>
+</dd>
+<dt><a id="Bit_2__0x4_"></a><a id="bit_2__0x4_"></a><a id="BIT_2__0X4_"></a>Bit 2 (0x4)</dt>
+<dd>
+<p>Causes the display to include the total number of free WSLEs, as well as the index of each free WSLE. If bit 1 is also set, then a check is done to make sure that the number of free WSLEs plus the number of valid WSLEs is actually equal to the total number of WSLEs.</p>
+</dd>
+</dl>
+</dd>
+<dt><a id="_______Address______"></a><a id="_______address______"></a><a id="_______ADDRESS______"></a>       <i>Address</i>      </dt>
+<dd>
+<p>Specifies the address of the working set list. If this is omitted, the default working set list is used. Specifying zero for <i>Address</i> is the same as omitting it.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<p>
+          Kdexts.dll
+         </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For information about working sets, see the Windows Driver Kit (WDK) documentation and <i>Microsoft Windows Internals</i>, by Mark Russinovich and David Solomon. (These resources may not be available in some languages and 
+
+countries.)
+</p>
+<h2>Remarks</h2>
+<p>This extension can take a significant amount of time to execute. </p>
+<p>Here is an example from an x86 target computer running Windows Server 2003:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !wsle 3
+
+Working Set @ c0503000
+    FirstFree:       a7  FirstDynamic:          4
+    LastEntry      23d  NextSlot:         4  LastInitialized      259
+    NonDirect       65  HashTable:        0  HashTableSize:         0
+
+Reading the WSLE data...
+
+Virtual Address           Age  Locked  ReferenceCount
+        c0300203          0        1        1
+        c0301203          0        1        1
+        c0502203          0        1        1
+        c0503203          0        1        1
+        c01ff201          0        0        1
+        77f74d19          3        0        1
+        7ffdfa01          2        0        1
+        c0001201          0        0        1
+
+.....
+
+Reading the WSLE data...
+Valid WSLE entries = 0xa7
+found end @ wsle index 0x259
+
+.....</code></pre>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!wsle%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

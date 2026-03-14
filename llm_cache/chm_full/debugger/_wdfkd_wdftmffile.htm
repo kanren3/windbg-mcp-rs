@@ -1,0 +1,65 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !wdfkd.wdftmffile extension sets the trace message format (.tmf) file to use when the debugger is formatting Kernel-Mode Driver Framework (KMDF) error log records for the !wdfkd.wdflogdump or !wdfkd.wdfcrashdump extensions."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!wdfkd.wdftmffile</title>
+
+<meta name="MS-HAID" content="r33~c_exts_WDF_2fbedc41-a957-49aa-bd1b-53c6662106e0.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._wdfkd_wdftmffile"></a>!wdfkd.wdftmffile</h1>
+</div>
+<p>The <b>!wdfkd.wdftmffile</b> extension sets the trace message format (.tmf) file to use when the debugger is formatting Kernel-Mode Driver Framework (KMDF) error log records for the <a href="_wdfkd_wdflogdump.htm"><b>!wdfkd.wdflogdump</b></a> or <a href="_wdfkd_wdfcrashdump.htm"><b>!wdfkd.wdfcrashdump</b></a> extensions.</p>
+<pre class="syntax"><b>!wdfkd.wdftmffile </b><i>TMFpath</i></pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______TMFpath______"></a><a id="_______tmfpath______"></a><a id="_______TMFPATH______"></a>       <i>TMFpath</i>      </dt>
+<dd>
+<p>A path that contains the .tmf file. </p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<p>
+       Wdfkd.dll
+      </p>
+<h3><a id="Frameworks"></a><a id="frameworks"></a><a id="FRAMEWORKS"></a>Frameworks</h3>
+<p>
+       KMDF 1, UMDF 2</p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information, see <a href="kernel_mode_driver_framework_debugging.htm">Kernel-Mode Driver Framework Debugging</a>.</p>
+<h2>Remarks</h2>
+<p>If your driver uses a KMDF version earlier than 1.11, you must use the <b>!wdfkd.wdftmffile</b> extension before you can use the <a href="_wdfkd_wdflogdump.htm"><b>!wdfkd.wdflogdump</b></a> or <a href="_wdfkd_wdfcrashdump.htm"><b>!wdfkd.wdfcrashdump</b></a> extensions. </p>
+<p>Starting in KMDF version 1.11, the framework library's symbol file (for example wdf01000.pdb) contains the trace message format (TMF) entries. Starting in the Windows 8 version of the kernel debugger, the <a href="kernel_mode_driver_framework_extensions__wdfkd_dll_.htm">Kernel-Mode Driver Framework Extensions (Wdfkd.dll)</a> read the entries from the .pdb file. As a result, if your driver uses KMDF version 1.11 or later, and you are using the kernel debugger from Windows 8 or later, you do not need to use <b>!wdfkd.wdftmffile</b>.  You do need to include the directory that contains the symbol file in the debugger's <a href="symbol_path.htm">symbol path</a>. The debugging target machine can be running any operating system that supports KMDF.</p>
+<p>The following example shows how to use the <b>!wdfkd.wdftmffile</b> extension from the root WDK directory, for KMDF version 1.5.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; !wdftmffile tools\tracing\&lt;platform&gt;\wdf1005.tmf</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Note that the path might be different for the version of the Windows Driver Kit (WDK) that you are using. Also note that the .tmf file's name represents the version of KMDF that you are using. For example, Wdf1005.tmf is the .tmf file for KMDF version 1.5.</p>
+<p>For information about how to view the KMDF log during a debugging session, see Using the Framework's Event Logger.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!wdfkd.wdftmffile%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

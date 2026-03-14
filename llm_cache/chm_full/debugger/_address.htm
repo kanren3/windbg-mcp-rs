@@ -1,0 +1,501 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !address extension displays information about the memory that the target process or target computer uses."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!address</title>
+
+<meta name="MS-HAID" content="r24_exts_general_A_881d012e-2175-492d-84fe-ce4d12f80691.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._address"></a>!address</h1>
+</div>
+<p>The <b>!address</b> extension displays information about the memory that the target process or target computer uses.</p>
+<p>User-Mode</p>
+<pre class="syntax"><b>!address </b><i>Address</i>
+<b>!address -summary</b> 
+<b>!address [-f:</b><i>F1</i><b>,</b><i>F2</i><b>,...] {[-o:{csv | tsv | 1}] | [-c:"</b><i>Command</i><b>"]}</b>
+<b>!address -? | -help</b></pre>
+<p>Kernel-Mode</p>
+<pre class="syntax"><b>!address </b><i>Address</i> 
+<b>!address</b></pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Address______"></a><a id="_______address______"></a><a id="_______ADDRESS______"></a>       <i>Address</i>      </dt>
+<dd>
+<p>Displays only the region of the address space that contains <i>Address</i>. </p>
+</dd>
+<dt><a id="_______-summary______"></a><a id="_______-SUMMARY______"></a>       <b>-summary</b>      </dt>
+<dd>
+<p>Displays only summary information. </p>
+</dd>
+<dt><a id="_______-f_F1__F2__..."></a><a id="_______-f_f1__f2__..."></a><a id="_______-F_F1__F2__..."></a>       <b>-f</b>:<i>F1</i>, <i>F2</i>, ...</dt>
+<dd>
+<p>Displays only the regions specified by the filters <i>F1</i>, <i>F2</i>, and so on.</p>
+<p>The following filter values specify memory regions by the way that the target process is using them.</p>
+<table>
+<tr>
+<th> Filter value</th>
+<th>Memory regions displayed</th>
+</tr>
+<tr>
+<td>
+<p>VAR</p>
+</td>
+<td>
+<p>Busy regions. These regions include all virtual allocation blocks, the SBH heap, memory from custom allocators, and all other regions of the address space that fall into no other classification.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Free</p>
+</td>
+<td>
+<p>Free memory. This includes all memory that has not been reserved.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Image</p>
+</td>
+<td>
+<p>Memory that is mapped to a file that is part of an executable image.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Stack</p>
+</td>
+<td>
+<p>Memory used for thread stacks.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Teb</p>
+</td>
+<td>
+<p>Memory used for thread environment blocks (TEBs). </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Peb</p>
+</td>
+<td>
+<p>Memory used for the process environment block (PEB).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Heap</p>
+</td>
+<td>
+<p>Memory used for heaps.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>PageHeap</p>
+</td>
+<td>
+<p>The memory region used for the full-page heap.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>CSR</p>
+</td>
+<td>
+<p>CSR shared memory.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Actx</p>
+</td>
+<td>
+<p>Memory used for activation context data.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>NLS</p>
+</td>
+<td>
+<p>Memory used for National Language Support (NLS) tables.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>FileMap</p>
+</td>
+<td>
+<p>Memory used for memory-mapped files. This filter is applicable only during live debugging.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>The following filter values specify memory regions by the memory type.</p>
+<table>
+<tr>
+<th> Filter value</th>
+<th>Memory regions displayed</th>
+</tr>
+<tr>
+<td>
+<p>MEM_IMAGE</p>
+</td>
+<td>
+<p>Memory that is mapped to a file that is part of an executable image.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>MEM_MAPPED</p>
+</td>
+<td>
+<p>Memory that is mapped to a file that is not part of an executable image. This includes memory that is mapped to the paging file.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>MEM_PRIVATE</p>
+</td>
+<td>
+<p>Private memory. This memory is not shared by any other process, and it is not mapped to any file.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>The following filter values specify memory regions by the state of the memory.</p>
+<table>
+<tr>
+<th> Filter value</th>
+<th>Memory regions displayed</th>
+</tr>
+<tr>
+<td>
+<p>MEM_COMMIT</p>
+</td>
+<td>
+<p>Committed memory.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>MEM_FREE</p>
+</td>
+<td>
+<p>Free memory. This includes all memory that has not been reserved.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>MEM_RESERVE</p>
+</td>
+<td>
+<p>Reserved memory.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>The following filter values specify memory regions by the protection applied to the memory.</p>
+<table>
+<tr>
+<th> Filter value</th>
+<th>Memory regions displayed</th>
+</tr>
+<tr>
+<td>
+<p>PAGE_NOACCESS</p>
+</td>
+<td>
+<p>Memory that cannot be accessed.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>PAGE_READONLY</p>
+</td>
+<td>
+<p>Memory that is readable, but not writable and not executable.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>PAGE_READWRITE</p>
+</td>
+<td>
+<p>Memory that is readable and writable, but not executable.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>PAGE_WRITECOPY</p>
+</td>
+<td>
+<p>Memory that has copy-on-write behavior.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>PAGE_EXECUTE</p>
+</td>
+<td>
+<p>Memory that is executable, but not readable and not writeable.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>PAGE_EXECUTE_READ</p>
+</td>
+<td>
+<p>Memory that is executable and readable, but not writable.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>PAGE_EXECUTE_READWRITE</p>
+</td>
+<td>
+<p>Memory that is executable, readable, and writable.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>PAGE_EXECUTE_WRITECOPY</p>
+</td>
+<td>
+<p>Memory that is executable and has copy-on-write behavior.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>PAGE_GUARD</p>
+</td>
+<td>
+<p>Memroy that acts as a guard page.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>PAGE_NOCACHE</p>
+</td>
+<td>
+<p>Memory that is not cached.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>PAGE_WRITECOMBINE</p>
+</td>
+<td>
+<p>Memory that has write-combine access enabled.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p></p>
+</dd>
+<dt><a id="_______-o__csv___tsv___1_"></a><a id="_______-O__CSV___TSV___1_"></a>       <b>-o:</b>{<b>csv</b> | <b>tsv</b> | <b>1</b>}</dt>
+<dd>
+<p>Displays the output according to one of the following options.</p>
+<table>
+<tr>
+<th> Option</th>
+<th>Output format</th>
+</tr>
+<tr>
+<td>
+<p>csv</p>
+</td>
+<td>
+<p>Displays the output as comma-separated values.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>tsv</p>
+</td>
+<td>
+<p>Displays the output as tab-separated values.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>1</p>
+</td>
+<td>
+<p>Displays the output in bare format. This format works well when <b>!address</b> is used as input to <a href="_foreach.htm"><b>.foreach</b></a>.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+</dd>
+<dt><a id="_______-c__Command_"></a><a id="_______-c__command_"></a><a id="_______-C__COMMAND_"></a>       <b>-c</b>:"<i>Command</i>"</dt>
+<dd>
+<p>Executes a custom command for each memory region. You can use the following placeholders in your command to represent output fields of the <b>!address</b> extension.</p>
+<table>
+<tr>
+<th> Placeholder</th>
+<th>Output field</th>
+</tr>
+<tr>
+<td>
+<p>%1 </p>
+</td>
+<td>
+<p>Base address</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>%2 </p>
+</td>
+<td>
+<p>End address + 1</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>%3 </p>
+</td>
+<td>
+<p>Region size</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>%4</p>
+</td>
+<td>
+<p>Type</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>%5 </p>
+</td>
+<td>
+<p>State</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>%6</p>
+</td>
+<td>
+<p>Protection</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>%7</p>
+</td>
+<td>
+<p>Usage</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>For example, <code>!address -f:Heap -c:".echo %1 %3 %5"</code> displays the base address, size, and state for each memory region of type <b>Heap</b>.</p>
+<p>Quotes in the command must be preceded by a back slash (\"). For example, !address -f:Heap -c:"s -a %1 %2 \"pad\"" searches each memory region of type <b>Heap</b> for the string "pad". </p>
+<p>Multiple commands separated by semicolons are not supported.</p>
+</dd>
+<dt><a id="_______-_______"></a>       <b>-?</b>      </dt>
+<dd>
+<p>Displays minimal Help text for this extension in the <a href="debugger_command_window.htm">Debugger Command window</a>.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000</b></p>
+</td>
+<td>
+<p>
+          Ext.dll
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later</b></p>
+</td>
+<td>
+<p>
+          Ext.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about how to display and search memory, see <a href="reading_and_writing_memory.htm">Reading and Writing Memory</a>. For additional extensions that display memory properties, see <a href="_vm.htm"><b>!vm</b></a> (kernel mode) and <a href="_vprot.htm"><b>!vprot</b></a> (user mode).</p>
+<h2>Remarks</h2>
+<p>Without any parameters, the <b>!address</b> extension displays information about the whole address space. The <b>!address -summary</b> command shows only the summary.</p>
+<p>In kernel mode, this extension searches only kernel memory, even if you used <a href="_process__set_process_context_.htm"><b>.process (Set Process Context)</b></a> to specify a given process' virtual address space. In user mode, the <b>!address</b> extension always refers to the memory that the target process owns.</p>
+<p>In user mode, <b>!address</b> <i>Address</i> shows the characteristics of the region that the specified address belongs to. Without parameters, <b>!address</b> shows the characteristics of all memory regions. These characteristics include the memory usage, memory type, memory state, and memory protection. For more information about the meaning of this information, see the earlier tables in the description of the <b>-f</b> parameter.</p>
+<p>The following example uses <b>!address</b> to retrieve information about a region of memory that is mapped to kernel32.dll.</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; !address 75831234
+Usage:                  Image
+Base Address:           75831000
+End Address:            758f6000
+Region Size:            000c5000
+Type:                   01000000MEM_IMAGE
+State:                  00001000MEM_COMMIT
+Protect:                00000020PAGE_EXECUTE_READ
+More info:              lmv m kernel32
+More info:              !lmi kernel32
+More info:              ln 0x75831234</code></pre>
+<p>This example uses an <i>Address</i> value of 0x75831234. The display shows that this address is in a memory region that begins with the address 0x75831000 and ends with the address 0x758f6000. The region has usage <b>Image</b>, type <b>MEM_IMAGE</b>, state <b>MEM_COMMIT</b>, and protection <b>PAGE_EXECUTE_READ</b>. (For more information about the meaning of these values, see the earlier tables.) The display also lists three other debugger commands that you can use to get more information about this memory address.</p>
+<p>If you are starting with an address and trying to determine information about it, the usage information is frequently the most valuable. After you know the usage, you can use additional extensions to learn more about this memory. For example, if the usage is <b>Heap</b>, you can use the <a href="_heap.htm"><b>!heap</b></a> extension to learn more.</p>
+<p>The following example uses the <a href="s__search_memory_.htm"><b>s (Search Memory)</b></a> command to search each memory region of type <b>Image</b> for the wide-character string "Note".</p>
+<pre class="syntax" xml:space="preserve"><code>!address /f:Image /c:"s -u %1 %2 \"Note\""
+
+*** Executing: s -u 0xab0000 0xab1000 "Note"
+*** Executing: s -u 0xab1000 0xabc000 "Note"
+00ab2936  004e 006f 0074 0065 0070 0061 0064 0000  N.o.t.e.p.a.d...
+00ab2f86  004e 006f 0074 0065 0070 0061 0064 005c  N.o.t.e.p.a.d.\.
+00ab32e4  004e 006f 0074 0065 0070 0061 0064 0000  N.o.t.e.p.a.d...
+*** Executing: s -u 0xabc000 0xabd000 "Note"
+. . .</code></pre>
+<p>In kernel mode, the output of <b>!address</b> is similar to the user mode output but contains less information. The following example example shows the kernel mode output.</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !address
+  804de000 - 00235000                           
+ Usage       KernelSpaceUsageImage
+          ImageName   ntoskrnl.exe
+
+  80c00000 - 001e1000
+          Usage       KernelSpaceUsagePFNDatabase
+
+....
+
+  f85b0000 - 00004000
+          Usage       KernelSpaceUsageKernelStack
+          KernelStack 817b4da0 : 324.368
+
+ f880d000 - 073d3000
+          Usage       KernelSpaceUsageNonPagedPoolExpansion</code></pre>
+<p>The meaning of "usage" is the same as in user mode. "ImageName" indicates the module that is associated with this address. "KernelStack" shows the address of this thread's ETHREAD block (0x817B4DA0), the process ID (0x324), and the thread ID (0x368).</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!address%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

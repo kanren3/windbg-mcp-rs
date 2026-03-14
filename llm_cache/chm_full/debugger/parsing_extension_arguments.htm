@@ -1,0 +1,172 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Parsing Extension Arguments"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Parsing Extension Arguments</title>
+
+<meta name="MS-HAID" content="EngExtCpp_DG_ee0ab1ba-1ede-4981-9200-ac2b0dbc6c03.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.parsing_extension_arguments"></a>Parsing Extension Arguments</h1>
+</div>
+<p>The EngExtCpp extension framework provides methods to aid in parsing the command-line arguments passed to an extension.  To take advantage of these methods, the extension must first declare the format of the command-line arguments in the <a href="ext_command.htm"><b>EXT_COMMAND</b></a> macro.</p>
+<p>To bypass the command-line argument parsing done by the framework and let the extension itself parse the arguments, set the command-line description to <code>"{{custom}}"</code> and use the method <a href="getrawargstr.htm"><b>GetRawArgStr</b></a> to get the command-line arguments for parsing.</p>
+<p>Command-line description strings will automatically be wrapped when printed, to fit the column width of the display.  However, newline characters can be embedded in the description strings - using '<code>\n</code>' - to start  new lines.</p>
+<p>The command-line description can be <b>NULL</b> or the empty string.  If either occurs, it indicates that the extension command does not take any arguments.</p>
+<h3><a id="command_line_description"></a><a id="COMMAND_LINE_DESCRIPTION"></a>Command-Line Description</h3>
+<p>The description of the command-line arguments is a sequence that contains two types of components: directives and arguments.  The description can optionally contain one of each directive and can contain up to 64 arguments.</p>
+<h3><a id="directives"></a><a id="DIRECTIVES"></a>Directives</h3>
+<p>Directives specify how the arguments are parsed.  They are enclosed by double braces (<code>'{{'</code> and <code>'}}'</code>).  Each directive can optionally appear zero or one times in the string that describes the arguments.</p>
+<p>The following directives are available:</p>
+<p></p>
+<dl>
+<dt><a id="custom"></a><a id="CUSTOM"></a><code>custom</code></dt>
+<dd>
+<p>Turns off the parsing done by the extension framework and lets the extension perform its own parsing.</p>
+</dd>
+<dt><a id="l_str"></a><a id="L_STR"></a><code>l:str</code></dt>
+<dd>
+<p>Overrides the default long description of the command-line arguments.  The extension framework will use <i>str</i> for the full description of all the arguments.</p>
+</dd>
+<dt><a id="opt_str"></a><a id="OPT_STR"></a><code>opt:str</code></dt>
+<dd>
+<p>Overrides the default prefix characters for named commands.  The default value is <code>"/-"</code>, allowing '<code>/</code>' or '<code>-</code>' to be used as the prefix that identifies named arguments.</p>
+</dd>
+<dt><a id="s_str"></a><a id="S_STR"></a><code>s:str</code></dt>
+<dd>
+<p>Overrides the default short description of the command-line arguments.  The extension framework will use <i>str</i> for the short description of all the arguments.</p>
+</dd>
+</dl>
+<p>Here are some examples of directives.  The following string is used by an extension command that parses its own arguments.  It also provides short and long descriptions for use with the automatic <b>!help</b> extension command:</p>
+<pre class="syntax" xml:space="preserve"><code>{{custom}}{{s:&lt;arg1&gt; &lt;arg2&gt;}}{{l:arg1 - Argument 1\narg2 - Argument 2}}</code></pre>
+<p>The following string changes the argument option prefix characters to '<code>/</code>' or '<code>-</code>'.  With this directive, the arguments will be specified using '<code>+arg</code>' and '<code>:arg</code>' instead of '<code>/arg</code>' and '<code>-arg</code>':</p>
+<pre class="syntax" xml:space="preserve"><code>{{opt:+:}}</code></pre>
+<h3><a id="arguments"></a><a id="ARGUMENTS"></a>Arguments</h3>
+<p>Arguments can be of two types: named and unnamed.  Unnamed arguments are read positionally.  Both types of argument also have a display name, used by the help command.</p>
+<p>Argument descriptions are enclosed by single braces (<code>'{'</code> and <code>'}'</code>).  </p>
+<p>Each argument description has the following syntax:</p>
+<pre class="syntax" xml:space="preserve"><code>{[optname];[type[,flags]];[argname];[argdesc]}</code></pre>
+<p>where:</p>
+<p></p>
+<dl>
+<dt><a id="optname"></a><a id="OPTNAME"></a><i>optname</i></dt>
+<dd>
+<p>The name of the argument.  This is the name used in commands and in methods that fetch arguments by name.  This name is optional.  If it is present, the argument becomes a "named argument"; it can appear anywhere on the command-line and is referenced by name.  If it is not present, the argument becomes an "unnamed argument"; its position on the command-line is important and it is referenced by its position relative to the other unnamed arguments.</p>
+</dd>
+<dt><a id="type"></a><a id="TYPE"></a><i>type</i></dt>
+<dd>
+<p>The type of the argument.  This affects how the argument is parsed and how it is retrieved. The <i>type</i> parameter can have one of the following values:</p>
+<p></p>
+<dl>
+<dt><a id="b"></a><a id="B"></a>b</dt>
+<dd>
+<p>Boolean type.  The argument is either present or not present.  Named Boolean arguments can be retrieved using <a href="hasarg.htm"><b>HasArg</b></a>.</p>
+</dd>
+<dt><a id="e_d__s__bits_"></a><a id="E_D__S__BITS_"></a>e[d][s][bits]</dt>
+<dd>
+<p>Expression type.  The argument has a numeric value.  Named expression arguments can be retrieved using <a href="getargu64.htm"><b>GetArgU64</b></a> and unnamed expression arguments can be retrieved using <a href="getunnamedargu64.htm"><b>GetUnnamedArgU64</b></a>.
+
+		     </p>
+<p></p>
+<dl>
+<dt><a id="d"></a><a id="D"></a>d</dt>
+<dd>
+<p>The expression is limited to the next space character in the argument string.  If this is not present, the expression evaluator will consume characters from the command line until it determines that it reached the end of the expression.</p>
+</dd>
+<dt><a id="s"></a><a id="S"></a>s</dt>
+<dd>
+<p>The value of the expression is signed.  Otherwise, the value of the expression is unsigned.</p>
+</dd>
+<dt><a id="bits"></a><a id="BITS"></a>bits</dt>
+<dd>
+<p>The number of bits in the value of the argument.  The maximum value for <i>bits</i> is 64.</p>
+</dd>
+</dl>
+</dd>
+<dt><a id="s"></a><a id="S"></a>s</dt>
+<dd>
+<p>String type.  The string is limited to the next space character.  Named string arguments can be retrieved using <a href="getargstr.htm"><b>GetArgStr</b></a> and unnamed string arguments can be retrieved using <a href="getunnamedargstr.htm"><b>GetUnnamedArgStr</b></a>.</p>
+</dd>
+<dt><a id="x"></a><a id="X"></a>x</dt>
+<dd>
+<p>String type.  The argument is the rest of the command line.  The argument is retrieved using <b>GetArgStr</b> or <b>GetUnnamedArgStr</b>, as with the s string type.</p>
+</dd>
+</dl>
+</dd>
+<dt><a id="flags"></a><a id="FLAGS"></a><i>flags</i></dt>
+<dd>
+<p>The argument flags.  These determine how the argument will be treated by the parser. The <i>flags</i> parameter can have one of the following values:</p>
+<p></p>
+<dl>
+<dt><a id="d_expr"></a><a id="D_EXPR"></a>d=expr</dt>
+<dd>
+<p>The default value of the argument.  If the argument is not present on the command line, then the argument is set to <i>expr</i>.  The default value is a string that is parsed according to the type of the argument.</p>
+</dd>
+<dt><a id="ds"></a><a id="DS"></a>ds</dt>
+<dd>
+<p>The default value will not be displayed in the argument description provided by the help.</p>
+</dd>
+<dt><a id="o"></a><a id="O"></a>o</dt>
+<dd>
+<p>The argument is optional.  This is the default for named arguments.</p>
+</dd>
+<dt><a id="r"></a><a id="R"></a>r</dt>
+<dd>
+<p>The argument is required.  This is the default for unnamed arguments.</p>
+</dd>
+</dl>
+</dd>
+<dt><a id="argname"></a><a id="ARGNAME"></a><i>argname</i></dt>
+<dd>
+<p>The display name of the argument.  This is the name used by the automatic <b>!help</b> extension command and by the automatic <b>/?</b> or <b>-?</b> command-line arguments.  Used when printing a summary of the command-line options.</p>
+</dd>
+<dt><a id="argdesc"></a><a id="ARGDESC"></a><i>argdesc</i></dt>
+<dd>
+<p>A description of the argument.  This is the description printed by the automatic <b>!help</b> extension and by the automatic "<b>/?</b>" or "<b>-?</b>" command-line arguments.</p>
+</dd>
+</dl>
+<p>Here are some examples of argument descriptions.  The following expression defines a command which takes a single optional expression argument.  The argument must fit in 32 bits. If the argument isn't present on the command line, the default value of 0x100 will be used.</p>
+<pre class="syntax" xml:space="preserve"><code>{;e32,o,d=0x100;flags;Flags to control command}</code></pre>
+<p>The following expression defines a command with an optional Boolean "<b>/v</b>" argument and a required unnamed string argument.</p>
+<pre class="syntax" xml:space="preserve"><code>{v;b;;Verbose mode}{;s;name;Name of object}</code></pre>
+<p>The following expression defines a command that has an optional named expression argument <b>/oname </b><i>expr</i> and an optional named string argument <b>/eol </b><i>str</i>.  If <b>/eol</b> is present, its value will be set to the remainder of the command line and no further arguments will be parsed.</p>
+<pre class="syntax" xml:space="preserve"><code>{oname;e;expr;Address of object}{eol;x;str;Commands to use}</code></pre>
+<h3><a id="command_line"></a><a id="COMMAND_LINE"></a>Command Line</h3>
+<p>The following is a list of some ways that arguments are parsed on the command line:</p>
+<ul>
+<li>
+<p>The values of named expression and string arguments follow the name on the command line. For example, <b>/name </b><i>expr</i> or <b>/name </b><i>str</i>.</p>
+</li>
+<li>
+<p>For named Boolean arguments, the value is true if the name appears on the command line; false otherwise.</p>
+</li>
+<li>
+<p>Multiple single-character-named Boolean options can be grouped together on the command line. For example, "/a /b /c" can be written using the shorthand notation "/abc" (unless there is already an argument named "abc").</p>
+</li>
+<li>
+<p>If the command line contains the named argument "?" - for example, "/?" and "-?" - the argument parsing ends, and the help text for the extension is displayed.</p>
+</li>
+</ul>
+<h3><a id="parsing_internals"></a><a id="PARSING_INTERNALS"></a>Parsing Internals</h3>
+<p>Several methods are used by the argument parser to set arguments. </p>
+<p>The method <a href="setunnamedarg.htm"><b>SetUnnamedArg</b></a> will change the value of an unnamed argument.  And, for convenience, the methods <a href="setunnamedargstr.htm"><b>SetUnnamedArgStr</b></a> and <a href="setunnamedargu64.htm"><b>SetUnnamedArgU64</b></a> will set unnamed string and expression arguments respectively.</p>
+<p>Similar methods exist for named arguments. <a href="setarg.htm"><b>SetArg</b></a> is used to change the value of any named argument and <a href="setargstr.htm"><b>SetArgStr</b></a> and <a href="setargu64.htm"><b>SetArgU64</b></a> are used for named string and expression arguments respectively.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Parsing Extension Arguments%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

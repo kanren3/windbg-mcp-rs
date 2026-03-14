@@ -1,0 +1,151 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !powertriage extension displays summary information about the system and device power related components."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!powertriage</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._powertriage"></a>!powertriage</h1>
+</div>
+<p>The !powertriage extension displays summary information about the system and device power related components. It also provides links to related commands that can be used to gather additional information. The !powertriage  command has no parameters. This command can be used  with both live kernel-mode debugging and for crash dump file analysis.</p>
+<p>Syntax</p>
+<pre class="syntax">!powertriage</pre>
+<h2><a id="ddk__thread_dbg"></a><a id="DDK__THREAD_DBG"></a>Parameters</h2>
+<p>
+<p>None</p>
+</p>
+
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 10 and later
+         </b></p>
+</td>
+<td>
+<p>
+          Kdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>The !powertriage extension displays the following information.
+
+</p>
+<dl>
+<dd>1.	Power state of the device node along with !podev for all the device objects.</dd>
+<dd>2.	Links to 
+
+
+
+
+
+<a href="_rcdrkd_rcdrlogdump.htm"><b>!rcdrkd.rcdrlogdump</b></a> if the driver has enabled the IFR. For more information about IFR, see Using Inflight Trace Recorder (IFR) in KMDF and UMDF 2 Drivers.
+</dd>
+<dd>3.	Links to <a href="_wdfkd_wdfdriverinfo.htm"><b>!wdfkd.wdfdriverinfo</b></a> and <a href="_wdfkd_wdflogdump.htm"><b>!wdfkd.wdflogdump</b></a> for WDF drivers.
+</dd>
+<dd>4.	Links to !fxdevice for PoFx devices. For more information about PoFX, see Overview of the Power Management Framework.
+</dd>
+</dl>
+<p>Here is example output  from the !powertriage command.</p>
+<pre class="syntax" xml:space="preserve"><code>
+kd&gt; !powertriage
+
+System Capabilities :
+  Machine is not AOAC capable.
+
+Power Capabilities:
+PopCapabilities @ 0xfffff8022f6c4380
+  Misc Supported Features:  PwrButton S1 S3 S4 S5 HiberFile FullWake
+  Processor Features:      
+  Disk Features:           
+  Battery Features:        
+  Wake Caps
+    Ac OnLine Wake:         Sx
+    Soft Lid Wake:          Sx
+    RTC Wake:               S4
+    Min Device Wake:        Sx
+    Default Wake:           Sx
+
+
+
+Power Action:
+
+PopAction :fffff8022f6ba550
+    Current System State..: Working
+    Target System State...: Unspecified
+    State.................: - Idle(0)
+
+Devices with allocated Power IRPs:
+
+    +  ACPI\PNP0C0C\2&amp;daba3ff&amp;1
+       0xffffe00023939ad0 ACPI D0 !podev  WAIT_WAKE_IRP !irp Related Threads 
+
+    +  USB\ROOT_HUB30\5&amp;2c60645a&amp;0&amp;0
+       0xffffe0002440ac40 USBXHCI D2 !podev  WAIT_WAKE_IRP !irp Related Threads !rcdrlogdump !wdfdriverinfo !wdflogdump 
+         Upper DO 0xffffe00024415a10 USBHUB3 !podev 
+
+
+    +  USB\ROOT_HUB30\5&amp;d91dce5&amp;0&amp;0
+       0xffffe00023ed4d30 USBXHCI D2 !podev  WAIT_WAKE_IRP !irp Related Threads !rcdrlogdump !wdfdriverinfo !wdflogdump 
+         Upper DO 0xffffe000249d8040 USBHUB3 !podev 
+
+    +  PCI\VEN_8086&amp;DEV_27E2&amp;SUBSYS_01DE1028&amp;REV_01\3&amp;172e68dd&amp;0&amp;E5
+       0xffffe000239e5880 pci D0 !podev FxDevice: !fxdevice  WAIT_WAKE_IRP !irp Related Threads 
+         Upper DO 0xffffe000239c0e50 ACPI !podev 
+           Upper DO 0xffffe000239f7040 pci !podev 
+
+
+    +  PCI\VEN_14E4&amp;DEV_167A&amp;SUBSYS_01DE1028&amp;REV_02\4&amp;24ac2e11&amp;0&amp;00E5
+       0xffffe000231e6060 pci D0 !podev  WAIT_WAKE_IRP !irp Related Threads 
+         Upper DO 0xffffe00024359050 b57nd60a !podev 
+
+
+Device Tree Info: 
+
+    !devpowerstate
+
+    !devpowerstate Complete
+
+
+Links:
+!poaction
+!cstriage
+!pdctriage
+!pdcclients
+!fxdevice
+!pnptriage
+
+</code></pre>
+<p><b>Dump File Power Failure Analysis</b></p>
+<p>The !powertriage extension can be useful in examining system crashes related to incorrect power state information. For example, in the case of <a href="bug_check_0x9f__driver_power_state_failure.htm"><b>Bug Check 0x9F: DRIVER_POWER_STATE_FAILURE</b></a>, the extension will display all the allocated power IRPs, the associated device stacks along with:</p>
+<dl>
+<dd>1.	Links to the <a href="_irp.htm"><b>!irp</b></a> command for the related IRPs.
+</dd>
+<dd>2.	Links to the <a href="_findthreads.htm"><b>!findthreads</b></a> command  with the related IRP. The IRP is added as part of the search criteria and displays the threads starting with higher correlation to the search criteria threads listed first. 
+
+</dd>
+</dl>
+<p>Dumping all device stacks with power IRPs can help in debugging cases where !analyze has not been able to correctly identify the IRP associated with the crash.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!powertriage%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

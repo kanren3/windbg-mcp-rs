@@ -1,0 +1,154 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !ks.objhdr extension displays the kernel streaming object header associated with the specified file object."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!ks.objhdr</title>
+
+<meta name="MS-HAID" content="r33~b_exts_KS_934456a2-0534-478f-8a81-bef4b9f1b3ad.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._ks_objhdr"></a>!ks.objhdr</h1>
+</div>
+<p>The <b>!ks.objhdr</b> extension displays the kernel streaming object header associated with the specified file object.</p>
+<pre class="syntax">
+    <b>!ks.objhdr </b><i>FileObject</i><b> </b>[<i>Level</i>]<b> </b>[<i>Flags</i>]  
+</pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______FileObject______"></a><a id="_______fileobject______"></a><a id="_______FILEOBJECT______"></a>       <i>FileObject</i>      </dt>
+<dd>
+<p>This parameter specifies a pointer to a WDM file object. If <i>FileObject</i> is not valid, the command returns an error.</p>
+</dd>
+<dt><a id="_______Level______"></a><a id="_______level______"></a><a id="_______LEVEL______"></a>       <i>Level</i>      </dt>
+<dd>
+<p>Optional. Values are the same as those for <a href="_ks_dump.htm"><b>!ks.dump</b></a>. </p>
+</dd>
+<dt><a id="_______Flags______"></a><a id="_______flags______"></a><a id="_______FLAGS______"></a>       <i>Flags</i>      </dt>
+<dd>
+<p>Optional. Values are the same as those for <a href="_ks_dump.htm"><b>!ks.dump</b></a>. </p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Windows 2000</b></p>
+</td>
+<td>
+<p>
+          winxp\Ks.dll 
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Ks.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information, see <a href="kernel_streaming_debugging.htm">Kernel Streaming Debugging</a>.</p>
+<h2>Remarks</h2>
+<p>Levels and flags for <b>!ks.objhdr</b> are identical to those described in <a href="_ks_dump.htm"><b>!ks.dump</b></a>.</p>
+<p>The output from <a href="_ks_allstreams.htm"><b>!ks.allstreams</b></a> and <a href="_ks_enumdevobj.htm"><b>!ks.enumdevobj</b></a> can be used as the input for <b>!ks.objhdr</b>. To do this with the <i>avssamp</i> sample, for instance, issue the following commands:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; !ks.allstreams
+6 Kernel Streaming FDOs found:
+    Functional Device 8299be18 [\Driver\smwdm]
+    Functional Device 827c86d8 [\Driver\wdmaud]
+    Functional Device 827c0f08 [\Driver\sysaudio]
+    Functional Device 82424590 [\Driver\avssamp]
+    Functional Device 82423720 [\Driver\MSPQM]
+    Functional Device 82b91a88 [\Driver\MSPCLOCK]
+kd&gt; !ks.enumdevobj 82424590
+WDM device object 82424590:
+    Corresponding KSDEVICE        82427540
+    Factory 8285baa4 [Descriptor f7a333c8] instances:
+        82837a34 
+kd&gt; !ks.objhdr 82837a34 7</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The results of this command might be lengthy. Issue a Ctrl-BREAK (WinDbg) or Ctrl-C (NTSD, CDB, KD) to stop the output.</p>
+<p>Here's a separate example:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; !ks.objhdr 81D828B8 7
+Adjusting file object 81D828B8 to object header 81BC1008
+
+Object Header 81BC1008
+    Associated Create Items:
+        Create Item F9F77E98
+            CreateFunction = ks!CKsFilter::DispatchCreatePin+0x00
+            ObjectClass = {146F1A80-4791-11D0-A5D6-28DB04C10000}
+            Flags = 0
+    Child Create Handler List:
+        Create Item F9F85AA0
+            CreateFunction = ks!CKsPin::DispatchCreateAllocator+0x00
+            ObjectClass = {642F5D00-4791-11D0-A5D6-28DB04C10000}
+            Flags = 0
+        Create Item F9F85AB8
+            CreateFunction = ks!CKsPin::DispatchCreateClock+0x00
+            ObjectClass = {53172480-4791-11D0-A5D6-28DB04C10000}
+            Flags = 0
+        Create Item F9F85AD0
+            CreateFunction = ks!CKsPin::DispatchCreateNode+0x00
+            ObjectClass = {0621061A-EE75-11D0-B915-00A0C9223196}
+            Flags = 0
+    DispatchTable:
+        Dispatch Table F9F85AE8
+            DeviceIoControl = ks!CKsPin::DispatchDeviceIoControl+0x00
+            Read = ks!KsDispatchInvalidDeviceRequest+0x00
+            Write = ks!KsDispatchInvalidDeviceRequest+0x00
+            Flush = ks!KsDispatchInvalidDeviceRequest+0x00
+            Close = ks!CKsPin::DispatchClose+0x00
+            QuerySecurity = ks!KsDispatchQuerySecurity+0x00
+            SetSecurity = ks!KsDispatchSetSecurity+0x00
+            FastDeviceIoControl = ks!KsDispatchFastIoDeviceControlFailure+0x00
+            FastRead = ks!KsDispatchFastReadFailure+0x00
+            FastWrite = ks!KsDispatchFastReadFailure+0x00
+    TargetState: KSTARGET_STATE_ENABLED
+    TargetDevice: 00000000
+    BaseDevice  : 81BBDF10
+    Stack Depth : 1
+    Corresponding AVStream object = 81A971B0</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!ks.objhdr%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

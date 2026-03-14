@@ -1,0 +1,187 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .fpo command controls the frame pointer omission (FPO) overrides."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.fpo (Control FPO Overrides)</title>
+
+<meta name="MS-HAID" content="r20_metacmds_E_db758fac-48bf-4ef3-8ec1-0ddc0322e826.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._fpo__control_fpo_overrides_"></a>.fpo (Control FPO Overrides)</h1>
+</div>
+<p>The <b>.fpo</b> command controls the frame pointer omission (FPO) overrides.</p>
+<pre class="syntax">
+    <b>.fpo -s </b>[<b>-f</b><i>Flag</i>]<b> </b><i>Address</i> 
+<b>.fpo -d </b><i>Address</i> 
+<b>.fpo -x </b><i>Address</i> 
+<b>.fpo -o </b><i>Address</i> 
+<b>.fpo </b><i>Address</i> 
+</pre>
+<h2><a id="ddk_meta_control_fpo_overrides_dbg"></a><a id="DDK_META_CONTROL_FPO_OVERRIDES_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______-s______"></a><a id="_______-S______"></a>       <b>-s</b>      </dt>
+<dd>
+<p>Sets an FPO override at the specified address.</p>
+</dd>
+<dt><a id="_______-fFlag______"></a><a id="_______-fflag______"></a><a id="_______-FFLAG______"></a>       <b>-f</b><i>Flag</i>      </dt>
+<dd>
+<p>Specifies FPO flags for the override. You must not add a space between <b>-f</b> and <i>Flag</i>. If the flag takes an argument, you must add a space between the flag and that argument. If you want multiple flags, you must repeat the <b>-f</b> switch (for example, <b>-fb -fp 4 -fe</b>). You can use the <b>-f</b> switch only with <b>-s</b>. You can use one of the following values for <i>Flag</i>.</p>
+<table>
+<tr>
+<th>Flag</th>
+<th>Effect</th>
+</tr>
+<tr>
+<td>
+<p><b>b</b></p>
+</td>
+<td>
+<p>Sets <b>fUseBP</b> equal to <b>TRUE</b>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>e</b></p>
+</td>
+<td>
+<p>Sets <b>fUseSEH</b> equal to <b>TRUE</b>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>n</b></p>
+</td>
+<td>
+<p>Sets <b>cbFrame</b> equal to FRAME_NONFPO.  (By default, cbFrame is set to FRAME_FPO.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>l</b><b> </b><i>Term</i></p>
+</td>
+<td>
+<p>Sets <b>cdwLocals</b> equal to <i>Term</i>. <i>Term</i> should specify the local DWORD count that you want.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>p</b><b> </b><i>Term</i></p>
+</td>
+<td>
+<p>Sets <b>cdwParams</b> equal to <i>Term</i>. <i>Term</i> should specify the parameter DWORD count that you want.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>r</b><b> </b><i>Term</i></p>
+</td>
+<td>
+<p>Sets <b>cbRegs</b> equal to <i>Term</i>. <i>Term</i> should specify the register count that you want.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>s</b><b> </b><i>Term</i></p>
+</td>
+<td>
+<p>Sets <b>cbProcSize</b> equal to <i>Term</i>. <i>Term</i> should specify the procedure size that you want.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>t</b><b> </b><i>Term</i></p>
+</td>
+<td>
+<p>Sets <b>cbFrame</b> equal to <i>Term</i>. <i>Term</i> should specify one of the following frame types:</p>
+<ul>
+<li>
+<p>FRAME_FPO       0</p>
+</li>
+<li>
+<p>FRAME_TRAP      1</p>
+</li>
+<li>
+<p>FRAME_TSS       2</p>
+</li>
+<li>
+<p>FRAME_NONFPO    3</p>
+</li>
+</ul>
+</td>
+</tr>
+</table>
+<p> </p>
+</dd>
+<dt><a id="_______Address______"></a><a id="_______address______"></a><a id="_______ADDRESS______"></a>       <i>Address</i>      </dt>
+<dd>
+<p>Specifies the address where the debugger sets or removes the override or the address whose overrides the debugger should display. This address must be within a module in the current module list.</p>
+</dd>
+<dt><a id="_______-d______"></a><a id="_______-D______"></a>       -<b>d</b>      </dt>
+<dd>
+<p>Removes the FPO overrides at the specified address.</p>
+</dd>
+<dt><a id="_______-x______"></a><a id="_______-X______"></a>       <b>-x</b>      </dt>
+<dd>
+<p>Removes all FPO overrides within the module that contains the <i>Address</i> address.</p>
+</dd>
+<dt><a id="_______-o______"></a><a id="_______-O______"></a>       <b>-o</b>      </dt>
+<dd>
+<p>Displays all FPO overrides within the module that contains the <i>Address</i> address.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets
+         </b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Platforms
+         </b></p>
+</td>
+<td>
+<p>all </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>Without parameters, the <b>.fpo</b> command displays the FPO overrides for the specified address.</p>
+<p>Some compilers (including Microsoft Visual Studio 6.0 and earlier versions) generate FPO information to indicate how the stack frame is set up. During stack walking, the debugger uses these FPO records to understand the stack. If the compiler generated incorrect FPO information, you can use the <b>.fpo</b> command to fix this problem.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.fpo (Control FPO Overrides)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

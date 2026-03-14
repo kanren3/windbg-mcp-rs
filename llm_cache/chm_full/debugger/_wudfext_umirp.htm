@@ -1,0 +1,105 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !wudfext.umirp extension displays information about a host user-mode I/O request packet (UM IRP)."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!wudfext.umirp</title>
+
+<meta name="MS-HAID" content="r33~e_exts_umdf_1faa7319-c423-4332-96b1-d081b60ef991.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._wudfext_umirp"></a>!wudfext.umirp</h1>
+</div>
+<p>The <b>!wudfext.umirp</b> extension displays information about a host user-mode I/O request packet (UM IRP). </p>
+<pre class="syntax"><b>!wudfext.umirp </b><i>Address</i></pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Address______"></a><a id="_______address______"></a><a id="_______ADDRESS______"></a>       <i>Address</i>      </dt>
+<dd>
+<p>Specifies the address of the UM IRP to display information about. </p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000</b></p>
+</td>
+<td>
+<p>Unavailable </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later</b></p>
+</td>
+<td>
+<p>
+          Wudfext.dll</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information, see <a href="user_mode_driver_framework_debugging.htm">User-Mode Driver Framework Debugging</a>.</p>
+<h2>Remarks</h2>
+<p>You can use the <a href="_wudfext_umirps.htm"><b>!wudfext.umirps</b></a> extension command to display a list of all outstanding UM IRPs in the host process. </p>
+<p>Each UM IRP has one or more stack locations. Each stack location corresponds to the parameters that a single driver in the device stack will receive when it is called to handle a request. </p>
+<p><b>!wudfext.umirp</b> dumps all of the stack locations and marks the current location with a right angle bracket (&gt;). The current location corresponds to the driver that currently owns the request. The current location changes when a driver forwards a request to the next lower driver in the stack, or when the driver completes a request that the driver owns.</p>
+<p>The following is an example of the <b>!wudfext.umirp</b> display:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; !umirp 3dd480 
+UM IRP: 0x003dd480  UniqueId: 0xde  Kernel Irp: 0x0x85377850
+  Type: WudfMsg_READ
+  ClientProcessId: 0x338
+  Device Stack: 0x0034e4e0
+  IoStatus
+    hrStatus: 0x0
+    Information: 0x0
+  Driver/Framework created IRP: No
+  Data Buffer: 0x00000000 / 0
+  IsFrom32BitProcess: Yes
+  CancelFlagSet: No
+  Cancel callback: 0x01102224
+  Total number of stack locations: 2
+  CurrentStackLocation: 2 (StackLocation[ 1 ])
+    StackLocation[ 0 ]
+      UNINITIALIZED
+  &gt; StackLocation[ 1 ]
+      IWDFRequest:  ????
+      IWDFDevice:   0x000f2f80
+      IWDFFile:     0x003a7648
+      Completion:
+        Callback:   0x00000000
+        Context:    0x00000000
+      Parameters: (RequestType: WdfRequestRead)
+        Buffer length:        0x400
+        Key:                  0x00000000
+        Offset:               0x0</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!wudfext.umirp%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

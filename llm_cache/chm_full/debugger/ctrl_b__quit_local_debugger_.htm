@@ -1,0 +1,74 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The CTRL+B key causes the debugger to terminate abruptly. This does not end a remote debugging session."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>CTRL+B (Quit Local Debugger)</title>
+
+<meta name="MS-HAID" content="r23_keys_847bf5ac-4c45-4a3c-bb2b-bed857dfa042.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.ctrl_b__quit_local_debugger_"></a>CTRL+B (Quit Local Debugger)</h1>
+</div>
+<p>The CTRL+B key causes the debugger to terminate abruptly. This does not end a remote debugging session.</p>
+<pre class="syntax">CTRL+B  ENTER 
+</pre>
+<h2><a id="ddk_meta_ctrl_b_dbg"></a><a id="DDK_META_CTRL_B_DBG"></a></h2>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Debuggers</b></p>
+</td>
+<td>
+<p>CDB and KD only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>user mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>all </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>In CDB, the <a href="q__qq__quit_.htm"><b>q (Quit)</b></a> command should be used to exit. CTRL+B should only be used if the debugger is not responding.</p>
+<p>In KD, the <b>q</b> command will end the debugging session and leave the target computer locked. If you need to preserve the debugging session (so a new debugger can connect to it), or if you need to leave the target computer running, you should use CTRL+B.</p>
+<p>In WinDbg, the equivalent command is <a href="file___exit.htm">File | Exit</a> or ALT+F4.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20CTRL+B (Quit Local Debugger)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

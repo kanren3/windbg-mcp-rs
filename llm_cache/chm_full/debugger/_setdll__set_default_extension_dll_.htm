@@ -1,0 +1,77 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .setdll command changes the default extension DLL for the debugger."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.setdll (Set Default Extension DLL)</title>
+
+<meta name="MS-HAID" content="r22_metacmds_S_505955dc-f0fc-4835-9f56-0e0eabda4bef.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._setdll__set_default_extension_dll_"></a>.setdll (Set Default Extension DLL)</h1>
+</div>
+<p>The <b>.setdll</b> command changes the default extension DLL for the debugger.</p>
+<pre class="syntax"><b>.setdll </b><i>DLLName</i> 
+<b>!</b><i>DLLName</i><b>.setdll</b> 
+</pre>
+<p></p>
+<h2><a id="ddk_meta_set_default_extension_dll_dbg"></a><a id="DDK_META_SET_DEFAULT_EXTENSION_DLL_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______DLLName______"></a><a id="_______dllname______"></a><a id="_______DLLNAME______"></a>       <i>DLLName</i>      </dt>
+<dd>
+<p>The name and path of the extension DLL. If the full path was specified when the DLL was loaded, it needs to be given in full here as well.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>user mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets</b></p>
+</td>
+<td>
+<p>live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>all </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For details on loading, unloading, and controlling extensions, see <a href="loading_debugger_extension_dlls.htm">Loading Debugger Extension DLLs</a>. For details on executing extension commands, see <a href="using_debugger_extension_commands.htm">Using Debugger Extension Commands</a>.</p>
+<h2>Remarks</h2>
+<p>The debugger maintains a default extension DLL that is implicitly loaded when the debugger is started. This allows the user to specify an extension command without first having to load an extension DLL. This command allows modification of which DLL is loaded as the default DLL.</p>
+<p>When a command is issued, the debugger looks for it in the default extension first. If a match is not found, all other loaded extension DLLs are searched in the order they were loaded.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.setdll (Set Default Extension DLL)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

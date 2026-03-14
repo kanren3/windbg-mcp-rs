@@ -1,0 +1,122 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !usb3kd.device_info command displays information about a USB device in the USB 3.0 tree."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!usb3kd.device_info</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._usb3kd_device_info"></a>!usb3kd.device_info</h1>
+</div>
+<p>The  <b>!usb3kd.device_info</b> command displays information about a USB device in the <a href="usb_3_extensions.htm#usb_3_tree">USB 3.0 tree</a>.</p>
+<pre class="syntax"><b>!usb3kd.device_info </b><i>DeviceContext</i></pre>
+<h2><a id="ddk__devobj_dbg"></a><a id="DDK__DEVOBJ_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______DeviceContext______"></a><a id="_______devicecontext______"></a><a id="_______DEVICECONTEXT______"></a>       <i>DeviceContext</i>      </dt>
+<dd>
+<p>Address of the _DEVICE_CONTEXT structure that represents the device.</p>
+</dd>
+</dl>
+<h2><a id="DLL"></a><a id="dll"></a>DLL</h2>
+<p>Usb3kd.dll
+     </p>
+<h2>Remarks</h2>
+<p><b>!device_info</b> and <a href="_usb3kd_ucx_device.htm"><b>!ucx_device</b></a> both display information about a device, but the information displayed is different. The output of <b>!device_info</b> is from the point of view of the USB 3.0 hub driver, and the output of <b>!ucx_device</b> is from the point of view of the USB host controller extension driver. For example, the <b>!device_info</b> output includes information about configuration and interface descriptors, and <b>!ucx_device</b> output includes information about endpoints.</p>
+<h2>Examples</h2>
+<p>You can obtain the address of the device context structure by looking at the output of the <a href="_usb3kd_usb_tree.htm"><b>!usb_tree</b></a> command. In the following example, the address of the device context structure is 0xfffffa8005abd0c0.</p>
+<div class="code"><span codelanguage="cmd"><table>
+<tr>
+<th>cmd</th>
+</tr>
+<tr>
+<td>
+<pre>3: kd&gt; !usb_tree
+
+Dumping HUB Tree - !drvObj 0xfffffa800597f770
+--------------------------------------------
+
+Topology
+--------
+1)  !xhci_info 0xfffffa80051d1940  ... - PCI: VendorId ...
+    !hub_info 0xfffffa8005ad92d0 (ROOT)
+    ...
+Enumerated Device List
+----------------------
+...
+
+2) !device_info 0xfffffa8005abd0c0, !devstack fffffa80059c3800
+    Current Device State: ConfiguredInD0
+    Desc: ... USB Flash Drive
+    ...</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Now you can pass the address of the device context to the <b>!device_info</b> command.</p>
+<div class="code"><span codelanguage="cmd"><table>
+<tr>
+<th>cmd</th>
+</tr>
+<tr>
+<td>
+<pre>3: kd&gt; !device_info 0xfffffa8005abd0c0
+
+Dumping Device Information fffffa8005abd0c0
+-------------------------------------------
+dt USBHUB3!_DEVICE_CONTEXT 0xfffffa8005abd0c0
+dt USBHUB3!_HUB_PDO_CONTEXT 0xfffffa8005b118d0
+!idle_info 0xfffffa8005b11920 (dt USBHUB3!_ISM_CONTEXT 0xfffffa8005b11920)
+Parent !hub_info 0xfffffa8005ad92d0 (dt USBHUB3!_HUB_FDO_CONTEXT 0xfffffa8005ad92d0)
+!port_info 0xfffffa8005abe0c0 (dt USBHUB3!_PORT_CONTEXT 0xfffffa8005abe0c0)
+!ucx_device 0xfffffa8005992840 !xhci_deviceslots 0xfffffa80051d1940 1
+
+LPMState: U1IsEnabledForUpStreamPort U2IsEnabledForUpStreamPort U1Timeout: 38, U2Timeout: 3
+DeviceFlags: HasContainerId NoBOSContainerId Removable HasSerialNumber MsOsDescriptorNotSupported NoWakeUpSupport DeviceIsSuperSpeedCapable 
+DeviceHackFlags: WillDisableOnSoftRemove SkipSetIsochDelay WillResetOnResumeS0 DisableOnSoftRemove 
+
+Descriptors:
+dt _USB_CONFIGURATION_DESCRIPTOR 0xfffffa80053f9250
+dt _USB_INTERFACE_DESCRIPTOR 0xfffffa80053f9259
+ProductId: ... Flash Drive
+DeviceDescriptor: VID ... PID ... REV 0a00,  Class: (0)(0) BcdUsb: 0300
+
+UcxRequest: !wdfrequest 0x57ffa662948, 
+ControlRequest: !wdfrequest 0x57ffa667798, !irp 0xfffffa8005997650 !urb 0xfffffa8005abd1c0, NumberOfBytes 0
+Device working at SuperSpeed
+Current Device State: ConfiguredInD0
+
+Device State History: &lt;Event&gt; NewState (&lt;Operation&gt;(),..) :
+
+    [16] &lt;Yes&gt; ConfiguredInD0
+    ...
+Device Event History:
+    [10] TransferSuccess
+    ...</pre>
+</td>
+</tr>
+</table></span></div>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="usb_3_extensions.htm">USB 3.0 Extensions</a></dt>
+<dt><a href="_usb3kd_device_info_from_pdo.htm"><b>!usb3kd.device_info_from_pdo</b></a></dt>
+<dt><a href="http://go.microsoft.com/fwlink/p?LinkID=227351">Universal Serial Bus (USB) Drivers</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!usb3kd.device_info%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

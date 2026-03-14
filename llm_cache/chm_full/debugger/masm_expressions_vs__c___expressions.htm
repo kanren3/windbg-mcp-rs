@@ -1,0 +1,55 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="MASM Expressions vs."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>MASM Expressions vs. C++ Expressions</title>
+
+<meta name="MS-HAID" content="r13_syntax_5c1956f3-a904-4421-97e2-aaefb7b1ffac.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.masm_expressions_vs__c___expressions"></a>MASM Expressions vs. C++ Expressions</h1>
+</div>
+<h2><a id="ddk_masm_expressions_vs__c_expressions_dbg"></a><a id="DDK_MASM_EXPRESSIONS_VS__C_EXPRESSIONS_DBG"></a></h2>
+<p>The most significant differences between MASM expression evaluation and C++ expression evaluation are as follows:</p>
+<ul>
+<li>
+<p>In an MASM expression, the numeric value of any symbol is its memory address. In a C++ expression, the numeric value of a variable is its actual value, not its address. Data structures do not have numeric values. Instead, they are treated as actual structures and you must use them accordingly. The value of a function name or any other entry point is the memory address and is treated as a function pointer. If you use a symbol that does not correspond to a C++ data type (such as an unmodified module name), a syntax error occurs.</p>
+</li>
+<li>
+<p>The MASM expression evaluator treats all numbers as ULONG64 values. The C++ expression evaluator casts numbers to ULONG64 and preserves type information of all data types.</p>
+</li>
+<li>
+<p>The MASM expression evaluator lets you to use any operator together with any number. The C++ expression evaluator generates an error if you use an operator together with an incorrect data type.</p>
+</li>
+<li>
+<p>In the MASM expression evaluator, all arithmetic is performed literally. In the C++ expression evaluator, pointer arithmetic is scaled properly and is not permitted when inappropriate.</p>
+</li>
+<li>
+<p>An MASM expression can use two underscores ( <b>__</b> ) or two colons ( <b>::</b> ) to indicate members of a class. The C++ expression evaluator uses only the two-colon syntax. Debugger <i>output</i> always uses two colons.</p>
+</li>
+<li>
+<p>In an MASM expression, you should add an at sign (<b>@</b>) before all except the most common registers. If you omit this at sign, the register name might be interpreted as a hexadecimal number or as a symbol. In a C++ expression, this prefix is <u>required</u> for all registers.</p>
+</li>
+<li>
+<p>MASM expressions might contain references to source lines. These references are indicated by grave accents ( <b>` </b>). You cannot reference source line numbers in a C++ expression.</p>
+</li>
+</ul>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20MASM Expressions vs. C++ Expressions%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

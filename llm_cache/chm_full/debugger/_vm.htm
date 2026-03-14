@@ -1,0 +1,170 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !vm extension displays summary information about virtual memory use statistics on the target system."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!vm</title>
+
+<meta name="MS-HAID" content="r30_exts_kernel_U_f7bac801-e399-4fab-af3e-ad2c1effce20.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._vm"></a>!vm</h1>
+</div>
+<p>The <b>!vm</b> extension displays summary information about virtual memory use statistics on the target system.</p>
+<pre class="syntax"><b>!vm </b>[<i>Flags</i>]</pre>
+<h2><a id="ddk__vm_dbg"></a><a id="DDK__VM_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Flags______"></a><a id="_______flags______"></a><a id="_______FLAGS______"></a>       <i>Flags</i>      </dt>
+<dd>
+<p>Specifies what information will be displayed in the output from this command. This can be any sum of the following bits. The default is 0, which causes the display to include system-wide virtual memory statistics as well as memory statistics for each process.</p>
+<p></p>
+<dl>
+<dt><a id="Bit_0__0x1_"></a><a id="bit_0__0x1_"></a><a id="BIT_0__0X1_"></a>Bit 0 (0x1)</dt>
+<dd>
+<p>Causes the display to omit process-specific statistics.</p>
+</dd>
+<dt><a id="Bit_1__0x2_"></a><a id="bit_1__0x2_"></a><a id="BIT_1__0X2_"></a>Bit 1 (0x2)</dt>
+<dd>
+<p>Causes the display to include memory management thread stacks.</p>
+</dd>
+<dt><a id="Bit_2__0x4_"></a><a id="bit_2__0x4_"></a><a id="BIT_2__0X4_"></a>Bit 2 (0x4)</dt>
+<dd>
+<p>(Windows XP and later)  Causes the display to include terminal server memory usage.</p>
+</dd>
+<dt><a id="Bit_3__0x8_"></a><a id="bit_3__0x8_"></a><a id="BIT_3__0X8_"></a>Bit 3 (0x8)</dt>
+<dd>
+<p>(Windows XP and later)  Causes the display to include the page file write log.</p>
+</dd>
+<dt><a id="Bit_4__0x10_"></a><a id="bit_4__0x10_"></a><a id="BIT_4__0X10_"></a>Bit 4 (0x10)</dt>
+<dd>
+<p>(Windows XP and later)  Causes the display to include working set owner thread stacks.</p>
+</dd>
+<dt><a id="Bit_5__0x20_"></a><a id="bit_5__0x20_"></a><a id="BIT_5__0X20_"></a>Bit 5 (0x20)</dt>
+<dd>
+<p>(Windows Vista and later)  Causes the display to include kernel virtual address usage.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>Modes</td>
+<td>kernel mode only</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Windows 2000</b></p>
+</td>
+<td>
+<p>
+          Kdextx86.dll
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later</b></p>
+</td>
+<td>
+<p>
+          Kdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>The <a href="_memusage.htm"><b>!memusage</b></a> extension command can be used to analyze physical memory usage. For more information about memory management, see <i>Microsoft Windows Internals</i>, by Mark Russinovich and David Solomon. (These resources may not be available in some languages and 
+
+countries.)
+</p>
+<h2>Remarks</h2>
+<p>Here is an example of the short output produced when <i>Flags</i> is 1:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !vm 1
+
+*** Virtual Memory Usage ***
+      Physical Memory:     16270   (   65080 Kb)
+      Page File: \??\E:\pagefile.sys
+         Current:     98304Kb Free Space:     61044Kb
+ Minimum:     98304Kb Maximum:       196608Kb
+      Available Pages:      5543   (   22172 Kb)
+      ResAvail Pages:       6759   (   27036 Kb)
+      Locked IO Pages:       112   (     448 Kb)
+ Free System PTEs:    45089   (  180356 Kb)
+      Free NP PTEs:         5145   (   20580 Kb)
+      Free Special NP:       336   (    1344 Kb)
+      Modified Pages:        714   (    2856 Kb)
+      NonPagedPool Usage:    877   (    3508 Kb)
+      NonPagedPool Max:     6252   (   25008 Kb)
+      PagedPool 0 Usage:     729   (    2916 Kb)
+      PagedPool 1 Usage:     432   (    1728 Kb)
+      PagedPool 2 Usage:     436   (    1744 Kb)
+      PagedPool Usage:      1597   (    6388 Kb)
+      PagedPool Maximum:   13312   (   53248 Kb)
+      Shared Commit:        1097   (    4388 Kb)
+      Special Pool:          229   (     916 Kb)
+      Shared Process:       1956   (    7824 Kb)
+      PagedPool Commit:     1597   (    6388 Kb)
+      Driver Commit:         828   (    3312 Kb)
+      Committed pages:     21949   (   87796 Kb)
+      Commit limit:        36256   (  145024 Kb)</code></pre>
+<p>All memory use is listed in pages and in kilobytes. The most useful information in this display is the following:</p>
+<table>
+<tr>
+<th>Parameter</th>
+<th>Meaning</th>
+</tr>
+<tr>
+<td>
+<p><b>
+        physical memory</b></p>
+</td>
+<td>
+<p>Total physical memory in the system.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+        available pages</b></p>
+</td>
+<td>
+<p>Number of pages of memory available on the system, both virtual and physical.  </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+        nonpaged pool usage</b></p>
+</td>
+<td>
+<p>The amount of pages allocated to the nonpaged pool. The nonpaged pool is memory that cannot be swapped out to the paging file, so it must always occupy physical memory. If this number is too large, this is usually an indication that there is a memory leak somewhere in the system.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!vm%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

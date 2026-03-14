@@ -1,0 +1,57 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Starting the Debugging Session"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Starting the Debugging Session</title>
+
+<meta name="MS-HAID" content="r05_use_start_0f22034f-a032-4d16-8fac-5c22cf5d766f.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.starting_the_debugging_session"></a>Starting the Debugging Session</h1>
+</div>
+<h2><a id="ddk_opening_a_crash_dump_dbg"></a><a id="DDK_OPENING_A_CRASH_DUMP_DBG"></a></h2>
+<p>In this documentation of how to <a href="controlling_the_user_mode_debugger_from_the_kernel_debugger.htm">control user-mode debugging from the kernel debugger</a>, <i>target application</i> refers to the user-mode application that is being debugged, <i>target computer</i> refers to the computer that contains the target application and the NTSD or CDB process, and <i>host computer</i> refers to the computer that contains the kernel debugger.</p>
+<p>To begin using this technique, you must do the following. You can do steps 1 and 2 in either order.</p>
+<ol>
+<li>
+<p>Start NTSD or CDB on the target computer, with the -d command-line option. </p>
+<p>For example, you can attach to a running process by using the following syntax.</p>
+<p><b>ntsd -d [-y </b><i>UserSymbolPath</i><b>] -p </b><i>PID</i></p>
+<p>Or, you can start a new process as the target by using the following syntax.</p>
+<p><b>ntsd -d [-y </b><i>UserSymbolPath</i><b>] </b><i>ApplicationName</i></p>
+<p>If you are installing this as a postmortem debugger, you would use the following syntax.</p>
+<p><b>ntsd -d [-y </b><i>UserSymbolPath</i><b>]</b></p>
+<p>For more information about this step, see <a href="debugging_a_user-mode_process_using_cdb.htm">Debugging a User-Mode Process Using CDB</a>.</p>
+</li>
+<li>
+<p>Start WinDbg or KD on the host computer, as if you were going to debug the target computer, but do not actually break in to the target computer.  To use WinDbg, use the following syntax.</p>
+<p><b>windbg [-y </b><i>KernelSymbolPath</i><b>] [-k </b><i>ConnectionOptions</i><b>]</b></p>
+<p>For more information about this step, see <a href="performing_kernel-mode_debugging_using_windbg.htm">Live Kernel-Mode Debugging Using WinDbg</a>.</p>
+<div class="alert"><b>Note</b>  If you use WinDbg as the kernel debugger, many of the familiar features of WinDbg are not available in this scenario. For example, you cannot use the Locals window, the Disassembly window, or the Call Stack window, and you cannot step through source code. This is because WinDbg is only acting as a viewer for the debugger (NTSD or CDB) running on the target computer.</div>
+<div> </div>
+</li>
+<li>
+<p>If you have not set the user-mode symbol path, set it from the Input&gt; prompt. If you have not set the kernel-mode symbol path, set it from the kd&gt; prompt. For information on how to access these prompts and to switch between modes, see <a href="switching_modes.htm">Switching Modes</a>. </p>
+</li>
+</ol>
+<p>If you use CDB, the Command Prompt window that is associated with CDB remains locked and unavailable while debugging continues. If you use NTSD, no additional window is created, even though NTSD has a process ID associated with it on the target computer.</p>
+<p>If you want to run the user-mode debugger from the kernel debugger while also using it as a debugging server, see <a href="combining_this_method_with_remote_debugging.htm">Combining This Method with Remote Debugging</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Starting the Debugging Session%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Debugging the Service Application Automatically"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Debugging the Service Application Automatically</title>
+
+<meta name="MS-HAID" content="t13_advanced_878afdbd-18d3-4564-88c3-45ffb9ba1a0b.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.debugging_the_service_application_automatically"></a>Debugging the Service Application Automatically</h1>
+</div>
+<p>A debugger can be launched automatically when the service application starts up. Alternatively, it can be launched automatically when the service application encounters an exception or executes a <b>DebugBreak</b> command. If you have chosen one of these methods, this topic explains how to proceed. If you are not sure which method to choose, see <a href="choosing_the_best_method.htm">Choosing the Best Method</a>.</p>
+<p>Then use the following procedure:</p>
+<ol>
+<li>Do one of the following preparatory steps:<ul>
+<li>If you plan to debug the service application from the very beginning, including its initialization code, follow the procedure described in Enabling the Debugging of the Initialization Code.  Alternatively, if you want the service application to break into the debugger when it crashes or encounters an exception, follow the procedure described in Enabling the Service Application to Break Into the Debugger. </li>
+<li>To assure that the service application will allow the debugger to run properly, perform the procedure described in <a href="preparing_to_debug_the_service_application.htm#adjusting_the_service_application_timeout">Adjusting the Service Application Timeout</a>. </li>
+<li>If the service is combined with other services in a single SvcHost process, perform the procedure described in Isolating the Service. </li>
+</ul>
+</li>
+<li>If the service is already running, you must restart it for these changes to take effect.  We recommend that you restart Windows itself, in order to remove any effects of the running service.  If you do not want to restart Windows, use the following commands, where <i>ServiceName</i> is the name of the service:<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>net stop ServiceName 
+net start ServiceName </pre>
+</td>
+</tr>
+</table></span></div>
+</li>
+<li>
+<p>If you have chosen to debug the service application's initialization code, when the service starts, the debugger is launched and attaches to the service application. </p>
+<p>If you have chosen to let the debugger be triggered by an exception, the service application executes normally until it encounters an exception or executes a <b>DebugBreak</b> function. At this point, the debugger is launched and attaches to the service application. </p>
+</li>
+<li>The next step depends on the debugger command line you specified during step 1:<ul>
+<li>If you specified a debugger without any remoting options, this debugger is launched and its window becomes visible. </li>
+<li>If you specified NTSD with the -server and -noio options, NTSD is launched without a console window. You can then connect to the debugging session from another computer by starting any user-mode debugger with the -remote parameter. For instructions, see <a href="activating_a_debugging_client.htm"><b>Activating a Debugging Client</b></a>. </li>
+<li>If you specified NTSD with the -d option, NTSD is launched without a console window. You can then connect to the debugging session by using kernel debugger running on another computer.  For instructions, see <a href="controlling_the_user_mode_debugger_from_the_kernel_debugger.htm">Controlling the User-Mode Debugger from the Kernel Debugger</a>. </li>
+<li>If you specified NTSD with the -ddefer and -server options, NTSD is launched without a console window. You can then connect to the debugging session by using both a kernel debugger and a user-mode remote debugger, running on a different computer than the service (but possibly the same computer as each other).  For instructions, see <a href="combining_this_method_with_remote_debugging.htm">Combining This Method with Remote Debugging</a>. </li>
+</ul>
+</li>
+<li>
+<p>When the debugger starts, the service pauses at the initial process breakpoint, the exception, or the <b>DebugBreak</b> command.  This enables you to examine the current state of the service application, set breakpoints, and make any other desired configuration choices.</p>
+</li>
+<li>
+<p>Use <a href="g__go_.htm"><b>g (Go)</b></a> or another execution command to resume the execution of the service application.</p>
+</li>
+</ol>
+<h2><a id="related_topics"></a>Related topics</h2>
+<dl>
+<dt><a href="http://go.microsoft.com/fwlink/p/?linkid=124229">DebugBreak function</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Debugging the Service Application Automatically%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,166 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The EXT_TDOP enumeration is used in the Operation member of the EXT_TYPED_DATA structure to specify which suboperation the DEBUG_REQUEST_EXT_TYPED_DATA_ANSI Request operation will perform."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>EXT_TDOP enumeration</title>
+
+<meta name="MS-HAID" content="Structures_77246150-309c-4646-82b2-ba9c75d9a2d4.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.ext_tdop"></a>EXT_TDOP enumeration</h1>
+</div>
+<p>The EXT_TDOP enumeration is used in the <b>Operation</b> member of the <a href="ext_typed_data.htm"><b>EXT_TYPED_DATA</b></a> structure to specify which suboperation the <a href="debug_request_ext_typed_data_ansi.htm"><b>DEBUG_REQUEST_EXT_TYPED_DATA_ANSI</b></a><a href="request.htm"><b> Request</b></a> operation will perform.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>typedef enum _EXT_TDOP { 
+  EXT_TDOP_COPY,
+  EXT_TDOP_RELEASE,
+  EXT_TDOP_SET_FROM_EXPR,
+   EXT_TDOP_SET_FROM_U64_EXPR,
+  EXT_TDOP_GET_FIELD,
+  EXT_TDOP_EVALUATE,
+  EXT_TDOP_GET_TYPE_NAME,
+  EXT_TDOP_OUTPUT_TYPE_NAME,
+  EXT_TDOP_OUTPUT_SIMPLE_VALUE,
+  EXT_TDOP_OUTPUT_FULL_VALUE,
+  EXT_TDOP_HAS_FIELD,
+  EXT_TDOP_GET_FIELD_OFFSET,
+  EXT_TDOP_GET_ARRAY_ELEMENT,
+  EXT_TDOP_GET_DEREFERENCE,
+  EXT_TDOP_GET_TYPE_SIZE,
+  EXT_TDOP_OUTPUT_TYPE_DEFINITION,
+  EXT_TDOP_GET_POINTER_TO,
+  EXT_TDOP_SET_FROM_TYPE_ID_AND_U64,
+  EXT_TDOP_SET_PTR_FROM_TYPE_ID_AND_U64,
+  EXT_TDOP_COUNT
+} EXT_TDOP;</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Constants</h2>
+<dl>
+<dt><a id="EXT_TDOP_COPY"></a><a id="ext_tdop_copy"></a><b>EXT_TDOP_COPY</b></dt>
+<dd>
+<p>Makes a copy of a typed data description.</p>
+</dd>
+<dt><a id="EXT_TDOP_RELEASE"></a><a id="ext_tdop_release"></a><b>EXT_TDOP_RELEASE</b></dt>
+<dd>
+<p>Releases a typed data description.</p>
+</dd>
+<dt><a id="EXT_TDOP_SET_FROM_EXPR"></a><a id="ext_tdop_set_from_expr"></a><b>EXT_TDOP_SET_FROM_EXPR</b></dt>
+<dd>
+<p>Returns the value of an expression.</p>
+</dd>
+<dt><a id="_EXT_TDOP_SET_FROM_U64_EXPR"></a><a id="_ext_tdop_set_from_u64_expr"></a><b> EXT_TDOP_SET_FROM_U64_EXPR</b></dt>
+<dd>
+<p>Returns the value of an expression. An optional address can be provided as a parameter to the expression.</p>
+</dd>
+<dt><a id="EXT_TDOP_GET_FIELD"></a><a id="ext_tdop_get_field"></a><b>EXT_TDOP_GET_FIELD</b></dt>
+<dd>
+<p>Returns a member of a structure.</p>
+</dd>
+<dt><a id="EXT_TDOP_EVALUATE"></a><a id="ext_tdop_evaluate"></a><b>EXT_TDOP_EVALUATE</b></dt>
+<dd>
+<p>Returns the value of an expression. An optional value can be provided as a parameter to the expression.</p>
+</dd>
+<dt><a id="EXT_TDOP_GET_TYPE_NAME"></a><a id="ext_tdop_get_type_name"></a><b>EXT_TDOP_GET_TYPE_NAME</b></dt>
+<dd>
+<p>Returns the type name for typed data.</p>
+</dd>
+<dt><a id="EXT_TDOP_OUTPUT_TYPE_NAME"></a><a id="ext_tdop_output_type_name"></a><b>EXT_TDOP_OUTPUT_TYPE_NAME</b></dt>
+<dd>
+<p>Prints the type name for typed data.</p>
+</dd>
+<dt><a id="EXT_TDOP_OUTPUT_SIMPLE_VALUE"></a><a id="ext_tdop_output_simple_value"></a><b>EXT_TDOP_OUTPUT_SIMPLE_VALUE</b></dt>
+<dd>
+<p>Prints the value of typed data.</p>
+</dd>
+<dt><a id="EXT_TDOP_OUTPUT_FULL_VALUE"></a><a id="ext_tdop_output_full_value"></a><b>EXT_TDOP_OUTPUT_FULL_VALUE</b></dt>
+<dd>
+<p>Prints the type and value for typed data.</p>
+</dd>
+<dt><a id="EXT_TDOP_HAS_FIELD"></a><a id="ext_tdop_has_field"></a><b>EXT_TDOP_HAS_FIELD</b></dt>
+<dd>
+<p>Determines whether a structure contains a specified member.</p>
+</dd>
+<dt><a id="EXT_TDOP_GET_FIELD_OFFSET"></a><a id="ext_tdop_get_field_offset"></a><b>EXT_TDOP_GET_FIELD_OFFSET</b></dt>
+<dd>
+<p>Returns the offset of a member within a structure.</p>
+</dd>
+<dt><a id="EXT_TDOP_GET_ARRAY_ELEMENT"></a><a id="ext_tdop_get_array_element"></a><b>EXT_TDOP_GET_ARRAY_ELEMENT</b></dt>
+<dd>
+<p>Returns an element from an array.</p>
+</dd>
+<dt><a id="EXT_TDOP_GET_DEREFERENCE"></a><a id="ext_tdop_get_dereference"></a><b>EXT_TDOP_GET_DEREFERENCE</b></dt>
+<dd>
+<p>Dereferences a pointer, returning the value it points to.</p>
+</dd>
+<dt><a id="EXT_TDOP_GET_TYPE_SIZE"></a><a id="ext_tdop_get_type_size"></a><b>EXT_TDOP_GET_TYPE_SIZE</b></dt>
+<dd>
+<p>Returns the size of the specified typed data.</p>
+</dd>
+<dt><a id="EXT_TDOP_OUTPUT_TYPE_DEFINITION"></a><a id="ext_tdop_output_type_definition"></a><b>EXT_TDOP_OUTPUT_TYPE_DEFINITION</b></dt>
+<dd>
+<p>Prints the definition of the type for the specified typed data.</p>
+</dd>
+<dt><a id="EXT_TDOP_GET_POINTER_TO"></a><a id="ext_tdop_get_pointer_to"></a><b>EXT_TDOP_GET_POINTER_TO</b></dt>
+<dd>
+<p>Returns a new typed data description that represents a pointer to specified typed data.</p>
+</dd>
+<dt><a id="EXT_TDOP_SET_FROM_TYPE_ID_AND_U64"></a><a id="ext_tdop_set_from_type_id_and_u64"></a><b>EXT_TDOP_SET_FROM_TYPE_ID_AND_U64</b></dt>
+<dd>
+<p>Creates a typed data description from a type and memory location.</p>
+</dd>
+<dt><a id="EXT_TDOP_SET_PTR_FROM_TYPE_ID_AND_U64"></a><a id="ext_tdop_set_ptr_from_type_id_and_u64"></a><b>EXT_TDOP_SET_PTR_FROM_TYPE_ID_AND_U64</b></dt>
+<dd>
+<p>Creates a typed data description representing a pointer to a specified memory location with specified type.</p>
+</dd>
+<dt><a id="EXT_TDOP_COUNT"></a><a id="ext_tdop_count"></a><b>EXT_TDOP_COUNT</b></dt>
+<dd>
+<p>Does not specify an operation. Instead, it represents the number of suboperations defined in the EXT_TDOP enumeration.
+</p>
+</dd>
+</dl>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>WdbgExts.h (include WdbgExts.h or DbgEng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="ext_typed_data.htm"><b>EXT_TYPED_DATA</b></a></dt>
+<dt><a href="debug_request_ext_typed_data_ansi.htm"><b>DEBUG_REQUEST_EXT_TYPED_DATA_ANSI</b></a></dt>
+<dt><a href="request.htm"><b>Request</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20EXT_TDOP enumeration%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,60 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !usbkd.usbfaildata command displays the failure data (if any) stored for a USB device."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!usbkd.usbfaildata</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._usbkd_usbfaildata"></a>!usbkd.usbfaildata</h1>
+</div>
+<p>The  <b>!usbkd.usbfaildata</b> command displays the failure data (if any) stored for a USB device.</p>
+<pre class="syntax"><b>!usbkd.usbfaildata </b><i>PDO</i></pre>
+<h2><a id="ddk__devobj_dbg"></a><a id="DDK__DEVOBJ_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______PDO______"></a><a id="_______pdo______"></a>       <i>PDO</i>      </dt>
+<dd>
+<p>Address of the physical device object (PDO) of a device that is connected to a USB hub.</p>
+</dd>
+</dl>
+<h2><a id="DLL"></a><a id="dll"></a>DLL</h2>
+<p>Usbkd.dll
+     </p>
+<h2>Examples</h2>
+<p>Here is one way to find the address of the PDO of a USB device. Enter <a href="_usbkd_usb2tree.htm"><b>!usbkd.usb2tree</b></a>.</p>
+<pre class="syntax" xml:space="preserve"><code> kd&gt; !usbkd.usb2tree
+...
+2)!ehci_info ffffe00001ca11a0 !devobj ffffe00001ca1050 PCI: VendorId 8086 DeviceId 293c RevisionId 0002 
+    RootHub !hub2_info ffffe000023201a0 !devstack ffffe00002320050
+        Port 1: !port2_info ffffe000021bf000 
+        Port 2: !port2_info ffffe000021bfb40 
+        Port 3: !port2_info ffffe000021c0680 !devstack ffffe00007c882a0
+...</code></pre>
+<p>In the preceding output, the address of the PDO appears as the argument of the suggested command <b>!devstack ffffe00007c882a0</b>.</p>
+<p>Now pass the address of the PDO to <b>!usbkd.usbfaildata</b>.</p>
+<div class="code"></div>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="usb_2_0_extensions.htm">USB 2.0 Debugger Extensions</a></dt>
+<dt><a href="http://go.microsoft.com/fwlink/p?LinkID=227351">Universal Serial Bus (USB) Drivers</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!usbkd.usbfaildata%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,91 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Robots" content="noindex, nofollow"/>
+<meta name="Description" content="Glossary page"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>I</title>
+
+<meta name="MS-HAID" content="dbg_glossary_48d73de7-50e9-4e41-8a7f-0207d5301620.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.i"></a>I</h1>
+</div>
+<dl>
+<dt><a id="i_o_request_packet__irp_"></a><a id="I_O_REQUEST_PACKET__IRP_"></a><b>I/O Request Packet (IRP)</b></dt>
+<dd>
+<p>A data structure used to represent an I/O request and control its processing. An IRP structure consists of a header and one or more stack locations.</p>
+</dd>
+<dt><a id="image"></a><a id="IMAGE"></a><b>image</b></dt>
+<dd>
+<p>An executable, DLL, or driver that Windows has loaded as part of a user-mode process or the Windows kernel.</p>
+<p>See also image file.
+</p>
+</dd>
+<dt><a id="image_file"></a><a id="IMAGE_FILE"></a><b>image file</b></dt>
+<dd>
+<p>The file from which an image was loaded.</p>
+</dd>
+<dt><a id="implicit_process"></a><a id="IMPLICIT_PROCESS"></a><b>implicit process</b></dt>
+<dd>
+<p>In kernel-mode debugging, the process used to determine which virtual address space to use when performing virtual to physical address translation.  When an event occurs, the implicit process is set to the event process.</p>
+<p>See also implicit thread.
+</p>
+<p>For more information, see <a href="threads_and_processes.htm">Threads and Processes</a>.
+</p>
+</dd>
+<dt><a id="implicit_thread"></a><a id="IMPLICIT_THREAD"></a><b>implicit thread</b></dt>
+<dd>
+<p>In kernel-mode debugging, the thread used to determine some of the target's registers, including frame offset and instruction offset.  When an event occurs, the implicit thread is set to the event thread.</p>
+</dd>
+<dt><a id="inaccessible"></a><a id="INACCESSIBLE"></a><b>inaccessible</b></dt>
+<dd>
+<p>A debugging session is <i>inaccessible</i> when all the targets are executing.</p>
+</dd>
+<dt><a id="initial_breakpoint"></a><a id="INITIAL_BREAKPOINT"></a><b>initial breakpoint</b></dt>
+<dd>
+<p>A breakpoint that automatically occurs near the beginning of a debugging session, after a reboot, or after a target application is restarted.</p>
+<p>For more information, see <a href="using_breakpoints.htm">Using Breakpoints</a>.
+</p>
+</dd>
+<dt><a id="input_callback_objects"></a><a id="INPUT_CALLBACK_OBJECTS"></a><b>input callback objects</b></dt>
+<dd>
+<p>Instances of the <a href="idebuginputcallbacks.htm">IDebugInputCallbacks</a> interface which have been registered with a client.  Whenever the debugger engine requires input it asks the input callbacks to provide it.</p>
+<p>See also output callbacks.
+</p>
+<p>For more information, see <a href="using_amli_debugger_commands.htm">Using AMLI Debugger Commands</a>.
+</p>
+</dd>
+<dt><a id="input_callbacks"></a><a id="INPUT_CALLBACKS"></a><b>input callbacks</b></dt>
+<dd>
+<p>
+     See
+     input callback objects.</p>
+</dd>
+<dt><a id="interrupt"></a><a id="INTERRUPT"></a><b>interrupt</b></dt>
+<dd>
+<p>A condition that disrupts normal command execution and transfers control to an interrupt handler. I/O devices requiring service from the processor usually initiate interrupts. </p>
+</dd>
+<dt><a id="interrupt_request_level__irql_"></a><a id="INTERRUPT_REQUEST_LEVEL__IRQL_"></a><b>Interrupt Request Level (IRQL)</b></dt>
+<dd>
+<p>The priority ranking of an interrupt. Each processor has an IRQL setting that threads can raise or lower. Interrupts that occur at or below the processor's IRQL setting are masked and will not interfere with the current operation. Interrupts that occur above the processor's IRQL setting take precedence over the current operation.</p>
+</dd>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20I%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

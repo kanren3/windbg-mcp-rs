@@ -1,0 +1,113 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !wdfkd.wdfpoolusage extension displays pool usage information for a specified driver, if the Kernel-Mode Driver Framework (KMDF) verifier is enabled for the driver."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!wdfkd.wdfpoolusage</title>
+
+<meta name="MS-HAID" content="r33~c_exts_WDF_b6cb341c-1a65-43c4-b71b-0bb237134ed5.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._wdfkd_wdfpoolusage"></a>!wdfkd.wdfpoolusage</h1>
+</div>
+<p>The <b>!wdfkd.wdfpoolusage</b> extension displays pool usage information for a specified driver, if the Kernel-Mode Driver Framework (KMDF) verifier is enabled for the driver.  </p>
+<pre class="syntax"><b>!wdfkd.wdfpoolusage </b>[<i>DriverName</i> [<i>SearchAddress</i>] [<i>Flags</i>]]]</pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______DriverName______"></a><a id="_______drivername______"></a><a id="_______DRIVERNAME______"></a>       <i>DriverName</i>      </dt>
+<dd>
+<p>Optional. The name of a driver. <i>DriverName</i> must not include the .sys file name extension.</p>
+</dd>
+<dt><a id="_______SearchAddress______"></a><a id="_______searchaddress______"></a><a id="_______SEARCHADDRESS______"></a>       <i>SearchAddress</i>      </dt>
+<dd>
+<p>Optional. A string that represents a memory address. The pool entry that contains <i>SearchAddress</i> is displayed. If <i>SearchAddress</i> is 0 or omitted, all of the driver's pool entries are displayed.  </p>
+</dd>
+<dt><a id="_______Flags______"></a><a id="_______flags______"></a><a id="_______FLAGS______"></a>       <i>Flags</i>      </dt>
+<dd>
+<p>Optional. The kind of information to display.  This parameter is valid only if <i>SearchAddress</i> is nonzero. <i>Flags</i> can be any combination of the following bits. The default value is 0x0.</p>
+<p></p>
+<dl>
+<dt><a id="Bit_0__0x1_"></a><a id="bit_0__0x1_"></a><a id="BIT_0__0X1_"></a>Bit 0 (0x1)</dt>
+<dd>
+<p>Displays verbose output. Multiple lines are displayed for each. If this flag is not set, the information about an allocation is displayed on one line.</p>
+</dd>
+<dt><a id="Bit_1__0x2_"></a><a id="bit_1__0x2_"></a><a id="BIT_1__0X2_"></a>Bit 1 (0x2)</dt>
+<dd>
+<p>Displays internal type information for each handle. </p>
+</dd>
+<dt><a id="Bit_2__0x4_"></a><a id="bit_2__0x4_"></a><a id="BIT_2__0X4_"></a>Bit 2 (0x4)</dt>
+<dd>
+<p>Displays the caller of each pool entry. </p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<p>
+       Wdfkd.dll
+      </p>
+<h3><a id="Frameworks"></a><a id="frameworks"></a><a id="FRAMEWORKS"></a>Frameworks</h3>
+<p>
+       KMDF 1, UMDF 2</p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information, see <a href="kernel_mode_driver_framework_debugging.htm">Kernel-Mode Driver Framework Debugging</a>.</p>
+<h2>Remarks</h2>
+<p>If you omit the <i>DriverName</i> parameter, the default driver is used. You can display the default driver by using the <a href="_wdfkd_wdfgetdriver.htm"><b>!wdfkd.wdfgetdriver</b></a> extension; you can set the default driver by using the <a href="_wdfkd_wdfsetdriver.htm"><b>!wdfkd.wdfsetdriver</b></a> extension.  </p>
+<p>The following example shows the output from the <b>!wdfpoolusage</b> extension when no pool allocation is marked and the <i>Flags</i> value is set to 0.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; !wdfpoolusage wdfrawbusenumtest 0 0 
+-----------------------------------
+FxDriverGlobals 83b7af18 pool stats
+-----------------------------------
+Driver Tag: 'RawB'
+15126 NonPaged Bytes, 548 Paged Bytes
+94 NonPaged Allocations, 10 Paged Allocations
+15610 PeakNonPaged Bytes, 752 PeakPaged Bytes
+100 PeakNonPaged Allocations, 14 PeakPaged Allocations
+
+pool 82dbae00, Size  512 Tag 'RawB', NonPaged, Caller:  Wdf01000!FxVerifierLock::AllocateThreadTable+5d</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The following example shows the output from <b>!wdfpoolusage</b> that appears when the value of <i>Flags</i> is 1. (Note that the ellipsis (...) on the second line indicates the omission of some output that is the same as that shown in the preceding example.)</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; !wdfpoolusage wdfrawbusenumtest 0 1 
+. . . 
+100 PeakNonPaged Allocations, 14 PeakPaged Allocations
+
+Client alloc starts at 82dbae00
+Size  512 Tag 'RawB'
+NonPaged (0x0)
+Caller:  Wdf01000!FxVerifierLock::AllocateThreadTable+5d</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!wdfkd.wdfpoolusage%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

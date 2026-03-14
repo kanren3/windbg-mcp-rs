@@ -1,0 +1,82 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !vad_reload extension reloads the user-mode modules for a specified process by using the virtual address descriptors (VADs) of that process."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!vad_reload</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._vad_reload"></a>!vad_reload</h1>
+</div>
+<p>The <b>!vad_reload</b> extension reloads the user-mode modules for a specified process by using the virtual address descriptors (VADs) of that process.</p>
+<pre class="syntax"><b>!vad_reload </b><i>Process</i></pre>
+<h2><a id="ddk__vad_dbg"></a><a id="DDK__VAD_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Process______"></a><a id="_______process______"></a><a id="_______PROCESS______"></a>       <i>Process</i>      </dt>
+<dd>
+<p>Specifies the hexadecimal address of the process for which the modules will be loaded.</p>
+</dd>
+</dl>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For information about VADs, see <i>Microsoft Windows Internals</i>, by Mark Russinovich and David Solomon. (This book may not be available in some languages and 
+
+countries.)
+ </p>
+<h2>Remarks</h2>
+<p>You can use the <a href="_process.htm"><b>!process</b></a> extension to find the address of a process.</p>
+<p>Here is an example of how to find an address and use it in the <b>!vad_reload</b> command.</p>
+<pre class="syntax" xml:space="preserve"><code>3: kd&gt; !process 0 0
+. . .
+PROCESS fffffa8007d54450
+    SessionId: 1  Cid: 115c    Peb: 7ffffef6000  ParentCid: 0c58
+    DirBase: 111bc3000  ObjectTable: fffff8a006ae0960  HandleCount: 229.
+    Image: SearchProtocolHost.exe
+. . .
+3: kd&gt; !vad_reload fffffa8007d54450
+fffffa80`04f5e8b0: VAD maps 00000000`6c230000 - 00000000`6c26bfff, file cscobj.dll
+fffffa80`04e8f890: VAD maps 00000000`6ef90000 - 00000000`6f04afff, file mssvp.dll
+fffffa80`07cbb010: VAD maps 00000000`6f910000 - 00000000`6faf5fff, file tquery.dll
+fffffa80`08c1f2a0: VAD maps 00000000`6fb80000 - 00000000`6fb9bfff, file mssprxy.dll
+fffffa80`07dce8b0: VAD maps 00000000`6fba0000 - 00000000`6fba7fff, file msshooks.dll
+fffffa80`04fd2e70: VAD maps 00000000`72a50000 - 00000000`72a6cfff, file userenv.dll
+. . .
+</code></pre>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>DLL</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Kdextx86.dll (Windows 2000); </dt>
+<dt>Kdexts.dll (Windows XP and later)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="_process.htm"><b>!process</b></a></dt>
+<dt><a href="_vad.htm"><b>!vad</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!vad_reload%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

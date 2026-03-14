@@ -1,0 +1,110 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !running extension displays a list of running threads on all processors of the target computer."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!running</title>
+
+<meta name="MS-HAID" content="r29_exts_kernel_Q_3a20d5ae-b6e7-44d5-a343-8a67f36ad66a.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._running"></a>!running</h1>
+</div>
+<p>The <b>!running</b> extension displays a list of running threads on all processors of the target computer.</p>
+<pre class="syntax"><b>!running </b>[<b>-i</b>]<b> </b>[<b>-t</b>]</pre>
+<h2><a id="ddk__running_dbg"></a><a id="DDK__RUNNING_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______-i______"></a><a id="_______-I______"></a>       <b>-i</b>      </dt>
+<dd>
+<p>Causes the display to include idle processors as well.</p>
+</dd>
+<dt><a id="_______-t______"></a><a id="_______-T______"></a>       <b>-t</b>      </dt>
+<dd>
+<p>Causes a stack trace to be displayed for each processor.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000</b></p>
+</td>
+<td>
+<p>Unavailable </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Kdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about debugging multiprocessor computers, see <a href="multiprocessor_syntax.htm">Multiprocessor Syntax</a>.</p>
+<h2>Remarks</h2>
+<p>With no options, <b>!running</b> will display the affinity of all active processors and all idle processors. For all active processors, it will also display the current and next thread fields from the process control block (PRCB) and the state of the 16 built-in queued spin locks.</p>
+<p>Here is an example from a multiprocessor Itanium system:</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !running
+ 
+System Processors 3 (affinity mask)
+ Idle Processors 0
+ 
+     Prcb              Current           Next
+  0  e0000000818f8000  e0000000818f9e50  e0000000866f12f0  ................
+ 1  e000000086f16010  e00000008620ebe0  e000000086eddbc0  .O..............</code></pre>
+<p>The 16 characters at the end of each line indicate the built-in queued spin locks (the LockQueue entries in the PRCB). A period ( . ) indicates that the lock is not in use, <b>O</b> means the lock is owned by this processor, and <b>W</b> means the processor is queued for the lock. To see more information about the spin lock queue, use <a href="_qlocks.htm"><b>!qlocks</b></a>.</p>
+<p>Here is an example that shows active and idle processors, along with their stack traces:</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !running -it
+ 
+System Processors f (affinity mask)
+  Idle Processors f
+All processors idle.
+ 
+     Prcb      Current   Next
+  0  ffdff120  805495a0            ................
+ 
+ChildEBP RetAddr
+8053e3f0 805329c2 nt!RtlpBreakWithStatusInstruction
+8053e3f0 80533464 nt!_KeUpdateSystemTime+0x126
+ffdff980 ffdff980 nt!KiIdleLoop+0x14
+ 
+ 1  f87e0120  f87e2e60            ................
+ 
+ChildEBP RetAddr
+f87e0980 f87e0980 nt!KiIdleLoop+0x14
+ 
+ 2  f87f0120  f87f2e60            ................
+ 
+ChildEBP RetAddr
+f87f0980 f87f0980 nt!KiIdleLoop+0x14
+ 
+  3  f8800120  f8802e60            ................
+ 
+ChildEBP RetAddr
+f8800980 f8800980 nt!KiIdleLoop+0x14</code></pre>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!running%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

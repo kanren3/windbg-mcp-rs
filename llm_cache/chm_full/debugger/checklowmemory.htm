@@ -1,0 +1,100 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The CheckLowMemory method checks for memory corruption in the low 4 GB of memory."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IDebugDataSpaces::CheckLowMemory method</title>
+
+<meta name="MS-HAID" content="IDebugDataSpaces_6682f39e-295a-4dae-b8a3-d83b1d5e41be.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.checklowmemory"></a>IDebugDataSpaces::CheckLowMemory method</h1>
+</div>
+<p>The <b>CheckLowMemory</b> method checks for memory corruption in the low 4 GB of memory.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>HRESULT CheckLowMemory();</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Parameters</h2>
+<p>This method has no parameters.</p>
+<h2>Return value</h2>
+<table>
+<tr>
+<th>Return code</th>
+<th>Description</th>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>S_OK</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>No corruption was found.</p>
+</td>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>FACILITY_NT_BIT |<i>Page</i></b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>Corruption was found on the memory page <i>Page</i>.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>This method can also return error values.  See <a href="hresult_values.htm"><b>Return Values</b></a> for more details.</p>
+<h2>Remarks</h2>
+<p>This method is only available in <a href="k.htm#kernel_mode_debugging"><i>kernel-mode debugging</i></a>, and is only useful when the <a href="k.htm#kernel"><i>kernel</i></a> was booted using the <b>/nolowmem</b> option.</p>
+<p>When the kernel is booted with the <b>/nolowmem</b> option, the kernel, drivers, operating system and applications are loaded in memory above 4 GB, while the low 4 GB of memory is filled with a unique pattern.  The <b>CheckLowMemory</b> method checks this pattern for corruption.</p>
+<p>This may be used to verify that a driver behaves well when using physical addresses greater than 32 bits in length.  See <i>Physical Address Extension (PAE)</i>, <b>/pae</b>, and <b>/nolowmem</b> in the Windows Driver Kit.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Target platform</p>
+</th>
+<td width="70%">
+<dl>
+<dt></dt>
+</dl>
+</td>
+</tr>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Dbgeng.h (include Dbgeng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IDebugDataSpaces::CheckLowMemory method%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

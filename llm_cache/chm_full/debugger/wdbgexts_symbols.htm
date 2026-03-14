@@ -1,0 +1,41 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="WdbgExts Symbols"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>WdbgExts Symbols</title>
+
+<meta name="MS-HAID" content="WdbgExts_DG_0a03ffbe-f2ac-4a7c-a20a-435bba838a59.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.wdbgexts_symbols"></a>WdbgExts Symbols</h1>
+</div>
+<p>This topic provides a brief overview of how symbols can be manipulated using the WdbgExts API.  For an overview of using symbols in the <a href="introduction.htm#debugger_engine">debugger engine</a>, see <a href="symbols.htm">Symbols</a> in the <a href="debugger_engine_overview.htm">Debugger Engine Overview</a> section of this documentation.</p>
+<p>To evaluate a MASM or C++ expression, use the functions <a href="getexpression.htm"><b>GetExpression</b></a> or <a href="getexpressionex.htm"><b>GetExpressionEx</b></a>.</p>
+<p>To read the value of a member in a structure, use the <a href="getfielddata.htm"><b>GetFieldData</b></a> function or, if, the member contains a primitive value, <a href="getfieldvalue.htm"><b>GetFieldValue</b></a> can be used.  To determine the size of an instance of a symbol in the target's memory, use the <a href="gettypesize.htm"><b>GetTypeSize</b></a> function.</p>
+<p>To locate the offset of a member in a structure, use the <a href="getfieldoffset.htm"><b>GetFieldOffset</b></a> function.</p>
+<p>To read multiple members in a structure, first use the <a href="inittyperead.htm"><b>InitTypeRead</b></a> function to initialize the structure.  Then, you can use the <a href="readfield.htm"><b>ReadField</b></a> function to read the members with size less than or equal to 8 bytes one at a time.  For structure addresses in physical memory, use the <a href="inittypereadphysical.htm"><b>InitTypeReadPhysical</b></a> function instead of <b>InitTypeRead</b>.  </p>
+<p>There are two functions that  you can use for iterating over linked lists.  For doubly-linked lists that use the LIST_ENTRY32 or LIST_ENTRY64 structures, the function <a href="readlistentry.htm"><b>ReadListEntry</b></a> can be used to find the next and previous entries.  The function <a href="listtype.htm"><b>ListType</b></a> will iterate over all the entries in a linked list and call a callback function for each entry.</p>
+<p>To locate a symbol near a specified address in the target's memory, use the <a href="getsymbol.htm"><b>GetSymbol</b></a> function.</p>
+<p>To delete all the symbol information from the debugger engine's cache, use the <a href="reloadsymbols.htm"><b>ReloadSymbols</b></a> function.  To read or change the symbol path, which is used to search for symbol files, use the <a href="getsetsympath.htm"><b>GetSetSympath</b></a> function.</p>
+<p>Almost all symbol operations provided by the debugger engine can be executed using the <a href="ioctl.htm"><b>Ioctl</b></a> operation <a href="ig_dump_symbol_info.htm"><b>IG_DUMP_SYMBOL_INFO</b></a>.  However, while being a very flexible function, it is advanced and we recommend that you use the above simpler functions where applicable.</p>
+<h3><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For a more powerful symbols API, see <a href="using_symbols.htm">Using Symbols</a> in the <a href="using_the_debugger_engine_api.htm">Using the Debugger Engine API</a> section of this documentation.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20WdbgExts Symbols%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

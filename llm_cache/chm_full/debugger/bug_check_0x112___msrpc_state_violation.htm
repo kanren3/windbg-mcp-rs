@@ -1,0 +1,224 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The MSRPC_STATE_VIOLATION bug check has a value of 0x00000112. This indicates that the Msrpc.sys driver has initiated a bug check."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0x112:  MSRPC_STATE_VIOLATION</title>
+
+<meta name="MS-HAID" content="t07_bugs_E0_ef91c445-e4fb-49d3-9f85-ca804ea708d4.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0x112___msrpc_state_violation"></a>Bug Check 0x112:  MSRPC_STATE_VIOLATION</h1>
+</div>
+<p>The MSRPC_STATE_VIOLATION bug check has a value of 0x00000112. This indicates that the Msrpc.sys driver has initiated a bug check.  </p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2>  MSRPC_STATE_VIOLATION Parameters</h2>
+<p>The following parameters are displayed on the blue screen. Parameters 1 and 2 are the only parameters of interest.  Parameter 1 indicates the state violation type; the value for Parameter 2 is determined by the value of Parameter 1.</p>
+<table>
+<tr>
+<th>Parameter 1</th>
+<th>Parameter 2</th>
+<th>Cause of Error</th>
+</tr>
+<tr>
+<td>
+<p>0x01</p>
+</td>
+<td>
+<p>The exception code </p>
+</td>
+<td>
+<p>A non-continuable exception was continued by the caller. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x02</p>
+</td>
+<td>
+<p>The error </p>
+</td>
+<td>
+<p>The advanced local procedure call (ALPC) returned an invalid error. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x03</p>
+</td>
+<td>
+<p>The session to the server </p>
+</td>
+<td>
+<p>The caller unloaded the Microsoft remote procedure call (MSRPC) driver while it was still in use.  It is likely that open binding handles remain.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x04 and</p>
+<p>0x05</p>
+</td>
+<td>
+<p>The session to the server </p>
+</td>
+<td>
+<p>An invalid close command was received from the ALPC. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x06</p>
+</td>
+<td>
+<p>The binding handle </p>
+</td>
+<td>
+<p>An attempt was made to bind a remote procedure call (RPC) handle a second time. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x07</p>
+</td>
+<td>
+<p>The binding handle</p>
+</td>
+<td>
+<p>An attempt was made to perform an operation on a binding handle that was not bound. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x08</p>
+</td>
+<td>
+<p>The binding handle </p>
+</td>
+<td>
+<p>An attempt was made to set security information on a binding handle that was already bound. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x09</p>
+</td>
+<td>
+<p>The binding handle </p>
+</td>
+<td>
+<p>An attempt was made to set an option on a binding handle that was already bound. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x0A</p>
+</td>
+<td>
+<p>The call object </p>
+</td>
+<td>
+<p>An attempt was made to cancel an invalid asynchronous remote procedure call.  </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x0B</p>
+</td>
+<td>
+<p>The call object</p>
+</td>
+<td>
+<p>An attempt was made to push on an asynchronous pipe call when it was not expected.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x0C and </p>
+<p>0x0E</p>
+</td>
+<td>
+<p>The pipe object </p>
+</td>
+<td>
+<p>An attempt was made to push on an asynchronous pipe without waiting for notification. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x0F</p>
+</td>
+<td>
+<p>The pipe object </p>
+</td>
+<td>
+<p>An attempt was made to synchronously terminate a pipe a second time. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x15</p>
+</td>
+<td>
+<p>The object closest to the error </p>
+</td>
+<td>
+<p>An RPC internal error occurred. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x16</p>
+</td>
+<td>
+<p>Reserved </p>
+</td>
+<td>
+<p>Two causally ordered calls were issued in an order that cannot be enforced by the RPC. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x17</p>
+</td>
+<td>
+<p>The call object </p>
+</td>
+<td>
+<p>A server manager routine did not unsubscribe from notifications prior to completing the call. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x18</p>
+</td>
+<td>
+<p>The async handle</p>
+</td>
+<td>
+<p>An invalid operation on the asynchronous handle occurred. </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Cause</h2>
+<p>The most common cause of this bug check is that the caller of the Msrpc.sys driver violated the state semantics for such a call.</p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

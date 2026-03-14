@@ -1,0 +1,48 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Debugging a Service Application"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Debugging a Service Application</title>
+
+<meta name="MS-HAID" content="t13_advanced_5c8fb529-d9f1-4f24-ae82-1d52a1d3d794.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.debugging_a_service_application"></a>Debugging a Service Application</h1>
+</div>
+<p>A <i>service</i>, also known as a <i>Windows service</i>, is a user-mode process designed to be started by Windows without human interaction. It is started automatically at system boot, or by an application that uses the service functions included in the Win32 API. A service can also be started by a human user through the Services control panel utility. Every service must conform to the interface rules of the service control manager (SCM).</p>
+<p>Each service is composed of three elements: a <i>service application</i>, a <i>service control program</i>, and the service control manager itself. Although a service application is sometimes (incorrectly) referred to as a "service," it is actually one of the three components that make up a service. The service application can contain almost any kind of user-mode code. The service control program controls when the service application starts and stops. The service control manager is part of Windows.</p>
+<p>The following sections describe how to debug a service application:</p>
+<dl>
+<dd>
+<p><a href="choosing_the_best_method.htm">Choosing the Best Method</a></p>
+</dd>
+<dd>
+<p><a href="preparing_to_debug_the_service_application.htm">Preparing to Debug the Service Application</a></p>
+</dd>
+<dd>
+<p><a href="debugging_the_service_application_automatically.htm">Debugging the Service Application Automatically</a></p>
+</dd>
+<dd>
+<p><a href="debugging_the_service_application_manually.htm">Debugging the Service Application Manually</a></p>
+</dd>
+</dl>
+<p>For an overview of services, service applications, and the service control manager, see <i>Microsoft Windows Internals: Microsoft Windows Server 2003, Windows XP, and Windows 2000</i> by David A. Solomon and Mark E. Russinovich (4th edition, Microsoft Press, 2005).</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Debugging a Service Application%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

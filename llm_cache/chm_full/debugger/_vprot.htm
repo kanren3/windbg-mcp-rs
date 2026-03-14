@@ -1,0 +1,90 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !vprot extension displays virtual memory protection information."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!vprot</title>
+
+<meta name="MS-HAID" content="r31_exts_user_43a1b87f-d7c7-44ae-b324-c54854ed9cad.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._vprot"></a>!vprot</h1>
+</div>
+<p>The <b>!vprot</b> extension displays virtual memory protection information.</p>
+<pre class="syntax"><b>!vprot </b>[<i>Address</i>]</pre>
+<h2><a id="ddk__vprot_dbg"></a><a id="DDK__VPROT_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Address______"></a><a id="_______address______"></a><a id="_______ADDRESS______"></a>       <i>Address</i>      </dt>
+<dd>
+<p>Specifies the hexadecimal address whose memory protection status is to be displayed.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Windows 2000</b></p>
+</td>
+<td>
+<p>
+<dl>
+<dt>
+          Uext.dll
+          </dt>
+<dt>Ntsdexts.dll
+          </dt>
+</dl>
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later</b></p>
+</td>
+<td>
+<p>
+          Uext.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>To view memory protection information for all memory ranges owned by the target process, use <a href="_vadump.htm"><b>!vadump</b></a>. For information about memory protection, see <i>Microsoft Windows Internals</i> by Mark Russinovich and David Solomon. (This book may not be available in some languages and 
+
+countries.)
+</p>
+<h2>Remarks</h2>
+<p>The <b>!vprot</b> extension command can be used for both live debugging and dump file debugging. </p>
+<p>Here is an example:</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; !vprot 30c191c
+BaseAddress: 030c1000
+AllocationBase: 030c0000
+AllocationProtect: 00000080 PAGE_EXECUTE_WRITECOPY
+RegionSize: 00011000
+State: 00001000 MEM_COMMIT
+Protect: 00000010 PAGE_EXECUTE
+Type: 01000000 MEM_IMAGE</code></pre>
+<p>In this display, the AllocationProtect line shows the default protection that the entire region was created with. Note that individual addresses within this region can have their protection altered after memory is allocated (for example, if <b>VirtualProtect</b> is called). The Protect line shows the actual protection for this specific address. The possible protection values are PAGE_NOACCESS, PAGE_READONLY, PAGE_READWRITE, PAGE_EXECUTE, PAGE_EXECUTE_READ, PAGE_EXECUTE_READWRITE, PAGE_WRITECOPY, PAGE_EXECUTE_WRITECOPY, and PAGE_GUARD.</p>
+<p>The State line also applies to the specific virtual address passed to <b>!vprot</b>. The possible state values are MEM_COMMIT, MEM_FREE, and MEM_RESERVE.</p>
+<p>The Type line shows the memory type. The possible values are MEM_IMAGE, MEM_MAPPED, and MEM_PRIVATE.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!vprot%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

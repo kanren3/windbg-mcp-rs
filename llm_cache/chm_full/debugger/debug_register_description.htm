@@ -1,0 +1,97 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The DEBUG_REGISTER_DESCRIPTION structure is returned by GetDescription to describe a processor's register."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>DEBUG_REGISTER_DESCRIPTION structure</title>
+
+<meta name="MS-HAID" content="Structures_a7dd005e-3383-4c58-8b01-fe2127d6bc20.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.debug_register_description"></a>DEBUG_REGISTER_DESCRIPTION structure</h1>
+</div>
+<p>The <b>DEBUG_REGISTER_DESCRIPTION</b> structure is returned by <a href="getdescription.htm"><b>GetDescription</b></a> to describe a processor's register.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>typedef struct _DEBUG_REGISTER_DESCRIPTION {
+  ULONG   Type;
+  ULONG   Flags;
+  ULONG   SubregMaster;
+  ULONG   SubregLength;
+  ULONG64 SubregMask;
+  ULONG   SubregShift;
+  ULONG   Reserved0;
+} DEBUG_REGISTER_DESCRIPTION, *PDEBUG_REGISTER_DESCRIPTION;</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Members</h2>
+<dl>
+<dt><b>Type</b></dt>
+<dd>
+<p>The type of value that this register holds.  The possible values are the same as for the <b>Type</b> field in the <a href="debug_value.htm"><b>DEBUG_VALUE</b></a> structure.</p>
+</dd>
+<dt><b>Flags</b></dt>
+<dd>
+<p>A bit field of flags for the register.  Currently, the only bit that can be set is DEBUG_REGISTER_SUB_REGISTER, which indicates that this register is a subregister.</p>
+</dd>
+<dt><b>SubregMaster</b></dt>
+<dd>
+<p>The index of the register of which this register is a sub-register.  This field is only used if the DEBUG_REGISTER_SUB_REGISTER bit is set in <b>Flags</b>; otherwise, it is set to zero.</p>
+</dd>
+<dt><b>SubregLength</b></dt>
+<dd>
+<p>The size, in bits, of this sub-register.  This field is only used if the DEBUG_REGISTER_SUB_REGISTER bit is set in <b>Flags</b>; otherwise, it is set to zero.</p>
+</dd>
+<dt><b>SubregMask</b></dt>
+<dd>
+<p>The bit mask that converts the register specified in <b>SubregMaster</b> into this sub-register.  This field is only used if the DEBUG_REGISTER_SUB_REGISTER bit is set in <b>Flags</b>; otherwise, it is set to zero.</p>
+</dd>
+<dt><b>SubregShift</b></dt>
+<dd>
+<p>The bit shift that converts the register specified in <b>SubregMaster</b> into this sub-register.  This field is only used if the DEBUG_REGISTER_SUB_REGISTER bit is set in <b>Flags</b>; otherwise, it is set to zero.</p>
+</dd>
+<dt><b>Reserved0</b></dt>
+<dd>
+<p>Reserved for system use.</p>
+</dd>
+</dl>
+<h2>Remarks</h2>
+<p>If this register is a subregister, the value of the full register can be turned into the value of the sub-register by first shifting <b>SubregShift</b> bits to the right and then combining the result with <b>SubregMask</b> using the bitwise-AND operator.  The size of the sub-register (<b>SubregLength</b>) is the number of bits set in <b>SubregMask</b>.</p>
+<p>For general information about registers, see <a href="registers.htm">Registers</a>.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>DbgEng.h (include DbgEng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20DEBUG_REGISTER_DESCRIPTION structure%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

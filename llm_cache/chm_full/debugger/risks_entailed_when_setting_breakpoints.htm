@@ -1,0 +1,62 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Risks Entailed When Setting Breakpoints"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Risks Entailed When Setting Breakpoints</title>
+
+<meta name="MS-HAID" content="r07_use_operation_f4ae2ad0-e56d-46fb-b14b-15235010513b.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.risks_entailed_when_setting_breakpoints"></a>Risks Entailed When Setting Breakpoints</h1>
+</div>
+<p>When you are setting a <a href="using_breakpoints.htm">breakpoints</a> by specifying a memory address or a symbol plus an offset, you must not put this breakpoint in the middle of an instruction.</p>
+<p>For example, consider the following disassembled code.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>770000f1 5e               pop     esi
+770000f2 5b               pop     ebx
+770000f3 c9               leave
+770000f4 c21000           ret     0x10
+770000f7 837ddc00         cmp     dword ptr [ebp-0x24],0x0</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The first three instructions are only one byte long. However, the fourth instruction is three bytes long. (It includes bytes 0x770000F4, 0x770000F5, and 0x770000F6.) If you want to put a breakpoint on this instruction by using the <b>bp</b>, <b>bu</b>, or <b>ba</b> command, you must specify the 0x770000F4 address.</p>
+<p>If you put a breakpoint in the 0x770000F5 address by using the <b>ba</b> command, the processor puts a breakpoint at that location. But this breakpoint would never be triggered, because the processor considers 0x770000F4 to be the actual address of the instruction.</p>
+<p>If you put a breakpoint in the 0x770000F5 address by using the <b>bp</b> or <b>bu</b> commands, the debugger writes a breakpoint at that location. However, this breakpoint might corrupt the target because of how the debugger creates breakpoints:</p>
+<ol>
+<li>
+<p>The debugger saves the contents of 0x770000F5 and overwrites this memory with a breakpoint instruction.</p>
+</li>
+<li>
+<p>If you try to display this memory in the debugger, the debugger does not show the breakpoint instruction that it has written. Instead, the debugger shows the memory that "should" be there. That is, the debugger shows the original memory, or any modifications to that memory that you have made since inserting the breakpoint.</p>
+</li>
+<li>
+<p>If you use the <b>BC</b> command to remove the breakpoint, the debugger restores the original memory to its proper location.</p>
+</li>
+</ol>
+<p>When you put a breakpoint at  0x770000F5, the debugger saves this byte and a break instruction is written here. However, when the application runs, it reaches the 0x770000F4 address and recognizes this address as the first byte of a multibyte instruction. The processor then tries to combine 0x770000F4, 0x770000F5, and possibly some later bytes into a single instruction. This combination can create a variety of behaviors, none of which are desirable.</p>
+<p>Therefore, when you put breakpoints by using a <b>bp</b>, <b>bu</b>, or <b>ba</b> command, make sure that you always put the breakpoints at the proper address. If you are using the WinDbg graphical interface to add breakpoints, you do not have to be concerned about this situation because the correct address is chosen automatically.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Risks Entailed When Setting Breakpoints%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

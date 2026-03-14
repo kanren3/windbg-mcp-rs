@@ -1,0 +1,54 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Features of Secure Mode"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Features of Secure Mode</title>
+
+<meta name="MS-HAID" content="r11_security_a451afa8-09c9-4afe-8c98-28be7979daa8.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.features_of_secure_mode"></a>Features of Secure Mode</h1>
+</div>
+<h2><a id="ddk_features_of_secure_mode_dbg"></a><a id="DDK_FEATURES_OF_SECURE_MODE_DBG"></a></h2>
+<p>When Secure Mode is active, all commands that could be used to affect the <i>host</i> computer are deactivated, and there are some restrictions on symbol servers and debugger extensions.</p>
+<p>The specific effects of Secure Mode are as follows:</p>
+<ul>
+<li>
+<p>The <a href="_attach__attach_to_process_.htm"><b>.attach (Attach to Process)</b></a>, <a href="_create__create_process_.htm"><b>.create (Create Process)</b></a>, <a href="_detach__detach_from_process_.htm"><b>.detach (Detach from Process)</b></a>, <a href="_abandon__abandon_process_.htm"><b>.abandon (Abandon Process)</b></a>, <a href="_kill__kill_process_.htm"><b>.kill (Kill Process)</b></a>, <a href="_tlist__list_process_ids_.htm"><b>.tlist (List Process IDs)</b></a>, <a href="_dump__create_dump_file_.htm"><b>.dump (Create Dump File)</b></a>, <a href="_opendump__open_dump_file_.htm"><b>.opendump (Open Dump File)</b></a>, <a href="_writemem__write_memory_to_file_.htm"><b>.writemem (Write Memory to File)</b></a>, <a href="_netuse__control_network_connections_.htm"><b>.netuse (Control Network Connections)</b></a>, and <a href="_quit_lock__prevent_accidental_quit_.htm"><b>.quit_lock (Prevent Accidental Quit)</b></a> commands are not available.</p>
+</li>
+<li>
+<p>The <a href="file___attach_to_a_process.htm">File | Attach to a Process</a>, <a href="file___open_executable.htm">File | Open Executable</a>, <a href="debug___detach_debuggee.htm">Debug | Detach Debuggee</a>, <a href="debug___stop_debugging.htm">Debug | Stop Debugging</a>, <a href="file___open_crash_dump.htm">File | Open Crash Dump</a> WinDbg menu commands are not available.</p>
+</li>
+<li>
+<p>The <a href="_shell__command_shell_.htm"><b>.shell (Command Shell)</b></a> command is not available.</p>
+</li>
+<li>
+<p>Extension DLLs must be loaded from a local disk; they cannot be loaded from UNC paths.</p>
+</li>
+<li>
+<p>Only the two standard types of extension DLLs (wdbgexts.h and dbgeng.h) are permitted. Other types of DLLs cannot be loaded as extensions.</p>
+</li>
+<li>
+<p>If you are using a symbol server, there are several restrictions. Only SymSrv (symsrv.dll) is permitted; other symbol server DLLs will not be accepted. You may not use a downstream store for your symbols, and any existing downstream store will be ignored. HTTP and HTTPS connections are not permitted. </p>
+</li>
+</ul>
+<p>After it has been activated, Secure Mode cannot be turned off. For more information see, <a href="activating_secure_mode.htm">Activating Secure Mode</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Features of Secure Mode%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

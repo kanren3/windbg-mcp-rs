@@ -1,0 +1,59 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The DbEngPrx command line uses the following syntax."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>DbEngPrx Command-Line Options</title>
+
+<meta name="MS-HAID" content="r12_cmdline_1e175ded-a756-4934-b4c8-f5e049ab4b9e.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.dbengprx_command_line_options"></a>DbEngPrx Command-Line Options</h1>
+</div>
+<p></p>
+<p>The DbEngPrx command line uses the following syntax.</p>
+<pre class="syntax">
+    <b>dbengprx [-p] -c </b><i>ClientTransport</i><b> -s </b><i>ServerTransport</i><b> 
+
+dbengprx -? 
+</b>
+   </pre>
+<h2><a id="ddk_dbengprx_command_line_options_dbg"></a><a id="DDK_DBENGPRX_COMMAND_LINE_OPTIONS_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______-p______"></a><a id="_______-P______"></a>       <b>-p</b>      </dt>
+<dd>
+<p>Causes DbEngPrx to continue existing even after all connections to it are dropped.</p>
+</dd>
+<dt><a id="_______-c_______ClientTransport______"></a><a id="_______-c_______clienttransport______"></a><a id="_______-C_______CLIENTTRANSPORT______"></a>       <b>-c</b>       <i>ClientTransport</i>      </dt>
+<dd>
+<p>Specifies the protocol settings to be used in connecting to the server. The protocol should match that used when the server was created. For details, see <a href="activating_a_repeater.htm"><b>Activating a Repeater</b></a>.</p>
+</dd>
+<dt><a id="_______-s_______ServerTransport______"></a><a id="_______-s_______servertransport______"></a><a id="_______-S_______SERVERTRANSPORT______"></a>       <b>-s</b>       <i>ServerTransport</i>      </dt>
+<dd>
+<p>Specifies the protocol settings that will be used when the client connects to the repeater. For details, see <a href="activating_a_repeater.htm"><b>Activating a Repeater</b></a>.</p>
+</dd>
+<dt><a id="_______-_______"></a>       <b>-?</b>      </dt>
+<dd>
+<p>Displays a message box with help text for the DbEngPrx command line.</p>
+<p>For information about using DbEngPrx, see <a href="repeaters.htm">Repeaters</a>.</p>
+</dd>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20DbEngPrx Command-Line Options%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

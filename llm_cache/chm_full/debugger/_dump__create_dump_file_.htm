@@ -1,0 +1,310 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .dump command creates a user-mode or kernel-mode crash dump file."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.dump (Create Dump File)</title>
+
+<meta name="MS-HAID" content="r19_metacmds_A_10de67ad-e8c3-42f2-ba9e-95a146a0320d.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._dump__create_dump_file_"></a>.dump (Create Dump File)</h1>
+</div>
+<p>The <b>.dump</b> command creates a user-mode or kernel-mode crash dump file.</p>
+<p></p>
+<pre class="syntax"><b>.dump </b><i>Options</i><b> </b><i>FileName</i> 
+<b>.dump /?</b></pre>
+<h2><a id="ddk_meta_create_dump_file_dbg"></a><a id="DDK_META_CREATE_DUMP_FILE_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Options______"></a><a id="_______options______"></a><a id="_______OPTIONS______"></a>       <i>Options</i>      </dt>
+<dd>
+<p>Represents one or more of the following options</p>
+<p></p>
+<dl>
+<dt><a id="_o"></a><a id="_O"></a><b>/o</b></dt>
+<dd>
+<p>Overwrites an existing dump file with the same name. If this option is not used and there is a file with the same file name, the dump file is not written.</p>
+</dd>
+<dt><a id="_f_FullOptions_"></a><a id="_f_fulloptions_"></a><a id="_F_FULLOPTIONS_"></a><b>/f</b><b>[</b><i>FullOptions</i><b>]</b></dt>
+<dd>
+<p>(Kernel mode:)  Creates a <a href="complete_memory_dump.htm">complete memory dump</a>. </p>
+<p>(User mode:)  Creates a <a href="full_user_mode_dumps.htm">full user-mode dump</a>. Despite their names, the largest minidump file actually contains more information than a full user-mode dump. For example, <b>.dump /mf</b> or <b>.dump /ma</b> creates a larger and more complete file than <b>.dump /f</b>. In user mode, <b>.dump </b><b>/m[</b><i>MiniOptions</i><b>]</b> is always preferable to <b>.dump /f</b>. </p>
+<p>You can add the following <i>FullOptions</i> to change the contents of the dump file; the option is  case-sensitive.</p>
+<table>
+<tr>
+<td>FullOption</td>
+<td>Effect</td>
+</tr>
+<tr>
+<td>
+<p><b>y</b></p>
+</td>
+<td>Adds AVX register information to the  dump file.</td>
+</tr>
+</table>
+<p> </p>
+</dd>
+<dt><a id="_m_MiniOptions_"></a><a id="_m_minioptions_"></a><a id="_M_MINIOPTIONS_"></a><b>/m</b><b>[</b><i>MiniOptions</i><b>]</b></dt>
+<dd>
+<p>Creates a <a href="cdb_and_windbg.htm">small memory dump</a> (in kernel mode) or a <a href="minidumps.htm">minidump </a> (in user mode). If neither <b>/f</b> nor <b>/m</b> is specified, <b>/m</b> is the default.</p>
+<p>In user mode, <b>/m</b> can be followed with additional <i>MiniOptions</i> specifying extra data that is to be included in the dump. If no <i>MiniOptions</i> are included, the dump will include module, thread, and stack information, but no additional data.   You can add any of the following <i>MiniOptions</i> to change the contents of the dump file; they are case-sensitive.</p>
+<table>
+<tr>
+<th>MiniOption</th>
+<th>Effect</th>
+</tr>
+<tr>
+<td>
+<p><b>a</b></p>
+</td>
+<td>
+<p>Creates a minidump with all optional additions. The <b>/ma</b> option is equivalent to <b>/mfFhut</b> -- it adds full memory data, handle data, unloaded module information, basic memory information, and thread time information to the minidump. Any failure to read inaccessable memory results in termination of the minidump generation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>A</b></p>
+</td>
+<td>
+<p>The <b>/mA</b> option is equivalent to <b>/ma</b> except that it ignores any failure to read inaccessable memory and continues generating the minidump.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>f </b></p>
+</td>
+<td>
+<p>Adds full memory data to the minidump. All accessible committed pages owned by the target application will be included.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>F </b></p>
+</td>
+<td>
+<p>Adds all basic memory information to the minidump.   This adds a stream to the minidump that contains all basic memory information, not just information about valid memory. This allows the debugger to reconstruct the complete virtual memory layout of the process when the minidump is being debugged. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>h </b></p>
+</td>
+<td>
+<p>Adds data about the handles associated with the target application to the minidump.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>u</b></p>
+</td>
+<td>
+<p>Adds unloaded module information to the minidump. This is available only in Windows Server 2003 and later versions of Windows.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>t </b></p>
+</td>
+<td>
+<p>Adds additional thread information to the minidump. This includes thread times, which can be displayed by using the <a href="_runaway.htm"><b>!runaway</b></a> extension or the <a href="_ttime__display_thread_times_.htm"><b>.ttime (Display Thread Times)</b></a> command when debugging the minidump.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>i</b></p>
+</td>
+<td>
+<p>Adds <i>secondary memory</i> to the minidump. Secondary memory is any memory referenced by a pointer on the stack or backing store, plus a small region surrounding this address.   </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>p</b></p>
+</td>
+<td>
+<p>Adds process environment block (PEB) and thread environment block (TEB) data to the minidump. This can be useful if you need access to Windows system information regarding the application's processes and threads.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>w</b></p>
+</td>
+<td>
+<p>Adds all committed read-write private pages to the minidump.  </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>d</b></p>
+</td>
+<td>
+<p>Adds all read-write data segments within the executable image to the minidump.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>c </b></p>
+</td>
+<td>
+<p>Adds code sections within images.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>r</b></p>
+</td>
+<td>
+<p>Deletes from the minidump those portions of the stack and store memory that are not useful for recreating the stack trace. Local variables and other data type values are deleted as well. This option does not make the minidump smaller (because these memory sections are simply zeroed), but it is useful if you want to protect the privacy of other applications. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>R</b></p>
+</td>
+<td>
+<p>Deletes the full module paths from the minidump. Only the module names will be included. This is a useful option if you want to protect the privacy of the user's directory structure.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>y</b></p>
+</td>
+<td>
+<p>Adds AVX register information to the  dump file.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>These <i>MiniOptions</i> can only be used when creating a user-mode minidump. They should follow the <b>/m</b> specifier.</p>
+</dd>
+<dt><a id="_u"></a><a id="_U"></a><b>/u</b></dt>
+<dd>
+<p>Appends the date, time, and PID to the dump file names. This ensures that dump file names are unique.</p>
+</dd>
+<dt><a id="_a"></a><a id="_A"></a><b>/a</b></dt>
+<dd>
+<p>Generates dumps for all currently-debugged processes. If <b>/a</b> is used, the <b>/u</b> option should also be used to ensure that each file has a unique name.</p>
+</dd>
+<dt><a id="_ba"></a><a id="_BA"></a><b>/b</b>[<b>a</b>]</dt>
+<dd>
+<p>Creates a .cab file. If this option is included, <i>FileName</i> is interpreted as the CAB file name, not the dump file name. A temporary dump file will be created, this file will be packaged into a CAB, and then the dump file will be deleted. If the <b>b</b> option is followed by <b>a</b>, all symbol and image files also will be packaged into the CAB.</p>
+</dd>
+<dt><a id="_c__Comment_"></a><a id="_c__comment_"></a><a id="_C__COMMENT_"></a><b>/c "</b><i>Comment</i><b>"</b></dt>
+<dd>
+<p>Specifies a comment string that will be written to the dump file. If <i>Comment</i> contains spaces, it must be enclosed in double quotes. When the dump file is loaded, the <i>Comment</i> string will be displayed.</p>
+</dd>
+<dt><a id="_xc_Address"></a><a id="_xc_address"></a><a id="_XC_ADDRESS"></a><b>/xc </b><i>Address</i></dt>
+<dd>
+<p>(User mode minidumps only)  Adds a context record to the dump file. <i>Address</i> must specify the address of the context record.</p>
+</dd>
+<dt><a id="_xr_Address"></a><a id="_xr_address"></a><a id="_XR_ADDRESS"></a><b>/xr </b><i>Address</i></dt>
+<dd>
+<p>(User mode minidumps only)  Adds an exception record to the dump file. <i>Address</i> must specify the address of the exception record.</p>
+</dd>
+<dt><a id="_xp_Address"></a><a id="_xp_address"></a><a id="_XP_ADDRESS"></a><b>/xp </b><i>Address</i></dt>
+<dd>
+<p>(User mode minidumps only)  Adds a context record and an exception record to the dump file. <i>Address</i> must specify the address of an EXCEPTION_POINTERS structure which contains pointers to the context record and the exception record.</p>
+</dd>
+<dt><a id="_xt_ThreadID"></a><a id="_xt_threadid"></a><a id="_XT_THREADID"></a><b>/xt </b><i>ThreadID</i></dt>
+<dd>
+<p>(User mode minidumps only)  Specifies the thread ID of the system thread that will be used as the exception thread for this dump file.</p>
+</dd>
+<dt><a id="_kpmf_File"></a><a id="_kpmf_file"></a><a id="_KPMF_FILE"></a><b>/kpmf </b><i>File</i></dt>
+<dd>
+<p>(Only when creating a kernel-mode Complete Memory Dump)  Specifies a file that contains physical memory page data. </p>
+</dd>
+<dt><a id="_j_Address"></a><a id="_j_address"></a><a id="_J_ADDRESS"></a><b>/j </b><i>Address</i></dt>
+<dd>
+<p>Adds the JIT_DEBUG_INFO structure to the dump file in user mode. <i>Address</i> must specify the address of the JIT_DEBUG_INFO structure. This address is normally  provided via the %p parameter when the .jdinfo command is used as part of a just in time postmortem debugging process. For more information, see <a href="_jdinfo__use_jit_debug_info_.htm"><b>.jdinfo (Use JIT_DEBUG_INFO)</b></a> and <a href="enabling_postmortem_debugging.htm">Enabling Postmortem Debugging</a>. </p>
+</dd>
+</dl>
+</dd>
+<dt><a id="_______FileName______"></a><a id="_______filename______"></a><a id="_______FILENAME______"></a>       <i>FileName</i>      </dt>
+<dd>
+<p>Specifies the name of the dump file. You can specify a full path and file name or just the file name. If the file name contains spaces, <i>FileName</i> should be enclosed in quotation marks. If no path is specified, the current directory is used.</p>
+</dd>
+<dt><a id="_______-_______"></a>       <b>-?</b>      </dt>
+<dd>
+<p>Displays help for this command. This text is different in kernel mode and in user mode.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Modes</b></p>
+</td>
+<td>
+<p>user mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets</b></p>
+</td>
+<td>
+<p>live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Platforms
+         </b></p>
+</td>
+<td>
+<p>all </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For a description of kernel-mode dump files and an explanation of their use, see <a href="kernel_mode_dump_files.htm">Kernel-Mode Dump Files</a>. For a description of user-mode dump files and an explanation of their use, see <a href="user_mode_dump_files.htm">User-Mode Dump Files</a>. </p>
+<h2>Remarks</h2>
+<p>This command can be used in a variety of situations:</p>
+<ul>
+<li>
+<p>During live user-mode debugging, this command directs the target application to generate a dump file, but the target application does not terminate.</p>
+</li>
+<li>
+<p>During live kernel-mode debugging, this command directs the target computer to generate a dump file, but the target computer does not crash.</p>
+</li>
+<li>
+<p>During crash dump debugging, this command creates a new crash dump file from the old one. This is useful if you have a large crash dump file and want to create a smaller one.</p>
+</li>
+</ul>
+<p>You can control what type of dump file will be produced:</p>
+<ul>
+<li>
+<p>In kernel mode, to produce a <a href="complete_memory_dump.htm">complete memory dump</a>, use the <b>/f</b> option. To produce a <a href="small_memory_dump.htm">small memory dump</a>, use the <b>/m</b> option (or no options). The .dump command cannot produce a <a href="kernel_memory_dump.htm">kernel memory dump</a>.</p>
+</li>
+<li>
+<p>In user mode, <b>.dump</b> <b>/m</b><b>[</b><i>MiniOptions</i><b>]</b> is the best choice. Although "m" stands for "minidump", the dump files created by using this <i>MiniOption</i> can vary in size from very small to very large. By specifying the proper <i>MiniOptions</i> you can control exactly what information is included. For example, <b>.dump /ma</b> produces a dump with a great deal of information. The older command, <b>.dump /f</b>, produces a moderately large "standard dump" file and cannot be customized.</p>
+</li>
+</ul>
+<p>You cannot specify which process is dumped. All running processes will be dumped.</p>
+<p> The <b>/xc</b>, <b>/xr</b>, <b>/xp</b>, and <b>/xt</b> options are used to store exception and context information in the dump file. This allows the <a href="_ecxr__display_exception_context_record_.htm"><b>.ecxr (Display Exception Context Record)</b></a> command to be run on this dump file.</p>
+<p>The following example will create a user-mode minidump, containing full memory and handle information:</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; .dump /mfh myfile.dmp </code></pre>
+<p>Handle information can be read by using the <a href="_handle.htm"><b>!handle</b></a> extension command.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.dump (Create Dump File)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

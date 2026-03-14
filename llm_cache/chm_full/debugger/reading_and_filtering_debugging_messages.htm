@@ -1,0 +1,182 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Reading and Filtering Debugging Messages"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Reading and Filtering Debugging Messages</title>
+
+<meta name="MS-HAID" content="t02_debugfns_7757121f-3370-467e-9ec3-e3fdde749f81.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.reading_and_filtering_debugging_messages"></a>Reading and Filtering Debugging Messages</h1>
+</div>
+<h2><a id="ddk_reading_and_filtering_debugging_messages_dbg"></a><a id="DDK_READING_AND_FILTERING_DEBUGGING_MESSAGES_DBG"></a></h2>
+<p>Kernel-mode code can use the <b>DbgPrintEx</b> and <b>KdPrintEx</b> routines to send a messages to the kernel debugger that are only transmitted under certain conditions. This allows you to filter out messages that you are not interested in.</p>
+<div class="alert"><b>Note</b>    In Windows Server 2003 and earlier versions of Windows, <b>DbgPrint</b> and <b>KdPrint</b> send messages to the kernel debugger unconditionally. In Windows Vista and later versions of Windows, these routines send messages conditionally, like <b>DbgPrintEx</b> and <b>KdPrintEx</b>. Whichever version of Windows you are using, it is recommended that you use <b>DbgPrintEx</b> and <b>KdPrintEx</b>, since these allow you to control the conditions under which the message will be sent.</div>
+<div> </div>
+<p>For complete documentation of these routines, see the Windows Driver Kit.</p>
+<p>The basic procedure is as follows:</p>
+<p class="proch"><img src="../common/wedge.gif" alt=""/><b>To filter debugging messages
+     </b></p>
+<ol>
+<li>
+<p>For each message you wish to send to the debugger, use the function <b>DbgPrintEx</b> or <b>KdPrintEx</b> in your driver's code. Pass the appropriate component name to the <i>ComponentId</i> parameter, and pass a value to the <i>Level</i> parameter that reflects the severity or nature of this message. The message itself is passed to the <i>Format</i> and <i>arguments</i> parameters as with <b>printf</b>.</p>
+</li>
+<li>
+<p>Set the value of the appropriate <i>component filter mask</i>. Each component has a different mask; the mask value indicates which of that component's messages will be displayed. The component filter mask may be set in the registry using a registry editor, or in memory using a kernel debugger.</p>
+</li>
+<li>
+<p>Attach a kernel debugger to the computer. Each time your driver passes a message to <b>DbgPrintEx</b> or <b>KdPrintEx</b>, the values passed to <i>ComponentId</i> and <i>Level</i> will be compared with the value of the corresponding component filter mask. If these values satisfy certain criteria, the message will be sent to the kernel debugger and displayed. Otherwise, no message will be sent.</p>
+</li>
+</ol>
+<p>Full details follow. All references on this page to <b>DbgPrintEx</b> apply equally to <b>KdPrintEx</b>.</p>
+<h3><a id="identifying_the_component_name"></a><a id="IDENTIFYING_THE_COMPONENT_NAME"></a>Identifying the Component Name</h3>
+<p>Each component has a separate filter mask. This allows the debugger to configure the filter for each component separately.</p>
+<p>Each component is referred to in different ways, depending on the context. In the <i>ComponentId</i> parameter of <b>DbgPrintEx</b>, the component name is prefixed with "DPFLTR_" and suffixed with "_ID". In the registry, the component filter mask has the same name as the component itself. In the debugger, the component filter mask is prefixed with "Kd_" and suffixed with "_Mask".</p>
+<p>There is a complete list of all component names (in DPFLTR_<i>XXXX</i>_ID format) in the Microsoft Windows Driver Kit (WDK) header ntddk.h and the Windows SDK header ntrtl.h. Most of these component names are reserved for Windows and for drivers written by Microsoft.</p>
+<p>There are six component names reserved for independent hardware vendors. To avoid mixing your driver's output with the output of Windows components, you should use one of the following component names:</p>
+<table>
+<tr>
+<th>Component name</th>
+<th>Driver type</th>
+</tr>
+<tr>
+<td>
+<p><b>IHVVIDEO</b></p>
+</td>
+<td>
+<p>Video driver</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>IHVAUDIO</b></p>
+</td>
+<td>
+<p>Audio driver</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>IHVNETWORK</b></p>
+</td>
+<td>
+<p>Network driver</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>IHVSTREAMING</b></p>
+</td>
+<td>
+<p>Kernel streaming driver</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>IHVBUS</b></p>
+</td>
+<td>
+<p>Bus driver</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>IHVDRIVER</b></p>
+</td>
+<td>
+<p>Any other type of driver</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p></p>
+<p>For example, if you are writing a video driver, you would use DPFLTR_IHVVIDEO_ID as the <i>ComponentId</i> parameter of <b>DbgPrintEx</b>, use the value name <b>IHVVIDEO</b> in the registry, and refer to <b>Kd_IHVVIDEO_Mask</b> in the debugger.</p>
+<p>In Windows Vista and later versions of Windows, all messages sent by <b>DbgPrint</b> and <b>KdPrint</b> are associated with the <b>DEFAULT</b> component.</p>
+<h3><a id="choosing_the_correct_level"></a><a id="CHOOSING_THE_CORRECT_LEVEL"></a>Choosing the Correct Level</h3>
+<p>The <i>Level</i> parameter of the <b>DbgPrintEx</b> routine is of type DWORD. It is used to determine the <i>importance bit field</i>. The connection between the <i>Level</i> parameter and this bit field depends on the size of <i>Level</i>:</p>
+<ul>
+<li>
+<p>If <i>Level</i> is equal to a number between 0 and 31, inclusive, it is interpreted as a bit shift. The importance bit field is set to the value 1 &lt;&lt; <i>Level</i>. Thus choosing a value between 0 and 31 for <i>Level</i> results in a bit field with exactly one bit set. If <i>Level</i> is 0, the bit field is equivalent to 0x00000001;if <i>Level</i> is 31, the bit field is equivalent to 0x80000000.</p>
+</li>
+<li>
+<p>If <i>Level</i> is a number between 32 and 0xFFFFFFFF inclusive, the importance bit field is set to the value of <i>Level</i> itself.</p>
+</li>
+</ul>
+<p>Thus, if you wish to set the bit field to 0x00004000, you can specify <i>Level</i> as 0x00004000 or simply as 14. Note that certain bit field values are <u>not</u> possible by this system -- including a bit field which is entirely zero.</p>
+<p>The following constants can be useful for setting the value of <i>Level</i>. They are defined in the Microsoft Windows Driver Kit (WDK) header ntddk.h and the Windows SDK header ntrtl.h:</p>
+<pre class="syntax" xml:space="preserve"><code>#define   DPFLTR_ERROR_LEVEL     0
+#define   DPFLTR_WARNING_LEVEL   1
+#define   DPFLTR_TRACE_LEVEL     2
+#define   DPFLTR_INFO_LEVEL      3
+#define   DPFLTR_MASK    0x8000000</code></pre>
+<p>One easy way to use the <i>Level</i> parameter is to always use values between 0 and 31 -- using the bits 0, 1, 2, 3 with the meaning given by DPFLTR_<i>XXXX</i>_LEVEL, and using the other bits to mean whatever you choose.</p>
+<p>Another easy way to use the <i>Level</i> parameter is to always use explicit bit fields. If you choose this method, you may wish to OR the value DPFLTR_MASK with your bit field; this assures that you will not accidentally use a value less than 32.</p>
+<p>To make your driver compatible with the way Windows uses message levels, you should only set the lowest bit (0x1) of the importance bit field if a serious error occurs. If you are using <i>Level</i> values less than 32, this corresponds to DPFLTR_ERROR_LEVEL. If this bit is set, your message is going to be viewed any time someone attaches a kernel debugger to a computer on which your driver is running. </p>
+<p>The warning, trace, and information levels should be used in the appropriate situations. Other bits can be freely used for any purposes that you find useful. This allows you to have a wide variety of message types that can be selectively seen or hidden.</p>
+<p>In Windows Vista and later versions of Windows, all messages sent by <b>DbgPrint</b> and <b>KdPrint</b> behave like <b>DbgPrintEx</b> and <b>KdPrintEx</b> messages with <i>Level</i> equal to DPFLTR_INFO_LEVEL. In other words, these messages have the third bit of their importance bit field set.</p>
+<h3><a id="setting_the_component_filter_mask"></a><a id="SETTING_THE_COMPONENT_FILTER_MASK"></a>Setting the Component Filter Mask</h3>
+<p>There are two ways to set a component filter mask:</p>
+<ul>
+<li>
+<p>The component filter mask can be accessed in the registry key <b>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Debug Print Filter</b>. Using a registry editor, create or open this key. Under this key, create a value with the name of the desired component, in uppercase. Set it equal to the DWORD value that you wish to use as the component filter mask.</p>
+</li>
+<li>
+<p>If a kernel debugger is active, it can access the component filter mask value by dereferencing the address stored in the symbol <b>Kd_</b><i>XXXX</i><b>_Mask</b>, where <i>XXXX</i> is the desired component name. You can display the value of this mask in WinDbg or KD with the <b>dd (Display DWORD)</b> command, or enter a new component filter mask with the <b>ed (Enter DWORD)</b> command. If there is a danger of symbol ambiguity, you may wish to specify this symbol as <b>nt!Kd_</b><i>XXXX</i><b>_Mask</b>.</p>
+</li>
+</ul>
+<p>Filter masks stored in the registry take effect during boot. Filter masks created by the debugger take effect immediately, and persist until Windows is rebooted. A value set in the registry can be overridden by the debugger, but the component filter mask will return to the value specified in the registry if the system is rebooted.</p>
+<p>There is also a system-wide mask called <b>WIN2000</b>. This is equal to 0x1 by default, though it can be changed through the registry or the debugger like all other components. When filtering is performed, each component filter mask is first ORed with the <b>WIN2000</b> mask. In particular, this means that components whose masks have never been specified default to 0x1.</p>
+<h3><a id="criteria_for_displaying_the_message"></a><a id="CRITERIA_FOR_DISPLAYING_THE_MESSAGE"></a>Criteria for Displaying the Message</h3>
+<p>When <b>DbgPrintEx</b> is called in kernel-mode code, Windows compares the message importance bit field specified by <i>Level</i> with the filter mask of the component specified by <i>ComponentId</i>.</p>
+<div class="alert"><b>Note</b>    Recall that when the <i>Level</i> parameter is between 0 and 31, the importance bit field is equal to 1 &lt;&lt; <i>Level</i>, but when the <i>Level</i> parameter is 32 or higher, the importance bit field is simply equal to <i>Level</i>.</div>
+<div> </div>
+<p>Windows performs an AND operation on the importance bit field and the component filter mask. If the result is nonzero, the message is sent to the debugger.</p>
+<h3><a id="example"></a><a id="EXAMPLE"></a>Example</h3>
+<p>Here is an example.</p>
+<p>Suppose that before the last boot, you created the following values in the <b>Debug Print Filter</b> key:</p>
+<ul>
+<li>
+<p><b>IHVVIDEO</b>, with a value equal to DWORD 0x2</p>
+</li>
+<li>
+<p><b>IHVBUS</b>, equal to DWORD 0x7FF</p>
+</li>
+</ul>
+<p>Now you issue the following commands in the kernel debugger:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; ed Kd_IHVVIDEO_Mask 0x8 
+kd&gt; ed Kd_IHVAUDIO_Mask 0x7 </code></pre>
+<p>At this point, the <b>IHVVIDEO</b> component has a filter mask of 0x8, the <b>IHVAUDIO</b> component has a filter mask of 0x7, and the <b>IHVBUS</b> component has a filter mask of 0x7FF.</p>
+<p>However, because these masks are automatically ORed with the <b>WIN2000</b> system-wide mask (which is usually equal to 0x1), the <b>IHVVIDEO</b> mask is effectively equal to 0x9.  Indeed, components whose filter masks have not been set at all (for instance, <b>IHVSTREAMING</b> or <b>DEFAULT</b>) will have a filter mask of 0x1.</p>
+<p>Now suppose that the following function calls occur in various drivers:</p>
+<pre class="syntax" xml:space="preserve"><code>DbgPrintEx( DPFLTR_IHVVIDEO_ID,  DPFLTR_INFO_LEVEL,   "First message.\n");
+DbgPrintEx( DPFLTR_IHVAUDIO_ID,  7,                   "Second message.\n");
+DbgPrintEx( DPFLTR_IHVBUS_ID,    DPFLTR_MASK | 0x10,  "Third message.\n");
+DbgPrint( "Fourth message.\n");</code></pre>
+<p>The first message has its <i>Level</i> parameter equal to DPFLTR_INFO_LEVEL, which is 3. Since this is less than 32, it is treated as a bit shift, resulting in an importance bit field of 0x8. This value is then ANDed with the effective <b>IHVVIDEO</b> component filter mask of 0x9, giving a nonzero result. So the first message is transmitted to the debugger.</p>
+<p>The second message has its <i>Level</i> parameter equal to 7. Again, this is treated as a bit shift, resulting in an importance bit field of 0x80. This is then ANDed with the <b>IHVAUDIO</b> component filter mask of 0x7, giving a result of zero. So the second message is <u>not</u> transmitted.</p>
+<p>The third message has its <i>Level</i> parameter equal to DPFLTR_MASK | 0x10. This is greater than 31, and therefore the importance bit field is set equal to the value of <i>Level</i> -- in other words, to 0x80000010. This is then ANDed with the <b>IHVBUS</b> component filter mask of 0x7FF, giving a nonzero result. So the third message is transmitted to the debugger.</p>
+<p>The fourth message was passed to <b>DbgPrint</b> instead of <b>DbgPrintEx</b>. In Windows Server 2003 and earlier versions of Windows, messages passed to this routine are always transmitted. In Windows Vista and later versions of Windows, messages passed to this routine are always given a default filter. The importance bit field is equal to 1 &lt;&lt; DPFLTR_INFO_LEVEL, which is 0x00000008. The component for this routine is <b>DEFAULT</b>. Since you have not set the <b>DEFAULT</b> component filter mask, it has a value of 0x1. When this is ANDed with the importance bit field, the result is zero. So the fourth message is not transmitted.</p>
+<h3><a id="the_dbgprint_buffer"></a><a id="THE_DBGPRINT_BUFFER"></a>The DbgPrint Buffer</h3>
+<p>When <b>DbgPrint</b>, <b>DbgPrintEx</b>, <b>KdPrint</b>, or <b>KdPrintEx</b> transmits a message to the debugger, the formatted string is sent to the <i>DbgPrint buffer</i>. In most cases, the contents of this buffer are displayed immediately in the Debugger Command window. This display can be disabled by using the <b>Buffer DbgPrint Output</b> option of the Global Flags Utility (gflags.exe). This display does not automatically appear during local kernel debugging.</p>
+<p>During local kernel debugging, and any other time this display has been disabled, the contents of the DbgPrint buffer can only be viewed by using the <a href="_dbgprint.htm"><b>!dbgprint</b></a> extension command.</p>
+<p>Any single call to <b>DbgPrint</b>, <b>DbgPrintEx</b>, <b>KdPrint</b>, or <b>KdPrintEx</b> will only transmit 512 bytes of information. Any output longer than this will be lost. The DbgPrint buffer itself can hold up to 4 KB of data on a free build of Windows, and up to 32 KB of data on a checked build of Windows. On Windows Server 2003 and later versions of Windows, you can use the KDbgCtrl tool to alter the size of the DbgPrint buffer. See <a href="using_kdbgctrl.htm">Using KDbgCtrl</a> for details.</p>
+<p>If a message is filtered out because of its <i>ComponentId</i> and <i>Level</i> values, it is not transmitted across the debugging connection. Therefore there is no way to display this message in the debugger.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Reading and Filtering Debugging Messages%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

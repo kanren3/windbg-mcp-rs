@@ -1,0 +1,110 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The AddProcessOptions method adds the process options to those options that affect the current process."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IDebugClient::AddProcessOptions method</title>
+
+<meta name="MS-HAID" content="IDebugClient_995041c9-9380-4a66-b9f8-d74d68398a44.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.addprocessoptions"></a>IDebugClient::AddProcessOptions method</h1>
+</div>
+<p>The <b>AddProcessOptions</b> method adds the process options to those options that affect the <a href="c.htm#current_process"><i>current process</i></a>.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>HRESULT AddProcessOptions(
+  [in] ULONG Options
+);</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Parameters</h2>
+<dl>
+<dt><i>Options</i> [in]</dt>
+<dd>
+<p>Specifies the process options to add to those affecting the current process.  For details on these process options, see <a href="debug_process_xxx.htm"><b>DEBUG_PROCESS_XXX</b></a>.</p>
+</dd>
+</dl>
+<h2>Return value</h2>
+<p>This method may also return error values.  See <a href="hresult_values.htm"><b>Return Values</b></a> for more details.</p>
+<table>
+<tr>
+<th>Return code</th>
+<th>Description</th>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>S_OK</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>The method was successful.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>This method is available only in <a href="l.htm#live_user_mode_debugging"><i>live user-mode debugging</i></a>.</p>
+<p>Some of the process options are global options, others are specific to the current process.</p>
+<p>If any process options are modified, the engine will notify the <a href="e.htm#event_callbacks"><i>event callbacks</i></a> by calling their <a href="idebugeventcallbacks_changeenginestate.htm"><b>IDebugEventCallbacks::ChangeEngineState</b></a> method with the DEBUG_CES_PROCESS_OPTIONS flag set.</p>
+<p>For more information about creating and attaching to live user-mode targets, see <a href="live_user_mode_targets.htm">Live User-Mode Targets</a>.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Target platform</p>
+</th>
+<td width="70%">
+<dl>
+<dt></dt>
+</dl>
+</td>
+</tr>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Dbgeng.h (include Dbgeng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="idebugclient.htm"><b>IDebugClient</b></a></dt>
+<dt><a href="idebugclient2.htm"><b>IDebugClient2</b></a></dt>
+<dt><a href="idebugclient3.htm"><b>IDebugClient3</b></a></dt>
+<dt><a href="idebugclient4.htm"><b>IDebugClient4</b></a></dt>
+<dt><a href="idebugclient5.htm"><b>IDebugClient5</b></a></dt>
+<dt><a href="getprocessoptions.htm"><b>GetProcessOptions</b></a></dt>
+<dt><a href="setprocessoptions.htm"><b>SetProcessOptions</b></a></dt>
+<dt><a href="removeprocessoptions.htm"><b>RemoveProcessOptions</b></a></dt>
+<dt><a href="debug_process_xxx.htm"><b>DEBUG_PROCESS_XXX</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IDebugClient::AddProcessOptions method%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,634 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="GFlags Flag Table"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>GFlags Flag Table</title>
+
+<meta name="MS-HAID" content="GFlags_bf174207-b0ea-40b3-b4d7-fc7e921e119e.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.gflags_flag_table"></a>GFlags Flag Table</h1>
+</div>
+<h2><a id="ddk_gflags_flag_table_dtools"></a><a id="DDK_GFLAGS_FLAG_TABLE_DTOOLS"></a></h2>
+<p>The following table lists the flags that GFlags changes, the hexadecimal value and abbreviation for each flag, and the destination (R for registry, K for kernel, I for image file) in which the flag is valid.</p>
+<p>For a detailed description of each flag, see the <a href="global_flag_reference.htm">Global Flag Reference</a>.</p>
+<p>For information about using GFlags, see <a href="gflags_overview.htm">GFlags Overview</a> and <a href="gflags_details.htm">GFlags Details</a>.</p>
+<div class="alert"><b>Important</b>    Pool tagging is permanently enabled in Windows Server 2003 and later versions of Windows. On these systems, the <b>Enable pool tagging</b> check box on the <b>Global Flags</b> dialog box is dimmed, and commands to enable or disable pool tagging fail.</div>
+<div> </div>
+<div class="alert"><b>Note</b>  The symbolic name of each flag is provided for reference only. Because symbolic names change, they are not a reliable identifier of a global flag.</div>
+<div> </div>
+<table>
+<tr>
+<th>Description</th>
+<th>Symbolic Name</th>
+<th>Hexadecimal Value</th>
+<th>Abbreviation</th>
+<th>Destination</th>
+</tr>
+<tr>
+<td>
+<p><a href="buffer_dbgprint_output.htm">Buffer DbgPrint Output</a></p>
+</td>
+<td>
+<p>FLG_DISABLE_DBGPRINT</p>
+</td>
+<td>
+<p>0x08000000</p>
+</td>
+<td>
+<p>ddp</p>
+</td>
+<td>
+<p>R,K</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="create_kernel_mode_stack_trace_database.htm">Create kernel mode stack trace database</a></p>
+</td>
+<td>
+<p>FLG_KERNEL_STACK_TRACE_DB</p>
+</td>
+<td>
+<p>0x2000</p>
+</td>
+<td>
+<p>kst</p>
+</td>
+<td>
+<p>R</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="create_user_mode_stack_trace_database.htm">Create user mode stack trace database</a></p>
+</td>
+<td>
+<p>FLG_USER_STACK_TRACE_DB</p>
+</td>
+<td>
+<p>0x1000</p>
+</td>
+<td>
+<p>ust</p>
+</td>
+<td>
+<p>R,K,I</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="debug_initial_command.htm">Debug initial command</a></p>
+</td>
+<td>
+<p>FLG_DEBUG_INITIAL_COMMAND</p>
+</td>
+<td>
+<p>0x04</p>
+</td>
+<td>
+<p>dic</p>
+</td>
+<td>
+<p>R</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="debug_winlogon.htm">Debug WinLogon</a></p>
+</td>
+<td>
+<p>FLG_DEBUG_INITIAL_COMMAND_EX</p>
+</td>
+<td>
+<p>0x04000000</p>
+</td>
+<td>
+<p>dwl</p>
+</td>
+<td>
+<p>R</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="disable_heap_coalesce_on_free.htm">Disable heap coalesce on free</a></p>
+</td>
+<td>
+<p>FLG_HEAP_DISABLE_COALESCING</p>
+</td>
+<td>
+<p>0x00200000</p>
+</td>
+<td>
+<p>dhc</p>
+</td>
+<td>
+<p>R,K,I</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="disable_paging_of_kernel_stacks.htm">Disable paging of kernel stacks</a></p>
+</td>
+<td>
+<p>FLG_DISABLE_PAGE_KERNEL_STACKS</p>
+</td>
+<td>
+<p>0x080000</p>
+</td>
+<td>
+<p>dps</p>
+</td>
+<td>
+<p>R</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="disable_protected_dll_verification.htm">Disable protected DLL verification</a></p>
+</td>
+<td>
+<p>FLG_DISABLE_PROTDLLS</p>
+</td>
+<td>
+<p>0x80000000</p>
+</td>
+<td>
+<p>dpd</p>
+</td>
+<td>
+<p>R,K,I</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="disable_stack_extension.htm">Disable stack extension</a></p>
+</td>
+<td>
+<p>FLG_DISABLE_STACK_EXTENSION</p>
+</td>
+<td>
+<p>0x010000</p>
+</td>
+<td>
+<p>dse</p>
+</td>
+<td>
+<p>I</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="early_critical_section_event_creation.htm">Early critical section event creation</a></p>
+</td>
+<td>
+<p>FLG_CRITSEC_EVENT_CREATION</p>
+</td>
+<td>
+<p>0x10000000</p>
+</td>
+<td>
+<p>cse</p>
+</td>
+<td>
+<p>R,K,I</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="enable_application_verifier.htm">Enable application verifier</a></p>
+</td>
+<td>
+<p>FLG_APPLICATION_VERIFIER</p>
+</td>
+<td>
+<p>0x0100</p>
+</td>
+<td>
+<p>vrf</p>
+</td>
+<td>
+<p>R,K,I</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="enable_bad_handles_detection.htm">Enable bad handles detection</a></p>
+</td>
+<td>
+<p>FLG_ENABLE_HANDLE_EXCEPTIONS</p>
+</td>
+<td>
+<p>0x40000000</p>
+</td>
+<td>
+<p>bhd</p>
+</td>
+<td>
+<p>R,K</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="enable_close_exception.htm">Enable close exception</a></p>
+</td>
+<td>
+<p>FLG_ENABLE_CLOSE_EXCEPTIONS</p>
+</td>
+<td>
+<p>0x400000</p>
+</td>
+<td>
+<p>ece</p>
+</td>
+<td>
+<p>R,K</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="enable_debugging_of_win32_subsystem.htm">Enable debugging of Win32 subsystem</a></p>
+</td>
+<td>
+<p>FLG_ENABLE_CSRDEBUG</p>
+</td>
+<td>
+<p>0x020000</p>
+</td>
+<td>
+<p>d32</p>
+</td>
+<td>
+<p>R</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="enable_exception_logging.htm">Enable exception logging</a></p>
+</td>
+<td>
+<p>FLG_ENABLE_EXCEPTION_LOGGING</p>
+</td>
+<td>
+<p>0x800000</p>
+</td>
+<td>
+<p>eel</p>
+</td>
+<td>
+<p>R,K</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="enable_heap_free_checking.htm">Enable heap free checking</a></p>
+</td>
+<td>
+<p>FLG_HEAP_ENABLE_FREE_CHECK</p>
+</td>
+<td>
+<p>0x20</p>
+</td>
+<td>
+<p>hfc</p>
+</td>
+<td>
+<p>R,K,I</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="enable_heap_parameter_checking.htm">Enable heap parameter checking</a></p>
+</td>
+<td>
+<p>FLG_HEAP_VALIDATE_PARAMETERS</p>
+</td>
+<td>
+<p>0x40</p>
+</td>
+<td>
+<p>hpc</p>
+</td>
+<td>
+<p>R,K,I</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="enable_heap_tagging.htm">Enable heap tagging</a></p>
+</td>
+<td>
+<p>FLG_HEAP_ENABLE_TAGGING</p>
+</td>
+<td>
+<p>0x0800</p>
+</td>
+<td>
+<p>htg</p>
+</td>
+<td>
+<p>R,K,I</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="enable_heap_tagging_by_dll.htm">Enable heap tagging by DLL</a></p>
+</td>
+<td>
+<p>FLG_HEAP_ENABLE_TAG_BY_DLL</p>
+</td>
+<td>
+<p>0x8000</p>
+</td>
+<td>
+<p>htd</p>
+</td>
+<td>
+<p>R,K,I</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="enable_heap_tail_checking.htm">Enable heap tail checking</a></p>
+</td>
+<td>
+<p>FLG_HEAP_ENABLE_TAIL_CHECK</p>
+</td>
+<td>
+<p>0x10</p>
+</td>
+<td>
+<p>htc</p>
+</td>
+<td>
+<p>R,K,I</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="enable_heap_validation_on_call.htm">Enable heap validation on call</a></p>
+</td>
+<td>
+<p>FLG_HEAP_VALIDATE_ALL</p>
+</td>
+<td>
+<p>0x80</p>
+</td>
+<td>
+<p>hvc</p>
+</td>
+<td>
+<p>R,K,I</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="enable_loading_of_kernel_debugger_symbols.htm">Enable loading of kernel debugger symbols</a></p>
+</td>
+<td>
+<p>FLG_ENABLE_KDEBUG_SYMBOL_LOAD</p>
+</td>
+<td>
+<p>0x040000</p>
+</td>
+<td>
+<p>ksl</p>
+</td>
+<td>
+<p>R,K</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="enable_object_handle_type_tagging.htm">Enable object handle type tagging</a></p>
+</td>
+<td>
+<p>FLG_ENABLE_HANDLE_TYPE_TAGGING</p>
+</td>
+<td>
+<p>0x01000000</p>
+</td>
+<td>
+<p>eot</p>
+</td>
+<td>
+<p>R,K</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="enable_page_heap.htm">Enable page heap</a></p>
+</td>
+<td>
+<p>FLG_HEAP_PAGE_ALLOCS</p>
+</td>
+<td>
+<p>0x02000000</p>
+</td>
+<td>
+<p>hpa</p>
+</td>
+<td>
+<p>R,K,I</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+<dl>
+<dt><a href="enable_pool_tagging.htm">Enable pool tagging</a></dt>
+<dt>(Windows 2000 and Windows XP only) </dt>
+</dl>
+</p>
+</td>
+<td>
+<p>FLG_POOL_ENABLE_TAGGING</p>
+</td>
+<td>
+<p>0x0400</p>
+</td>
+<td>
+<p>ptg</p>
+</td>
+<td>
+<p>R</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="enable_system_critical_breaks.htm">Enable system critical breaks</a></p>
+</td>
+<td>
+<p>FLG_ENABLE_SYSTEM_CRIT_BREAKS</p>
+</td>
+<td>
+<p>0x100000</p>
+</td>
+<td>
+<p>scb</p>
+</td>
+<td>
+<p>R, K, I</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="load_image_using_large_pages_if_possible.htm">Load image using large pages if possible</a></p>
+</td>
+<td></td>
+<td></td>
+<td>
+<p>lpg</p>
+</td>
+<td>
+<p>I</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="maintain_a_list_of_objects_for_each_type.htm">Maintain a list of objects for each type</a></p>
+</td>
+<td>
+<p>FLG_MAINTAIN_OBJECT_TYPELIST</p>
+</td>
+<td>
+<p>0x4000</p>
+</td>
+<td>
+<p>otl</p>
+</td>
+<td>
+<p>R</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="enable_silent_process_exit_monitoring.htm">Enable silent process exit monitoring</a></p>
+</td>
+<td>
+<p>FLG_MONITOR_SILENT_PROCESS_EXIT </p>
+</td>
+<td>
+<p>0x200</p>
+</td>
+<td></td>
+<td>
+<p>R</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="object_reference_tracing.htm">Object Reference Tracing</a></p>
+<p>(Windows Vista and later)</p>
+</td>
+<td></td>
+<td></td>
+<td></td>
+<td>
+<p>R, K</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="show_loader_snaps.htm">Show loader snaps</a></p>
+</td>
+<td>
+<p>FLG_SHOW_LDR_SNAPS</p>
+</td>
+<td>
+<p>0x02</p>
+</td>
+<td>
+<p>sls</p>
+</td>
+<td>
+<p>R,K,I</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="special_pool.htm">Special Pool</a></p>
+</td>
+<td></td>
+<td></td>
+<td>
+<p>spp</p>
+</td>
+<td>
+<p>R</p>
+<p>R,K (Windows Vista and later)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="stop_on_exception.htm">Stop on exception</a></p>
+</td>
+<td>
+<p>FLG_STOP_ON_EXCEPTION</p>
+</td>
+<td>
+<p>0x01</p>
+</td>
+<td>
+<p>soe</p>
+</td>
+<td>
+<p>R,K,I</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="stop_on_hung_gui.htm">Stop on hung GUI</a></p>
+</td>
+<td>
+<p>FLG_STOP_ON_HUNG_GUI</p>
+</td>
+<td>
+<p>0x08</p>
+</td>
+<td>
+<p>shg</p>
+</td>
+<td>
+<p>K</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="stop_on_unhandled_user-mode_exception.htm">Stop on unhandled user-mode exception</a></p>
+</td>
+<td>
+<p>FLG_STOP_ON_UNHANDLED_EXCEPTION</p>
+</td>
+<td>
+<p>0x20000000</p>
+</td>
+<td>
+<p>sue</p>
+</td>
+<td>
+<p>R,K,I</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20GFlags Flag Table%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,86 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Example 10: Detecting a Heap Memory Leak in a Process"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Example 10:  Detecting a Heap Memory Leak in a Process</title>
+
+<meta name="MS-HAID" content="GFlags_f1428e98-84d5-4d52-886b-93ea3586352b.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.example_10___detecting_a_heap_memory_leak_in_a_process"></a>Example 10:  Detecting a Heap Memory Leak in a Process</h1>
+</div>
+<h2><a id="ddk_example_10___detecting_a_heap_memory_leak_in_a_process_dtools"></a><a id="DDK_EXAMPLE_10___DETECTING_A_HEAP_MEMORY_LEAK_IN_A_PROCESS_DTOOLS"></a></h2>
+<p>This example uses GFlags and User Mode Dump Heap (UMDH, umdh.exe), a tool included in Microsoft Debugging Tools for Windows.</p>
+<p class="proch"><img src="../common/wedge.gif" alt=""/><b>To detect a leak in heap memory in notepad.exe</b></p>
+<ol>
+<li>
+<p>Set the <a href="create_user_mode_stack_trace_database.htm">Create user mode stack trace database</a> (<b>ust</b>) flag for the notepad.exe image file. </p>
+<p>The following command uses GFlags to set the <b>Create user mode stack trace database</b> flag. It uses the <b>/i</b> parameter to identify the image file and the <b>ust</b> abbreviation for the flag.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>gflags /i Notepad.exe +ust </pre>
+</td>
+</tr>
+</table></span></div>
+<p>As a result of this command, a user-mode stack trace is created for all new instances of the Notepad process.</p>
+</li>
+<li>
+<p>Set the symbol file path. </p>
+<p>The following command creates an environment variable that stores the path to the directory of symbol files:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>set _NT_SYMBOL_PATH=C:\Windows\symbols</pre>
+</td>
+</tr>
+</table></span></div>
+</li>
+<li>
+<p>Start Notepad. </p>
+</li>
+<li>
+<p>Find the process identifier (PID) of the Notepad process. </p>
+<p>You can find the PID of any running process from Task Manager or Tasklist (tasklist.exe), a tool included in Windows XP Professional and Windows Server 2003 operating systems. In this example, the Notepad PID is 1228.</p>
+</li>
+<li>
+<p>Run UMDH.</p>
+<p>The following command runs UMDH (umdh.exe). It uses the <b>-p:</b> parameter to specify the PID that, in this example, is 1228. It uses the <b>/f:</b> parameter to specify the name and location of the output file for the heap dump, notepad.dmp.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>umdh -p:1228 -f:notepad.dmp </pre>
+</td>
+</tr>
+</table></span></div>
+<p>In response, UMDH writes a complete dump of all active heaps to the notepad.dmp file.</p>
+</li>
+</ol>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Example 10:  Detecting a Heap Memory Leak in a Process%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

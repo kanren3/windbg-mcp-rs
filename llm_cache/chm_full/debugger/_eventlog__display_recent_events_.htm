@@ -1,0 +1,91 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .eventlog command displays the recent Microsoft Win32 debug events, such as module loading, process creation and termination, and thread creation and termination."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.eventlog (Display Recent Events)</title>
+
+<meta name="MS-HAID" content="r20_metacmds_E_bdd38f71-ab6c-4f23-bd4f-b7540abeb487.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._eventlog__display_recent_events_"></a>.eventlog (Display Recent Events)</h1>
+</div>
+<p>The <b>.eventlog</b> command displays the recent Microsoft Win32 debug events, such as module loading, process creation and termination, and thread creation and termination. </p>
+<pre class="syntax">
+    <b>.eventlog</b> 
+</pre>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets</b></p>
+</td>
+<td>
+<p>Live, crash dump </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Platforms</b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>The <b>.eventlog</b> command shows only 1024 characters.</p>
+<p>The following example shows the <b>.eventlog</b> command.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; .eventlog
+0904.1014: Load module C:\Windows\system32\ADVAPI32.dll at 000007fe`fed80000
+0904.1014: Load module C:\Windows\system32\RPCRT4.dll at 000007fe`fe8c0000
+0904.1014: Load module C:\Windows\system32\GDI32.dll at 000007fe`fea00000
+0904.1014: Load module C:\Windows\system32\USER32.dll at 00000000`76b10000
+0904.1014: Load module C:\Windows\system32\msvcrt.dll at 000007fe`fe450000
+0904.1014: Load module C:\Windows\system32\COMDLG32.dll at 000007fe`fecf0000
+0904.1014: Load module C:\Windows\system32\SHLWAPI.dll at 000007fe`fe1f0000
+0904.1014: Load module C:\Windows\WinSxS\amd64_microsoft.windows.common-controls_6595b6414
+4ccf1df_6.0.6000.16386_none_1559f1c6f365a7fa\COMCTL32.dll at 000007fe`fbda0000
+0904.1014: Load module C:\Windows\system32\SHELL32.dll at 000007fe`fd4a0000
+0904.1014: Load module C:\Windows\system32\WINSPOOL.DRV at 000007fe`f77d0000
+0904.1014: Load module C:\Windows\system32\ole32.dll at 000007fe`feb10000
+0904.1014: Load module C:\Windows\system32\OLEAUT32.dll at 000007fe`feeb0000
+Last event: Break instruction exception - code 80000003 (first chance)</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.eventlog (Display Recent Events)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

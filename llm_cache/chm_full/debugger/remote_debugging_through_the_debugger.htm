@@ -1,0 +1,55 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Remote Debugging Through the Debugger"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Remote Debugging Through the Debugger</title>
+
+<meta name="MS-HAID" content="r08_use_remote_e8049dea-474e-411d-8286-ec4a646480f7.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.remote_debugging_through_the_debugger"></a>Remote Debugging Through the Debugger</h1>
+</div>
+<h2><a id="ddk_remote_debugging_through_the_debugger_dbg"></a><a id="DDK_REMOTE_DEBUGGING_THROUGH_THE_DEBUGGER_DBG"></a></h2>
+<p>Remote debugging directly through the debugger is usually the best and easiest method of performing remote debugging.</p>
+<p>This technique involves running two debuggers at different locations. The debugger that is actually doing the debugging is called the <i>debugging server</i>. The debugger that is controlling the session from a distance is called the <i>debugging client</i>.</p>
+<p>The two computers do not have to be running the same version of Windows; they can be running any version of Windows. The actual debuggers used need not be the same; a WinDbg debugging client can connect to a CDB debugging server, and so on.</p>
+<p>However, it is best that the debugger binaries on the two computers both be from the same release of the Debugging Tools for Windows package, or at least both from recent releases.</p>
+<p>To set up this remote session, the debugging server is set up first, and then the debugging client is activated. Any number of debugging clients can connect to a debugging server. A single debugger can turn itself into several debugging servers at the same time, to facilitate different kinds of connections.</p>
+<p>However, no single debugger can be a debugging client and a debugging server simultaneously.</p>
+<p>This section includes:</p>
+<dl>
+<dd>
+<p><a href="activating_a_debugging_server.htm">Activating a Debugging Server</a></p>
+</dd>
+<dd>
+<p><a href="searching_for_debugging_servers.htm">Searching for Debugging Servers</a></p>
+</dd>
+<dd>
+<p><a href="activating_a_debugging_client.htm">Activating a Debugging Client</a></p>
+</dd>
+<dd>
+<p><a href="client_and_server_examples.htm">Client and Server Examples</a></p>
+</dd>
+<dd>
+<p><a href="controlling_a_remote_debugging_session.htm">Controlling a Remote Debugging Session</a></p>
+</dd>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Remote Debugging Through the Debugger%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

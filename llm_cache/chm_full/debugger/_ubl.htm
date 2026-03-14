@@ -1,0 +1,81 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !ubl extension lists all user-space breakpoints and their current status."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!ubl</title>
+
+<meta name="MS-HAID" content="r30_exts_kernel_U_77af4ef1-f9e1-459f-a90b-447d637812c5.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._ubl"></a>!ubl</h1>
+</div>
+<p>The <b>!ubl</b> extension lists all user-space breakpoints and their current status.</p>
+<p></p>
+<pre class="syntax"><b>!ubl</b></pre>
+<h2><a id="ddk__ubl_dbg"></a><a id="DDK__UBL_DBG"></a></h2>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000</b></p>
+</td>
+<td>
+<p>
+          Kdextx86.dll
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Kdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>Here is an example of the use and display of user-space breakpoints:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !ubp 8014a131
+This command is VERY DANGEROUS, and may crash your system!
+If you don't know what you are doing, enter "!ubc *" now!
+
+kd&gt; !ubp 801544f4
+
+kd&gt; !ubd 1
+
+kd&gt; !ubl
+ 0: e ffffffff`8014a131 (ffffffff`82deb000) 1 ffffffff
+ 1: d ffffffff`801544f4 (ffffffff`82dff000) 0 ffffffff</code></pre>
+<p>Each line in this listing contains the breakpoint number, the status (<b>e</b> for enabled or <b>d</b> for disabled), the virtual address used to set the breakpoint, the physical address of the actual breakpoint, the byte position, and the contents of this memory location at the time the breakpoint was set.</p>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="_ubc.htm"><b>!ubc</b></a></dt>
+<dt><a href="_ubd.htm"><b>!ubd</b></a></dt>
+<dt><a href="_ube.htm"><b>!ube</b></a></dt>
+<dt><a href="_ubp.htm"><b>!ubp</b></a></dt>
+<dt><a href="user_space_and_system_space.htm">User Space and System Space</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!ubl%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,45 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Accessing Local Variables"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Accessing Local Variables</title>
+
+<meta name="MS-HAID" content="r07_use_operation_80f32b72-6ace-4cf7-a9d5-9a24afd387d9.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.accessing_local_variables"></a>Accessing Local Variables</h1>
+</div>
+<h2><a id="ddk_debugging_bios_code_dbg"></a><a id="DDK_DEBUGGING_BIOS_CODE_DBG"></a></h2>
+<p>Local variables, like global variables, are stored in the symbol files. And as with global variables, the debugger interprets their names as addresses. They can be read and written in the same manner as global variables.  However, if you need to indicate to a command that a symbol is local, precede the symbol with a dollar sign ( $ ) and an exclamation point ( ! ), as in <code>$!var</code>.</p>
+<p>Visual Studio and WinDbg provide user interface elements that you can use (in addition to commands) to view and edit local variables. For more information, see <a href="viewing_memory__variables__and_registers_in_visual_studio.htm">Viewing and Editing Memory and Registers in Visual Studio</a> and <a href="locals_window.htm">Viewing and Editing Local Variables in WinDbg</a>.</p>
+<p>You can also use the following methods to display, change, and use local variables:</p>
+<ul>
+<li>
+<p>The <a href="dv__display_local_variables_.htm"><b>dv (Display Local Variables)</b></a> command displays the names and values of all local variables.</p>
+</li>
+<li>
+<p>The <a href="_for_each_local.htm"><b>!for_each_local</b></a> extension enables you to execute a single command repeatedly, once for each local variable.</p>
+</li>
+</ul>
+<p>However, there is one primary difference between local and global variables. When an application is executing, the meaning of local variables depends on the location of the program counter, because the scope of such variables extends only to the function in which they are defined.</p>
+<p>The debugger interprets local variables according to the <a href="changing_contexts.htm#local_context">local context</a>. By default, this context matches the location of the program counter. But the debugger can change the context. For more information about the local context, see Local Context.</p>
+<p>When the local context is changed, the Locals window is immediately updated to reflect the new collection of local variables. The <a href="dv__display_local_variables_.htm"><b>dv</b></a> command also shows the new variables. All of these variable names are then interpreted correctly by the memory commands that are described earlier. You can then read or write to these variables.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Accessing Local Variables%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

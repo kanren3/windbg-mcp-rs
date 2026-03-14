@@ -1,0 +1,88 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The Sharks Cove development board supports serial debugging over a USB cable."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Setting Up Kernel-Mode Debugging using Serial over USB in Visual Studio</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.setting_up_kernel-mode_debugging_using_serial_over_usb_in_visual_studio"></a>Setting Up Kernel-Mode Debugging using Serial over USB in Visual Studio</h1>
+</div>
+<p>The <a href="http://go.microsoft.com/fwlink/p?linkid=403168">Sharks Cove development board</a> supports serial debugging over a USB cable.</p>
+<p>To use Microsoft Visual Studio for kernel-mode debugging, you must have the Windows Driver Kit (WDK) integrated with Visual Studio. For information about how to install the integrated environment, see <a href="http://go.microsoft.com/fwlink/p?linkid=301383">Windows Driver Kit (WDK)</a>.</p>
+<p>As an alternative to using Visual Studio to set up serial debugging over a USB cable, you can do the setup manually. For more information, see <a href="setting_up_kernel-mode_debugging_using_serial_over_usb_manually_.htm">Setting Up Kernel-Mode Debugging using Serial over USB Manually</a>.</p>
+<p>The computer that runs the debugger is called the <i>host computer</i>, and the computer being debugged is called the <i>target computer</i>. In this topic, the Sharks Cove board is the target computer.</p>
+<h2><a id="Setting_up_a_Host_Computer_for_debugging_the_Sharks_Cove_board"></a><a id="setting_up_a_host_computer_for_debugging_the_sharks_cove_board"></a><a id="SETTING_UP_A_HOST_COMPUTER_FOR_DEBUGGING_THE_SHARKS_COVE_BOARD"></a>Setting up a Host Computer for debugging the Sharks Cove board</h2>
+<ol>
+<li>
+<p>On the host computer, open Device Manager. On the <b>View</b> menu, choose <b>Devices by Type</b>.</p>
+</li>
+<li>
+<p>On the Sharks Cove board, locate the debug connector. This is the micro USB connector shown in the following picture.</p><img src="images/SharksCoveDebugConnector.png" alt="Picture that shows debug connector on Sharks Cove board"/></li>
+<li>
+<p>Use a USB 2.0 cable to connect the host computer to the debug connector on the Sharks cove board.</p>
+</li>
+<li>
+<p>On the host computer, in Device Manager, two COM ports will get enumerated. Select the lowest numbered COM port. On the <b>View</b> menu, choose <b>Devices by Connection</b>. Verify that the COM port is listed under one of the USB host controllers.</p><img src="images/SerialOverUsb01.png" alt="Screen show that shows COM ports in Device Manager"/><p>Make a note of the COM port number. This is the lowest COM port number that shows under the USB host controller node. For example, in the preceding screen shot, the lowest COM port number under the USB host controller is COM3. You will need this COM port number later when you start a debugging session. If the driver is not already installed for the COM port, right click the COM port node, and choose <b>Update Driver</b>. Then select <b>Search automatically for updated driver software</b>. You will need an internet connection for this.</p>
+</li>
+</ol>
+<h2><a id="Configuring_the_host_and_target_computers"></a><a id="configuring_the_host_and_target_computers"></a><a id="CONFIGURING_THE_HOST_AND_TARGET_COMPUTERS"></a>Configuring the host and target computers</h2>
+<p>In these steps, the Sharks Cove board is the target computer.</p>
+<ol>
+<li>Begin configuring your host and target computer as described in Provision a computer for driver deployment and testing (WDK 8.1).</li>
+<li>On the host computer, in  Visual Studio, when you come to the Computer Configuration dialog box, select <b>Provision computer and choose debugger settings</b>.</li>
+<li>
+<p>For <b>Connection Type</b>, choose <b>Serial</b>.</p><img src="images/SetupSerialOverUsbVs.png" alt="Screen shot showing an example of debugger settings with values for the following fields: Connection Type, Target Name, and Bus Parameters"/><p>For <b>Baud Rate</b>, enter 115200. For <b>Port</b>, enter the name of the COM port that you noted previously in Device Manager (for example, com3). For <b>Target Port</b>, enter com1.</p>
+</li>
+<li>The configuration process takes several minutes and might automatically reboot the target computer once or twice. When the process is complete, click <b>Finish</b>.</li>
+</ol>
+<h2><a id="Starting_the_Debugging_Session"></a><a id="starting_the_debugging_session"></a><a id="STARTING_THE_DEBUGGING_SESSION"></a>Starting the Debugging Session</h2>
+<ol>
+<li>On the host computer, in Visual Studio, on the <b>Tools</b> menu, choose <b>Attach to Process</b>.</li>
+<li>For <b>Transport</b>, choose <b>Windows Kernel Mode Debugger</b>.</li>
+<li>For <b>Qualifier</b>, select the name of the target computer that you previously configured.</li>
+<li>Click <b>Attach</b>.</li>
+</ol>
+<h2><a id="Troubleshooting_Tips_for_Serial_Debugging_over_a_USB_Cable"></a><a id="troubleshooting_tips_for_serial_debugging_over_a_usb_cable"></a><a id="TROUBLESHOOTING_TIPS_FOR_SERIAL_DEBUGGING_OVER_A_USB_CABLE"></a>Troubleshooting Tips for Serial Debugging over a USB Cable</h2>
+<h3><a id="Specify_correct_COM_port_on_both_host_and_target"></a><a id="specify_correct_com_port_on_both_host_and_target"></a><a id="SPECIFY_CORRECT_COM_PORT_ON_BOTH_HOST_AND_TARGET"></a>Specify correct COM port on both host and target</h3>
+<p>On the target computer (Sharks Cove board), verify that you are using COM1 for debugging. Open a Command Prompt window as Administrator, and enter <b>bcdedit /dbgsettings</b>. The output of <b>bcdedit</b> should show <code>debugport 1</code>.</p>
+<p>On the host computer, verify that you are using the COM port that you noted earlier in Device Manager.</p>
+<ol>
+<li>On the host computer, in Visual Studio, on the <b>Driver</b> menu, choose <b>Test &gt; Configure Computers</b>.</li>
+<li>Select the name of your test computer, and click <b>Next</b>.</li>
+<li>Select <b>Provision computer and choose debugger settings</b>. Click <b>Next</b>.</li>
+<li>Verify that the correct COM port number is listed for <b>Port</b>.</li>
+</ol>
+<h3><a id="Baud_rate_must_be_the_same_on_host_and_target"></a><a id="baud_rate_must_be_the_same_on_host_and_target"></a><a id="BAUD_RATE_MUST_BE_THE_SAME_ON_HOST_AND_TARGET"></a>Baud rate must be the same on host and target</h3>
+<p>The baud rate must be 115200 on both the host and target computers.</p>
+<p> On the target computer (Sharks Cove board), open a Command Prompt window as Administrator, and enter <b>bcdedit /dbgsettings</b>. The output of <b>bcdedit</b> should show <code>baudrate 115200</code>.</p>
+<p>On the host computer, verify that you are using a baud rate of 115200.</p>
+<ol>
+<li>On the host computer, in Visual Studio, on the <b>Driver</b> menu, choose <b>Test &gt; Configure Computers</b>.</li>
+<li>Select the name of your test computer, and click <b>Next</b>.</li>
+<li>Select <b>Provision computer and choose debugger settings</b>. Click <b>Next</b>.</li>
+<li>Verify that the <b>Baud Rate</b> is 115200.</li>
+</ol>
+<h2><a id="related_topics"></a>Related topics</h2>
+<dl>
+<dt><a href="setting_up_kernel-mode_debugging_in_visual_studio.htm">Setting Up Kernel-Mode Debugging in Visual Studio</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Setting Up Kernel-Mode Debugging using Serial over USB in Visual Studio%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

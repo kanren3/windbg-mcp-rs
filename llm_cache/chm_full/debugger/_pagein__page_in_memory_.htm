@@ -1,0 +1,103 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .pagein command pages in the specified region of memory."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.pagein (Page In Memory)</title>
+
+<meta name="MS-HAID" content="r21_metacmds_L_f15dd6af-7557-480e-be99-2a30030f6758.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._pagein__page_in_memory_"></a>.pagein (Page In Memory)</h1>
+</div>
+<p>The <b>.pagein</b> command pages in the specified region of memory.</p>
+<pre class="syntax"><b>.pagein </b>[<i>Options</i>]<b> </b><i>Address</i></pre>
+<h2><a id="ddk_meta_page_in_memory_dbg"></a><a id="DDK_META_PAGE_IN_MEMORY_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Options______"></a><a id="_______options______"></a><a id="_______OPTIONS______"></a>       <i>Options</i>      </dt>
+<dd>
+<p>Any of the following options:</p>
+<p></p>
+<dl>
+<dt><a id="_p_Process"></a><a id="_p_process"></a><a id="_P_PROCESS"></a><b>/p</b><b> </b><i>Process</i></dt>
+<dd>
+<p>Specifies the address of the process that owns the memory that you want to page in. (More precisely, this parameter specifies the address of the EPROCESS block for the process.) If you omit <i>Process</i> or specify zero, the debugger uses the current process setting.  For more information about the process setting, see <a href="_process__set_process_context_.htm"><b>.process (Set Process Context)</b></a></p>
+</dd>
+<dt><a id="_f"></a><a id="_F"></a><b>/f</b></dt>
+<dd>
+<p>Forces the memory to be paged in, even if the address is in kernel memory and the version of the Microsoft Windows operating system does not support this action.</p>
+</dd>
+</dl>
+</dd>
+<dt><a id="_______Address______"></a><a id="_______address______"></a><a id="_______ADDRESS______"></a>       <i>Address</i>      </dt>
+<dd>
+<p>Specifies the address to page in.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>Kernel mode only (but not during local kernel debugging)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>Live debugging only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Platforms
+         </b></p>
+</td>
+<td>
+<p>All     </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>After you run the <b>.pagein</b> command, you must use the <a href="g__go_.htm"><b>g (Go)</b></a> command to resume program execution. After a brief time, the target computer automatically breaks into the debugger again.</p>
+<p>At this point, the address that you specify is paged in. If you use the <b>/p</b> option, the process context is also set to the specified process, exactly as if you used the <a href="_process__set_process_context_.htm"><b>.process /i Process</b></a> command. </p>
+<p>If the address is already paged in, the <b>.pagein</b> command still checks that the address is paged in and then breaks back into the debugger. If the address is invalid, this command only breaks back into the debugger.</p>
+<p>In Windows Server 2003 and Windows XP, you can page in only user-mode addresses by using <b>.pagein</b>. You can override this restriction by using the <b>/f</b> switch, but we do not recommend that you use this switch. In Windows Vista,  you can safely page in user-mode and kernel-mode memory.</p>
+<div class="alert"><b>Warning</b>    If you use <b>.pagein</b> on an address in a kernel stack in Windows Server 2003 or Windows XP, a bug check might occur.</div>
+<div> </div>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Version</p>
+</th>
+<td width="70%">
+<p>Supported in Windows XP and later versions of Windows.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.pagein (Page In Memory)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

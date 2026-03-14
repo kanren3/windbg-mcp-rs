@@ -1,0 +1,190 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="When the !analyze debugger command runs, the analysis engine can load and run extension analysis plug-ins."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IDebugFailureAnalysis2 interface</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.idebugfailureanalysis2"></a>IDebugFailureAnalysis2 interface</h1>
+</div>
+<p>When the <a href="_analyze.htm"><b>!analyze</b></a> debugger command runs, the analysis engine can load and run extension analysis plug-ins. The analysis engine creates a <i>DebugFailureAnalysis object</i> to organize data that is related to a particular analysis session.</p>
+<p> An extension analysis plug-in can access a DebugFailureAnalysis object through an <b>IDebugFailureAnalysis2</b> interface. The plug-in can inspect, alter, and enhance the information created by the default analysis. For more information, see <a href="writing_an_analysis_extension_to_extend__analyze.htm">Writing an Analysis Extension Plug-in to Extend !analyze</a>.</p>
+<h2>Members</h2>
+<p>The <b xmlns:loc="http://microsoft.com/wdcml/l10n">IDebugFailureAnalysis2</b> interface inherits from the <b>IUnknown</b> interface. <b>IDebugFailureAnalysis2</b> also has these types of members:</p>
+<ul>
+<li><a href="#methods">Methods</a></li>
+</ul>
+<h3><a id="methods"></a>Methods</h3>
+<p>The <b>IDebugFailureAnalysis2</b> interface has these methods.</p>
+<table id="memberListMethods" class="members">
+<tr>
+<th align="left" width="37%">Method</th>
+<th align="left" width="63%">Description</th>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="idebugfailureanalysis2_addbuffer.htm"><b>AddBuffer</b></a></td>
+<td align="left" width="63%">
+<p>The <a href="idebugfailureanalysis2_addbuffer.htm"><b>AddBuffer</b></a> method adds a new <a href="failure_analysis_entries.htm">FA entry</a> to a <b>DebugFailureAnalysis</b> object, and writes the bytes from a specified buffer to the data block of the new FA entry.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="idebugfailureanalysis2_addextensioncommand.htm"><b>AddExtensionCommand</b></a></td>
+<td align="left" width="63%">
+<p>The <a href="idebugfailureanalysis2_addextensioncommand.htm"><b>AddExtensionCommand</b></a> method adds a new <a href="failure_analysis_entries.htm">FA entry</a> to a <b>DebugFailureAnalysis</b> object and sets the data block of the FA entry to a specified debugger command.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="idebugfailureanalysis2_addstring.htm"><b>AddString</b></a></td>
+<td align="left" width="63%">
+<p>The <a href="idebugfailureanalysis2_addstring.htm"><b>AddString</b></a> method adds a new <a href="failure_analysis_entries.htm">FA entry</a> to a <b>DebugFailureAnalysis</b> object and sets the data block of the FA entry to a specified string.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="idebugfailureanalysis2_addulong.htm"><b>AddUlong</b></a></td>
+<td align="left" width="63%">
+<p>The <a href="idebugfailureanalysis2_addulong.htm"><b>AddUlong</b></a> method adds a new <a href="failure_analysis_entries.htm">FA entry</a>  to a <b>DebugFailureAnalysis</b> object and sets the data block of the FA entry to a specified <b>ULONG</b> value.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="idebugfailureanalysis2_addulong64.htm"><b>AddUlong64</b></a></td>
+<td align="left" width="63%">
+<p>The <a href="idebugfailureanalysis2_addulong64.htm"><b>AddUlong64</b></a> method adds a new <a href="failure_analysis_entries.htm">FA entry</a>  to a <b>DebugFailureAnalysis</b> object and sets the data block of the FA entry to a specified 64-bit value.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="idebugfailureanalysis2_get.htm"><b>Get</b></a></td>
+<td align="left" width="63%">
+<p>   The <a href="idebugfailureanalysis2_get.htm"><b>Get</b></a> method searches a <b>DebugFailureAnalysis</b> object for the first <a href="failure_analysis_entries.htm">FA entry</a> that has a specified tag.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="idebugfailureanalysis2_getbuffer.htm"><b>GetBuffer</b></a></td>
+<td align="left" width="63%">
+<p>The <a href="idebugfailureanalysis2_getbuffer.htm"><b>GetBuffer</b></a> method searches a <b>DebugFailureAnalysis</b> object for the first <a href="failure_analysis_entries.htm">FA entry</a> that has a specified tag. If it finds an FA entry with the specified tag, it gets the entry's data block.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="idebugfailureanalysis2_getdebugfatagcontrol.htm"><b>GetDebugFATagControl</b></a></td>
+<td align="left" width="63%">
+<p>The <a href="idebugfailureanalysis2_getdebugfatagcontrol.htm"><b>GetDebugFATagControl</b></a> method gets a pointer to an <a href="idebugfaentrytags.htm">IDebugFAEntryTags</a> interface, which provides access to the tags in a DebugFailureAnalysisTags object.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="idebugfailureanalysis2_getfailureclass.htm"><b>GetFailureClass</b></a></td>
+<td align="left" width="63%">
+<p>The <a href="idebugfailureanalysis2_getfailureclass.htm"><b>GetFailureClass</b></a> method gets the failure class of a <b>DebugFailureAnalysis</b> object. The failure class indicates whether the debugging session  that created the <b>DebugFailureAnalysis</b> object is a kernel mode session or a user mode session.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="idebugfailureanalysis2_getfailurecode.htm"><b>GetFailureCode</b></a></td>
+<td align="left" width="63%">
+<p>The <a href="idebugfailureanalysis2_getfailurecode.htm"><b>GetFailureCode</b></a> method gets the bug check code or exception code of a <b>DebugFailureAnalysis</b> object.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="idebugfailureanalysis2_getfailuretype.htm"><b>GetFailureType</b></a></td>
+<td align="left" width="63%">
+<p>The <a href="idebugfailureanalysis2_getfailuretype.htm"><b>GetFailureType</b></a> method gets the failure type of a <b>DebugFailureAnalysis</b> object. The failure type indicates whether the code being analyzed was running in kernel mode or user mode.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="idebugfailureanalysis2_getnext.htm"><b>GetNext</b></a></td>
+<td align="left" width="63%">
+<p>   The <a href="idebugfailureanalysis2_getnext.htm"><b>GetNext</b></a> method searches a <b>DebugFailureAnalysis</b> object for the next <a href="failure_analysis_entries.htm">FA entry</a>, after a given FA entry, that satisfies conditions specified by the <i>Tag</i> and <i>TagMask</i> parameters.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="idebugfailureanalysis2_getstring.htm"><b>GetString</b></a></td>
+<td align="left" width="63%">
+<p>The <a href="idebugfailureanalysis2_getstring.htm"><b>GetString</b></a> method searches a <b>DebugFailureAnalysis</b> object for the first <a href="failure_analysis_entries.htm">FA entry</a> that has a specified tag. If it finds an FA entry with the specified tag, it gets the ANSI string value from the entry's data block.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="idebugfailureanalysis2_getulong.htm"><b>GetUlong</b></a></td>
+<td align="left" width="63%">
+<p>The <a href="idebugfailureanalysis2_getulong.htm"><b>GetUlong</b></a> method searches a <b>DebugFailureAnalysis</b> object for the first <a href="failure_analysis_entries.htm">FA entry</a> that has a specified tag. If it finds an FA entry with the specified tag, it gets the <b>ULONG</b> value from the entry's data block.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="idebugfailureanalysis2_getulong64.htm"><b>GetUlong64</b></a></td>
+<td align="left" width="63%">
+<p>The <a href="idebugfailureanalysis2_getulong64.htm"><b>GetUlong64</b></a> method searches a <b>DebugFailureAnalysis</b> object for the first <a href="failure_analysis_entries.htm">FA entry</a> that has a specified tag. If it finds an FA entry with the specified tag, it gets the <b>ULONG64</b> value from the entry's data block.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="idebugfailureanalysis2_nextentry.htm"><b>NextEntry</b></a></td>
+<td align="left" width="63%">
+<p>The <a href="idebugfailureanalysis2_nextentry.htm"><b>NextEntry</b></a> method gets the next <a href="failure_analysis_entries.htm">FA entry</a>, after a given FA entry, in a <b>DebugFailureAnalysis</b> object.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="idebugfailureanalysis2_setbuffer.htm"><b>SetBuffer</b></a></td>
+<td align="left" width="63%">
+<p>The <a href="idebugfailureanalysis2_setbuffer.htm"><b>SetBuffer</b></a> method searches a <b>DebugFailureAnalysis</b> object for the first <a href="failure_analysis_entries.htm">FA entry</a> that has a specified tag. If it finds an FA entry with the specified tag, it overwrites the data block of the FA entry with the bytes in a specified buffer.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="idebugfailureanalysis2_setextensioncommand.htm"><b>SetExtensionCommand</b></a></td>
+<td align="left" width="63%">
+<p>The <a href="idebugfailureanalysis2_setextensioncommand.htm"><b>SetExtensionCommand</b></a> method searches a <b>DebugFailureAnalysis</b> object for the first <a href="failure_analysis_entries.htm">FA entry</a> that has a specified tag. If it finds an FA entry with the specified tag, it sets (overwrites) the data block of the FA entry to a specified extension command string.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="idebugfailureanalysis2_setstring.htm"><b>SetString</b></a></td>
+<td align="left" width="63%">
+<p>The <a href="idebugfailureanalysis2_setstring.htm"><b>SetString</b></a> method searches a <b>DebugFailureAnalysis</b> object for the first <a href="failure_analysis_entries.htm">FA entry</a> that has a specified tag. If it finds an FA entry with the specified tag, it sets (overwrites) the data block of the FA entry to a specified string value.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="idebugfailureanalysis2_setulong.htm"><b>SetUlong</b></a></td>
+<td align="left" width="63%">
+<p>The <a href="idebugfailureanalysis2_setulong.htm"><b>SetUlong</b></a> method searches a <b>DebugFailureAnalysis</b> object for the first <a href="failure_analysis_entries.htm">FA entry</a> that has a specified tag. If it finds an FA entry with the specified tag, it sets (overwrites) the data block of the FA entry to a specified <b>ULONG</b> value.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="idebugfailureanalysis2_setulong64.htm"><b>SetUlong64</b></a></td>
+<td align="left" width="63%">
+<p>The <a href="idebugfailureanalysis2_setulong64.htm"><b>SetUlong64</b></a> method searches a <b>DebugFailureAnalysis</b> object for the first <a href="failure_analysis_entries.htm">FA entry</a> that has a specified tag. If it finds an FA entry with the specified tag, it sets (overwrites) the data block of the FA entry to a specified <b>ULONG64</b> value.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Extsfns.h</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="writing_an_analysis_extension_to_extend__analyze.htm">Writing an Analysis Extension Plug-in to Extend !analyze</a></dt>
+<dt><a href="_efn_analyze.htm"><b>_EFN_Analyze</b></a></dt>
+<dt><a href="_analyze.htm"><b>!analyze</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IDebugFailureAnalysis2 interface%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

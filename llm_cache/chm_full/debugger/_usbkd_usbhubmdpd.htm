@@ -1,0 +1,50 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !usbkd.usbhubmdpd command displays a usbhub!_HUB_PORT_DATA structure if one is present in a crash dump that was generated as a result of Bug Check 0xFE."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!usbkd.usbhubmdpd</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._usbkd_usbhubmdpd"></a>!usbkd.usbhubmdpd</h1>
+</div>
+<p>The  <b>!usbkd.usbhubmdpd</b> command displays a <b>usbhub!_HUB_PORT_DATA</b> structure if one is present in a crash
+dump that was generated as a result of <a href="bug_check_0xfe__bugcode_usb_driver.htm"><b>Bug Check 0xFE</b></a>.</p>
+<pre class="syntax"><b>!usbkd.usbhubmdpd </b>[<i>PortNum</i>]</pre>
+<h2><a id="ddk__devobj_dbg"></a><a id="DDK__DEVOBJ_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______PortNum______"></a><a id="_______portnum______"></a><a id="_______PORTNUM______"></a>       <i>PortNum</i>      </dt>
+<dd>
+<p>A USB port number. If you specify a port number, this command displays the  structure (if one is present) that represents the specified port. If you do not specify a port number, this command displays the structure (if one is present) on which <a href="bug_check_0xfe__bugcode_usb_driver.htm"><b>Bug Check 0xFE</b></a> was initiated.</p>
+</dd>
+</dl>
+<h2><a id="DLL"></a><a id="dll"></a>DLL</h2>
+<p>Usbkd.dll
+     </p>
+<h2>Remarks</h2>
+<p>Use this command only when you are debugging a crash dump file that was generated as a result of <a href="bug_check_0xfe__bugcode_usb_driver.htm"><b>Bug Check 0xFE: BUGCODE_USB_DRIVER</b></a>.</p>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="usb_2_0_extensions.htm">USB 2.0 Debugger Extensions</a></dt>
+<dt><a href="http://go.microsoft.com/fwlink/p?LinkID=227351">Universal Serial Bus (USB) Drivers</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!usbkd.usbhubmdpd%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,69 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The Srcsrv.ini File"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>The Srcsrv.ini File</title>
+
+<meta name="MS-HAID" content="SymChk_e64e8848-6e99-4ced-af83-199b6c35c2dd.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.the_srcsrv_ini_file"></a>The Srcsrv.ini File</h1>
+</div>
+<p>The Srcsrv.ini file is the master list of all source control servers.  Each entry has the following format:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>MYSERVER=ServerInfo</pre>
+</td>
+</tr>
+</table></span></div>
+<p>When using Perforce, the <i>ServerInfo</i> consists of the full network path to the server, followed by a colon, followed by the port number it uses.  For example:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>MYSERVER=machine.corp.company.com:1666</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Srcsrv.ini is a required file when you are actually source indexing a build using the modules shipped with this package.  This entry creates an alias that is used to describe the server info.  The value should be unique for every server that you support.</p>
+<p>This file can also be installed on the computer running the debugger.  When SrcSrv starts, it looks at Srcsrv.ini for values; these values override the information contained in the .pdb file.  This enables users to configure a debugger to use an alternative source control server at debug time.  However, if you manage your servers well and do not rename them, there should be no need to include this file with your client debugger installations.</p>
+<p>This file also serves other purposes on the client side.  For more information, see the sample Srcsrv.ini file installed with SrcSrv tools.</p>
+<h3><a id="using_a_different_location_or_file_name"></a><a id="USING_A_DIFFERENT_LOCATION_OR_FILE_NAME"></a>Using a Different Location or File Name</h3>
+<p>By default, SrcSrv uses as its master configuration file the file named Srcsrv.ini, located in the srcsrv subdirectory of the Debugging Tools for Windows installation directory.</p>
+<p>You can specify a different file for configuration by setting the SRCSRV_INI_FILE environment variable equal to the full path and file name of the desired file.</p>
+<p>For example, if several people want to share a single configuration file, they could place it on a share accessible to all of their systems, and then set an environment variable like the following: </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>set SRCSRV_INI_FILE=\\ourserver\ourshare\bestfile.txt</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20The Srcsrv.ini File%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

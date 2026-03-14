@@ -1,0 +1,45 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Security During Remote Debugging"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Security During Remote Debugging</title>
+
+<meta name="MS-HAID" content="r11_security_7db68a09-a3b2-45b5-b6da-7bcd8589eb05.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.security_during_remote_debugging"></a>Security During Remote Debugging</h1>
+</div>
+<h2><a id="ddk_security_during_remote_debugging_dbg"></a><a id="DDK_SECURITY_DURING_REMOTE_DEBUGGING_DBG"></a></h2>
+<p>There are two ways to increase security during remote debugging: by restricting who can connect to your session and by restricting the powers of someone who does connect.</p>
+<h3><a id="controlling_access_to_the_debugging_session"></a><a id="CONTROLLING_ACCESS_TO_THE_DEBUGGING_SESSION"></a>Controlling Access to the Debugging Session</h3>
+<p>If you are performing <a href="remote_debugging_through_the_debugger.htm">remote debugging through the debugger</a>, or using a <a href="process_servers__user_mode_.htm">process server</a> or <a href="kd_connection_servers__kernel_mode_.htm">KD connection server</a>, any computer on your local network can attempt to attach to your debugging session.</p>
+<p>If you are using the TCP, 1394, COM, or named pipe protocols, you can require the Debugging Client to supply a password. However, this password is not encrypted during transmission, and therefore these protocols are not secure.</p>
+<p>If you want your Debugging Server to be secure, you must use secure sockets layer (SSL) or secure pipe (SPIPE) protocol.</p>
+<p>If you are performing <a href="remote_debugging_through_remote_exe.htm">remote debugging through remote.exe</a>, you can use the <b>/u</b> parameter to prohibit connections from unauthorized users.</p>
+<h3><a id="restricting_the_powers_of_the_client"></a><a id="RESTRICTING_THE_POWERS_OF_THE_CLIENT"></a>Restricting the Powers of the Client</h3>
+<p>If you are setting up a kernel-mode debugging session, you can restrict the debugger's ability to interfere with the host machine by using <a href="secure_mode.htm">Secure Mode</a>.</p>
+<p>In user mode, Secure Mode is not available. You can stop an intrusive client from issuing Microsoft MS-DOS commands and running external programs by issuing the <a href="_noshell__prohibit_shell_commands_.htm"><b>.noshell (Prohibit Shell Commands)</b></a> command. However, there are many other ways for a client to interfere with your computer.</p>
+<p>Note that both Secure Mode and <b>.noshell</b> will prevent both the Debugging Client and the Debugging Server from taking certain actions. There is no way to place a restriction on the client but not on the server.</p>
+<h3><a id="forgotten_process_servers"></a><a id="FORGOTTEN_PROCESS_SERVERS"></a>Forgotten Process Servers</h3>
+<p>When you start a process server on a remote machine, the process server runs silently.</p>
+<p>If you perform remote debugging through this process server and then end the session, the process server continues to run.</p>
+<p>A forgotten process server is a potential target for an attack. You should always shut down an unneeded process server. Use the Kill.exe utility or Task Manager to terminate the process server.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Security During Remote Debugging%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

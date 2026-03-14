@@ -1,0 +1,142 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !usbkd.usblist command displays a linked list of structures of a specified type."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!usbkd.usblist</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._usbkd_usblist"></a>!usbkd.usblist</h1>
+</div>
+<p>The  <b>!usbkd.usblist</b> command displays a linked list of structures of a specified type. </p>
+<pre class="syntax"><b>!usbkd.usblist </b><i>ListAddr</i><b>, </b><i>ListType</i></pre>
+<h2><a id="ddk__devobj_dbg"></a><a id="DDK__DEVOBJ_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______ListAddr______"></a><a id="_______listaddr______"></a><a id="_______LISTADDR______"></a>       <i>ListAddr</i>      </dt>
+<dd>
+<p>Address of a linked list of structures. To find addresses of linked lists maintained by the USB port driver, use <a href="_usbkd_usbhcdext.htm"><b>!usbhcdext</b></a>. To find addresses of linked list maintained by the USB hub driver, use <a href="_usbkd_usbhubext.htm"><b>!usbhubext</b></a>.</p>
+</dd>
+<dt><a id="_______ListType______"></a><a id="_______listtype______"></a><a id="_______LISTTYPE______"></a>       <i>ListType</i>      </dt>
+<dd>
+<p>One of the following list types.</p>
+<table>
+<tr>
+<th>List type</th>
+<th>Structure</th>
+</tr>
+<tr>
+<td><b>BC</b></td>
+<td><b>usbport!_BUS_CONTEXT</b></td>
+</tr>
+<tr>
+<td><b>EP</b></td>
+<td><b>usbport!_HCD_ENDPOINT</b></td>
+</tr>
+<tr>
+<td><b>TT</b></td>
+<td><b>usbport!_TRANSACTION_TRANSLATOR</b></td>
+</tr>
+<tr>
+<td><b>DL</b></td>
+<td><b>usbport!_USBD_DEVICE_HANDLE</b></td>
+</tr>
+<tr>
+<td><b>PL</b></td>
+<td><b>usbhub!_DEVICE_EXTENSION_PDO</b></td>
+</tr>
+<tr>
+<td><b>EL</b></td>
+<td><b>usbhub!_HUB_EXCEPTION_RECORD</b></td>
+</tr>
+<tr>
+<td><b>RL</b></td>
+<td><b>usbhub!_HUB_REFERENCE_LIST_ENTRY</b></td>
+</tr>
+<tr>
+<td><b>TL</b></td>
+<td><b>usbhub!_HUB_TIMER_OBJECT</b></td>
+</tr>
+<tr>
+<td><b>WI</b></td>
+<td><b>usbhub!_HUB_WORKITEM</b></td>
+</tr>
+<tr>
+<td><b>IO</b></td>
+<td><b>usbhub!_IO_LIST_ENTRY</b></td>
+</tr>
+<tr>
+<td><b>LA</b></td>
+<td><b>usbhub!_LATCH_LIST_ENTRY</b></td>
+</tr>
+<tr>
+<td><b>CL</b></td>
+<td><b>usbhub!_PORT_CHANGE_CONTEXT</b></td>
+</tr>
+<tr>
+<td><b>BL</b></td>
+<td><b>usbhub!_SSP_BUSY_HANDLE</b></td>
+</tr>
+</table>
+<p> </p>
+</dd>
+</dl>
+<h2><a id="DLL"></a><a id="dll"></a>DLL</h2>
+<p>Usbkd.dll
+     </p>
+<h2>Examples</h2>
+<p>Here is one way to find the address of a linked list. First enter <a href="_usbkd_usb2tree.htm"><b>!usbkd.usb2tree</b></a>.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !usbkd.usb2tree
+...
+2)!ehci_info ffffe00001ca11a0 !devobj ffffe00001ca1050 ...
+   ...</code></pre>
+<p>In the preceding output, the address of the device extension of the FDO is displayed as the argument of the <a href="debugger_markup_language_commands.htm">DML</a> command <b>!ehci_info ffffe00001ca11a0</b>.</p>
+<p>Either click the DML command  or pass the address of the device extension to <b>!usbhcdext</b>.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !usbkd.usbhcdext ffffe00001ca11a0
+
+HC Flavor 1000 	FDO ffffe00001ca1050
+Root Hub: FDO ffffe00002320050 !hub2_info ffffe000023201a0
+...
+DeviceHandleList: !usblist ffffe00001ca23b8, DL
+...</code></pre>
+<p>In the preceding output, ffffe00001ca23b8 is the address of a linked list of <b>usbport!_USBD_DEVICE_HANDLE</b> structures.</p>
+<p>Now pass the address of the linked list to <b>!usblist</b>.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !usblist ffffe00001ca23b8, DL
+list: ffffe00001ca23b8 DL
+----------
+!usbdevh ffffe000020f9590
+SSP [IdleReady] (0)
+PCI\VEN_Xxxx  Xxxx Corporation
+Root Hub
+DriverName :  
+----------
+!usbdevh ffffe00001bce250
+SSP [IdleReady] (0)
+USB\Xxxx  Xxxx Corporation
+Speed: HIGH, Address:  1, PortPathDepth: 1, PortPath: [3 0 0 0 0 0]
+DriverName :\Driver\USBSTOR      !devstack ffffe000053ef2a0
+----------</code></pre>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="usb_2_0_extensions.htm">USB 2.0 Debugger Extensions</a></dt>
+<dt><a href="http://go.microsoft.com/fwlink/p?LinkID=227351">Universal Serial Bus (USB) Drivers</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!usbkd.usblist%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,83 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .ttime command displays the running times for a thread."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.ttime (Display Thread Times)</title>
+
+<meta name="MS-HAID" content="r22_metacmds_S_2fa3c9d4-ae93-48f9-b8e3-092b1cbb02cf.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._ttime__display_thread_times_"></a>.ttime (Display Thread Times)</h1>
+</div>
+<p>The <b>.ttime</b> command displays the running times for a thread.</p>
+<pre class="syntax">
+    <b>.ttime</b> 
+</pre>
+<h2><a id="ddk_meta_display_thread_times_dbg"></a><a id="DDK_META_DISPLAY_THREAD_TIMES_DBG"></a></h2>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>user mode only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets</b></p>
+</td>
+<td>
+<p>live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Platforms
+         </b></p>
+</td>
+<td>
+<p>x86 only</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>This command only works in user mode. In kernel mode you should use <a href="_thread.htm"><b>!thread</b></a> instead. This command works with user-mode minidumps as long as they were created with the <b>/mt</b> or <b>/ma</b> options; see <a href="minidumps.htm">Minidumps</a> for details.</p>
+<p>The <b>.ttime</b> command shows the creation time of the thread, as well as the amount of time it has been running in kernel mode and in user mode.</p>
+<p>Here is an example:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; .ttime
+Created: Sat Jun 28 17:58:42 2003
+Kernel:  0 days 0:00:00.131
+User:    0 days 0:00:02.109</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.ttime (Display Thread Times)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

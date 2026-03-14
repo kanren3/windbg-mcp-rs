@@ -1,0 +1,65 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !dbgprint extension displays a string that was previously sent to the DbgPrint buffer."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!dbgprint</title>
+
+<meta name="MS-HAID" content="r26_exts_kernel_A_da744a34-04ee-4dd7-8bdc-a0419cdb60c1.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._dbgprint"></a>!dbgprint</h1>
+</div>
+<p>The <b>!dbgprint</b> extension displays a string that was previously sent to the <b>DbgPrint</b> buffer.</p>
+<pre class="syntax"><b>!dbgprint</b></pre>
+<h2><a id="ddk__dbgprint_dbg"></a><a id="DDK__DBGPRINT_DBG"></a></h2>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Windows 2000</b></p>
+</td>
+<td>
+<p>
+          Kdextx86.dll
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Windows XP and later</b></p>
+</td>
+<td>
+<p>
+          Kdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For information about <b>DbgPrint</b>, <b>KdPrint</b>, <b>DbgPrintEx</b>, and <b>KdPrintEx</b>, see <a href="sending_output_to_the_debugger.htm">Sending Output to the Debugger</a>.</p>
+<h2>Remarks</h2>
+<p>The kernel-mode routines <b>DbgPrint</b>, <b>KdPrint</b>, <b>DbgPrintEx</b>, and <b>KdPrintEx</b> send a formatted string to a buffer on the target computer. The string is automatically displayed in the Debugger Command window on the host computer unless such printing has been disabled.</p>
+<p>Generally, messages sent to this buffer are displayed automatically in the Debugger Command window. However, this display can be disabled through the Global Flags (gflags.exe) utility. Moreover, this display does not automatically appear during local kernel debugging. For more information, see <a href="reading_and_filtering_debugging_messages.htm#the_dbgprint_buffer">The DbgPrint Buffer</a>. </p>
+<p>The <b>!dbgprint</b> extension causes the contents of this buffer to be displayed (regardless of whether automatic printing has been disabled). It will not show messages that have been filtered out based on their component and importance level. (For details on this filtering, see <a href="reading_and_filtering_debugging_messages.htm">Reading and Filtering Debugging Messages</a>.)</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!dbgprint%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,68 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The Remote tool, Remote.exe, is a command-line tool that lets you run and control any console program from a remote computer."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Remote Tool</title>
+
+<meta name="MS-HAID" content="Remote_bf30d515-f221-4419-bea3-294e559f66ed.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.remote_tool"></a>Remote Tool</h1>
+</div>
+<p>
+<p>The Remote tool, Remote.exe, is a command-line tool that lets you run and control any console program from a remote computer.</p>
+</p>
+<h2><a id="Where_to_get_the_Remote_tool"></a><a id="where_to_get_the_remote_tool"></a><a id="WHERE_TO_GET_THE_REMOTE_TOOL"></a>Where to get the Remote tool</h2>
+<p>Remote.exe is included in <a href="introduction6.htm">Debugging Tools for Windows</a>.</p>
+<h2><a id="ddk_remote_tool_dtools"></a><a id="DDK_REMOTE_TOOL_DTOOLS"></a>Remote tool components</h2>
+<p>The Remote tool includes the following components:</p>
+<ul>
+<li>
+<p>A server application that starts a console program and opens a named pipe for client connections.</p>
+</li>
+<li>
+<p>A client application that establishes a connection to a server. Commands typed on the client computer are sent to the console application on the server, and the remote client displays the output from the server's console window. </p>
+</li>
+<li>
+<p>A query feature that lists the remote sessions running on a server computer.</p>
+</li>
+</ul>
+<p>With the Remote tool, you can start multiple server sessions on a single computer where multiple clients can connect to each session. The sessions are limited only by the computer's resources.</p>
+<p>This is an older tool that has been eclipsed by more sophisticated tools, primarily Remote Desktop. However, because it is simple and uses very few resources, it is still widely used, typically for remote debugging.</p>
+<p>The Remote tool requires that commands be submitted on both the local and remote computers. As such, to use this tool on a computer without a local user, you must develop an alternate way to submit the commands and to restart the computer, if necessary.</p>
+<p>The Remote tool can compromise security on your computer, because it does not authenticate users or use Microsoft Windows permissions. By default, any remote computer that can connect and provide the session name can use the named pipe that this tool creates, although you can use Remote tool options to include and exclude particular users and groups.</p>
+<p>This section includes:</p>
+<dl>
+<dd>
+<p><a href="remote_tool_concepts.htm">Remote Tool Concepts</a></p>
+</dd>
+<dd>
+<p><a href="remote_tool_commands.htm">Remote Tool Commands</a></p>
+</dd>
+<dd>
+<p><a href="remote_tool_examples.htm">Remote Tool Examples</a></p>
+</dd>
+</dl>
+<h2><a id="related_topics"></a>Related topics</h2>
+<dl>
+<dt><a href="extra_tools.htm">Tools Included in Debugging Tools for Windows</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Remote Tool%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

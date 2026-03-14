@@ -1,0 +1,90 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .dvalloc command causes Windows to allocate additional memory to the target process."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.dvalloc (Allocate Memory)</title>
+
+<meta name="MS-HAID" content="r19_metacmds_A_ef2733c1-4b7f-42e3-9217-76a1fb37702a.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._dvalloc__allocate_memory_"></a>.dvalloc (Allocate Memory)</h1>
+</div>
+<p>The <b>.dvalloc</b> command causes Windows to allocate additional memory to the target process.</p>
+<pre class="syntax">
+    <b>.dvalloc </b>[<i>Options</i>]<b> </b><i>Size</i> 
+</pre>
+<h2><a id="ddk_meta_allocate_memory_dbg"></a><a id="DDK_META_ALLOCATE_MEMORY_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Options______"></a><a id="_______options______"></a><a id="_______OPTIONS______"></a>       <i>Options</i>      </dt>
+<dd>
+<p>Can be any number of the following options:</p>
+<p></p>
+<dl>
+<dt><a id="_b_BaseAddress"></a><a id="_b_baseaddress"></a><a id="_B_BASEADDRESS"></a><b>/b</b><b> </b><i>BaseAddress</i></dt>
+<dd>
+<p>Specifies the virtual address of the beginning of the allocation.</p>
+</dd>
+<dt><a id="_r"></a><a id="_R"></a><b>/r</b></dt>
+<dd>
+<p>Reserves the memory in the virtual address space but does not actually allocate any physical memory. If this option is used, the debugger calls <b>VirtualAllocEx</b> with the <i>flAllocationType</i> parameter equal to MEM_RESERVE. If this option is not used, the value MEM_COMMIT | MEM_RESERVE is used. See the Microsoft Windows SDK for details.</p>
+</dd>
+</dl>
+</dd>
+<dt><a id="_______Size______"></a><a id="_______size______"></a><a id="_______SIZE______"></a>       <i>Size</i>      </dt>
+<dd>
+<p>Specifies the amount of memory to be allocated, in bytes. The amount of memory available to the program will equal <i>Size</i>. The amount of memory actually used may be slightly larger, since it is always a whole number of pages.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>user mode only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>live debugging only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Platforms
+         </b></p>
+</td>
+<td>
+<p>all </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>The <b>.dvalloc</b> command calls <b>VirtualAllocEx</b> to allocate new memory for the target process. The allocated memory permits reading, writing, and execution.</p>
+<p>To free this memory, use <a href="_dvfree__free_memory_.htm"><b>.dvfree (Free Memory)</b></a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.dvalloc (Allocate Memory)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

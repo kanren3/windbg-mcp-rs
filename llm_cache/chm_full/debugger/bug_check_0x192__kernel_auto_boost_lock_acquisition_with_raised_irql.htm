@@ -1,0 +1,63 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The KERNEL_AUTO_BOOST_LOCK_ACQUISITION_WITH_RAISED_IRQL bug check has a value of 0x00000192. This indicates that a lock tracked by AutoBoost was acquired while executing at DISPATCH_LEVEL or above."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0x192: KERNEL_AUTO_BOOST_LOCK_ACQUISITION_WITH_RAISED_IRQL</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0x192__kernel_auto_boost_lock_acquisition_with_raised_irql"></a>Bug Check 0x192: KERNEL_AUTO_BOOST_LOCK_ACQUISITION_WITH_RAISED_IRQL</h1>
+</div>
+<p>The KERNEL_AUTO_BOOST_LOCK_ACQUISITION_WITH_RAISED_IRQL bug check has a value of 0x00000192. This indicates that a lock tracked by AutoBoost was acquired while executing at DISPATCH_LEVEL or
+above.</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2>KERNEL_AUTO_BOOST_LOCK_ACQUISITION_WITH_RAISED_IRQL Parameters</h2>
+<p>The following parameters are displayed on the blue screen.</p>
+<table>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>1</td>
+<td>The address of the thread</td>
+</tr>
+<tr>
+<td>2</td>
+<td>The lock address</td>
+</tr>
+<tr>
+<td>3</td>
+<td>The IRQL at which the lock was acquired</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Reserved</td>
+</tr>
+</table>
+<p> </p>
+<h2>Cause</h2>
+<p>The caller cannot be blocking on a lock above APC_LEVEL because the
+        lock may be held exclusively by the interrupted thread, which would
+        cause a deadlock.</p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

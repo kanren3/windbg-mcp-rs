@@ -1,0 +1,99 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The t command executes a single instruction or source line and optionally displays the resulting values of all registers and flags. When subroutine calls or interrupts occur, each of their steps is also traced."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>t (Trace)</title>
+
+<meta name="MS-HAID" content="r18_cmds_S_fe6d30ae-7c39-40db-a971-2aae584c13d3.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.t__trace_"></a>t (Trace)</h1>
+</div>
+<p>The <b>t</b> command executes a single instruction or source line and optionally displays the resulting values of all registers and flags. When subroutine calls or interrupts occur, each of their steps is also traced.</p>
+<p>User-Mode</p>
+<pre class="syntax">[<b>~</b>Thread] <b>t</b> [<b>r</b>] [= StartAddress] [Count] [<b>"</b>Command<b>"</b>] 
+</pre>
+<p>Kernel-Mode</p>
+<pre class="syntax">
+    <b>t</b> [<b>r</b>] [= StartAddress] [Count] [<b>"</b>Command<b>"</b>] 
+</pre>
+<h2><a id="ddk_cmd_trace_dbg"></a><a id="DDK_CMD_TRACE_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Thread______"></a><a id="_______thread______"></a><a id="_______THREAD______"></a>       <i>Thread</i>      </dt>
+<dd>
+<p>Specifies threads to thaw. All other threads are frozen. For more information about this syntax, see <a href="thread_syntax.htm">Thread Syntax</a>. You can specify threads only in user mode.</p>
+</dd>
+<dt><a id="_______r______"></a><a id="_______R______"></a>       <b>r</b>      </dt>
+<dd>
+<p>Turns on and off the display of registers and flags. By default, the registers and flags are displayed. You can disable register display by using the <a href="p__step_.htm"><b>pr</b></a>, <b>tr</b>, or .prompt_allow -reg commands. All three of these commands control the same setting and you can use any of them to override any previous use of these commands.  </p>
+<p>You can also disable register display by using the l-os command.  This setting is separate from the other three commands. To control <u>which</u> registers and flags are displayed, use the <a href="rm__register_mask_.htm"><b>rm (Register Mask)</b></a> command.</p>
+</dd>
+<dt><a id="_______StartAddress______"></a><a id="_______startaddress______"></a><a id="_______STARTADDRESS______"></a>       <i>StartAddress</i>      </dt>
+<dd>
+<p>Specifies the address where execution should begin. If you do not use <i>StartAddress</i>, execution begins at the instruction that the instruction pointer points to. For more information about the syntax, see <a href="address_and_address_range_syntax.htm">Address and Address Range Syntax</a>.</p>
+</dd>
+<dt><a id="_______Count______"></a><a id="_______count______"></a><a id="_______COUNT______"></a>       <i>Count</i>      </dt>
+<dd>
+<p>Specifies the number of instructions or source lines to trace through before stopping. Each step is displayed as a separate action in the <a href="debugger_command_window.htm">Debugger Command window</a>. The default value is one.</p>
+</dd>
+<dt><a id="_______Command______"></a><a id="_______command______"></a><a id="_______COMMAND______"></a>       <i>Command</i>      </dt>
+<dd>
+<p>Specifies a debugger command to execute after the trace is performed. This command is executed before the standard <b>t</b> results are displayed. If you also use <i>Count</i>, this command is executed after all tracing is complete (but before the results from the final trace are displayed).</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>Live debugging only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about how to issue the <b>t</b> command and an overview of related commands, see <a href="controlling_the_target.htm">Controlling the Target</a>. </p>
+<h2>Remarks</h2>
+<p>When you specify <i>Count</i>, each instruction is displayed as it is stepped through.</p>
+<p>Each trace executes a single assembly instruction or a single source line, depending on whether the debugger is in assembly mode or source mode.  Use the <a href="l___l___set_source_options_.htm"><b>l+t</b></a> and l-t commands or the buttons on the WinDbg toolbar to switch between these modes.</p>
+<p>If you want to trace most function calls but skip certain calls, you can use <a href="_step_filter__set_step_filter_.htm"><b>.step_filter (Set Step Filter)</b></a> to indicate which calls to step over.</p>
+<p>You can use the <b>t</b> command to trace instructions in ROM.</p>
+<p>When you are quickly tracing many times in WinDbg, the debugging information windows are updated after each trace.  If this update causes slower response time, use <a href="_suspend_ui__suspend_windbg_interface_.htm"><b>.suspend_ui (Suspend WinDbg Interface)</b></a> to temporarily suspend the updating of these windows.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20t (Trace)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

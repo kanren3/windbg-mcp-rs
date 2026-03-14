@@ -1,0 +1,131 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !amli dns extension displays an ACPI namespace object."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!amli dns</title>
+
+<meta name="MS-HAID" content="r33_exts_ACPI_6053e299-7e6a-4401-a760-385611d5c8d4.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._amli_dns"></a>!amli dns</h1>
+</div>
+<p>The <b>!amli dns</b> extension displays an ACPI namespace object.</p>
+<p>Syntax</p>
+<pre class="syntax"><b>!amli dns </b>[<b>/s</b>] [<i>Name</i> | <i>Address</i>]</pre>
+<h2><a id="ddk__amli_dns_dbg"></a><a id="DDK__AMLI_DNS_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="________s______"></a><a id="________S______"></a>       <b>/s</b>      </dt>
+<dd>
+<p>Causes the entire namespace subtree under the specified object to be displayed recursively.</p>
+</dd>
+<dt><a id="_______Name______"></a><a id="_______name______"></a><a id="_______NAME______"></a>       <i>Name</i>      </dt>
+<dd>
+<p>Specifies the namespace path.</p>
+</dd>
+<dt><a id="_______Address______"></a><a id="_______address______"></a><a id="_______ADDRESS______"></a>       <i>Address</i>      </dt>
+<dd>
+<p>Specifies the address of the namespace node.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<p>
+       
+          Kdexts.dll</p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For information about related commands and their uses, see <a href="the_amli_debugger.htm">The AMLI Debugger</a>.</p>
+<h2>Remarks</h2>
+<p>If neither <i>Name</i> nor <i>Address</i> is specified, the entire ACPI namespace tree is displayed recursively. The <b>/s</b> parameter is always assumed in this case, even if it is not specified.</p>
+<p>This command is useful for determining what a particular namespace object is&#8212;whether it is a method, a field unit, a device, or another type of object.</p>
+<p>Without the <b>/s</b> parameter, this extension is equivalent to the <a href="_nsobj.htm"><b>!nsobj</b></a> extension. With the <b>/s</b> parameter, it is equivalent to the <a href="_nstree.htm"><b>!nstree</b></a> extension.</p>
+<p>Here are some examples. The following command displays the namespace for the object <b>bios</b>:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>AMLI(? for help)-&gt; dns \bios
+
+ACPI Name Space: \BIOS (80E5F378)
+OpRegion(BIOS:RegionSpace=SystemMemory,Offset=0xfcb07500,Len=2816)</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The following command displays the namespace for the object _BST, and the tree subordinate to it:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; !amli dns /s \_sb.pci0.isa.bat1._bst
+
+ACPI Name Space: \_SB.PCI0.ISA.BAT1._BST (c29c2044)
+Method(_BST:Flags=0x0,CodeBuff=c29c20a5,Len=103)</pre>
+</td>
+</tr>
+</table></span></div>
+<p>To display the namespace for the device BAT1, type:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; !amli dns /s \_sb.pci0.isa.bat1</pre>
+</td>
+</tr>
+</table></span></div>
+<p>To display the namespace of everything subordinate to the DOCK device, type:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; !amli dns /s \_sb.pci0.dock</pre>
+</td>
+</tr>
+</table></span></div>
+<p>To display the namespace subordinate to the _DCK method, type:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; !amli dns /s \_sb.pci0.dock._dck</pre>
+</td>
+</tr>
+</table></span></div>
+<p>To display the entire namespace, type:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; !amli dns</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!amli dns%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,86 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Monitoring Events"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Monitoring Events</title>
+
+<meta name="MS-HAID" content="Engine_DG_d6c1b024-ac66-457c-aaf9-913336fdfce5.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.monitoring_events"></a>Monitoring Events</h1>
+</div>
+<h2><a id="ddk_monitoring_events_dbx"></a><a id="DDK_MONITORING_EVENTS_DBX"></a></h2>
+<p>For an overview of events in the <a href="introduction.htm#debugger_engine">debugger engine</a>, see <a href="events.htm">Events</a>.</p>
+<p>Events occurring in a target or the debugger engine may be monitored using the <a href="idebugeventcallbacks.htm">IDebugEventCallbacks</a> interface.  An <b>IDebugEventCallbacks</b> object may be registered with a client using <a href="seteventcallbacks.htm"><i>SetEventCallbacks</i></a>.  Each client can only have at most one <b>IDebugEventCallbacks</b> object registered with it.</p>
+<p>When an <b>IDebugEventCallbacks</b> object is registered with a client, the engine will call the object's <a href="idebugeventcallbacks_getinterestmask.htm"><b>IDebugEventCallbacks::GetInterestMask</b></a> to determine which events the object is interested in.  Only events in which the object is interested will be sent to it.</p>
+<p>For each type of event, the engine calls a corresponding callback method on <a href="idebugeventcallbacks.htm">IDebugEventCallbacks</a>.  For events from the target, the <a href="debug_status_xxx.htm"><b>DEBUG_STATUS_XXX</b></a> value returned from these calls specifies how the execution of the target should proceed.  The engine collects these return values from each <b>IDebugEventCallbacks</b> object it calls and acts on the one with the highest precedence.</p>
+<h3><a id="events_from_the_target_that_break_into_the_debugger_by_default"></a><a id="EVENTS_FROM_THE_TARGET_THAT_BREAK_INTO_THE_DEBUGGER_BY_DEFAULT"></a>Events from the Target That Break into the Debugger by Default</h3>
+<p>The following events break into the debugger by default:</p>
+<ul>
+<li>
+<p>Breakpoint Events</p>
+</li>
+<li>
+<p>Exception Events (not documented here)</p>
+</li>
+<li>
+<p>System Error</p>
+</li>
+</ul>
+<h3><a id="events_from_the_target_that_do_not_break_into_the_debugger_by_default"></a><a id="EVENTS_FROM_THE_TARGET_THAT_DO_NOT_BREAK_INTO_THE_DEBUGGER_BY_DEFAULT"></a>Events from the Target that Do Not Break into the Debugger by Default</h3>
+<p>The following events do not break into the debugger by default:</p>
+<ul>
+<li>
+<p>Create Process Event</p>
+</li>
+<li>
+<p>Exit Process Event</p>
+</li>
+<li>
+<p>Create Thread Event</p>
+</li>
+<li>
+<p>Exit Thread Event</p>
+</li>
+<li>
+<p>Load Module Event</p>
+</li>
+<li>
+<p>Unload Module Event</p>
+</li>
+</ul>
+<h3><a id="internal_engine_changes"></a><a id="INTERNAL_ENGINE_CHANGES"></a>Internal Engine Changes</h3>
+<p>The following are not actual events, but are merely internal engine changes:</p>
+<ul>
+<li>
+<p>Target Change</p>
+</li>
+<li>
+<p>Engine Change</p>
+</li>
+<li>
+<p>Engine Symbol Change</p>
+</li>
+<li>
+<p>Session Status Change</p>
+</li>
+</ul>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Monitoring Events%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

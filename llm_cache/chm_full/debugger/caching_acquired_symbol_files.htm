@@ -1,0 +1,91 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Caching Acquired Symbol Files"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Caching Acquired Symbol Files</title>
+
+<meta name="MS-HAID" content="r09_symbols_27c283e7-5fb1-4a06-9540-ea7ba4374312.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.caching_acquired_symbol_files"></a>Caching Acquired Symbol Files</h1>
+</div>
+<p>Typically, SymProxy caches the files that it acquires in the directory designated within Internet Information Services (IIS) as the virtual root for the associated Web site.  Then IIS makes the file available to the client debugger.  Because the debugger cannot open a file directly from HTTP, it copies the file to a local cache, specified by the symbol path:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>srv*c:\localcache*http://server/symbols</pre>
+</td>
+</tr>
+</table></span></div>
+<p>In this example, the client debugger copies the file to c:\localcache.  In a situation such as this, the file is copied twice - once by SymProxy to the virtual root of the Web site, and again by the debugger to its local cache.</p>
+<p>It is possible to avoid the second copy operation and speed up processing.  To do this, you must first  share the virtual root of the Web site as a UNC path that can be accessed by the debuggers.  For sake of example,  this path is named \\server\symbols.  You must then remove the IIS configuration for MIME types:</p>
+<p class="proch"><img src="../common/wedge.gif" alt=""/><b>To remove the IIS configuration for MIME types
+      
+     </b></p>
+<ol>
+<li>
+<p>From <b>Administrative Tools</b> open <b>Internet Information Services (IIS) Manager</b>.</p>
+</li>
+<li>
+<p>Expand <b>Web Sites</b>.</p>
+</li>
+<li>
+<p>Right-click <b>Default Web Site</b>.</p>
+</li>
+<li>
+<p>Right-click the <b>Symbols</b> virtual directory and select <b>Properties</b>.</p>
+</li>
+<li>
+<p>Click the <b>HTTP Headers</b> tab.</p>
+</li>
+<li>
+<p>Click <b>MIME Types</b> .</p>
+</li>
+<li>
+<p>Select all types in the list box labeled <b>Registered MIME Types</b>.</p>
+</li>
+<li>
+<p>Click <b>Remove</b> .</p>
+</li>
+<li>
+<p>To exit the <b>MIME Types</b> dialog, click <b>OK</b>.</p>
+</li>
+<li>
+<p>To exit <b>Symbols Properties</b>, click <b>OK</b>.</p>
+</li>
+</ol>
+<p>This causes IIS to return <b>file not found</b> to the debugging client for all transactions on the Web site.  However, it does not prevent SymProxy from populating the virtual root with the file.</p>
+<p>After you remove the IIS configuration for MIME types, configure the debugger clients to look for symbols first in the HTTP store and in the share that maps to the virtual root of the store with the command:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>srv**http://server/symbols;srv*\\server\symbols</pre>
+</td>
+</tr>
+</table></span></div>
+<p>In the preceding example, the first element of the symbol path (srv**http://server/symbols) says to get files from the HTTP store and copy them to the default symbol store as a local cache.  The specified cache is of no importance because no file is ever received from the HTTP store.  After this failure, it attempts to obtain the file from the actual location of the virtual root of the store (srv*\\server\symbols).  This attempt succeeds because the file is copied to that location as a side effect of the previous path processing.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Caching Acquired Symbol Files%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

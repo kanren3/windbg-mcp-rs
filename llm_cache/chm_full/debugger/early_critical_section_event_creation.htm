@@ -1,0 +1,70 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Early critical section event creation"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Early critical section event creation</title>
+
+<meta name="MS-HAID" content="GFlags_e572ef51-5064-4701-b269-a19005c6e7ac.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.early_critical_section_event_creation"></a>Early critical section event creation</h1>
+</div>
+<h2><a id="ddk_early_critical_section_event_creation_dtools"></a><a id="DDK_EARLY_CRITICAL_SECTION_EVENT_CREATION_DTOOLS"></a></h2>
+<p>The <b>Early critical section event creation</b> flag creates event handles when a critical section is initialized, rather than waiting until the event is needed. </p>
+<table>
+<tr>
+<td>
+<p><b>Abbreviation</b></p>
+</td>
+<td>
+<p>cse</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Hexadecimal value</b></p>
+</td>
+<td>
+<p>0x10000000</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Symbolic Name</b></p>
+</td>
+<td>
+<p>FLG_CRITSEC_EVENT_CREATION</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Destination</b></p>
+</td>
+<td>
+<p>System-wide registry entry, kernel flag, image file registry entry</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="comments"></a><a id="COMMENTS"></a>Comments</h3>
+<p>When Windows cannot create an event, it generates the exception during initialization and the calls to enter and leave the critical section do not fail.</p>
+<p>Because this flag uses a significant amount of nonpaged pool memory, use it only on very reliable systems that have sufficient memory.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Early critical section event creation%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

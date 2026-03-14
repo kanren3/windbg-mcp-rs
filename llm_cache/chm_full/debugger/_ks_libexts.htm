@@ -1,0 +1,105 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !ks.libexts extension provides access to Microsoft-supplied library extensions that are statically linked to the extension module."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!ks.libexts</title>
+
+<meta name="MS-HAID" content="r33~b_exts_KS_d320bb35-9ebb-42cb-ae39-9446791b45de.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._ks_libexts"></a>!ks.libexts</h1>
+</div>
+<p>The <b>!ks.libexts</b> extension provides access to Microsoft-supplied library extensions that are statically linked to the extension module.</p>
+<pre class="syntax">
+    <b>!ks.libexts </b>[<i>Command</i>]<b> </b>[<i>Libext</i>] 
+</pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="Command"></a><a id="command"></a><a id="COMMAND"></a><i>Command</i></dt>
+<dd>
+<p>Optional. Specifies one of the following values. If this argument is omitted, <b>!ks.libexts</b> returns help information.</p>
+<p></p>
+<dl>
+<dt><a id="disableall________"></a><a id="DISABLEALL________"></a><b>disableall
+       </b></dt>
+<dd>
+<p>Disable all library extensions. When this is used, omit the <i>Libext</i> parameter.</p>
+</dd>
+<dt><a id="_________disable"></a><a id="_________DISABLE"></a><b>
+        disable</b></dt>
+<dd>
+<p>Disable a specific library extension by name. When this is used, specify the name in the <i>Libext</i> parameter.</p>
+</dd>
+<dt><a id="_________enableall"></a><a id="_________ENABLEALL"></a><b>
+        enableall</b></dt>
+<dd>
+<p>Enable all library extensions. Only loaded components with correct symbols are enabled. When this is used, omit the <i>Libext</i> parameter.</p>
+</dd>
+<dt><a id="enable"></a><a id="ENABLE"></a><b>enable</b></dt>
+<dd>
+<p>Enable a specific library extension by name. When this is used, specify the name in the <i>Libext</i> parameter. Only loaded components with correct symbols can be enabled.</p>
+</dd>
+<dt><a id="_________details"></a><a id="_________DETAILS"></a><b>
+        details</b></dt>
+<dd>
+<p>Show details about all currently linked library extensions. When this is used, omit the <i>Libext</i> parameter. </p>
+</dd>
+</dl>
+</dd>
+<dt><a id="_______Libext______"></a><a id="_______libext______"></a><a id="_______LIBEXT______"></a>       <i>Libext</i>      </dt>
+<dd>
+<p>Specifies the name of a library extension. Required only for <i>Command</i> values of <b>enable</b> or <b>
+        disable</b>. </p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Windows 2000</b></p>
+</td>
+<td>
+<p>
+          winxp\Ks.dll 
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Ks.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information, see <a href="kernel_streaming_debugging.htm">Kernel Streaming Debugging</a>.</p>
+<h2>Remarks</h2>
+<p>The extension module contains an extensibility framework that allows separate components to be built and linked into Ks.dll. These extra components are called library extensions.</p>
+<p>The <b>!ks.libexts</b> command allows viewing of statistics about those library extensions as well as control over them. For details, issue <b>!ks.libexts</b> with no arguments.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!ks.libexts%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Displaying RPC State Information"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Displaying RPC State Information</title>
+
+<meta name="MS-HAID" content="t11_rpc_acpi_27d1302a-e73c-411f-bd7a-62a396ee166a.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.displaying_rpc_state_information"></a>Displaying RPC State Information</h1>
+</div>
+<h2><a id="ddk_displaying_rpc_state_information_dbg"></a><a id="DDK_DISPLAYING_RPC_STATE_INFORMATION_DBG"></a></h2>
+<p>All RPC run-time state information is contained in cells. A cell is the smallest unit of information that can be viewed and updated individually. Both the DbgRpc tool and the RPC debugger extensions allow you to view the contents of any given cell or to run high-level queries.</p>
+<p>Each key object in the RPC Run-Time will maintain one or more cells of information about its state. Each cell has a cell ID. When an object refers to another object, it does so by specifying that object's cell ID.</p>
+<p>The key objects that the RPC Run-Time can maintain information about are endpoints, threads, connection objects, Server Call (SCALL) objects, and Client Call (CCALL) objects. Server Call objects are usually referred to simply as <i>call objects</i>.</p>
+<p>The RPC state information queries produce the same information whether you are using the DbgRpc tool or the RPC debugger extensions. The following sections describe how queries are used in each vehicle:</p>
+<dl>
+<dd>
+<p><a href="using_the_rpc_debugger_extensions.htm">Using the RPC Debugger Extensions</a></p>
+</dd>
+<dd>
+<p><a href="using_the_dbgrpc_tool.htm">Using the DbgRpc Tool</a></p>
+</dd>
+</dl>
+<p>The most basic query simply displays an individual cell:</p>
+<dl>
+<dd>
+<p><a href="get_rpc_cell_information.htm">Get RPC Cell Information</a></p>
+</dd>
+</dl>
+<p>The following high-level queries are also available:</p>
+<dl>
+<dd>
+<p><a href="get_rpc_endpoint_information.htm">Get RPC Endpoint Information</a></p>
+</dd>
+<dd>
+<p><a href="get_rpc_thread_information.htm">Get RPC Thread Information</a></p>
+</dd>
+<dd>
+<p><a href="get_rpc_call_information.htm">Get RPC Call Information</a></p>
+</dd>
+<dd>
+<p><a href="get_rpc_client_call_information.htm">Get RPC Client Call Information</a></p>
+</dd>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Displaying RPC State Information%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

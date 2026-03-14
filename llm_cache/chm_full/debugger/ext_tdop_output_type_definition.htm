@@ -1,0 +1,59 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The EXT_TDOP_OUTPUT_TYPE_DEFINITION sub-operation of the DEBUG_REQUEST_EXT_TYPED_DATA_ANSI Request operation prints the definition of the type for the specified typed data."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>EXT_TDOP_OUTPUT_TYPE_DEFINITION</title>
+
+<meta name="MS-HAID" content="IDebugAdvanced_6ed64a77-7672-46ba-a7a5-3e62fb0cca15.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.ext_tdop_output_type_definition"></a>EXT_TDOP_OUTPUT_TYPE_DEFINITION</h1>
+</div>
+<p>The EXT_TDOP_OUTPUT_TYPE_DEFINITION sub-operation of the <a href="debug_request_ext_typed_data_ansi.htm"><b>DEBUG_REQUEST_EXT_TYPED_DATA_ANSI</b></a><a href="request.htm"><b> Request</b></a> operation prints the definition of the type for the specified typed data.</p>
+<p>
+<p><b>Parameters</b></p>
+</p>
+<dl>
+<dt><a id="Operation"></a><a id="operation"></a><a id="OPERATION"></a><b>Operation</b></dt>
+<dd>
+<p>Set to EXT_TDOP_OUTPUT_TYPE_DEFINITION for this sub-operation.</p>
+</dd>
+<dt><a id="InData"></a><a id="indata"></a><a id="INDATA"></a><b>InData</b></dt>
+<dd>
+<p>Specifies the typed data whose type's definition will be printed.</p>
+</dd>
+<dt><a id="Status"></a><a id="status"></a><a id="STATUS"></a><b>Status</b></dt>
+<dd>
+<p>Receives the status code returned by this sub-operation.  This is the same as the value returned by <a href="request.htm"><b>Request</b></a>.</p>
+</dd>
+</dl>
+<h2>Remarks</h2>
+<p>The definition of the type is formatted and sent to the debugger engine's <a href="using_input_and_output.htm#output_callbacks">output callbacks</a>.</p>
+<p>EXT_TDOP_OUTPUT_TYPE_DEFINITION is a value in the <a href="ext_tdop.htm"><b>EXT_TDOP</b></a> enumeration.</p>
+<p>The parameters for this sub-operation are members of the <a href="ext_typed_data.htm"><b>EXT_TYPED_DATA</b></a> structure.  The members of EXT_TYPED_DATA that are not listed in the preceding Parameters section are not used by this sub-operation and should be set to zero.  The descriptions of the members in the preceding Parameters section specify what the members are used for. See <b>EXT_TYPED_DATA</b> for more details.</p>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="debug_request_ext_typed_data_ansi.htm"><b>DEBUG_REQUEST_EXT_TYPED_DATA_ANSI</b></a></dt>
+<dt><a href="ext_tdop.htm"><b>EXT_TDOP</b></a></dt>
+<dt><a href="ext_typed_data.htm"><b>EXT_TYPED_DATA</b></a></dt>
+<dt><a href="request.htm"><b>Request</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20EXT_TDOP_OUTPUT_TYPE_DEFINITION%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

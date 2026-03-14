@@ -1,0 +1,85 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .open command searches the source path for a source file and opens this file."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.open (Open Source File)</title>
+
+<meta name="MS-HAID" content="r21_metacmds_L_2bf63e00-f90a-4416-a13a-b4d4153e12dd.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._open__open_source_file_"></a>.open (Open Source File)</h1>
+</div>
+<p>The <b>.open</b> command searches the source path for a source file and opens this file.</p>
+<pre class="syntax">
+    <b>.open </b>[<b>-m</b> <i>Address</i>]<b> </b><i>FileName</i> 
+<b>.open -a </b><i>Address</i> 
+</pre>
+<h2><a id="ddk_meta_open_source_file_dbg"></a><a id="DDK_META_OPEN_SOURCE_FILE_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______FileName______"></a><a id="_______filename______"></a><a id="_______FILENAME______"></a>       <i>FileName</i>      </dt>
+<dd>
+<p>Specifies the source file name. This name can include an absolute or relative path. Unless you specify an absolute path, the path is interpreted as relative to a directory in the source path.</p>
+</dd>
+<dt><a id="_______-m_______Address______"></a><a id="_______-m_______address______"></a><a id="_______-M_______ADDRESS______"></a>       <b>-m</b><b>       </b><i>Address</i>      </dt>
+<dd>
+<p>Specifies an address within the source file. This address must be contained in a known module. You should use the <b>-m</b><b>       </b><i>Address</i> parameter if the file that <i>FileName</i> specifies is not unique. For more information about the syntax, see <a href="address_and_address_range_syntax.htm">Address and Address Range Syntax</a>.</p>
+<p>The <b>-m</b> parameter is required if you are using a <a href="using_a_source_server.htm">source server</a> to retrieve the source files.</p>
+</dd>
+<dt><a id="_______-a_______Address______"></a><a id="_______-a_______address______"></a><a id="_______-A_______ADDRESS______"></a>       <b>-a</b>       <i>Address</i>      </dt>
+<dd>
+<p>Specifies an address within the source file. This address must be contained in a known module. If the debugger can find the source file, the debugger loads and opens the file, and the line that corresponds to the specified address is highlighted. If the debugger cannot find the source file, the address is displayed in the <a href="disassembly_window.htm">Disassembly window</a>. For more information about the syntax, see <a href="address_and_address_range_syntax.htm">Address and Address Range Syntax</a>.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<p>You can use the <b>.open</b> command only in WinDbg, and you cannot use it in script files.</p>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Platforms
+         </b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about source files and source paths and for other ways to load source files, see <a href="source_path.htm">Source Path</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.open (Open Source File)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

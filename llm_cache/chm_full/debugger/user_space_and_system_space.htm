@@ -1,0 +1,45 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="User Space and System Space"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>User Space and System Space</title>
+
+<meta name="MS-HAID" content="r07_use_operation_d08cb60d-2986-48e8-87a7-ebbfec447f93.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.user_space_and_system_space"></a>User Space and System Space</h1>
+</div>
+<p>Windows gives each user-mode application a block of virtual addresses. This is known as the <i>user space</i> of that application. The other large block of addresses, known as <i>system space</i> or <i>kernel space</i>, cannot be directly accessed by the application. </p>
+<p>When WinDbg or CDB sets a <a href="using_breakpoints.htm">breakpoint</a> in user space, this breakpoint is set at the specified address in the user space of a single process. During user-mode debugging, the current process determines the meaning of virtual addresses. For more information, see <a href="controlling_processes_and_threads.htm">Controlling Processes and Threads</a>.</p>
+<p>In kernel mode, you can set breakpoints in user space with the <b>bp</b>, <b>bu</b>, and <b>ba</b> commands or with the <b>Breakpoints</b> dialog box. You must first use the <i>process context</i> to specify the user-mode process that owns that address space by using <b>.process /i</b> (or a process-specific breakpoint on some kernel-space function) to switch the target to the correct <a href="changing_contexts.htm#process_context">process context</a>. </p>
+<p>Breakpoints in user space are always associated with the process whose process context was active when the breakpoints were set. If a user-mode debugger is debugging this process and if a kernel debugger is debugging the computer that the process is running on, this breakpoint breaks into the user-mode debugger, even though the breakpoint was actually set from the kernel debugger. You can break into the system from the kernel debugger at this point, or use the <a href="_breakin__break_to_the_kernel_debugger_.htm"><b>.breakin (Break to the Kernel Debugger)</b></a> command from the user-mode debugger to transfer control to the kernel debugger.</p>
+<h3><a id="determining_the_range_of_user_space_and_system_space"></a><a id="DETERMINING_THE_RANGE_OF_USER_SPACE_AND_SYSTEM_SPACE"></a>Determining the Range of User Space and System Space</h3>
+<p>If you need to determine the extent of user space and system space on the target computer, you can use the <a href="d__da__db__dc__dd__dd__df__dp__dq__du__dw__dw__dyb__dyd__display_memor.htm"><b>dp (Display Memory)</b></a> command from a kernel debugger to display the Windows global variable <b>MmHighestUserAddress</b>. This variable contains the address of the top of user space. Since system space addresses are always higher than user space addresses, this value allows you to determine whether any given address is in user space or in kernel space. </p>
+<p>For example, on a 32-bit target computer with an x86 processor and standard boot parameters, this command will show the following result: </p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; dp nt!mmhighestuseraddress L1 
+81f71864  7ffeffff </code></pre>
+<p>This indicates that user space ranges from the address 0x00000000 to 0x7FFEFFFF, and system space therefore ranges from 0x80000000 up to the highest possible address (which is 0xFFFFFFFF on a standard 32-bit Windows installation). </p>
+<p>With a 64-bit target computer, different values will occur.  For example, this command might show the following: </p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; dp nt!mmhighestuseraddress L1 
+fffff800`038b4010  000007ff`fffeffff </code></pre>
+<p>This indicates that user space ranges from 0x00000000`00000000 to 0x000007FF`FFFEFFFF. Therefore, system space includes all addresses from 0x00000800`00000000 upward. </p>
+<p>For more information about Windows memory management, see <i>Microsoft Windows Internals</i> by David Solomon and Mark Russinovich (4th edition, Microsoft Press, 2005). </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20User Space and System Space%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

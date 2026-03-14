@@ -1,0 +1,309 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="First-time users of KD should begin with the Debugging Using KD and NTKD section."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>KD Command-Line Options</title>
+
+<meta name="MS-HAID" content="r12_cmdline_1ce8da81-b62c-4064-9bd7-c4380884b1b0.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.kd_command_line_options"></a>KD Command-Line Options</h1>
+</div>
+<p>
+    First-time users of KD should begin with the <a href="debugging_using_kd_and_ntkd.htm">Debugging Using KD and NTKD</a> section.
+   </p>
+<p>The KD command line uses the following syntax.</p>
+<pre class="syntax">
+    <b>kd [ -server </b><i>ServerTransport</i><b> | -remote </b><i>ClientTransport</i><b> ] 
+   [-b | -x] [-d] [-bonc] [-m] [-myob] [-lines] [-n] [-r] [-s] 
+   [-v] [-clines </b><i>lines</i><b>] [-failinc] [-noio] [-noshell] 
+   [-secure] [-sdce] [-ses] [-sicv] [-sins] [-snc] [-snul]
+   [-sup] [-sflags 0x</b><i>Number</i><b>] [-log{a|au|o|ou} </b><i>LogFile</i><b>] 
+   [-a</b><i>Extension</i><b>] [-zp </b><i>PageFile</i><b>] 
+   [-i </b><i>ImagePath</i><b>] [-y </b><i>SymbolPath</i><b>]  [-srcpath </b><i>SourcePath</i><b>] 
+   [-k </b><i>ConnectType</i><b> | -kl | -kqm | -kx </b><i>ExdiOptions</i><b>] [-ee {masm|c++}] 
+   [-z </b><i>DumpFile</i><b>] [-cf "</b><i>filename</i><b>"] [-cfr "</b><i>filename</i><b>"] [-c "</b><i>command</i><b>"] 
+   [-t </b><i>PrintErrorLevel</i><b>] [-version] 
+
+kd -iu </b><i>KeyString</i><b>
+
+kd -QR </b><i>Server</i><b> 
+
+kd -wake </b><i>PID</i><b> 
+
+kd -?
+</b>
+   </pre>
+<p>Descriptions of the KD command-line options follow. Only the <b>-remote</b> and <b>-server</b> options are case-sensitive. The initial hyphen can be replaced with a forward-slash (/). Options which do not take any additional parameters can be concatenated -- so <b>kd -r -n -v</b> can be written as <b>kd -rnv</b>.</p>
+<p>If the <b>-remote</b> or <b>-server</b> option is used, it must appear before any other options on the command line.</p>
+<h2><a id="ddk_kd_command_line_options_dbg"></a><a id="DDK_KD_COMMAND_LINE_OPTIONS_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______-server_______ServerTransport______"></a><a id="_______-server_______servertransport______"></a><a id="_______-SERVER_______SERVERTRANSPORT______"></a>       <b>-server</b>       <i>ServerTransport</i>      </dt>
+<dd>
+<p>Creates a debugging server that can be accessed by other debuggers. For an explanation of the possible <i>ServerTransport</i>, see <a href="activating_a_debugging_server.htm"><b>Activating a Debugging Server</b></a>. When this parameter is used, it must be the first parameters on the command line. </p>
+</dd>
+<dt><a id="_______-remote_______ClientTransport______"></a><a id="_______-remote_______clienttransport______"></a><a id="_______-REMOTE_______CLIENTTRANSPORT______"></a>       <b>-remote</b>       <i>ClientTransport</i>      </dt>
+<dd>
+<p>Creates a debugging client, and connects to a debugging server that is already running. For an explanation of the possible <i>ClientTransport</i> values, see <a href="activating_a_debugging_client.htm"><b>Activating a Debugging Client</b></a>. When this parameter is used, it must be the first parameters on the command line. </p>
+</dd>
+<dt><a id="_______-a________Extension______"></a><a id="_______-a________extension______"></a><a id="_______-A________EXTENSION______"></a>       <b>-a </b>       <i>Extension</i>      </dt>
+<dd>
+<p>Sets the default extension DLL. The default is kdextx86.dll or kdexts.dll. There must be no space after the "a", and the .dll file name extension must not be included. For details, and other methods of setting this default, see <a href="loading_debugger_extension_dlls.htm">Loading Debugger Extension DLLs</a>.</p>
+</dd>
+<dt><a id="_______-b______"></a><a id="_______-B______"></a>       <b>-b</b>      </dt>
+<dd>
+<p>This option no longer supported.</p>
+</dd>
+<dt><a id="_______-bonc______"></a><a id="_______-BONC______"></a>       <b>-bonc</b>      </dt>
+<dd>
+<p>If this option is specified, the debugger will break into the target as soon as the session begins. This is especially useful when connecting to a debugging server that might not be currently broken into the target.</p>
+</dd>
+<dt><a id="_______-c__command_______"></a><a id="_______-C__COMMAND_______"></a>       <b>-c "</b><i>command</i><b>"</b>      </dt>
+<dd>
+<p>Specifies the initial debugger command to run at start-up. This command must be surrounded with quotation marks. Multiple commands can be separated with semicolons. (If you have a long command list, it may be easier to put them in a script and then use the <b>-c</b> option with the <a href="_______________________a___run_script_file_.htm"><b>$&lt;, $&gt;&lt;, $&gt;&lt;, $$&gt;&lt; (Run Script File)</b></a> command.) </p>
+<p>If you are starting a debugging client, this command must be intended for the debugging server. Client-specific commands, such as <b>.lsrcpath</b>, are not allowed. </p>
+</dd>
+<dt><a id="_______-cf__filename_______"></a><a id="_______-CF__FILENAME_______"></a>       <b>-cf "</b><i>filename</i><b>"</b>      </dt>
+<dd>
+<p>Specifies the path and name of a script file. This script file is executed as soon as the debugger is started. If <i>filename</i> contains spaces it must be enclosed in quotation marks. If the path is omitted, the current directory is assumed. If the -cf option is not used, the file ntsd.ini in the current directory is used as the script file. If the file does not exist, no error occurs. For details, see <a href="using_script_files.htm">Using Script Files</a>.</p>
+</dd>
+<dt><a id="_______-cfr__filename_______"></a><a id="_______-CFR__FILENAME_______"></a>       <b>-cfr "</b><i>filename</i><b>"</b>      </dt>
+<dd>
+<p>Specifies the path and name of a script file. This script file is executed as soon as the debugger is started, and any time the target is restarted. If <i>filename</i> contains spaces it must be enclosed in quotation marks. If the path is omitted, the current directory is assumed. If the file does not exist, no error occurs. For details, see <a href="using_script_files.htm">Using Script Files</a>.</p>
+</dd>
+<dt><a id="_______-clines________lines______"></a><a id="_______-CLINES________LINES______"></a>       <b>-clines</b>       <i> lines</i>      </dt>
+<dd>
+<p>Sets the approximate number of commands in the command history which can be accessed during remote debugging. For details, and for other ways to change this number, see <a href="using_debugger_commands.htm">Using Debugger Commands</a>.</p>
+</dd>
+<dt><a id="_______-d______"></a><a id="_______-D______"></a>       <b>-d</b>      </dt>
+<dd>
+<p>After a reboot, the debugger will break into the target computer as soon as a kernel module is loaded. (This break is <u>earlier</u> than the break from the <b>-b</b> option.) See <a href="crashing_and_rebooting_the_target_computer.htm">Crashing and Rebooting the Target Computer</a> for details and for other methods of changing this status.</p>
+</dd>
+<dt><a id="_______-ee__masm_c___"></a><a id="_______-EE__MASM_C___"></a>       <b>-ee</b> {<b>masm</b>|<b>c++</b>}</dt>
+<dd>
+<p>Sets the default expression evaluator. If <b>masm</b> is specified, MASM expression syntax will be used. If <b>c++</b> is specified, C++ expression syntax will be used. If the <b>-ee</b> option is omitted, MASM expression syntax is used as the default. See <a href="evaluating_expressions.htm">Evaluating Expressions</a> for details.</p>
+</dd>
+<dt><a id="_______-failinc______"></a><a id="_______-FAILINC______"></a>       <b>-failinc</b>      </dt>
+<dd>
+<p>Causes the debugger to ignore any questionable symbols. When debugging a user-mode or kernel-mode minidump file, this option will also prevent the debugger from loading any modules whose images can't be mapped. For details and for other methods of controlling this, see <a href="symbol_options.htm#symopt_exact_symbols">SYMOPT_EXACT_SYMBOLS</a>.</p>
+</dd>
+<dt><a id="_______-i_______ImagePath______"></a><a id="_______-i_______imagepath______"></a><a id="_______-I_______IMAGEPATH______"></a>       <b>-i</b>       <i>ImagePath</i>      </dt>
+<dd>
+<p>Specifies the location of the executables that generated the fault. If the path contains spaces, it should be enclosed in quotation marks.</p>
+</dd>
+<dt><a id="_______-iu________KeyString______"></a><a id="_______-iu________keystring______"></a><a id="_______-IU________KEYSTRING______"></a>       <b>-iu </b>       <i>KeyString</i>      </dt>
+<dd>
+<p>Registers debugger remoting as an URL type so that users can auto-launch a debugger remote client with an URL. <i>KeyString</i> has the format <code>remdbgeng://RemotingOption</code>. <i>RemotingOption</i> is a string that defines the transport protocol as defined in the topic <a href="activating_a_debugging_client.htm"><b>Activating a Debugging Client</b></a>. If this action succeeds, no message is displayed; if it fails, an error message is displayed.</p>
+<p>The <b>-iu</b> parameter must not be used with any other parameters. This command will not actually start KD.</p>
+</dd>
+<dt><a id="_______-k_______ConnectType______"></a><a id="_______-k_______connecttype______"></a><a id="_______-K_______CONNECTTYPE______"></a>       <b>-k</b>       <i>ConnectType</i>      </dt>
+<dd>
+<p>Tells the debugger how to connect to the target. For details, see <a href="debugging_using_kd_and_ntkd.htm">Debugging Using KD and NTKD</a>.</p>
+</dd>
+<dt><a id="_______-kl______"></a><a id="_______-KL______"></a>       <b>-kl</b>      </dt>
+<dd>
+<p>(Windows XP and later)  Starts a kernel debugging session on the same machine as the debugger.</p>
+</dd>
+<dt><a id="_______-kqm______"></a><a id="_______-KQM______"></a>       <b>-kqm</b>      </dt>
+<dd>
+<p>Starts KD in quiet mode.</p>
+</dd>
+<dt><a id="_______-kx_______ExdiOptions______"></a><a id="_______-kx_______exdioptions______"></a><a id="_______-KX_______EXDIOPTIONS______"></a>       <b>-kx</b>       <i>ExdiOptions</i>      </dt>
+<dd>
+<p>Starts a kernel debugging session using an EXDI driver. EXDI drivers are not described in this documentation. If you have an EXDI interface to your hardware probe or hardware simulator, please contact Microsoft for debugging information.</p>
+</dd>
+<dt><a id="_______-lines______"></a><a id="_______-LINES______"></a>       <b>-lines</b>      </dt>
+<dd>
+<p>Enables source line debugging. If this option is omitted, the <a href="_lines__toggle_source_line_support_.htm"><b>.lines (Toggle Source Line Support)</b></a> command will have to be used before source debugging will be allowed. For other methods of controlling this, see <a href="symbol_options.htm#symopt_load_lines">SYMOPT_LOAD_LINES</a>.</p>
+</dd>
+<dt><a id="_______-log_a_au_o_ou__LogFile"></a><a id="_______-log_a_au_o_ou__logfile"></a><a id="_______-LOG_A_AU_O_OU__LOGFILE"></a>       <b>-log</b>{<b>a|au|o|ou</b>} <i>LogFile</i></dt>
+<dd>
+<p>Begins logging information to a log file. If <i>LogFile</i> already exists, it will be overwritten if <b>-logo</b> is used, or output will be appended to the file if <b>-loga</b> is used. The <b>-logau</b> and <b>-logou</b> options operate similar to <b>-loga</b> and <b>-logo</b> respectively,  except that the log file is a Unicode file. For more details, see <a href="keeping_a_log_file_in_kd.htm">Keeping a Log File in KD</a>.</p>
+</dd>
+<dt><a id="_______-m______"></a><a id="_______-M______"></a>       <b>-m</b>      </dt>
+<dd>
+<p>Indicates that the serial port is connected to a modem. Instructs the debugger to watch for the carrier-detect signal.</p>
+</dd>
+<dt><a id="_______-myob______"></a><a id="_______-MYOB______"></a>       <b>-myob</b>      </dt>
+<dd>
+<p>If there is a version mismatch with dbghelp.dll, the debugger will continue to run. (Without the <b>-myob</b> switch, this is considered a fatal error.)</p>
+<p>A secondary effect of this option is that the warning that normally appears when breaking into the target computer is suppressed.  </p>
+</dd>
+<dt><a id="_______-n______"></a><a id="_______-N______"></a>       <b>-n</b>      </dt>
+<dd>
+<p><i>Noisy symbol load</i>: Enables verbose output from symbol handler. For details and for other methods of controlling this, see <a href="symbol_options.htm#symopt_debug">SYMOPT_DEBUG</a>.</p>
+</dd>
+<dt><a id="_______-noio______"></a><a id="_______-NOIO______"></a>       <b>-noio</b>      </dt>
+<dd>
+<p>Prevents the debugging server from being used for input or output. Input will only be accepted from the debugging client (plus any initial command or command script specified by the <b>-c</b> command-line option). </p>
+<p>   All output will be directed to the debugging client. For more details, see <a href="activating_a_debugging_server.htm"><b>Activating a Debugging Server</b></a>.</p>
+</dd>
+<dt><a id="_______-noshell______"></a><a id="_______-NOSHELL______"></a>       <b>-noshell</b>      </dt>
+<dd>
+<p>Prohibits all <b>.shell</b> commands. This prohibition will last as long as the debugger is running, even if a new debugging session is begun. For details, and for other ways to disable shell commands, see <a href="using_shell_commands.htm">Using Shell Commands</a>.</p>
+</dd>
+<dt><a id="_______-QR_______Server______"></a><a id="_______-qr_______server______"></a><a id="_______-QR_______SERVER______"></a>       <b>-QR</b>       <i>Server</i>      </dt>
+<dd>
+<p>Lists all debugging servers running on the specified network server. The double backslash (<b>\\</b>) preceding <i>Server</i> is optional. See <a href="searching_for_debugging_servers.htm"><b>Searching for Debugging Servers</b></a> for details.</p>
+<p>The <b>-QR</b> parameter must not be used with any other parameters. This command will not actually start KD.</p>
+</dd>
+<dt><a id="_______-r______"></a><a id="_______-R______"></a>       <b>-r</b>      </dt>
+<dd>
+<p>Displays registers.</p>
+</dd>
+<dt><a id="_______-s______"></a><a id="_______-S______"></a>       <b>-s</b>      </dt>
+<dd>
+<p>Disables lazy symbol loading. This will slow down process startup. For details and for other methods of controlling this, see <a href="symbol_options.htm#symopt_deferred_loads">SYMOPT_DEFERRED_LOADS</a>.</p>
+</dd>
+<dt><a id="_______-sdce______"></a><a id="_______-SDCE______"></a>       <b>-sdce</b>      </dt>
+<dd>
+<p>Causes the debugger to display <b>File access error</b> dialog boxes during symbol load. For details and for other methods of controlling this, see <a href="symbol_options.htm#symopt_fail_critical_errors">SYMOPT_FAIL_CRITICAL_ERRORS</a>.</p>
+</dd>
+<dt><a id="_______-secure______"></a><a id="_______-SECURE______"></a>       <b>-secure</b>      </dt>
+<dd>
+<p>Activates <a href="secure_mode.htm">Secure Mode</a>.</p>
+</dd>
+<dt><a id="_______-ses______"></a><a id="_______-SES______"></a>       <b>-ses</b>      </dt>
+<dd>
+<p>Causes the debugger to perform a strict evaluation of all symbol files and ignore any questionable symbols. For details and for other methods of controlling this, see <a href="symbol_options.htm#symopt_exact_symbols">SYMOPT_EXACT_SYMBOLS</a>.</p>
+</dd>
+<dt><a id="_______-sflags_0xNumber"></a><a id="_______-sflags_0xnumber"></a><a id="_______-SFLAGS_0XNUMBER"></a>       <b>-sflags 0x</b><i>Number</i></dt>
+<dd>
+<p>Sets all the symbol handler options at once. <i>Number</i> should be a hexadecimal number prefixed with <b>0x</b> -- a decimal without the <b>0x</b> is permitted, but the symbol options are binary flags and therefore hexadecimal is recommended. This option should be used with care, since it will override all the symbol handler defaults. For details, see <a href="symbol_options.htm">Setting Symbol Options</a>.</p>
+</dd>
+<dt><a id="_______-sicv______"></a><a id="_______-SICV______"></a>       <b>-sicv</b>      </dt>
+<dd>
+<p>Causes the symbol handler to ignore the CV record. For details and for other methods of controlling this, see <a href="symbol_options.htm#symopt_ignore_cvrec">SYMOPT_IGNORE_CVREC</a>.</p>
+</dd>
+<dt><a id="_______-sins______"></a><a id="_______-SINS______"></a>       <b>-sins</b>      </dt>
+<dd>
+<p>Causes the debugger to ignore the symbol path and executable image path environment variables. For details, see <a href="symbol_options.htm#symopt_ignore_nt_sympath">SYMOPT_IGNORE_NT_SYMPATH</a>.</p>
+</dd>
+<dt><a id="_______-snc______"></a><a id="_______-SNC______"></a>       <b>-snc</b>      </dt>
+<dd>
+<p>Causes the debugger to turn off C++ translation. For details and for other methods of controlling this, see <a href="symbol_options.htm#symopt_no_cpp">SYMOPT_NO_CPP</a>.</p>
+</dd>
+<dt><a id="_______-snul______"></a><a id="_______-SNUL______"></a>       <b>-snul</b>      </dt>
+<dd>
+<p>Disables automatic symbol loading for unqualified names. For details and for other methods of controlling this, see <a href="symbol_options.htm#symopt_no_unqualified_loads">SYMOPT_NO_UNQUALIFIED_LOADS</a>.</p>
+</dd>
+<dt><a id="_______-srcpath_______SourcePath______"></a><a id="_______-srcpath_______sourcepath______"></a><a id="_______-SRCPATH_______SOURCEPATH______"></a>       <b>-srcpath</b>       <i>SourcePath</i>      </dt>
+<dd>
+<p>Specifies the source file search path. Separate multiple paths with a semicolon (<b>;</b>). If the path contains spaces, it should be enclosed in quotation marks. For details, and for other ways to change this path, see <a href="source_path.htm">Source Path</a>.</p>
+</dd>
+<dt><a id="_______-sup______"></a><a id="_______-SUP______"></a>       <b>-sup</b>      </dt>
+<dd>
+<p>Causes the symbol handler to search the public symbol table during every symbol search. For details and for other methods of controlling this, see <a href="symbol_options.htm#symopt_auto_publics">SYMOPT_AUTO_PUBLICS</a>.  </p>
+</dd>
+<dt><a id="_______-t________PrintErrorLevel______"></a><a id="_______-t________printerrorlevel______"></a><a id="_______-T________PRINTERRORLEVEL______"></a>       <b>-t </b>       <i>PrintErrorLevel</i>      </dt>
+<dd>
+<p>Specifies the error level that will cause the debugger to display an error message. This is a decimal number equal to 0, 1, 2, or 3. The values are described as follows:</p>
+<table>
+<tr>
+<th>Value</th>
+<th>Constant</th>
+<th>Meaning</th>
+</tr>
+<tr>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>NONE</p>
+</td>
+<td>
+<p>Do not display any errors.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>1</p>
+</td>
+<td>
+<p>ERROR</p>
+</td>
+<td>
+<p>Display ERROR level debugging events.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>2</p>
+</td>
+<td>
+<p>MINORERROR</p>
+</td>
+<td>
+<p>Display MINORERROR and ERROR level debugging events.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>3</p>
+</td>
+<td>
+<p>WARNING</p>
+</td>
+<td>
+<p>Display WARNING, MINORERROR, and ERROR level debugging events.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>This error level only has meaning in checked builds of Microsoft Windows. The default value is 1.</p>
+</dd>
+<dt><a id="_______-v______"></a><a id="_______-V______"></a>       <b>-v</b>      </dt>
+<dd>
+<p>Generates verbose messages for loads, deferred loads, and unloads. </p>
+</dd>
+<dt><a id="_______-version______"></a><a id="_______-VERSION______"></a>       <b>-version</b>      </dt>
+<dd>
+<p>Prints the debugger version string.</p>
+</dd>
+<dt><a id="_______-wake_______PID______"></a><a id="_______-wake_______pid______"></a><a id="_______-WAKE_______PID______"></a>       <b>-wake</b>       <i>PID</i>      </dt>
+<dd>
+<p>Causes sleep mode to end for the user-mode debugger whose process ID is specified by <i>PID</i>. This command must be issued on the target machine during sleep mode. See <a href="controlling_the_user_mode_debugger_from_the_kernel_debugger.htm">Controlling the User-Mode Debugger from the Kernel Debugger</a> for details.</p>
+<p>The <b>-wake</b> parameter must not be used with any other parameters. This command will not actually start KD. </p>
+</dd>
+<dt><a id="_______-x______"></a><a id="_______-X______"></a>       <b>-x</b>      </dt>
+<dd>
+<p>Causes the debugger to break in when an exception first occurs, rather than letting the application or module that caused the exception deal with it. (Same as <b>-b</b>, except with an initial <b>eb nt!NtGlobalFlag 9;g</b> command.)</p>
+</dd>
+<dt><a id="_______-y_______SymbolPath______"></a><a id="_______-y_______symbolpath______"></a><a id="_______-Y_______SYMBOLPATH______"></a>       <b>-y</b>       <i>SymbolPath</i>      </dt>
+<dd>
+<p>Specifies the symbol search path. Separate multiple paths with a semicolon (<b>;</b>). If the path contains spaces, it should be enclosed in quotation marks. For details, and for other ways to change this path, see <a href="symbol_path.htm">Symbol Path</a>.</p>
+</dd>
+<dt><a id="_______-z_______DumpFile______"></a><a id="_______-z_______dumpfile______"></a><a id="_______-Z_______DUMPFILE______"></a>       <b>-z</b>       <i>DumpFile</i>      </dt>
+<dd>
+<p>Specifies the name of a crash dump file to debug. If the path and file name contain spaces, this must be surrounded by quotation marks. It is possible to open several dump files at once by including multiple <b>-z</b> options, each followed by a different <i>DumpFile</i> value. For details, see <a href="analyzing_a_kernel_mode_dump_file_with_kd.htm">Analyzing a Kernel-Mode Dump File with KD</a>.</p>
+</dd>
+<dt><a id="_______-zp_______PageFile______"></a><a id="_______-zp_______pagefile______"></a><a id="_______-ZP_______PAGEFILE______"></a>       <b>-zp</b>       <i>PageFile</i>      </dt>
+<dd>
+<p>Specifies the name of a modified page file. This is useful if you are debugging a dump file and want to use the <a href="_pagein__page_in_memory_.htm"><b>.pagein (Page In Memory)</b></a> command. You cannot use <b>-zp</b> with a standard Windows page file&#8212;only specially-modified page files can be used.  </p>
+</dd>
+<dt><a id="_______-_______"></a>       <b>-?</b>      </dt>
+<dd>
+<p>Displays command-line help text.</p>
+<p>KD will automatically detect the platform on which the target is running. You do not need to specify the target on the KD command line. The older syntax (using the name <i>I386KD</i> or <i>IA64KD</i>) is obsolete.</p>
+</dd>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20KD Command-Line Options%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,132 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The ReadTypedDataVirtual method reads the value of a variable in the target's virtual memory."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IDebugSymbols::ReadTypedDataVirtual method</title>
+
+<meta name="MS-HAID" content="IDebugSymbols_c7a6fee6-d6bc-4dd6-923a-7e789801091f.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.readtypeddatavirtual"></a>IDebugSymbols::ReadTypedDataVirtual method</h1>
+</div>
+<p>The <b>ReadTypedDataVirtual</b> method reads the value of a variable in the target's virtual memory.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>HRESULT ReadTypedDataVirtual(
+  [in]            ULONG64 Offset,
+  [in]            ULONG64 Module,
+  [in]            ULONG   TypeId,
+  [out]           PVOID   Buffer,
+  [in]            ULONG   BufferSize,
+  [out, optional] PULONG  BytesRead
+);</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Parameters</h2>
+<dl>
+<dt><i>Offset</i> [in]</dt>
+<dd>
+<p>Specifies the location in the target's virtual address space of the variable to read.</p>
+</dd>
+<dt><i>Module</i> [in]</dt>
+<dd>
+<p>Specifies the base address of the module containing the type of the variable.</p>
+</dd>
+<dt><i>TypeId</i> [in]</dt>
+<dd>
+<p>Specifies the type ID of the type.</p>
+</dd>
+<dt><i>Buffer</i> [out]</dt>
+<dd>
+<p>Receives the data that is read.</p>
+</dd>
+<dt><i>BufferSize</i> [in]</dt>
+<dd>
+<p>Specifies the size in bytes of the buffer <i>Buffer</i>.  This is the maximum number of bytes to be read.</p>
+</dd>
+<dt><i>BytesRead</i> [out, optional]</dt>
+<dd>
+<p>Receives the number of bytes that were read.  If <i>BytesRead</i> is <b>NULL</b>, this information is not returned.</p>
+</dd>
+</dl>
+<h2>Return value</h2>
+<table>
+<tr>
+<th>Return code</th>
+<th>Description</th>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>S_OK</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>The method was successful.</p>
+</td>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>S_FALSE</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>The method was successful.  However, the buffer <i>Buffer</i> was not large enough to hold all the data and it was truncated.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>This method may also return error values.  See <a href="hresult_values.htm"><b>Return Values</b></a> for more details.</p>
+<h2>Remarks</h2>
+<p>The number of bytes this method attempts to read is the smaller of the size of the buffer and the size of the variable.</p>
+<p>This is a convenience method.  The same result can be obtained by calling <a href="gettypesize2.htm"><b>GetTypeSize</b></a> and <a href="readvirtual.htm"><b>ReadVirtual</b></a>.</p>
+<p>For more information about types, see <a href="types.htm">Types</a>.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Target platform</p>
+</th>
+<td width="70%">
+<dl>
+<dt></dt>
+</dl>
+</td>
+</tr>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Dbgeng.h (include Dbgeng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IDebugSymbols::ReadTypedDataVirtual method%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

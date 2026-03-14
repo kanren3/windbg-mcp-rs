@@ -1,0 +1,133 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !ks.forcedump command displays information about memory contents at a caller-supplied address."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!ks.forcedump</title>
+
+<meta name="MS-HAID" content="r33~b_exts_KS_086f70e5-59dc-4d37-9638-defcdd9ac86b.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._ks_forcedump"></a>!ks.forcedump</h1>
+</div>
+<p>The <b>!ks.forcedump</b> command displays information about memory contents at a caller-supplied address.</p>
+<pre class="syntax">
+    <b>!ks.forcedump </b><i>Object</i><b> </b><i>Type</i><b> </b>[<i>Level</i>] 
+</pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Object______"></a><a id="_______object______"></a><a id="_______OBJECT______"></a>       <i>Object</i>      </dt>
+<dd>
+<p>Specifies a pointer to the object for which to display information. </p>
+</dd>
+<dt><a id="_______Type______"></a><a id="_______type______"></a><a id="_______TYPE______"></a>       <i>Type</i>      </dt>
+<dd>
+<p>Specifies the type of object. </p>
+<p>For AVStream/KS objects, <i>Type</i> must be one of the following values: CKsQueue, CKsDevice, CKsFilterFactory, CKsFilter, CKsPin, CKsRequestor, CKsSplitter, CKsSplitterBranch, CKsPipeSection, KSPIN, KSFILTER, KSFILTERFACTORY, KSDEVICE, KSSTREAM_POINTER, KSPFRAME_HEADER, KSIOBJECT_HEADER, KSPDO_EXTENSION, KSIDEVICE_HEADER, KSSTREAM_HEADER, KSPIN_DESCRIPTOR_EX, CKsProxy, CKsInputPin, CKsOutputPin, CasyncItemHandler.</p>
+<p>For Port Class objects, <i>Type</i> must be one of the following values: DEVICE_CONTEXT, CPortWaveCyclic, CPortPinWaveCyclic, CPortTopology, CPortDMus, CIrpStream, CKsShellRequestor, CPortFilterWaveCyclic, CDmaChannel, CPortWavePci, CportPinWavePci. </p>
+</dd>
+<dt><a id="_______Level______"></a><a id="_______level______"></a><a id="_______LEVEL______"></a>       <i>Level</i>      </dt>
+<dd>
+<p>Optional. Specifies the level of detail to display on a 0-7 scale with progressively more information displayed for higher values.  To display all available details, supply a value of 7.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Windows 2000</b></p>
+</td>
+<td>
+<p>
+          winxp\Ks.dll 
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Ks.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information, see <a href="kernel_streaming_debugging.htm">Kernel Streaming Debugging</a>.</p>
+<h2>Remarks</h2>
+<p>Normally, you can use <a href="_ks_dump.htm"><b>!ks.dump</b></a> to display data structures.</p>
+<p>However, if symbols are loaded incorrectly or too much information is paged out, the type identification logic in the <a href="_ks_dump.htm"><b>!ks.dump</b></a> command may fail to identify the type of structure at a given address.</p>
+<p>If this happens, try using the <b>!ks.forcedump</b> command.  This command works just like <a href="_ks_dump.htm"><b>!ks.dump</b></a> except that the user specifies the type of the object.</p>
+<div class="alert"><b>Note</b>    The <b>!ks.forcedump</b> command does not verify that <i>Type</i> is the correct type of structure found at the address provided in <i>Object</i>. The command assumes that this is the type of structure found at <i>Object</i> and displays data accordingly.</div>
+<div> </div>
+<p>A listing of all supported objects can be retrieved by issuing a <b>!ks.forcedump</b> command with no arguments.</p>
+<p>Here are two examples of the output from <b>!ks.forcedump</b>, using the address of a filter for the <i>Object</i> argument but with different levels of detail:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; !forcedump 829493c4 KSFILTER
+WARNING: I am dumping 829493c4 as a KSFILTER.
+         No checking has been performed to ensure that it is this type!!!
+
+Filter object 829493c4 [CKsFilter = 82949350]
+    Descriptor     f7a233c8:
+    Context        829dce28
+
+kd&gt; !forcedump 829493c4 KSFILTER 7
+WARNING: I am dumping 829493c4 as a KSFILTER.
+         No checking has been performed to ensure that it is this type!!!
+
+Filter object 829493c4 [CKsFilter = 82949350]
+    Descriptor     f7a233c8:
+    Filter Category GUIDs:
+        Video
+        Capture
+    Context        829dce28
+    INTERNAL INFORMATION:
+        Public Parent Factory   829782dc
+        Aggregated Unknown      00000000
+        Device Interface        823b83c8
+        Control Mutex           829493f8 is not held
+    Object Event List:
+        None
+    CKsFilter object 82949350 [KSFILTER = 829493c4]
+        Processing Mutex         82949484 is not held
+        Gate &amp;                   82949464
+        Gate.Count               1
+        Pin Factories:
+            Pin ID 0 [Video/General Capture Out]:
+                Child Count        1
+                Bound Child Count  1
+                Necessary Count    0
+                Specific Instances:
+                    8293f580 </pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!ks.forcedump%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

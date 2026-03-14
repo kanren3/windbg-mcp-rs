@@ -1,0 +1,87 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="You can perform remote debugging with computers that are joined to a workgroup."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Remote Debugging on Workgroup Computers</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.remote_debugging_on_workgroup_computers"></a>Remote Debugging on Workgroup Computers</h1>
+</div>
+<p>You can perform remote debugging with computers that are joined to a workgroup. First configure the computer that will run the debugging server. Then activate the debugging server. After the debugging server is activated, you can connect to the server from a debugging client.</p>
+<h2><a id="Configuring_the_debugging_server_computer"></a><a id="configuring_the_debugging_server_computer"></a><a id="CONFIGURING_THE_DEBUGGING_SERVER_COMPUTER"></a>Configuring the debugging server computer</h2>
+<ul>
+<li>Create a local administrator account, and log on using that account.</li>
+<li>
+<p>Enable file and printer sharing for your active network. For example if your active network is Private, enable file and printer sharing for Private networks.</p>
+<p>You can use Control Panel to enable file and printer sharing. For example, here are the steps in Windows 8.</p>
+<ol>
+<li>Open Control Panel.</li>
+<li>Click <b>Network and Internet</b> and then <b>Network and Sharing Center</b>. Under <b>View your active networks</b>, note the type of network (for example, Private) that is active.</li>
+<li>Click <b>Change advanced sharing settings</b>. For your active network type, select <b>Turn on network discovery</b> and <b>Turn on file and printer sharing</b>.</li>
+</ol>
+</li>
+<li>
+<p>Start the remote registry service by following these steps.</p>
+<ol>
+<li>In a Command Prompt window or in the Run box, enter <b>services.msc</b>.</li>
+<li>Right click <b>Remote Registry</b>, and choose <b>Start</b>.</li>
+</ol>
+</li>
+<li>
+<p>Turn off the ForceGuest feature by following these steps.</p>
+<ol>
+<li>In a Command Prompt window or in the Run box, enter <b>regedit</b>.</li>
+<li>
+<p>In Registry Editor, set this value to 0.</p>
+<p><b>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Lsa ForceGuest</b></p>
+</li>
+</ol>
+</li>
+</ul>
+<p></p>
+<h2><a id="Activating_the_debugging_server"></a><a id="activating_the_debugging_server"></a><a id="ACTIVATING_THE_DEBUGGING_SERVER"></a>Activating the debugging server</h2>
+<p>You can activate the debugging server through the debugger or by using a process server or a KD connection server. For more information, see the following topics.</p>
+<ul>
+<li><a href="activating_a_debugging_server.htm"><b>Activating a Debugging Server</b></a></li>
+<li><a href="activating_a_process_server.htm"><b>Activating a Process Server</b></a></li>
+<li><a href="activating_a_kd_connection_server.htm"><b>Activating a KD Connection Server</b></a></li>
+</ul>
+<h2><a id="Activating_the_debugging_client"></a><a id="activating_the_debugging_client"></a><a id="ACTIVATING_THE_DEBUGGING_CLIENT"></a>Activating the debugging client</h2>
+<p>There are several ways to activate a debugging client. For more information, see the following topics.</p>
+<ul>
+<li><a href="activating_a_debugging_client.htm"><b>Activating a Debugging Client</b></a></li>
+<li><a href="activating_a_smart_client.htm"><b>Activating a Smart Client</b></a></li>
+<li><a href="activating_a_smart_client__kernel_mode_.htm"><b>Activating a Smart Client (Kernel Mode)</b></a></li>
+<li><a href="searching_for_process_servers.htm"><b>Searching for Process Servers</b></a></li>
+<li><a href="searching_for_kd_connection_servers.htm"><b>Searching for KD Connection Servers</b></a></li>
+</ul>
+<div class="alert"><b>Note</b>  <p class="note">If you are using a named pipe to connect a debugging client to a debugging server, you must provide the user name and password of an account that has access to the computer running the debugging server. Use one, but not both, of the following options.</p>
+<ul>
+<li>Log on to the debugging client computer with an account that shares the user name and password of an account on the debugging server computer.</li>
+<li>
+<p>On the debugging client computer, in a Command Prompt window, enter the following command.</p><b>net use \\</b><i>Server</i><b>\ipc$ /user:</b><i>UserName</i><p>where <i>Server</i> is the name of the server computer, and <i>UserName</i> is the name of an account that has access to the server computer.</p>
+<p>When you are prompted, enter the password for <i>UserName</i>.</p>
+</li>
+</ul>
+</div>
+<div> </div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Remote Debugging on Workgroup Computers%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

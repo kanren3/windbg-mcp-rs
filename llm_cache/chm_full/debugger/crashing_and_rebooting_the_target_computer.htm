@@ -1,0 +1,57 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Crashing and Rebooting the Target Computer"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Crashing and Rebooting the Target Computer</title>
+
+<meta name="MS-HAID" content="r07_use_operation_8338d017-7a53-4d82-bd91-bd0eaebe319a.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.crashing_and_rebooting_the_target_computer"></a>Crashing and Rebooting the Target Computer</h1>
+</div>
+<h2><a id="ddk_crashing_and_rebooting_the_target_computer_dbg"></a><a id="DDK_CRASHING_AND_REBOOTING_THE_TARGET_COMPUTER_DBG"></a></h2>
+<p>When you perform kernel debugging, you can cause the target computer to stop responding (that is, <i>crash</i> or <i>bug check</i>) by issuing the <a href="_crash__force_system_crash_.htm"><b>.crash (Force System Crash)</b></a> command. This command immediately causes the target computer to stop responding. The debugger writes a kernel-mode dump file if you have enabled crash dumps. (For more information about these files, see <a href="creating_a_kernel_mode_dump_file.htm">Creating a Kernel-Mode Dump File</a>.)</p>
+<p>To restart the target computer, use the <a href="_reboot__reboot_target_computer_.htm"><b>.reboot (Reboot Target Computer)</b></a> command.</p>
+<p>If you want the target computer to create a crash dump file and then restart, you should issue the <b>.crash</b> command, followed by the <b>.reboot</b> command. If you want only to restart, the <b>.crash</b> command is not required.</p>
+<p>In the early stages of the boot process, the connection between the host computer and the target computer is lost. No information about the target computer is available to the debugger.</p>
+<p>After the connection is broken, the debugger closes all symbol files and unloads all debugger extensions. At this point, all breakpoints are lost if you are running KD or CDB. In WinDbg, you can save the current workspace. This action saves all breakpoints.</p>
+<p>If you want to end the debugging session at this point, use the <a href="ctrl_b__quit_local_debugger_.htm"><b>CTRL+B</b></a> command (in KD) or click <b>Exit</b> on the <b>File</b> menu (in WinDbg).</p>
+<p>If you do not exit the debugger, the connection is reestablished after enough of the boot process has completed. Symbols and extensions are reloaded at this point. If you are running WinDbg, the kernel-mode workspace is reloaded.</p>
+<p>You can tell the debugger to automatically break into the target computer during the restart process at two possible times:</p>
+<ul>
+<li>
+<p>When the first kernel module is loaded into memory </p>
+</li>
+<li>
+<p>When the kernel initializes</p>
+</li>
+</ul>
+<p>To set an automatic breakpoint when the first kernel module loads, use the <b>-d</b> <a href="command_line_options.htm">command-line option</a>.</p>
+<p>You can also change the break state after the debugger is running:</p>
+<ul>
+<li>
+<p>Control the initial module load and kernel initialization breakpoints like all exceptions and events. You can break into the debugger when these events occur, or ignore them. You can also have a specified command automatically execute when these breakpoints are hit. For more information, see <a href="controlling_exceptions_and_events.htm">Controlling Exceptions and Events</a>.</p>
+</li>
+<li>
+<p>Use the <a href="ctrl_k__change_post_reboot_break_state_.htm"><b>CTRL+K</b></a> shortcut keys in KD, the <a href="debug___kernel_connection___cycle_initial_break.htm">CTRL+ALT+K</a> shortcut keys in WinDbg, and the Debug | Kernel Connection | Cycle Initial Break command in WinDbg to change the break state. Every time that you use these commands, the debugger switches between three states: no automatic break, break upon kernel initialization, and break on first kernel module load. This method cannot activate <u>both</u> automatic breakpoints at the same time.</p>
+</li>
+</ul>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Crashing and Rebooting the Target Computer%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,221 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !cs extension displays one or more critical sections or the whole critical section tree."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!cs</title>
+
+<meta name="MS-HAID" content="r24_exts_general_A_074a8417-eee7-42e0-a69c-636d4732950c.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._cs"></a>!cs</h1>
+</div>
+<p>The <b>!cs</b> extension displays one or more critical sections or the whole critical section tree.</p>
+<pre class="syntax"><b>!cs </b>[<b>-s</b>] [<b>-l</b>] [<b>-o</b>] 
+<b>!cs </b>[<b>-s</b>] [<b>-o</b>] <i>Address</i> 
+<b>!cs </b>[<b>-s</b>] [<b>-l</b>] [<b>-o</b>] <i>StartAddress EndAddress</i> 
+<b>!cs </b>[<b>-s</b>] [<b>-o</b>] <b>-d</b> <i>InfoAddress</i> 
+<b>!cs </b>[<b>-s</b>] <b>-t</b> [<i>TreeAddress</i>] 
+<b>!cs -?</b> 
+</pre>
+<h2><a id="ddk__cs_dbg"></a><a id="DDK__CS_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______-s______"></a><a id="_______-S______"></a>       <b>-s</b>      </dt>
+<dd>
+<p>Displays each critical section's initialization stack trace, if this information is available.</p>
+</dd>
+<dt><a id="_______-l______"></a><a id="_______-L______"></a>       <b>-l</b>      </dt>
+<dd>
+<p>Display only the locked critical sections. </p>
+</dd>
+<dt><a id="_______-o______"></a><a id="_______-O______"></a>       <b>-o</b>      </dt>
+<dd>
+<p>Displays the owner's stack for any locked critical section that is being displayed. </p>
+</dd>
+<dt><a id="_______Address______"></a><a id="_______address______"></a><a id="_______ADDRESS______"></a>       <i>Address</i>      </dt>
+<dd>
+<p>Specifies the address of the critical section to display. If you omit this parameter, the debugger displays all critical sections in the current process.</p>
+</dd>
+<dt><a id="_______StartAddress______"></a><a id="_______startaddress______"></a><a id="_______STARTADDRESS______"></a>       <i>StartAddress</i>      </dt>
+<dd>
+<p>Specifies the beginning of the address range to search for critical sections.</p>
+</dd>
+<dt><a id="_______EndAddress______"></a><a id="_______endaddress______"></a><a id="_______ENDADDRESS______"></a>       <i>EndAddress</i>      </dt>
+<dd>
+<p>Specifies the end of the address range to search for critical sections.</p>
+</dd>
+<dt><a id="_______-d______"></a><a id="_______-D______"></a>       <b>-d</b>      </dt>
+<dd>
+<p>Displays critical sections that are associated with DebugInfo. </p>
+</dd>
+<dt><a id="_______InfoAddress______"></a><a id="_______infoaddress______"></a><a id="_______INFOADDRESS______"></a>       <i>InfoAddress</i>      </dt>
+<dd>
+<p>Specifies the address of the DebugInfo.</p>
+</dd>
+<dt><a id="_______-t______"></a><a id="_______-T______"></a>       <b>-t</b>      </dt>
+<dd>
+<p>Displays a critical section tree. Before you can use the <b>-t</b> option, you must activate <a href="application_verifier.htm">Application Verifier</a> for the target process and select the <b>Check lock usage</b> option. </p>
+</dd>
+<dt><a id="_______TreeAddress______"></a><a id="_______treeaddress______"></a><a id="_______TREEADDRESS______"></a>       <i>TreeAddress</i>      </dt>
+<dd>
+<p>Specifies the address of the root of the critical section tree. If you omit this parameter or specify zero, the debugger displays the critical section tree for the current process.</p>
+</dd>
+<dt><a id="_______-_______"></a>       <b>-?</b>      </dt>
+<dd>
+<p>Displays some Help text for this extension in the <a href="debugger_command_window.htm">Debugger Command window</a>.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000</b></p>
+</td>
+<td>
+<p>Unavailable </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later</b></p>
+</td>
+<td>
+<p>
+          Exts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For other commands and extensions that can display critical section information, see <a href="displaying_a_critical_section.htm">Displaying a Critical Section</a>. For more information about critical sections, see the Microsoft Windows SDK documentation, the Windows Driver Kit (WDK) documentation, and <i>Microsoft Windows Internals</i> by Mark Russinovich and David Solomon. (These resources may not be available in some languages 
+
+and countries.) </p>
+<h2>Remarks</h2>
+<p>The <b>!cs</b> extension requires full symbols (including type information) for the process that is being debugged and for Ntdll.dll. If you do not have symbols for Ntdll.dll, see <a href="installing_windows_symbol_files.htm">Installing Windows Symbol Files</a>.</p>
+<p>The following examples shows you how to use <b>!cs</b>. The following command displays information about the critical section at address 0x7803B0F8 and shows its initialization stack trace.</p>
+<pre class="syntax" xml:space="preserve"><code>0:001&gt; !cs -s 0x7803B0F8
+Critical section   = 0x7803B0F8 (MSVCRT!__app_type+0x4)
+DebugInfo          = 0x6A262080
+NOT LOCKED
+LockSemaphore      = 0x0
+SpinCount          = 0x0
+
+Stack trace for DebugInfo = 0x6A262080:
+
+0x6A2137BD: ntdll!RtlInitializeCriticalSectionAndSpinCount+0x9B
+0x6A207A4C: ntdll!LdrpCallInitRoutine+0x14
+0x6A205569: ntdll!LdrpRunInitializeRoutines+0x1D9
+0x6A20DCE1: ntdll!LdrpInitializeProcess+0xAE5</code></pre>
+<p>The following command displays information about the critical section whose DebugInfo is at address 0x6A262080.</p>
+<pre class="syntax" xml:space="preserve"><code>0:001&gt; !cs -d 0x6A262080
+DebugInfo          = 0x6A262080
+Critical section   = 0x7803B0F8 (MSVCRT!__app_type+0x4)
+NOT LOCKED
+LockSemaphore      = 0x0
+SpinCount          = 0x0</code></pre>
+<p>The following command displays information about all of the active critical sections in the current process.</p>
+<pre class="syntax" xml:space="preserve"><code>0:001&gt; !cs
+-----------------------------------------
+DebugInfo          = 0x6A261D60
+Critical section   = 0x6A262820 (ntdll!RtlCriticalSectionLock+0x0)
+LOCKED
+LockCount          = 0x0
+OwningThread       = 0x460
+RecursionCount     = 0x1
+LockSemaphore      = 0x0
+SpinCount          = 0x0
+-----------------------------------------
+DebugInfo          = 0x6A261D80
+Critical section   = 0x6A262580 (ntdll!DeferedCriticalSection+0x0)
+NOT LOCKED
+LockSemaphore      = 0x7FC
+SpinCount          = 0x0
+-----------------------------------------
+DebugInfo          = 0x6A262600
+Critical section   = 0x6A26074C (ntdll!LoaderLock+0x0)
+NOT LOCKED
+LockSemaphore      = 0x0
+SpinCount          = 0x0
+-----------------------------------------
+DebugInfo          = 0x77fbde20
+Critical section   = 0x77c8ba60 (GDI32!semColorSpaceCache+0x0)
+LOCKED
+LockCount          = 0x0
+OwningThread       = 0x00000dd8
+RecursionCount     = 0x1
+LockSemaphore      = 0x0
+SpinCount          = 0x00000000
+-----------------------------------------
+...</code></pre>
+<p>The following command displays the critical section tree.</p>
+<pre class="syntax" xml:space="preserve"><code>0:001&gt; !cs -t
+
+Tree root 00bb08c0
+
+Level     Node       CS    Debug  InitThr EnterThr  WaitThr TryEnThr LeaveThr EnterCnt  WaitCnt
+
+-----------------------------------------------------------------------------------------------
+
+    0 00bb08c0 77c7e020 77fbcae0      4c8      4c8        0        0      4c8        c        0
+ 1 00dd6fd0 0148cfe8 01683fe0      4c8      4c8        0        0      4c8        2        0
+ 2 00bb0aa0 008e8b84 77fbcc20      4c8        0        0        0        0        0        0
+    3 00bb09e0 008e8704 77fbcba0      4c8        0        0        0        0        0        0
+    4 00bb0a40 008e8944 77fbcbe0      4c8        0        0        0        0        0        0
+    5 00bb0a10 008e8824 77fbcbc0      4c8        0        0        0        0        0        0
+    5 00bb0a70 008e8a64 77fbcc00      4c8        0        0        0        0        0        0
+    3 00bb0b00 008e8dc4 77fbcc60      4c8        0        0        0        0        0        0
+    4 00bb0ad0 008e8ca4 77fbcc40      4c8        0        0        0        0        0        0
+    4 00bb0b30 008e8ee4 77fbcc80      4c8        0        0        0        0        0        0
+    5 00dd4fd0 0148afe4 0167ffe0      4c8        0        0        0        0        0        0
+    2 00bb0e90 77c2da98 00908fe0      4c8      4c8        0        0      4c8       3a        0
+ 3 00bb0d70 77c2da08 008fcfe0      4c8        0        0        0        0        0        0</code></pre>
+<p>The following items appear in this <b>!cs -t</b> display: </p>
+<ul>
+<li>
+<p><b>
+       InitThr</b> is the thread ID for the thread that initialized the CS.</p>
+</li>
+<li>
+<p><b>
+       EnterThr</b> is the ID of the thread that called <b>EnterCriticalSection</b> last time.</p>
+</li>
+<li>
+<p><b>
+       WaitThr</b> is the ID of the thread that found the critical section that another thread owned and waited for it last time.</p>
+</li>
+<li>
+<p><b>
+       TryEnThr</b> is the ID of the thread that called <b>TryEnterCriticalSection</b> last time.</p>
+</li>
+<li>
+<p><b>
+       LeaveThr</b> is the ID of the thread that called <b>LeaveCriticalSection</b> last time</p>
+</li>
+<li>
+<p><b>
+       EnterCnt</b> is the count of <b>EnterCriticalSection</b>.</p>
+</li>
+<li>
+<p><b>WaitCnt</b> is the contention count. </p>
+</li>
+</ul>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!cs%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

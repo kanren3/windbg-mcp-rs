@@ -1,0 +1,1269 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="This section contains descriptions of the common bug checks, including the parameters passed to the blue screen."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check Code Reference</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_code_reference2"></a>Bug Check Code Reference</h1>
+</div>
+<p>
+<p>This section contains descriptions of the common bug checks, including the parameters passed to the blue screen. It also describes how you can diagnose the fault which led to the bug check, and possible ways to deal with the error. </p>
+<div class="alert"><b>Note</b>  This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see  <a href="http://go.microsoft.com/fwlink/p/?linkid=183646">Troubleshoot blue screen errors</a>.</div>
+<div> </div>
+</p>
+<p>If a specific bug check code does not appear in this reference, use the <a href="_analyze.htm"><b>!analyze</b></a> extension command (in kernel mode) with the following syntax:</p>
+<p><b>!analyze -show </b><i>Code</i>.</p>
+<p>This will display information about the specified bug check. If your default radix is not 16, you should prefix <i>Code</i> with "0x".</p>
+<p>The following table shows the code  and name of each bug check.</p>
+<table>
+<tr>
+<th> Code</th>
+<th>Name</th>
+</tr>
+<tr>
+<td>0x00000001</td>
+<td><a href="bug_check_0x1__apc_index_mismatch.htm"><b>APC_INDEX_MISMATCH</b></a></td>
+</tr>
+<tr>
+<td>0x00000002</td>
+<td><a href="bug_check_0x2__device_queue_not_busy.htm"><b>DEVICE_QUEUE_NOT_BUSY</b></a></td>
+</tr>
+<tr>
+<td>0x00000003</td>
+<td><a href="bug_check_0x3__invalid_affinity_set.htm"><b>INVALID_AFFINITY_SET</b></a></td>
+</tr>
+<tr>
+<td>0x00000004</td>
+<td><a href="bug_check_0x4__invalid_data_access_trap.htm"><b>INVALID_DATA_ACCESS_TRAP</b></a></td>
+</tr>
+<tr>
+<td>0x00000005</td>
+<td><a href="bug_check_0x5__invalid_process_attach_attempt.htm"><b>INVALID_PROCESS_ATTACH_ATTEMPT</b></a></td>
+</tr>
+<tr>
+<td>0x00000006</td>
+<td><a href="bug_check_0x6__invalid_process_detach_attempt.htm"><b>INVALID_PROCESS_DETACH_ATTEMPT</b></a></td>
+</tr>
+<tr>
+<td>0x00000007</td>
+<td>I<a href="bug_check_0x7__invalid_software_interrupt.htm"><b>NVALID_SOFTWARE_INTERRUPT</b></a></td>
+</tr>
+<tr>
+<td>0x00000008</td>
+<td>I<a href="bug_check_0x8__irql_not_dispatch_level.htm"><b>RQL_NOT_DISPATCH_LEVEL</b></a></td>
+</tr>
+<tr>
+<td>0x00000009</td>
+<td><a href="bug_check_0x9__irql_not_greater_or_equal.htm"><b>IRQL_NOT_GREATER_OR_EQUAL</b></a></td>
+</tr>
+<tr>
+<td>0x0000000A</td>
+<td><a href="bug_check_0xa__irql_not_less_or_equal.htm"><b>IRQL_NOT_LESS_OR_EQUAL</b></a></td>
+</tr>
+<tr>
+<td>0x0000000B</td>
+<td><a href="bug_check_0xb__no_exception_handling_support.htm"><b>NO_EXCEPTION_HANDLING_SUPPORT</b></a></td>
+</tr>
+<tr>
+<td>0x0000000C</td>
+<td><a href="bug_check_0xc__maximum_wait_objects_exceeded.htm"><b>MAXIMUM_WAIT_OBJECTS_EXCEEDED</b></a></td>
+</tr>
+<tr>
+<td>0x0000000D</td>
+<td><a href="bug_check_0xd__mutex_level_number_violation.htm"><b>MUTEX_LEVEL_NUMBER_VIOLATION</b></a></td>
+</tr>
+<tr>
+<td>0x0000000E</td>
+<td><a href="bug_check_0xe__no_user_mode_context.htm"><b>NO_USER_MODE_CONTEXT</b></a></td>
+</tr>
+<tr>
+<td>0x0000000F</td>
+<td><a href="bug_check_0xf__spin_lock_already_owned.htm"><b>SPIN_LOCK_ALREADY_OWNED</b></a></td>
+</tr>
+<tr>
+<td>0x00000010</td>
+<td><a href="bug_check_0x10__spin_lock_not_owned.htm"><b>SPIN_LOCK_NOT_OWNED</b></a></td>
+</tr>
+<tr>
+<td>0x00000011</td>
+<td><a href="bug_check_0x11__thread_not_mutex_owner.htm"><b>THREAD_NOT_MUTEX_OWNER</b></a></td>
+</tr>
+<tr>
+<td>0x00000012</td>
+<td><a href="bug_check_0x12__trap_cause_unknown.htm"><b>TRAP_CAUSE_UNKNOWN</b></a></td>
+</tr>
+<tr>
+<td>0x00000013</td>
+<td><a href="bug_check_0x13__empty_thread_reaper_list.htm"><b>EMPTY_THREAD_REAPER_LIST</b></a></td>
+</tr>
+<tr>
+<td>0x00000014</td>
+<td><a href="bug_check_0x14__create_delete_lock_not_locked.htm"><b>CREATE_DELETE_LOCK_NOT_LOCKED</b></a></td>
+</tr>
+<tr>
+<td>0x00000015</td>
+<td><a href="bug_check_0x15__last_chance_called_from_kmode.htm"><b>LAST_CHANCE_CALLED_FROM_KMODE</b></a></td>
+</tr>
+<tr>
+<td>0x00000016</td>
+<td><a href="bug_check_0x16__cid_handle_creation.htm"><b>CID_HANDLE_CREATION</b></a></td>
+</tr>
+<tr>
+<td>0x00000017</td>
+<td><a href="bug_check_0x17__cid_handle_deletion.htm"><b>CID_HANDLE_DELETION</b></a></td>
+</tr>
+<tr>
+<td>0x00000018</td>
+<td><a href="bug_check_0x18__reference_by_pointer.htm"><b>REFERENCE_BY_POINTER</b></a></td>
+</tr>
+<tr>
+<td>0x00000019</td>
+<td><a href="bug_check_0x19__bad_pool_header.htm"><b>BAD_POOL_HEADER</b></a></td>
+</tr>
+<tr>
+<td>0x0000001A</td>
+<td><a href="bug_check_0x1a__memory_management.htm"><b>MEMORY_MANAGEMENT</b></a></td>
+</tr>
+<tr>
+<td>0x0000001B</td>
+<td><a href="bug_check_0x1b__pfn_share_count.htm"><b>PFN_SHARE_COUNT</b></a></td>
+</tr>
+<tr>
+<td>0x0000001C</td>
+<td><a href="bug_check_0x1c__pfn_reference_count.htm"><b>PFN_REFERENCE_COUNT</b></a></td>
+</tr>
+<tr>
+<td>0x0000001D</td>
+<td><a href="bug_check_0x1d__no_spin_lock_available.htm"><b>NO_SPIN_LOCK_AVAILABLE</b></a></td>
+</tr>
+<tr>
+<td>0x0000001E</td>
+<td><a href="bug_check_0x1e__kmode_exception_not_handled.htm"><b>KMODE_EXCEPTION_NOT_HANDLED</b></a></td>
+</tr>
+<tr>
+<td>0x0000001F</td>
+<td><a href="bug_check_0x1f__shared_resource_conv_error.htm"><b>SHARED_RESOURCE_CONV_ERROR</b></a></td>
+</tr>
+<tr>
+<td>0x00000020</td>
+<td><a href="bug_check_0x20__kernel_apc_pending_during_exit.htm"><b>KERNEL_APC_PENDING_DURING_EXIT</b></a></td>
+</tr>
+<tr>
+<td>0x00000021</td>
+<td><a href="bug_check_0x21__quota_underflow.htm"><b>QUOTA_UNDERFLOW</b></a></td>
+</tr>
+<tr>
+<td>0x00000022</td>
+<td><a href="bug_check_0x22__file_system.htm"><b>FILE_SYSTEM</b></a></td>
+</tr>
+<tr>
+<td>0x00000023</td>
+<td><a href="bug_check_0x23__fat_file_system.htm"><b>FAT_FILE_SYSTEM</b></a></td>
+</tr>
+<tr>
+<td>0x00000024</td>
+<td><a href="bug_check_0x24__ntfs_file_system.htm"><b>NTFS_FILE_SYSTEM</b></a></td>
+</tr>
+<tr>
+<td>0x00000025</td>
+<td><a href="bug_check_0x25__npfs_file_system.htm"><b>NPFS_FILE_SYSTEM</b></a></td>
+</tr>
+<tr>
+<td>0x00000026</td>
+<td><a href="bug_check_0x26__cdfs_file_system.htm"><b>CDFS_FILE_SYSTEM</b></a></td>
+</tr>
+<tr>
+<td>0x00000027</td>
+<td><a href="bug_check_0x27__rdr_file_system.htm"><b>RDR_FILE_SYSTEM</b></a></td>
+</tr>
+<tr>
+<td>0x00000028</td>
+<td><a href="bug_check_0x28__corrupt_access_token.htm"><b>CORRUPT_ACCESS_TOKEN</b></a></td>
+</tr>
+<tr>
+<td>0x00000029</td>
+<td><a href="bug_check_0x29__security_system.htm"><b>SECURITY_SYSTEM</b></a></td>
+</tr>
+<tr>
+<td>0x0000002A</td>
+<td><a href="bug_check_0x2a__inconsistent_irp.htm"><b>INCONSISTENT_IRP</b></a></td>
+</tr>
+<tr>
+<td>0x0000002B</td>
+<td><a href="bug_check_0x2b__panic_stack_switch.htm"><b>PANIC_STACK_SWITCH</b></a></td>
+</tr>
+<tr>
+<td>0x0000002C</td>
+<td><a href="bug_check_0x2c__port_driver_internal.htm"><b>PORT_DRIVER_INTERNAL</b></a></td>
+</tr>
+<tr>
+<td>0x0000002D</td>
+<td><a href="bug_check_0x2d__scsi_disk_driver_internal.htm"><b>SCSI_DISK_DRIVER_INTERNAL</b></a></td>
+</tr>
+<tr>
+<td>0x0000002E</td>
+<td><a href="bug_check_0x2e__data_bus_error.htm"><b>DATA_BUS_ERROR</b></a></td>
+</tr>
+<tr>
+<td>0x0000002F</td>
+<td>I<a href="bug_check_0x2f__instruction_bus_error.htm"><b>NSTRUCTION_BUS_ERROR</b></a></td>
+</tr>
+<tr>
+<td>0x00000030</td>
+<td><a href="bug_check_0x30__set_of_invalid_context.htm"><b>SET_OF_INVALID_CONTEXT</b></a></td>
+</tr>
+<tr>
+<td>0x00000031</td>
+<td><a href="bug_check_0x31__phase0_initialization_failed.htm"><b>PHASE0_INITIALIZATION_FAILED</b></a></td>
+</tr>
+<tr>
+<td>0x00000032</td>
+<td><a href="bug_check_0x32__phase1_initialization_failed.htm"><b>PHASE1_INITIALIZATION_FAILED</b></a></td>
+</tr>
+<tr>
+<td>0x00000033</td>
+<td><a href="bug_check_0x33__unexpected_initialization_call.htm"><b>UNEXPECTED_INITIALIZATION_CALL</b></a></td>
+</tr>
+<tr>
+<td>0x00000034</td>
+<td><a href="bug_check_0x34__cache_manager.htm"><b>CACHE_MANAGER</b></a></td>
+</tr>
+<tr>
+<td>0x00000035</td>
+<td><a href="bug_check_0x35__no_more_irp_stack_locations.htm"><b>NO_MORE_IRP_STACK_LOCATIONS</b></a></td>
+</tr>
+<tr>
+<td>0x00000036</td>
+<td><a href="bug_check_0x36__device_reference_count_not_zero.htm"><b>DEVICE_REFERENCE_COUNT_NOT_ZERO</b></a></td>
+</tr>
+<tr>
+<td>0x00000037</td>
+<td><a href="bug_check_0x37__floppy_internal_error.htm"><b>FLOPPY_INTERNAL_ERROR</b></a></td>
+</tr>
+<tr>
+<td>0x00000038</td>
+<td><a href="bug_check_0x38__serial_driver_internal.htm"><b>SERIAL_DRIVER_INTERNAL</b></a></td>
+</tr>
+<tr>
+<td>0x00000039</td>
+<td><a href="bug_check_0x39__system_exit_owned_mutex.htm"><b>SYSTEM_EXIT_OWNED_MUTEX</b></a></td>
+</tr>
+<tr>
+<td>0x0000003A</td>
+<td><a href="bug_check_0x3a__system_unwind_previous_user.htm"><b>SYSTEM_UNWIND_PREVIOUS_USER</b></a></td>
+</tr>
+<tr>
+<td>0x0000003B</td>
+<td><a href="bug_check_0x3b__system_service_exception.htm"><b>SYSTEM_SERVICE_EXCEPTION</b></a></td>
+</tr>
+<tr>
+<td>0x0000003C</td>
+<td><a href="bug_check_0x3c__interrupt_unwind_attempted.htm"><b>INTERRUPT_UNWIND_ATTEMPTED</b></a></td>
+</tr>
+<tr>
+<td>0x0000003D</td>
+<td><a href="bug_check_0x3d__interrupt_exception_not_handled.htm"><b>INTERRUPT_EXCEPTION_NOT_HANDLED</b></a></td>
+</tr>
+<tr>
+<td>0x0000003E</td>
+<td><a href="bug_check_0x3e__multiprocessor_configuration_not_supported.htm"><b>MULTIPROCESSOR_CONFIGURATION_NOT_SUPPORTED</b></a></td>
+</tr>
+<tr>
+<td>0x0000003F</td>
+<td><a href="bug_check_0x3f__no_more_system_ptes.htm"><b>NO_MORE_SYSTEM_PTES</b></a></td>
+</tr>
+<tr>
+<td>0x00000040</td>
+<td><a href="bug_check_0x40__target_mdl_too_small.htm"><b>TARGET_MDL_TOO_SMALL</b></a></td>
+</tr>
+<tr>
+<td>0x00000041</td>
+<td><a href="bug_check_0x41__must_succeed_pool_empty.htm"><b>MUST_SUCCEED_POOL_EMPTY</b></a></td>
+</tr>
+<tr>
+<td>0x00000042</td>
+<td><a href="bug_check_0x42__atdisk_driver_internal.htm"><b>ATDISK_DRIVER_INTERNAL</b></a></td>
+</tr>
+<tr>
+<td>0x00000043</td>
+<td><a href="bug_check_0x43__no_such_partition.htm"><b>NO_SUCH_PARTITION</b></a></td>
+</tr>
+<tr>
+<td>0x00000044</td>
+<td><a href="bug_check_0x44__multiple_irp_complete_requests.htm"><b>MULTIPLE_IRP_COMPLETE_REQUESTS</b></a></td>
+</tr>
+<tr>
+<td>0x00000045</td>
+<td><a href="bug_check_0x45__insufficient_system_map_regs.htm"><b>INSUFFICIENT_SYSTEM_MAP_REGS</b></a></td>
+</tr>
+<tr>
+<td>0x00000046</td>
+<td><a href="bug_check_0x46__deref_unknown_logon_session.htm"><b>DEREF_UNKNOWN_LOGON_SESSION</b></a></td>
+</tr>
+<tr>
+<td>0x00000047</td>
+<td><a href="bug_check_0x47__ref_unknown_logon_session.htm"><b>REF_UNKNOWN_LOGON_SESSION</b></a></td>
+</tr>
+<tr>
+<td>0x00000048</td>
+<td><a href="bug_check_0x48__cancel_state_in_completed_irp.htm"><b>CANCEL_STATE_IN_COMPLETED_IRP</b></a></td>
+</tr>
+<tr>
+<td>0x00000049</td>
+<td><a href="bug_check_0x49__page_fault_with_interrupts_off.htm"><b>PAGE_FAULT_WITH_INTERRUPTS_OFF</b></a></td>
+</tr>
+<tr>
+<td>0x0000004A</td>
+<td><a href="bug_check_0x4a__irql_gt_zero_at_system_service.htm"><b>IRQL_GT_ZERO_AT_SYSTEM_SERVICE</b></a></td>
+</tr>
+<tr>
+<td>0x0000004B</td>
+<td><a href="bug_check_0x4b__streams_internal_error.htm"><b>STREAMS_INTERNAL_ERROR</b></a></td>
+</tr>
+<tr>
+<td>0x0000004C</td>
+<td><a href="bug_check_0x4c__fatal_unhandled_hard_error.htm"><b>FATAL_UNHANDLED_HARD_ERROR</b></a></td>
+</tr>
+<tr>
+<td>0x0000004D</td>
+<td><a href="bug_check_0x4d__no_pages_available.htm"><b>NO_PAGES_AVAILABLE</b></a></td>
+</tr>
+<tr>
+<td>0x0000004E</td>
+<td><a href="bug_check_0x4e__pfn_list_corrupt.htm"><b>PFN_LIST_CORRUPT</b></a></td>
+</tr>
+<tr>
+<td>0x0000004F</td>
+<td><a href="bug_check_0x4f__ndis_internal_error.htm"><b>NDIS_INTERNAL_ERROR</b></a></td>
+</tr>
+<tr>
+<td>0x00000050</td>
+<td><a href="bug_check_0x50__page_fault_in_nonpaged_area.htm"><b>PAGE_FAULT_IN_NONPAGED_AREA</b></a></td>
+</tr>
+<tr>
+<td>0x00000051</td>
+<td><a href="bug_check_0x51__registry_error.htm"><b>REGISTRY_ERROR</b></a></td>
+</tr>
+<tr>
+<td>0x00000052</td>
+<td><a href="bug_check_0x52__mailslot_file_system.htm"><b>MAILSLOT_FILE_SYSTEM</b></a></td>
+</tr>
+<tr>
+<td>0x00000053</td>
+<td><a href="bug_check_0x53__no_boot_device.htm"><b>NO_BOOT_DEVICE</b></a></td>
+</tr>
+<tr>
+<td>0x00000054</td>
+<td><a href="bug_check_0x54__lm_server_internal_error.htm"><b>LM_SERVER_INTERNAL_ERROR</b></a></td>
+</tr>
+<tr>
+<td>0x00000055</td>
+<td><a href="bug_check_0x55__data_coherency_exception.htm"><b>DATA_COHERENCY_EXCEPTION</b></a></td>
+</tr>
+<tr>
+<td>0x00000056</td>
+<td><a href="bug_check_0x56__instruction_coherency_exception.htm"><b>INSTRUCTION_COHERENCY_EXCEPTION</b></a></td>
+</tr>
+<tr>
+<td>0x00000057</td>
+<td><a href="bug_check_0x57__xns_internal_error.htm"><b>XNS_INTERNAL_ERROR</b></a></td>
+</tr>
+<tr>
+<td>0x00000058</td>
+<td><a href="bug_check_0x58__ftdisk_internal_error.htm"><b>FTDISK_INTERNAL_ERROR</b></a></td>
+</tr>
+<tr>
+<td>0x00000059</td>
+<td><a href="bug_check_0x59__pinball_file_system.htm"><b>PINBALL_FILE_SYSTEM</b></a></td>
+</tr>
+<tr>
+<td>0x0000005A</td>
+<td><a href="bug_check_0x5a__critical_service_failed.htm"><b>CRITICAL_SERVICE_FAILED</b></a></td>
+</tr>
+<tr>
+<td>0x0000005B</td>
+<td><a href="bug_check_0x5b__set_env_var_failed.htm"><b>SET_ENV_VAR_FAILED</b></a></td>
+</tr>
+<tr>
+<td>0x0000005C</td>
+<td><a href="bug_check_0x5c__hal_initialization_failed.htm"><b>HAL_INITIALIZATION_FAILED</b></a></td>
+</tr>
+<tr>
+<td>0x0000005D</td>
+<td><a href="bug_check_0x5d__unsupported_processor.htm"><b>UNSUPPORTED_PROCESSOR</b></a></td>
+</tr>
+<tr>
+<td>0x0000005E</td>
+<td><a href="bug_check_0x5e__object_initialization_failed.htm"><b>OBJECT_INITIALIZATION_FAILED</b></a></td>
+</tr>
+<tr>
+<td>0x0000005F</td>
+<td><a href="bug_check_0x5f__security_initialization_failed.htm"><b>SECURITY_INITIALIZATION_FAILED</b></a></td>
+</tr>
+<tr>
+<td>0x00000060</td>
+<td><a href="bug_check_0x60__process_initialization_failed.htm"><b>PROCESS_INITIALIZATION_FAILED</b></a></td>
+</tr>
+<tr>
+<td>0x00000061</td>
+<td><a href="bug_check_0x61__hal1_initialization_failed.htm"><b>HAL1_INITIALIZATION_FAILED</b></a></td>
+</tr>
+<tr>
+<td>0x00000062</td>
+<td><a href="bug_check_0x62__object1_initialization_failed.htm"><b>OBJECT1_INITIALIZATION_FAILED</b></a></td>
+</tr>
+<tr>
+<td>0x00000063</td>
+<td><a href="bug_check_0x63__security1_initialization_failed.htm"><b>SECURITY1_INITIALIZATION_FAILED</b></a></td>
+</tr>
+<tr>
+<td>0x00000064</td>
+<td><a href="bug_check_0x64__symbolic_initialization_failed.htm"><b>SYMBOLIC_INITIALIZATION_FAILED</b></a></td>
+</tr>
+<tr>
+<td>0x00000065</td>
+<td><a href="bug_check_0x65__memory1_initialization_failed.htm"><b>MEMORY1_INITIALIZATION_FAILED</b></a></td>
+</tr>
+<tr>
+<td>0x00000066</td>
+<td><a href="bug_check_0x66__cache_initialization_failed.htm"><b>CACHE_INITIALIZATION_FAILED</b></a></td>
+</tr>
+<tr>
+<td>0x00000067</td>
+<td><a href="bug_check_0x67__config_initialization_failed.htm"><b>CONFIG_INITIALIZATION_FAILED</b></a></td>
+</tr>
+<tr>
+<td>0x00000068</td>
+<td><a href="bug_check_0x68__file_initialization_failed.htm"><b>FILE_INITIALIZATION_FAILED</b></a></td>
+</tr>
+<tr>
+<td>0x00000069</td>
+<td><a href="bug_check_0x69__io1_initialization_failed.htm"><b>IO1_INITIALIZATION_FAILED</b></a></td>
+</tr>
+<tr>
+<td>0x0000006A</td>
+<td><a href="bug_check_0x6a__lpc_initialization_failed.htm"><b>LPC_INITIALIZATION_FAILED</b></a></td>
+</tr>
+<tr>
+<td>0x0000006B</td>
+<td><a href="bug_check_0x6b__process1_initialization_failed.htm"><b>PROCESS1_INITIALIZATION_FAILE</b></a>D</td>
+</tr>
+<tr>
+<td>0x0000006C</td>
+<td><a href="bug_check_0x6c__refmon_initialization_failed.htm"><b>REFMON_INITIALIZATION_FAILED</b></a></td>
+</tr>
+<tr>
+<td>0x0000006D</td>
+<td><a href="bug_check_0x6d__session1_initialization_failed.htm"><b>SESSION1_INITIALIZATION_FAILED</b></a></td>
+</tr>
+<tr>
+<td>0x0000006E</td>
+<td><a href="bug_check_0x6e__session2_initialization_failed.htm"><b>SESSION2_INITIALIZATION_FAILED</b></a></td>
+</tr>
+<tr>
+<td>0x0000006F</td>
+<td><a href="bug_check_0x6f__session3_initialization_failed.htm"><b>SESSION3_INITIALIZATION_FAILED</b></a></td>
+</tr>
+<tr>
+<td>0x00000070</td>
+<td><a href="bug_check_0x70__session4_initialization_failed.htm"><b>SESSION4_INITIALIZATION_FAILED</b></a></td>
+</tr>
+<tr>
+<td>0x00000071</td>
+<td><a href="bug_check_0x71__session5_initialization_failed.htm"><b>SESSION5_INITIALIZATION_FAILED</b></a></td>
+</tr>
+<tr>
+<td>0x00000072</td>
+<td><a href="bug_check_0x72__assign_drive_letters_failed.htm"><b>ASSIGN_DRIVE_LETTERS_FAILED</b></a></td>
+</tr>
+<tr>
+<td>0x00000073</td>
+<td><a href="bug_check_0x73__config_list_failed.htm"><b>CONFIG_LIST_FAILED</b></a></td>
+</tr>
+<tr>
+<td>0x00000074</td>
+<td><a href="bug_check_0x74__bad_system_config_info.htm"><b>BAD_SYSTEM_CONFIG_INFO</b></a></td>
+</tr>
+<tr>
+<td>0x00000075</td>
+<td><a href="bug_check_0x75__cannot_write_configuration.htm"><b>CANNOT_WRITE_CONFIGURATION</b></a></td>
+</tr>
+<tr>
+<td>0x00000076</td>
+<td><a href="bug_check_0x76__process_has_locked_pages.htm"><b>PROCESS_HAS_LOCKED_PAGES</b></a></td>
+</tr>
+<tr>
+<td>0x00000077</td>
+<td><a href="bug_check_0x77__kernel_stack_inpage_error.htm"><b>KERNEL_STACK_INPAGE_ERROR</b></a></td>
+</tr>
+<tr>
+<td>0x00000078</td>
+<td><a href="bug_check_0x78__phase0_exception.htm"><b>PHASE0_EXCEPTION</b></a></td>
+</tr>
+<tr>
+<td>0x00000079</td>
+<td><a href="bug_check_0x79__mismatched_hal.htm"><b>MISMATCHED_HAL</b></a></td>
+</tr>
+<tr>
+<td>0x0000007A</td>
+<td><a href="bug_check_0x7a__kernel_data_inpage_error.htm"><b>KERNEL_DATA_INPAGE_ERROR</b></a></td>
+</tr>
+<tr>
+<td>0x0000007B</td>
+<td><a href="bug_check_0x7b__inaccessible_boot_device.htm"><b>INACCESSIBLE_BOOT_DEVICE</b></a></td>
+</tr>
+<tr>
+<td>0x0000007C</td>
+<td><a href="bug_check_0x7c__bugcode_ndis_driver.htm"><b>BUGCODE_NDIS_DRIVER</b></a></td>
+</tr>
+<tr>
+<td>0x0000007D</td>
+<td><a href="bug_check_0x7d__install_more_memory.htm"><b>INSTALL_MORE_MEMORY</b></a></td>
+</tr>
+<tr>
+<td>0x0000007E</td>
+<td><a href="bug_check_0x7e__system_thread_exception_not_handled.htm"><b>SYSTEM_THREAD_EXCEPTION_NOT_HANDLED</b></a></td>
+</tr>
+<tr>
+<td>0x0000007F</td>
+<td><a href="bug_check_0x7f__unexpected_kernel_mode_trap.htm"><b>UNEXPECTED_KERNEL_MODE_TRAP</b></a></td>
+</tr>
+<tr>
+<td>0x00000080</td>
+<td><a href="bug_check_0x80__nmi_hardware_failure.htm"><b>NMI_HARDWARE_FAILURE</b></a></td>
+</tr>
+<tr>
+<td>0x00000081</td>
+<td><a href="bug_check_0x81__spin_lock_init_failure.htm"><b>SPIN_LOCK_INIT_FAILURE</b></a></td>
+</tr>
+<tr>
+<td>0x00000082</td>
+<td><a href="bug_check_0x82__dfs_file_system.htm"><b>DFS_FILE_SYSTEM</b></a></td>
+</tr>
+<tr>
+<td>0x00000085</td>
+<td><a href="bug_check_0x85__setup_failure.htm"><b>SETUP_FAILURE</b></a></td>
+</tr>
+<tr>
+<td>0x0000008B</td>
+<td><a href="bug_check_0x8b__mbr_checksum_mismatch.htm"><b>MBR_CHECKSUM_MISMATCH</b></a></td>
+</tr>
+<tr>
+<td>0x0000008E</td>
+<td><a href="bug_check_0x8e__kernel_mode_exception_not_handled.htm"><b>KERNEL_MODE_EXCEPTION_NOT_HANDLED</b></a></td>
+</tr>
+<tr>
+<td>0x0000008F</td>
+<td><a href="bug_check_0x8f__pp0_initialization_failed.htm"><b>PP0_INITIALIZATION_FAILED</b></a></td>
+</tr>
+<tr>
+<td>0x00000090</td>
+<td><a href="bug_check_0x90__pp1_initialization_failed.htm"><b>PP1_INITIALIZATION_FAILED</b></a></td>
+</tr>
+<tr>
+<td>0x00000092</td>
+<td><a href="bug_check_0x92__up_driver_on_mp_system.htm"><b>UP_DRIVER_ON_MP_SYSTEM</b></a></td>
+</tr>
+<tr>
+<td>0x00000093</td>
+<td><a href="bug_check_0x93__invalid_kernel_handle.htm"><b>INVALID_KERNEL_HANDLE</b></a></td>
+</tr>
+<tr>
+<td>0x00000094</td>
+<td><a href="bug_check_0x94__kernel_stack_locked_at_exit.htm"><b>KERNEL_STACK_LOCKED_AT_EXIT</b></a></td>
+</tr>
+<tr>
+<td>0x00000096</td>
+<td><a href="bug_check_0x96__invalid_work_queue_item.htm"><b>INVALID_WORK_QUEUE_ITEM</b></a></td>
+</tr>
+<tr>
+<td>0x00000097</td>
+<td><a href="bug_check_0x97__bound_image_unsupported.htm"><b>BOUND_IMAGE_UNSUPPORTED</b></a></td>
+</tr>
+<tr>
+<td>0x00000098</td>
+<td><a href="bug_check_0x98__end_of_nt_evaluation_period.htm"><b>END_OF_NT_EVALUATION_PERIOD</b></a></td>
+</tr>
+<tr>
+<td>0x00000099</td>
+<td><a href="bug_check_0x99__invalid_region_or_segment.htm"><b>INVALID_REGION_OR_SEGMENT</b></a></td>
+</tr>
+<tr>
+<td>0x0000009A</td>
+<td><a href="bug_check_0x9a__system_license_violation.htm"><b>SYSTEM_LICENSE_VIOLATION</b></a></td>
+</tr>
+<tr>
+<td>0x0000009B</td>
+<td><a href="bug_check_0x9b__udfs_file_system.htm"><b>UDFS_FILE_SYSTEM</b></a></td>
+</tr>
+<tr>
+<td>0x0000009C</td>
+<td><a href="bug_check_0x9c__machine_check_exception.htm"><b>MACHINE_CHECK_EXCEPTION</b></a></td>
+</tr>
+<tr>
+<td>0x0000009E</td>
+<td><a href="bug_check_0x9e__user_mode_health_monitor.htm"><b>USER_MODE_HEALTH_MONITOR</b></a></td>
+</tr>
+<tr>
+<td>0x0000009F</td>
+<td><a href="bug_check_0x9f__driver_power_state_failure.htm"><b>DRIVER_POWER_STATE_FAILURE</b></a></td>
+</tr>
+<tr>
+<td>0x000000A0</td>
+<td><a href="bug_check_0xa0__internal_power_error.htm"><b>INTERNAL_POWER_ERROR</b></a></td>
+</tr>
+<tr>
+<td>0x000000A1</td>
+<td><a href="bug_check_0xa1__pci_bus_driver_internal.htm"><b>PCI_BUS_DRIVER_INTERNAL</b></a></td>
+</tr>
+<tr>
+<td>0x000000A2</td>
+<td><a href="bug_check_0xa2__memory_image_corrupt.htm"><b>MEMORY_IMAGE_CORRUPT</b></a></td>
+</tr>
+<tr>
+<td>0x000000A3</td>
+<td><a href="bug_check_0xa3__acpi_driver_internal.htm"><b>ACPI_DRIVER_INTERNAL</b></a></td>
+</tr>
+<tr>
+<td>0x000000A4</td>
+<td><a href="bug_check_0xa4__cnss_file_system_filter.htm"><b>CNSS_FILE_SYSTEM_FILTER</b></a></td>
+</tr>
+<tr>
+<td>0x000000A5</td>
+<td><a href="bug_check_0xa5__acpi_bios_error.htm"><b>ACPI_BIOS_ERROR</b></a></td>
+</tr>
+<tr>
+<td>0x000000A7</td>
+<td><a href="bug_check_0xa7__bad_exhandle.htm"><b>BAD_EXHANDLE</b></a></td>
+</tr>
+<tr>
+<td>0x000000AB</td>
+<td><a href="bug_check_0xab__session_has_valid_pool_on_exit.htm"><b>SESSION_HAS_VALID_POOL_ON_EXIT</b></a></td>
+</tr>
+<tr>
+<td>0x000000AC</td>
+<td><a href="bug_check_0xac__hal_memory_allocation.htm"><b>HAL_MEMORY_ALLOCATION</b></a></td>
+</tr>
+<tr>
+<td>0x000000AD</td>
+<td><a href="bug_check_0xad__video_driver_debug_report_request.htm"><b>VIDEO_DRIVER_DEBUG_REPORT_REQUEST</b></a></td>
+</tr>
+<tr>
+<td>0x000000B4</td>
+<td><a href="bug_check_0xb4__video_driver_init_failure.htm"><b>VIDEO_DRIVER_INIT_FAILURE</b></a></td>
+</tr>
+<tr>
+<td>0x000000B8</td>
+<td><a href="bug_check_0xb8__attempted_switch_from_dpc.htm"><b>ATTEMPTED_SWITCH_FROM_DPC</b></a></td>
+</tr>
+<tr>
+<td>0x000000B9</td>
+<td><a href="bug_check_0xb9__chipset_detected_error.htm"><b>CHIPSET_DETECTED_ERROR</b></a></td>
+</tr>
+<tr>
+<td>0x000000BA</td>
+<td><a href="bug_check_0xba__session_has_valid_views_on_exit.htm"><b>SESSION_HAS_VALID_VIEWS_ON_EXIT</b></a></td>
+</tr>
+<tr>
+<td>0x000000BB</td>
+<td><a href="bug_check_0xbb__network_boot_initialization_failed.htm"><b>NETWORK_BOOT_INITIALIZATION_FAILED</b></a></td>
+</tr>
+<tr>
+<td>0x000000BC</td>
+<td><a href="bug_check_0xbc__network_boot_duplicate_address.htm"><b>NETWORK_BOOT_DUPLICATE_ADDRESS</b></a></td>
+</tr>
+<tr>
+<td>0x000000BE</td>
+<td><a href="bug_check_0xbe__attempted_write_to_readonly_memory.htm"><b>ATTEMPTED_WRITE_TO_READONLY_MEMORY</b></a></td>
+</tr>
+<tr>
+<td>0x000000BF</td>
+<td><a href="bug_check_0xbf__mutex_already_owned.htm"><b>MUTEX_ALREADY_OWNED</b></a></td>
+</tr>
+<tr>
+<td>0x000000C1</td>
+<td><a href="bug_check_0xc1__special_pool_detected_memory_corruption.htm"><b>SPECIAL_POOL_DETECTED_MEMORY_CORRUPTION</b></a></td>
+</tr>
+<tr>
+<td>0x000000C2</td>
+<td><a href="bug_check_0xc2__bad_pool_caller.htm"><b>BAD_POOL_CALLER</b></a></td>
+</tr>
+<tr>
+<td>0x000000C4</td>
+<td><a href="bug_check_0xc4__driver_verifier_detected_violation.htm"><b>DRIVER_VERIFIER_DETECTED_VIOLATION</b></a></td>
+</tr>
+<tr>
+<td>0x000000C5</td>
+<td><a href="bug_check_0xc5__driver_corrupted_expool.htm"><b>DRIVER_CORRUPTED_EXPOOL</b></a></td>
+</tr>
+<tr>
+<td>0x000000C6</td>
+<td><a href="bug_check_0xc6__driver_caught_modifying_freed_pool.htm"><b>DRIVER_CAUGHT_MODIFYING_FREED_POO</b></a>L</td>
+</tr>
+<tr>
+<td>0x000000C7</td>
+<td><a href="bug_check_0xc7__timer_or_dpc_invalid.htm"><b>tIMER_OR_DPC_INVALID</b></a></td>
+</tr>
+<tr>
+<td>0x000000C8</td>
+<td><a href="bug_check_0xc8__irql_unexpected_value.htm"><b>IRQL_UNEXPECTED_VALUE</b></a></td>
+</tr>
+<tr>
+<td>0x000000C9</td>
+<td><a href="bug_check_0xc9__driver_verifier_iomanager_violation.htm"><b>DRIVER_VERIFIER_IOMANAGER_VIOLATION</b></a></td>
+</tr>
+<tr>
+<td>0x000000CA</td>
+<td><a href="bug_check_0xca__pnp_detected_fatal_error.htm"><b>PNP_DETECTED_FATAL_ERROR</b></a></td>
+</tr>
+<tr>
+<td>0x000000CB</td>
+<td><a href="bug_check_0xcb__driver_left_locked_pages_in_process.htm"><b>DRIVER_LEFT_LOCKED_PAGES_IN_PROCESS</b></a></td>
+</tr>
+<tr>
+<td>0x000000CC</td>
+<td><a href="bug_check_0xcc__page_fault_in_freed_special_pool.htm"><b>PAGE_FAULT_IN_FREED_SPECIAL_POOL</b></a></td>
+</tr>
+<tr>
+<td>0x000000CD</td>
+<td><a href="bug_check_0xcd__page_fault_beyond_end_of_allocation.htm"><b>PAGE_FAULT_BEYOND_END_OF_ALLOCATION</b></a></td>
+</tr>
+<tr>
+<td>0x000000CE</td>
+<td><a href="bug_check_0xce__driver_unloaded_without_cancelling_pending_operations.htm"><b>DRIVER_UNLOADED_WITHOUT_CANCELLING_PENDING_OPERATIONS</b></a></td>
+</tr>
+<tr>
+<td>0x000000CF</td>
+<td><a href="bug_check_0xcf__terminal_server_driver_made_incorrect_memory_reference.htm"><b>TERMINAL_SERVER_DRIVER_MADE_INCORRECT_MEMORY_REFERENCE</b></a></td>
+</tr>
+<tr>
+<td>0x000000D0</td>
+<td><a href="bug_check_0xd0__driver_corrupted_mmpool.htm"><b>DRIVER_CORRUPTED_MMPOOL</b></a></td>
+</tr>
+<tr>
+<td>0x000000D1</td>
+<td><a href="bug_check_0xd1__driver_irql_not_less_or_equal.htm"><b>DRIVER_IRQL_NOT_LESS_OR_EQUAL</b></a></td>
+</tr>
+<tr>
+<td>0x000000D2</td>
+<td><a href="bug_check_0xd2__bugcode_id_driver.htm"><b>BUGCODE_ID_DRIVER</b></a></td>
+</tr>
+<tr>
+<td>0x000000D3</td>
+<td><a href="bug_check_0xd3__driver_portion_must_be_nonpaged.htm"><b>DRIVER_PORTION_MUST_BE_NONPAGED</b></a></td>
+</tr>
+<tr>
+<td>0x000000D4</td>
+<td><a href="bug_check_0xd4__system_scan_at_raised_irql_caught_improper_driver_unlo.htm"><b>SYSTEM_SCAN_AT_RAISED_IRQL_CAUGHT_IMPROPER_DRIVER_UNLOAD</b></a></td>
+</tr>
+<tr>
+<td>0x000000D5</td>
+<td><a href="bug_check_0xd5__driver_page_fault_in_freed_special_pool.htm"><b>DRIVER_PAGE_FAULT_IN_FREED_SPECIAL_POOL</b></a></td>
+</tr>
+<tr>
+<td>0x000000D6</td>
+<td><a href="bug_check_0xd6__driver_page_fault_beyond_end_of_allocation.htm"><b>DRIVER_PAGE_FAULT_BEYOND_END_OF_ALLOCATION</b></a></td>
+</tr>
+<tr>
+<td>0x000000D7</td>
+<td><a href="bug_check_0xd7__driver_unmapping_invalid_view.htm"><b>DRIVER_UNMAPPING_INVALID_VIEW</b></a></td>
+</tr>
+<tr>
+<td>0x000000D8</td>
+<td><a href="bug_check_0xd8__driver_used_excessive_ptes.htm"><b>DRIVER_USED_EXCESSIVE_PTES</b></a></td>
+</tr>
+<tr>
+<td>0x000000D9</td>
+<td><a href="bug_check_0xd9__locked_pages_tracker_corruption.htm"><b>LOCKED_PAGES_TRACKER_CORRUPTION</b></a></td>
+</tr>
+<tr>
+<td>0x000000DA</td>
+<td><a href="bug_check_0xda__system_pte_misuse.htm"><b>SYSTEM_PTE_MISUSE</b></a></td>
+</tr>
+<tr>
+<td>0x000000DB</td>
+<td><a href="bug_check_0xdb__driver_corrupted_sysptes.htm"><b>DRIVER_CORRUPTED_SYSPTES</b></a></td>
+</tr>
+<tr>
+<td>0x000000DC</td>
+<td><a href="bug_check_0xdc__driver_invalid_stack_access.htm"><b>DRIVER_INVALID_STACK_ACCESS</b></a></td>
+</tr>
+<tr>
+<td>0x000000DE</td>
+<td><a href="bug_check_0xde__pool_corruption_in_file_area.htm"><b>POOL_CORRUPTION_IN_FILE_AREA</b></a></td>
+</tr>
+<tr>
+<td>0x000000DF</td>
+<td>I<a href="bug_check_0xdf__impersonating_worker_thread.htm"><b>MPERSONATING_WORKER_THREAD</b></a></td>
+</tr>
+<tr>
+<td>0x000000E0</td>
+<td><a href="bug_check_0xe0__acpi_bios_fatal_error.htm"><b>ACPI_BIOS_FATAL_ERROR</b></a></td>
+</tr>
+<tr>
+<td>0x000000E1</td>
+<td><a href="bug_check_0xe1__worker_thread_returned_at_bad_irql.htm"><b>WORKER_THREAD_RETURNED_AT_BAD_IRQL</b></a></td>
+</tr>
+<tr>
+<td>0x000000E2</td>
+<td><a href="bug_check_0xe2__manually_initiated_crash.htm"><b>MANUALLY_INITIATED_CRASH</b></a></td>
+</tr>
+<tr>
+<td>0x000000E3</td>
+<td><a href="bug_check_0xe3__resource_not_owned.htm"><b>RESOURCE_NOT_OWNED</b></a></td>
+</tr>
+<tr>
+<td>0x000000E4</td>
+<td><a href="bug_check_0xe4__worker_invalid.htm"><b>WORKER_INVALID</b></a></td>
+</tr>
+<tr>
+<td>0x000000E6</td>
+<td><a href="bug_check_0xe6__driver_verifier_dma_violation.htm"><b>DRIVER_VERIFIER_DMA_VIOLATION</b></a></td>
+</tr>
+<tr>
+<td>0x000000E7</td>
+<td><a href="bug_check_0xe7__invalid_floating_point_state.htm"><b>INVALID_FLOATING_POINT_STATE</b></a></td>
+</tr>
+<tr>
+<td>0x000000E8</td>
+<td><a href="bug_check_0xe8__invalid_cancel_of_file_open.htm"><b>INVALID_CANCEL_OF_FILE_OPEN</b></a></td>
+</tr>
+<tr>
+<td>0x000000E9</td>
+<td><a href="bug_check_0xe9__active_ex_worker_thread_termination.htm"><b>ACTIVE_EX_WORKER_THREAD_TERMINATION</b></a></td>
+</tr>
+<tr>
+<td>0x000000EA</td>
+<td><a href="bug_check_0xea__thread_stuck_in_device_driver.htm"><b>THREAD_STUCK_IN_DEVICE_DRIVER</b></a></td>
+</tr>
+<tr>
+<td>0x000000EB</td>
+<td><a href="bug_check_0xeb__dirty_mapped_pages_congestion.htm"><b>DIRTY_MAPPED_PAGES_CONGESTION</b></a></td>
+</tr>
+<tr>
+<td>0x000000EC</td>
+<td><a href="bug_check_0xec__session_has_valid_special_pool_on_exit.htm"><b>SESSION_HAS_VALID_SPECIAL_POOL_ON_EXIT</b></a></td>
+</tr>
+<tr>
+<td>0x000000ED</td>
+<td><a href="bug_check_0xed__unmountable_boot_volume.htm"><b>UNMOUNTABLE_BOOT_VOLUME</b></a></td>
+</tr>
+<tr>
+<td>0x000000EF</td>
+<td><a href="bug_check_0xef__critical_process_died.htm"><b>CRITICAL_PROCESS_DIED</b></a></td>
+</tr>
+<tr>
+<td>0x000000F1</td>
+<td><a href="bug_check_0xf1__scsi_verifier_detected_violation.htm"><b>SCSI_VERIFIER_DETECTED_VIOLATION</b></a></td>
+</tr>
+<tr>
+<td>0x000000F3</td>
+<td><a href="bug_check_0xf3__disorderly_shutdown.htm"><b>DISORDERLY_SHUTDOWN</b></a></td>
+</tr>
+<tr>
+<td>0x000000F4</td>
+<td><a href="bug_check_0xf4__critical_object_termination.htm"><b>CRITICAL_OBJECT_TERMINATION</b></a></td>
+</tr>
+<tr>
+<td>0x000000F5</td>
+<td><a href="bug_check_0xf5__fltmgr_file_system.htm"><b>FLTMGR_FILE_SYSTEM</b></a></td>
+</tr>
+<tr>
+<td>0x000000F6</td>
+<td><a href="bug_check_0xf6__pci_verifier_detected_violation.htm"><b>PCI_VERIFIER_DETECTED_VIOLATION</b></a></td>
+</tr>
+<tr>
+<td>0x000000F7</td>
+<td><a href="bug_check_0xf7__driver_overran_stack_buffer.htm"><b>DRIVER_OVERRAN_STACK_BUFFER</b></a></td>
+</tr>
+<tr>
+<td>0x000000F8</td>
+<td><a href="bug_check_0xf8__ramdisk_boot_initialization_failed.htm"><b>RAMDISK_BOOT_INITIALIZATION_FAILED</b></a></td>
+</tr>
+<tr>
+<td>0x000000F9</td>
+<td><a href="bug_check_0xf9__driver_returned_status_reparse_for_volume_open.htm"><b>DRIVER_RETURNED_STATUS_REPARSE_FOR_VOLUME_OPEN</b></a></td>
+</tr>
+<tr>
+<td>0x000000FA</td>
+<td><a href="bug_check_0xfa___http_driver_corrupted.htm"><b>HTTP_DRIVER_CORRUPTED</b></a></td>
+</tr>
+<tr>
+<td>0x000000FC</td>
+<td><a href="bug_check_0xfc___attempted_execute_of_noexecute_memory.htm"><b>ATTEMPTED_EXECUTE_OF_NOEXECUTE_MEMORY</b></a></td>
+</tr>
+<tr>
+<td>0x000000FD</td>
+<td><a href="bug_check_0xfd___dirty_nowrite_pages_congestion.htm"><b>DIRTY_NOWRITE_PAGES_CONGESTION</b></a></td>
+</tr>
+<tr>
+<td>0x000000FE</td>
+<td><a href="bug_check_0xfe__bugcode_usb_driver.htm"><b>BUGCODE_USB_DRIVER</b></a></td>
+</tr>
+<tr>
+<td>0x000000FF</td>
+<td><a href="bug_check_0xff___reserve_queue_overflow.htm"><b>RESERVE_QUEUE_OVERFLOW</b></a></td>
+</tr>
+<tr>
+<td>0x00000100</td>
+<td><a href="bug_check_0x100___loader_block_mismatch.htm"><b>LOADER_BLOCK_MISMATCH</b></a></td>
+</tr>
+<tr>
+<td>0x00000101</td>
+<td><a href="bug_check_0x101___clock_watchdog_timeout.htm"><b>CLOCK_WATCHDOG_TIMEOUT</b></a></td>
+</tr>
+<tr>
+<td>0x00000102</td>
+<td><a href="bug_check_0x102__dpc_watchdog_timeout.htm"><b> DPC_WATCHDOG_TIMEOUT</b></a></td>
+</tr>
+<tr>
+<td>0x00000103</td>
+<td><a href="bug_check_0x103___mup_file_system.htm"><b>MUP_FILE_SYSTEM</b></a></td>
+</tr>
+<tr>
+<td>0x00000104</td>
+<td><a href="bug_check_0x104___agp_invalid_access.htm"><b>AGP_INVALID_ACCESS</b></a></td>
+</tr>
+<tr>
+<td>0x00000105</td>
+<td><a href="bug_check_0x105___agp_gart_corruption.htm"><b>AGP_GART_CORRUPTION</b></a></td>
+</tr>
+<tr>
+<td>0x00000106</td>
+<td><a href="bug_check_0x106___agp_illegally_reprogrammed.htm"><b>AGP_ILLEGALLY_REPROGRAMMED</b></a></td>
+</tr>
+<tr>
+<td>0x00000108</td>
+<td><a href="bug_check_0x108__third_party_file_system_failure.htm"><b>THIRD_PARTY_FILE_SYSTEM_FAILURE</b></a></td>
+</tr>
+<tr>
+<td>0x00000109</td>
+<td><a href="bug_check_0x109___critical_structure_corruption.htm"><b>CRITICAL_STRUCTURE_CORRUPTION</b></a></td>
+</tr>
+<tr>
+<td>0x0000010A</td>
+<td><a href="bug_check_0x10a___app_tagging_initialization_failed.htm"><b>APP_TAGGING_INITIALIZATION_FAILED</b></a></td>
+</tr>
+<tr>
+<td>0x0000010C</td>
+<td><a href="bug_check_0x10c___fsrtl_extra_create_parameter_violation.htm"><b>FSRTL_EXTRA_CREATE_PARAMETER_VIOLATION</b></a></td>
+</tr>
+<tr>
+<td>0x0000010D</td>
+<td><a href="bug_check_0x10d___wdf_violation.htm"><b>WDF_VIOLATION</b></a></td>
+</tr>
+<tr>
+<td>0x0000010E</td>
+<td><a href="bug_check_0x10e___video_memory_management_internal.htm"><b>VIDEO_MEMORY_MANAGEMENT_INTERNAL</b></a></td>
+</tr>
+<tr>
+<td>0x0000010F</td>
+<td><a href="bug_check_0x10f___resource_manager_exception_not_handled.htm"><b>RESOURCE_MANAGER_EXCEPTION_NOT_HANDLED</b></a></td>
+</tr>
+<tr>
+<td>0x00000111</td>
+<td><a href="bug_check_0x111___recursive_nmi.htm"><b>RECURSIVE_NMI</b></a></td>
+</tr>
+<tr>
+<td>0x00000112</td>
+<td><a href="bug_check_0x112___msrpc_state_violation.htm"><b>MSRPC_STATE_VIOLATION</b></a></td>
+</tr>
+<tr>
+<td>0x00000113</td>
+<td><a href="bug_check_0x113___video_dxgkrnl_fatal_error.htm"><b>VIDEO_DXGKRNL_FATAL_ERROR</b></a></td>
+</tr>
+<tr>
+<td>0x00000114</td>
+<td><a href="bug_check_0x114___video_shadow_driver_fatal_error.htm"><b>VIDEO_SHADOW_DRIVER_FATAL_ERROR</b></a></td>
+</tr>
+<tr>
+<td>0x00000115</td>
+<td><a href="bug_check_0x115___agp_internal.htm"><b>AGP_INTERNAL</b></a></td>
+</tr>
+<tr>
+<td>0x00000116</td>
+<td><a href="bug_check_0x116___video_tdr_error.htm"><b>VIDEO_TDR_ERROR</b></a></td>
+</tr>
+<tr>
+<td>0x00000117</td>
+<td><a href="bug_check_0x117___video_tdr_timeout_detected.htm"><b>VIDEO_TDR_TIMEOUT_DETECTED</b></a></td>
+</tr>
+<tr>
+<td>0x00000119</td>
+<td><a href="bug_check_0x119___video_scheduler_internal_error.htm"><b>VIDEO_SCHEDULER_INTERNAL_ERROR</b></a></td>
+</tr>
+<tr>
+<td>0x0000011A</td>
+<td><a href="bug_check_0x11a___em_initialization_failure.htm"><b>EM_INITIALIZATION_FAILURE</b></a></td>
+</tr>
+<tr>
+<td>0x0000011B</td>
+<td><a href="bug_check_0x11b___driver_returned_holding_cancel_lock.htm"><b>DRIVER_RETURNED_HOLDING_CANCEL_LOCK</b></a></td>
+</tr>
+<tr>
+<td>0x0000011C</td>
+<td><a href="bug_check_0x11c__attempted_write_to_cm_protected_storage.htm"><b>ATTEMPTED_WRITE_TO_CM_PROTECTED_STORAGE</b></a></td>
+</tr>
+<tr>
+<td>0x0000011D</td>
+<td><a href="bug_check_0x11d___event_tracing_fatal_error.htm"><b>EVENT_TRACING_FATAL_ERROR</b></a></td>
+</tr>
+<tr>
+<td>0x0000011E</td>
+<td><a href="bug_check__0x11e__too_many_recursive_faults.htm"><b>TOO_MANY_RECURSIVE_FAULTS</b></a></td>
+</tr>
+<tr>
+<td>0x0000011F</td>
+<td><a href="bug_check__0x11f__invalid_driver_handle.htm"><b>INVALID_DRIVER_HANDLE</b></a></td>
+</tr>
+<tr>
+<td>0x00000120</td>
+<td><a href="bug_check__0x120__bitlocker_fatal_error_.htm"><b> BITLOCKER_FATAL_ERROR</b></a></td>
+</tr>
+<tr>
+<td>0x00000121</td>
+<td><a href="bug_check_0x121___driver_violation.htm"><b>DRIVER_VIOLATION</b></a></td>
+</tr>
+<tr>
+<td>0x00000122</td>
+<td><a href="bug_check_0x122___whea_internal_error.htm"><b>WHEA_INTERNAL_ERROR</b></a></td>
+</tr>
+<tr>
+<td>0x00000123</td>
+<td><a href="bug_check__0x123__crypto_self_test_failure_.htm"><b>CRYPTO_SELF_TEST_FAILURE</b></a></td>
+</tr>
+<tr>
+<td>0x00000124</td>
+<td><a href="bug_check_0x124___whea_uncorrectable_error.htm"><b>WHEA_UNCORRECTABLE_ERROR</b></a></td>
+</tr>
+<tr>
+<td>0x00000127</td>
+<td><a href="bug_check_0x127___page_not_zero.htm"><b>PAGE_NOT_ZERO</b></a></td>
+</tr>
+<tr>
+<td>0x00000128</td>
+<td><a href="bug_check_0x128__worker_thread_returned_with_bad_io_priority.htm"><b>WORKER_THREAD_RETURNED_WITH_BAD_IO_PRIORITY</b></a></td>
+</tr>
+<tr>
+<td>0x00000129</td>
+<td><a href="bug_check_0x129__worker_thread_returned_with_bad_paging_io_priority.htm"><b>WORKER_THREAD_RETURNED_WITH_BAD_PAGING_IO_PRIORITY</b></a></td>
+</tr>
+<tr>
+<td>0x0000012A</td>
+<td><a href="bug_check_0x12a__mui_no_valid_system_language.htm"><b>MUI_NO_VALID_SYSTEM_LANGUAGE</b></a></td>
+</tr>
+<tr>
+<td>0x0000012B</td>
+<td><a href="bug_check_0x12b___faulty_hardware_corrupted_page.htm"><b>FAULTY_HARDWARE_CORRUPTED_PAGE</b></a></td>
+</tr>
+<tr>
+<td>0x0000012C</td>
+<td><a href="bug_check_0x12c___exfat_file_system.htm"><b>EXFAT_FILE_SYSTEM</b></a></td>
+</tr>
+<tr>
+<td>0x0000012D</td>
+<td><a href="bug_check_0x12d__volsnap_overlapped_table_access.htm"><b>VOLSNAP_OVERLAPPED_TABLE_ACCESS</b></a></td>
+</tr>
+<tr>
+<td>0x00000133</td>
+<td><a href="bug_check_0x133_dpc_watchdog_violation.htm"><b>DPC_WATCHDOG_VIOLATION</b></a></td>
+</tr>
+<tr>
+<td>0x00000136</td>
+<td><a href="bug_check_0x136__vhd_boot_host_volume_not_enough_space.htm"><b>VHD_BOOT_HOST_VOLUME_NOT_ENOUGH_SPACE</b></a></td>
+</tr>
+<tr>
+<td>0x00000138</td>
+<td><a href="bug_check_0x138_gpio_controller_driver_error.htm"><b>GPIO_CONTROLLER_DRIVER_ERROR</b></a></td>
+</tr>
+<tr>
+<td>0x00000139</td>
+<td><a href="bug_check___bug_check_0x139_kernel_security_check_failure.htm"><b>KERNEL_SECURITY_CHECK_FAILURE</b></a></td>
+</tr>
+<tr>
+<td>0x0000013B</td>
+<td><a href="bug_check_0x13b__passive_interrupt_error.htm"><b>PASSIVE_INTERRUPT_ERROR</b></a></td>
+</tr>
+<tr>
+<td>0x0000013C</td>
+<td><a href="bug_check_0x13c__invalid_io_boost_state.htm"><b>INVALID_IO_BOOST_STATE</b></a></td>
+</tr>
+<tr>
+<td>0x00000144</td>
+<td><a href="bug_check_0x144__bugcode_usb3_driver.htm"><b>BUGCODE_USB3_DRIVER</b></a></td>
+</tr>
+<tr>
+<td>0x00000145</td>
+<td><a href="bug_check_0x145__secure_boot_violation_.htm"><b>SECURE_BOOT_VIOLATION</b></a></td>
+</tr>
+<tr>
+<td>0x00000147</td>
+<td><a href="bug_check_0x147__abnormal_reset_detected.htm"><b>ABNORMAL_RESET_DETECTED</b></a></td>
+</tr>
+<tr>
+<td>0x0000014B</td>
+<td><a href="bug_check_0x14b__soc_subsystem_failure.htm"><b>SOC_SUBSYSTEM_FAILURE</b></a></td>
+</tr>
+<tr>
+<td>0x0000014C</td>
+<td><a href="bug_check_0x14c__fatal_abnormal_reset_error.htm"><b>FATAL_ABNORMAL_RESET_ERROR</b></a></td>
+</tr>
+<tr>
+<td>0x00000151</td>
+<td><a href="bug_check_0x151__unsupported_instruction_mode.htm"><b>UNSUPPORTED_INSTRUCTION_MODE</b></a></td>
+</tr>
+<tr>
+<td>0x00000152</td>
+<td><a href="bug_check_0x152__invalid_push_lock_flags.htm"><b>INVALID_PUSH_LOCK_FLAGS</b></a></td>
+</tr>
+<tr>
+<td>0x00000154</td>
+<td><a href="bug_check_0x154__unexpected_store_exception.htm"><b>UNEXPECTED_STORE_EXCEPTION</b></a></td>
+</tr>
+<tr>
+<td>0x00000156</td>
+<td><a href="bug_check_0x156__winsock_detected_hung_closesocket_livedump.htm"><b> WINSOCK_DETECTED_HUNG_CLOSESOCKET_LIVEDUMP</b></a></td>
+</tr>
+<tr>
+<td>0x00000157</td>
+<td><a href="bug_check_0x157__kernel_thread_priority_floor_violation.htm"><b>KERNEL_THREAD_PRIORITY_FLOOR_VIOLATION</b></a></td>
+</tr>
+<tr>
+<td>0x00000158</td>
+<td><a href="bug_check_0x158__illegal_iommu_page_fault.htm"><b> ILLEGAL_IOMMU_PAGE_FAULT</b></a></td>
+</tr>
+<tr>
+<td>0x0000015A</td>
+<td><a href="bug_check_0x15a__sdbus_internal_error.htm"><b>SDBUS_INTERNAL_ERROR</b></a></td>
+</tr>
+<tr>
+<td>0x00000160</td>
+<td><a href="bug_check_0x160__win32k_atomic_check_failure.htm"><b>WIN32K_ATOMIC_CHECK_FAILURE</b></a></td>
+</tr>
+<tr>
+<td>0x00000162</td>
+<td><a href="bug_check_0x162__kernel_auto_boost_invalid_lock_release.htm"><b>KERNEL_AUTO_BOOST_INVALID_LOCK_RELEASE</b></a></td>
+</tr>
+<tr>
+<td>0x00000163</td>
+<td><a href="bug_check_0x162__worker_thread_test_condition.htm"><b> WORKER_THREAD_TEST_CONDITION</b></a></td>
+</tr>
+<tr>
+<td>0x0000016D</td>
+<td><a href="bug_check_0x16d__invalid_slot_allocator_flags.htm"><b>INVALID_SLOT_ALLOCATOR_FLAGS</b></a></td>
+</tr>
+<tr>
+<td>0x0000016E</td>
+<td><a href="bug_check_0x16e__eresource_invalid_release.htm"><b>ERESOURCE_INVALID_RELEASE</b></a></td>
+</tr>
+<tr>
+<td>0x0000018B</td>
+<td><a href="bug_check_0x18b__secure_kernel_error.htm"><b>SECURE_KERNEL_ERROR</b></a></td>
+</tr>
+<tr>
+<td>0x00000190</td>
+<td><a href="bug_check_0x190__win32k_critical_failure_livedump.htm"><b>WIN32K_CRITICAL_FAILURE_LIVEDUMP</b></a></td>
+</tr>
+<tr>
+<td>0x00000192</td>
+<td><a href="bug_check_0x192__kernel_auto_boost_lock_acquisition_with_raised_irql.htm"><b>KERNEL_AUTO_BOOST_LOCK_ACQUISITION_WITH_RAISED_IRQL</b></a></td>
+</tr>
+<tr>
+<td>0x00000195</td>
+<td><a href="bug_check_0x195__smb_server_livedump.htm"><b>SMB_SERVER_LIVEDUMP</b></a></td>
+</tr>
+<tr>
+<td>0x00000196</td>
+<td><a href="bug_check_0x196__loader_rollback_detected.htm"><b> LOADER_ROLLBACK_DETECTED</b></a></td>
+</tr>
+<tr>
+<td>0x00000199</td>
+<td><a href="bug_check_0x199__kernel_storage_slot_in_use.htm"><b>KERNEL_STORAGE_SLOT_IN_USE</b></a></td>
+</tr>
+<tr>
+<td>0x0000019A</td>
+<td><a href="bug_check_0x19a__worker_thread_returned_while_attached_to_silo.htm"><b>WORKER_THREAD_RETURNED_WHILE_ATTACHED_TO_SILO</b></a></td>
+</tr>
+<tr>
+<td>0x0000019B</td>
+<td><a href="bug_check_0x19b__ttm_fatal_error.htm"><b>TTM_FATAL_ERROR</b></a></td>
+</tr>
+<tr>
+<td>0x0000019C</td>
+<td><a href="bug_check_0x19c__win32k_power_watchdog_timeout.htm"><b>WIN32K_POWER_WATCHDOG_TIMEOUT</b></a></td>
+</tr>
+<tr>
+<td>0x0000019D</td>
+<td><a href="bug_check_0x19d__cluster_svhdx_livedump.htm"><b>CLUSTER_SVHDX_LIVEDUMP</b></a></td>
+</tr>
+<tr>
+<td>0x000001C4</td>
+<td><a href="bug_check_0x1c4__driver_verifier_detected_violation_livedump.htm"><b>DRIVER_VERIFIER_DETECTED_VIOLATION_LIVEDUMP</b></a></td>
+</tr>
+<tr>
+<td>0x000001C5</td>
+<td><a href="bug_check_0x1c5__io_threadpool_deadlock_livedump.htm"><b>IO_THREADPOOL_DEADLOCK_LIVEDUMP</b></a></td>
+</tr>
+<tr>
+<td>0x00000BFF</td>
+<td><a href="bug_check_0xbff__bc_bthmini_verifier_fault.htm"><b>BC_BTHMINI_VERIFIER_FAULT</b></a></td>
+</tr>
+<tr>
+<td>0x1000007E</td>
+<td><a href="bug_check_0x1000007e__system_thread_exception_not_handled_m.htm"><b>SYSTEM_THREAD_EXCEPTION_NOT_HANDLED_M</b></a></td>
+</tr>
+<tr>
+<td>0x1000007F</td>
+<td><a href="bug_check_0x1000007f__unexpected_kernel_mode_trap_m.htm"><b>UNEXPECTED_KERNEL_MODE_TRAP_M</b></a></td>
+</tr>
+<tr>
+<td>0x1000008E</td>
+<td><a href="bug_check_0x1000008e__kernel_mode_exception_not_handled_m.htm"><b>KERNEL_MODE_EXCEPTION_NOT_HANDLED_M</b></a></td>
+</tr>
+<tr>
+<td>0x100000EA</td>
+<td><a href="bug_check_0x100000ea__thread_stuck_in_device_driver_m.htm"><b>THREAD_STUCK_IN_DEVICE_DRIVER_M</b></a></td>
+</tr>
+<tr>
+<td>0x4000008A</td>
+<td><a href="bug_check_0x4000008a__thread_terminate_held_mutex.htm"><b>THREAD_TERMINATE_HELD_MUTEX</b></a></td>
+</tr>
+<tr>
+<td>0xC0000218</td>
+<td><a href="bug_check_0xc0000218__status_cannot_load_registry_file.htm"><b>STATUS_CANNOT_LOAD_REGISTRY_FILE</b></a></td>
+</tr>
+<tr>
+<td>0xC000021A</td>
+<td><a href="bug_check_0xc000021a__status_system_process_terminated.htm"><b>STATUS_SYSTEM_PROCESS_TERMINATED</b></a></td>
+</tr>
+<tr>
+<td>0xC0000221</td>
+<td><a href="bug_check_0xc0000221__status_image_checksum_mismatch.htm"><b>STATUS_IMAGE_CHECKSUM_MISMATCH</b></a></td>
+</tr>
+<tr>
+<td>0xDEADDEAD</td>
+<td><a href="bug_check_0xdeaddead__manually_initiated_crash1.htm"><b>MANUALLY_INITIATED_CRASH1</b></a></td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Bug Check Code Reference%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

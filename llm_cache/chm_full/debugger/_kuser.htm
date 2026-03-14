@@ -1,0 +1,86 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !kuser extension displays the shared user-mode page (KUSER_SHARED_DATA)."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!kuser</title>
+
+<meta name="MS-HAID" content="r25_exts_general_He_45fc1eb2-6f0e-44a9-b8ce-faca174f0501.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._kuser"></a>!kuser</h1>
+</div>
+<p>The <b>!kuser</b> extension displays the shared user-mode page (KUSER_SHARED_DATA).</p>
+<pre class="syntax">
+    <b>!kuser</b> 
+</pre>
+<h2><a id="ddk__kuser_dbg"></a><a id="DDK__KUSER_DBG"></a></h2>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Windows 2000</b></p>
+</td>
+<td>
+<p>
+<dl>
+<dt>
+          Kdextx86.dll
+          </dt>
+<dt>Ntsdexts.dll
+         </dt>
+</dl>
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Exts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>The KUSER_SHARED_DATA page gives resource and other information about the user who is currently logged on.</p>
+<p>Here is an example.  Note that, in this example, the tick count is displayed in both its raw form and in a more user-friendly form, which is in parentheses.  The user-friendly display is available only in Windows XP and later.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; !kuser
+_KUSER_SHARED_DATA at 7ffe0000
+TickCount:    fa00000 * 00482006 (0:20:30:56.093)
+TimeZone Id: 2
+ImageNumber Range: [14c .. 14c]
+Crypto Exponent: 0
+SystemRoot: 'F:\WINDOWS'</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!kuser%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

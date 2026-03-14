@@ -1,0 +1,36 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="dbgerr004: Page Not Present in Dump File"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>dbgerr004: Page Not Present in Dump File</title>
+
+<meta name="MS-HAID" content="r35_errors_495676a6-62c9-46ac-9f86-05d2b15adca5.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.dbgerr004__page_not_present_in_dump_file"></a>dbgerr004: Page Not Present in Dump File</h1>
+</div>
+<h2><a id="ddk_dbgerr004_dbg"></a><a id="DDK_DBGERR004_DBG"></a></h2>
+<p>Debugger error <b>dbgerr004</b> displays the message "Page <i>number</i> not present in dump file." This error indicates that the debugger needed a memory page that was not included in the dump file being debugged.</p>
+<p>The specified <i>number</i> is the page frame number (PFN) corresponding to the location in the physical memory of the original page.</p>
+<p>To suppress this error message, use the <a href="_ignore_missing_pages__suppress_missing_page_errors_.htm"><b>.ignore_missing_pages 1</b></a> command. This command allows debugging to proceed, but does not display this error message.</p>
+<p>Kernel-mode memory dumps come in three sizes, and the smaller sizes do not include all the memory pages. For details, see <a href="varieties_of_kernel_mode_dump_files.htm">Varieties of Kernel-Mode Dump Files</a>.</p>
+<p>User-mode memory dumps also come in various sizes. See <a href="user_mode_dump_files.htm">User-Mode Dump Files</a> for details.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20dbgerr004: Page Not Present in Dump File%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

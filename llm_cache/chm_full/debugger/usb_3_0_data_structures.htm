@@ -1,0 +1,51 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="This topic describes the data structures used by the USB 3.0 host controller driver."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>USB 3.0 Data Structures</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.usb_3_0_data_structures"></a>USB 3.0 Data Structures</h1>
+</div>
+<p>This topic describes the data structures used by the USB 3.0 host controller driver. Understanding these data structures will help you use the <a href="usb_3_extensions.htm">USB 3.0</a> and <a href="rcdrkd_extensions.htm">RCDRKD</a> debugger extension commands effectively. The data structures presented here have names that are consistent with the <a href="http://go.microsoft.com/fwlink/p?LinkID=224892">USB 3.0 specification</a>. Familiarity with the USB 3.0 specification will further enhance your ability to use the extension commands to debug USB 3.0 drivers.</p>
+<p>The USB 3.0 host controller driver is part of the USB 3.0 core driver stack. For more information, see <a href="http://go.microsoft.com/fwlink/p?LinkID=251983">USB Driver Stack Architecture</a>.</p>
+<p>Each USB 3.0 host controller can have up to 255 devices, and each device can have up to 31 endpoints. The following diagram shows some of the data structures that represent one host controller and the connected devices.</p><img src="images/Usb3Structures01.png" alt="USB 3.0 data structures that represent one host controller and the connected devices that have device context that in turn have slot and end point context"/><h2><a id="Device_Context_Base_Array"></a><a id="device_context_base_array"></a><a id="DEVICE_CONTEXT_BASE_ARRAY"></a>Device Context Base Array</h2>
+<p>The Device Context Base Array is an array of pointers to Device Context structures. There is one Device Context structure for each device connected to the host controller. Elements 1 through 255 point to Device Context structures. Element 0 points to a context structure for the host controller.</p>
+<h2><a id="Device_Context_and_Slot_Context"></a><a id="device_context_and_slot_context"></a><a id="DEVICE_CONTEXT_AND_SLOT_CONTEXT"></a>Device Context and Slot Context</h2>
+<p>A Device Context structure holds an array of pointers to Endpoint Context structures. There is one Endpoint Context structure for each endpoint on the device. Elements 1 through 31 point to Endpoint Context structures. Element 0 points to a Slot Context structure, which holds context information for the device.</p>
+<h2><a id="Command_Ring"></a><a id="command_ring"></a><a id="COMMAND_RING"></a>Command Ring</h2>
+<p>The Command Ring is used by software to pass commands to the host controller. Some of these commands are directed at the host controller, and some are directed at particular devices connected to the host controller.</p>
+<h2><a id="Event_Ring"></a><a id="event_ring"></a><a id="EVENT_RING"></a>Event Ring</h2>
+<p>The Event Ring is used by the host controller to pass events to software. That is, the Event Ring is a structure that the host controller uses to inform drivers that an action has completed.</p>
+<h2><a id="Doorbell_Register_Array"></a><a id="doorbell_register_array"></a><a id="DOORBELL_REGISTER_ARRAY"></a>Doorbell Register Array</h2>
+<p>The Doorbell Register Array is an array of doorbell registers, one for each device connected to the host controller. Elements 1 through 255 are doorbell registers. Element 0 indicates whether there is a pending command in the Command Ring.</p>
+<p>Software notifies the host controller that it has device-related or endpoint-related work to perform by writing context information into the doorbell register for the device.</p>
+<p>The following diagram continues to the right of the preceding diagram. It shows additional data structures that represent a single endpoint.</p><img src="images/Usb3Structures02.png" alt="USB 3.0 data structure showing end point context that has multiple TRBs that have Data and TDs"/><h2><a id="Transfer_Ring"></a><a id="transfer_ring"></a><a id="TRANSFER_RING"></a>Transfer Ring</h2>
+<p>Each endpoint has one or more Transfer Rings. A Transfer Ring is an array of Transfer Request Blocks (TRBs). Each TRB points to a block of contiguous data (up to 64 KB) that will be transferred between hardware and memory as a single unit.</p>
+<p>When the USB 3.0 core stack receives a transfer request from a USB client driver, it identifies the Endpoint Context for the transfer, and then breaks the transfer request into one or more Transfer Descriptors (TDs). Each TD contains one or more TRBs.</p>
+<h2><a id="Endpoint_Context"></a><a id="endpoint_context"></a><a id="ENDPOINT_CONTEXT"></a>Endpoint Context</h2>
+<p>An Endpoint Context structure holds context information for a single endpoint. It also has <b>Dequeue</b> and <b>Enqueue</b> members, which are used to track where TRBs are being consumed by the hardware and where TRBs are being added by software.</p>
+<h2><a id="related_topics"></a>Related topics</h2>
+<dl>
+<dt><a href="http://go.microsoft.com/fwlink/p/?LinkID=249153">USB Debugging Innovations in Windows 8</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20USB 3.0 Data Structures%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

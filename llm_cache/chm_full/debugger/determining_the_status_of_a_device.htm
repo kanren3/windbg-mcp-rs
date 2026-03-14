@@ -1,0 +1,172 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Determining the Status of a Device"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Determining the Status of a Device</title>
+
+<meta name="MS-HAID" content="t12_drivers_19bb6f6b-7a10-496c-886c-49f5d20fca00.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.determining_the_status_of_a_device"></a>Determining the Status of a Device</h1>
+</div>
+<h2><a id="ddk_determining_the_status_of_a_device_dbg"></a><a id="DDK_DETERMINING_THE_STATUS_OF_A_DEVICE_DBG"></a></h2>
+<p>To display the entire device tree, starting with the root, use <b>!devnode 0 1</b>:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; !devnode 0 1 </pre>
+</td>
+</tr>
+</table></span></div>
+<p>Identify the devnode for which you are searching, either by examining the driver or the bus that exposed it.</p>
+<p>The devnode status flags describe the status of the device. For details, see <a href="device_node_status_flags.htm">Device Node Status Flags</a>.</p>
+<p>In the example for the <b>!devnode</b> command in the <a href="extensions_for_debugging_plug_and_play_drivers.htm">Extensions for Debugging Plug and Play Drivers</a> section, the swenum device  was created by the PnP Manager, so the DNF_MADEUP (0x00000001) flag is set.</p>
+<p>The following example shows a device that was created by the PCI bus. This device does not have the DNF_MADEUP flag set.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !devnode 0xfffffa8004483490
+DevNode 0xfffffa8004483490 for PDO 0xfffffa800448d060
+  Parent 0xfffffa80036766d0   Sibling 0xfffffa8004482010   Child 0xfffffa80058ad720
+  InstancePath is "PCI\VEN_8086&amp;DEV_293C&amp;SUBSYS_2819103C&amp;REV_02\3&amp;21436425&amp;0&amp;D7"
+  ServiceName is "usbehci"
+  State = DeviceNodeStarted (0x308)
+  Previous State = DeviceNodeEnumerateCompletion (0x30d)
+  StateHistory[09] = DeviceNodeEnumerateCompletion (0x30d)
+  StateHistory[08] = DeviceNodeEnumeratePending (0x30c)
+  StateHistory[07] = DeviceNodeStarted (0x308)
+  StateHistory[06] = DeviceNodeStartPostWork (0x307)
+  ...
+  Flags (0x6c0000f0)  DNF_ENUMERATED, DNF_IDS_QUERIED, 
+                      DNF_HAS_BOOT_CONFIG, DNF_BOOT_CONFIG_RESERVED, 
+                      DNF_NO_LOWER_DEVICE_FILTERS, DNF_NO_LOWER_CLASS_FILTERS, 
+                      DNF_NO_UPPER_DEVICE_FILTERS, DNF_NO_UPPER_CLASS_FILTERS
+  CapabilityFlags (0x00002000)  WakeFromD3</code></pre>
+<p><b>Examples</b></p>
+<p>1. A devnode for a device with insufficient resources:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !devnode 0xff0d06e8 6
+
+DevNode 0xff0d06e8 for PDO 0xff0d07d0 at level 0x3
+  Parent 0xff0d1408   Sibling 0000000000   Child 0000000000
+  InterfaceType 0xffffffff  Bus Number 0xfffffff0
+  InstancePath is "ISAPNP\SUP2171\00000067"
+  ServiceName is "Modem"
+  TargetDeviceNotify List - f 0xff0d074c  b 0xff0d074c
+  Flags (..........)  DNF_PROCESSED, DNF_ENUMERATED,
+                      DNF_INSUFFICIENT_RESOURCES, DNF_ADDED,
+                      DNF_HAS_BOOT_CONFIG
+                      Unknown flags 0x40000000
+
+  IoResList at 0xe133e7a8 : Interface 0x1  Bus 0  Slot 0
+    Alternative 0 (Version 1.1)
+      Preferred Descriptor 0 - NonArbitrated/ConfigData (0x80) Shared (0x3)
+        Flags (0000) -
+        Data:              : 0x0 0x61004d 0x680063
+      Preferred Descriptor 1 - Port (0x1) Undetermined Sharing (0)
+        Flags (0x11) - PORT_IO 16_BIT_DECODE
+        0x000008 byte range with alignment 0x000001
+        2f8 - 0x2ff
+      Preferred Descriptor 2 - Interrupt (0x2) Shared (0x3)
+        Flags (0x01) - LATCHED
+        0x3 - 0x3</code></pre>
+<p>Note that the devnode has no CM Resource List, because it is not started and is not using resources, although it has requested resources.</p>
+<p>2. Note that there are no resources stored in this devnode for a legacy driver.</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !devnode 0xff0d1648 6
+
+DevNode 0xff0d1648 for PDO 0xff0d22d0 at level 0x2
+  Parent 0xff0d2e28   Sibling 0xff0d1588   Child 0000000000
+  InterfaceType 0xffffffff  Bus Number 0xffffffff
+  InstancePath is "PCI\VEN_102B&amp;DEV_0519\0&amp;60"
+  ServiceName is "mga_mil"
+  TargetDeviceNotify List - f 0xff0d16ac  b 0xff0d16ac
+  Flags (0x6000500b)  DNF_PROCESSED, DNF_STARTED,
+                      DNF_ENUMERATED, DNF_ADDED,
+                      DNF_LEGACY_DRIVER, DNF_HAS_BOOT_CONFIG
+                      Unknown flags 0x40000000</code></pre>
+<p>You can retrieve the device object list for the driver for the following types of devices:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; !drvobj mga_mil
+
+Driver object (ff0bbc10) is for:
+ \Driver\mga_mil
+Driver Extension List: (id , addr)
+
+Device Object list:
+ff0bb900</pre>
+</td>
+</tr>
+</table></span></div>
+<p>You can then dump the data for this device object:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; !devobj ff0bb900
+
+Device object (ff0bb900) is for:
+ Video0 \Driver\mga_mil DriverObject ff0bbc10
+Current Irp 00000000 RefCount 1 Type 00000023 Flags 0000204c
+DevExt ff0bb9b8 DevNode ff0bb808
+Device queue is not busy.</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Finally, you can dump the devnode referred by the device object. This devnode is not linked in the device tree. It represents a "pseudo-devnode" used to claim resources for the legacy device. Note the DNF_RESOURCE_REPORTED flag that indicates the device is a reported detected device.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; !devnode ff0bb808 6
+
+DevNode 0xff0bb808 for PDO 0xff0bb900 at level 0xffffffff
+  Parent 0xff0daf48   Sibling 0000000000   Child 0000000000
+  InterfaceType 0xffffffff  Bus Number 0xffffffff
+  TargetDeviceNotify List - f 0xff0bb86c  b 0xff0bb86c
+  Flags (0x00000400)  DNF_RESOURCE_REPORTED
+  CmResourceList at 0xe12474e8  Version 0.0  Interface 0x5  Bus #0
+    Entry 0 - Port (0x1) Shared (0x3)
+      Flags (0x01) - PORT_MEMORY PORT_IO
+      Range starts at 0x3c0 for 0x10 bytes
+    Entry 1 - Port (0x1) Shared (0x3)
+      Flags (0x01) - PORT_MEMORY PORT_IO
+      Range starts at 0x3d4 for 0x8 bytes
+    Entry 2 - Port (0x1) Shared (0x3)
+      Flags (0x01) - PORT_MEMORY PORT_IO
+      Range starts at 0x3de for 0x2 bytes
+    Entry 3 - Memory (0x3) Device Exclusive (0x1)
+      Flags (0000) - READ_WRITE
+      Range starts at 0x0000000040000000 for 0x4000 bytes
+    Entry 4 - Memory (0x3) Device Exclusive (0x1)
+      Flags (0000) - READ_WRITE
+      Range starts at 0x0000000040800000 for 0x800000 bytes</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Determining the Status of a Device%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Using Shell Commands"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Using Shell Commands</title>
+
+<meta name="MS-HAID" content="r05_use_start_f999ba17-ca66-4b05-bce4-9bc4671308e3.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.using_shell_commands"></a>Using Shell Commands</h1>
+</div>
+<h2><a id="ddk_using_shell_commands_dbg"></a><a id="DDK_USING_SHELL_COMMANDS_DBG"></a></h2>
+<p>The debugger can transmit certain commands to the Microsoft Windows environment in which the debugger is running.</p>
+<p>You can use the <a href="_shell__command_shell_.htm"><b>.shell (Command Shell)</b></a> command in any Windows debugger. With this command, you can execute an application or a Microsoft MS-DOS command directly from the debugger. If you are performing <a href="remote_debugging.htm">remote debugging</a>, these shell commands are executed on the server.</p>
+<p>The <a href="_noshell__prohibit_shell_commands_.htm"><b>.noshell (Prohibit Shell Commands)</b></a> command or the <b>-noshell</b> <a href="command_line_options.htm">command-line option</a> disables all shell commands. The commands are disabled while the debugger is running, even if you begin a new debugging session. The commands remain disabled even if you issue a <a href="_restart__restart_kernel_connection_.htm"><b>.restart (Restart Kernel Connection)</b></a> command in KD.  </p>
+<p>If you are running a debugging server,you might want to disable shell commands. If the shell is available, a remote connection can use the <b>.shell</b> command to change your computer.</p>
+<h3><a id="network_drive_control"></a><a id="NETWORK_DRIVE_CONTROL"></a>Network Drive Control</h3>
+<p>In WinDbg, you can use the <a href="file___map_network_drive.htm">File | Map Network Drive</a> and <a href="file___disconnect_network_drive.htm">File | Disconnect Network Drive</a> commands to control the network drive mappings. These changes always occur on the computer that WinDbg is running on, never on any computer that is remotely connected to WinDbg.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Using Shell Commands%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

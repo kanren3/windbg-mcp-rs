@@ -1,0 +1,110 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !devnode extension displays information about a node in the device tree."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!devnode</title>
+
+<meta name="MS-HAID" content="r26_exts_kernel_A_87ee2749-b028-4ab8-b0c0-d4a6fc734488.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._devnode"></a>!devnode</h1>
+</div>
+<p>The <b>!devnode</b> extension displays information about a node in the device tree.</p>
+<pre class="syntax"><b>!devnode </b><i>Address</i><b> </b>[<i>Flags</i>]<b> </b>[<i>Service</i>]<b> </b> 
+<b>!devnode 1</b> 
+<b>!devnode 2</b></pre>
+<h2><a id="ddk__devnode_dbg"></a><a id="DDK__DEVNODE_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Address______"></a><a id="_______address______"></a><a id="_______ADDRESS______"></a>       <i>Address</i>      </dt>
+<dd>
+<p>Specifies the hexadecimal address of the device extension whose node is to be displayed. If this is zero, the root of the main device tree is displayed.</p>
+</dd>
+<dt><a id="_______Flags______"></a><a id="_______flags______"></a><a id="_______FLAGS______"></a>       <i>Flags</i>      </dt>
+<dd>
+<p>Specifies the level of output to be displayed. This can be any combination of the following bits:</p>
+<p></p>
+<dl>
+<dt><a id="Bit_0__0x1_"></a><a id="bit_0__0x1_"></a><a id="BIT_0__0X1_"></a>Bit 0 (0x1)</dt>
+<dd>
+<p>Causes the display to include all children of the device node.</p>
+</dd>
+<dt><a id="Bit_1__0x2_"></a><a id="bit_1__0x2_"></a><a id="BIT_1__0X2_"></a>Bit 1 (0x2)</dt>
+<dd>
+<p>Causes the display to include resources used (CM_RESOURCE_LIST). These include the boot configuration reported by IRP_MN_QUERY_RESOURCES, as well as the resources allocated to the device in the <i>AllocatedResources</i> parameter of IRP_MN_START_DEVICE.</p>
+</dd>
+<dt><a id="Bit_2__0x4_"></a><a id="bit_2__0x4_"></a><a id="BIT_2__0X4_"></a>Bit 2 (0x4)</dt>
+<dd>
+<p>Causes the display to include resources required (IO_RESOURCE_REQUIREMENTS_LIST) as reported by IRP_MN_FILTER_RESOURCE_REQUIREMENTS.</p>
+</dd>
+<dt><a id="Bit_3__0x8_"></a><a id="bit_3__0x8_"></a><a id="BIT_3__0X8_"></a>Bit 3 (0x8)</dt>
+<dd>
+<p>Causes the display to include a list of translated resources as allocated to the device in the <i>AllocatedResourcesTranslated</i> parameter of IRP_MN_START_DEVICE.</p>
+</dd>
+<dt><a id="Bit_4__0x10_"></a><a id="bit_4__0x10_"></a><a id="BIT_4__0X10_"></a>Bit 4 (0x10)</dt>
+<dd>
+<p>Specifies that only device nodes that are not started should be displayed.</p>
+</dd>
+<dt><a id="Bit_5__0x20_"></a><a id="bit_5__0x20_"></a><a id="BIT_5__0X20_"></a>Bit 5 (0x20)</dt>
+<dd>
+<p>Specifies that only device nodes with problems should be displayed. (These are nodes that contain the flag bits DNF_HAS_PROBLEM or DNF_HAS_PRIVATE_PROBLEM.)</p>
+</dd>
+</dl>
+</dd>
+<dt><a id="_______Service______"></a><a id="_______service______"></a><a id="_______SERVICE______"></a>       <i>Service</i>      </dt>
+<dd>
+<p>Specifies the name of a service. If this is included, only those device nodes driven by this service will be displayed. (If <i>Flags</i> includes bit 0x1, device nodes driven by this service and all their children will be displayed.)</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Windows 2000</b></p>
+</td>
+<td>
+<p>
+          Kdextx86.dll
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later</b></p>
+</td>
+<td>
+<p>
+          Kdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>See <a href="plug_and_play_debugging.htm">Plug and Play Debugging</a> for applications of this extension command. For information about device trees, see the Windows Driver Kit (WDK) documentation and <i>Microsoft Windows Internals</i> by Mark Russinovich and David Solomon. (These resources may not be available in some languages 
+
+and countries.)</p>
+<h2>Remarks</h2>
+<p>The <b>!devnode 1</b> command lists all pending removals of device objects.</p>
+<p>The <b>!devnode 2</b> command lists all pending ejects of device objects.</p>
+<p>You can use <b>!devnode 0 1</b> to see the entire device tree.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!devnode%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

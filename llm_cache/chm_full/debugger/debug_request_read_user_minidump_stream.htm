@@ -1,0 +1,115 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The DEBUG_REQUEST_READ_USER_MINIDUMP_STREAM Request operation reads a stream from a user-mode minidump target."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>DEBUG_REQUEST_READ_USER_MINIDUMP_STREAM</title>
+
+<meta name="MS-HAID" content="IDebugAdvanced_60564876-4bdf-4236-875e-f094d8b0e84a.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.debug_request_read_user_minidump_stream"></a>DEBUG_REQUEST_READ_USER_MINIDUMP_STREAM</h1>
+</div>
+<p>The DEBUG_REQUEST_READ_USER_MINIDUMP_STREAM <a href="request.htm"><b>Request</b></a> operation reads a stream from a user-mode minidump target.</p>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="InBuffer"></a><a id="inbuffer"></a><a id="INBUFFER"></a><i>InBuffer</i></dt>
+<dd>
+<p>The stream to read and the buffer into which to place the contents of the stream. The type of this parameter is DEBUG_READ_USER_MINIDUMP_STREAM.</p>
+</dd>
+<dt><a id="OutBuffer"></a><a id="outbuffer"></a><a id="OUTBUFFER"></a><i>OutBuffer</i></dt>
+<dd>
+<p>Not used.</p>
+</dd>
+</dl>
+<p>The DEBUG_READ_USER_MINIDUMP_STREAM structure holds the parameters for the DEBUG_REQUEST_READ_USER_MINIDUMP_STREAM <a href="request.htm"><b>Request</b></a> operation.</p>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>typedef struct _DEBUG_READ_USER_MINIDUMP_STREAM
+{
+    IN ULONG  StreamType;
+    IN ULONG  Flags;
+    IN ULONG64  Offset;
+    OUT PVOID  Buffer;
+    IN ULONG  BufferSize;
+    OUT ULONG  BufferUsed;
+} DEBUG_READ_USER_MINIDUMP_STREAM, *PDEBUG_READ_USER_MINIDUMP_STREAM;</pre>
+</td>
+</tr>
+</table></span></div>
+<h2><a id="Members"></a><a id="members"></a><a id="MEMBERS"></a>Members</h2>
+<p></p>
+<dl>
+<dt><a id="StreamType"></a><a id="streamtype"></a><a id="STREAMTYPE"></a><b>StreamType</b></dt>
+<dd>
+<p>Specifies the stream to read from the minidump file. The possible values for <b>StreamType</b> come from the MINIDUMP_STREAM_TYPE enumeration.</p>
+<p>For a list of possible values and their interpretation, see the MINIDUMP_STREAM_TYPE topic in the Debug Help Library documentation in dbghelp.chm.</p>
+</dd>
+<dt><a id="Flags"></a><a id="flags"></a><a id="FLAGS"></a><b>Flags</b></dt>
+<dd>
+<p>Set to zero.</p>
+</dd>
+<dt><a id="Offset"></a><a id="offset"></a><a id="OFFSET"></a><b>Offset</b></dt>
+<dd>
+<p>Specifies the offset within the stream to start reading. To start reading from the beginning of the stream, set <b>Offset</b> to zero. 
+</p>
+</dd>
+<dt><a id="Buffer"></a><a id="buffer"></a><a id="BUFFER"></a><b>Buffer</b></dt>
+<dd>
+<p>Receives the bytes read from the minidump stream. <b>Buffer</b> cannot be <b>NULL</b>. 
+</p>
+</dd>
+<dt><a id="BufferSize"></a><a id="buffersize"></a><a id="BUFFERSIZE"></a><b>BufferSize</b></dt>
+<dd>
+<p>Specifies the size, in bytes, of the buffer <b>Buffer</b>. 
+</p>
+</dd>
+<dt><a id="BufferUsed"></a><a id="bufferused"></a><a id="BUFFERUSED"></a><b>BufferUsed</b></dt>
+<dd>
+<p>Receives the number of bytes read into the buffer <b>Buffer</b>. 
+</p>
+</dd>
+</dl>
+<h2>Remarks</h2>
+<p>The target must be a user-mode minidump file.</p>
+<p>Each minidump file contains a number of <i>streams</i>.  These streams are blocks of data written to the minidump file.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Dbgeng.h (include Dbgeng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="request.htm"><b>Request</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20DEBUG_REQUEST_READ_USER_MINIDUMP_STREAM%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

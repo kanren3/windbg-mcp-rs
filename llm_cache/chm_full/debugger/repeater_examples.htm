@@ -1,0 +1,100 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Repeater Examples"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Repeater Examples</title>
+
+<meta name="MS-HAID" content="r08_use_remote_eca83ce5-a04c-4278-be2c-e5f97b66e518.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.repeater_examples"></a>Repeater Examples</h1>
+</div>
+<h2><a id="ddk_repeater_examples_dbg"></a><a id="DDK_REPEATER_EXAMPLES_DBG"></a></h2>
+<p>Let us suppose you have three computers, \\BOXA, \\BOXB, and \\BOXC, and you wish to use them as the server, the repeater, and the client, respectively.</p>
+<p>You can start a debugging server on \\BOXA, using process 122 as the target, in the following manner:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>E:\Debugging Tools for Windows&gt; cdb -server tcp:port=1025,password=wrought -p 122 </pre>
+</td>
+</tr>
+</table></span></div>
+<p>Then you can start a repeater on \\BOXB as follows:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>C:\Misc&gt; dbengprx -c tcp:server=BOXA,port=1025 -s npipe:pipe=MyPipe </pre>
+</td>
+</tr>
+</table></span></div>
+<p>Finally, start a debugging client on \\BOXC in the following manner:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>G:\Debugging Tools&gt; windbg -remote npipe:server=BOXB,pipe=MyPipe,password=wrought </pre>
+</td>
+</tr>
+</table></span></div>
+<p>Here is another example. Your symbols are at the remote location, 127.0.0.30. So you decide to use a process server on the computer where the target is, 127.0.0.10. You put a repeater at 127.0.0.20.</p>
+<p>You also decide to use reverse connections. So you begin by starting the client on 127.0.0.30:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>G:\Debugging Tools&gt; windbg -premote tcp:clicon=127.0.0.20,port=1033 notepad.exe </pre>
+</td>
+</tr>
+</table></span></div>
+<p>Then start the repeater on 127.0.0.20:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>C:\Misc&gt; dbengprx -c tcp:clicon=127.0.0.10,port=1025 -s tcp:port=1033,clicon=127.0.0.10 </pre>
+</td>
+</tr>
+</table></span></div>
+<p>And finally start the process server on 127.0.0.10:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>E:\Debugging Tools for Windows&gt; dbgsrv -t tcp:port=1025,clicon=127.0.0.20 </pre>
+</td>
+</tr>
+</table></span></div>
+<p>For a more complicated example using repeaters, see <a href="two_firewalls.htm">Two Firewalls</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Repeater Examples%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

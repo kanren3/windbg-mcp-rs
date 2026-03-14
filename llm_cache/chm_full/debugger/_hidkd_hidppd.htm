@@ -1,0 +1,78 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !hidkd.hidppd command displays HID preparsed data."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!hidkd.hidppd</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._hidkd_hidppd"></a>!hidkd.hidppd</h1>
+</div>
+<p>The  <b>!hidkd.hidppd</b> command displays HID preparsed data.</p>
+<pre class="syntax"><b>!hidkd.hidppd </b><i>ppd</i></pre>
+<h2><a id="ddk__devobj_dbg"></a><a id="DDK__DEVOBJ_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______ppd______"></a><a id="_______PPD______"></a>       <i>ppd</i>      </dt>
+<dd>
+<p>Address of a <b>HIDP_PREPARSED_DATA</b>  structure. To get the address of a <b>HIDP_PREPARSED_DATA</b> structure, use <a href="_hidkd_hidfdo.htm"><b>!hidfdo</b></a> or <a href="_hidkd_hidpdo.htm"><b>!hidpdo</b></a>.</p>
+</dd>
+</dl>
+<h2><a id="DLL"></a><a id="dll"></a>DLL</h2>
+<p>Hidkd.dll</p>
+<h2>Examples</h2>
+<p>This example shows how to use <a href="_hidkd_hidpdo.htm"><b>!hidpdo</b></a> followed by <b>!hidppd</b>. The output of <b>!hidpdo</b> shows the address of a <b>HIDP_PREPARSED_DATA</b> structure.</p>
+<pre class="syntax" xml:space="preserve"><code>================================================================================
+0: kd&gt; !hidpdo 0xffffe000029f6060
+PDO 0xffffe000029f6060  (!devobj/!devstack)
+==============================================
+  Collection Num  : 1
+  Name            : \Device\_HID00000000#COLLECTION00000001
+  ...
+  Pre-parsed Data : 0xffffe000029d1010
+  ...
+
+0: kd&gt; !hidkd.hidppd 0xffffe000029d1010
+Reading preparsed data...
+Preparsed Data at 0xffffe000029d1010  
+
+Summary
+-----------------------------------------------------
+  UsagePage             : Vendor-defined (0xFFA0)
+  Usage                 : 0x01
+  Report Length         : 0x2(Input) 0x2(Output) 0x0(Feature)
+  Link Collection Nodes : 2
+  Button Caps           : 0(Input) 0(Output) 0(Feature)
+  Value Caps            : 1(Input) 1(Output) 0(Feature)
+  Data Indices          : 1(Input) 1(Output) 0(Feature)
+
+Input Value Capability #0
+-----------------------------------------------------
+  Report ID         : 0x0
+  Usage Page        : Vendor-defined (0xFFA1)
+  Bit Size          : 0x8
+  Report Count      : 0x1
+  ...</code></pre>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="hid_extensions.htm">HID Extensions</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!hidkd.hidppd%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

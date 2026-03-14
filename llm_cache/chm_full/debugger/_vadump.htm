@@ -1,0 +1,121 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !vadump extension displays all virtual memory ranges and their corresponding protection information."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!vadump</title>
+
+<meta name="MS-HAID" content="r31_exts_user_882e1e6f-6605-4019-a976-e1c79a59cc61.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._vadump"></a>!vadump</h1>
+</div>
+<p>The <b>!vadump</b> extension displays all virtual memory ranges and their corresponding protection information.</p>
+<pre class="syntax">
+    <b>!vadump </b>[<b>-v</b>] 
+</pre>
+<h2><a id="ddk__vadump_dbg"></a><a id="DDK__VADUMP_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______-v______"></a><a id="_______-V______"></a>       <b>-v</b>      </dt>
+<dd>
+<p>Causes the display to include information about each original allocation region as well. Because individual addresses within a region can have their protection altered after memory is allocated (by <b>VirtualProtect</b>, for example), the original protection status for this larger region may not be the same as that of each range within the region.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Windows 2000</b></p>
+</td>
+<td>
+<p>
+          Uext.dll
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later</b></p>
+</td>
+<td>
+<p>
+          Uext.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>To view memory protection information for a single virtual address, use <a href="_vprot.htm"><b>!vprot</b></a>. For information about memory protection, see <i>Microsoft Windows Internals</i> by Mark Russinovich and David Solomon.</p>
+<h2>Remarks</h2>
+<p>Here is an example:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; !vadump
+BaseAddress:       00000000
+RegionSize:        00010000
+State:             00010000  MEM_FREE
+Protect:           00000001  PAGE_NOACCESS
+
+BaseAddress:       00010000
+RegionSize:        00001000
+State:             00001000  MEM_COMMIT
+Protect:           00000004  PAGE_READWRITE
+Type:              00020000  MEM_PRIVATE
+.........</pre>
+</td>
+</tr>
+</table></span></div>
+<p>In this display, the State line shows the state of the memory range beginning at the specified BaseAddress. The possible state values are MEM_COMMIT, MEM_FREE, and MEM_RESERVE.</p>
+<p>The Protect line shows the protection status of this memory range. The possible protection values are PAGE_NOACCESS, PAGE_READONLY, PAGE_READWRITE, PAGE_EXECUTE, PAGE_EXECUTE_READ, PAGE_EXECUTE_READWRITE, PAGE_WRITECOPY, PAGE_EXECUTE_WRITECOPY, and PAGE_GUARD.</p>
+<p>The Type line shows the memory type. The possible values are MEM_IMAGE, MEM_MAPPED, and MEM_PRIVATE.</p>
+<p>Here is an example using the <b>-v</b> parameter:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; !vadump -v
+BaseAddress:       00000000
+AllocationBase:    00000000
+RegionSize:        00010000
+State:             00010000  MEM_FREE
+Protect:           00000001  PAGE_NOACCESS
+
+BaseAddress:       00010000
+AllocationBase:    00010000
+AllocationProtect: 00000004  PAGE_READWRITE
+RegionSize:        00001000
+State:             00001000  MEM_COMMIT
+Protect:           00000004  PAGE_READWRITE
+Type:              00020000  MEM_PRIVATE
+.........</pre>
+</td>
+</tr>
+</table></span></div>
+<p>When <b>-v</b> is used, the AllocationProtect line shows the default protection that the entire region was created with. The Protect line shows the actual protection for this specific address.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!vadump%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

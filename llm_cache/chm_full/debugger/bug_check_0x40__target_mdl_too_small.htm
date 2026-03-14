@@ -1,0 +1,40 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The TARGET_MDL_TOO_SMALL bug check has a value of 0x00000040. This indicates that a driver has improperly used IoBuildPartialMdl."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0x40: TARGET_MDL_TOO_SMALL</title>
+
+<meta name="MS-HAID" content="t04_bugs_00_33301fe2-3820-4d0b-8c9b-1ff40e3f4ade.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0x40__target_mdl_too_small"></a>Bug Check 0x40: TARGET_MDL_TOO_SMALL</h1>
+</div>
+<p>The TARGET_MDL_TOO_SMALL bug check has a value of 0x00000040. This indicates that a driver has improperly used <b>IoBuildPartialMdl</b>.</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2> TARGET_MDL_TOO_SMALL Parameters</h2>
+<p>None</p>
+<h2>Cause</h2>
+<p>This is a driver bug. A driver has called the <b>IoBuildPartialMdl</b> function and passed it an MDL to map part of a source MDL, but the target MDL is not large enough to map the entire range of addresses requested.</p>
+<h2>Resolution</h2>
+<p>The source and target MDLs, as well as the address range length to be mapped, are the first, second, and fourth arguments to the <b>IoBuildPartialMdl</b> function.  Therefore, doing a stack trace on this particular function might help during the debugging process.  Ensure that your code is correctly calculating the necessary size for the target MDL for the address range length that you are passing to this function.</p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

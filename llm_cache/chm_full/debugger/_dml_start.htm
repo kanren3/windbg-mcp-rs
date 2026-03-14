@@ -1,0 +1,74 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .dml_start command displays output that serves as a starting point for exploration using commands that support Debugger Markup Language (DML)."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.dml_start (Display DML Starting Point)</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._dml_start"></a>.dml_start (Display DML Starting Point)</h1>
+</div>
+<p>The <b>.dml_start</b> command displays output that serves as a starting point for exploration using commands that support <a href="debugger_markup_language_commands.htm">Debugger Markup Language</a> (DML).</p>
+<pre class="syntax"><b>.dml_start</b>
+<b>.dml_start </b><i>filename</i>
+</pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="filename"></a><a id="FILENAME"></a><i>filename</i></dt>
+<dd>
+<p>The name of a DML file to be displayed as the starting output.</p>
+</dd>
+</dl>
+<h2><a id="Using_the_Default_Starting_Output"></a><a id="using_the_default_starting_output"></a><a id="USING_THE_DEFAULT_STARTING_OUTPUT"></a>Using the Default Starting Output</h2>
+<p>If <i>filename</i> is omitted, the debugger displays a default DML starting output as illustrated in the following image.</p><img src="images/DmlStart01.png" alt="Screen shot of .dml_start output"/><p>Each line of output in the preceding example is a link that you can click to invoke other commands.</p>
+<h2><a id="Providing_a_DML_File"></a><a id="providing_a_dml_file"></a><a id="PROVIDING_A_DML_FILE"></a>Providing a DML File</h2>
+<p>If you supply a path to a DML file, the file is used as the starting output. For example, suppose the file c:\MyFavoriteCommands.txt contains the following text and DML tags.</p>
+<div class="code"><span codelanguage="cmd"><table>
+<tr>
+<th>cmd</th>
+</tr>
+<tr>
+<td>
+<pre>Display all device nodes.
+   &lt;link cmd="!devnode 0 1"&gt;!devnode 0 1&lt;/link&gt;
+
+Display all device nodes that are driven by a specified service.
+Include child nodes in the display.
+   &lt;b&gt;!devnode 0 1&lt;/b&gt; &lt;i&gt;ServiceName&lt;/i&gt;  
+   Example: &lt;link cmd="!devnode 0 1 usbehci"&gt;!devnode 0 1 usbehci&lt;/link&gt;
+
+Explore device stacks, device objects, and driver objects.
+   &lt;b&gt;!devstack&lt;/b&gt;  List the device objects in a device stack.
+   &lt;b&gt;!devobj&lt;/b&gt;    Display information about a device object.
+   &lt;b&gt;!drvobj&lt;/b&gt;    Display information about a driver object.</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The command <b>.dml_start c:\MyFavoriteCommands.txt</b> will display the file as shown in the following image.</p><img src="images/DmlStart02.png" alt="Screen shot of DML file output"/><h2>Remarks</h2>
+<p>For information about DML tags that can be used in DML files, see dml.doc in the installation folder for Debugging Tools for Windows.</p>
+<p>DML output often works well in the <a href="command_browser_window.htm">Command Browser window</a>. To display a DML file in the Command Browser window, use <b>.browse .dml_start </b><i>filename</i>.</p>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="debugger_markup_language_commands.htm">Debugger Markup Language Commands</a></dt>
+<dt><a href="_browse__display_command_in_browser_.htm"><b>.browse</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.dml_start (Display DML Starting Point)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

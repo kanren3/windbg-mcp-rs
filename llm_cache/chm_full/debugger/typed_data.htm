@@ -1,0 +1,42 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Typed Data"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Typed Data</title>
+
+<meta name="MS-HAID" content="EngExtCpp_DG_82e81486-6ba4-479b-9855-b5700447aad1.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.typed_data"></a>Typed Data</h1>
+</div>
+<p>The EngExtCpp extension framework provides a few classes to help manipulate the target's memory.  The <a href="extremotedata.htm"><b>ExtRemoteData</b></a> class describes a small piece of the target's memory.  If the type of this memory is known, it is referred to as <i>typed data</i> and is described by <a href="extremotetyped.htm"><b>ExtRemoteTyped</b></a> objects.</p>
+<p>Windows lists can be iterated over by using <a href="extremotelist.htm"><b>ExtRemoteList</b></a> and, if the type of the objects in the list is known, <a href="extremotetypedlist.htm"><b>ExtRemoteTypedList</b></a>.</p>
+<div class="alert"><b>Note</b>    Like the client objects in <a href="extextension.htm"><b>ExtExtension</b></a>, instances of these classes are only valid while the extension library is used to execute an extension command or format a structure for output.  In particular, they should not be cached.  For more information about when client objects are valid, see <a href="client_objects_and_the_engine.htm">Client Objects and the Engine</a>, .</div>
+<div> </div>
+<h3><a id="remote_data"></a><a id="REMOTE_DATA"></a>Remote Data</h3>
+<p>Remote data should be handled using the class <a href="extremotedata.htm"><b>ExtRemoteData</b></a>.  This class is a wrapper around a small section of a target's memory.  <b>ExtRemoteData</b> automatically retrieves the memory and wraps other common requests with throwing methods.</p>
+<h3><a id="remote_typed_data"></a><a id="REMOTE_TYPED_DATA"></a>Remote Typed Data</h3>
+<p>If the type of the remote data is known, it should be handled using the <a href="extremotetyped.htm"><b>ExtRemoteTyped</b></a> class.  This class is an enhanced remote data object that understands data typed with type information from symbols.  It is initialized to a particular object by symbol or cast, after which it can be used like an object of the given type.  </p>
+<h3><a id="remote_lists"></a><a id="REMOTE_LISTS"></a>Remote Lists</h3>
+<p>To handle remote lists, use the <a href="extremotelist.htm"><b>ExtRemoteList</b></a> class.  This class can be used for either a singly linked or doubly linked list.  If the list is doubly linked, it is assumed that the previous pointer immediately follows the next pointer. The class contains methods that can iterate over the list and retrieve nodes both forward and backward. <b>ExtRemoteList</b> can be used with either null-terminated or circular lists also.</p>
+<h3><a id="remote_typed_lists"></a><a id="REMOTE_TYPED_LISTS"></a>Remote Typed Lists</h3>
+<p>To handle remote lists when the type of the nodes in the list is known, use the <a href="extremotetypedlist.htm"><b>ExtRemoteTypedList</b></a> class.  This is an enhanced version of <a href="extremotelist.htm"><b>ExtRemoteList</b></a>.  In addition to the basic functionality of <b>ExtRemoteList</b>, <b>ExtRemoteTypedList</b> automatically determines link offsets from type information.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Typed Data%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

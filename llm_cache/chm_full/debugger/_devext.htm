@@ -1,0 +1,183 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !devext extension displays bus-specific device extension information for devices on a variety of buses."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!devext</title>
+
+<meta name="MS-HAID" content="r26_exts_kernel_A_346bd09f-2f67-4afe-81ad-dc77887036d6.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._devext"></a>!devext</h1>
+</div>
+<p>The <b>!devext</b> extension displays bus-specific device extension information for devices on a variety of buses.</p>
+<pre class="syntax"><b>!devext </b><i>Address</i><b> </b><i>TypeCode</i></pre>
+<h2><a id="ddk__devext_dbg"></a><a id="DDK__DEVEXT_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Address______"></a><a id="_______address______"></a><a id="_______ADDRESS______"></a>       <i>Address</i>      </dt>
+<dd>
+<p>Specifies the hexadecimal address of the device extension to be displayed.</p>
+</dd>
+<dt><a id="_______TypeCode______"></a><a id="_______typecode______"></a><a id="_______TYPECODE______"></a>       <i>TypeCode</i>      </dt>
+<dd>
+<p>Specifies the type of object that owns the device extension to be displayed. Type codes are not case-sensitive. Valid type codes are:</p>
+<table>
+<tr>
+<th>TypeCode</th>
+<th>Object</th>
+</tr>
+<tr>
+<td>
+<p>PCI</p>
+</td>
+<td>
+<p>(Windows 2000 only)  PCI device extension  </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>ISAPNP</p>
+</td>
+<td>
+<p>ISA PnP device extension</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>PCMCIA</p>
+</td>
+<td>
+<p>PCMCIA device extension</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>HID</p>
+</td>
+<td>
+<p>HID device extension</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>USBD</p>
+</td>
+<td>
+<p>(Windows 2000 only)  USB bus driver extension</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>UHCD</p>
+</td>
+<td>
+<p>(Windows 2000 only)  UHCD host controller extension</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>OpenHCI</p>
+</td>
+<td>
+<p>(Windows 2000 only)  Open HCI host controller extension</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>USBHUB</p>
+</td>
+<td>
+<p>(Windows 2000 only)  USB hub extension</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>MF</p>
+</td>
+<td>
+<p>(Windows 2000 only)  MF device extension</p>
+</td>
+</tr>
+</table>
+<p> </p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000
+         </b></p>
+</td>
+<td>
+<p>
+          Kdextx86.dll
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later</b></p>
+</td>
+<td>
+<p>
+          Kdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>See <a href="plug_and_play_debugging.htm">Plug and Play Debugging</a> for applications of this extension command. For more information about device extensions, see the Windows Driver Kit (WDK) documentation.</p>
+<h2>Remarks</h2>
+<p>The <b>!usbhub</b>, <b>!hidfdo</b>, and <b>!hidpdo</b> extensions are obsolete; their functionality has been integrated into <b>!devext</b>.</p>
+<p>For those object types that are no longer supported by <b>!devext</b>, use the <a href="dt__display_type_.htm"><b>dt (Display Type)</b></a> debugger command.</p>
+<p>Here is an example for an ISA PnP device extension:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !devext e0000165fff32190 ISAPNP
+ISA PnP FDO @ 0x00000000, DevExt @ 0xe0000165fff32190, Bus # 196639
+Flags (0x854e2530)  DF_ACTIVATED, DF_QUERY_STOPPED, 
+                    DF_STOPPED, DF_RESTARTED_NOMOVE, 
+                    DF_BUS
+                    Unknown flags 0x054e2000
+
+NumberCSNs           - -536870912
+ReadDataPort         - 0x0000000d (mapped)
+AddressPort          - 0x00000000 (not mapped)
+CommandPort          - 0x00000000 (not mapped)
+DeviceList           - 0xe000000085007b50
+CardList             - 0x00000000
+PhysicalBusDevice    - 0x00000000
+AttachedDevice       - 0x00000000
+SystemPowerState     - Unspecified
+DevicePowerState     - Unspecified</code></pre>
+<p>Here is an example for a PCI device:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !devext e0000000858c31b0 PCI
+PDO Extension, Bus 0x0, Device 0, Function 0.
+  DevObj 0xe0000000858c3060 PCI Parent Bus FDO DevExt 0xe0000000858c4960
+  Device State = PciNotStarted
+  Vendor ID 8086 (INTEL)  Device ID 123D
+  Class Base/Sub 08/00  (Base System Device/Interrupt Controller)
+  Programming Interface: 20, Revision: 01, IntPin: 00, Line Raw/Adj 00/00
+  Enables ((cmd &amp; 7) = 106): BM   Capabilities Pointer = &lt;none&gt;
+  CurrentState:          System Working,  Device D0
+  WakeLevel:             System Unspecified,  Device Unspecified
+  Requirements: &lt;none&gt;</code></pre>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!devext%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

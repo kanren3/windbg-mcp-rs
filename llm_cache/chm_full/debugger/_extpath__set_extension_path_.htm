@@ -1,0 +1,89 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .extpath command sets or displays the extension DLL search path."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.extpath (Set Extension Path)</title>
+
+<meta name="MS-HAID" content="r20_metacmds_E_c6a14a6e-13e7-4e85-9f41-8c9b5ba0967e.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._extpath__set_extension_path_"></a>.extpath (Set Extension Path)</h1>
+</div>
+<p>The <b>.extpath</b> command sets or displays the extension DLL search path.</p>
+<pre class="syntax"><b>.extpath[+] [</b><i>Directory</i><b>[;...]]</b></pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="______________"></a>       +      </dt>
+<dd>
+<p>Signifies that the debugger should append new directories to the previous extension DLL search path (instead of replacing the path).</p>
+</dd>
+<dt><a id="_______Directory______"></a><a id="_______directory______"></a><a id="_______DIRECTORY______"></a>       <i>Directory</i>      </dt>
+<dd>
+<p>Specifies one or more directories to put in the search path. If you do not specify <i>Directory</i>, the current path is displayed. You can separate multiple directories with semicolons.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p>
+          Modes
+         </p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+          Targets
+         </p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+          Platforms
+         </p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about the extension search path and loading extension DLLs, see <a href="loading_debugger_extension_dlls.htm">Loading Debugger Extension DLLs</a>.</p>
+<h2>Remarks</h2>
+<p>The extension DLL search path is reset to its default value at the start of each debugging session.</p>
+<p>During live kernel-mode debugging, a reboot of the target computer results in the start of a new debugging session. So any changes that you make to the extension DLL search path during kernel-mode debugging will not persist across a reboot of the target computer.</p>
+<p>The default value of the extension DLL search path contains all the extension paths known to the debugger and all the paths in the %PATH% environment variable. For example, suppose your %PATH% environment variable has a value of <code>C:\Windows\system32;C:\Windows</code>. Then the default value of the DLL extension search path might look like this.</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; .extpath
+Extension search path is: C:\Program Files\Debugging Tools for Windows (x64)\WINXP;C:\Program Files\
+Debugging Tools for Windows (x64)\winext;C:\Program Files\Debugging Tools for Windows (x64)\winext\
+arcade;C:\Program Files\Debugging Tools for Windows (x64);C:\Program Files\Debugging Tools for 
+Windows (x64)\winext\arcade;C:\Windows\system32;C:\Windows</code></pre>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.extpath (Set Extension Path)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,1281 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The dx command displays a C++ expression using the NatVis extension model. For more information about NatVis, see Create custom views of native objects in the debugger."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>dx (Display Debugger Object Model Expression)</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.dx__display_visualizer_variables_"></a>dx (Display Debugger Object Model Expression)</h1>
+</div>
+<p>The <b>dx</b> command displays a C++ expression using the NatVis extension model. For more information about NatVis, see <a href="http://msdn.microsoft.com/en-us/library/jj620914.aspx">Create custom views of native objects in the debugger</a>.</p>
+<pre class="syntax">
+<b>dx </b>[<b>-g</b>|<b>-gc #</b>][<b>-c #</b>][<b>-n</b>|<b>-v</b>]<b>-r[</b><i>#</i><b>] </b><i>Expression</i>[<b>,&lt;FormatSpecifier&gt; </b>]
+<b>dx </b>[{<b>-?</b>}|{<b>-h</b>}]
+</pre>
+<h2><a id="ddk_cmd_display_type_dbg"></a><a id="DDK_CMD_DISPLAY_TYPE_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Expression______"></a><a id="_______expression______"></a><a id="_______EXPRESSION______"></a>       <i>Expression</i>      </dt>
+<dd>
+<p>A C++ expression to be displayed.</p>
+</dd>
+<dt><a id="_______-g______"></a><a id="_______-G______"></a>       <b>-g</b>      </dt>
+<dd>
+<p>Display as a data grid objects which are iterable.  Each iterated element is a row in the grid and each display child of 
+those elements is a column.  This allows you to view something such as an array of structs,  where each array 
+element is displayed in a row and each field of the struct is displayed in a column.
+
+</p>
+<p>Left clicking a column name (where there is an available DML link) will sort by that column.  If already sorted by that column, the sort order will be inverted.</p>
+<p>Any object which is iterable will have a right click context menu item added via DML called
+'Display as Grid'.  Right clicking an object in the output window and selecting this will display the object in the
+grid view instead of the standard tree view.
+
+</p>
+<p>A (+) displayed by  a column name offers both a right click and left click behavior.</p>
+<ul>
+<li>Left click takes that column and explodes it into its own table. You see the original rows plus the children of the expanded column.  </li>
+<li>Right click provides "Expand Into Grid" which takes the column and adds it back to the current table as right most columns.</li>
+</ul>
+</dd>
+<dt><a id="_______-gc________"></a><a id="_______-GC________"></a>       <b>-gc #</b>      </dt>
+<dd>
+<p>Display as a grid and restrict grid cell sizes to specified number of (#) characters.
+</p>
+</dd>
+<dt><a id="_______-c________"></a><a id="_______-C________"></a>       <b>-c #</b>      </dt>
+<dd>
+<p>Displays container continuation (skipping # elements of the container).This option is typically used in custom output automation scenarios and provides a "…" continuation element at the bottom of the listing.</p>
+</dd>
+<dt><a id="_______-n______"></a><a id="_______-N______"></a>       <b>-n</b>      </dt>
+<dd>
+<p>There are two ways that data can be rendered. Using the NatVis visualization (the default) or using the underlying native C/C++ structures. Specify the  -n parameter to render the output using just the native  C/C++ structures and not the NatVis visualizations.</p>
+</dd>
+<dt><a id="_______-v______"></a><a id="_______-V______"></a>       <b>-v</b>      </dt>
+<dd>
+<p>Display verbose information that includes methods and other non-typical objects.</p>
+</dd>
+<dt><a id="_______-r_______"></a><a id="_______-R_______"></a>       <b>-r</b><i>#</i>      </dt>
+<dd>
+<p>Recursively display subtypes (fields) up to <i>#</i> levels. If <i>#</i> is not specified, a recursion level of one, is the default value.</p>
+</dd>
+<dt><a id="__________FormatSpecifier_________"></a><a id="__________formatspecifier_________"></a><a id="__________FORMATSPECIFIER_________"></a>       <b>[&lt;,FormatSpecifier&gt;] </b>      </dt>
+<dd>
+<p>Use any of the following format specifiers to modify the default rendering.</p>
+<p></p>
+<table>
+<tr>
+<td>,x</td>
+<td>Display ordinals in hexidecimal</td>
+</tr>
+<tr>
+<td>,d</td>
+<td>Display ordinals in decimal</td>
+</tr>
+<tr>
+<td>,o</td>
+<td>Display ordinals in octal</td>
+</tr>
+<tr>
+<td>,b</td>
+<td>Display ordinals in binary</td>
+</tr>
+<tr>
+<td>,en</td>
+<td>Display enums by name only (no value)</td>
+</tr>
+<tr>
+<td>,c</td>
+<td>Display as single character (not a string)</td>
+</tr>
+<tr>
+<td>.s</td>
+<td>Display 8-bit strings as ASCII quoted</td>
+</tr>
+<tr>
+<td>,sb </td>
+<td>Display 8-bit strings as ASCII unquoted</td>
+</tr>
+<tr>
+<td>,s8</td>
+<td>Display 8-bit strings as UTF-8 quoted</td>
+</tr>
+<tr>
+<td>,s8b</td>
+<td>Display 8-bit strings as UTF-8 unquoted</td>
+</tr>
+<tr>
+<td>,su</td>
+<td>Display 16-bit strings as UTF-16 quoted</td>
+</tr>
+<tr>
+<td>,sub</td>
+<td>Display 16-bit strings as UTF-16 unqouted</td>
+</tr>
+<tr>
+<td>,!</td>
+<td>Display objects in raw mode only (e.g.: no NatVis)</td>
+</tr>
+<tr>
+<td>,#</td>
+<td>Specify length of pointer/array/container as the literal value # (replace with numeric)</td>
+</tr>
+<tr>
+<td>,[&lt;expression&gt;]</td>
+<td>Specify length of pointer/array/container as the expression &lt;expression&gt;</td>
+</tr>
+<tr>
+<td>,nd</td>
+<td>Do not find the derived (runtype) type of the object.  Display static value only</td>
+</tr>
+</table>
+<p> </p>
+</dd>
+<dt><a id="_______dx_-_______"></a><a id="_______DX_-_______"></a>       <b>dx </b>{<b>-?</b>}      </dt>
+<dd>
+<p>Display command line  help.</p>
+</dd>
+<dt><a id="_______dx_-h______"></a><a id="_______DX_-H______"></a>       <b>dx </b>{<b>-h</b>}      </dt>
+<dd>
+<p>Displays help for objects available in the debugger.</p>
+</dd>
+</dl>
+<p><b>Command line usage example</b></p>The .dx settings command can be used to display information about the Debug Settings object. For more information about the debug settings objects, see <a href="_settings__set_debug_settings_.htm"><b>.settings</b></a> . <pre class="syntax" xml:space="preserve"><code>
+kd&gt; dx -r1 Debugger.Settings
+Debugger.Settings : 
+    Display          : 
+    EngineInitialization : 
+    Extensions       : 
+    Input            : 
+    Sources          : 
+    Symbols          : 
+    AutoSaveSettings : false
+</code></pre>
+<p></p>
+<p>Use the -r1 recursion option to view the other Debugger objects - Sessions, Settings and State.</p>
+<pre class="syntax" xml:space="preserve"><code>
+kd&gt; dx -r1 Debugger
+Debugger : 
+  Sessions : 
+  Settings : 
+  State    : 
+
+</code></pre>
+<p></p>
+<p>Specify the Debugger.Sessions object with the -r3 recursion option to travel further down the object chain.</p>
+<pre class="syntax" xml:space="preserve"><code>
+kd&gt; dx -r3 Debugger.Sessions
+Debugger.Sessions : 
+  [0]              : Remote KD: KdSrv:Server=@{&lt;Local&gt;},Trans=@{1394:Channel=0}
+    Processes : 
+      [0]              : &lt;Unknown Image&gt;
+      [4]              : &lt;Unknown Image&gt;
+      [304]            : smss.exe
+      [388]            : csrss.exe
+      [456]            : wininit.exe
+      [468]            : csrss.exe
+      [528]            : services.exe
+      [536]            : lsass.exe
+      [544]            : winlogon.exe
+      [620]            : svchost.exe
+       ...               ...
+</code></pre>
+<p></p>
+<p>Add the x format specifier to display the ordinal values in hexadecimal.</p>
+<pre class="syntax" xml:space="preserve"><code>
+kd&gt; dx -r3 Debugger.Sessions,x
+Debugger.Sessions,x : 
+  [0x0]            : Remote KD: KdSrv:Server=@{&lt;Local&gt;},Trans=@{1394:Channel=0}
+    Processes : 
+      [0x0]            : &lt;Unknown Image&gt;
+      [0x4]            : &lt;Unknown Image&gt;
+      [0x130]          : smss.exe
+      [0x184]          : csrss.exe
+      [0x1c8]          : wininit.exe
+      [0x1d4]          : csrss.exe
+      [0x210]          : services.exe
+      [0x218]          : lsass.exe
+      [0x220]          : winlogon.exe
+      [0x26c]          : svchost.exe
+      [0x298]          : svchost.exe
+      [0x308]          : dwm.exe
+      [0x34c]          : nvvsvc.exe
+      [0x37c]          : nvvsvc.exe
+      [0x384]          : svchost.exe
+       ...               ...
+</code></pre>
+<p></p>
+<p>This example uses an active debug session to list the call stack of the first thread in the first process.</p>
+<pre class="syntax" xml:space="preserve"><code>
+kd&gt; dx -r1 Debugger.Sessions.First().Processes.First().Threads.First().Stack.Frames
+Debugger.Sessions.First().Processes.First().Threads.First().Stack.Frames : 
+    [0x0]            : nt!RtlpBreakWithStatusInstruction
+    [0x1]            : nt!KdCheckForDebugBreak + 0x7a006
+    [0x2]            : nt!KiUpdateRunTime + 0x42
+    [0x3]            : nt!KiUpdateTime + 0x129
+    [0x4]            : nt!KeClockInterruptNotify + 0x1c3
+    [0x5]            : hal!HalpTimerClockInterruptEpilogCommon + 0xa
+    [0x6]            : hal!HalpTimerClockInterruptCommon + 0x3e
+    [0x7]            : hal!HalpTimerClockInterrupt + 0x1cb
+    [0x8]            : nt!KiIdleLoop + 0x1a
+
+</code></pre>
+<p></p>
+<p>Use the -g option to display output as a data grid. Click on a column to sort. </p>
+<pre class="syntax" xml:space="preserve"><code>
+kd&gt; dx -g @$curprocess.Modules
+</code></pre><img src="images/dx_grid_example.png" alt="Output from dx -g @$curprocess.Modules showing columnar grid output"/><p></p>
+<p></p>Use the -h option to display information about objects. <pre class="syntax" xml:space="preserve"><code>
+kd&gt;  dx -h Debugger.State
+Debugger.State   [State pertaining to the current execution of the debugger (e.g.: user variables)]
+    DebuggerVariables [Debugger variables which are owned by the debugger and can be referenced by a pseudo-register prefix of @$]
+    PseudoRegisters   [Categorizied debugger managed pseudo-registers which can be referenced by a pseudo-register prefix of @$]
+    UserVariables     [User variables which are maintained by the debugger and can be referenced by a pseudo-register prefix of @$]
+</code></pre>
+<p></p>
+<p><b>Working around symbol file limitations with casting</b></p>
+<p>When displaying information about various Windows system variables, there are times where not all of the type information is available in the public symbols. This example illustrates this situation. </p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; dx nt!PsIdleProcess
+Error: No type (or void) for object at Address 0xfffff800e1d50128</code></pre>
+<p>The dx command supports the ability to reference the address of a variable which does not have type information.  Such “address of” references are treated as “void *” and can be cast as such.   This means that if the data type is known, the following syntax can be used to display type information for the variable. </p>
+<pre class="syntax" xml:space="preserve"><code>dx (Datatype *)&amp;VariableName</code></pre>
+<p>For example for a nt!PsIdleProcess which has a data type of nt!_EPROCESS, use this command.</p>
+<pre class="syntax" xml:space="preserve"><code>
+dx (nt!_EPROCESS *)&amp;nt!PsIdleProcess
+(nt!_EPROCESS *)&amp;nt!PsIdleProcess                 : 0xfffff800e1d50128 [Type: _EPROCESS *]
+    [+0x000] Pcb              [Type: _KPROCESS]
+    [+0x2c8] ProcessLock      [Type: _EX_PUSH_LOCK]
+    [+0x2d0] CreateTime       : {4160749568} [Type: _LARGE_INTEGER]
+    [+0x2d8] RundownProtect   [Type: _EX_RUNDOWN_REF]
+    [+0x2e0] UniqueProcessId  : 0x1000 [Type: void *]
+    [+0x2e8] ActiveProcessLinks [Type: _LIST_ENTRY]
+    [+0x2f8] Flags2           : 0x218230 [Type: unsigned long]
+    [+0x2f8 ( 0: 0)] JobNotReallyActive : 0x0 [Type: unsigned long]
+</code></pre>
+<p>The dx command does not  support switching expression evaluators with the @@ MASM syntax. For more information about expression evaluators, see <a href="evaluating_expressions.htm">Evaluating Expressions</a>.</p>
+<p></p>
+<h2><a id="Custom_NatVis_object_example"></a><a id="custom_natvis_object_example"></a><a id="CUSTOM_NATVIS_OBJECT_EXAMPLE"></a>Custom NatVis object example</h2>
+<p>Create a simple C++ application that has an instance of the class <b>CDog</b>.</p>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>class CDog
+{
+public:
+   CDog(){m_age = 8; m_weight = 30;}
+   long m_age;
+   long m_weight;
+};
+
+int main()
+{
+   CDog MyDog;
+   printf_s("%d, %d\n", MyDog.m_age, MyDog.m_weight);
+   return 0;
+}</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Create a file named Dog.natvis that contains this XML:</p>
+<div class="code"><span codelanguage="XML"><table>
+<tr>
+<th>XML</th>
+</tr>
+<tr>
+<td>
+<pre>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010"&gt;
+   &lt;Type Name="CDog"&gt;
+      &lt;DisplayString&gt;{{Age = {m_age} years. Weight = {m_weight} pounds.}}&lt;/DisplayString&gt;
+   &lt;/Type&gt;
+&lt;/AutoVisualizer&gt;</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Copy Dog.natvis to the Visualizers folder in your installation directory for Debugging Tools for Windows. For example:</p>
+<p>C:\Program Files\Debugging Tools for Windows (x64)\Visualizers</p>
+<p>Run your program, and break in at the main function. Take a step so that the variable <code>MyDog</code> gets initialized. Display <code>MyDog</code> using <a href="____evaluate_c___expression_.htm"><b>??</b></a> and again using <b>dx</b>.</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; ??MyDog
+class CDog
+   +0x000 m_age        : 0n8
+   +0x004 m_weight     : 0n30
+0:000&gt; *
+0:000&gt; dx -r1 MyDog
+.....
+MyDog     : {Age = 8 years. Weight = 30 pounds.} [Type: CDog]</code></pre>
+<h2><a id="LINQ"></a><a id="linq"></a>LINQ</h2>
+<p><b>Using LINQ With The dx Command</b></p>
+<p>LINQ syntax can be used with the dx command to search and manipulate data. LINQ is conceptually similar to the Structured Query Language (SQL) that is used to query databases. You can use a number of LINQ methods to search, filter and parse debug data. The LINQ C# method syntax is used. For more information on LINQ and the LINQ C# syntax,  see the following MSDN topics:</p>
+<p><a href="https://msdn.microsoft.com/en-us/library/bb397926.aspx">LINQ (Language-Integrated Query)</a></p>
+<p><a href="https://msdn.microsoft.com/en-us/library/bb397933.aspx">Getting Started with LINQ in C#</a></p>
+<p><b>Function Objects (Lambda Expressions)</b></p>
+<p>Many of the methods that are used to query data are based on the concept of repeatedly running a user provided function across objects in a collection.  To support the ability to query and manipulate data in  the debugger, the dx command supports lambda expressions using the equivalent C# syntax.  A lambda expression is defined by usage of the =&gt; operator as follows:</p>
+<p>(arguments) =&gt; (result)</p>
+<p>To see how LINQ is used with dx, try this simple example to add together 5 and 7.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; dx ((x, y) =&gt; (x + y))(5, 7) </pre>
+</td>
+</tr>
+</table></span></div>
+<p>The dx command echos back the lambda expression and displays the result of 12.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>((x, y) =&gt; (x + y))(5, 7)  : 12</pre>
+</td>
+</tr>
+</table></span></div>
+<p>This example lambda expression combines the strings "Hello" and "World".</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; dx ((x, y) =&gt; (x + y))("Hello", "World")
+((x, y) =&gt; (x + y))("Hello", "World") : HelloWorld</pre>
+</td>
+</tr>
+</table></span></div>
+<p><b>Debugger Objects Examples</b></p>
+<p>Debugger objects are projected into a namespace rooted at "Debugger".  Processes, modules, threads, stacks, stack frames, and local  variables 
+
+are all available to be used  in a LINQ query. </p>
+<p>LINQ commands such as the following can be used .All, .Any, .Count, .First, .Flatten, .GroupBy, .Last, 
+      .OrderBy, .OrderByDescending, .Select, and .Where.  These methods follow (as closely as possible) the C# LINQ method 
+      form.</p>
+<p>This example shows the top 5 processes running the most  threads:</p>
+<p></p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0: kd&gt; dx -r2 Debugger.Sessions.First().Processes.Select(p =&gt; new { Name = p.Name, ThreadCount = p.Threads.Count() }).OrderByDescending(p =&gt; p.ThreadCount),5
+Debugger.Sessions.First().Processes.Select(p =&gt; new { Name = p.Name, ThreadCount = p.Threads.Count() }).OrderByDescending(p =&gt; p.ThreadCount),5 
+
+: 
+    [0x4]            : 
+        Name             : &lt;Unknown Image&gt;
+        ThreadCount      : 0x73
+    [0x708]          : 
+        Name             : explorer.exe
+        ThreadCount      : 0x2d
+    [0x37c]          : 
+        Name             : svchost.exe
+        ThreadCount      : 0x2c
+    [0x6b0]          : 
+        Name             : MsMpEng.exe
+        ThreadCount      : 0x22
+    [0x57c]          : 
+        Name             : svchost.exe
+        ThreadCount      : 0x15
+    [...]       
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p>This example shows the devices in the plug and play device tree grouped by the name of the physical device object's driver. Not all of the output is shown.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; dx -r2 Debugger.Sessions.First().Devices.DeviceTree.Flatten(n =&gt; n.Children).GroupBy(n =&gt; n.PhysicalDeviceObject-&gt;Driver-&gt;DriverName.ToDisplayString())
+Debugger.Sessions.First().Devices.DeviceTree.Flatten(n =&gt; n.Children).GroupBy(n =&gt; n.PhysicalDeviceObject-&gt;Driver-&gt;DriverName.ToDisplayString()) 
+
+: 
+    ["\"\\Driver\\PnpManager\""] : 
+        [0x0]            : HTREE\ROOT\0
+        [0x1]            : ROOT\volmgr\0000 (volmgr)
+        [0x2]            : ROOT\BasicDisplay\0000 (BasicDisplay)
+        [0x3]            : ROOT\CompositeBus\0000 (CompositeBus)
+        [0x4]            : ROOT\vdrvroot\0000 (vdrvroot)
+         ...  
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p><b> Tab Auto Completion</b></p>
+<p>Contextual TAB key auto completion is aware of the LINQ query methods and will work for parameters of lambdas.
+      </p>
+<p>As an example, type (or copy and paste) the following text into the debugger. Then hit the TAB key several times to cycle
+      through potential completions.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>dx -r2 Debugger.Sessions.First().Processes.Select(p =&gt; new {Name = p.Name, ThreadCount = p.Threads.Count() }).OrderByDescending(p =&gt; p.
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Press the TAB key until ".Name" appears. Add a closing parenthesis ")" and press enter to execute the command. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; dx -r2 Debugger.Sessions.First().Processes.Select(p =&gt; new {Name = p.Name, ThreadCount = p.Threads.Count() }).OrderByDescending(p =&gt; p.Name)
+Debugger.Sessions.First().Processes.Select(p =&gt; new {Name = p.Name, ThreadCount = p.Threads.Count() }).OrderByDescending(p =&gt; p.Name) : 
+    [0x274]          : 
+        Name             : winlogon.exe
+        ThreadCount      : 0x4
+    [0x204]          : 
+        Name             : wininit.exe
+        ThreadCount      : 0x2
+    [0x6c4]          : 
+        Name             : taskhostex.exe
+        ThreadCount      : 0x8
+         ...  
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p>This example shows completion with a key comparator method. The substitution will show string methods, since the key is a string.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>dx -r2 Debugger.Sessions.First().Processes.Select(p =&gt; new {Name = p.Name, ThreadCount = p.Threads.Count() }).OrderByDescending(p =&gt; p.Name, (a, b) =&gt; a.</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Press the TAB key until ".Length" appears. Add a closing parenthesis ")" and press enter to execute the command. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; dx -r2 Debugger.Sessions.First().Processes.Select(p =&gt; new {Name = p.Name, ThreadCount = p.Threads.Count() }).OrderByDescending(p =&gt; p.Name, (a, b) =&gt; a.Length)
+Debugger.Sessions.First().Processes.Select(p =&gt; new {Name = p.Name, ThreadCount = p.Threads.Count() }).OrderByDescending(p =&gt; p.Name, (a, b) =&gt; a.Length) : 
+    [0x544]          : 
+        Name             : spoolsv.exe
+        ThreadCount      : 0xc
+    [0x4d4]          : 
+        Name             : svchost.exe
+        ThreadCount      : 0xa
+    [0x438]          : 
+        Name             : svchost.exe</pre>
+</td>
+</tr>
+</table></span></div>
+<p><b>User Defined Variables</b></p>
+<p>A user defined variable can be defined by prefixing the variable name  with @$.   A user defined variable can be assigned to anything dx can utilize, for example, lambdas, the results of LINQ queries, etc. </p>
+<p>You can create and set the value of a user variable like this.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; dx @$String1="Test String"</pre>
+</td>
+</tr>
+</table></span></div>
+<p>You can display the defined user variables using <i>Debugger.State.UserVariables</i> or <i>@$vars</i>.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; dx Debugger.State.UserVariables
+Debugger.State.UserVariables : 
+    mySessionVar     : 
+    String1          : Test String</pre>
+</td>
+</tr>
+</table></span></div>
+<p>You can remove a variable using .Remove.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; dx @$vars.Remove("String1")
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p>This  example shows how to define a user variable to reference Debugger.Sesssions.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; dx @$mySessionVar = Debugger.Sessions</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The user defined variable can then be used as shown below. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; dx -r2 @$mySessionVar 
+@$mySessionVar   : 
+    [0x0]            : Remote KD: KdSrv:Server=@{&lt;Local&gt;},Trans=@{COM:Port=\\.\com3,Baud=115200,Timeout=4000}
+        Processes        : 
+        Devices     </pre>
+</td>
+</tr>
+</table></span></div>
+<p><b>User Defined Variables - Anonymous Types </b></p>
+<p>
+             This creation of dynamic objects is done using the C# anonymous type syntax (new { ... }). For more information see about anonymous types, see <a href="https://msdn.microsoft.com/en-us/library/bb397696.aspx">Anonymous Types (C# Programming Guide)</a>. This example create an anonymous type with an integer and string value.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; dx -r1 new { MyInt = 42, MyString = "Hello World" }
+new { MyInt = 42, MyString = "Hello World" } : 
+    MyInt            : 42
+    MyString         : Hello World</pre>
+</td>
+</tr>
+</table></span></div>
+<p><b>System Defined Variables</b></p>
+<p>The following system defined variables can be used in any LINQ dx query.</p>
+<ul>
+<li>
+<p>	@$cursession - The current session
+</p>
+</li>
+<li>
+<p>@$curprocess - The current process
+</p>
+</li>
+<li>
+<p>	@$curthread - The current thread
+</p>
+</li>
+</ul>
+<p>This example show the use of the system defined variables.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; dx @$curprocess.Threads.Count()
+@$curprocess.Threads.Count() : 0x4</pre>
+</td>
+</tr>
+</table></span></div>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; dx -r1 @$curprocess.Threads
+@$curprocess.Threads : 
+    [0x4adc]         : 
+    [0x1ee8]         : 
+    [0x51c8]         : 
+    [0x62d8]         : 
+     ...</pre>
+</td>
+</tr>
+</table></span></div>
+<p><b>Supported LINQ Syntax - Query Methods</b></p>
+<p>Any object which dx defines as iterable (be that a native array, a type which has NatVis written describing it as a container, or a debugger extension object) has a series of LINQ (or LINQ equivalent) methods projected onto it.  Those query methods are described below. The signatures of the arguments to the query methods are listed after all of the query methods.</p>
+<p>Filtering Methods</p>
+<table>
+<tr>
+<td>.Where ( PredicateMethod )</td>
+<td>Returns a new collection of objects containing every object in the input collection for which the predicate method returned true.</td>
+</tr>
+</table>
+<p> </p>
+<p>Projection Methods</p>
+<table>
+<tr>
+<td> .Flatten ( [KeyProjectorMethod] )</td>
+<td>Takes an input container of containers (a tree) and flattens it into a single container which has every element in the tree.  If the optional key projector method is supplied, the tree is considered a container of keys which are themselves containers and those keys are determined by a call to the projection method.</td>
+</tr>
+<tr>
+<td>.Select ( KeyProjectorMethod )</td>
+<td>Returns a new collection of objects containing the result of calling the projector method on every object in the input collection.</td>
+</tr>
+</table>
+<p> </p>
+<p> Grouping Methods</p>
+<table>
+<tr>
+<td>.GroupBy ( KeyProjectorMethod, [KeyComparatorMethod] )</td>
+<td>Returns a new collection of collections by grouping all objects in the input collection having the same key as determined by calling the key projector method.  An optional comparator method can be provided.</td>
+</tr>
+<tr>
+<td>Join (InnerCollection, Outer key selector method, Inner key selector method, Result selector method, [ComparatorMethod])</td>
+<td>Joins two sequences based on key selector functions and extracts pairs of values. An optional comparator method can also be specified.</td>
+</tr>
+<tr>
+<td>Intersect (InnerCollection, [ComparatorMethod])</td>
+<td>Returns the set intersection, which means elements that appear in each of two collections. An optional comparator method can also be specified.</td>
+</tr>
+<tr>
+<td>Union (InnerCollection, [ComparatorMethod])</td>
+<td>Returns the set union, which means unique elements that appear in either of two collections. An optional comparator method can also be specified.</td>
+</tr>
+</table>
+<p> </p>
+<p>Data Set Methods</p>
+<table>
+<tr>
+<td>Contains (Object, [ComparatorMethod])</td>
+<td>Determines whether a sequence contains a specified element. An optional comparator method can be provided that will be called each time the element is compared against an entry in the sequence.</td>
+</tr>
+<tr>
+<td>Distinct ([ComparatorMethod])</td>
+<td>Removes duplicate values from a collection.  An optional comparator method can be provided to be called each time objects in the collection must be compared.</td>
+</tr>
+<tr>
+<td>Except (InnerCollection, [ComparatorMethod])</td>
+<td>Returns the set difference, which means the elements of one collection that do not appear in a second collection. An optional comparator method can be specified.</td>
+</tr>
+<tr>
+<td>Concat (InnerCollection)</td>
+<td>Concatenates two sequences to form one sequence.</td>
+</tr>
+</table>
+<p> </p>
+<p>Ordering Methods</p>
+<table>
+<tr>
+<td>.OrderBy ( KeyProjectorMethod, [KeyComparatorMethod] )</td>
+<td>Sorts the collection in ascending order according to a key as provided by calling the key projection method on every object in the input collection.  An optional comparator method can be provided.</td>
+</tr>
+<tr>
+<td>.OrderByDescending ( KeyProjectorMethod, [KeyComparatorMethod] )</td>
+<td>Sorts the collection in descending order according to a key as provided by calling the key projection method on every object in the input collection.  An optional comparator method can be provided.</td>
+</tr>
+</table>
+<p> </p>
+<p>Aggregating Methods</p>
+<table>
+<tr>
+<td>Count () </td>
+<td> A method that returns the number of elements in the collection.</td>
+</tr>
+<tr>
+<td>Sum ([ProjectionMethod])</td>
+<td>Calculates the sum of the values in a collection. Can optionally specify a projector method to transform the elements before summation occurs.</td>
+</tr>
+</table>
+<p> </p>
+<p>Skip Methods</p>
+<table>
+<tr>
+<td>Skip (Count) </td>
+<td>Skips elements up to a specified position in a sequence.</td>
+</tr>
+<tr>
+<td>SkipWhile  (PredicateMethod) </td>
+<td>Skips elements based on a predicate function until an element does not satisfy the condition.</td>
+</tr>
+</table>
+<p> </p>
+<p>Take Methods </p>
+<table>
+<tr>
+<td>Take (Count)</td>
+<td>Takes elements up to a specified position in a sequence.</td>
+</tr>
+<tr>
+<td>TakeWhile (PredicateMethod) </td>
+<td>Takes elements based on a predicate function until an element does not satisfy the condition.</td>
+</tr>
+</table>
+<p> </p>
+<p>Comparison Methods</p>
+<table>
+<tr>
+<td>SequenceEqual (InnerCollection, [ComparatorMethod]) </td>
+<td>Determines whether two sequences are equal by comparing elements in a pair-wise manner. An optional comparator can be specified.</td>
+</tr>
+</table>
+<p> </p>
+<p>Error Handling  Methods</p>
+<table>
+<tr>
+<td>	AllNonError (PredicateMethod)</td>
+<td>Returns whether all non-error elements of a collection satisfy a given condition.</td>
+</tr>
+<tr>
+<td>	FirstNonError ([PredicateMethod])</td>
+<td>Returns the first element of a collection that isn’t an error.</td>
+</tr>
+<tr>
+<td>	LastNonError ([PredicateMethod])</td>
+<td>Returns the last element of a collection that isn’t an error.</td>
+</tr>
+</table>
+<p> </p>
+<p> Other Methods</p>
+<table>
+<tr>
+<td>.All ( PredicateMethod )</td>
+<td>Returns whether the result of calling the specified predicate method on every element in the input collection is true.</td>
+</tr>
+<tr>
+<td>.Any ( PredicateMethod )</td>
+<td>Returns whether the result of calling the specified predicate method on any element in the input collection is true.</td>
+</tr>
+<tr>
+<td>.First ( [PredicateMethod] )</td>
+<td>Returns the first element in the collection.  If the optional predicate is passed, returns the first element in the collection for which a call to the predicate returns true.</td>
+</tr>
+<tr>
+<td>.Last ( [PredicateMethod] )</td>
+<td>Returns the last element in the collection.  If the optional predicate is passed, returns the last element in the collection for which a call to the predicate returns true.</td>
+</tr>
+<tr>
+<td>Min([KeyProjectorMethod])</td>
+<td>Returns the minimum element of the collection. An optional projector method can be specified to project each method before it is compared to others.</td>
+</tr>
+<tr>
+<td>Max([KeyProjectorMethod])</td>
+<td>Returns the maximum element of the collection. An optional projector method can be specified to project each method before it is compared to others.</td>
+</tr>
+<tr>
+<td>Single([PredicateMethod])</td>
+<td>Returns the only element from the list (or an error if the collection contains more than one element). If a predicate is specified, returns the single element that satisfies that predicate (if more than one element satisfies it, the function returns an error instead).
+</td>
+</tr>
+</table>
+<p> </p>
+<p></p>
+<p><b>Signatures of the Arguments</b></p>
+<table>
+<tr>
+<td>KeyProjectorMethod : ( obj =&gt; arbitrary key )</td>
+<td>Takes an object of the collection and returns a key from that object.</td>
+</tr>
+<tr>
+<td>KeyComparatorMethod: ( (a, b) =&gt; integer value )</td>
+<td>Takes two keys and compares them returning:<p>-1 if ( a &lt; b )</p>
+<p>0 if ( a == b)</p>
+<p>1 if ( a &gt; b )</p>
+</td>
+</tr>
+<tr>
+<td>PredicateMethod: ( obj =&gt; boolean value )</td>
+<td>Takes an object of the collection and returns true or false based on whether that object meets certain criteria.</td>
+</tr>
+</table>
+<p> </p>
+<p><b>Supported LINQ Syntax - String Manipulation</b></p>
+<p>All string objects have the following methods projected into them, so that they are available for use:</p>
+<p>Query Relevant Methods &amp; Properties</p>
+<table>
+<tr>
+<td>.Contains ( OtherString )</td>
+<td>Returns a boolean value indicating whether the input string contains OtherString.</td>
+</tr>
+<tr>
+<td>.EndsWith ( OtherString )</td>
+<td>Returns a boolean value indicating whether the input string ends with OtherString.</td>
+</tr>
+<tr>
+<td>Length</td>
+<td>A property which returns the length of the string.</td>
+</tr>
+<tr>
+<td>.StartsWith ( OtherString )</td>
+<td>Returns a boolean value indicating whether the input string starts with OtherString.</td>
+</tr>
+<tr>
+<td> .Substring ( StartPos, [Length] )</td>
+<td>Returns a substring within the input string starting at the given starting position.  If the optional length is supplied, the returned substring will be of the specified length; otherwise – it will go to the end of the string.</td>
+</tr>
+</table>
+<p> </p>
+<p>Miscellaneous Methods</p>
+<table>
+<tr>
+<td> .IndexOf ( OtherString )</td>
+<td>Returns the index of the first occurrence of OtherString within the input string.</td>
+</tr>
+<tr>
+<td>.LastIndexOf ( OtherString )</td>
+<td>Returns the index of the last occurrence of OtherString within the input string.</td>
+</tr>
+</table>
+<p> </p>
+<p>Formatting Methods</p>
+<table>
+<tr>
+<td>.PadLeft ( TotalWidth )</td>
+<td>Adds spaces as necessary to the left side of the string in order to bring the total length of the string to the specified width.</td>
+</tr>
+<tr>
+<td>.PadRight ( TotalWidth )</td>
+<td>Adds spaces as necessary to the right side of the string in order to bring the total length of the string to the specified width.</td>
+</tr>
+<tr>
+<td>.Remove ( StartPos, [Length] )</td>
+<td>Removes characters from the input string starting as the specified starting position.  If the optional length parameter is supplied, that number of characters will be removed; otherwise – all characters to the end of the string will be removed.</td>
+</tr>
+<tr>
+<td>   .Replace ( SearchString, ReplaceString )</td>
+<td>Replaces every occurrence of SearchString within the input string with the specified ReplaceString.</td>
+</tr>
+</table>
+<p> </p>
+<p>String Object Projections</p>
+<p>In addition to the methods which are projected directly onto string objects, any object which itself has a string conversion has the following method projected onto it, making it method available for use:</p>
+<table>
+<tr>
+<td> .ToDisplayString ( )</td>
+<td>Returns a string conversion of the object.  This is the string conversion which would be shown in a dx invocation for the object. You can provide a formatting specifier to format the output of ToDisplayString.  </td>
+</tr>
+</table>
+<p> </p>
+<p>The following examples illustrate the use of format specifiers.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; dx (10).ToDisplayString("d")
+(10).ToDisplayString("d") : 10
+
+kd&gt; dx (10).ToDisplayString("x")
+(10).ToDisplayString("x") : 0xa
+
+kd&gt; dx (10).ToDisplayString("o")
+(10).ToDisplayString("o") : 012
+
+kd&gt; dx (10).ToDisplayString("b") 
+(10).ToDisplayString("b")  : 0y1010
+</pre>
+</td>
+</tr>
+</table></span></div>
+<h2><a id="Debugging_Plug_and_Play"></a><a id="debugging_plug_and_play"></a><a id="DEBUGGING_PLUG_AND_PLAY"></a>Debugging Plug and Play</h2>
+<p>This section illustrates how the built in debugger objects used with LINQ queries, can be used to debug plug and play objects.</p>
+<p></p>
+<p><b>View all devices</b></p>
+<p>Use  <i>Flatten</i> on the device tree to view all devices. This is similar  to the   <b>!devinst</b>  command.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre> 1: kd&gt; dx @$cursession.Devices.DeviceTree.Flatten(n =&gt; n.Children)
+@$cursession.Devices.DeviceTree.Flatten(n =&gt; n.Children)                
+    [0x0]            : HTREE\ROOT\0
+    [0x1]            : ROOT\volmgr\0000 (volmgr)
+    [0x2]            : ROOT\BasicDisplay\0000 (BasicDisplay)
+    [0x3]            : ROOT\CompositeBus\0000 (CompositeBus)
+    [0x4]            : ROOT\vdrvroot\0000 (vdrvroot)
+    [0x5]            : ROOT\spaceport\0000 (spaceport)
+    [0x6]            : ROOT\KDNIC\0000 (kdnic)
+    [0x7]            : ROOT\UMBUS\0000 (umbus)
+    [0x8]            : ROOT\ACPI_HAL\0000
+...</pre>
+</td>
+</tr>
+</table></span></div>
+<p></p>
+<p><b>Grid Display</b></p>
+<p>As with other dx commands, you can right click on a command after it was executed and click "Display as grid" or add "-g" to the command to get a grid view of the results. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0: kd&gt; dx -g @$cursession.Devices.DeviceTree.Flatten(n =&gt; n.Children)
+=====================================================================================================================================================================================================================================================================================================================
+=                                                              = (+) DeviceNodeObject = InstancePath                                                 = ServiceName               = (+) PhysicalDeviceObject                                    = State                          = (+) Resoures = (+) Children       =
+=====================================================================================================================================================================================================================================================================================================================
+= [0x0] : HTREE\ROOT\0                                         - {...}                - HTREE\ROOT\0                                                 -                           - 0xffffb6075614be40 : Device for "\Driver\PnpManager"        - DeviceNodeStarted (776)        - {...}        - [object Object]    =
+= [0x1] : ROOT\volmgr\0000 (volmgr)                            - {...}                - ROOT\volmgr\0000                                             - volmgr                    - 0xffffb607561fbe40 : Device for "\Driver\PnpManager"        - DeviceNodeStarted (776)        - {...}        - [object Object]    =
+= [0x2] : ROOT\BasicDisplay\0000 (BasicDisplay)                - {...}                - ROOT\BasicDisplay\0000                                       - BasicDisplay              - 0xffffb607560739b0 : Device for "\Driver\PnpManager"        - DeviceNodeStarted (776)        - {...}        - [object Object]    =
+= [0x3] : ROOT\CompositeBus\0000 (CompositeBus)                - {...}                - ROOT\CompositeBus\0000                                       - CompositeBus              - 0xffffb607561f9060 : Device for "\Driver\PnpManager"        - DeviceNodeStarted (776)        - {...}        - [object Object]    =
+...</pre>
+</td>
+</tr>
+</table></span></div>
+<p></p>
+<p><b>View Devices by State</b></p>
+<p>Use <i>Where</i> to specify a specific device state.  </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>dx @$cursession.Devices.DeviceTree.Flatten(n =&gt; n.Children).Where(n =&gt; n.State &lt;operator&gt; &lt;state number&gt;)</pre>
+</td>
+</tr>
+</table></span></div>
+<p>For example to view devices in state DeviceNodeStarted use this command. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>1: kd&gt;  dx @$cursession.Devices.DeviceTree.Flatten(n =&gt; n.Children).Where(n =&gt; n.State == 776)
+@$cursession.Devices.DeviceTree.Flatten(n =&gt; n.Children).Where(n =&gt; n.State == 776)                
+    [0x0]            : HTREE\ROOT\0
+    [0x1]            : ROOT\volmgr\0000 (volmgr)
+    [0x2]            : ROOT\BasicDisplay\0000 (BasicDisplay)
+    [0x3]            : ROOT\CompositeBus\0000 (CompositeBus)
+    [0x4]            : ROOT\vdrvroot\0000 (vdrvroot)
+...</pre>
+</td>
+</tr>
+</table></span></div>
+<p></p>
+<p><b>View Not Started Devices</b></p>
+<p>Use this command to view devices not in state DeviceNodeStarted. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>1: kd&gt;  dx @$cursession.Devices.DeviceTree.Flatten(n =&gt; n.Children).Where(n =&gt; n.State != 776)
+@$cursession.Devices.DeviceTree.Flatten(n =&gt; n.Children).Where(n =&gt; n.State != 776)                
+    [0x0]            : ACPI\PNP0C01\1
+    [0x1]            : ACPI\PNP0000\4&amp;215d0f95&amp;0
+    [0x2]            : ACPI\PNP0200\4&amp;215d0f95&amp;0
+    [0x3]            : ACPI\PNP0100\4&amp;215d0f95&amp;0
+    [0x4]            : ACPI\PNP0800\4&amp;215d0f95&amp;0
+    [0x5]            : ACPI\PNP0C04\4&amp;215d0f95&amp;0
+    [0x6]            : ACPI\PNP0700\4&amp;215d0f95&amp;0 (fdc)
+    [0x7]            : ACPI\PNP0C02\1
+    [0x8]            : ACPI\PNP0C02\2</pre>
+</td>
+</tr>
+</table></span></div>
+<p></p>
+<p><b>View Devices by Problem Code</b></p>
+<p></p>
+<p>Use the <i>DeviceNodeObject.Problem</i> object to view devices that have specific  problem codes. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>dx @$cursession.Devices.DeviceTree.Flatten(n =&gt; n.Children).Where(n =&gt; n.DeviceNodeObject.Problem &lt;operator&gt; &lt;problemCode&gt;)</pre>
+</td>
+</tr>
+</table></span></div>
+<p>For example,  to view devices that have a non zero problem code use this command.  This provides similar information to "<a href="_devnode.htm"><b>!devnode</b></a> 0 21". </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>1: kd&gt; dx @$cursession.Devices.DeviceTree.Flatten(n =&gt; n.Children).Where(n =&gt; n.DeviceNodeObject.Problem != 0)
+@$cursession.Devices.DeviceTree.Flatten(n =&gt; n.Children).Where(n =&gt; n.DeviceNodeObject.Problem != 0)                
+    [0x0]            : HTREE\ROOT\0
+    [0x1]            : ACPI\PNP0700\4&amp;215d0f95&amp;0 (fdc)</pre>
+</td>
+</tr>
+</table></span></div>
+<p><b>View All Devices Without  a Problem</b></p>
+<p>Use this command to view all devices without  a problem </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>1: kd&gt; dx @$cursession.Devices.DeviceTree.Flatten(n =&gt; n.Children).Where(n =&gt; n.DeviceNodeObject.Problem == 0)
+@$cursession.Devices.DeviceTree.Flatten(n =&gt; n.Children).Where(n =&gt; n.DeviceNodeObject.Problem == 0)                
+    [0x0]            : ROOT\volmgr\0000 (volmgr)
+    [0x1]            : ROOT\BasicDisplay\0000 (BasicDisplay)
+    [0x2]            : ROOT\CompositeBus\0000 (CompositeBus)
+    [0x3]            : ROOT\vdrvroot\0000 (vdrvroot)
+...</pre>
+</td>
+</tr>
+</table></span></div>
+<p></p>
+<p><b>View All Devices With a Specific Problem</b></p>
+<p>Use this command to view devices with a problem state of 0x16. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>1: kd&gt; dx @$cursession.Devices.DeviceTree.Flatten(n =&gt; n.Children).Where(n =&gt; n.DeviceNodeObject.Problem == 0x16)
+@$cursession.Devices.DeviceTree.Flatten(n =&gt; n.Children).Where(n =&gt; n.DeviceNodeObject.Problem == 0x16)                
+    [0x0]            : HTREE\ROOT\0
+    [0x1]            : ACPI\PNP0700\4&amp;215d0f95&amp;0 (fdc)</pre>
+</td>
+</tr>
+</table></span></div>
+<p></p>
+<p><b>View Devices by Function Driver</b></p>
+<p>Use this command to view devices by function driver. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>dx @$cursession.Devices.DeviceTree.Flatten(n =&gt; n.Children).Where(n =&gt; n.ServiceName &lt;operator&gt; &lt;service name&gt;)</pre>
+</td>
+</tr>
+</table></span></div>
+<p>To view devices using a certain function driver, such as atapi, use this command.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>1: kd&gt; dx @$cursession.Devices.DeviceTree.Flatten(n =&gt; n.Children).Where(n =&gt; n.ServiceName == "atapi")
+@$cursession.Devices.DeviceTree.Flatten(n =&gt; n.Children).Where(n =&gt; n.ServiceName == "atapi")                
+    [0x0]            : PCIIDE\IDEChannel\4&amp;10bf2f88&amp;0&amp;0 (atapi)
+    [0x1]            : PCIIDE\IDEChannel\4&amp;10bf2f88&amp;0&amp;1 (atapi)</pre>
+</td>
+</tr>
+</table></span></div>
+<p></p>
+<p><b>Viewing a List of Boot Start Drivers</b></p>
+<p>To view the list of what winload loaded as boot start drivers, you need to be in a context where you have access to the LoaderBlock and early enough the LoaderBlock is still around. For example, during nt!IopInitializeBootDrivers. A breakpoint can be set to stop in this context. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>1: kd&gt; g
+Breakpoint 0 hit
+nt!IopInitializeBootDrivers:
+8225c634 8bff            mov     edi,edi</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Use the ?? command to display the boot driver structure.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>1: kd&gt; ?? LoaderBlock-&gt;BootDriverListHead
+struct _LIST_ENTRY
+ [ 0x808c9960 - 0x808c8728 ]
+   +0x000 Flink            : 0x808c9960 _LIST_ENTRY [ 0x808c93e8 - 0x808a2e18 ]
+   +0x004 Blink            : 0x808c8728 _LIST_ENTRY [ 0x808a2e18 - 0x808c8de0 ]</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Use the Debugger.Utility.Collections.FromListEntry debugger object   to  view of the data, using the starting address of the  nt!_LIST_ENTRY structure.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>1: kd&gt; dx Debugger.Utility.Collections.FromListEntry(*(nt!_LIST_ENTRY *)0x808c9960, "nt!_BOOT_DRIVER_LIST_ENTRY", "Link")
+Debugger.Utility.Collections.FromListEntry(*(nt!_LIST_ENTRY *)0x808c9960, "nt!_BOOT_DRIVER_LIST_ENTRY", "Link")                
+    [0x0]            [Type: _BOOT_DRIVER_LIST_ENTRY]
+    [0x1]            [Type: _BOOT_DRIVER_LIST_ENTRY]
+    [0x2]            [Type: _BOOT_DRIVER_LIST_ENTRY]
+    [0x3]            [Type: _BOOT_DRIVER_LIST_ENTRY]
+    [0x4]            [Type: _BOOT_DRIVER_LIST_ENTRY]
+    [0x5]            [Type: _BOOT_DRIVER_LIST_ENTRY]
+...</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Use the -g option to create a grid view of the data.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>dx -r1 -g Debugger.Utility.Collections.FromListEntry(*(nt!_LIST_ENTRY *)0x808c9960, "nt!_BOOT_DRIVER_LIST_ENTRY", "Link")</pre>
+</td>
+</tr>
+</table></span></div>
+<p></p>
+<p><b>View devices by Capability</b></p>
+<p>View devices by capability using the DeviceNodeObject.CapabilityFlags object.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>dx -r1 @$cursession.Devices.DeviceTree.Flatten(n =&gt; n.Children).Where(n =&gt; (n.DeviceNodeObject.CapabilityFlags &amp; &lt;flag&gt;) != 0)</pre>
+</td>
+</tr>
+</table></span></div>
+<p>This table summarizes the use of the dx command with common device capability flags.</p>
+<table>
+<tr>
+<td>Removable</td>
+<td>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0: kd&gt; dx -r1 @$cursession.Devices.DeviceTree.Flatten(n =&gt; n.Children).Where(n =&gt; (n.DeviceNodeObject.CapabilityFlags &amp; 0x10) != 0)
+@$cursession.Devices.DeviceTree.Flatten(n =&gt; n.Children).Where(n =&gt; (n.DeviceNodeObject.CapabilityFlags &amp; 0x10) != 0)                
+    [0x0]            : SWD\PRINTENUM\{2F8DBBB6-F246-4D84-BB1D-AA8761353885}
+    [0x1]            : SWD\PRINTENUM\{F210BC77-55A1-4FCA-AA80-013E2B408378}
+    [0x2]            : SWD\PRINTENUM\{07940A8E-11F4-46C3-B714-7FF9B87738F8}
+    [0x3]            : DISPLAY\Default_Monitor\6&amp;1a097cd8&amp;0&amp;UID5527112 (monitor)</pre>
+</td>
+</tr>
+</table></span></div>
+</td>
+</tr>
+<tr>
+<td>UniqueID</td>
+<td>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0: kd&gt; dx -r1 @$cursession.Devices.DeviceTree.Flatten(n =&gt; n.Children).Where(n =&gt; (n.DeviceNodeObject.CapabilityFlags &amp; 0x40) != 0)
+@$cursession.Devices.DeviceTree.Flatten(n =&gt; n.Children).Where(n =&gt; (n.DeviceNodeObject.CapabilityFlags &amp; 0x40) != 0)                
+    [0x0]            : HTREE\ROOT\0
+    [0x1]            : ROOT\volmgr\0000 (volmgr)
+    [0x2]            : ROOT\spaceport\0000 (spaceport)
+...</pre>
+</td>
+</tr>
+</table></span></div>
+</td>
+</tr>
+<tr>
+<td>SilentInstall</td>
+<td>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0: kd&gt; dx -r1 @$cursession.Devices.DeviceTree.Flatten(n =&gt; n.Children).Where(n =&gt; (n.DeviceNodeObject.CapabilityFlags &amp; 0x80) != 0)
+@$cursession.Devices.DeviceTree.Flatten(n =&gt; n.Children).Where(n =&gt; (n.DeviceNodeObject.CapabilityFlags &amp; 0x80) != 0)                
+    [0x0]            : HTREE\ROOT\0
+    [0x1]            : ROOT\volmgr\0000 (volmgr)
+    [0x2]            : ROOT\spaceport\0000 (spaceport)
+...</pre>
+</td>
+</tr>
+</table></span></div>
+</td>
+</tr>
+<tr>
+<td>RawDeviceOk</td>
+<td>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0: kd&gt; dx -r1 @$cursession.Devices.DeviceTree.Flatten(n =&gt; n.Children).Where(n =&gt; (n.DeviceNodeObject.CapabilityFlags &amp; 0x100) != 0)
+@$cursession.Devices.DeviceTree.Flatten(n =&gt; n.Children).Where(n =&gt; (n.DeviceNodeObject.CapabilityFlags &amp; 0x100) != 0)                
+    [0x0]            : HTREE\ROOT\0
+    [0x1]            : SWD\MMDEVAPI\MicrosoftGSWavetableSynth
+    [0x2]            : SWD\IP_TUNNEL_VBUS\IP_TUNNEL_DEVICE_ROOT
+...</pre>
+</td>
+</tr>
+</table></span></div>
+</td>
+</tr>
+<tr>
+<td>SurpriseRemovalOK</td>
+<td>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0: kd&gt; dx -r1 @$cursession.Devices.DeviceTree.Flatten(n =&gt; n.Children).Where(n =&gt; (n.DeviceNodeObject.CapabilityFlags &amp; 0x200) != 0)
+@$cursession.Devices.DeviceTree.Flatten(n =&gt; n.Children).Where(n =&gt; (n.DeviceNodeObject.CapabilityFlags &amp; 0x200) != 0)                
+    [0x0]            : SWD\MMDEVAPI\MicrosoftGSWavetableSynth
+    [0x1]            : SWD\IP_TUNNEL_VBUS\IP_TUNNEL_DEVICE_ROOT
+    [0x2]            : SWD\PRINTENUM\PrintQueues
+...</pre>
+</td>
+</tr>
+</table></span></div>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> For more information about the CapabilityFlags, see <b>DEVICE_CAPABILITIES</b>.</p>
+<p></p>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="http://code.msdn.microsoft.com/windowsdesktop/Writing-type-visualizers-2eae77a2">Writing debugger type visualizers for C++ using .natvis files</a></dt>
+<dt><a href="http://msdn.microsoft.com/en-us/library/jj620914.aspx">Create custom views of native objects in the debugger</a></dt>
+<dt><a href="_nvload__natvis_load_.htm"><b>.nvload</b></a></dt>
+<dt><a href="_nvlist__natvis_list_.htm"><b>.nvlist</b></a></dt>
+<dt><a href="_nvunload__natvis_unload_.htm"><b>.nvunload</b></a></dt>
+<dt><a href="_nvunloadall__natvis_unload_all_.htm"><b>.nvunloadall</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20dx (Display Debugger Object Model Expression)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

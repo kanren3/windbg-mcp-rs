@@ -1,0 +1,41 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Deferred Symbol Loading"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Deferred Symbol Loading</title>
+
+<meta name="MS-HAID" content="r09_symbols_538315dc-6582-4a76-9725-d9d53b52e4a0.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.deferred_symbol_loading"></a>Deferred Symbol Loading</h1>
+</div>
+<h2><a id="ddk_deferred_symbol_loading_dbg"></a><a id="DDK_DEFERRED_SYMBOL_LOADING_DBG"></a></h2>
+<p>By default, symbol information is not actually loaded when the target modules are loaded. Instead, symbols are loaded by the debugger as they are needed. This is called <i>deferred symbol loading</i> or <i>lazy symbol loading</i>. When this option is enabled, the debugger loads symbols whenever it encounters an unrecognized symbol.</p>
+<p>When the symbol path is changed, for example by using the <a href="_sympath__set_symbol_path_.htm"><b>.sympath (Set Symbol Path)</b></a> command, all loaded modules with export symbols are lazily reloaded.
+
+Symbols of modules with full PDB symbols will be lazily reloaded if the new path no longer includes the original path that was used to load the PDB symbols. If the new path still includes the original path to the PDB symbol file, those symbols will not be lazily reloaded. 
+</p>
+<p>When deferred symbol loading is disabled, process startup can be much slower, because all symbols are read whenever a module is loaded.</p>
+<p>In WinDbg, the deferred symbol loading behavior can be modified for symbols that have no module prefix by using the <a href="debug___resolve_unqualified_symbols.htm">Resolve Unqualified Symbols</a> option on the <b>Debug</b> menu.</p>
+<p></p>
+<p>You can override deferred symbol loading by using the <a href="ld__load_symbols_.htm"><b>ld (Load Symbols)</b></a> command or the <a href="_reload__reload_module_.htm"><b>.reload (Reload Module)</b></a> command with the <b>/f</b> option. These force the specified symbols to be loaded immediately, although the loading of other symbols is deferred. </p>
+<p>By default, deferred symbol loading is enabled. In CDB and KD, the <b>-s </b><a href="command_line_options.htm">command-line option</a> will turn this option off. It can also be turned off in CDB by using the <i>LazyLoad</i> variable in the <a href="configuring_tools_ini.htm">tools.ini</a> file. Once the debugger is running, this option can be turned on or off by using <a href="_symopt__set_symbol_options_.htm"><b>.symopt+0x4</b></a> or <b>.symopt-0x4</b>, respectively.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Deferred Symbol Loading%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

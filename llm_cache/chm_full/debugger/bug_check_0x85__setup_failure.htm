@@ -1,0 +1,148 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The SETUP_FAILURE bug check has a value of 0x00000085. This bug check indicates that a fatal error occurred during setup."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0x85: SETUP_FAILURE</title>
+
+<meta name="MS-HAID" content="t05_bugs_60_78820982-e95f-44b7-9e57-cabe3f3c6fae.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0x85__setup_failure"></a>Bug Check 0x85: SETUP_FAILURE</h1>
+</div>
+<p>The SETUP_FAILURE bug check has a value of 0x00000085. This bug check indicates that a fatal error occurred during setup.<p></p>
+</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2> SETUP_FAILURE Parameters</h2>
+<p>The following parameters appear on the blue screen. Parameter 1 indicates the type of violation. Parameter 4 is not used. The meaning of the other parameters depends on the value of Parameter 1.</p>
+<table>
+<tr>
+<th>Parameter 1</th>
+<th>Parameter 2</th>
+<th>Parameter 3</th>
+<th>Cause</th>
+</tr>
+<tr>
+<td>
+<p>0x0</p>
+</td>
+<td>
+<p>0 </p>
+</td>
+<td>
+<p>0 </p>
+</td>
+<td>
+<p>The OEM HAL font is not a valid .fon format file, so setup cannot display text. </p>
+<p>This cause indicates that Vga<i>xxx</i>.fon on the boot floppy or CD is damaged. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x1</p>
+</td>
+<td>
+<p>The precise video initialization failure:</p>
+<p><b>0:</b><b>NtCreateFile</b> of \device\video0 </p>
+<p><b>1:</b> IOCTL_VIDEO_QUERY_NUM_AVAIL_MODES </p>
+<p><b>2:</b> IOCTL_VIDEO_QUERY_AVAIL_MODES </p>
+<p><b>3:</b> The desired video mode is not supported. This value indicates an internal setup error. </p>
+<p><b>4:</b> IOCTL_VIDEO_SET_CURRENT_MODE (unable to set video mode) </p>
+<p><b>5:</b> IOCTL_VIDEO_MAP_VIDEO_MEMORY </p>
+<p><b>6:</b> IOCTL_VIDEO_LOAD_AND_SET_FONT </p>
+</td>
+<td>
+<p>The status code from the NT API call, if appropriate </p>
+</td>
+<td>
+<p>Video initialization failed.</p>
+<p>This failure might indicate that the disk that contains Vga.sys (or another video driver that is appropriate to the computer) is damaged or that the computer has video hardware that the Microsoft Windows operating system cannot communicate with.</p>
+<p></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x2</p>
+</td>
+<td>
+<p>0 </p>
+</td>
+<td>
+<p>0 </p>
+</td>
+<td>
+<p>Out of memory.</p>
+<p></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x3</p>
+</td>
+<td>
+<p>The precise keyboard initialization failure:</p>
+<p><b>0:</b><b>NtCreateFile</b> of \device\KeyboardClass0 failed. (Setup did not find a keyboard connected to the computer.)</p>
+<p><b>1:</b> Unable to load keyboard layout DLL. (Setup could not load the keyboard layout file. This failure indicates that the CD or floppy disk is missing a file, such as Kbdus.dll for the U.S. release or another layout DLL for localized releases.) </p>
+</td>
+<td>
+<p>0 </p>
+</td>
+<td>
+<p>Keyboard initialization failed.</p>
+<p>This failure might indicate that the disk that contains the keyboard driver (I8042prt.sys or Kbdclass.sys) is damaged or that the computer has keyboard hardware that Windows cannot communicate with. This failure might also mean that the keyboard layout DLL could not be loaded.</p>
+<p></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x4</p>
+</td>
+<td>
+<p>0 </p>
+</td>
+<td>
+<p>0 </p>
+</td>
+<td>
+<p>Setup could not resolve the ARC device path name of the device that setup was started from.</p>
+<p>This error is an internal setup error. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x5</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>Partitioning sanity check failed.</p>
+<p>This error indicates a bug in a disk driver.</p>
+<p></p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

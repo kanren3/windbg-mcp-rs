@@ -1,0 +1,119 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !logexts.logm extension creates or displays a module inclusion list or a module exclusion list."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!logexts.logm</title>
+
+<meta name="MS-HAID" content="r32_exts_Lg_ND_RPC_9f590c56-6fb6-4f95-8ee9-a151f20eae5c.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._logexts_logm"></a>!logexts.logm</h1>
+</div>
+<p>The <b>!logexts.logm</b> extension creates or displays a module inclusion list or a module exclusion list.</p>
+<pre class="syntax">
+    <b>!logexts.logm i </b><i>Modules</i> 
+<b>!logexts.logm x </b><i>Modules</i> 
+<b>!logexts.logm</b> 
+</pre>
+<h2><a id="ddk__logexts_logm_dbg"></a><a id="DDK__LOGEXTS_LOGM_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______i______"></a><a id="_______I______"></a>       <b>i</b>      </dt>
+<dd>
+<p>Causes Logger to use a module inclusion list. It will consist of the specified <i>Modules</i>.</p>
+</dd>
+<dt><a id="_______x______"></a><a id="_______X______"></a>       <b>x</b>      </dt>
+<dd>
+<p>Causes Logger to use a module exclusion list. It will consist of Logexts.dll, kernel32.dll, and the specified <i>Modules</i>.</p>
+</dd>
+<dt><a id="_______Modules______"></a><a id="_______modules______"></a><a id="_______MODULES______"></a>       <i>Modules</i>      </dt>
+<dd>
+<p>Specifies the modules to be included or excluded. This list is not cumulative; each use of this command creates an entirely new list. If multiple modules are listed, separate them with spaces. An asterisk (*) can be used to indicate all modules.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Windows 2000</b></p>
+</td>
+<td>
+<p>
+          Logexts.dll
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Logexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information, see <a href="logger_and_logviewer.htm">Logger and LogViewer</a>.</p>
+<h2>Remarks</h2>
+<p>With no parameters, the <b>!logexts.logm</b> extension displays the current inclusion list or exclusion list.</p>
+<p>The extensions <b>!logexts.logm x *</b> and <b>!logexts.logm i</b> are equivalent: they result in a completely empty inclusion list.</p>
+<p>The extensions <b>!logexts.logm i *</b> and <b>!logexts.logm x</b> are equivalent: they result in an exclusion list that contains only Logexts.dll and kernel32.dll. These two modules are always excluded, because Logger is not permitted to log itself.</p>
+<p>Here are some examples:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:001&gt; !logm
+Excluded modules:
+  LOGEXTS.DLL      [mandatory]
+  KERNEL32.DLL     [mandatory]
+  USER32.DLL
+  GDI32.DLL
+  ADVAPI32.DLL
+
+0:001&gt; !logm x winmine.exe
+Excluded modules:
+  Logexts.dll      [mandatory]
+  kernel32.dll     [mandatory]
+  winmine.exe
+
+0:001&gt; !logm x user32.dll gdi32.dll
+Excluded modules:
+  Logexts.dll      [mandatory]
+  kernel32.dll     [mandatory]
+  user32.dll
+  gdi32.dll
+
+0:001&gt; !logm i winmine.exe mymodule2.dll
+Included modules:
+  winmine.exe
+  mymodule2.dll</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!logexts.logm%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

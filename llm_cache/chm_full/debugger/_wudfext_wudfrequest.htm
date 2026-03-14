@@ -1,0 +1,107 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !wudfext.wudfrequest extension displays information about an I/O request."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!wudfext.wudfrequest</title>
+
+<meta name="MS-HAID" content="r33~e_exts_umdf_80aebcbc-8572-4ab7-b675-c6062e709b2f.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._wudfext_wudfrequest"></a>!wudfext.wudfrequest</h1>
+</div>
+<p>The <b>!wudfext.wudfrequest</b> extension displays information about an I/O request.</p>
+<pre class="syntax"><b>!wudfext.wudfrequest </b><i>pWDFRequest</i></pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______pWDFRequest______"></a><a id="_______pwdfrequest______"></a><a id="_______PWDFREQUEST______"></a>       <i>pWDFRequest</i>      </dt>
+<dd>
+<p>Specifies the address of the <b>WDFIoRequest</b> interface to display information about. The <a href="_wudfext_wudfqueue.htm"><b>!wudfext.wudfqueue</b></a> extension command determines the address of <b>WDFIoRequest</b>. </p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000</b></p>
+</td>
+<td>
+<p>Unavailable </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later</b></p>
+</td>
+<td>
+<p>
+          Wudfext.dll</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information, see <a href="user_mode_driver_framework_debugging.htm">User-Mode Driver Framework Debugging</a>.</p>
+<h2>Remarks</h2>
+<p>The following is an example of the <b>!wudfext.wudfrequest</b> display:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; !wudfrequest 0x000fa530 
+CWdfIoRequest  0x000fa4b8
+Type: WdfRequestRead
+  IWDFIoQueue: 0x000f3500
+Completed: No
+Canceled: No
+UM IRP: 0x00429108  UniqueId: 0xf4  Kernel Irp: 0x0x936ef160
+  Type: WudfMsg_READ
+  ClientProcessId: 0x1248
+  Device Stack: 0x003be4e0
+  IoStatus
+    hrStatus: 0x0
+    Information: 0x0
+  Driver/Framework created IRP: No
+  Data Buffer: 0x00000000 / 0
+  IsFrom32BitProcess: Yes
+  CancelFlagSet: No
+  Cancel callback: 0x000fa534
+  Total number of stack locations: 2
+  CurrentStackLocation: 2 (StackLocation[ 1 ])
+    StackLocation[ 0 ]
+      UNINITIALIZED
+  &gt; StackLocation[ 1 ]
+      IWDFRequest:  ????
+      IWDFDevice:   0x000f2f80
+      IWDFFile:     0x00418cf0
+      Completion:
+        Callback:   0x00000000
+        Context:    0x00000000
+      Parameters: (RequestType: WdfRequestRead)
+        Buffer length:        0x400
+        Key:                  0x00000000
+        Offset:               0x0</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!wudfext.wudfrequest%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

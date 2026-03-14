@@ -1,0 +1,103 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The REFERENCE_BY_POINTER bug check has a value of 0x00000018. This indicates that the reference count of an object is illegal for the current state of the object."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0x18: REFERENCE_BY_POINTER</title>
+
+<meta name="MS-HAID" content="t04_bugs_00_54e615ba-2d31-4b73-8766-6039c70dbcbd.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0x18__reference_by_pointer"></a>Bug Check 0x18: REFERENCE_BY_POINTER</h1>
+</div>
+<p>The REFERENCE_BY_POINTER bug check has a value of 0x00000018. This indicates that the reference count of an object is illegal for the current state of the object.</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2> REFERENCE_BY_POINTER Parameters</h2>
+<p>The following parameters are displayed on the blue screen.</p>
+<table>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>1</p>
+</td>
+<td>
+<p>Object type of the object whose reference count is being lowered.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>2</p>
+</td>
+<td>
+<p>Object whose reference count is being lowered.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>3</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>4</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Cause</h2>
+<p>The reference count of an object is illegal for the current state of the object. Each time a driver uses a pointer to an object, the driver calls a kernel routine to increase the reference count of the object by one. When the driver is done with the pointer, the driver calls another kernel routine to decrease the reference count by one.</p>
+<p>Drivers must match calls to the routines that increase (<i>reference</i>) and decrease (<i>dereference</i>) the reference count. This bug check is caused by an inconsistency in the object's reference count. Typically, the inconsistency is caused by a driver that decreases the reference count of an object too many times, making extra calls that dereference the object. This bug check can occur because an object's reference count goes to zero while there are still open handles to the object. It might also occur when the object's reference count drops below zero, whether or not there are open handles to the object.</p>
+<h2>Resolution</h2>
+<p>Make sure that the driver matches calls to the routines that increase and decrease the reference count of the object. Make sure that your driver does not make extra calls to routines that dereference the object (see Parameter 2). </p>
+<p></p>
+<p>You can use a debugger to help analyze this problem. For more information, see <a href="crash_dump_files.htm">Crash dump analysis using the Windows debuggers (WinDbg)</a>. The <a href="_analyze.htm"><b>!analyze</b></a> debug extension displays information about  the bug check and can be very helpful in determining the root cause.</p>
+<p> To find the handle and pointer count on the object, use the <b>!object</b> debugger command.</p>
+<p>kd&gt; !object <i>address</i></p>
+<p>Where <i>address</i> is the address of the object given in Parameter 2.</p>
+<p>You can also set a breakpoint in the code leading up to this stop code and attempt to single step forward into the faulting code.</p>
+<p>If you are not equipped to use the Windows debugger to work on   this problem, you can use some basic troubleshooting techniques. </p>
+<ul>
+<li>
+<p>Check the System Log in Event Viewer for additional error messages that might help identify the device or driver that is causing this bug check. </p>
+</li>
+<li>
+<p>If a driver is identified in the bug check message, disable the driver or check with the manufacturer for driver updates. </p>
+</li>
+<li>
+<p>Confirm that any new hardware that is installed is compatible with the installed version of Windows. For example, you can get information about required hardware at <a href="https://www.microsoft.com/en-us/windows/windows-10-specifications">Windows 10
+
+Specifications</a>.</p>
+</li>
+<li>
+<p>For additional general troubleshooting information, see <a href="blue_screen_data.htm"><b>Blue Screen Data</b></a>. </p>
+</li>
+</ul>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,63 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="In Microsoft Visual Studio, you can use the Windows User Mode Debugger to attach to a running process or to spawn and attach to a new process. The process can run on the same computer that is running the debugger, or it can run on a separate computer."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Debugging a User-Mode Process Using Visual Studio</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.debugging_a_user-mode_process_using_visual_studio"></a>Debugging a User-Mode Process Using Visual Studio</h1>
+</div>
+<p>
+<p>In Microsoft Visual Studio, you can use the Windows User Mode Debugger to attach to a running process or to spawn and attach to a new process. The process can run on the same computer that is running the debugger, or it can run on a separate computer.</p>
+</p>
+<p>The procedures shown in this topic require that you have the Windows Driver Kit integrated into Visual Studio. To get the integrated environment, first install Visual Studio, and then install the   Windows Driver Kit (WDK). For more information, see <a href="http://go.microsoft.com/fwlink/p?linkid=391063">Windows Driver Kit (WDK)</a>.</p>
+<h2><a id="Attaching_to_a_running_process_on_the_same_computer"></a><a id="attaching_to_a_running_process_on_the_same_computer"></a><a id="ATTACHING_TO_A_RUNNING_PROCESS_ON_THE_SAME_COMPUTER"></a>Attaching to a running process on the same computer</h2>
+<ol>
+<li>In Visual Studio, from the <b>Tools</b> menu, choose <b>Attach to Process</b>.</li>
+<li>In the <b>Attach to Process</b> dialog box, set <b>Transport</b> to <b>Windows User Mode Debugger</b>, and set <b>Qualifier</b> to <b>Localhost</b>.</li>
+<li>In the <b>Available Processes</b> list, select the process that you want to attach to.</li>
+<li>Click <b>Attach</b>.</li>
+</ol>
+<h3><a id="Noninvasive_debugging"></a><a id="noninvasive_debugging"></a><a id="NONINVASIVE_DEBUGGING"></a>Noninvasive debugging</h3>
+<p>If you want to debug a running process and interfere only minimally in its execution, you should debug the process <a href="noninvasive_debugging__user_mode_.htm">noninvasively</a>.</p>
+<h2><a id="Spawning_a_new_process_on_the_same_computer"></a><a id="spawning_a_new_process_on_the_same_computer"></a><a id="SPAWNING_A_NEW_PROCESS_ON_THE_SAME_COMPUTER"></a>Spawning a new process on the same computer</h2>
+<ol>
+<li>In Visual Studio, from the <b>Tools</b> menu, choose <b>Launch Under Debugger</b>.</li>
+<li>In the <b>Launch Under Debugger</b> dialog box, enter the path to the executable file. You can also enter arguments and a working directory.</li>
+<li>Click <b>Launch.</b></li>
+</ol>
+<p>Processes that the debugger creates (also known as spawned processes) behave a little differently than processes that the debugger does not create.</p>
+<p>Instead of using the standard heap API, processes that the debugger creates use a special debug heap. You can force a spawned process to use the standard heap instead of the debug heap by using the _NO_DEBUG_HEAP environment variable.</p>
+<p>Also, because the target application is a child process of the debugger, it inherits the debugger's permissions. This permission might enable the target application to perform certain actions that it could not perform otherwise. For example, the target application might be able to affect protected processes.</p>
+<h2><a id="Attaching_to_a_running_process_on_a_separate_computer"></a><a id="attaching_to_a_running_process_on_a_separate_computer"></a><a id="ATTACHING_TO_A_RUNNING_PROCESS_ON_A_SEPARATE_COMPUTER"></a>Attaching to a running process on a separate computer</h2>
+<p>Sometimes the debugger and the code being debugged run on separate computers. The computer that runs the debugger is called the <i>host computer</i>, and the computer that runs the code being debugged is called the <i>target computer</i>. You can configure a target computer from Visual Studio on the host computer. Configuring the target computer is also called <i>provisioning</i> the target computer. For more information, see Provision a computer for driver deployment and testing (WDK 8.1).</p>
+<p>After you have provisioned a target computer, you can use Visual Studio on the host computer to attach to a process running on the target computer.</p>
+<ol>
+<li>On the host computer, in  Visual Studio, from the <b>Tools</b> menu, choose <b>Attach to Process</b>.</li>
+<li>In the <b>Attach to Process</b> dialog box, set <b>Transport</b> to <b>Windows User Mode Debugger</b>, and set <b>Qualifier</b> to the name of the target computer.</li>
+<li>In the <b>Available Processes</b> list, select the process that you want to attach to.</li>
+<li>Click <b>Attach</b>.</li>
+</ol>
+<div class="alert"><b>Note</b>  <p class="note">If you are using separate host and target computers, do not install Visual Studio and the WDK on the target computer. Debugging is not supported if Visual Studio and the WDK are installed on the target computer.</p>
+</div>
+<div> </div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Debugging a User-Mode Process Using Visual Studio%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

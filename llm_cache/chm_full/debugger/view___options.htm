@@ -1,0 +1,101 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="View | Options"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>View | Options</title>
+
+<meta name="MS-HAID" content="r37_gui_2_1be1d2c8-bb5f-4c06-b2a6-7bc84ba4ec56.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.view___options"></a>View | Options</h1>
+</div>
+<h2><a id="ddk_view_options_dbg"></a><a id="DDK_VIEW_OPTIONS_DBG"></a></h2>
+<p>Click <b>Options</b> on the <b>View</b> menu to open the <b>Options</b> dialog box. This command is equivalent to clicking the button (<img src="images/tbopt.png" alt="Screen shot of the Options button"/>) on the toolbar.</p>
+<h3><a id="dialog_box"></a><a id="DIALOG_BOX"></a>Dialog Box</h3>
+<p>In the <b>Options</b> dialog box, you can select or deselect the following options:</p>
+<p></p>
+<dl>
+<dt><a id="Tab_width"></a><a id="tab_width"></a><a id="TAB_WIDTH"></a><b>Tab width</b></dt>
+<dd>
+<p>The <b>Tab width</b> box controls how tab characters are displayed in any Source window. In the <b>Tab width</b> box, enter the number of spaces that you want to have between each tab setting. (The default setting is 8. For more information about text properties, see <a href="changing_text_properties.htm">Changing Text Properties</a>.)</p>
+</dd>
+<dt><a id="Reuse_after_opening_this_many"></a><a id="reuse_after_opening_this_many"></a><a id="REUSE_AFTER_OPENING_THIS_MANY"></a><b>Reuse after opening this many</b></dt>
+<dd>
+<p>The <b>Reuse after opening this many</b> box controls the number of document, or source, windows that can be open at the same time. If the specified number of source windows has been reached, opening a new window causes an existing window to close. Windows that are marked as tab-dock targets do not close. The last windows to close are the ones you used most recently.</p>
+</dd>
+<dt><a id="Parse_source_languages"></a><a id="parse_source_languages"></a><a id="PARSE_SOURCE_LANGUAGES"></a><b>Parse source languages</b></dt>
+<dd>
+<p>If the <b>Parse source languages</b> check box is selected, the text of source code in all Source windows is colored according to a simple parse of the source syntax. To change the colors, in the <b>Colors</b> area of the dialog box, select a syntax element and then click <b>Change</b>. (To turn the syntax colors off in a single Source window, open that window's shortcut menu, click <b>Select source language</b>, and then click <b>&lt;None&gt;</b>.) </p>
+</dd>
+<dt><a id="Evaluate_on_hover"></a><a id="evaluate_on_hover"></a><a id="EVALUATE_ON_HOVER"></a><b>Evaluate on hover</b></dt>
+<dd>
+<p>If the <b>Evaluate on hover</b> check box is selected (and the <b>Parse source languages</b> check box is selected as well), symbols in a Source window will be evaluated when you select that window and then hover over a symbol with the mouse. The evaluation is the same as that produced by the <a href="dt__display_type_.htm"><b>dt (Display Type)</b></a> command. </p>
+</dd>
+<dt><a id="Enter_repeats_last_command"></a><a id="enter_repeats_last_command"></a><a id="ENTER_REPEATS_LAST_COMMAND"></a><b>Enter repeats last command</b></dt>
+<dd>
+<p>If the <b>Enter repeats last command</b> check box is selected, you can press the ENTER key at an empty prompt in the <a href="debugger_command_window.htm">Debugger Command window</a> to repeat the previous command. If you clear this check box, the ENTER key generates a new prompt.</p>
+</dd>
+<dt><a id="Automatically_scroll"></a><a id="automatically_scroll"></a><a id="AUTOMATICALLY_SCROLL"></a><b>Automatically scroll</b></dt>
+<dd>
+<p>The <b>Automatically scroll </b>check box controls the automatic scrolling that occurs when new text is sent to the Debugger Command window. If you want to turn off this feature, clear the <b>Automatically scroll </b>check box. For more information about this scrolling, see <a href="using_debugger_commands.htm">Using Debugger Commands</a>.</p>
+</dd>
+<dt><a id="Workspace_Prompts"></a><a id="workspace_prompts"></a><a id="WORKSPACE_PROMPTS"></a><b>Workspace Prompts</b></dt>
+<dd>
+<p>In the <b>Workspace Prompts</b> area, you can click one of three options to determine when and how frequently the workspace is saved in WinDbg.</p>
+<ul>
+<li>
+<p>If you click <b>Always ask</b>, when a workspace changes (such as when a debugging session ends), the debugger displays the <b>Workspace save</b> dialog box where you can save the workspace.</p>
+<p>In the <b>Workspace save</b> dialog box, if you click <b>Don't ask again</b>, WinDbg resets the <b>Workspace Prompts </b>option to <b>Never save</b> or <b>Always save</b>.</p>
+</li>
+<li>
+<p>  If you click <b>Always save</b>, the workspace is saved automatically whenever it changes. </p>
+</li>
+<li>
+<p>  If you click <b>Never save</b>, the workspace is not saved when it changes, and you are not prompted to save it.</p>
+</li>
+</ul>
+</dd>
+<dt><a id="QuickEdit_Mode"></a><a id="quickedit_mode"></a><a id="QUICKEDIT_MODE"></a><b>QuickEdit Mode</b></dt>
+<dd>
+<p>If the <b>QuickEdit Mode</b> check box is selected, you can right-click an item to copy or paste, depending on the window selection state. When you clear this check, QuickEdit is disabled and you can right-click an item to open a shortcut menu for the window. You cannot give individual windows different settings; the QuickEdit setting applies globally to all windows. By default, this box is selected. The QuickEdit setting is saved in the current workspace. </p>
+</dd>
+<dt><a id="Colors"></a><a id="colors"></a><a id="COLORS"></a><b>Colors</b></dt>
+<dd>
+<p>To change the color of the source text that is displayed, select an item from the <b>Colors</b> area and then click <b>Change</b>. Select a color, or select a custom color, and then click <b>OK</b>.</p>
+<p>In the <b>Colors</b> menu, you can change the colors of the following items: </p>
+<ul>
+<li>
+<p>The first ten items represent text in the <a href="disassembly_window.htm">Disassembly window</a> and the <a href="source_window.htm">Source window</a>. </p>
+</li>
+<li>
+<p>The <b>Changed data text</b> item represents data entries that have been changed (for example, in the <a href="registers_window.htm">Registers window</a>). </p>
+</li>
+<li>
+<p>The ten <b>Source </b><i>Xxx</i> items control the colors that are used for syntax elements in the Source window. </p>
+</li>
+<li>
+<p>The remaining items refer to different kinds of text in the Debugger Command window.</p>
+</li>
+</ul>
+</dd>
+</dl>
+<p>These color changes take effect when you click <b>OK</b>. To discard these changes, click <b>Cancel</b>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20View | Options%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

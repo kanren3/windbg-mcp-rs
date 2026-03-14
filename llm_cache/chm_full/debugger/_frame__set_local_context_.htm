@@ -1,0 +1,114 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .frame command specifies which local context (scope) is used to interpret local variables or displays the current local context."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.frame (Set Local Context)</title>
+
+<meta name="MS-HAID" content="r20_metacmds_E_562cba4e-2bec-44d2-a751-719a48625811.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._frame__set_local_context_"></a>.frame (Set Local Context)</h1>
+</div>
+<p>The <b>.frame</b> command specifies which local context (scope) is used to interpret local variables or displays the current local context.</p>
+<pre class="syntax"><b>.frame </b>[<b>/c</b>]<b> </b>[<b>/r</b>]<b> </b>[<i>FrameNumber</i>] 
+<b>.frame </b>[<b>/c</b>]<b> </b>[<b>/r</b>]<b> = </b><i>BasePtr</i><b> </b>[<i>FrameIncrement</i>] 
+<b>.frame </b>[<b>/c</b>]<b> </b>[<b>/r</b>]<b> = </b><i>BasePtr</i><b> </b><i>StackPtr</i><b> </b><i>InstructionPtr</i> 
+</pre>
+<h2><a id="ddk_meta_set_local_context_dbg"></a><a id="DDK_META_SET_LOCAL_CONTEXT_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="________c______"></a><a id="________C______"></a>       <b>/c</b>      </dt>
+<dd>
+<p>Sets the specified frame as the current local override context. This action allows a user to access the nonvolatile registers for any function in the call stack.</p>
+</dd>
+<dt><a id="________r______"></a><a id="________R______"></a>       <b>/r</b>      </dt>
+<dd>
+<p>Displays registers and other information about the specified local context.</p>
+</dd>
+<dt><a id="_______FrameNumber______"></a><a id="_______framenumber______"></a><a id="_______FRAMENUMBER______"></a>       <i>FrameNumber</i>      </dt>
+<dd>
+<p>Specifies the number of the frame whose local context you want. If this parameter is zero, the command specifies the current frame. If you omit this parameter, this command displays the current local context.</p>
+</dd>
+<dt><a id="_______BasePtr______"></a><a id="_______baseptr______"></a><a id="_______BASEPTR______"></a>       <i>BasePtr</i>      </dt>
+<dd>
+<p>Specifies the base pointer for the stack trace that is used to determine the frame, if you add an equal sign (=) after the command name (<b>.frame</b>). On an x86-based processor, you add another argument after <i>BasePtr</i> (which is interpreted as <i>FrameIncrement</i>) or two more arguments after <i>BasePtr</i> (which are interpreted as <i>InstructionPtr</i> and <i>StackPtr</i>).</p>
+</dd>
+<dt><a id="_______FrameIncrement______"></a><a id="_______frameincrement______"></a><a id="_______FRAMEINCREMENT______"></a>       <i>FrameIncrement</i>      </dt>
+<dd>
+<p>
+       (x86-based processor only)
+       </p>
+<p> Specifies an additional quantity of frames past the base pointer. For example, if the base pointer 0x0012FF00 is the address of frame 3, the command <b>.frame 12ff00</b> is equivalent to <b>.frame 3</b>, and <b>.frame 12ff00 2</b> is equivalent to <b>.frame 5</b>. </p>
+</dd>
+<dt><a id="_______StackPtr______"></a><a id="_______stackptr______"></a><a id="_______STACKPTR______"></a>       <i>StackPtr</i>      </dt>
+<dd>
+<p>
+       (x86-based processor only)  Specifies the stack pointer for the stack trace that is used to determine the frame. If you omit <i>StackPtr</i> and <i>InstructionPtr</i>, the debugger uses the stack pointer that the <b>esp</b> register specifies and the instruction pointer that the <b>eip</b> register specifies.</p>
+</dd>
+<dt><a id="_______InstructionPtr______"></a><a id="_______instructionptr______"></a><a id="_______INSTRUCTIONPTR______"></a>       <i>InstructionPtr</i>      </dt>
+<dd>
+<p>
+       (x86-based processor only)  Specifies the instruction pointer for the stack trace that is used to determine the frame. If you omit <i>StackPtr</i> and <i>InstructionPtr</i>, the debugger uses the stack pointer that the <b>esp</b> register specifies and the instruction pointer that the <b>eip</b> register specifies.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets
+         </b></p>
+</td>
+<td>
+<p>Live, crash dump    </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Platforms
+         </b></p>
+</td>
+<td>
+<p>All     </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about the local context and other context settings, see <a href="changing_contexts.htm">Changing Contexts</a>. For more information about how to display local variables and other memory-related commands, see <a href="reading_and_writing_memory.htm">Reading and Writing Memory</a>.</p>
+<h2>Remarks</h2>
+<p>When an application is running, the meaning of local variables depends on the location of the program counter, because the scope of such variables extends only to the function that they are defined in. If you do not use the <b>.frame</b> command, the debugger uses the scope of the current function (the current frame on the stack) as the <a href="changing_contexts.htm#local_context">local context</a>.</p>
+<p>To change the local context, use the <b>.frame</b> command and specify the frame number that you want.</p>
+<p>The <i>frame number</i> is the position of the stack frame within the stack trace. You can view this stack trace with the <a href="k__kb__kc__kd__kp__kp__kv__display_stack_backtrace_.htm"><b>k (Display Stack Backtrace)</b></a> command or the <a href="calls_window.htm">Calls window</a>. The first line (the current frame) is frame number 0. The subsequent lines represent frame numbers 1, 2, 3, and so on.</p>
+<p>If you use the <b>n</b> parameter with the <a href="k__kb__kc__kd__kp__kp__kv__display_stack_backtrace_.htm"><b>k</b></a> command, the <b>k</b> command displays frame numbers together with the stack trace. These frame numbers are always displayed in hexadecimal form. On the other hand, the <b>.frame</b> command interprets its argument in the default radix, unless you override this setting with a prefix such as 0x. To change the default radix, use the <a href="n__set_number_base_.htm"><b>n (Set Number Base)</b></a> command.</p>
+<p>You can set the local context to a different stack frame to enable you to view new local variable information. However, the actual variables that are available depend on the code that is being executed.</p>
+<p>The local context is reset to the scope of the program counter if any application execution occurs. The local context is reset to the top stack frame if the register context is changed.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.frame (Set Local Context)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

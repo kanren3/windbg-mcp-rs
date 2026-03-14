@@ -1,0 +1,117 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !drvobj extension displays detailed information about a DRIVER_OBJECT."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!drvobj</title>
+
+<meta name="MS-HAID" content="r26_exts_kernel_A_002d80d3-ce77-4ed3-a211-26ace4fd6f58.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._drvobj"></a>!drvobj</h1>
+</div>
+<p>The <b>!drvobj</b> extension displays detailed information about a DRIVER_OBJECT.</p>
+<pre class="syntax">
+    <b>!drvobj </b><i>DriverObject</i><b> </b>[<i>Flags</i>] 
+</pre>
+<h2><a id="ddk__drvobj_dbg"></a><a id="DDK__DRVOBJ_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______DriverObject______"></a><a id="_______driverobject______"></a><a id="_______DRIVEROBJECT______"></a>       <i>DriverObject</i>      </dt>
+<dd>
+<p>Specifies the driver object. This can be the hexadecimal address of the DRIVER_OBJECT structure or the name of the driver.</p>
+</dd>
+<dt><a id="_______Flags______"></a><a id="_______flags______"></a><a id="_______FLAGS______"></a>       <i>Flags</i>      </dt>
+<dd>
+<p>Can be any combination of the following bits. (The default is 0x01.)</p>
+<p></p>
+<dl>
+<dt><a id="Bit_0__0x1_"></a><a id="bit_0__0x1_"></a><a id="BIT_0__0X1_"></a>Bit 0 (0x1)</dt>
+<dd>
+<p>Causes the display to include device objects owned by the driver.</p>
+</dd>
+<dt><a id="Bit_1__0x2_"></a><a id="bit_1__0x2_"></a><a id="BIT_1__0X2_"></a>Bit 1 (0x2)</dt>
+<dd>
+<p>Causes the display to include entry points for the driver's dispatch routines.</p>
+</dd>
+<dt><a id="Bit_2__0x4_"></a><a id="bit_2__0x4_"></a><a id="BIT_2__0X4_"></a>Bit 2 (0x4)</dt>
+<dd>
+<p>Lists with detailed information the device objects owned by the driver (requires bit 0 (0x1)).</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000</b></p>
+</td>
+<td>
+<p>
+          Kdextx86.dll
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Windows XP and later</b></p>
+</td>
+<td>
+<p>
+          Kdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>See <a href="plug_and_play_debugging.htm">Plug and Play Debugging</a> for examples and applications of this extension command. For information about driver objects, see the Windows Driver Kit (WDK) documentation and <i>Microsoft Windows Internals</i> by Mark Russinovich and David Solomon.</p>
+<h2>Remarks</h2>
+<p>If <i>DriverObject</i> specifies the name of the device but supplies no prefix, the prefix "\Driver\" is assumed. Note that this command will check to see if <i>DriverObject</i> is a valid address or device name before using the expression evaluator.</p>
+<p>If <i>DriverObject</i> is an address, it must be the address of the DRIVER_OBJECT structure. This can be obtained by examining the arguments passed to the driver's <b>DriverEntry</b> routine.</p>
+<p>This extension command will display a list of all device objects created by a specified driver. It will also display all fast I/O routines registered with this driver object.</p>
+<p>The following is an example for the Symbios Logic 810 SCSI miniport driver:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; bp DriverEntry          //  breakpoint at DriverEntry
+
+kd&gt; g
+symc810!DriverEntry+0x40:    
+80006a20: b07e0050 stl     t2,50(sp)
+
+kd&gt; r a0  //address of DevObj (the first parameter)
+a0=809d5550
+
+kd&gt; !drvobj 809d5550   //  display the driver object
+Driver object is for:
+\Driver\symc810
+Device Object list:
+809d50d0</pre>
+</td>
+</tr>
+</table></span></div>
+<p>You can also use <a href="_devobj.htm"><b>!devobj 809d50d0</b></a> to get information about the device object.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!drvobj%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,117 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="A DebugFailureAnalysis object has a collection of failure analysis entries (FA entries)."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>FA_ENTRY_TYPE enumeration</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.fa_entry_type"></a>FA_ENTRY_TYPE enumeration</h1>
+</div>
+<p>A <a href="idebugfailureanalysis2.htm"><b>DebugFailureAnalysis</b></a> object has a collection of <a href="failure_analysis_entries.htm">failure analysis entries</a> (FA entries).  Each FA entry  has a tag, and each tag is associated with one of the data types in the <b>FA_ENTRY_TYPE</b> enumeration. For more information, see <a href="writing_an_analysis_extension_to_extend__analyze.htm#failure_analysis_entries_tags_and_data_types">Failure Analysis Entries, Tags, and Data Types</a>.</p>
+<p>An FA entry is an <a href="fa_entry.htm"><b>FA_ENTRY</b></a> structure along with an optional data block. The data type of the tag indicates the type of data in the data block.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>typedef enum _FA_ENTRY_TYPE { 
+  DEBUG_FA_ENTRY_NO_TYPE,
+  DEBUG_FA_ENTRY_ULONG,
+  DEBUG_FA_ENTRY_ULONG64,
+  DEBUG_FA_ENTRY_INSTRUCTION_OFFSET,
+  DEBUG_FA_ENTRY_POINTER,
+  DEBUG_FA_ENTRY_ANSI_STRING,
+  DEBUG_FA_ENTRY_EXTENSION_CMD,
+  DEBUG_FA_ENTRY_STRUCTURED_DATA,
+  DEBUG_FA_ENTRY_UNICODE_STRING,
+  DEBUG_FA_ENTRY_ARRAY               = 0x8000
+} FA_ENTRY_TYPE;</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Constants</h2>
+<dl>
+<dt><a id="DEBUG_FA_ENTRY_NO_TYPE"></a><a id="debug_fa_entry_no_type"></a><b>DEBUG_FA_ENTRY_NO_TYPE</b></dt>
+<dd>
+<p>There is no data type associated with the tag, and there is no data block.</p>
+</dd>
+<dt><a id="DEBUG_FA_ENTRY_ULONG"></a><a id="debug_fa_entry_ulong"></a><b>DEBUG_FA_ENTRY_ULONG</b></dt>
+<dd>
+<p>The data block holds a <b>ULONG</b> value.</p>
+</dd>
+<dt><a id="DEBUG_FA_ENTRY_ULONG64"></a><a id="debug_fa_entry_ulong64"></a><b>DEBUG_FA_ENTRY_ULONG64</b></dt>
+<dd>
+<p>The data block holds a <b>ULONG64</b> value.</p>
+</dd>
+<dt><a id="DEBUG_FA_ENTRY_INSTRUCTION_OFFSET"></a><a id="debug_fa_entry_instruction_offset"></a><b>DEBUG_FA_ENTRY_INSTRUCTION_OFFSET</b></dt>
+<dd>
+<p>The data block holds a 64-bit instruction offset.</p>
+</dd>
+<dt><a id="DEBUG_FA_ENTRY_POINTER"></a><a id="debug_fa_entry_pointer"></a><b>DEBUG_FA_ENTRY_POINTER</b></dt>
+<dd>
+<p>The data block holds a 64-bit pointer.</p>
+</dd>
+<dt><a id="DEBUG_FA_ENTRY_ANSI_STRING"></a><a id="debug_fa_entry_ansi_string"></a><b>DEBUG_FA_ENTRY_ANSI_STRING</b></dt>
+<dd>
+<p>The data block holds a null-terminated string. The <b>DataSize</b> member of the <a href="fa_entry.htm"><b>FA_ENTRY</b></a> structure holds the size of the string including the null terminator.</p>
+</dd>
+<dt><a id="DEBUG_FA_ENTRY_EXTENSION_CMD"></a><a id="debug_fa_entry_extension_cmd"></a><b>DEBUG_FA_ENTRY_EXTENSION_CMD</b></dt>
+<dd>
+<p>The data block holds a null-terminated string that is a debugger command. An example of a debugger command string is "!analyze -v".</p>
+</dd>
+<dt><a id="DEBUG_FA_ENTRY_STRUCTURED_DATA"></a><a id="debug_fa_entry_structured_data"></a><b>DEBUG_FA_ENTRY_STRUCTURED_DATA</b></dt>
+<dd>
+<p>The data block holds a  pointer to an  <a href="idebugfailureanalysis2.htm"><b>IDebugFailureAnalysis2</b></a> interface.</p>
+</dd>
+<dt><a id="DEBUG_FA_ENTRY_UNICODE_STRING"></a><a id="debug_fa_entry_unicode_string"></a><b>DEBUG_FA_ENTRY_UNICODE_STRING</b></dt>
+<dd>
+<p>The data block holds a null-terminated Unicode string. The <b>DataSize</b> member of the <a href="fa_entry.htm"><b>FA_ENTRY</b></a> structure holds the size of the Unicode string including the null terminator.</p>
+</dd>
+<dt><a id="DEBUG_FA_ENTRY_ARRAY"></a><a id="debug_fa_entry_array"></a><b>DEBUG_FA_ENTRY_ARRAY</b></dt>
+<dd>
+<p>A bitwise OR of this value and one of the basic types indicates an array. For example, if the data type is <b>DEBUG_FA_ENTRY_ARRAY | DEBUG_FA_ENTRY_POINTER</b>, the data block holds an array of pointers. </p>
+</dd>
+</dl>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Extsfns.h</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="writing_an_analysis_extension_to_extend__analyze.htm">Writing an Analysis Extension Plug-in to Extend !analyze</a></dt>
+<dt><a href="failure_analysis_entries.htm">Failure Analysis Entries</a></dt>
+<dt><a href="fa_entry.htm"><b>FA_ENTRY</b></a></dt>
+<dt><a href="idebugfailureanalysis2.htm"><b>IDebugFailureAnalysis2</b></a></dt>
+<dt><a href="idebugfaentrytags.htm">IDebugFAEntryTag</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20FA_ENTRY_TYPE enumeration%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

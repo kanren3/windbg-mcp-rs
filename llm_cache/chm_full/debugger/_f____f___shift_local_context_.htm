@@ -1,0 +1,85 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .f+ command shifts the frame index to the next frame in the current stack. The .f- command shifts the frame index to the previous frame in the current stack."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.f+, .f- (Shift Local Context)</title>
+
+<meta name="MS-HAID" content="r20_metacmds_E_927c9dae-87d7-4589-ab0b-721d596ed771.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._f____f___shift_local_context_"></a>.f+, .f- (Shift Local Context)</h1>
+</div>
+<p>The <b>.f+</b> command shifts the frame index to the next frame in the current stack. The <b>.f-</b> command shifts the frame index to the previous frame in the current stack.</p>
+<pre class="syntax">
+    <b>.f+</b>  
+<b>.f-</b>  
+</pre>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets
+         </b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Platforms</b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about the local context and other context settings, see <a href="changing_contexts.htm">Changing Contexts</a>. For more information about how to display local variables and other memory-related commands, see <a href="reading_and_writing_memory.htm">Reading and Writing Memory</a>.</p>
+<h2>Remarks</h2>
+<p>The <i>frame</i> specifies the local context (scope) that the debugger uses to interpret local variables</p>
+<p>The <b>.f+</b> and .f- commands are shortcuts for moving to the next and previous frames in the current stack. These commands are equivalent to the following <a href="_frame__set_local_context_.htm"><b>.frame</b></a> commands, but the <b>.f</b> commands are shorter for convenience:</p>
+<ul>
+<li>
+<p><b>.f+</b> is the same as <b>.frame @$frame + 1</b>.</p>
+</li>
+<li>
+<p><b>.f-</b> is the same as <b>.frame @$frame - 1</b>.</p>
+</li>
+</ul>
+<p>The dollar sign ($) identifies the frame value as a <a href="pseudo_register_syntax.htm">pseudo-register</a>. The at sign (@ causes the debugger to access the value more quickly, because it notifies the debugger that a string is a register or pseudo-register.</p>
+<p>When an application is running, the meaning of local variables depends on the location of the program counter, because the scope of such variables extends only to the function that they are defined in. Unless you use an <b>.f+</b> or <b>.f-</b> command (or a <a href="_frame__set_local_context_.htm"><b>.frame</b></a> command), the debugger uses the scope of the current function (the current frame on the stack) as the local context.</p>
+<p>The <i>frame number</i> is the position of the stack frame within the stack trace. You can view this stack trace by using the <a href="k__kb__kc__kd__kp__kp__kv__display_stack_backtrace_.htm"><b>k, kb, kc, kd, kp, kP, kv (Display Stack Backtrace)</b></a> command or the <a href="calls_window.htm">Calls window</a>. The first line (the current frame) represents frame number 0. The subsequent lines represent frame numbers 1, 2, 3, and so on.</p>
+<p>You can set the local context to a different stack frame to view new local variable information. However, the actual variables that are available depend on the code that is executed.</p>
+<p>The debugger resets the local context to the scope of the program counter if any program execution occurs. The local context is reset to the top stack frame if the register context is changed.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.f+, .f- (Shift Local Context)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

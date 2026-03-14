@@ -1,0 +1,298 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The MACHINE_CHECK_EXCEPTION bug check has a value of 0x0000009C. This bug check indicates that a fatal machine check exception has occurred."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0x9C: MACHINE_CHECK_EXCEPTION</title>
+
+<meta name="MS-HAID" content="t05_bugs_60_d9e325c9-274f-4795-af27-2d2d374e628d.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0x9c__machine_check_exception"></a>Bug Check 0x9C: MACHINE_CHECK_EXCEPTION</h1>
+</div>
+<p>The MACHINE_CHECK_EXCEPTION bug check has a value of 0x0000009C. This bug check indicates that a fatal machine check exception has occurred.</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2> MACHINE_CHECK_EXCEPTION Parameters</h2>
+<p>The four parameters that are listed in the message have different meanings, depending on the processor type.</p>
+<p>If the processor is based on an older x86-based architecture and has the Machine Check Exception (MCE) feature but not the Machine Check Architecture (MCA) feature (for example, the Intel Pentium processor), the parameters have the following meaning. </p>
+<table>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>1</p>
+</td>
+<td>
+<p>The low 32 bits of P5_MC_TYPE Machine Service Report (MSR) </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>2</p>
+</td>
+<td>
+<p>The address of the MCA_EXCEPTION structure  </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>3</p>
+</td>
+<td>
+<p>The high 32 bits of P5_MC_ADDR MSR </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>4</p>
+</td>
+<td>
+<p>The low 32 bits of P5_MC_ADDR MSR </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>If the processor is based on a newer x86-based architecture and has the MCA feature and the MCE feature (for example, any Intel Processor of family 6 or higher, such as Pentium Pro, Pentium IV, or Xeon), or if the processor is an x64-based processor, the parameters have the following meaning.</p>
+<table>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>1</p>
+</td>
+<td>
+<p>The bank number </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>2</p>
+</td>
+<td>
+<p>The address of the MCA_EXCEPTION structure </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>3</p>
+</td>
+<td>
+<p>The high 32 bits of MCi_STATUS MSR for the MCA bank that had the error </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>4</p>
+</td>
+<td>
+<p>The low 32 bits of MCi_STATUS MSR for the MCA bank that had the error </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>On an Itanium-based processor, the parameters have the following meaning. </p>
+<div class="alert"><b>Note</b>  Parameter 1 indicates the type of violation.</div>
+<div> </div>
+<table>
+<tr>
+<th>Parameter 1</th>
+<th>Parameter 2</th>
+<th>Parameter 3</th>
+<th>Parameter 4</th>
+<th>Cause</th>
+</tr>
+<tr>
+<td>
+<p>0x1</p>
+</td>
+<td>
+<p>The address of the log</p>
+</td>
+<td>
+<p>The size of the log</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x2</p>
+</td>
+<td>
+<p>The address of the log</p>
+</td>
+<td>
+<p>The size of the log</p>
+</td>
+<td>
+<p>The error code</p>
+</td>
+<td>
+<p>The system abstraction layer (SAL) returned an error for SAL_GET_STATEINFO while processing MCA. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x3</p>
+</td>
+<td>
+<p>The address of the log</p>
+</td>
+<td>
+<p>The size of the log</p>
+</td>
+<td>
+<p>The error code</p>
+</td>
+<td>
+<p>SAL returned an error for SAL_CLEAR_STATEINFO while it processed MCA. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x4</p>
+</td>
+<td>
+<p>The address of the log</p>
+</td>
+<td>
+<p>The size of the log</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>Firmware (FW) reported a fatal MCA.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x5</p>
+</td>
+<td>
+<p>The address of the log</p>
+</td>
+<td>
+<p>The size of the log</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>There are two possible causes:</p>
+<ul>
+<li>
+<p>SAL reported a recoverable MCA, but this recovery is not currently supported.</p>
+</li>
+<li>
+<p>SAL generated an MCA but could not produce an error record.</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td>
+<p>0xB</p>
+</td>
+<td>
+<p>The address of the log</p>
+</td>
+<td>
+<p>The size of the log</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0xC</p>
+</td>
+<td>
+<p>The address of the log</p>
+</td>
+<td>
+<p>The size of the log</p>
+</td>
+<td>
+<p>The error code</p>
+</td>
+<td>
+<p>SAL returned an error for SAL_GET_STATEINFO while processing an INIT event. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0xD</p>
+</td>
+<td>
+<p>The address of the log</p>
+</td>
+<td>
+<p>The size of the log</p>
+</td>
+<td>
+<p>The error code</p>
+</td>
+<td>
+<p>SAL returned an error for SAL_CLEAR_STATEINFO while it processed an INIT event. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0xE</p>
+</td>
+<td>
+<p>The address of the log</p>
+</td>
+<td>
+<p>The size of the log</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p></p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>In Windows Vista and later operating systems, this bug check occurs only in the following circumstances.</p>
+<ul>
+<li>WHEA is not fully initialized.</li>
+<li>All processors that rendezvous have no errors in their registers.</li>
+</ul>
+<p>For other circumstances, this bug check has been replaced with <a href="bug_check_0x124___whea_uncorrectable_error.htm"><b>bug Check 0x124: WHEA_UNCORRECTABLE_ERROR</b></a> in Windows Vista and later operating systems.</p>
+<p>For more information about Machine Check Architecture (MCA), see the Intel or AMD Web sites.</p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Analyzing Stalled Drivers and Time-Outs"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Analyzing Stalled Drivers and Time-Outs</title>
+
+<meta name="MS-HAID" content="t11~d_scsi_c3fbe678-efcd-427e-a0b3-d1199114c2a5.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.analyzing_stalled_drivers_and_time_outs"></a>Analyzing Stalled Drivers and Time-Outs</h1>
+</div>
+<p>When debugging a SCSI miniport driver, the three most common causes for hangs and time-outs are:</p>
+<ul>
+<li>
+<p>The SCSI miniport DPC is not running </p>
+</li>
+<li>
+<p>The SCSI miniport fails to ask for the next request  </p>
+</li>
+<li>
+<p>A request is not being completed by the SCSI miniport, usually because it is waiting for map registers. </p>
+</li>
+</ul>
+<p>If you suspect that the SCSI miniport DPC is not running, use <a href="_pcr.htm"><b>!pcr</b></a> to display the DPC queue for the current processor. If the SCSI port DPC routine is in the DPC queue, place a breakpoint on this routine to determine whether this routine is ever called. Otherwise, use <a href="_scsikd_scsiext.htm"><b>!scsikd.scsiext</b></a> on each device. Consider the following sample output from the <b>!scsikd.scsiext</b> extension:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0: kd&gt; !scsikd.scsiext 86353040 
+Common Extension:
+   &lt; ..omitted.. &gt;
+Logical Unit Extension:
+  Address (3, 0, 1, 0) Claimed  Enumerated Visible
+  LuFlags (0x00000000):
+  Retry 0x00          Key 0x008889ff
+  Lock 0x00000000  Pause 0x00000000   CurrentLock: 0x00000000
+  HwLuExt 0x862e6f00  Adapter 0x8633db28  Timeout 0x0000000a
+  NextLun 0x00000000  ReadyLun 0x00000000
+  Pending 0x00000000  Busy 0x00000000     Untagged 0x00000000
+ 
+  . . .  
+ 
+Request list @0x86353200:
+      Tick count is 2526
+      SrbData 8615d700  Srb 8611f4fc  Irp 8611f2b8   Key 60197  &lt;1s
+      SrbData 85e72868  Srb 86100c3c Irp 861009f8   Key e29dc7  &lt;1s </pre>
+</td>
+</tr>
+</table></span></div>
+<p>If the timeout slot is -1 and the untagged slot is nonzero, or the time-out slot is nonzero and there are requests shown, the miniport has failed to ask for the next request. </p>
+<p>Alternatively, if the retry slot and the busy slot are nonzero, a request may not be completed by the SCSI miniport because it is waiting for map registers. Similarly, if the untagged and pending slots are nonzero, the SCSI miniport might be waiting for map registers. In either case, the address of the SCSI request block (SRB) is the address in the busy slot and the address of the request that is not being completed. For more information about the SRB, use the <a href="_minipkd_srb.htm"><b>!minipkd.srb</b></a> extension with this address as input.</p>
+<p>The <a href="_devobj.htm"><b>!devobj</b></a> extension determines whether the SCSI miniport is waiting for map registers. Use the device object address of the device that is issuing the request as input to <b>!devobj</b>. If the current IRQ is nonzero, it is highly probable that the SCSI miniport is waiting for map registers. </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Analyzing Stalled Drivers and Time-Outs%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

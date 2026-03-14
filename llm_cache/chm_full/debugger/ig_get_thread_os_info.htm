@@ -1,0 +1,108 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The IG_GET_THREAD_OS_INFO Ioctl operation returns information about an operating system thread in the target. When calling Ioctl with IoctlType set to IG_GET_THREAD_OS_INFO, IpvData should contain an instance of the WDBGEXTS_THREAD_OS_INFO structure."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IG_GET_THREAD_OS_INFO</title>
+
+<meta name="MS-HAID" content="WdbgExts_Ref_dfcc01ec-d4f4-4eba-adb5-d729f951f502.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.ig_get_thread_os_info"></a>IG_GET_THREAD_OS_INFO</h1>
+</div>
+<p>The IG_GET_THREAD_OS_INFO <a href="ioctl.htm"><b>Ioctl</b></a> operation returns information about an operating system thread in the target.  When calling <b>Ioctl</b> with <i>IoctlType</i> set to IG_GET_THREAD_OS_INFO, <i>IpvData</i> should contain an instance of the WDBGEXTS_THREAD_OS_INFO structure.</p>
+<pre class="syntax" xml:space="preserve"><code>typedef struct _WDBGEXTS_THREAD_OS_INFO {
+    ULONG  ThreadId;
+    ULONG  ExitStatus;
+    ULONG  PriorityClass;
+    ULONG  Priority;
+    ULONG64  CreateTime;
+    ULONG64  ExitTime;
+    ULONG64  KernelTime;
+    ULONG64  UserTime;
+    ULONG64  StartOffset;
+    ULONG64  Affinity;
+} WDBGEXTS_THREAD_OS_INFO, *PWDBGEXTS_THREAD_OS_INFO;</code></pre>
+<h2><a id="Members"></a><a id="members"></a><a id="MEMBERS"></a>Members</h2>
+<p></p>
+<dl>
+<dt><a id="ThreadId"></a><a id="threadid"></a><a id="THREADID"></a><b>ThreadId</b></dt>
+<dd>
+<p>Specifies the operating system thread ID (within the current process) for the thread whose information is being requested.</p>
+</dd>
+<dt><a id="ExitStatus"></a><a id="exitstatus"></a><a id="EXITSTATUS"></a><b>ExitStatus</b></dt>
+<dd>
+<p>Receives the exit code of the thread.  If the thread is still running or the exit code is not known, <b>ExitStatus</b> will be set to STILL_ACTIVE.</p>
+</dd>
+<dt><a id="PriorityClass"></a><a id="priorityclass"></a><a id="PRIORITYCLASS"></a><b>PriorityClass</b></dt>
+<dd>
+<p>Receives the priority class of the thread.  The priority classes are defined by the constants <i>XXX</i>_PRIORITY_CLASS in WinBase.h.  See the Platform SDK for more information about thread priority classes.  If the priority class is not know, <b>PriorityClass</b> will be set to zero.</p>
+</dd>
+<dt><a id="Priority"></a><a id="priority"></a><a id="PRIORITY"></a><b>Priority</b></dt>
+<dd>
+<p>Receives the priority of the thread relative to the priority class.  Some thread priorities are defined by the constants THREAD_PRIORITY_<i>XXX</i> in WinBase.h.  See the Platform SDK for more information about thread priorities.  If the priority is not known, <b>Priority</b> will be set to THREAD_PRIORITY_NORMAL.</p>
+</dd>
+<dt><a id="CreateTime"></a><a id="createtime"></a><a id="CREATETIME"></a><b>CreateTime</b></dt>
+<dd>
+<p>Receives the creation time of the thread.</p>
+</dd>
+<dt><a id="ExitTime"></a><a id="exittime"></a><a id="EXITTIME"></a><b>ExitTime</b></dt>
+<dd>
+<p>Receives the exit time of the thread.  If the thread has not exited, <b>ExitTime</b> is undefined.</p>
+</dd>
+<dt><a id="KernelTime"></a><a id="kerneltime"></a><a id="KERNELTIME"></a><b>KernelTime</b></dt>
+<dd>
+<p>Receives the amount of time that the thread has executed in kernel mode.</p>
+</dd>
+<dt><a id="UserTime"></a><a id="usertime"></a><a id="USERTIME"></a><b>UserTime</b></dt>
+<dd>
+<p>Receives the amount of time that the thread has executed in user-mode.</p>
+</dd>
+<dt><a id="StartOffset"></a><a id="startoffset"></a><a id="STARTOFFSET"></a><b>StartOffset</b></dt>
+<dd>
+<p>Receives the starting address of the thread.  If the starting address is not known, <b>StartOffset</b> will be set to zero.</p>
+</dd>
+<dt><a id="Affinity"></a><a id="affinity"></a><a id="AFFINITY"></a><b>Affinity</b></dt>
+<dd>
+<p>Receives the thread affinity mask for the thread in a symmetric multiprocessor (SMP) computer.  See the Platform SDK for more information about the thread affinity mask.  If the affinity mask is not known, <b>Affinity</b> is set to zero.</p>
+</dd>
+</dl>
+<h2><a id="Return_Value"></a><a id="return_value"></a><a id="RETURN_VALUE"></a>Return Value</h2>
+<p>If a thread with the given thread ID is found, the return value is <b>TRUE</b>; otherwise, it is <b>FALSE</b>.</p>
+<h2>Remarks</h2>
+<p>The parameters for the IG_GET_THREAD_OS_INFO <a href="ioctl.htm"><b>Ioctl</b></a> operation are the members of the WDBGEXTS_THREAD_OS_INFO structure.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Wdbgexts.h (include Wdbgexts.h or Dbgeng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="ioctl.htm"><b>Ioctl</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IG_GET_THREAD_OS_INFO%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

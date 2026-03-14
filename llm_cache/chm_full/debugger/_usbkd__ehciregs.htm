@@ -1,0 +1,139 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !usbkd._ehciregs command displays the operational and root hub port status registers of a USB EHCI host controller."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!usbkd._ehciregs</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._usbkd__ehciregs"></a>!usbkd._ehciregs</h1>
+</div>
+<p>The  <b>!usbkd._ehciregs</b> command displays the operational and root hub port status registers of a USB EHCI host controller.</p>
+<pre class="syntax"><b>!usbkd._ehciregs </b><i>StructAddr</i><b>[, </b><i>NumPorts</i><b>]</b></pre>
+<h2><a id="ddk__devobj_dbg"></a><a id="DDK__DEVOBJ_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______StructAddr______"></a><a id="_______structaddr______"></a><a id="_______STRUCTADDR______"></a>       <i>StructAddr</i>      </dt>
+<dd>
+<p>Address of a <b>usbehci!_HC_OPERATIONAL_REGISTER</b> structure. To find the address of a <b>usbehci!_HC_OPERATIONAL_REGISTER</b> structure, use <a href="_usbkd_usbhcdlist.htm"><b>!usbkd.usbhcdlist</b></a>.</p>
+</dd>
+<dt><a id="_______NumPorts______"></a><a id="_______numports______"></a><a id="_______NUMPORTS______"></a>       <i>NumPorts</i>      </dt>
+<dd>
+<p>The number of root hub port status registers to display.</p>
+</dd>
+</dl>
+<h2><a id="DLL"></a><a id="dll"></a>DLL</h2>
+<p>Usbkd.dll
+     </p>
+<h2>Examples</h2>
+<p>Here is one way to get the address of a <b>usbehci!_HC_OPERATIONAL_REGISTER</b> structure. First enter <a href="_usbkd_usbhcdlist.htm"><b>!usbkd.usbhcdlist</b></a>.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !usbkd.usbhcdlist
+MINIPORT List @ fffff80001e5bbd0
+
+List of EHCI controllers
+-------------------------
+!drvobj ffffe00001fd33a0 dt USBPORT!_USBPORT_MINIPORT_DRIVER ...
+...
+02. Xxxx Corporation PCI: VendorID Xxxx DeviceID Xxxx RevisionId 0002
+    !devobj ffffe00001ca1050
+    !ehci_info ffffe00001ca11a0
+    Operational Registers ffffd000228bf020</code></pre>
+<p>In the preceding output,<code> ffffd000228bf020</code> is the address of a <b>_HC_OPERATIONAL_REGISTER</b> structure.</p>
+<p>Now pass the structure address to <b>!_ehciregs</b>. In this example, the second argument limits the display to two root hub port status registers.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !usbkd._ehciregs ffffd000228bf020, 2
+*(ehci)HC_OPERATIONAL_REGISTER ffffd000228bf020
+	USBCMD 00010001
+	.HostControllerRun: 1
+	.HostControllerReset: 0
+	.FrameListSize: 0
+	.PeriodicScheduleEnable: 0
+	.AsyncScheduleEnable: 0
+	.IntOnAsyncAdvanceDoorbell: 0
+	.HostControllerLightReset: 0
+	.InterruptThreshold: 1
+	.ParkModeEnable: 0
+	.ParkModeCount: 0
+
+	USBSTS 00002008
+	.UsbInterrupt: 0
+	.UsbError: 0
+	.PortChangeDetect: 0
+	.FrameListRollover: 1
+	.HostSystemError: 0
+	.IntOnAsyncAdvance: 0
+	----
+	.HcHalted: 0
+	.Reclimation: 1
+	.PeriodicScheduleStatus: 0
+	.AsyncScheduleStatus: 0
+
+	USBINTR 0000003f
+	.UsbInterrupt: 1
+	.UsbError: 1
+	.PortChangeDetect: 1
+	.FrameListRollover: 1
+	.HostSystemError: 1
+	.IntOnAsyncAdvance: 1
+	PeriodicListBase dec8e000
+	AsyncListAddr dec91000
+	PortSC[0] 00001000
+		PortConnect x0
+		PortConnectChange x0
+		PortEnable x0
+		PortEnableChange x0
+		OvercurrentActive x0
+		OvercurrentChange x0
+		ForcePortResume x0
+		PortSuspend x0
+		PortReset x0
+		HighSpeedDevice x0
+		LineStatus x0
+		PortPower x1
+		PortOwnedByCC x0
+		PortIndicator x0
+		PortTestControl x0
+		WakeOnConnect x0
+		WakeOnDisconnect x0
+		WakeOnOvercurrent x0
+	PortSC[1] 00001000
+		PortConnect x0
+		PortConnectChange x0
+		PortEnable x0
+		PortEnableChange x0
+		OvercurrentActive x0
+		OvercurrentChange x0
+		ForcePortResume x0
+		PortSuspend x0
+		PortReset x0
+		HighSpeedDevice x0
+		LineStatus x0
+		PortPower x1
+		PortOwnedByCC x0
+		PortIndicator x0
+		PortTestControl x0
+		WakeOnConnect x0
+		WakeOnDisconnect x0</code></pre>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="usb_2_0_extensions.htm">USB 2.0 Debugger Extensions</a></dt>
+<dt><a href="http://go.microsoft.com/fwlink/p?LinkID=227351">Universal Serial Bus (USB) Drivers</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!usbkd._ehciregs%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

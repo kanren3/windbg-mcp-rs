@@ -1,0 +1,75 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !owner extension displays the owner of a module or function."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!owner</title>
+
+<meta name="MS-HAID" content="r25_exts_general_He_e593e9b0-8cf1-429b-8428-cc5aa26f4601.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._owner"></a>!owner</h1>
+</div>
+<p>The <b>!owner</b> extension displays the owner of a module or function.</p>
+<pre class="syntax"><b>!owner </b>[<i>Module</i>[<b>!</b><i>Symbol</i>]]</pre>
+<h2><a id="ddk__owner_dbg"></a><a id="DDK__OWNER_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Module______"></a><a id="_______module______"></a><a id="_______MODULE______"></a>       <i>Module</i>      </dt>
+<dd>
+<p>Specifies the module whose owner is desired. An asterisk (*) at the end of <i>Module</i> represents any number of additional characters.</p>
+</dd>
+<dt><a id="_______Symbol______"></a><a id="_______symbol______"></a><a id="_______SYMBOL______"></a>       <i>Symbol</i>      </dt>
+<dd>
+<p>Specifies the symbol within <i>Module</i> whose owner is desired. An asterisk (*) at the end of <i>Symbol</i> represents any number of additional characters. If <i>Symbol</i> is omitted, the owner of the entire module is displayed.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Windows 2000</b></p>
+</td>
+<td>
+<p>
+          Ext.dll
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Ext.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>If no parameters are used and a fault has occurred, <b>!owner</b> will display the name of the owner of the faulting module or function.</p>
+<p>When you pass a module or function name to the <b>!owner</b> extension, the debugger displays the word <b>Followup</b> followed by the name of owner of the specified module or function.</p>
+<p>For this extension to display useful information, you must first create a triage.ini file containing the names of the module and function owners.</p>
+<p>For details on the triage.ini file and an example of the <b>!owner</b> extension, see <a href="specifying_module_and_function_owners.htm">Specifying Module and Function Owners</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!owner%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

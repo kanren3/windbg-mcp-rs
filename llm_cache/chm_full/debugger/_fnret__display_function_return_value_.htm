@@ -1,0 +1,83 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .fnret command displays information about a function's return value."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.fnret (Display Function Return Value)</title>
+
+<meta name="MS-HAID" content="r20_metacmds_E_189863c6-2702-44b7-b2a6-8e5584244552.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._fnret__display_function_return_value_"></a>.fnret (Display Function Return Value)</h1>
+</div>
+<p>The <b>.fnret</b> command displays information about a function's return value.</p>
+<pre class="syntax">
+    <b>.fnret </b>[<b>/s</b>]<b> </b><i>Address</i><b> </b>[<i>Value</i>] 
+</pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="________s______"></a><a id="________S______"></a>       <b>/s</b>      </dt>
+<dd>
+<p>Sets the <b>$callret</b> pseudo-register equal to the return value that is being displayed, including type information.</p>
+</dd>
+<dt><a id="_______Address______"></a><a id="_______address______"></a><a id="_______ADDRESS______"></a>       <i>Address</i>      </dt>
+<dd>
+<p>Specifies the address of the function.</p>
+</dd>
+<dt><a id="_______Value______"></a><a id="_______value______"></a><a id="_______VALUE______"></a>       <i>Value</i>      </dt>
+<dd>
+<p>Specifies the return value to display.  If you include <i>Value</i>, <b>.fnret</b> casts <i>Value</i> to the return type of the specified function and displays it in the format of the return type.  If you omit <i>Value</i>, the debugger obtains the return value of the function from the return value registers.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets</b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Platforms</b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>If you include the <i>Value</i> parameter, the <b>.fnret</b> command only casts this value to the proper type and displays the results.</p>
+<p>If you omit <i>Value</i>, the debugger uses the return value registers to determine this value. If a function has returned more recently than the function that the <i>Address</i> parameter specifies, the value that is displayed will probably not be a value that this function returned.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.fnret (Display Function Return Value)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

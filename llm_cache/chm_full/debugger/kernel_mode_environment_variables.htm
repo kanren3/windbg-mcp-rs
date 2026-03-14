@@ -1,0 +1,124 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Kernel-Mode Environment Variables"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Kernel-Mode Environment Variables</title>
+
+<meta name="MS-HAID" content="r12_cmdline_a7670eb8-0ac9-4d47-ae07-97c237dc7f53.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.kernel_mode_environment_variables"></a>Kernel-Mode Environment Variables</h1>
+</div>
+<h2><a id="ddk_kernel_mode_environment_variables_dbg"></a><a id="DDK_KERNEL_MODE_ENVIRONMENT_VARIABLES_DBG"></a></h2>
+<p>The following table lists the environment variables that are used only in kernel-mode debugging.</p>
+<table>
+<tr>
+<th>Variable</th>
+<th>Meaning</th>
+</tr>
+<tr>
+<td>
+<p>_NT_DEBUG_PORT = <i>ComPort</i></p>
+</td>
+<td>
+<p>Specifies the COM port to be used in a kernel connection. For details, see <a href="getting_set_up_for_debugging.htm">Getting Set Up for Debugging</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>_NT_DEBUG_BAUD_RATE = <i>BaudRate</i></p>
+</td>
+<td>
+<p>Specifies the baud rate to be used over the COM port connection. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>_NT_DEBUG_BUS = 1394</p>
+</td>
+<td>
+<p>Specifies that kernel debugging will be done over a 1394 cable connection.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>_NT_DEBUG_1394_CHANNEL = <i>1394Channel</i></p>
+</td>
+<td>
+<p>Specifies the channel to be used for the 1394 kernel connection.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>_NT_DEBUG_1394_SYMLINK = <i>Protocol</i></p>
+</td>
+<td>
+<p>Specifies the connection protocol to be used for the 1394 kernel connection.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>KDQUIET =<i>Anything</i></p>
+</td>
+<td>
+<p>If KDQUIET is defined, the debugger will run in <i>quiet mode</i>. Quiet mode involves three distinct effects:</p>
+<p>1. The debugger does not display messages each time an extension DLL is loaded or unloaded.</p>
+<p>2. The <a href="r__registers_.htm"><b>r (Registers)</b></a> command no longer requires an equal sign in its syntax.</p>
+<p>3. The debugger will not display a warning message when breaking into the target computer.</p>
+<p>Quiet mode can also be controlled by using the <a href="sq__set_quiet_mode_.htm"><b>sq (Set Quiet Mode)</b></a> command.  </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+<dl>
+<dt>_NT_DEBUG_CACHE_SIZE</dt>
+<dt>= <i>Size</i></dt>
+</dl>
+</p>
+</td>
+<td>
+<p>Specifies the maximum kernel debugging cache size, in bytes. This cache holds data received by the host computer from the serial connection. The default is 1,024,000.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>_NT_DEBUG_OPTIONS = <i>Option</i></p>
+</td>
+<td>
+<p>Specifies one of the following two values:</p>
+<p>NOEXTWARNING tells the debugger not to output a warning when it cannot find an extension command.</p>
+<p>NOVERSIONCHECK tells the debugger not to check the version of debugger extensions.  </p>
+<p></p>
+<p>These options can be modified or displayed by using the <a href="so__set_kernel_debugging_options_.htm"><b>so (Set Kernel Options)</b></a> command.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>_NT_KD_FILES = <i>MapFile</i></p>
+</td>
+<td>
+<p>Specifies a driver replacement map file. For details and for other methods of controlling driver replacement, see <a href="mapping_driver_files.htm">Mapping Driver Files</a>.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Kernel-Mode Environment Variables%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

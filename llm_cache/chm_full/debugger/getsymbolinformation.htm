@@ -1,0 +1,221 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The GetSymbolInformation method returns specified information about a symbol."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IDebugAdvanced2::GetSymbolInformation method</title>
+
+<meta name="MS-HAID" content="IDebugAdvanced_353e07f5-e506-4d5f-8c64-d3f500ff283f.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.getsymbolinformation"></a>IDebugAdvanced2::GetSymbolInformation method</h1>
+</div>
+<p>The <b>GetSymbolInformation</b> method returns specified information about a symbol.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>HRESULT GetSymbolInformation(
+  [in]            ULONG   Which,
+  [in]            ULONG64 Arg64,
+  [in]            ULONG   Arg32,
+  [out, optional] PVOID   Buffer,
+  [in]            ULONG   BufferSize,
+  [out, optional] PULONG  InfoSize,
+  [out, optional] PSTR    StringBuffer,
+  [in]            ULONG   StringBufferSize,
+  [out, optional] PULONG  StringSize
+);</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Parameters</h2>
+<dl>
+<dt><i>Which</i> [in]</dt>
+<dd>
+<p>Specifies the piece of information to return.  <i>Which</i> can take one of the values in the follow table.</p>
+<table>
+<tr>
+<th>Value</th>
+<th>Information returned</th>
+</tr>
+<tr>
+<td>
+<p>DEBUG_SYMINFO_BREAKPOINT_SOURCE_LINE</p>
+</td>
+<td>
+<p>Returns the source code file name and line number for a specified breakpoint.  The line number is returned to <i>Buffer</i> as a ULONG.  The file name is returned to <i>StringBuffer</i>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_SYMINFO_IMAGEHLP_MODULEW64</p>
+</td>
+<td>
+<p>Returns an IMAGEHLP_MODULEW64 structure that describes a specified module.  For details about this structure, see the IMAGEHLP_MODULE64 topic in the Debug Help Library documentation (dbghelp.chm).</p>
+<p>No string is returned and <i>StringBuffer</i>, <i>StringBufferSize</i>, and <i>StringSize</i> must all be set to zero.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_SYMINFO_GET_SYMBOL_NAME_BY_OFFSET_AND_TAG_WIDE</p>
+</td>
+<td>
+<p>Returns the Unicode name of the symbol specified by location in memory and PDB tag type.  The name is returned to <i>Buffer</i>.  <i>StringBuffer</i> is not used.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_SYMINFO_GET_MODULE_SYMBOL_NAMES_AND_OFFSETS</p>
+</td>
+<td>
+<p>Returns a list of symbol names and offsets for the symbols in the specified module with the specified PDB tag type.  The offsets are returned as an array of ULONG values to <i>Buffer</i>.  The names are returned in the same order as the offsets to <i>StringBuffer</i>.  Some names might contain embedded zeros because annotations can have multi-part names; hence, each name is terminated with two null characters.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+</dd>
+<dt><i>Arg64</i> [in]</dt>
+<dd>
+<p>Specifies a 64-bit argument.  This parameter has the following interpretations depending on the value of <i>Which</i>:</p>
+<p></p>
+<dl>
+<dt><a id="DEBUG_SYMINFO_BREAKPOINT_SOURCE_LINE"></a><a id="debug_syminfo_breakpoint_source_line"></a>DEBUG_SYMINFO_BREAKPOINT_SOURCE_LINE</dt>
+<dd>
+<p>Ignored.</p>
+</dd>
+<dt><a id="DEBUG_SYMINFO_IMAGEHLP_MODULEW64"></a><a id="debug_syminfo_imagehlp_modulew64"></a>DEBUG_SYMINFO_IMAGEHLP_MODULEW64</dt>
+<dd>
+<p>The base address of the module whose description is being requested.</p>
+</dd>
+<dt><a id="DEBUG_SYMINFO_GET_SYMBOL_NAME_BY_OFFSET_AND_TAG_WIDE"></a><a id="debug_syminfo_get_symbol_name_by_offset_and_tag_wide"></a>DEBUG_SYMINFO_GET_SYMBOL_NAME_BY_OFFSET_AND_TAG_WIDE</dt>
+<dd>
+<p>Specifies the address in the target's memory of the symbol whose name is being requested.</p>
+</dd>
+<dt><a id="DEBUG_SYMINFO_GET_MODULE_SYMBOL_NAMES_AND_OFFSETS"></a><a id="debug_syminfo_get_module_symbol_names_and_offsets"></a>DEBUG_SYMINFO_GET_MODULE_SYMBOL_NAMES_AND_OFFSETS</dt>
+<dd>
+<p>Specifies the module whose symbols are requested.  <i>Arg64</i> is a location within the memory allocation of the module.</p>
+</dd>
+</dl>
+</dd>
+<dt><i>Arg32</i> [in]</dt>
+<dd>
+<p>Specifies a 32-bit argument.  This parameter has the following interpretations depending on the value of <i>Which</i>:</p>
+<p></p>
+<dl>
+<dt><a id="DEBUG_SYMINFO_BREAKPOINT_SOURCE_LINE"></a><a id="debug_syminfo_breakpoint_source_line"></a>DEBUG_SYMINFO_BREAKPOINT_SOURCE_LINE</dt>
+<dd>
+<p>The engine breakpoint ID of the desired breakpoint.</p>
+</dd>
+<dt><a id="DEBUG_SYMINFO_IMAGEHLP_MODULEW64"></a><a id="debug_syminfo_imagehlp_modulew64"></a>DEBUG_SYMINFO_IMAGEHLP_MODULEW64</dt>
+<dd>
+<p>Set to zero.</p>
+</dd>
+<dt><a id="DEBUG_SYMINFO_GET_SYMBOL_NAME_BY_OFFSET_AND_TAG_WIDE"></a><a id="debug_syminfo_get_symbol_name_by_offset_and_tag_wide"></a>DEBUG_SYMINFO_GET_SYMBOL_NAME_BY_OFFSET_AND_TAG_WIDE</dt>
+<dd>
+<p>The PDB classification of the symbol.  <i>Arg32</i> must be one of the values in the <b>SymTagEnum</b> enumeration defined in Dbghelp.h.  For more information, see PDB documentation.</p>
+</dd>
+<dt><a id="DEBUG_SYMINFO_GET_MODULE_SYMBOL_NAMES_AND_OFFSETS"></a><a id="debug_syminfo_get_module_symbol_names_and_offsets"></a>DEBUG_SYMINFO_GET_MODULE_SYMBOL_NAMES_AND_OFFSETS</dt>
+<dd>
+<p>The PDB classification of the symbol.  <i>Arg32</i> must be one of the values in the <b>SymTagEnum</b> enumeration defined in Dbghelp.h.  For more information, see PDB documentation.</p>
+</dd>
+</dl>
+</dd>
+<dt><i>Buffer</i> [out, optional]</dt>
+<dd>
+<p>Receives the requested symbol information.  The type of the data returned depends on the value of <i>Which</i>.  If <i>Buffer</i> is <b>NULL</b>, this information is not returned.</p>
+</dd>
+<dt><i>BufferSize</i> [in]</dt>
+<dd>
+<p>Specifies the size, in bytes, of the buffer <i>Buffer</i>.</p>
+</dd>
+<dt><i>InfoSize</i> [out, optional]</dt>
+<dd>
+<p>If this method returns <b>S_OK</b>, <i>InfoSize</i> receives the size, in bytes, of the symbol information returned to <i>Buffer</i>.  If this method returns <b>S_FALSE</b>, the supplied buffer is not big enough, and <i>InfoSize</i> receives the required buffer size. If <i>InfoSize</i> is <b>NULL</b>, this information is not returned.</p>
+</dd>
+<dt><i>StringBuffer</i> [out, optional]</dt>
+<dd>
+<p>Receives the requested string.  The interpretation of this string depends on the value of <i>Which</i>.  If <i>StringBuffer</i> is <b>NULL</b>, this information is not returned.</p>
+</dd>
+<dt><i>StringBufferSize</i> [in]</dt>
+<dd>
+<p>Specifies the size, in characters, of the string buffer <i>StringBuffer</i>.</p>
+</dd>
+<dt><i>StringSize</i> [out, optional]</dt>
+<dd>
+<p>Receives the size, in characters, of the string returned to <i>StringBuffer</i>.  If <i>StringSize</i> is <b>NULL</b>, this information is not returned.</p>
+</dd>
+</dl>
+<h2>Return value</h2>
+<p>This method may also return error values.  See <a href="hresult_values.htm"><b>Return Values</b></a> for more details.</p>
+<table>
+<tr>
+<th>Return code</th>
+<th>Description</th>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>S_OK</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>The method was successful.</p>
+</td>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>S_FALSE</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>The method was successful. However, the information would not fit in the buffer <i>Buffer</i> or the string would not fit in the buffer <i>StringBuffer</i>, so the information or name was truncated.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Target platform</p>
+</th>
+<td width="70%">
+<dl>
+<dt></dt>
+</dl>
+</td>
+</tr>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Dbgeng.h (include Dbgeng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IDebugAdvanced2::GetSymbolInformation method%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

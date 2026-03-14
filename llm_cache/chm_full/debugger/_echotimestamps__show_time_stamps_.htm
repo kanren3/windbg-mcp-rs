@@ -1,0 +1,84 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .echotimestamps command turns on or turns off the display of time stamp information."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.echotimestamps (Show Time Stamps)</title>
+
+<meta name="MS-HAID" content="r20_metacmds_E_48ba5774-77b0-4ac1-8eaf-f2d48c95e264.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._echotimestamps__show_time_stamps_"></a>.echotimestamps (Show Time Stamps)</h1>
+</div>
+<p>The <b>.echotimestamps</b> command turns on or turns off the display of time stamp information.</p>
+<pre class="syntax"><b>.echotimestamps 0</b> 
+<b>.echotimestamps 1</b> 
+<b>.echotimestamps</b> 
+</pre>
+<h2><a id="ddk_meta_show_time_stamps_dbg"></a><a id="DDK_META_SHOW_TIME_STAMPS_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______0______"></a>       <b>0</b>      </dt>
+<dd>
+<p>Turns off the display of time stamp information. This is the default behavior of the Debugger.</p>
+</dd>
+<dt><a id="_______1______"></a>       <b>1</b>      </dt>
+<dd>
+<p>Turns on the display of time stamp information.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets</b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Platforms</b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about <b>DbgPrint</b>, <b>KdPrint</b>, <b>DbgPrintEx</b>, and <b>KdPrintEx</b>, see <a href="reading_and_filtering_debugging_messages.htm#the_dbgprint_buffer">The DbgPrint Buffer</a> or see the Microsoft Windows Driver Kit (WDK) documentation.</p>
+<h2>Remarks</h2>
+<p>When you use the <b>.echotimestamps</b> command without parameters, the display of time stamps is turned on or off, and the new state is displayed.</p>
+<p>If you turn on this display, the debugger shows time stamps for module loads, thread creations, exceptions, and other events.</p>
+<p>The <b>DbgPrint</b>, <b>KdPrint</b>, <b>DbgPrintEx</b>, and <b>KdPrintEx</b> kernel-mode routines send a formatted string to a buffer on the host computer. The string is displayed in the <a href="debugger_command_window.htm">Debugger Command window</a> (unless you have disabled such printing). You can also display the formatted string by using the <a href="_dbgprint.htm"><b>!dbgprint</b></a> extension command.</p>
+<p>When you use <b>.echotimestamps</b> to turn on the display of time stamps, the time and date of each comment in the <b>DbgPrint</b> buffer is displayed.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.echotimestamps (Show Time Stamps)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,144 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The tilde (~) command displays status for the specified thread or for all threads in the current process."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>~ (Thread Status)</title>
+
+<meta name="MS-HAID" content="r15_cmds_A_e8b03a38-abea-4e4f-9429-a89f4638905b.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.___thread_status_"></a>~ (Thread Status)</h1>
+</div>
+<p>The tilde (<b>~</b>) command displays status for the specified thread or for all threads in the current process.</p>
+<pre class="syntax"><b>~ </b><i>Thread</i></pre>
+<h2><a id="ddk_cmd_thread_status_dbg"></a><a id="DDK_CMD_THREAD_STATUS_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Thread______"></a><a id="_______thread______"></a><a id="_______THREAD______"></a>       <i>Thread</i>      </dt>
+<dd>
+<p>Specifies the thread to display. If you omit this parameter, all threads are displayed. For more information about the syntax, see <a href="thread_syntax.htm">Thread Syntax</a>.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets</b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information and other methods of displaying or controlling processes and threads, see <a href="controlling_processes_and_threads.htm">Controlling Processes and Threads</a>.</p>
+<h2>Remarks</h2>
+<p>You can specify threads only in user mode. In kernel mode, the tilde (<b>~</b>) refers to a processor.</p>
+<p>You can add a thread symbol before many commands. For more information about the meaning of a tilde (<b>~</b>) followed by a command, see the entry for the command itself.</p>
+<p>The following examples show you how to use this command. The following command displays all threads.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:001&gt; ~</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The following command also displays all threads.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:001&gt; ~*</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The following command displays the currently active thread.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:001&gt; ~.</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The following command displays the thread that originally caused the exception (or that was active when the debugger attached to the process).</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:001&gt; ~#</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The following command displays thread number 2.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:001&gt; ~2</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The previous command displays the following output.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:001&gt; ~
+   0 id: 4dc.470 Suspend: 0 Teb 7ffde000 Unfrozen
+. 1 id: 4dc.534 Suspend: 0 Teb 7ffdd000 Unfrozen
+#  2 id: 4dc.5a8 Suspend: 0 Teb 7ffdc000 Unfrozen</pre>
+</td>
+</tr>
+</table></span></div>
+<p>On the first line of this output, 0 is the decimal thread number, 4DC is the hexadecimal process ID, 470 is the hexadecimal thread ID, 0x7FFDE000 is the address of the TEB, and <b>Unfrozen</b> is the thread status. The period (.) before thread 1 means this thread is the current thread. The number sign (#) before thread 2 means this thread was the one that originally caused the exception or it was active when the debugger attached to the process.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20~ (Thread Status)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

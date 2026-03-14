@@ -1,0 +1,248 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The BUGCODE_ID_DRIVER bug check has a value of 0x000000D2. This indicates that a problem occurred with an NDIS driver."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0xD2: BUGCODE_ID_DRIVER</title>
+
+<meta name="MS-HAID" content="t06_bugs_B0_95bfd10f-6572-4c61-b50e-4a5746e9aa4c.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0xd2__bugcode_id_driver"></a>Bug Check 0xD2: BUGCODE_ID_DRIVER</h1>
+</div>
+<p>The BUGCODE_ID_DRIVER bug check has a value of 0x000000D2. This indicates that a problem occurred with an NDIS driver.</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2> BUGCODE_ID_DRIVER Parameters</h2>
+<p>Before this bug check occurs, a message is sent to the DbgPrint buffer. If a debugger is connected, this message will be displayed.</p>
+<p>This message indicates the type of violation. The meanings of the bug check parameters depend on this message.</p>
+<table>
+<tr>
+<th>Parameter 1</th>
+<th>Parameter 2</th>
+<th>Parameter 3</th>
+<th>Parameter 4</th>
+<th>Message and Cause</th>
+</tr>
+<tr>
+<td>
+<p>Address of the miniport block</p>
+</td>
+<td>
+<p>Number of bytes requested</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>1</p>
+</td>
+<td>
+<p><b>Allocating shared memory at raised IRQL.</b> A driver called <b>NdisMAllocateSharedMemory</b> with IRQL &gt;= DISPATCH_LEVEL.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Address of the miniport block</p>
+</td>
+<td>
+<p>The <i>Status</i> value submitted to <b>NdisMResetComplete</b></p>
+</td>
+<td>
+<p>The <i>AddressingReset</i> value submitted to <b>NdisMResetComplete</b></p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p><b>Completing reset when one is not pending.</b> A driver called <b>NdisMResetComplete</b>, but no reset was pending.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Address of the miniport block</p>
+</td>
+<td>
+<p>Memory page containing address being freed</p>
+</td>
+<td>
+<p>Address of shared memory signature</p>
+</td>
+<td>
+<p>Virtual address being freed</p>
+</td>
+<td>
+<p><b>Freeing shared memory not allocated.</b> A driver called <b>NdisMFreeSharedMemory</b> or <b>NdisMFreeSharedMemoryAsync</b> with an address that is not located in NDIS shared memory.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Address of the miniport block</p>
+</td>
+<td>
+<p>Address of the packet that is incorrectly included in the packet array</p>
+</td>
+<td>
+<p>Address of the packet array</p>
+</td>
+<td>
+<p>Number of packets in the array</p>
+</td>
+<td>
+<p><b>Indicating packet not owned by it.</b> The miniport's packet array is corrupt.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Address of the MiniBlock</p>
+</td>
+<td>
+<p>Address of the driver object</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p><b>NdisAddDevice: AddDevice</b> called with a <b>MiniBlock</b> that is not on the <b>NdisMiniDriverList</b>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Address of the MiniBlock</p>
+</td>
+<td>
+<p>The MiniBlock's reference count</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p><b>NdisMUnload: MiniBlock</b> is getting unloaded but it is still on <b>NdisMiniDriverList</b>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Address of the miniport block</p>
+</td>
+<td>
+<p>Memory page</p>
+</td>
+<td>
+<p>Wrapper context</p>
+</td>
+<td>
+<p>Address of shared memory signature</p>
+</td>
+<td>
+<p><b>Overwrote past allocated shared memory.</b> The address being written to is not located in NDIS shared memory.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>In the following instances of this bug check, the meaning of the parameters depends on the message <u>and</u> on the value of Parameter 4.</p>
+<table>
+<tr>
+<th>Parameter 1</th>
+<th>Parameter 2</th>
+<th>Parameter 3</th>
+<th>Parameter 4</th>
+<th>Message and Cause</th>
+</tr>
+<tr>
+<td>
+<p>Address of the miniport block</p>
+</td>
+<td>
+<p>Address of the miniport interrupt</p>
+</td>
+<td>
+<p>Address of the miniport timer queue</p>
+</td>
+<td>
+<p>1</p>
+</td>
+<td>
+<p><b>Unloading without deregistering interrupt.</b> A miniport driver failed its initialization without deregistering its interrupt.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Address of the miniport block</p>
+</td>
+<td>
+<p>Address of the miniport timer queue</p>
+</td>
+<td>
+<p>Address of the miniport interrupt</p>
+</td>
+<td>
+<p>2</p>
+</td>
+<td>
+<p><b>Unloading without deregistering interrupt.</b> A miniport driver did not deregister its interrupt during the halt process.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Address of the miniport block</p>
+</td>
+<td>
+<p>Address of the miniport interrupt</p>
+</td>
+<td>
+<p>Address of the miniport timer queue</p>
+</td>
+<td>
+<p>1</p>
+</td>
+<td>
+<p><b>Unloading without deregistering timer.</b> A miniport driver failed its initialization without successfully canceling all its timers.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Address of the miniport block</p>
+</td>
+<td>
+<p>Address of the miniport timer queue</p>
+</td>
+<td>
+<p>Address of the miniport interrupt</p>
+</td>
+<td>
+<p>2</p>
+</td>
+<td>
+<p><b>Unloading without deregistering timer.</b> A miniport driver halted without successfully canceling all its timers.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>This bug check code only occurs on Windows 2000 and Windows XP. In Windows Server 2003 and later, the corresponding code is <a href="bug_check_0x7c__bugcode_ndis_driver.htm"><b>bug check 0x7C</b></a> (BUGCODE_NDIS_DRIVER).</p>
+<p>On the checked build of Windows, only the <b>Allocating Shared Memory at Raised IRQL</b> and <b>Completing Reset When One is Not Pending</b> instances of this bug check can occur. All the other instances of bug check 0xD2 are replaced with ASSERTs. See <a href="breaking_into_the_debugger.htm">Breaking Into the Debugger</a> for details.</p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,121 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The STATUS_SYSTEM_PROCESS_TERMINATED bug check has a value of 0xC000021A. This means that an error has occurred in a crucial user-mode subsystem."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0xC000021A: STATUS_SYSTEM_PROCESS_TERMINATED</title>
+
+<meta name="MS-HAID" content="t08_bugs_END_7b197f47-8362-496c-83f8-7ae501401457.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0xc000021a__status_system_process_terminated"></a>Bug Check 0xC000021A: STATUS_SYSTEM_PROCESS_TERMINATED</h1>
+</div>
+<p>The STATUS_SYSTEM_PROCESS_TERMINATED bug check has a value of 0xC000021A. This means that an error has occurred in a crucial user-mode subsystem.<p></p>
+</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2> STATUS_SYSTEM_PROCESS_TERMINATED Parameters</h2>
+<p>The following parameters are displayed on the blue screen. </p>
+<table>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>1</p>
+</td>
+<td>
+<p>A string that identifies the problem </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>2</p>
+</td>
+<td>
+<p>The error code </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>3</p>
+</td>
+<td>
+<p>Reserved </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>4</p>
+</td>
+<td>
+<p>Reserved </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p></p>
+<h2>Cause</h2>
+<p>This error occurs when a user-mode subsystem, such as WinLogon or the Client Server Run-Time Subsystem (CSRSS), has been fatally compromised and security can no longer be guaranteed. In response, the operating system switches to kernel mode. Microsoft Windows cannot run without WinLogon or CSRSS. Therefore, this is one of the few cases where the failure of a user-mode service can shut down the system.</p>
+<p>Mismatched system files can also cause this error. This can occur if you have restored your hard disk from a backup. Some backup programs might skip restoring system files that they determine are in use.</p>
+<h2>Resolution</h2>
+<p>Running the kernel debugger is not useful in this situation because the actual error occurred in a user-mode process.</p>
+<p><b>Resolving an error in a user-mode device driver, system service, or third-party application:</b> Because bug check 0xC000021A occurs in a user-mode process, the most common culprits are third-party applications. If the error occurred after the installation of a new or updated device driver, system service, or third-party application, the new software should be removed or disabled to isolate the cause. Contact the manufacturer of the software about a possible update. </p>
+<p><b>Resolving a mismatched system file problem:</b> If you have recently restored your hard disk from a backup, check if there is an updated version of the Backup/Restore program available from the manufacturer. </p>
+<p>These steps may be helpful in gathering additional information.</p>
+<ul>
+<li>
+<p>Look at the most recently installed applications. To do this navigate to "Uninstall or change a program" in control panel and sort the installed applications by install date. </p>
+</li>
+<li>
+<p>Check the System Log in Event Viewer for additional error messages that might help pinpoint the device or driver that is causing the error. For more information, see <a href="http://windows.microsoft.com/en-us/windows/what-information-event-logs-event-viewer#1TC=windows-7">Open Event Viewer</a>. Look for critical errors in the system log that occurred in the same time window as the blue screen.</p>
+</li>
+</ul>
+<p>These steps may be helpful in resolving this issue.</p>
+<ul>
+<li>
+<p>Use the System File Checker tool to repair missing or corrupted system files. The System File Checker is a utility in Windows that allows users to scan for corruptions in Windows system files and restore corrupted files. Use the following command to run the    
+
+System File Checker tool (SFC.exe).</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>SFC /scannow</pre>
+</td>
+</tr>
+</table></span></div>
+<p>For more information, see <a href="https://support.microsoft.com/kb/929833">Use the System File Checker tool to repair missing or corrupted system files</a>.</p>
+</li>
+<li>
+<p>Run a virus detection program. Viruses can infect all types of hard disks formatted for Windows, and resulting disk corruption can generate system bug check codes. Make sure the virus detection program checks the Master Boot Record for infections.</p>
+</li>
+<li>
+<p>Verify that the system has the latest Service Pack installed. To detect which Service Pack, if any, is installed on your system, click <b>Start</b>, click <b>Run</b>, type <b>winver</b>, and then press ENTER. The <b>About Windows</b> dialog box displays the Windows version number and the version number of the Service Pack, if one has been installed.</p>
+</li>
+</ul>
+<p><b>Using Safe Mode</b></p>
+<p>Consider using Safe Mode to isolate elements for troubleshooting and if necessary to use Windows. Using Safe Mode loads only the minimum required drivers and system services during the Windows startup. To enter Safe Mode, use <b>Update and Security</b> in Settings. Select <b>Recovery</b>-&gt;<b>Advanced startup</b> to  boot to maintenance mode. At the resulting menu, choose <b>Troubleshoot</b>-&gt; <b>Advanced Options</b> -&gt; <b>Startup Settings</b> -&gt; <b>Restart</b>. After Windows restarts to the <b>Startup Settings</b> screen, select option, 4, 5 or 6 to boot to Safe Mode. </p>
+<p>Safe Mode may be available by pressing a function key on boot, for example F8. Refer to information from the manufacturer for specific startup options.</p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

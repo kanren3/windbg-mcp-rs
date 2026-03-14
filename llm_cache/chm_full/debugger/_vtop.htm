@@ -1,0 +1,113 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !vtop extension converts a virtual address to the corresponding physical address, and displays other page table and page directory information."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!vtop</title>
+
+<meta name="MS-HAID" content="r30_exts_kernel_U_15c2c0bd-29e2-4939-8958-02a30ebe4af2.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._vtop"></a>!vtop</h1>
+</div>
+<p>The <b>!vtop</b> extension converts a virtual address to the corresponding physical address, and displays other page table and page directory information.</p>
+<p>Syntax</p>
+<pre class="syntax">
+<b>!vtop </b><i>PFN VirtualAddress</i> 
+<b>!vtop 0</b><i> VirtualAddress</i> 
+</pre>
+<h2><a id="ddk__vtop_dbg"></a><a id="DDK__VTOP_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______DirBase______"></a><a id="_______dirbase______"></a><a id="_______DIRBASE______"></a>       <i>DirBase</i>      </dt>
+<dd>
+<p>Specifies the directory base for the process. Each process has its own virtual address space. Use the <a href="_process.htm"><b>!process</b></a> extension to determine the directory base for a process.</p>
+</dd>
+<dt><a id="_______PFN______"></a><a id="_______pfn______"></a>       <i>PFN</i>      </dt>
+<dd>
+<p>Specifies the page frame number (PFN) of the directory base for the process. </p>
+</dd>
+<dt><a id="_______0______"></a>       <b>0</b>      </dt>
+<dd>
+<p>  Causes <b>!vtop</b> to use the current <a href="changing_contexts.htm#process_context">process context</a> for address translation.</p>
+</dd>
+<dt><a id="_______VirtualAddress______"></a><a id="_______virtualaddress______"></a><a id="_______VIRTUALADDRESS______"></a>       <i>VirtualAddress</i>      </dt>
+<dd>
+<p>Specifies the virtual address whose page is desired.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<p>
+          Kdexts.dll
+         </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For other methods of achieving these results, see <a href="converting_virtual_addresses_to_physical_addresses.htm">Converting Virtual Addresses to Physical Addresses</a>. Also see <a href="_ptov.htm"><b>!ptov</b></a>. For information about page tables and page directories, see <i>Microsoft Windows Internals</i>, by Mark Russinovich and David Solomon.</p>
+<h2>Remarks</h2>
+<p>To use this command, first use the <a href="_process.htm"><b>!process</b></a> extension to determine the directory base of the process. The page frame number (PFN) of this directory base can be found by removing the three trailing hexadecimal zeros (in other words, by right-shifting the number 12 bits).</p>
+<p>Here is an example:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; !process 0 0
+**** NT ACTIVE PROCESS DUMP ****
+....
+PROCESS ff779190  SessionId: 0  Cid: 04fc    Peb: 7ffdf000  ParentCid: 0394
+ DirBase: 098fd000  ObjectTable: e1646b30  TableSize:   8.
+    Image: MyApp.exe</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Since the directory base is 0x098FD000, its PFN is 0x098FD.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; !vtop 98fd 12f980
+Pdi 0 Pti 12f
+0012f980 09de9000 pfn(09de9)</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Notice how the trailing three zeros are optional. The <b>!vtop</b> extension displays the page directory index (PDI), the page table index (PTI), the virtual address that you had originally input, the physical address of the beginning of the physical page, and the page frame number (PFN) of the page table entry (PTE).</p>
+<p>If you want to convert the virtual address 0x0012F980 to a physical address, you simply have to take the last three hexadecimal digits (0x980) and add them to the physical address of the beginning of the page (0x09DE9000). This gives the physical address 0x09DE9980.</p>
+<p>If you forget to remove the three zeros, and pass the full directory base to <b>!vtop</b> instead of the PFN, the results will usually be correct. This is because when <b>!vtop</b> receives a number too large to be a PFN, it right-shifts it twelve bits and uses that number instead:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; !vtop 98fd 12f980
+Pdi 0 Pti 12f
+0012f980 09de9000 pfn(09de9)
+
+kd&gt; !vtop 98fd000 12f980
+Pdi 0 Pti 12f
+0012f980 09de9000 pfn(09de9)</pre>
+</td>
+</tr>
+</table></span></div>
+<p>However, it is better to always use the PFN, because some directory base values will not be converted in this manner.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!vtop%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,212 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The sx* commands control the action that the debugger takes when an exception occurs in the application that is being debugged, or when certain events occur."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>sx, sxd, sxe, sxi, sxn, sxr, sx- (Set Exceptions)</title>
+
+<meta name="MS-HAID" content="r18_cmds_S_ab1aa333-3a7d-409d-96b6-4d56990268a9.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.sx__sxd__sxe__sxi__sxn__sxr__sx___set_exceptions_"></a>sx, sxd, sxe, sxi, sxn, sxr, sx- (Set Exceptions)</h1>
+</div>
+<p>The <b>sx</b><i>*</i> commands control the action that the debugger takes when an exception occurs in the application that is being debugged, or when certain events occur.</p>
+<pre class="syntax"><b>sx</b> 
+
+<b>sx</b>{<b>e</b>|<b>d</b>|<b>i</b>|<b>n</b>} [<b>-c</b> <b>"</b>Cmd1<b>"</b>] [<b>-c2</b> <b>"</b>Cmd2<b>"</b>] [<b>-h</b>] {Exception|Event|<b>*</b>} 
+
+<b>sx-</b> [<b>-c</b> <b>"</b>Cmd1<b>"</b>] [<b>-c2</b> <b>"</b>Cmd2<b>"</b>] {Exception|Event|<b>*</b>} 
+
+<b>sxr</b>
+</pre>
+<h2><a id="ddk_cmd_set_exceptions_dbg"></a><a id="DDK_CMD_SET_EXCEPTIONS_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="-c__Cmd1_"></a><a id="-c__cmd1_"></a><a id="-C__CMD1_"></a><b>-c "</b><i>Cmd1</i><b>"</b></dt>
+<dd>
+<p>Specifies a command that is executed if the exception or event occurs. This command is executed when the first chance to handle this exception occurs, regardless of whether this exception breaks into the debugger. You must enclose the <i>Cmd1</i> string in quotation marks. This string can include multiple commands, separated by semicolons. The space between the -c and the quoted command string is optional.</p>
+</dd>
+<dt><a id="-c2_Cmd2_"></a><a id="-c2_cmd2_"></a><a id="-C2_CMD2_"></a><b>-c2"</b><i>Cmd2</i><b>"</b></dt>
+<dd>
+<p>Specifies a command that is executed if the exception or event occurs and is not handled on the first chance. This command is executed when the second chance to handle this exception occurs, regardless of whether this exception breaks into the debugger. You must enclose the <i>Cmd2</i> string in quotation marks. This string can include multiple commands, separated by semicolons. The space between the -c2 and the quoted command string is optional.</p>
+</dd>
+<dt><a id="_______-h______"></a><a id="_______-H______"></a>       <b>-h</b>      </dt>
+<dd>
+<p>Changes the specified event's handling status instead of its break status. If <i>Event</i> is <b>cc</b>, <b>hc</b>, <b>bpec</b>, or <b>ssec</b>, you do not have to use the <b>-h</b> option.</p>
+</dd>
+<dt><a id="_______Exception______"></a><a id="_______exception______"></a><a id="_______EXCEPTION______"></a>       <i>Exception</i>      </dt>
+<dd>
+<p>Specifies the exception number that the command acts on, in the current radix.</p>
+</dd>
+<dt><a id="_______Event______"></a><a id="_______event______"></a><a id="_______EVENT______"></a>       <i>Event</i>      </dt>
+<dd>
+<p>Specifies the event that the command acts on. These events are identified by short abbreviations. For a list of the events, see <a href="controlling_exceptions_and_events.htm">Controlling Exceptions and Events</a>.</p>
+</dd>
+<dt><a id="______________"></a>       <b>*</b>      </dt>
+<dd>
+<p>Affects all exceptions that are not otherwise explicitly named for <b>sx</b>. For a list of explicitly named exceptions, see <a href="controlling_exceptions_and_events.htm">Controlling Exceptions and Events</a>.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>Live debugging only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about break status and handling status, descriptions of all event codes, a list of the default status for all events, and other methods of controlling this status, see <a href="controlling_exceptions_and_events.htm">Controlling Exceptions and Events</a>.</p>
+<h2>Remarks</h2>
+<p>The <b>sx</b> command displays the list of exceptions for the current process and the list of all nonexception events and displays the default behavior of the debugger for each exception and event.</p>
+<p>The <b>sxe</b>, <b>sxd</b>, <b>sxn</b>, and <b>sxi</b> commands control the debugger settings for each exception and event.</p>
+<p>The <b>sxr </b>command resets all of the exception and event filter states to the default settings.  Commands are cleared, break and continue options are reset to their default settings, and so on.</p>
+<p>The <b>sx-</b> command does not change the handling status or the break status of the specified exception or event. This command can be used if you wish to change the first-chance command or second-chance command associated with a specific event, but do not wish to change anything else. </p>
+<p>If you include the <b>-h</b> option (or if the <b>cc</b>, <b>hc</b>, <b>bpec</b>, or <b>ssec</b> events are specified), the <b>sxe</b>, <b>sxd</b>, <b>sxn</b>, and <b>sxi</b> commands control the <a href="debug_filter_xxx.htm#handling_status">handling status</a> of the exception or event. In all other cases, these commands control the <a href="debug_filter_xxx.htm#break_status">break status</a> of the exception or event.</p>
+<p>When you are setting the break status, these commands have the following effects.</p>
+<table>
+<tr>
+<th>Command</th>
+<th>Status name</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p><b>sxe</b></p>
+</td>
+<td>
+<p><b>Break</b></p>
+<p><b>(Enabled)</b></p>
+</td>
+<td>
+<p>When this exception occurs, the target immediately breaks into the debugger before any other error handlers are activated. This kind of handling is called <i>first chance</i> handling.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>sxd</b></p>
+</td>
+<td>
+<p><b>Second chance break</b></p>
+<p><b>
+        (Disabled)</b></p>
+</td>
+<td>
+<p>The debugger does not break for a first-chance exception of this type (although a message is displayed). If other error handlers do not address this exception, execution stops and the target breaks into the debugger. This kind of handling is called <i>second chance</i> handling.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>sxn</b></p>
+</td>
+<td>
+<p><b>Output</b></p>
+<p><b>
+        (Notify)</b></p>
+</td>
+<td>
+<p>When this exception occurs, the target application does not break into the debugger at all. However, a message is displayed that notifies the user of this exception.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>sxi</b></p>
+</td>
+<td>
+<p><b>Ignore</b></p>
+</td>
+<td>
+<p>When this exception occurs, the target application does not break into the debugger at all, and no message is displayed.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>When you are setting the handling status, these commands have the following effects:</p>
+<table>
+<tr>
+<th>Command</th>
+<th>Status name</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p><b>sxe</b></p>
+</td>
+<td>
+<p><b>Handled</b></p>
+</td>
+<td>
+<p>The event is considered handled when execution resumes.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>sxd,sxn,sxi</b></p>
+</td>
+<td>
+<p><b>Not Handled</b></p>
+</td>
+<td>
+<p>The event is considered not handled when execution resumes.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>You can use the <b>-h</b> option together with exceptions, not events. Using this option with <b>ch</b>, <b>bpe</b>, or <b>sse</b> sets the handling status for <b>hc</b>, <b>bpec</b>, or <b>ssec</b>, respectively. If you use the -h option with any other event, it has no effect.</p>
+<p>Using the <b>-c</b> or <b>-c2</b> options with <b>hc</b>, <b>bpec</b>, or <b>ssec</b> associates the specified commands with <b>ch</b>, <b>bpe</b>, or <b>sse</b>, respectively.</p>
+<p>In the following example, the <b>sxe</b> command is used to set the break status of access violation events to break on the first chance, and to set the first-chance command that will be executed at that point to <b>r eax</b>.  Then the <b>sx-</b> command is used to alter the first-chance command to <b>r ebx</b>, without changing the handling status.  Finally, a portion of the <b>sx</b> output is shown, indicating the current settings for access violation events:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; sxe -c "r eax" av 
+
+0:000&gt; sx- -c "r ebx" av 
+
+0:000&gt; sx 
+ av - Access violation - break - not handled
+       Command: "r ebx"
+  . . .  </pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20sx, sxd, sxe, sxi, sxn, sxr, sx- (Set Exceptions)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

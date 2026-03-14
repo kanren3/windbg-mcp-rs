@@ -1,0 +1,116 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The LOCKED_PAGES_TRACKER_CORRUPTION bug check has a value of 0x000000D9. This indicates that the internal locked-page tracking structures have been corrupted."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0xD9: LOCKED_PAGES_TRACKER_CORRUPTION</title>
+
+<meta name="MS-HAID" content="t06_bugs_B0_10889780-f5eb-4aae-a53d-22b8ecd02674.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0xd9__locked_pages_tracker_corruption"></a>Bug Check 0xD9: LOCKED_PAGES_TRACKER_CORRUPTION</h1>
+</div>
+<p>The LOCKED_PAGES_TRACKER_CORRUPTION bug check has a value of 0x000000D9. This indicates that the internal locked-page tracking structures have been corrupted.</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2> LOCKED_PAGES_TRACKER_CORRUPTION Parameters</h2>
+<p>The following parameters are displayed on the blue screen. Parameter 1 indicates the type of violation. The meaning of the other parameters depends on the value of Parameter 1.</p>
+<table>
+<tr>
+<th>Parameter 1</th>
+<th>Parameter 2</th>
+<th>Parameter 3</th>
+<th>Parameter 4</th>
+<th>Cause of Error</th>
+</tr>
+<tr>
+<td>
+<p>0x01</p>
+</td>
+<td>
+<p>The address of the internal lock tracking structure </p>
+</td>
+<td>
+<p>The address of the memory descriptor list </p>
+</td>
+<td>
+<p>The number of pages locked for the current process </p>
+</td>
+<td>
+<p>The MDL is being inserted twice on the same process list.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x02</p>
+</td>
+<td>
+<p>The address of the internal lock tracking structure </p>
+</td>
+<td>
+<p>The address of the memory descriptor list </p>
+</td>
+<td>
+<p>The number of pages locked for the current process </p>
+</td>
+<td>
+<p>The MDL is being inserted twice on the systemwide list. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x03</p>
+</td>
+<td>
+<p>The address of the first internal tracking structure found </p>
+</td>
+<td>
+<p>The address of the internal lock tracking structure </p>
+</td>
+<td>
+<p>The address of the memory descriptor list </p>
+</td>
+<td>
+<p>The MDL was found twice in the process list when being freed. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x04</p>
+</td>
+<td>
+<p>The address of the internal lock tracking structure </p>
+</td>
+<td>
+<p>The address of the memory descriptor list </p>
+</td>
+<td>
+<p>0 </p>
+</td>
+<td>
+<p>The MDL was found in the systemwide list on free after it was removed. </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Cause</h2>
+<p>The error is indicated by the value of Parameter 1.</p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

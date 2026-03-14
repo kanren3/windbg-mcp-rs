@@ -1,0 +1,296 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The rm command modifies or displays the register display mask. This mask controls how registers are displayed by the r (Registers) command."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>rm (Register Mask)</title>
+
+<meta name="MS-HAID" content="r17_cmds_I_7920456a-7091-467f-a3d0-552c68eee937.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.rm__register_mask_"></a>rm (Register Mask)</h1>
+</div>
+<p>The <b>rm</b> command modifies or displays the register display mask. This mask controls how registers are displayed by the <a href="r__registers_.htm"><b>r (Registers)</b></a> command.</p>
+<pre class="syntax"><b>rm</b> 
+<b>rm</b> <b>?</b> 
+<b>rm</b> Mask 
+</pre>
+<h2><a id="ddk_cmd_register_mask_dbg"></a><a id="DDK_CMD_REGISTER_MASK_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="______________"></a>       <b>?</b>      </dt>
+<dd>
+<p>Displays a list of possible <i>Mask</i> bits.</p>
+</dd>
+<dt><a id="_______Mask______"></a><a id="_______mask______"></a><a id="_______MASK______"></a>       <i>Mask</i>      </dt>
+<dd>
+<p>Specifies the mask to use when the debugger displays the registers. <i>Mask</i> is a sum of bits that indicate something about the register display. The meaning of the bits depends on the processor and the mode. For more information; see the tables in the following Remarks section.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>The "m" in the command name must be a lowercase letter.</p>
+<p>If you use <b>rm</b> with no parameters, the current value is displayed, along with an explanation about its bits.</p>
+<p>To display the basic integer registers, you must set bit 0 (0x1) or bit 1 (0x2). By default, 0x1 is set for 32-bit targets and 0x2 is set for 64-bit targets. You cannot set these two bits at the same time--if you try to set both bits, 0x2 overrides 0x1.</p>
+<p>You can override the default mask by using the <a href="r__registers_.htm"><b>r (Registers)</b></a> command together with the <b>M</b> option.</p>
+<p>The following <i>Mask</i> bits are supported for an x86-based processor or an x64-based processor.</p>
+<table>
+<tr>
+<th>Bit</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>
+<dl>
+<dt>0</dt>
+<dt>1</dt>
+</dl>
+</p>
+</td>
+<td>
+<p>
+<dl>
+<dt>0x1</dt>
+<dt>0x2</dt>
+</dl>
+</p>
+</td>
+<td>
+<p>Displays the basic integer registers. (Setting one or both of these bits has the same effect.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>2</p>
+</td>
+<td>
+<p>0x4</p>
+</td>
+<td>
+<p>Displays the floating-point registers.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>3</p>
+</td>
+<td>
+<p>0x8</p>
+</td>
+<td>
+<p>Displays the segment registers.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>4</p>
+</td>
+<td>
+<p>0x10</p>
+</td>
+<td>
+<p>Displays the MMX registers.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>5</p>
+</td>
+<td>
+<p>0x20</p>
+</td>
+<td>
+<p>Displays the debug registers. In kernel mode, setting this bit also displays the CR4 register.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>6</p>
+</td>
+<td>
+<p>0x40</p>
+</td>
+<td>
+<p>Displays the SSE XMM registers.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>7</p>
+</td>
+<td>
+<p>0x80</p>
+</td>
+<td>
+<p>(Kernel mode only)  Displays the control registers, for example CR0, CR2, CR3 and CR8.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>8</p>
+</td>
+<td>
+<p>0x100</p>
+</td>
+<td>
+<p>(Kernel mode only)  Displays the descriptor and task state registers.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>9</p>
+</td>
+<td>
+<p>0x200</p>
+</td>
+<td>
+<p>Displays the AVX YMM registers in floating point.
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>10</p>
+</td>
+<td>
+<p>0x400</p>
+</td>
+<td>
+<p>Displays the AVX YMM registers in decimal integers.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>11</p>
+</td>
+<td>
+<p>0x800</p>
+</td>
+<td>
+<p>Displays the AVX XMM registers in decimal integers.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p></p>
+<p>The following <i>Mask</i> bits are supported for an Itanium-based processor.</p>
+<table>
+<tr>
+<th>Bit</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>
+<dl>
+<dt>0</dt>
+<dt>1</dt>
+</dl>
+</p>
+</td>
+<td>
+<p>
+<dl>
+<dt>0x1</dt>
+<dt>0x2</dt>
+</dl>
+</p>
+</td>
+<td>
+<p>Displays the basic integer registers. (Setting one or both of these bits has the same effect.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>2</p>
+</td>
+<td>
+<p>0x4</p>
+</td>
+<td>
+<p>Displays the floating-point registers.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>3</p>
+</td>
+<td>
+<p>0x8</p>
+</td>
+<td>
+<p>Displays the high, floating-point registers (<b>f32</b> to <b>f127</b>).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>4</p>
+</td>
+<td>
+<p>0x10</p>
+</td>
+<td>
+<p>Displays the user debug registers.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>5</p>
+</td>
+<td>
+<p>0x20</p>
+</td>
+<td>
+<p>(Kernel mode only)  Displays the KSPECIAL_REGISTERS.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20rm (Register Mask)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

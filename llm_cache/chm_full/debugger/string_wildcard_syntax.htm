@@ -1,0 +1,55 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="String Wildcard Syntax"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>String Wildcard Syntax</title>
+
+<meta name="MS-HAID" content="r13_syntax_c980a67c-f2d7-495d-8675-2763584a1516.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.string_wildcard_syntax"></a>String Wildcard Syntax</h1>
+</div>
+<h2><a id="ddk_string_wildcard_syntax_dbg"></a><a id="DDK_STRING_WILDCARD_SYNTAX_DBG"></a></h2>
+<p>Some debugger commands have string parameters that accept a variety of wildcard characters. These parameters are noted on their respective reference pages.</p>
+<p>These kinds of parameters support the following syntax features:</p>
+<ul>
+<li>
+<p>An asterisk (*) represents zero or more characters.</p>
+</li>
+<li>
+<p>A question mark (?) represents any single character.</p>
+</li>
+<li>
+<p>Brackets ( [ ] ) that contain a list of characters represent any single character in the list. Exactly one character in the list is matched. Within these brackets, you can use a hyphen (-) to specify a range. For example, <b>Prog[er-t7]am</b> matches "Progeam", "Program", "Progsam", "Progtam", and "Prog7am".</p>
+</li>
+<li>
+<p>A number sign (#) represents zero or more of the preceding characters. For example, <b>Lo#p</b> matches "Lp", "Lop", "Loop", "Looop", and so on. You can also combine a number sign with brackets, so <b>m[ia]#n</b> matches "mn", "min", "man", "maan", "main", "mian", "miin", "miain", and so on.</p>
+</li>
+<li>
+<p>A plus sign (+) represents one or more of the preceding characters. For example, <b>Lo+p</b> is the same as <b>Lo#p</b>, except that <b>Lo+p</b> does not match "Lp". Similarly, <b>m[ia]+n</b> is the same as <b>m[ia]#n</b>, except that m<b>[ia]+n</b> does not match "mn". <b>a?+b</b> is also the same as <b>a*b</b>, except that <b>a?+b</b> does not match "ab".</p>
+</li>
+<li>
+<p>If you have to specify a literal number sign (#), question mark (?), opening bracket ([), closing bracket (]), asterisk (*), or plus sign (+) character, you must add a backslash ( \ ) in front of the character. Hyphens are always literal when you do not enclose them in brackets. But you cannot specify a literal hyphen within a bracketed list.  </p>
+</li>
+</ul>
+<p></p>
+<p>Parameters that specify symbols also support some additional features. In addition to the standard string wildcard characters, you can use an underscore (_) before a text expression that you use to specify a symbol. When matching this expression to a symbol, the debugger treats the underscore as any quantity of underscores, even zero. This feature applies only when you are matching symbols. It does not apply to string wildcard expressions in general. For more information about symbol syntax, see <a href="symbol_syntax_and_symbol_matching.htm">Symbol Syntax and Symbol Matching</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20String Wildcard Syntax%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

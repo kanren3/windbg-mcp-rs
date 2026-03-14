@@ -1,0 +1,57 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !amli ln extension displays the specified method or the method containing a given address."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!amli ln</title>
+
+<meta name="MS-HAID" content="r33_exts_ACPI_1a02af87-276c-458a-ad9e-3ac6f39b92e0.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._amli_ln"></a>!amli ln</h1>
+</div>
+<p>The <b>!amli ln</b> extension displays the specified method or the method containing a given address.</p>
+<p></p>
+<p>Syntax</p>
+<pre class="syntax"><b>!amli ln </b>[ <i>MethodName</i> | <i>CodeAddress</i> ]</pre>
+<h2><a id="ddk__amli_ln_dbg"></a><a id="DDK__AMLI_LN_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______MethodName______"></a><a id="_______methodname______"></a><a id="_______METHODNAME______"></a>       <i>MethodName</i>      </dt>
+<dd>
+<p>Specifies the full path of the method name. If <i>MethodName</i> specifies an object that is not actually a method, an error results.</p>
+</dd>
+<dt><a id="_______CodeAddress______"></a><a id="_______codeaddress______"></a><a id="_______CODEADDRESS______"></a>       <i>CodeAddress</i>      </dt>
+<dd>
+<p>Specifies the address of the AML code that is contained in the desired method. If <i>CodeAddress</i> is prefixed with two percent signs (<b>%%</b>), it is interpreted as a physical address. Otherwise, it is interpreted as a virtual address.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<p>
+          Kdexts.dll</p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For information about related commands and their uses, see <a href="the_amli_debugger.htm">The AMLI Debugger</a>.</p>
+<h2>Remarks</h2>
+<p>If neither <i>MethodName</i> nor <i>CodeAddress</i> is specified, the method associated with the current context is displayed.</p>
+<p>The following command shows the method being currently run:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !amli ln
+c29accf5: \_WAK</code></pre>
+<p>The method _WAK is shown, with address 0xC29ACCF5.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!amli ln%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

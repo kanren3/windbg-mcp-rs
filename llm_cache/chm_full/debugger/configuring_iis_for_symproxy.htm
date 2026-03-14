@@ -1,0 +1,121 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Configuring IIS for SymProxy"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Configuring IIS for SymProxy</title>
+
+<meta name="MS-HAID" content="r09_symbols_5af10c3e-680c-4d62-b23a-601b5ebc3b74.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.configuring_iis_for_symproxy"></a>Configuring IIS for SymProxy</h1>
+</div>
+<p>Internet Information Services (IIS) must be configured to use SymProxy as an Internet Server Application Programming Interface (ISAPI) filter.  Furthermore, permissions must be set so that IIS can obtain symbols.</p>
+<p class="proch"><img src="../common/wedge.gif" alt=""/><b>To configure the application pool
+      
+     </b></p>
+<ol>
+<li>
+<p>From <b>Administrative Tools</b> open <b>Internet Information Services (IIS) Manager</b>.</p>
+</li>
+<li>
+<p>	Expand the entry with the computer name on the left and locate <b>Application Pools</b>.</p>
+</li>
+<li>
+<p>Right-click <b>Application Pools</b> and choose <b>Add Application Pool</b>.</p>
+</li>
+<li>
+<p>For the <b>Name</b> type <i>SymProxy App Pool</i>.</p>
+</li>
+<li>
+<p>	Under <b>.Net Framework version</b> select <i>None</i></p>
+</li>
+<li>
+<p>Click <b>OK</b> to create the application pool.</p>
+</li>
+<li>
+<p>Next, right click the entry for the new application pool and select <b>Advanced Settings…</b>.</p>
+</li>
+<li>
+<p>	Under <b>Process Model</b>, you will see <b>Identity</b>.  Click the button at the right labeled "<b>…</b>".</p>
+<ol>
+<li>
+<p>If you are authenticating as a network service, select <b>Predefined</b> for the <b>Application Pool Identity</b> and then select <b>Network Service</b>.</p>
+</li>
+<li>
+<p>If you are authenticating as a domain user, select <b>Custom account</b> and then click the <b>Set</b> button. Type the credentials of the account that has permissions to access the remote symbol server store (for example, <i>corp\SymProxyUser</i>), and click <b>OK</b>.</p>
+</li>
+</ol>
+</li>
+<li>
+<p>	Click <b>OK</b> to exit the <b>Application Pool Identity</b> dialog.</p>
+</li>
+<li>
+<p>Click <b>OK</b> to exit the <b>Advanced Settings</b> dialog.</p>
+</li>
+</ol>
+<p class="proch"><img src="../common/wedge.gif" alt=""/><b>To set up the Virtual Directory
+      
+     </b></p>
+<ol>
+<li>
+<p>Expand <b>Web Sites</b>.</p>
+</li>
+<li>
+<p>Select <b>Default Web Site</b>.</p>
+</li>
+<li>
+<p>Right-click the <b>Symbols</b> virtual directory and choose <b>Properties</b>.</p>
+</li>
+<li>
+<p>In the <b>Virtual Directory</b> tab, click <b>Create</b>.</p>
+</li>
+<li>
+<p>From the <b>Application Pool</b> drop-down menu, choose <b>SymProxy App Pool</b>.</p>
+</li>
+<li>
+<p>To exit <b>Symbols Properties</b>, click <b>OK</b>.</p>
+</li>
+</ol>
+<p class="proch"><img src="../common/wedge.gif" alt=""/><b>Configure the ISAPI Filter</b></p>
+<ol>
+<li>
+<p>Right-click the <b>Default Web Site</b> and select <b>Properties</b>.</p>
+</li>
+<li>
+<p>Double-click <b>ISAPI Filters</b>.</p>
+</li>
+<li>
+<p>	Right click the center pane under the column <b>Name</b> and select Click <b>Add</b>.</p>
+</li>
+<li>
+<p>For <b>Filter Name</b> type <b>SymProxy</b> or some other meaningful name.</p>
+</li>
+<li>
+<p>For <b>Executable</b> type <i>c:\windows\system32\inetsrv\symproxy.dll</i>.</p>
+</li>
+<li>
+<p>To exit the <b>Filter Properties</b> dialog, click <b>OK</b>.</p>
+</li>
+<li>
+<p>To exit <b>Default Web Site Properties,</b> click <b>OK</b>. </p>
+</li>
+</ol>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Configuring IIS for SymProxy%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,115 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !usbkd.usbhubs command displays information about USB hubs."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!usbkd.usbhubs</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._usbkd_usbhubs"></a>!usbkd.usbhubs</h1>
+</div>
+<p>The  <b>!usbkd.usbhubs</b> command displays information about USB hubs.</p>
+<pre class="syntax">
+<b>!usbkd.usbhubs a</b>[<b>v</b>]
+<b>!usbkd.usbhubs x</b>[<b>v</b>]
+<b>!usbkd.usbhubs r</b>[<b>v</b>]</pre>
+<h2><a id="ddk__devobj_dbg"></a><a id="DDK__DEVOBJ_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_____________a"></a><a id="_____________A"></a>       <b>      a</b></dt>
+<dd>
+<p>Display all hubs.</p>
+</dd>
+<dt><a id="_____________r"></a><a id="_____________R"></a>       <b>      r</b></dt>
+<dd>
+<p>Display root hubs.</p>
+</dd>
+<dt><a id="_____________x"></a><a id="_____________X"></a>       <b>      x</b></dt>
+<dd>
+<p>Display external hubs.</p>
+</dd>
+<dt><a id="_____________v"></a><a id="_____________V"></a>       <b>      v</b></dt>
+<dd>
+<p>The output is verbose. For example, <b>!usbhubs rv</b> displays verbose output about all root hubs.</p>
+</dd>
+</dl>
+<h2><a id="DLL"></a><a id="dll"></a>DLL</h2>
+<p>Usbkd.dll
+     </p>
+<h2>Examples</h2>
+<p>Here is an example of verbose output from the <b>!usbhubs</b> command.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !usbkd.usbhubs rv
+
+args 'rv'
+level: r v
+ROOT HUBS
+*LIST -- Root Hub List @ fffff8000217f440
+*flink, blink ffffe000023215c0,ffffe000011f85c0
+----------
+
+[0] entry @: ffffe000023201a0
+	!DevObj ffffe00002320050 !usbhubext ffffe000023201a0 
+On Host Controller (0x8086, 0x293c) 
+		Stat_AsyncResumeStartAt: 2437ee39d29bd498
+		Stat_AsyncResumeCompleteAt: 24413c77d29bd498
+		Stat_AsyncResume: 0x3c(60) ms
+		Stat_SyncResumeStartAt: 2437ee39d29bd498
+		Stat_SyncResumeCompleteAt: 2437ee39d29bd498
+		Stat_SyncResume: 0x0(0) ms
+Trap Regs: Event, Port, Event (ffffe000023204d0) 
+	Enable: 0 Port: 0 Event 00000000
+Hub Number: # 3
+Number Of Ports: 4
+dt usbhub!_USBHUB_FDO_FLAGS ffffe00002320ba0
+&gt;Is Root
+&gt;Power Switching: 
+	 No Power Switching 
+&gt;Overcurrent: 
+	 Global Overcurrent 
+&gt;PortIndicators: 
+	 No PortIndicators present
+&gt;AllowWakeOnConnect: 
+	 DO NOT WakeOnConnect
+&gt;CURRENT Hub Wake on Connectstate: 
+	 HWC_DISARM:- do not wake system on connect/disconnect event
+&gt;CURRENT Bus Wake state: 
+	 BUS_DISARM:- bus not armed for wake by this hub
+&gt;CURRENT Wake Detect state (WW Irp): 
+	 HUB_DISARM:- no ww irp pending (HUB_WAKESTATE_DISARMED)
+Milliamps/Port : 500ma
+Power caps (0 = not reported)
+	 PortPower_Registry : 0
+	 PortPower_DeviceStatus : 500
+	 PortPower_CfgDescriptor : 500
+	 PortPower_HubStatus : 500
+----------------------------------------------------------
+----------
+
+[1] entry @: ffffe000008b91a0
+	!DevObj ffffe000008b9050 !usbhubext ffffe000008b91a0 
+On Host Controller (0x8086, 0x2937) 
+...</code></pre>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="usb_2_0_extensions.htm">USB 2.0 Debugger Extensions</a></dt>
+<dt><a href="http://go.microsoft.com/fwlink/p?LinkID=227351">Universal Serial Bus (USB) Drivers</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!usbkd.usbhubs%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,180 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !whea extension displays top-level Windows Hardware Error Architecture (WHEA) information."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!whea</title>
+
+<meta name="MS-HAID" content="r30_exts_kernel_U_95131e12-e601-4d1d-b676-21847ce6c545.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._whea"></a>!whea</h1>
+</div>
+<p>The <b>!whea</b> extension displays top-level Windows Hardware Error Architecture (WHEA) information.</p>
+<pre class="syntax">
+    <b>!whea</b> 
+</pre>
+<h2><a id="ddk__ubp_dbg"></a><a id="DDK__UBP_DBG"></a></h2>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000
+         </b></p>
+</td>
+<td>
+<p>Unavailable </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP</b></p>
+</td>
+<td>
+<p>Unavailable </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Windows Server 2003</b></p>
+</td>
+<td>
+<p>Unavailable </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows Vista and later</b></p>
+</td>
+<td>
+<p>
+          Kdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>This extension can be used only in Windows Vista and later versions of Windows.</p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>The <a href="_errrec.htm"><b>!errrec</b></a> and <a href="_errpkt.htm"><b>!errpkt</b></a> extensions can be used to display additional WHEA information.  For general information about WHEA, see <a href="http://go.microsoft.com/fwlink/p/?linkid=153571">Windows Hardware Error Architecture (WHEA)</a> in the Windows Driver Kit (WDK) documentation. </p>
+<h2>Remarks</h2>
+<p>The following example shows the (truncated) output of the <b>!whea</b> extension: </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>3: kd&gt; !whea 
+Error Source Table @ fffff800019ca250
+13 Error Sources
+Error Source 0 @ fffffa80064132c0
+   Notify Type      : Machine Check Exception
+   Type             : 0x0 (MCE)
+   Error Count      : 8
+   Record Count     : 10
+   Record Length    : c3e
+   Error Records    : wrapper @ fffffa8007cf4000  record @ fffffa8007cf4030
+                    : wrapper @ fffffa8007cf4c3e  record @ fffffa8007cf4c6e
+                    : wrapper @ fffffa8007cf587c  record @ fffffa8007cf58ac
+                    : wrapper @ fffffa8007cf64ba  record @ fffffa8007cf64ea
+                    : wrapper @ fffffa8007cf70f8  record @ fffffa8007cf7128
+                    : wrapper @ fffffa8007cf7d36  record @ fffffa8007cf7d66
+                    : wrapper @ fffffa8007cf8974  record @ fffffa8007cf89a4
+                    : wrapper @ fffffa8007cf95b2  record @ fffffa8007cf95e2
+                    : wrapper @ fffffa8007cfa1f0  record @ fffffa8007cfa220
+                    : wrapper @ fffffa8007cfae2e  record @ fffffa8007cfae5e
+                    : wrapper @ fffffa8007cfba6c  record @ fffffa8007cfba9c
+                    : wrapper @ fffffa8007cfc6aa  record @ fffffa8007cfc6da
+                    : wrapper @ fffffa8007cfd2e8  record @ fffffa8007cfd318
+                    : wrapper @ fffffa8007cfdf26  record @ fffffa8007cfdf56
+                    : wrapper @ fffffa8007cfeb64  record @ fffffa8007cfeb94
+                    : wrapper @ fffffa8007cff7a2  record @ fffffa8007cff7d2
+   Descriptor       : @ fffffa8006413328
+      Length                     : 3cc
+      Max Raw Data Length        : 392
+      Num Records To Preallocate : 10
+      Max Sections Per Record    : 3
+      Error Source ID            : 0
+      Flags                      : 00000000
+Error Source 1 @ fffffa8007d00bc0
+   Notify Type      : Corrected Machine Check
+   Type             : 0x1 (CMC)
+   Error Count      : 0
+   Record Count     : 10
+   Record Length    : c3e
+   Error Records    : wrapper @ fffffa8007d01000  record @ fffffa8007d01030
+                    : wrapper @ fffffa8007d01c3e  record @ fffffa8007d01c6e
+                    : wrapper @ fffffa8007d0287c  record @ fffffa8007d028ac
+                    : wrapper @ fffffa8007d034ba  record @ fffffa8007d034ea
+                    : wrapper @ fffffa8007d040f8  record @ fffffa8007d04128
+                    : wrapper @ fffffa8007d04d36  record @ fffffa8007d04d66
+                    : wrapper @ fffffa8007d05974  record @ fffffa8007d059a4
+                    : wrapper @ fffffa8007d065b2  record @ fffffa8007d065e2
+                    : wrapper @ fffffa8007d071f0  record @ fffffa8007d07220
+                    : wrapper @ fffffa8007d07e2e  record @ fffffa8007d07e5e
+                    : wrapper @ fffffa8007d08a6c  record @ fffffa8007d08a9c
+                    : wrapper @ fffffa8007d096aa  record @ fffffa8007d096da
+                    : wrapper @ fffffa8007d0a2e8  record @ fffffa8007d0a318
+                    : wrapper @ fffffa8007d0af26  record @ fffffa8007d0af56
+                    : wrapper @ fffffa8007d0bb64  record @ fffffa8007d0bb94
+                    : wrapper @ fffffa8007d0c7a2  record @ fffffa8007d0c7d2
+   Descriptor       : @ fffffa8007d00c28
+      Length                     : 3cc
+      Max Raw Data Length        : 392
+      Num Records To Preallocate : 10
+      Max Sections Per Record    : 3
+      Error Source ID            : 1
+      Flags                      : 00000000
+Error Source 2 @ fffffa8007d00770
+   Notify Type      : Non-Maskable Interrupt
+   Type             : 0x3 (NMI)
+   Error Count      : 1
+   Record Count     : 1
+   Record Length    : 1f8
+   Error Records    : wrapper @ fffffa800631b2c0  record @ fffffa800631b2f0
+   Descriptor       : @ fffffa8007d007d8
+      Length                     : 3cc
+      Max Raw Data Length        : 100
+      Num Records To Preallocate : 1
+      Max Sections Per Record    : 1
+      Error Source ID            : 2
+      Flags                      : 00000000
+Error Source 3 @ fffffa8007d0dbc0
+   Notify Type      : BOOT Error Record
+   Type             : 0x7 (BOOT)
+   Error Count      : 0
+   Record Count     : 1
+   Record Length    : 4f8
+   Error Records    : wrapper @ 0000000000000000  record @ 0000000000000030
+   Descriptor       : @ fffffa8007d0dc28
+      Length                     : 3cc
+      Max Raw Data Length        : 400
+      Num Records To Preallocate : 1
+      Max Sections Per Record    : 1
+      Error Source ID            : 3
+      Flags                      : 00000000
+
+. . . . </pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!whea%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,122 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The General Purpose Input/Output (GPIO) extension commands display the software state of GPIO controllers."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>GPIO Extensions</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.gpio_extensions"></a>GPIO Extensions</h1>
+</div>
+<p>The General Purpose Input/Output (GPIO) extension commands display the software state of GPIO controllers. These commands display information from data structures maintained by the GPIO framework extension driver (Msgpioclx.sys). For information about the GPIO framework extension, see <a href="http://go.microsoft.com/fwlink/p?LinkID=299823">General-Purpose I/O (GPIO) Drivers</a>.</p>
+<p>The GPIO debugger extension commands are implemented in gpiokd.dll. To load the GPIO commands, enter <b>.load gpiokd.dll</b> in the debugger.</p>
+<p>Each GPIO controller has a set of banks. Each bank has a pin table that has an array of pins. The GPIO debugger extension commands display information about GPIO controllers, banks, pin tables, and pins.</p>
+<h2><a id="data_structures_used_by_the_gpio_commands"></a><a id="DATA_STRUCTURES_USED_BY_THE_GPIO_COMMANDS"></a>Data structures used by the GPIO commands</h2>
+<p>The GPIO debugger extension commands use these data structures, which are defined by Msgpioclx.sys.</p>
+<p></p>
+<dl>
+<dt><a id="msgpioclx__DEVICE_EXTENSION"></a><a id="msgpioclx__device_extension"></a><a id="MSGPIOCLX__DEVICE_EXTENSION"></a><b>msgpioclx!_DEVICE_EXTENSION</b></dt>
+<dd>
+<p>The device extension structure for the GPIO framework extension driver. This structure holds information about an individual GPIO controller.</p>
+</dd>
+<dt><a id="msgpioclx__GPIO_BANK_ENTRY"></a><a id="msgpioclx__gpio_bank_entry"></a><a id="MSGPIOCLX__GPIO_BANK_ENTRY"></a><b>msgpioclx!_GPIO_BANK_ENTRY</b></dt>
+<dd>
+<p>This structure holds information about an individual bank of a GPIO controller.</p>
+</dd>
+<dt><a id="msgpioclx__GPIO_PIN_INFORMATION_ENTRY"></a><a id="msgpioclx__gpio_pin_information_entry"></a><a id="MSGPIOCLX__GPIO_PIN_INFORMATION_ENTRY"></a><b>msgpioclx!_GPIO_PIN_INFORMATION_ENTRY</b></dt>
+<dd>
+<p>This structure holds information about an individual pin in a bank of a GPIO controller.</p>
+</dd>
+</dl>
+<h2><a id="Getting_started_with_GPIO_debugging"></a><a id="getting_started_with_gpio_debugging"></a><a id="GETTING_STARTED_WITH_GPIO_DEBUGGING"></a>Getting started with GPIO debugging</h2>
+<p>To start debugging a  GPIO issue, enter the <a href="_gpiokd_clientlist.htm"><b>!gpiokd.clientlist</b></a> command. The <b>!gpiokd.clientlist</b> command displays an overview of all registered GPIO controllers and displays addresses that you can pass to other GPIO debugger commands.</p>
+<p>
+<h2><a id="in_this_section"></a>In this section</h2>
+<table>
+<tr>
+<th>Topic</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p><a href="_gpiokd_help.htm"><b>!gpiokd.help</b></a></p>
+</td>
+<td>
+<p>The <a href="_gpiokd_help.htm"><b>!gpiokd.help</b></a> command displays help for the GPIO debugger extension commands.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="_gpiokd_bankinfo.htm"><b>!gpiokd.bankinfo</b></a></p>
+</td>
+<td>
+<p>The  <a href="_gpiokd_bankinfo.htm"><b>!gpiokd.bankinfo</b></a> command displays information about a GPIO bank.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="_gpiokd_clientlist.htm"><b>!gpiokd.clientlist</b></a></p>
+</td>
+<td>
+<p>The  <a href="_gpiokd_clientlist.htm"><b>!gpiokd.clientlist</b></a> command displays all registered GPIO controllers.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="_gpiokd_gpioext.htm"><b>!gpiokd.gpioext</b></a></p>
+</td>
+<td>
+<p>The  <a href="_gpiokd_gpioext.htm"><b>!gpiokd.gpioext</b></a> command displays information about a GPIO controller.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="_gpiokd_pininfo.htm"><b>!gpiokd.pininfo</b></a></p>
+</td>
+<td>
+<p>The  <a href="_gpiokd_pininfo.htm"><b>!gpiokd.pininfo</b></a> command displays information about a specified GPIO pin.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="_gpiokd_pinisrvec.htm"><b>!gpiokd.pinisrvec</b></a></p>
+</td>
+<td>
+<p>The  <a href="_gpiokd_pinisrvec.htm"><b>!gpiokd.pinisrvec</b></a> command displays Interrupt Service Routine (ISR) vector information for a specified pin.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="_gpiokd_pintable.htm"><b>!gpiokd.pintable</b></a></p>
+</td>
+<td>
+<p>The  <a href="_gpiokd_pintable.htm"><b>!gpiokd.pintable</b></a> command displays information about an array of GPIO pins.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+</p>
+<p></p>
+<h2><a id="related_topics"></a>Related topics</h2>
+<dl>
+<dt><a href="specialized_extensions.htm">Specialized Extension Commands</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20GPIO Extensions%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

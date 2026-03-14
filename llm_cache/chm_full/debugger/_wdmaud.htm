@@ -1,0 +1,96 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Displays a variety of WDM Audio (WDMAud) structures."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!wdmaud</title>
+
+<meta name="MS-HAID" content="r30_exts_kernel_U_dffcf787-b959-4dae-ab7d-db407458834f.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._wdmaud"></a>!wdmaud</h1>
+</div>
+<p>Displays a variety of WDM Audio (WDMAud) structures.</p>
+<p></p>
+<pre class="syntax"><b>!wdmaud </b><i>Address</i><b> </b><i>Flags</i></pre>
+<h2><a id="ddk__wdmaud_dbg"></a><a id="DDK__WDMAUD_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Address______"></a><a id="_______address______"></a><a id="_______ADDRESS______"></a>       <i>Address</i>      </dt>
+<dd>
+<p>Specifies the address of the structure to be displayed. </p>
+</dd>
+<dt><a id="_______Flags______"></a><a id="_______flags______"></a><a id="_______FLAGS______"></a>       <i>Flags</i>      </dt>
+<dd>
+<p>Specifies the information to display. This must include exactly one of the bits 0x1, 0x2, 0x4, and 0x8. The 0x100 bit can be added to any of these.</p>
+<p></p>
+<dl>
+<dt><a id="Bit_0__0x1_"></a><a id="bit_0__0x1_"></a><a id="BIT_0__0X1_"></a>Bit 0 (0x1)</dt>
+<dd>
+<p>Displays a list of all IOCTLs that have been sent to wdmaud.sys. When this is used, <i>Address</i> should specify the address of the <b>WdmaIoctlHistoryListHead</b>. If the 0x100 bit is set, the display also includes the <b>pContext</b> that each IOCTL was sent with.</p>
+</dd>
+<dt><a id="Bit_1__0x2_"></a><a id="bit_1__0x2_"></a><a id="BIT_1__0X2_"></a>Bit 1 (0x2)</dt>
+<dd>
+<p>Displays a list of all IRPs that WDMAud has marked as pending. When this is used, <i>Address</i> should specify the address of the <b>WdmaPendingIrpListHead</b>. If the 0x100 bit is set, the display also includes the context on which each IRP was allocated.</p>
+</dd>
+<dt><a id="Bit_2__0x4_"></a><a id="bit_2__0x4_"></a><a id="BIT_2__0X4_"></a>Bit 2 (0x4)</dt>
+<dd>
+<p>Displays a list of all MDLs that WDMAud has allocated. When this is used, <i>Address</i> should specify the address of the <b>WdmaAllocatedMdlListHead</b>. If the 0x100 bit is set, the display also includes the context on which each MDL was allocated.</p>
+</dd>
+<dt><a id="Bit_3__0x8_"></a><a id="bit_3__0x8_"></a><a id="BIT_3__0X8_"></a>Bit 3 (0x8)</dt>
+<dd>
+<p>Displays a list of all active contexts attached to wdmaud.sys. When this is used, <i>Address</i> should specify the address of the <b>WdmaContextListHead</b>. If the 0x100 bit is set, the display also includes the data members of each context structure.</p>
+</dd>
+<dt><a id="Bit_8__0x100_"></a><a id="bit_8__0x100_"></a><a id="BIT_8__0X100_"></a>Bit 8 (0x100)</dt>
+<dd>
+<p>Causes the display to include verbose information.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000
+         </b></p>
+</td>
+<td>
+<p>
+          Kdextx86.dll
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>Unavailable </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For information about WDM audio architecture and audio drivers, see the Windows Driver Kit (WDK) documentation.</p>
+<h2>Remarks</h2>
+<p>The contexts attached to wdmaud.sys (<b>pContext</b>) contain most of the state data for each device. Whenever wdmaud.drv is loaded into a new process, wdmaud.sys is notified of its arrival. Whenever wdmaud.drv is unloaded, wdmaud.sys cleans up any allocations made in that context.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!wdmaud%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

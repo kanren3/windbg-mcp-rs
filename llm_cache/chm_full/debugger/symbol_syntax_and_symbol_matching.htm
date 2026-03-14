@@ -1,0 +1,56 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Symbol Syntax and Symbol Matching"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Symbol Syntax and Symbol Matching</title>
+
+<meta name="MS-HAID" content="r09_symbols_6e5fcfbf-08a6-481b-9df4-23e19ee7559d.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.symbol_syntax_and_symbol_matching"></a>Symbol Syntax and Symbol Matching</h1>
+</div>
+<h2><a id="ddk_symbol_syntax_and_symbol_matching_dbg"></a><a id="DDK_SYMBOL_SYNTAX_AND_SYMBOL_MATCHING_DBG"></a></h2>
+<p>Symbols allow you to directly manipulate tokens that are used by the program being debugged. For example, you can set a breakpoint at the function <b>main</b> with the command <b>bp main</b>, or display the integer variable <b>MyInt</b> with the command <b>dd MyInt L1</b>.</p>
+<p>In many cases, symbols can be used as parameters in debugger commands. This is supported for most numerical parameters, and is also supported in some text parameters. In addition to general rules for symbol syntax, there are also symbol syntax rules that apply in each of these cases.</p>
+<h3><a id="general_symbol_syntax_rules"></a><a id="GENERAL_SYMBOL_SYNTAX_RULES"></a>General Symbol Syntax Rules</h3>
+<p>A symbol name consists of one or more characters, but always begins with a letter, underscore (<b>_</b>), question mark (<b>?</b>), or dollar sign (<b>$</b>).</p>
+<p>A symbol name may be qualified by a module name. An exclamation mark (<b>!</b>) separates the module name from the symbol (for instance, <b>mymodule!main</b>). If no module name is used, the symbol can still be prefixed with an exclamation mark.  Using an exclamation mark with no module name can be especially useful, even for local variables, to indicate to a debugger command that a parameter is a name and not a hexadecimal number.  For example, the variable <b>fade</b> will be read by the <a href="dt__display_type_.htm"><b>dt (Display Type)</b></a> command as an address, unless it is prefixed by an exclamation mark or the -n option is used.  However, to specify that a symbol is local, precede it with a dollar sign ( $ ) and an exclamation point ( ! ), as in <b>$!lime</b>.</p>
+<p>Symbol names are completely case-insensitive. This means that the presence of a <b>myInt</b> and a <b>MyInt</b> in your program will not be correctly understood by the debuggers; any command that references one of these may access the other one, regardless of how the command is capitalized.</p>
+<h3><a id="symbol_syntax_in_numerical_expressions"></a><a id="SYMBOL_SYNTAX_IN_NUMERICAL_EXPRESSIONS"></a>Symbol Syntax in Numerical Expressions</h3>
+<p>The debugger understands two different kinds of expressions: Microsoft Macro Assembler (MASM) expressions and C++ expressions. As far as symbols are concerned, these two forms of syntax differ as follows:</p>
+<ul>
+<li>
+<p>In MASM expressions, each symbol is interpreted as an address. Depending on what the symbol refers to, this will be the address of a global variable, local variable, function, segment, module, or any other recognized label.</p>
+</li>
+<li>
+<p>In C++ expressions, each symbol is interpreted according to its type. Depending on what the symbol refers to, it may be interpreted as an integer, a data structure, a function pointer, or any other data type. A symbol that does not correspond to a C++ data type (such as an unmodified module name) will result in a syntax error.</p>
+</li>
+</ul>
+<p>For an explanation of when and how to use each type of syntax, see <a href="evaluating_expressions.htm">Evaluating Expressions</a>.</p>
+<p>If you are using MASM expression syntax, any symbol that could be interpreted as a hexadecimal number or as a register (e.g., <b>BadFeed</b>, <b>ebX</b>) should always be prefixed by an exclamation point. This makes sure the debugger recognizes it as a symbol.</p>
+<p>The <a href="ss__set_symbol_suffix_.htm"><b>ss (Set Symbol Suffix)</b></a> command can be used to set the symbol suffix. This instructs the debugger to automatically append "A" or "W" to any symbol name it cannot find otherwise.</p>
+<p>Many Win32 routines exist in both ASCII and Unicode versions. These routines often have an "A" or "W" appended to the end of their names, respectively. Using a symbol suffix will aid the debugger when searching for these symbols.</p>
+<p>Suffix matching is not active by default. </p>
+<h3><a id="symbol_syntax_in_text_expressions"></a><a id="SYMBOL_SYNTAX_IN_TEXT_EXPRESSIONS"></a>Symbol Syntax in Text Expressions</h3>
+<p>Symbols can be used in the text parameters of some commands -- for example, <a href="bp__bu__bm__set_breakpoint_.htm"><b>bm (Set Breakpoint)</b></a> and <a href="x__examine_symbols_.htm"><b>x (Examine Symbols)</b></a>.</p>
+<p>These text parameters support a variety of wildcards and specifiers. See <a href="string_wildcard_syntax.htm">String Wildcard Syntax</a> for details. In addition to the standard string wildcards, a text expression used to specify a symbol can be prefixed with a leading underscore. When matching this to a symbol, the debugger will treat this as any quantity of underscores, even zero.</p>
+<p>The symbol suffix is not used when matching symbols in text expressions. </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Symbol Syntax and Symbol Matching%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

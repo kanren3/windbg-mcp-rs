@@ -1,0 +1,86 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The BC_BTHMINI_VERIFIER_FAULT bug check has a value of 0x00000BFF. This indicates that The Bluetooth miniport extensible driver verifier has caught a violation."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0xBFF: BC_BTHMINI_VERIFIER_FAULT</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0xbff__bc_bthmini_verifier_fault"></a>Bug Check 0xBFF: BC_BTHMINI_VERIFIER_FAULT</h1>
+</div>
+<p>The BC_BTHMINI_VERIFIER_FAULT bug check has a value of 0x00000BFF. This indicates that The Bluetooth miniport extensible driver verifier has caught a violation.
+</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2>BC_BTHMINI_VERIFIER_FAULT Parameters</h2>
+<p>The following parameters are displayed on the blue screen.</p>
+<table>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>1</td>
+<td>
+<p>The subtype of the Bluetooth verifier fault.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>            0x1 : An attempt was made to return a packet with type that mis-matched its original request.
+                  2 - Returned packet type
+                  3 - Expected packet type
+                  4 - Reserved
+            0x2 : An attempt was made to return an unexpected status code and caused the packet to be discarded.
+                  2 - Unexpected return status
+                  3 - Reserved
+                  4 - Reserved
+            0x3 : Incorrect output buffer size was returned to indicate number of bytes written by the lower transport driver.
+                  2 - Unexpected buffer size
+                  3 - Expected buffer size
+                  4 - Reserved
+</pre>
+</td>
+</tr>
+</table></span></div>
+</td>
+</tr>
+<tr>
+<td>2</td>
+<td>See parameter 1</td>
+</tr>
+<tr>
+<td>3</td>
+<td>See parameter 1</td>
+</tr>
+<tr>
+<td>4</td>
+<td>See parameter 1</td>
+</tr>
+</table>
+<p> </p>
+<h2>Resolution</h2>
+<p> Parameter 1 describes the type of violation.
+Look at the call stack to determine the misbehaving driver.</p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

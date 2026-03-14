@@ -1,0 +1,144 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="There are two ways you can use WinDbg to initiate a live kernel-mode debugging session."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Live Kernel-Mode Debugging Using WinDbg</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.performing_kernel-mode_debugging_using_windbg"></a>Live Kernel-Mode Debugging Using WinDbg</h1>
+</div>
+<p>There are two ways you can use WinDbg to initiate a live kernel-mode debugging session.</p>
+<h2><a id="WinDbg_Menu"></a><a id="windbg_menu"></a><a id="WINDBG_MENU"></a>WinDbg Menu</h2>
+<p>When WinDbg is in dormant mode, you can begin a kernel debugging session by choosing <b>Kernel Debug</b> from the <b>File</b> menu or by pressing CTRL+K.
+
+When the <b>Kernel Debugging</b> dialog box appears, click the appropriate tab: <b>NET</b>,  <b>1394</b>, <b>USB</b>, <b>COM</b>, or <b>Local</b>. Each tab specifies a different connection method. For more information about the dialog box and its entries, see <a href="file___kernel_debug.htm">File | Kernel Debug</a>.</p>
+<h2><a id="Command_Prompt"></a><a id="command_prompt"></a><a id="COMMAND_PROMPT"></a>Command Prompt</h2>
+<p>In a Command Prompt window, you can initiate a kernel-mode debugging session when you launch WinDbg. Enter one of the following commands:</p>
+<dl>
+<dd><b>windbg [-y </b><i>SymbolPath</i><b>] -k net:port=</b><i>PortNumber</i><b>,key=</b><i>Key</i></dd>
+<dd><b>windbg [-y </b><i>SymbolPath</i><b>] -k 1394:channel=</b><i>1394Channel</i><b>[,symlink=</b><i>1394Protocol</i><b>] </b></dd>
+<dd><b>windbg [-y </b><i>SymbolPath</i><b>] -k usb:targetname=</b><i>USBString</i></dd>
+<dd><b>windbg [-y </b><i>SymbolPath</i><b>] -k com:port=</b><i>ComPort</i><b>,baud=</b><i>BaudRate</i></dd>
+<dd><b>windbg [-y </b><i>SymbolPath</i><b>] -k com:pipe,port=\\</b><i>VMHost</i><b>\pipe\</b><i>PipeName</i><b>[,resets=0][,reconnect]</b></dd>
+<dd><b>windbg [-y </b><i>SymbolPath</i><b>] -k com:</b><i>modem</i></dd>
+<dd><b>windbg [-y </b><i>SymbolPath</i><b>] -kl </b></dd>
+<dd><b>windbg [-y </b><i>SymbolPath</i><b>] -k</b></dd>
+</dl>
+<p>For more information, see <a href="windbg_command_line_options.htm"><b>WinDbg Command-Line Options</b></a>.</p>
+<h2><a id="Environment_Variables"></a><a id="environment_variables"></a><a id="ENVIRONMENT_VARIABLES"></a>Environment Variables</h2>
+<p>For debugging over a serial (COM port) or 1394 connection, you can use environment variables to specify the connection settings.</p>
+<p>Use the following variables to specify a serial connection.</p>
+<dl>
+<dd><b>set _NT_DEBUG_PORT = </b><i>ComPort</i></dd>
+<dd><b>set _NT_DEBUG_BAUD_RATE = </b><i>BaudRate 
+</i></dd>
+</dl>
+<p>Use the following variables to specify a 1394 connection.</p>
+<dl>
+<dd><b>set _NT_DEBUG_BUS = 1394 </b></dd>
+<dd><b>set _NT_DEBUG_1394_CHANNEL = </b><i>1394Channel</i><b> </b></dd>
+<dd><b>set _NT_DEBUG_1394_SYMLINK = </b><i>1394Protocol</i><b> </b></dd>
+</dl>
+<p>For more information, see <a href="kernel_mode_environment_variables.htm">Kernel-Mode Environment Variables</a>.</p>
+<h2><a id="ddk__devobj_dbg"></a><a id="DDK__DEVOBJ_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______SymbolPath______"></a><a id="_______symbolpath______"></a><a id="_______SYMBOLPATH______"></a>       <i>SymbolPath</i>      </dt>
+<dd>
+<p>A list of directories where symbol files are located. Directories in the list are separated by semicolons. For more information, see <a href="symbol_path.htm">Symbol Path</a>.</p>
+</dd>
+<dt><a id="_______PortNumber______"></a><a id="_______portnumber______"></a><a id="_______PORTNUMBER______"></a>       <i>PortNumber</i>      </dt>
+<dd>
+<p>A port number to use for network debugging. You can choose any number from 49152 through 65535. For more information, see <a href="setting_up_a_network_debugging_connection.htm">Setting Up a Network Connection Manually</a>.</p>
+</dd>
+<dt><a id="_______Key______"></a><a id="_______key______"></a><a id="_______KEY______"></a>       <i>Key</i>      </dt>
+<dd>
+<p>The encryption key to use for network debugging. We recommend that you use an automatically generated key, which is provided by bcdedit when you configure the target computer.  For more information, see <a href="setting_up_a_network_debugging_connection.htm">Setting Up a Network Connection Manually</a>.</p>
+</dd>
+<dt><a id="_______1394Channel______"></a><a id="_______1394channel______"></a><a id="_______1394CHANNEL______"></a>       <i>1394Channel</i>      </dt>
+<dd>
+<p>The 1394 channel number. Valid channel numbers are any integer between 0 and 62, inclusive. <i>1394Channel</i> must match the number used by the target computer, but does not depend on the physical 1394 port chosen on the adapter. For more information, see <a href="setting_up_a_1394_cable_connection.htm">Setting Up a 1394 Connection Manually</a>.</p>
+</dd>
+<dt><a id="_______1394Protocol______"></a><a id="_______1394protocol______"></a><a id="_______1394PROTOCOL______"></a>       <i>1394Protocol</i>      </dt>
+<dd>
+<p>The connection protocol to be used for the 1394 kernel connection. This can almost always be omitted, because the debugger will automatically choose the correct protocol. If you wish to set this manually, and the target computer is running Windows XP, <i>1394Protocol</i> should be set equal to "channel". If the target computer is running Windows Server 2003 or later, <i>1394Protocol</i> should be set equal to "instance". If it is omitted, the debugger will default to the protocol appropriate for the current target computer. This can only be specified through the command line or the environment variables, not through the WinDbg graphical interface.</p>
+</dd>
+<dt><a id="_______USBString______"></a><a id="_______usbstring______"></a><a id="_______USBSTRING______"></a>       <i>USBString</i>      </dt>
+<dd>
+<p>A  USB connection string. This must match the string specified with the /targetname boot option. For more information, see <a href="setting_up_a_usb_3_0_debug_cable_connection.htm">Setting Up a USB 3.0 Connection Manually</a> and <a href="setting_up_a_usb_2_0_debug_cable_connection.htm">Setting Up a USB 2.0 Connection Manually</a>.</p>
+</dd>
+<dt><a id="_______ComPort______"></a><a id="_______comport______"></a><a id="_______COMPORT______"></a>       <i>ComPort</i>      </dt>
+<dd>
+<p>The name of the COM port. This can be in the format "com2" or in the format "\\.\com2", but should not simply be a number. For more information, see <a href="setting_up_a_null_modem_cable_connection.htm">Setting Up a Serial Connection Manually</a>.</p>
+</dd>
+<dt><a id="_______BaudRate______"></a><a id="_______baudrate______"></a><a id="_______BAUDRATE______"></a>       <i>BaudRate</i>      </dt>
+<dd>
+<p>The baud rate. This can be 9600, 19200, 38400, 57600, or 115200.</p>
+</dd>
+<dt><a id="_______VMHost______"></a><a id="_______vmhost______"></a><a id="_______VMHOST______"></a>       <i>VMHost</i>      </dt>
+<dd>
+<p>When debugging a virtual machine, <i>VMHost</i> specifies the name of the physical computer on which the virtual machine is running. If the virtual machine is running on the same computer as the kernel debugger itself, use a single period (.) for <i>VMHost</i>. For more information, see <a href="attaching_to_a_virtual_machine__kernel_mode_.htm">Setting Up a Connection to a Virtual Machine</a>.</p>
+</dd>
+<dt><a id="_______PipeName______"></a><a id="_______pipename______"></a><a id="_______PIPENAME______"></a>       <i>PipeName</i>      </dt>
+<dd>
+<p>The name of the pipe created by the virtual machine for the debugging connection. </p>
+</dd>
+<dt><a id="_______resets_0"></a><a id="_______RESETS_0"></a>       <b>resets=0</b></dt>
+<dd>
+<p>Specifies that an unlimited number of reset packets can be sent to the target when the host and target are synchronizing. This parameter is only needed when debugging certain kinds of virtual machines.</p>
+</dd>
+<dt><a id="_______reconnect"></a><a id="_______RECONNECT"></a>       <b>reconnect</b></dt>
+<dd>
+<p>Causes the debugger to automatically disconnect and reconnect the pipe if a read/write failure occurs. Additionally, if the named pipe is not found when the debugger is started, the reconnect parameter will cause it to wait for a pipe of this name to appear. This parameter is only needed when debugging certain kinds of virtual machines. </p>
+</dd>
+<dt><a id="_______-kl"></a><a id="_______-KL"></a>       <b>-kl</b></dt>
+<dd>
+<p>Causes the debugger to perform local kernel-mode debugging. For more information, see <a href="performing_local_kernel_debugging.htm">Local Kernel-Mode Debugging</a>.</p>
+</dd>
+</dl>
+<h2><a id="Examples"></a><a id="examples"></a><a id="EXAMPLES"></a>Examples</h2>
+<p>The following batch file could be used to set up and start a debugging session over a COM port connection.</p>
+<pre class="syntax" xml:space="preserve"><code>set _NT_SYMBOL_PATH=d:\mysymbols
+set _NT_DEBUG_PORT=com1
+set _NT_DEBUG_BAUD_RATE=115200
+set _NT_DEBUG_LOG_FILE_OPEN=d:\debuggers\logfile1.log
+windbg -k</code></pre>
+<p>The following batch file could be used to set up and start a debugging session over a 1394 connection.</p>
+<pre class="syntax" xml:space="preserve"><code>set _NT_SYMBOL_PATH=d:\mysymbols
+set _NT_DEBUG_BUS=1394
+set _NT_DEBUG_1394_CHANNEL=44
+set _NT_DEBUG_LOG_FILE_OPEN=d:\debuggers\logfile1.log
+windbg -k</code></pre>
+<p>The following command lines could be used to start WinDbg without any environment variables.</p>
+<dl>
+<dt><b>windbg -y d:\mysymbols -k com:port=com2,baud=57600 </b></dt>
+<dt><b>windbg -y d:\mysymbols -k com:port=\\.\com2,baud=115200</b></dt>
+<dt><b>windbg -y d:\mysymbols -k 1394:channel=20,symlink=instance</b></dt>
+<dt><b>windbg -y d:\mysymbols -k net:port=50000,key=</b><i>AutoGeneratedKey</i></dt>
+</dl>
+<div class="code"></div>
+<h2><a id="related_topics"></a>Related topics</h2>
+<dl>
+<dt><a href="windbg_command_line_options.htm"><b>WinDbg Command-Line Options</b></a></dt>
+<dt><a href="kernel_mode_environment_variables.htm">Kernel-Mode Environment Variables</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Live Kernel-Mode Debugging Using WinDbg%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

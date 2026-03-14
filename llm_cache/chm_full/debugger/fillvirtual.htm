@@ -1,0 +1,123 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The FillVirtual method writes a pattern of bytes to the target's virtual memory. The pattern is written repeatedly until the specified memory range is filled."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IDebugDataSpaces2::FillVirtual method</title>
+
+<meta name="MS-HAID" content="IDebugDataSpaces_26ed83e1-6084-4826-bf6c-30be250d3e3f.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.fillvirtual"></a>IDebugDataSpaces2::FillVirtual method</h1>
+</div>
+<p>The <b>FillVirtual</b> method writes a pattern of bytes to the target's virtual memory.  The pattern is written repeatedly until the specified memory range is filled.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>HRESULT FillVirtual(
+  [in]            ULONG64 Start,
+  [in]            ULONG   Size,
+  [in]            PVOID   Pattern,
+  [in]            ULONG   PatternSize,
+  [out, optional] PULONG  Filled
+);</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Parameters</h2>
+<dl>
+<dt><i>Start</i> [in]</dt>
+<dd>
+<p>Specifies the location in the target's virtual address space at which to start writing the pattern.</p>
+</dd>
+<dt><i>Size</i> [in]</dt>
+<dd>
+<p>Specifies how many bytes to write to the target's memory.</p>
+</dd>
+<dt><i>Pattern</i> [in]</dt>
+<dd>
+<p>Specifies the memory location of the pattern.</p>
+</dd>
+<dt><i>PatternSize</i> [in]</dt>
+<dd>
+<p>Specifies the size in bytes of the pattern.</p>
+</dd>
+<dt><i>Filled</i> [out, optional]</dt>
+<dd>
+<p>Receives the number of bytes written.  If it is set to <b>NULL</b>, this information isn't returned.</p>
+</dd>
+</dl>
+<h2>Return value</h2>
+<p>This method can also return error values.  See <a href="hresult_values.htm"><b>Return Values</b></a> for more details.</p>
+<table>
+<tr>
+<th>Return code</th>
+<th>Description</th>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>S_OK</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>The method was successful.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>This method writes the pattern to the target's memory as many times as will fit in <i>Size</i> bytes.</p>
+<p>If the final copy of the pattern will not completely fit into the memory range, it will only be partially written.  This includes the case where the size of the pattern is larger than the value of <i>Size</i>, and the extra bytes in the pattern are ignored.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Target platform</p>
+</th>
+<td width="70%">
+<dl>
+<dt></dt>
+</dl>
+</td>
+</tr>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Dbgeng.h (include Dbgeng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="idebugdataspaces2.htm"><b>IDebugDataSpaces2</b></a></dt>
+<dt><a href="idebugdataspaces3.htm"><b>IDebugDataSpaces3</b></a></dt>
+<dt><a href="idebugdataspaces4.htm"><b>IDebugDataSpaces4</b></a></dt>
+<dt><a href="writevirtual.htm"><b>WriteVirtual</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IDebugDataSpaces2::FillVirtual method%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

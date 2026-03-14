@@ -1,0 +1,53 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="KD Connection Servers (Kernel Mode)"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>KD Connection Servers (Kernel Mode)</title>
+
+<meta name="MS-HAID" content="r08_use_remote_da274d6a-0dd9-43db-98cf-5c84038694db.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.kd_connection_servers__kernel_mode_"></a>KD Connection Servers (Kernel Mode)</h1>
+</div>
+<h2><a id="ddk_kd_connection_servers_kernel_mode__dbg"></a><a id="DDK_KD_CONNECTION_SERVERS_KERNEL_MODE__DBG"></a></h2>
+<p>Kernel-mode remote debugging through a KD connection server involves running a small application called a <i>KD connection server</i> on the server. Then a kernel-mode debugger is started on the client. Since this debugger will be doing all of the actual processing, it is called the <i>smart client</i>.</p>
+<p>The Debugging Tools for Windows package includes a KD connection server called KdSrv (kdsrv.exe).</p>
+<p>The two computers do not have to be running the same version of Windows; they can be running any version of Windows. However, the debugger binaries used on the client and the KdSrv binary used on the server must be from the same release of the Debugging Tools for Windows package. This method cannot be used for dump-file debugging. </p>
+<p>To set up this remote session, the KD connection server is set up first, and then the smart client is activated. Any number of smart clients can operate through a single KD connection server, but they must each be connected to a different kernel debugging session.</p>
+<p>This section includes:</p>
+<dl>
+<dd>
+<p><a href="activating_a_kd_connection_server.htm">Activating a KD Connection Server</a></p>
+</dd>
+<dd>
+<p><a href="searching_for_kd_connection_servers.htm">Searching for KD Connection Servers</a></p>
+</dd>
+<dd>
+<p><a href="activating_a_smart_client__kernel_mode_.htm">Activating a Smart Client (Kernel Mode)</a></p>
+</dd>
+<dd>
+<p><a href="kd_connection_server_examples.htm">KD Connection Server Examples</a></p>
+</dd>
+<dd>
+<p><a href="controlling_a_kd_connection_server_session.htm">Controlling a KD Connection Server Session</a></p>
+</dd>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20KD Connection Servers (Kernel Mode)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

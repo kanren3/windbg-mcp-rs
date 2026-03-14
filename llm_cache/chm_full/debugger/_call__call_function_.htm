@@ -1,0 +1,117 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .call command causes the target process to execute a function."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.call (Call Function)</title>
+
+<meta name="MS-HAID" content="r19_metacmds_A_99939ae5-be91-4ff3-a7fe-3162f8cd11da.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._call__call_function_"></a>.call (Call Function)</h1>
+</div>
+<p>The <b>.call</b> command causes the target process to execute a function.</p>
+<pre class="syntax">
+    <b>.call </b>[<b>/v</b>]<b> </b><i>Function</i><b>( </b><i>Arguments</i><b> )</b> 
+<b>.call /s </b><i>Prototype</i><b> </b><i>Function</i><b>( </b><i>Arguments</i><b> )</b> 
+<b>.call /c</b> 
+<b>.call /C</b> 
+</pre>
+<h2><a id="ddk_meta_call_function_dbg"></a><a id="DDK_META_CALL_FUNCTION_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="________v______"></a><a id="________V______"></a>       <b>/v</b>      </dt>
+<dd>
+<p>Verbose information about the call and its arguments is displayed.</p>
+</dd>
+<dt><a id="________s________Prototype______"></a><a id="________s________prototype______"></a><a id="________S________PROTOTYPE______"></a>       <b>/s        </b><i>Prototype</i>      </dt>
+<dd>
+<p>Allows you to call the function that is specified by <i>Function</i> even though you do not have the correct symbols.  In this case, you must have symbols for another function that has the same calling prototype as the function you are trying to call.  The <i>Prototype</i> parameter is the name of this prototype function.</p>
+</dd>
+<dt><a id="_______Function______"></a><a id="_______function______"></a><a id="_______FUNCTION______"></a>       <i>Function</i>      </dt>
+<dd>
+<p>Specifies the function being called. This can be the name of the function (preferably qualified with a module name), or any other expression that evaluates to the function address. If you need to call a constructor or destructor, you must supply the address -- or else use a C++ expression to evaluate named syntax for the operators (see <a href="numerical_expression_syntax.htm">Numerical Expression Syntax</a> for details).</p>
+</dd>
+<dt><a id="_______Arguments______"></a><a id="_______arguments______"></a><a id="_______ARGUMENTS______"></a>       <i>Arguments</i>      </dt>
+<dd>
+<p>Specifies the arguments passed to the function. If you are calling a method, the first argument must be <b>this</b>, and all other arguments follow it. Arguments should be separated with commas and should match the usual argument syntax. Variable-length argument lists are supported. Expressions within an argument are parsed by the C++ expression evaluator; see <a href="c___numbers_and_operators.htm">C++ Numbers and Operators</a> for details. You cannot enter a literal string as an argument, but you can use a pointer to a string, or any other memory accessible to the target process.</p>
+</dd>
+<dt><a id="________c______"></a><a id="________C______"></a>       <b>/c</b>      </dt>
+<dd>
+<p>Clears any existing call on the current thread.</p>
+</dd>
+<dt><a id="________C______"></a><a id="________c______"></a>       <b>/C</b>      </dt>
+<dd>
+<p>Clears any existing call on the current thread, and resets the context of the current thread to the context stored by the outstanding call. </p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>user mode only  </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets
+         </b></p>
+</td>
+<td>
+<p>live debugging only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Platforms</b></p>
+</td>
+<td>
+<p>x86 and x64 only </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>The specified function is called by the current thread of the current process.  </p>
+<p>Only the <b>cdecl</b>, <b>stdcall</b>, <b>fastcall</b>, and <b>thiscall</b> calling conventions are supported. Managed code cannot be called by this command.</p>
+<p>After <b>.call</b> is used, the debugger will update the stack, change the instruction pointer to point to the beginning of the called function, and then stop. Use <a href="g__go_.htm"><b>g (Go)</b></a> to resume execution, or <b>~. g</b> to execute just the thread making the call.</p>
+<p>When the function returns, a break occurs and the debugger displays the return value of the function. The return value is also stored in the <b>$callret</b> pseudo-register, which acquires the type of the return value.</p>
+<p>If you have broken into the target using CTRL+C or CTRL+BREAK, the current thread is an additional thread created to handle the breakin. If you issue a <b>.call</b> command at this point, the extra thread will be used for the called function.</p>
+<p>If you have reached a predefined breakpoint, there is no extra breakin thread. If you use <b>.call</b> while at a breakpoint in user mode, you could use <a href="g__go_.htm"><b>g</b></a> to execute the entire process, or <b>~. g</b> to execute just the current thread. Using <b>g</b> may distort your program's behavior, since you have taken one thread and diverted it to this new function. On the other hand, this thread will still have its locks and other attributes, and thus <b>~. g</b> may risk deadlocks.</p>
+<p>The safest way to use <b>.call</b> is to set a breakpoint in your code at a location where a certain function could be safely called. When that breakpoint is hit, you can use <b>.call</b> if you desire that function to run. If you use <b>.call</b> at a point where this function could not normally be called, a deadlock or target corruption could result.</p>
+<p>It may be useful to add extra functions to your source code that are not called by the existing code, but are intended to be called by the debugger. For example, you could add functions that are used to investigate the current state of your code and its environment and store information about the state in a known memory location. Be sure not to optimize your code, or these functions may be removed by the compiler.  Use this technique only as a last resort, because if your application crashes <b>.call</b> will not be available when debugging the dump file.</p>
+<p>The <b>.call /c</b> and <b>.call /C</b> commands should only be used if an attempt to use <b>.call</b> has failed, or if you changed your mind before entering the <a href="g__go_.htm"><b>g</b></a> command. These should not be used casually, since abandoning an uncompleted call can lead to a corrupted target state.</p>
+<p>The following code example shows how the <b>.call /s</b> command is used.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>.call /s KnownFunction UnknownFunction( 1 )</pre>
+</td>
+</tr>
+</table></span></div>
+<p>In this example, you have private symbols for <b>KnownFunction</b>, which takes an integer as its only argument and returns, for example, a pointer to an array.  You do not have symbols, or possibly you only have public symbols for <b>UnknownFunction</b>, but you do know that it takes an integer as its only argument and returns a pointer to an array.  By using the <b>/s</b> option, you can specify that <b>UnknownFunction</b> will work the same way that <b>KnownFunction</b> does.  Thus, you can successfully generate a call to <b>UnknownFunction</b>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.call (Call Function)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

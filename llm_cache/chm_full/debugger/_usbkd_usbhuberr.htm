@@ -1,0 +1,77 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !usbkd.usbhuberr command displays a USB hub error record."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!usbkd.usbhuberr</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._usbkd_usbhuberr"></a>!usbkd.usbhuberr</h1>
+</div>
+<p>The  <b>!usbkd.usbhuberr</b> command displays a USB hub error record.</p>
+<pre class="syntax"><b>!usbkd.usbhuberr </b><i>StructAddr</i></pre>
+<h2><a id="ddk__devobj_dbg"></a><a id="DDK__DEVOBJ_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______StructAddr______"></a><a id="_______structaddr______"></a><a id="_______STRUCTADDR______"></a>       <i>StructAddr</i>      </dt>
+<dd>
+<p>Address of a <b>usbhub!_HUB_EXCEPTION_RECORD</b> structure.</p>
+</dd>
+</dl>
+<h2><a id="DLL"></a><a id="dll"></a>DLL</h2>
+<p>Usbkd.dll
+     </p>
+<h2>Examples</h2>
+<p>Here is one way to find the address of a <b>usbhub!_HUB_EXCEPTION_RECORD</b>. First enter <a href="_usbkd_usb2tree.htm"><b>!usbkd.usb2tree</b></a>.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !usbkd.usb2tree
+...
+2)!ehci_info ffffe00001ca11a0 !devobj ffffe00001ca1050 PCI: VendorId 8086 DeviceId 293c RevisionId 0002 
+    RootHub !hub2_info ffffe000023201a0 !devstack ffffe00002320050
+      ...</code></pre>
+<p>In the preceding output, you can see the suggested command <b>!devstack ffffe00002320050</b>. Enter this command.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !kdexts.devstack ffffe000011f7050
+
+  !DevObj           !DrvObj            !DevExt           ObjectName
+&gt; ffffe000011f7050  \Driver\usbhub     ffffe000011f71a0  0000006f
+  ffffe00000a21050  \Driver\usbehci    ffffe00000a211a0  USBPDO-8
+...</code></pre>
+<p>In the preceding output, <code>ffffe000011f71a0</code> is the address of the device extension for the functional device object (FDO) of the hub. Pass the address of the device extension to <a href="_usbkd_usbhubext.htm"><b>!usbkd.usbhubext</b></a>.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !usbkd.usbhubext ffffe000011f71a0
+
+FDO ffffe000011f7050 PDO ffffe00000a21050 HubNumber# 7
+dt USBHUB!_DEVICE_EXTENSION_HUB ffffe000011f71a0
+!usbhublog ffffe000011f71a0
+RemoveLock ffffe000011f7668
+FdoFlags ffffe000011f7ba0
+
+CurrentPowerIrp: System (0000000000000000) Device (0000000000000000)
+
+ObjReferenceList: !usblist ffffe000011f7b70, RL 
+ExceptionList: !usblist ffffe000011f8498, EL [Empty]
+...</code></pre>
+<p>In the preceding output, <code>ffffe000011f8498</code> is the address of the exception list. If the exception list is not empty, it will contain addresses of <b>_HUB_EXCEPTION_RECORD</b> structures.</p>
+<pre class="syntax" xml:space="preserve"><code></code></pre>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="usb_2_0_extensions.htm">USB 2.0 Debugger Extensions</a></dt>
+<dt><a href="http://go.microsoft.com/fwlink/p?LinkID=227351">Universal Serial Bus (USB) Drivers</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!usbkd.usbhuberr%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

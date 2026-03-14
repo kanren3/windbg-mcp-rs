@@ -1,0 +1,63 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Enabling RPC State Information"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Enabling RPC State Information</title>
+
+<meta name="MS-HAID" content="t11_rpc_acpi_abc7732c-fc43-4867-9a31-876548cd5412.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.enabling_rpc_state_information"></a>Enabling RPC State Information</h1>
+</div>
+<h2><a id="ddk_enabling_rpc_state_information_dbg"></a><a id="DDK_ENABLING_RPC_STATE_INFORMATION_DBG"></a></h2>
+<p>Two different levels of RPC run-time state information can be gathered: <b>Server</b> information and <b>Full</b> information. This information gathering must be enabled before the debugger or DbgRpc can be used to analyze state information.</p>
+<p>Only Windows XP and later versions of Windows support the gathering of RPC state information.</p>
+<p>Gathering <b>Server</b> state information is very lightweight. It costs about 100 machine instructions per RPC call, resulting in no detectable load, even during performance tests. However, gathering this information does use memory (about 4KB per RPC server), so it is not recommended on a machine that is already experiencing memory pressure. <b>Server</b> information includes data about endpoints, threads, connection objects, and Server Call (SCALL) objects. This is sufficient to debug most RPC problems.</p>
+<p>Gathering <b>Full</b> state information is more heavyweight. It includes all the information gathered at the <b>Server</b> level and, in addition, includes Client Call (CCALL) objects. <b>Full</b> state information is usually not needed.</p>
+<p>To enable state information to be gathered on an individual machine, run the Group Policy Editor (Gpedit.msc). Under the Local Computer Policy, navigate to <b>Computer Configuration/Administrative Templates/System/Remote Procedure Call</b>. Under this node you will see the <b>RPC Troubleshooting State Information</b> item. When you edit its properties, you will see five possible states:</p>
+<p></p>
+<dl>
+<dt><a id="None"></a><a id="none"></a><a id="NONE"></a><b>None</b></dt>
+<dd>
+<p>No state information will be maintained. Unless your machine is experiencing memory pressure, this is not recommended.</p>
+</dd>
+<dt><a id="Server"></a><a id="server"></a><a id="SERVER"></a><b>Server</b></dt>
+<dd>
+<p><b>Server</b> state information will be gathered. This is the recommended setting on a single computer.</p>
+</dd>
+<dt><a id="Full"></a><a id="full"></a><a id="FULL"></a><b>Full</b></dt>
+<dd>
+<p><b>Full</b> state information will be gathered.</p>
+</dd>
+<dt><a id="Auto1"></a><a id="auto1"></a><a id="AUTO1"></a><b>Auto1</b></dt>
+<dd>
+<p>On a computer with less than 64 MB of RAM, this is the same as <b>None</b>. On a computer with at least 64 MB of RAM, this is the same as <b>Server</b>.</p>
+</dd>
+<dt><a id="Auto2"></a><a id="auto2"></a><a id="AUTO2"></a><b>Auto2</b></dt>
+<dd>
+<p>On a computer running Windows Server 2003 with less than 128 MB of RAM, or on any Windows XP computer, this is the same as <b>None</b>. On a Windows Server 2003 computer with at least 128 MB RAM, this is the same as <b>Server</b>.   </p>
+<p>This is the default.</p>
+</dd>
+</dl>
+<p>If you want to simultaneously set these levels on a set of networked computers, use the Group Policy Editor to roll out a machine policy to the preferred set of machines. The policy engine will take care that the settings you want are propagated to the preferred set of machines. The <b>Auto1</b> and <b>Auto2</b> levels are especially useful in this case, because the operating system and amount of RAM on each computer may vary.</p>
+<p>If the network includes computers running versions of Windows that are earlier than Windows XP, the settings will be ignored on those machines.</p>
+<p></p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Enabling RPC State Information%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

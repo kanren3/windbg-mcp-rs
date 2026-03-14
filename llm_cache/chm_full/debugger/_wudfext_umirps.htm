@@ -1,0 +1,102 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !wudfext.umirps extension displays the list of pending user-mode I/O request packets (UM IRPs) in the host process."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!wudfext.umirps</title>
+
+<meta name="MS-HAID" content="r33~e_exts_umdf_95c40bd6-f77f-4371-9a85-399cfcadc977.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._wudfext_umirps"></a>!wudfext.umirps</h1>
+</div>
+<p>The <b>!wudfext.umirps</b> extension displays the list of pending user-mode I/O request packets (UM IRPs) in the host process. </p>
+<pre class="syntax"><b>!wudfext.umirps </b><i>NumberOfIrps</i> <i>Flags</i></pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______NumberOfIrps______"></a><a id="_______numberofirps______"></a><a id="_______NUMBEROFIRPS______"></a>       <i>NumberOfIrps</i>      </dt>
+<dd>
+<p>Optional. Specifies the number of pending UM IRPs to display information about. If <i>NumberOfIrps</i> is an asterisk (*) or is omitted, all UM all UM IRPs will be displayed. </p>
+</dd>
+<dt><a id="_______Flags______"></a><a id="_______flags______"></a><a id="_______FLAGS______"></a>       <i>Flags</i>      </dt>
+<dd>
+<p>Optional. Specifies the type of information to be displayed. <i>Flags</i> can be any combination of the following bits. The default value is 0x01.</p>
+<p></p>
+<dl>
+<dt><a id="Bit_0__0x01_"></a><a id="bit_0__0x01_"></a><a id="BIT_0__0X01_"></a>Bit 0 (0x01)</dt>
+<dd>
+<p>Displays details about the pending IRPs. </p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000</b></p>
+</td>
+<td>
+<p>Unavailable </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later</b></p>
+</td>
+<td>
+<p>
+          Wudfext.dll</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information, see <a href="user_mode_driver_framework_debugging.htm">User-Mode Driver Framework Debugging</a>.</p>
+<h2>Remarks</h2>
+<p>The list of pending UM IRPs that are displayed have either been presented to the driver or are waiting to be presented to the driver.</p>
+<p>By default, <b>!wudfext.umirps</b> shows all UM IRPs. However, you can use the <i>NumberOfIrps</i> parameter to limit this display. </p>
+<p>The following is an example of the <b>!wudfext.umirps</b> display:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; !umirps 0xa 
+Number of pending IRPS: 0xc8
+####  CWudfIrp          Type        UniqueId          KernelIrp
+----  ----------------  ----------  ----------------  ---------
+0000            3dd280        READ                dc  856f02f0
+0001            3dd380       WRITE                dd  85b869e0
+0002            3dd480        READ                de  85377850
+0003            3dd580        READ                df  93bba4e8
+0004            3dd680       WRITE                e0  84cb9d70
+0005            3dd780        READ                e1  85bec150
+0006            3dd880       WRITE                e2  86651db0
+0007            3dd980        READ                e3  85c22818
+0008            3dda80        READ                e4  9961d150
+0009            3ddb80       WRITE                e5  85c15148</pre>
+</td>
+</tr>
+</table></span></div>
+<p>To determine the corresponding kernel-mode IRP, use the <a href="_wudfext_wudfdownkmirp.htm"><b>!wudfext.wudfdownkmirp</b></a> extension.  Alternatively, you can use the values in the <b>UniqueId</b> and <b>KernelIrp</b> columns to match a UMDF IRP (or UM IRP) to a corresponding kernel IRP. You can pass the values in the <b>CWudfIrp</b> column to the <a href="_wudfext_umirp.htm"><b>!wudfext.umirp</b></a> extension to determine the framework <b>IWDFRequest</b> objects that each layer in the device stack can access.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!wudfext.umirps%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,136 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Using Debugger Commands"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Using Debugger Commands</title>
+
+<meta name="MS-HAID" content="r05_use_start_0d2d0e09-870d-4d87-a7c7-2cac43538545.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.using_debugger_commands"></a>Using Debugger Commands</h1>
+</div>
+<h2><a id="ddk_using_debugger_commands_dbg"></a><a id="DDK_USING_DEBUGGER_COMMANDS_DBG"></a></h2>
+<p>For KD or CDB, "Debugger Command window" refers to the whole window. You enter commands at the prompt at the bottom of the window. If the commands have any output, the window displays the output and then displays the prompt again.</p>
+<p>For Visual Studio, "Debugger Command window" refers to a window that is labeled "Debugger Immediate Window" in the title bar. This window has two panes:</p>
+<ul>
+<li>
+<p>In the small, bottom pane, you enter commands.</p>
+</li>
+<li>
+<p>In the large, upper pane, you view command output.</p>
+</li>
+</ul>
+<p>For WinDbg, "Debugger Command window" refers to the window that is labeled "Command" in the title bar. This window contains two panes: </p>
+<ul>
+<li>
+<p>In the small, bottom pane, you enter commands.</p>
+</li>
+<li>
+<p>In the large, upper pane, you view command output.</p>
+</li>
+</ul>
+<p>This window is always open at the beginning of a debugging session. You can reopen or switch to this window by clicking <b>Command</b> on the <b>View</b> menu, pressing ALT+1, or clicking the <b>Command (Alt+1)</b> button (<img src="images/tbcmd.png" alt="Screen shot of the Debugger Command window button"/>) on the toolbar.</p>
+<p>You can use the UP ARROW and DOWN ARROW keys to scroll through the command history. When a previous command appears, you can edit it and then press ENTER to execute the previous command (or the edited version of the previous command). The cursor does not have to be at the end of the line for this procedure to work correctly.</p>
+<h3><a id="debugger_command_window_prompt"></a><a id="DEBUGGER_COMMAND_WINDOW_PROMPT"></a>Debugger Command Window Prompt</h3>
+<p>When you are performing user-mode debugging, the prompt in the Debugger Command window looks like the following example.</p>
+<pre class="syntax" xml:space="preserve"><code>2:005&gt;</code></pre>
+<p>In the preceding example, 2 is the current process number, and 005 is the current thread number.</p>
+<p>If you attach the debugger to more than one computer, the system number is included before the process and thread number, as in the following example.</p>
+<pre class="syntax" xml:space="preserve"><code>3:2:005&gt;</code></pre>
+<p>In this example, 3 is the current system number, 2 is the current process number, and 005 is the current thread number.</p>
+<p>When you are performing kernel-mode debugging on a target computer that has only one processor, the prompt looks like the following example.</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt;</code></pre>
+<p>However, if the target computer has multiple processors, the number of the current processor appears before the prompt, as in the following example.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; </code></pre>
+<p>If the debugger is busy processing a previously issued command, new commands will temporarily not be processed, although they can be added to the command buffer. In addition, you can still use <a href="control_keys.htm">control keys</a> in KD and CDB, and you can still use menu commands and <a href="keyboard_shortcuts.htm">shortcut keys</a> in WinDbg. When KD or CDB is in this busy state, no prompt is displayed. When WinDbg is in this busy state, the following indicator will appear in place of the prompt:</p>
+<pre class="syntax" xml:space="preserve"><code>*BUSY* </code></pre>
+<p>You can use the <a href="_pcmd__set_prompt_command_.htm"><b>.pcmd (Set Prompt Command)</b></a> command to add text to this prompt.</p>
+<h3><a id="kinds_of_commands"></a><a id="KINDS_OF_COMMANDS"></a>Kinds of Commands</h3>
+<p>WinDbg, KD, and CDB support a variety of commands. Some commands are shared between the debuggers, and some are available only on one or two of the debuggers.</p>
+<p>Some commands are available only in live debugging, and other commands are available only when you debug a dump file. </p>
+<p>Some commands are available only during user-mode debugging, and other commands are available only during kernel-mode debugging. </p>
+<p>Some commands are available only when the target is running on certain processors. For more information about all of the commands and their restrictions, see <a href="debugger_commands.htm">Debugger Commands</a>.</p>
+<h3><a id="editing__repeating__and_canceling_commands"></a><a id="EDITING__REPEATING__AND_CANCELING_COMMANDS"></a>Editing, Repeating, and Canceling Commands</h3>
+<p>You can use standard editing keys when you enter a command: </p>
+<ul>
+<li>
+<p>Use the UP ARROW and DOWN ARROW keys to find previous commands. </p>
+</li>
+<li>
+<p>Edit the current command with the BACKSPACE, DELETE, INSERT, and LEFT ARROW and RIGHT ARROW keys. </p>
+</li>
+<li>
+<p>Press the ESC key to clear the current line.</p>
+</li>
+</ul>
+<p>You can press the TAB key to automatically complete your text entry. In any of the debuggers, press the TAB key after you enter at least one character to automatically complete a command. Press the TAB key repeatedly to cycle through text completion options, and hold down the SHIFT key and press TAB to cycle backward. You can also use wildcard characters in the text and press TAB to expand to the full set of text completion options. For example, if you type <b>fo*!ba</b> and then press TAB, the debugger expands to the set of all symbols that start with "ba", in all modules with module names that start with "fo". As another example, you can complete all extension commands that have "prcb" in them by typing <b>!*prcb</b> and then pressing TAB. </p>
+<p>When you use the TAB key to perform text completion, if your text fragment begins with a period (.), the text is matched to a dot command. If your text fragment begins with an exclamation point (!), the text is matched to an extension command. Otherwise, the text is matched with a symbol. When you usee the TAB key to enter symbols, pressing the TAB key completes code and type symbols and module names. If no module name is apparent, local symbols and module names are completed. If a module or module pattern is given, symbol completion completes code and type symbols from all matches.</p>
+<p>You can right-click in the Debugger Command window to automatically paste the contents of the clipboard into the command that you are typing.</p>
+<p>The maximum command length is 4096 characters. However, if you are <a href="controlling_the_user_mode_debugger_from_the_kernel_debugger.htm">controlling the user-mode debugger from the kernel debugger</a>, the maximum line length is 512 characters.</p>
+<p>In CDB and KD, press the ENTER key by itself to repeat the previous command. In WinDbg, you can enable or disable this behavior. For more information about this behavior, see <a href="enter__repeat_last_command_.htm"><b>ENTER (Repeat Last Command)</b></a>.</p>
+<p>If the last command that you issued presents a long display and you want to cut it off, use the <a href="ctrl_c__break_.htm"><b>CTRL+C</b></a> key in CDB or KD. In WinDbg, use <a href="debug___break.htm">Debug | Break</a> or press CTRL+BREAK.</p>
+<p>In kernel-mode debugging, you can cancel commands from the keyboard of the target computer by pressing <a href="ctrl_c__break_.htm"><b>CTRL+C</b></a>.</p>
+<p>You can use the <a href="_cls__clear_screen_.htm"><b>.cls (Clear Screen)</b></a> command to clear all of the text from the <a href="debugger_command_window.htm">Debugger Command window</a>. This command clears the whole command history. In WinDbg, you can clear the command history by using the <a href="edit___clear_command_output.htm">Edit | Clear Command Output</a> command or by clicking <b>Clear command output</b> on the shortcut menu of the Debugger Command window.</p>
+<h3><a id="expression_syntax"></a><a id="EXPRESSION_SYNTAX"></a>Expression Syntax</h3>
+<p>Many commands and extension commands accept <i>expressions</i> as their arguments. The debugger evaluates these expressions before executing the command. For more information about expressions, see <a href="evaluating_expressions.htm">Evaluating Expressions</a>.</p>
+<h3><a id="aliases"></a><a id="ALIASES"></a>Aliases</h3>
+<p><i>Aliases</i> are text macros that you can use to avoid having to retype complex phrases. There are two kinds of aliases. For more information about aliases, see <a href="using_aliases.htm">Using Aliases</a>.</p>
+<h3><a id="self_repeating_commands"></a><a id="SELF_REPEATING_COMMANDS"></a>Self-Repeating Commands</h3>
+<p>You can use the following commands to repeat an action or conditionally execute other commands:</p>
+<ul>
+<li>
+<p>The <a href="j__execute_if___else_.htm"><b>j (Execute If-Else)</b></a> conditional command</p>
+</li>
+<li>
+<p>The <a href="z__execute_while_.htm"><b>z (Execute While)</b></a> conditional command </p>
+</li>
+<li>
+<p>The <a href="_e__thread_specific_command_.htm"><b>~e (Thread-Specific Command)</b></a> command qualifier </p>
+</li>
+<li>
+<p>(Windows XP and later versions of Windows)  The <a href="_list.htm"><b>!list</b></a> extension command </p>
+</li>
+</ul>
+<p>For more information about each command, see the individual command topics.</p>
+<h3><a id="controlling_scrolling"></a><a id="CONTROLLING_SCROLLING"></a>Controlling Scrolling</h3>
+<p>You can use the scrollbar to view your previous commands and their output.</p>
+<p>When you are using CDB or KD, any keyboard entry automatically scrolls down the Debugger Command window back to the bottom.</p>
+<p>In WinDbg, the display automatically scrolls down to the bottom whenever a command produces output or you press the ENTER key. If you want to disable this automatic scrolling, click the <a href="view___options.htm">Options</a> on the <b>View</b> menu and then clear the <b>Automatically scroll</b> check box.</p>
+<h3><a id="windbg_text_features"></a><a id="WINDBG_TEXT_FEATURES"></a>WinDbg Text Features</h3>
+<p>In WinDbg, you can use several additional features to change how text is displayed in the <a href="debugger_command_window.htm">Debugger Command window</a>. You can access some of these features in the WinDbg window,  some in the shortcut menu in the Debugger Command window, and some by clicking on the appropriate menu icon.</p>
+<ul>
+<li>
+<p>The <b>Word wrap</b> command on the shortcut menu turns on and off the word wrap status. This command affects the whole window, not only commands that you use after this state is changed. Because many commands and extensions produce formatted displays, we typically do not recommend word wrap.</p>
+</li>
+<li>
+<p>The <a href="edit___add_to_command_output.htm">Edit | Add to Command Output</a> menu command adds a comment in the Debugger Command window. The <b>Add to command output</b> command on the shortcut menu has the same effect.</p>
+</li>
+<li>
+<p>You can customize the colors that are used for the text and the background of the Debugger Command window. You can specify different colors for different kinds of text. For example, you can display the automatic register output in one color, error messages in another color, and <b>DbgPrint</b> messages in a third color. For more information about this customization, see <a href="view___options.htm">View | Options</a>.</p>
+</li>
+<li>
+<p>You can use all of the features common to WinDbg's debugging information windows, such as customizing the fonts and using special editing commands. For more information about these features, see <a href="using_debugging_information_windows.htm">Using Debugging Information Windows</a>.</p>
+</li>
+</ul>
+<h3><a id="remote_debugging"></a><a id="REMOTE_DEBUGGING"></a>Remote Debugging</h3>
+<p>When you are performing remote debugging through the debugger, the debugging client can access a limited number of commands. To change the number of commands that the client can access, use the <b>-clines</b> <a href="command_line_options.htm">command-line option</a> or the _NT_DEBUG_HISTORY_SIZE <a href="environment_variables.htm">environment variable</a>.</p>
+<p></p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Using Debugger Commands%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

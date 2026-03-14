@@ -1,0 +1,66 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Example 13: Listing Image Files with Global Flags"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Example 13:  Listing Image Files with Global Flags</title>
+
+<meta name="MS-HAID" content="GFlags_b31c163c-7f8e-4c79-9d7e-66b622633289.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.example_13___listing_image_files_with_global_flags"></a>Example 13:  Listing Image Files with Global Flags</h1>
+</div>
+<h2><a id="ddk_example_13___listing_image_files_with_global_flags_dtools"></a><a id="DDK_EXAMPLE_13___LISTING_IMAGE_FILES_WITH_GLOBAL_FLAGS_DTOOLS"></a></h2>
+<p>GFlags displays the flags set for a particular image file, but it does not display all image files that have flags set.</p>
+<p>Windows stores flags for an image file that the <b>GlobalFlag</b> registry entry in a registry subkey named for the image file in the following registry path, <b>HKEY_LOCAL_MACHINE\ SOFTWARE\ Microsoft\ Windows NT\ CurrentVersion\ Image File Execution Options\<i>ImageFileName</i>\GlobalFlag</b>.</p>
+<p>To determine which image files have flags set, use Reg (reg.exe), a tool included in Windows Server 2003.</p>
+<p>The following Reg <b>Query</b> command searches for the <b>GlobalFlag</b> registry entry in the specified registry path. The <b>-v</b> parameter specifies the <b>GlobalFlag</b> registry entry. The <b>/s</b> parameter makes the search recursive.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>reg query "HKLM\Software\Microsoft\Windows NT\CurrentVersion\Image File Execution Options" /v GlobalFlag /s</pre>
+</td>
+</tr>
+</table></span></div>
+<p>In response, Reg displays all instances of the <b>GlobalFlag</b> registry entry in the path and the value of the entry.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\notepad.exe
+    GlobalFlag    REG_SZ    0x00001000
+
+HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\photohse.EXE
+    GlobalFlag    REG_SZ    0x00200000
+
+HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\printhse.EXE
+    GlobalFlag    REG_SZ    0x00200000</pre>
+</td>
+</tr>
+</table></span></div>
+<div class="alert"><b>Tip</b>  
+     Type the <b>Reg</b> command into Notepad, then save the file as imageflags.bat. Thereafter, to find image files for which flags have been set, just type <b>ImageFlags</b>. </div>
+<div> </div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Example 13:  Listing Image Files with Global Flags%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

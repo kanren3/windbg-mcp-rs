@@ -1,0 +1,159 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Using PoolMon to Find a Kernel-Mode Memory Leak"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Using PoolMon to Find a Kernel-Mode Memory Leak</title>
+
+<meta name="MS-HAID" content="t13_advanced_2e1b1c13-0c48-4b86-a09e-c37a9939107b.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.using_poolmon_to_find_a_kernel_mode_memory_leak"></a>Using PoolMon to Find a Kernel-Mode Memory Leak</h1>
+</div>
+<p>If you suspect there is a kernel-mode memory leak, the easiest way to determine which pool tag is associated with the leak is to use the PoolMon tool.</p>
+<p>PoolMon (Poolmon.exe) monitors pool memory usage by pool tag name. This tool is included in the Windows Driver Kit (WDK). For a full description, see <a href="http://go.microsoft.com/fwlink/p/?linkid=122776">PoolMon</a> in the WDK documentation. </p>
+<h3><a id="enable_pool_tagging__windows_2000_and_windows_xp_"></a><a id="ENABLE_POOL_TAGGING__WINDOWS_2000_AND_WINDOWS_XP_"></a>Enable Pool Tagging (Windows 2000 and Windows XP)</h3>
+<p>On Windows 2000 and Windows XP you must first use GFlags to enable pool tagging. GFlags is included in Debugging Tools for Windows. Start GFlags, choose the <b>System Registry</b> tab, check the <b>Enable Pool Tagging</b> box, and then click <b>Apply</b>. You must restart Windows for this setting to take effect. For more details, see <a href="gflags.htm">GFlags</a>.</p>
+<p>On Windows Server 2003 and later versions of Windows, pool tagging is always enabled. </p>
+<h3><a id="using_poolmon"></a><a id="USING_POOLMON"></a>Using PoolMon</h3>
+<p>The PoolMon header displays the total paged and non-paged pool bytes. The columns show pool use for each pool tag. The display is updated automatically every few seconds. For example:</p>
+<pre class="syntax" xml:space="preserve"><code>Memory: 16224K Avail: 4564K PageFlts: 31 InRam Krnl: 684K P: 680K
+Commit: 24140K Limit: 24952K Peak: 24932K Pool N: 744K P: 2180K
+
+Tag   Type  Allocs       Frees        Diff    Bytes       Per Alloc
+-----------------------------------------------------------------------
+
+CM    Paged   1283  ( 0)  1002  ( 0)   281  1377312   ( 0)  4901
+Strg  Paged  10385 ( 10)  6658  ( 4)  3727   317952 ( 512)    85
+Fat   Paged   6662  ( 8)  4971  ( 6)  1691   174560 ( 128)   103
+MmSt  Paged    614  ( 0)   441  ( 0)   173    83456   ( 0)   482 </code></pre>
+<p>PoolMon has command keys that sort the output according to various criteria. Press the letter associated with each command in order to re-sort the data. It takes a few seconds for each command to work. </p>
+<p>The sort commands include:</p>
+<table>
+<tr>
+<th>
+       Command Key
+       
+      </th>
+<th>
+       Operation
+       
+      </th>
+</tr>
+<tr>
+<td>
+<p><b>P</b></p>
+</td>
+<td>
+<p>Limits the tags shown to nonpaged pool, paged pool, or both. Repeatedly pressing <b>P</b> cycles through each of these options, in that order.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>B</b></p>
+</td>
+<td>
+<p>Sorts tags by maximum byte usage.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>M</b></p>
+</td>
+<td>
+<p>Sorts tags by maximum byte allocations.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>T</b></p>
+</td>
+<td>
+<p>Sorts tags alphabetically by tag name.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>E</b></p>
+</td>
+<td>
+<p>Causes the display to include the paged and non-paged totals across the bottom.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>A</b></p>
+</td>
+<td>
+<p>Sorts tags by allocation size.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>F</b></p>
+</td>
+<td>
+<p>Sorts tags by free operations.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>S</b></p>
+</td>
+<td>
+<p>Sorts tags by the difference between allocations and frees. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Q</b></p>
+</td>
+<td>
+<p>Quits PoolMon.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="using_the_poolmon_utility_to_find_a_memory_leak"></a><a id="USING_THE_POOLMON_UTILITY_TO_FIND_A_MEMORY_LEAK"></a>Using the PoolMon Utility to Find a Memory Leak</h3>
+<p>To find a memory leak with the PoolMon utility, follow this procedure:</p>
+<ol>
+<li>
+<p>Start PoolMon. </p>
+</li>
+<li>
+<p>If you have determined that the leak is occurring in non-paged pool, press <b>P</b> once; if you have determined that it is occurring in paged pool, press <b>P</b> twice. If you do not know, do not press <b>P</b> and both kinds of pool are included. </p>
+</li>
+<li>
+<p>Press <b>B</b> to sort the display by maximum byte use. </p>
+</li>
+<li>
+<p>Start your test. Take a screen shot and copy it to Notepad. </p>
+</li>
+<li>
+<p>Take a new screen shot every half hour. By comparing screen shots, determine which tag's bytes are increasing. </p>
+</li>
+<li>
+<p>Stop your test and wait a few hours. How much of the tag was freed up in this time? </p>
+</li>
+</ol>
+<p>Typically, after an application reaches a stable running state, it allocates memory and free memory at roughly the same rate. If it tends to allocate memory faster than it frees it, its memory use will grow over time. This often indicates a memory leak.</p>
+<h3><a id="addressing_the_leak"></a><a id="ADDRESSING_THE_LEAK"></a>Addressing the Leak</h3>
+<p>After you have determined which pool tag is associated with the leak, this might reveal all you need to know about the leak. If you need to determine which specific instance of the allocation routine is causing the leak, see <a href="using_the_kernel_debugger_to_find_a_kernel_mode_memory_leak.htm">Using the Kernel Debugger to Find Kernel-Mode Memory Leaks</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Using PoolMon to Find a Kernel-Mode Memory Leak%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

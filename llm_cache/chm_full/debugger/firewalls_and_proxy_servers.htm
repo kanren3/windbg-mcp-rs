@@ -1,0 +1,57 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Firewalls and Proxy Servers"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Firewalls and Proxy Servers</title>
+
+<meta name="MS-HAID" content="r09_symbols_ee8ab129-5530-41ad-af38-8a777fde7b79.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.firewalls_and_proxy_servers"></a>Firewalls and Proxy Servers</h1>
+</div>
+<h2><a id="ddk_firewalls_and_proxy_servers_dbg"></a><a id="DDK_FIREWALLS_AND_PROXY_SERVERS_DBG"></a></h2>
+<p>If you are using SymSrv to access symbols, and your computer is on a network that uses a proxy server or the symbol store is outside your firewall, authentication may be required for data transmission to take place.</p>
+<p>When SymSrv receives authentication requests, the debugger can either display the authentication request or automatically refuse the request, depending on how it has been configured.</p>
+<p>SymSrv has integrated support for a proxy server. It can either use the default proxy server, <a href="symproxy.htm">SymProxy</a>, or it can use another proxy server of your choice.</p>
+<h3><a id="authentication_requests"></a><a id="AUTHENTICATION_REQUESTS"></a>Authentication Requests</h3>
+<p>The debugger can be configured to allow authentication requests. When a firewall or proxy server requests authorization, a dialog box will appear. You will have to enter some sort of information (usually a user name and password) before the debugger can download symbols. If you enter incorrect information, the dialog box will be redisplayed. If you select the <b>Cancel</b> button, the dialog box will vanish and no symbol information will be transferred.</p>
+<p>If the debugger is configured to refuse all authentication requests, no dialog box will appear, and no symbols will be transferred if authentication is required.</p>
+<p>If you refuse an authentication request, or if the debugger automatically refuses an authentication request, SymSrv will make no further attempts to contact the symbol store. If you wish to renew contact, you must either restart the debugging session or use <a href="_symsrv.htm"><b>!symsrv close</b></a>.</p>
+<div class="alert"><b>Note</b>    If you are using KD or CDB, the authentication dialog box may appear <u>behind</u> an open window. If this occurs, you may have to move or minimize some windows in order to find this dialog box.</div>
+<div> </div>
+<p>In WinDbg, authentication requests are allowed by default. In KD and CDB, authentication requests are automatically refused by default.</p>
+<p>To allow authentication requests, use either <a href="_sym.htm"><b>!sym prompts</b></a> or <a href="_symopt__set_symbol_options_.htm"><b>.symopt-0x80000</b></a>. To refuse all requests, use either <b>!sym prompts off</b> or <b>.symopt+0x80000</b>. To display the current setting, use <b>!sym</b>.</p>
+<p>You must use <a href="_reload__reload_module_.htm"><b>.reload (Reload Module)</b></a> after making any changes to the authentication permission status.</p>
+<h3><a id="choosing_a_proxy_server"></a><a id="CHOOSING_A_PROXY_SERVER"></a>Choosing a Proxy Server</h3>
+<p>To select a default proxy server for Windows, open <b>Internet Options</b> in Control Panel, select the <b>Connections</b> tab, and then select the <b>LAN Settings</b> button. You can then enter the proxy server name and port number, or select <b>Advanced</b> to configure multiple proxy servers. For more details, see Internet Explorer's help file.</p>
+<p>To select a specific proxy server for symsrv to use, set the _NT_SYMBOL_PROXY environment variable equal to the name or IP of the proxy server, followed by a colon and then the port number. For example:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>set _NT_SYMBOL_PROXY=myproxyserver:80</pre>
+</td>
+</tr>
+</table></span></div>
+<p>When a proxy server is chosen in this way, it will be used by any Windows debugger that is using SymSrv to access a symbol server. It will also be used by any other debugging tool that uses DbgHelp as its symbol handler. No other programs will be affected by this setting.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Firewalls and Proxy Servers%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Configuring Special Pool"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Configuring Special Pool</title>
+
+<meta name="MS-HAID" content="GFlags_df50b292-a788-44a3-9461-8dc8461a0557.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.configuring_special_pool"></a>Configuring Special Pool</h1>
+</div>
+<h2><a id="ddk_configuring_kernel_special_pool_dtools"></a><a id="DDK_CONFIGURING_KERNEL_SPECIAL_POOL_DTOOLS"></a></h2>
+<p>The Gflags <i>Special Pool</i> feature directs Windows to request memory allocations from a reserved memory pool when the memory is allocated with a specified pool tag or is within a specified size range. </p>
+<p>For detailed information about this feature, see <a href="special_pool.htm">Special Pool</a>.</p>
+<p>In Windows Vista and later versions of Windows, you can configure the Special Pool feature as a system-wide registry setting or as a kernel flags setting that does not require a reboot. In earlier versions of Windows, Special Pool is available only as a registry setting.</p>
+<p>In Windows Vista and later versions of Windows, you can also use the command line to request special pool by pool tag. For information, see <a href="gflags_commands.htm"><b>GFlags Commands</b></a>.</p>
+<p>This section includes the following topics.</p>
+<dl>
+<dd>
+<p><a href="requesting_special_pool_by_pool_tag.htm">Requesting Special Pool by Pool Tag</a></p>
+</dd>
+<dd>
+<p><a href="requesting_special_pool_by_allocation_size.htm">Requesting Special Pool by Allocation Size</a></p>
+</dd>
+<dd>
+<p><a href="canceling_requests_for_special_pool.htm">Canceling Requests for Special Pool</a></p>
+</dd>
+<dd>
+<p><a href="detecting_overruns_and_underruns.htm">Detecting Overruns and Underruns</a></p>
+</dd>
+</dl>
+<div class="alert"><b>Note</b>    Use <i>Driver Verifier</i> to request special pool for allocations by a particular driver. For more information, see the "Special Pool" topic in the "Driver Verifier" section of the Windows Driver Kit (WDK).</div>
+<div> </div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Configuring Special Pool%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

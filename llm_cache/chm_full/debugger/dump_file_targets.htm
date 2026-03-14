@@ -1,0 +1,40 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Dump-File Targets"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Dump-File Targets</title>
+
+<meta name="MS-HAID" content="Engine_DG_4f17b58c-6753-4fcf-b1de-13ddffb62c15.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.dump_file_targets"></a>Dump-File Targets</h1>
+</div>
+<h2><a id="ddk_dump_file_targets_dbx"></a><a id="DDK_DUMP_FILE_TARGETS_DBX"></a></h2>
+<p>For an introduction and overview of crash dump files, see <a href="crash_dump_files.htm">Crash Dump Files</a>.</p>
+<h3><a id="Opening_Dump_Files"></a><a id="opening_dump_files"></a><a id="OPENING_DUMP_FILES"></a>Opening Dump Files</h3>
+<p>To open a crash dump file for use as a debugger target, use <a href="opendumpfile.htm"><b>OpenDumpFile</b></a> or <a href="opendumpfilewide.htm"><b>OpenDumpfileWide</b></a>.  These methods are similar to the <a href="_opendump__open_dump_file_.htm"><b>.opendump</b></a> debugger command.</p>
+<div class="alert"><b>Note</b>    The engine doesn't completely attach to the dump file until the <a href="waitforevent.htm"><b>WaitForEvent</b></a> method has been called.  When a dump file is created from a process or kernel, information about the last event is stored in the dump file.  After the dump file is opened, the next time execution is attempted, the engine will generate this event for the event callbacks.  Only then does the dump file become available in the debugging session.  See <a href="debugging_session_and_execution_model.htm">Debugging Session and Execution Model</a> for more details.</div>
+<div> </div>
+<p>Additional files can be used to assist in debugging a crash dump file.  The methods <a href="adddumpinformationfile.htm"><b>AddDumpInformationFile</b></a> and <a href="adddumpinformationfilewide.htm"><b>AddDumpInformationFileWide</b></a> register files containing page-file information to be used when the next dump file is opened.  These methods must be called before the dump file is opened.  <a href="getnumberdumpfiles.htm"><b>GetNumberDumpFiles</b></a> will return the number of such files that were used when the current dump file was opened and <a href="getdumpfile.htm"><b>GetDumpFile</b></a> will return a description of these files.</p>
+<p>User-mode minidump files contain several streams of information.  These streams can be read using the <a href="request.htm"><b>Request</b></a> operation <a href="debug_request_read_user_minidump_stream.htm"><b>DEBUG_REQUEST_READ_USER_MINIDUMP_STREAM</b></a>.</p>
+<h3><a id="Creating_Dump_Files"></a><a id="creating_dump_files"></a><a id="CREATING_DUMP_FILES"></a>Creating Dump Files</h3>
+<p>To create a crash dump file of the current target -- user-mode or kernel-mode -- use <a href="writedumpfile2.htm"><b>WriteDumpFile2</b></a>.  This method is similar to the <a href="_dump__create_dump_file_.htm"><b>.dump</b></a> debugger command.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Dump-File Targets%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

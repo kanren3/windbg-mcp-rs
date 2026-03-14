@@ -1,0 +1,181 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The Bluetooth debugger extensions display information about the current Bluetooth environment on the target system."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bluetooth Extensions (Bthkd.dll)</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bluetooh_extensions__bthkd_dll_"></a>Bluetooth Extensions (Bthkd.dll)</h1>
+</div>
+<p>The Bluetooth debugger extensions display information about the current Bluetooth environment on the target system.</p>
+<div class="alert"><b>Note</b>  As you work with the Bluetooth debugging extensions, you may come across undocumented behavior or APIs. We strongly recommend against taking dependencies on  undocumented behavior or APIs as it's subject to change in future releases.</div>
+<div> </div>
+<p>
+<h2><a id="in_this_section"></a>In this section</h2>
+<table>
+<tr>
+<th>Topic</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p><a href="_bthkd_bthdevinfo.htm"><b>!bthkd.bthdevinfo</b></a></p>
+</td>
+<td>
+<p>The <a href="_bthkd_bthdevinfo.htm"><b>!bthkd.bthdevinfo</b></a>  command displays the information about a given BTHENUM created device PDO.
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="_bthkd_bthenuminfo.htm"><b>!bthkd.bthenuminfo</b></a></p>
+</td>
+<td>
+<p>The  <a href="_bthkd_bthenuminfo.htm"><b>!bthkd.bthenuminfo</b></a> command displays information about the BTHENUM FDO.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="_bthkd_bthinfo_.htm"><b>!bthkd.bthinfo</b></a></p>
+</td>
+<td>
+<p>The <a href="_bthkd_bthinfo_.htm"><b>!bthkd.bthinfo</b></a> command displays details about the BTHPORT FDO. This command is a good starting point for Bluetooth investigations  as it displays address information that can be used to access many of the other Bluetooth debug extension commands. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="_bthkd_bthhelp.htm"><b>!bthkd.bthhelp</b></a></p>
+</td>
+<td>
+<p>The <a href="_bthkd_bthhelp.htm"><b>!bthkd.bthhelp</b></a> command displays help for the Bluetooth debug extension commands.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="_bthkd_bthtree.htm"><b>!bthkd.bthtree</b></a></p>
+</td>
+<td>
+<p>The <a href="_bthkd_bthtree.htm"><b>!bthkd.bthtree</b></a> command displays the complete Bluetooth device tree.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="_bthkd_bthusbtransfer.htm"><b>!bthkd.bthusbtransfer</b></a></p>
+</td>
+<td>
+<p>The  <a href="_bthkd_bthusbtransfer.htm"><b>!bthkd.bthusbtransfer</b></a> command displays the Bluetooth usb transfer context including Irp, Bip and transfer buffer information.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="_bthkd_dibflags.htm"><b>!bthkd.dibflags</b></a></p>
+</td>
+<td>
+<p>The  <a href="_bthkd_dibflags.htm"><b>!bthkd.dibflags</b></a> command displays  DEVICE_INFO_BLOCK.DibFlags
+dumps flags set in _DEVICE_INFO_BLOCK.DibFlags.
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="_bthkd_hcicmd.htm"><b>!bthkd.hcicmd</b></a></p>
+</td>
+<td>
+<p>The  <a href="_bthkd_hcicmd.htm"><b>!bthkd.hcicmd</b></a> command displays a list of the currently pending commands.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="_bthkd_hciinterface.htm"><b>!bthkd.hciinterface</b></a></p>
+</td>
+<td>
+<p>The  <a href="_bthkd_hciinterface.htm"><b>!bthkd.hciinterface</b></a> command displays the bthport!_HCI_INTERFACE structure.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="_bthkd_l2capinterface_.htm"><b>!bthkd.l2capinterface</b></a></p>
+</td>
+<td>
+<p>The  <a href="_bthkd_l2capinterface_.htm"><b>!bthkd.l2capinterface</b></a> command displays information about the L2CAP interface.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="_bthkd_rfcomminfo.htm"><b>!bthkd.rfcomminfo</b></a></p>
+</td>
+<td>
+<p>The    <a href="_bthkd_rfcomminfo.htm"><b>!bthkd.rfcomminfo</b></a> command displays information about the RFCOMM FDO and the TDI Device Object.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="_bthkd_rfcommconnection.htm"><b>!bthkd.rfcommconnection</b></a></p>
+</td>
+<td>
+<p>The  <a href="_bthkd_rfcommconnection.htm"><b>!bthkd.rfcommconnection</b></a> command displays information about a given RFCOMM connection object.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="_bthkd_rfcommchannel.htm"><b>!bthkd.rfcommchannel</b></a></p>
+</td>
+<td>
+<p>The  <a href="_bthkd_rfcommchannel.htm"><b>!bthkd.rfcommchannel</b></a>  command displays information about a given RFCOMM channel CB.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="_bthkd_sdpinterface.htm"><b>!bthkd.sdpinterface</b></a></p>
+</td>
+<td>
+<p>The  <a href="_bthkd_sdpinterface.htm"><b>!bthkd.sdpinterface</b></a> command displays information about the SDP interface.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="_bthkd_scointerface_.htm"><b>!bthkd.scointerface</b></a></p>
+</td>
+<td>
+<p>The  <a href="_bthkd_scointerface_.htm"><b>!bthkd.scointerface</b></a> command displays information about the SCO interface.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="_bthkd_sdpnode.htm"><b>!bthkd.sdpnode</b></a></p>
+</td>
+<td>
+<p>The  <a href="_bthkd_sdpnode.htm"><b>!bthkd.sdpnode</b></a> command displays information about  a node in an sdp tree.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="_bthkd_sdpstream.htm"><b>!bthkd.sdpstream</b></a></p>
+</td>
+<td>
+<p>The <a href="_bthkd_sdpstream.htm"><b>!bthkd.sdpstream</b></a> command displays the contents of a SDP stream.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Bluetooth Extensions (Bthkd.dll)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

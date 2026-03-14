@@ -1,0 +1,224 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="DEBUG_REQUEST_EXT_TYPED_DATA_ANSI"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>DEBUG_REQUEST_EXT_TYPED_DATA_ANSI</title>
+
+<meta name="MS-HAID" content="IDebugAdvanced_873e0a1a-4c79-428d-a551-b2132da9b98f.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.debug_request_ext_typed_data_ansi"></a>DEBUG_REQUEST_EXT_TYPED_DATA_ANSI</h1>
+</div>
+<p>The DEBUG_REQUEST_EXT_TYPED_DATA_ANSI <a href="request.htm"><b>Request</b></a> operation performs a variety of different sub-operations that aid in the interpretation of typed data.</p>
+<p>
+<p><b>Parameters</b></p>
+</p>
+<dl>
+<dt><a id="InBuffer"></a><a id="inbuffer"></a><a id="INBUFFER"></a><i>InBuffer</i></dt>
+<dd>
+<p>Specifies the <a href="ext_typed_data.htm"><b>EXT_TYPED_DATA</b></a> structure that determines the sub-operation to perform. This EXT_TYPED_DATA structure contains the input parameters for that sub-operation along with any (optional) additional data.  The additional data is included in <i>InBuffer</i> after the EXT_TYPED_DATA structure.  The size of <i>InBuffer</i> is the total size of the buffer that contains the EXT_TYPED_DATA structure and the additional data.  See <b>EXT_TYPED_DATA</b> for details on this structure and how to include the additional data.</p>
+<p>The following sub-operations are supported.</p>
+<table>
+<tr>
+<th>Sub-Operation</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p><a href="ext_tdop_copy.htm"><b>EXT_TDOP_COPY</b></a></p>
+</td>
+<td>
+<p>Makes a copy of a typed data description.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="ext_tdop_release.htm"><b>EXT_TDOP_RELEASE</b></a></p>
+</td>
+<td>
+<p>Releases a typed data description.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="ext_tdop_set_from_expr.htm"><b>EXT_TDOP_SET_FROM_EXPR</b></a></p>
+</td>
+<td>
+<p>Returns the value of an expression.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="ext_tdop_set_from_u64_expr.htm"><b>EXT_TDOP_SET_FROM_U64_EXPR</b></a></p>
+</td>
+<td>
+<p>Returns the value of an expression. An optional address can be provided as a parameter to the expression.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="ext_tdop_get_field.htm"><b>EXT_TDOP_GET_FIELD</b></a></p>
+</td>
+<td>
+<p>Returns a member of a structure.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="ext_tdop_evaluate.htm"><b>EXT_TDOP_EVALUATE</b></a></p>
+</td>
+<td>
+<p>Returns the value of an expression. An optional value can be provided as a parameter to the expression.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="ext_tdop_get_type_name.htm"><b>EXT_TDOP_GET_TYPE_NAME</b></a></p>
+</td>
+<td>
+<p>Returns the type name for typed data.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="ext_tdop_output_type_name.htm"><b>EXT_TDOP_OUTPUT_TYPE_NAME</b></a></p>
+</td>
+<td>
+<p>Prints the type name for typed data.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="ext_tdop_output_simple_value.htm"><b>EXT_TDOP_OUTPUT_SIMPLE_VALUE</b></a></p>
+</td>
+<td>
+<p>Prints the value of typed data.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="ext_tdop_output_full_value.htm"><b>EXT_TDOP_OUTPUT_FULL_VALUE</b></a></p>
+</td>
+<td>
+<p>Prints the type and value for typed data.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="ext_tdop_has_field.htm"><b>EXT_TDOP_HAS_FIELD</b></a></p>
+</td>
+<td>
+<p>Determines if a structure contains a specified member.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="ext_tdop_get_field_offset.htm"><b>EXT_TDOP_GET_FIELD_OFFSET</b></a></p>
+</td>
+<td>
+<p>Returns the offset of a member within a structure.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="ext_tdop_get_array_element.htm"><b>EXT_TDOP_GET_ARRAY_ELEMENT</b></a></p>
+</td>
+<td>
+<p>Returns an element from an array.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="ext_tdop_get_dereference.htm"><b>EXT_TDOP_GET_DEREFERENCE</b></a></p>
+</td>
+<td>
+<p>Dereferences a pointer, returning the value it points to.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="ext_tdop_get_type_size.htm"><b>EXT_TDOP_GET_TYPE_SIZE</b></a></p>
+</td>
+<td>
+<p>Returns the size of the specified typed data.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="ext_tdop_output_type_definition.htm"><b>EXT_TDOP_OUTPUT_TYPE_DEFINITION</b></a></p>
+</td>
+<td>
+<p>Prints the definition of the type for the specified typed data.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="ext_tdop_get_pointer_to.htm"><b>EXT_TDOP_GET_POINTER_TO</b></a></p>
+</td>
+<td>
+<p>Returns a new typed data description that represents a pointer to specified typed data.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="ext_tdop_set_from_type_id_and_u64.htm"><b>EXT_TDOP_SET_FROM_TYPE_ID_AND_U64</b></a></p>
+</td>
+<td>
+<p>Creates a typed data description from a type and memory location.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="ext_tdop_set_ptr_from_type_id_and_u64.htm"><b>EXT_TDOP_SET_PTR_FROM_TYPE_ID_AND_U64</b></a></p>
+</td>
+<td>
+<p>Creates a typed data description that represents a pointer to a specified memory location with specified type.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+</dd>
+<dt><a id="OutBuffer"></a><a id="outbuffer"></a><a id="OUTBUFFER"></a><i>OutBuffer</i></dt>
+<dd>
+<p>Receives the <a href="ext_typed_data.htm"><b>EXT_TYPED_DATA</b></a> structure that contains the output parameters and any additional data for the sub-operation.  As with <i>InBuffer</i>, the size of <i>OutBuffer</i> is the total size of the buffer that contains the EXT_TYPED_DATA structure and any additional data.</p>
+<p>The  DEBUG_REQUEST_EXT_TYPED_DATA_ANSI operation will initially copy <i>InBuffer</i> into <i>OutBuffer</i> and then modify the contents of <i>OutBuffer</i> in place.  This means that <i>OutBuffer</i> will be populated with the input parameters of the EXT_TYPED_DATA and any additional data that was provided in <i>InBuffer</i>.  It also means that the size of <i>OutBuffer</i> must be at least as big as the size of <i>InBuffer</i>.
+	 </p>
+</dd>
+</dl>
+<h3><a id="Return_Value"></a><a id="return_value"></a><a id="RETURN_VALUE"></a>Return Value</h3>
+<p></p>
+<dl>
+<dt><a id="S_OK"></a><a id="s_ok"></a>S_OK</dt>
+<dd>
+<p>The operation was successful.</p>
+</dd>
+</dl>
+<p>This method can also return error values.  See <a href="hresult_values.htm"><b>Return Values</b></a> for more details.</p>
+<p>The value returned by this operation is also stored in the <b>Status</b> member of <i>OutBuffer</i>.</p>
+<h2>Remarks</h2>
+<p>The sub-operation performed by the DEBUG_REQUEST_EXT_TYPED_DATA_ANSI <a href="request.htm"><b>Request</b></a> operation is determined by the <b>Operation</b> member of the <a href="ext_typed_data.htm"><b>EXT_TYPED_DATA</b></a> structure, which takes a value in the <a href="ext_tdop.htm"><b>EXT_TDOP</b></a> enumeration.</p>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="ext_typed_data.htm"><b>EXT_TYPED_DATA</b></a></dt>
+<dt><a href="ext_tdop.htm"><b>EXT_TDOP</b></a></dt>
+<dt><a href="request.htm"><b>Request</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20DEBUG_REQUEST_EXT_TYPED_DATA_ANSI%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

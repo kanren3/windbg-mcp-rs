@@ -1,0 +1,177 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The ReadProcessorSystemData method returns data about the specified processor."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IDebugDataSpaces::ReadProcessorSystemData method</title>
+
+<meta name="MS-HAID" content="IDebugDataSpaces_a2ffd54a-03f2-4b74-928c-b043bfdac073.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.readprocessorsystemdata"></a>IDebugDataSpaces::ReadProcessorSystemData method</h1>
+</div>
+<p>The <b>ReadProcessorSystemData</b> method returns data about the specified processor.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>HRESULT ReadProcessorSystemData(
+  [in]            ULONG  Processor,
+  [in]            ULONG  Index,
+  [out]           PVOID  Buffer,
+  [in]            ULONG  BufferSize,
+  [out, optional] PULONG DataSize
+);</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Parameters</h2>
+<dl>
+<dt><i>Processor</i> [in]</dt>
+<dd>
+<p>Specifies the processor whose data is to be read.</p>
+</dd>
+<dt><i>Index</i> [in]</dt>
+<dd>
+<p>Specifies the data type to read.  The following table contains the valid values.  After successful completion, the data returned in the buffer <i>Buffer</i> has the type specified by the middle column.</p>
+<table>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>DEBUG_DATA_KPCR_OFFSET</p>
+</td>
+<td>
+<p>Returns the virtual address of the processor's Processor Control Region (PCR).</p>
+<p>In this case, the argument <i>Buffer</i> can be considered to have type PULONG64.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_DATA_KPRCB_OFFSET</p>
+</td>
+<td>
+<p>Returns the virtual address of the processor's Processor Control Block (PRCB).</p>
+<p>In this case, the argument <i>Buffer</i> can be considered to have type PULONG64.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_DATA_KTHREAD_OFFSET</p>
+</td>
+<td>
+<p>Returns the virtual address of the KTHREAD structure for the system thread  running on the processor.</p>
+<p>In this case, the argument <i>Buffer</i> can be considered to have type PULONG64.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_DATA_BASE_TRANSLATION_VIRTUAL_OFFSET</p>
+</td>
+<td>
+<p>Returns the virtual address of the base of the paging information owned by the operating system or the processor.  The address and the content at the address are processor- and operating-system-dependent. </p>
+<p>In this case, the argument <i>Buffer</i> can be considered to have type PULONG64.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_DATA_PROCESSOR_IDENTIFICATION</p>
+</td>
+<td>
+<p>Returns a description of the processor.</p>
+<p>In this case, the argument <i>Buffer</i> can be considered to have type PDEBUG_PROCESSOR_IDENTIFICATION_ALL .</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_DATA_PROCESSOR_SPEED</p>
+</td>
+<td>
+<p>Returns the speed of the processor in MHz.  This may not work in a particular session.</p>
+<p>In this case, the argument <i>Buffer</i> can be considered to have type PULONG.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+</dd>
+<dt><i>Buffer</i> [out]</dt>
+<dd>
+<p>Receives the processor data.  Upon successful completion of the method, the contents of this buffer may be accessed by casting <i>Buffer</i> to the type specified in the above table.</p>
+</dd>
+<dt><i>BufferSize</i> [in]</dt>
+<dd>
+<p>Specifies the size in bytes of the buffer <i>Buffer</i>.  This is the maximum number of bytes that will be returned.</p>
+</dd>
+<dt><i>DataSize</i> [out, optional]</dt>
+<dd>
+<p>Receives the size of the data in bytes.  If <i>DataSize</i> is <b>NULL</b>, this information is not returned.</p>
+</dd>
+</dl>
+<h2>Return value</h2>
+<table>
+<tr>
+<th>Return code</th>
+<th>Description</th>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>S_OK</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>The method was successful.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>This method can also return error values.  See <a href="hresult_values.htm"><b>Return Values</b></a> for more details.</p>
+<h2>Remarks</h2>
+<p>This method is only available in kernel-mode debugging.</p>
+<p>For information about the PCR, PRCB, and KTHREAD structures, as well as information about paging tables, see <i>Microsoft Windows Internals</i> by David Solomon and Mark Russinovich.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Target platform</p>
+</th>
+<td width="70%">
+<dl>
+<dt></dt>
+</dl>
+</td>
+</tr>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Dbgeng.h (include Dbgeng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IDebugDataSpaces::ReadProcessorSystemData method%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

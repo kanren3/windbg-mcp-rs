@@ -1,0 +1,72 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="In WinDbg, you can view assembly code by entering commands or by using the Disassembly window."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Assembly Code Debugging in WinDbg</title>
+
+<meta name="MS-HAID" content="r36_gui_1_f9c06d65-64ae-4439-bb41-318a12e6c859.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.disassembly_window"></a>Assembly Code Debugging in WinDbg</h1>
+</div>
+<p>In WinDbg, you can view assembly code by entering commands or by using the Disassembly window.</p>
+<h2><a id="Debugger_Command_Window"></a><a id="debugger_command_window"></a><a id="DEBUGGER_COMMAND_WINDOW"></a>Debugger Command Window</h2>
+<p>You can view assembly code by entering the one of the <a href="u__unassemble_.htm"><b>u, ub, uu (Unassemble)</b></a>
+ commands in the Debugger Command window.</p>
+<h2><a id="ddk_disassembly_window_dbg"></a><a id="DDK_DISASSEMBLY_WINDOW_DBG"></a>Dissasembly Window</h2>
+<p>To open or switch to the Disassembly window, choose <b>Dissasembly</b> from the <b>View</b> menu. (You can also press ALT+7 or click the <b>Disassembly</b>  button (<img src="images/tbdisasm2.png" alt="Screen shot of the Disassembly button"/>) on the toolbar.  ALT+SHIFT+7 will close the Disassembly Window.)</p>
+<p>The following screen shot shows an example of a Disassembly window.</p><img src="images/window-disassembly.png" alt="Screen shot of the Disassembly window"/><p>The debugger takes a section of memory, interprets it as binary machine instructions, and then disassembles it to produce an assembly-language version of the machine instructions. The resulting code is displayed in the Disassembly window.</p>
+<p>In the Disassembly window, you can do the following:</p>
+<ul>
+<li>
+<p>To disassemble a different section of memory, in the <b>Offset</b> box, type the address of the memory you want to disassemble. (You can press ENTER after typing the address, but you do not have to.) The Disassembly window displays code before you have completed the address; you can disregard this code.</p>
+</li>
+<li>
+<p>To see other sections of memory, click the <b>Previous</b> or <b>Next</b> buttons or press the PAGE UP or PAGE DOWN keys. These commands display disassembled code from the preceding or following sections of memory, respectively. By pressing the RIGHT ARROW, LEFT ARROW, UP ARROW, and DOWN ARROW keys, you can navigate within the window. If you use these keys to move off of the page, a new page will appear.</p>
+</li>
+</ul>
+<p>The Disassembly window has a toolbar that contains two buttons and a shortcut menu with additional commands. To access the menu, right-click the title bar or click the icon that appears near the upper-right corner of the window (<img src="images/tbdisasm2.png" alt="Screen shot of the button that displays the Disassembly window toolbar shortcut menu"/>). The following list describes some of the menu commands:</p>
+<ul>
+<li>
+<p><b>
+       
+       Go to current address</b> opens the Source window with the source file that corresponds to the selected line in the Disassembly window and highlights this line.</p>
+</li>
+<li>
+<p><b>
+       
+       Disassemble before current instruction</b> causes the current line to be placed in the middle of the Disassembly window. This command is the default option. If this command is cleared, the current line will appear at the top of the Disassembly window, which saves time because reverse-direction disassembly can be time-consuming.</p>
+</li>
+<li>
+<p><b>Highlight instructions from the current source line</b> causes all of the instructions that correspond to the current source line to be highlighted. Often, a single source line will correspond to multiple assembly instructions. If code has been optimized, these assembly instructions might not be consecutive. This command enables you to find all of the instructions that were assembled from the current source line.</p>
+</li>
+<li>
+<p><b>
+       
+       Show source line for each instruction</b> displays the source line number that corresponds to each assembly instruction.</p>
+</li>
+<li>
+<p><b>Show source file for each instruction</b> displays the source file name that corresponds to each assembly instruction.</p>
+</li>
+</ul>
+<h3><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about assembly debugging and related commands and a full explanation of the assembly display, see <a href="debugging_in_assembly_mode.htm">Debugging in Assembly Mode</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Assembly Code Debugging in WinDbg%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

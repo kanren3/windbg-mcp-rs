@@ -1,0 +1,57 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !amli bl extension displays a list of all AML breakpoints."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!amli bl</title>
+
+<meta name="MS-HAID" content="r33_exts_ACPI_657d1fc1-6417-4178-81d2-12c0e9102fdb.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._amli_bl"></a>!amli bl</h1>
+</div>
+<p>The <b>!amli bl</b> extension displays a list of all AML breakpoints.</p>
+<p>Syntax</p>
+<pre class="syntax"><b>!amli bl</b></pre>
+<h2><a id="ddk__amli_bl_dbg"></a><a id="DDK__AMLI_BL_DBG"></a></h2>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<p>
+          Kdexts.dll</p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For information about related commands and their uses, see <a href="the_amli_debugger.htm">The AMLI Debugger</a>.</p>
+<h2>Remarks</h2>
+<p>The AMLI Debugger supports a maximum of ten breakpoints.</p>
+<p>Here is an example of the <b>!amli bl</b> extension:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; !amli bl
+ 0: &lt;e&gt; ffffffff80e5e2f1:[\_SB.LNKD._SRS]
+ 1: &lt;e&gt; ffffffff80e5d969:[\_SB.LNKB._STA]
+ 2: &lt;d&gt; ffffffff80e630c9:[\_WAK]
+ 3: &lt;e&gt; ffffffff80e612c9:[\_SB.MBRD._CRS]</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The first column gives the breakpoint number. The <b>&lt;e&gt;</b> and <b>&lt;d&gt;</b> marks indicate whether the breakpoint is enabled or disabled. The address of the breakpoint is in the next column. Finally, the method containing the breakpoint is listed, with the offset of the breakpoint if it is not set at the start of the method.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!amli bl%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

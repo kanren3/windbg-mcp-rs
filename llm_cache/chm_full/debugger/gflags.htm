@@ -1,0 +1,89 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="GFlags (the Global Flags Editor), gflags.exe, enables and disables advanced debugging, diagnostic, and troubleshooting features. It is most often used to turn on indicators that other tools track, count, and log."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>GFlags</title>
+
+<meta name="MS-HAID" content="GFlags_ea035958-0ade-4e07-856e-cfd1ed0b4df0.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.gflags"></a>GFlags</h1>
+</div>
+<p>GFlags (the Global Flags Editor), gflags.exe, enables and disables advanced debugging, diagnostic, and troubleshooting features. It is most often used to turn on indicators that other tools track, count, and log.</p>
+<h2><a id="Where_to_get_GFlags"></a><a id="where_to_get_gflags"></a><a id="WHERE_TO_GET_GFLAGS"></a>Where to get GFlags</h2>
+<p>GFlags is included in <a href="introduction6.htm">Debugging Tools for Windows</a>.</p>
+<h2><a id="ddk_gflags_dtools"></a><a id="DDK_GFLAGS_DTOOLS"></a>Overview of GFlags</h2>
+<p>Driver developers and testers often use GFlags to turn on debugging, logging and test features, either directly, or by including GFlags commands in a test script. The page heap verification features can help you to identify memory leaks and buffer errors in kernel-mode drivers.</p>
+<p>GFlags has both a dialog box and a command-line interface. Most features are available from both interfaces, but some features are accessible from only one of the interfaces. (See <a href="gflags_details.htm">GFlags Details</a>.)</p>
+<h3><a id="new_features"></a><a id="NEW_FEATURES"></a>Features</h3>
+<ul>
+<li>
+<p>Page heap verification. GFlags now includes the functions of PageHeap (pageheap.exe), a tool that enables heap allocation monitoring. PageHeap was included in previous versions of Windows. </p>
+</li>
+<li>
+<p>No reboot required for the Special Pool feature. On Windows Vista and later versions of Windows, you can enable, disable, and configure the Special Pool feature without restarting ("rebooting") the computer. For information, see <a href="special_pool.htm">Special Pool</a>.</p>
+</li>
+<li>
+<p>Object Reference Tracing. A new flag enables tracing of object referencing and object dereferencing in the kernel. This new feature of Windows detects when an object reference count is decremented too many times or not decremented even though an object is no longer used. This flag is supported only in Windows Vista and later versions of Windows.</p>
+</li>
+<li>
+<p>New dialog box design. The GFlags dialog box has tabbed pages for easier navigation.</p>
+</li>
+</ul>
+<h3><a id="requirements"></a><a id="REQUIREMENTS"></a>Requirements</h3>
+<p>To use most GFlags features, including setting flags in the registry or in kernel mode, or enabling page heap verification, you must be a member of the Administrators group on the computer. However, prior to Windows Vista, users with at least Guest account access can launch a program from the <b>Global Flags</b> dialog box. </p>
+<p>When features do not work, or work differently, on particular operating system versions, the differences are explained in the description of the feature.</p>
+<p>This topic includes:</p>
+<dl>
+<dd>
+<p><a href="gflags_overview.htm">GFlags Overview</a></p>
+</dd>
+<dd>
+<p><a href="gflags_details.htm">GFlags Details</a></p>
+</dd>
+<dd>
+<p><a href="gflags_commands.htm"><b>GFlags Commands</b></a></p>
+</dd>
+<dd>
+<p><a href="gflags_flag_table.htm">GFlags Flag Table</a></p>
+</dd>
+<dd>
+<p><a href="gflags_and_pageheap.htm">GFlags and PageHeap</a></p>
+</dd>
+<dd>
+<p><a href="global_flags_dialog_box.htm">Global Flags Dialog Box</a></p>
+</dd>
+<dd>
+<p><a href="gflags_examples.htm">GFlags Examples</a></p>
+</dd>
+<dd>
+<p><a href="global_flag_reference.htm">Global Flag Reference</a></p>
+</dd>
+</dl>
+<div class="alert"><b>Note</b>    Incorrect use of this tool can degrade system performance or prevent Windows from starting, requiring you to reinstall Windows. </div>
+<div> </div>
+<div class="alert"><b>Important</b>  Pool tagging is permanently enabled on Windows Server 2003 and later versions of Windows, including Windows Vista. On these systems, the <b>Enable pool tagging</b> check box on the <b>Global Flags</b> dialog box is dimmed and commands to enable or disable pool tagging fail.</div>
+<div> </div>
+<h2><a id="related_topics"></a>Related topics</h2>
+<dl>
+<dt><a href="extra_tools.htm">Tools Included in Debugging Tools for Windows</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20GFlags%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

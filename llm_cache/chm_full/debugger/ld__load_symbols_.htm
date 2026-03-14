@@ -1,0 +1,78 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The ld command loads symbols for the specified module and updates all module information."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>ld (Load Symbols)</title>
+
+<meta name="MS-HAID" content="r17_cmds_I_4c0144c7-30e4-40ee-a7aa-6ee2c44b143d.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.ld__load_symbols_"></a>ld (Load Symbols)</h1>
+</div>
+<p>The <b>ld</b> command loads symbols for the specified module and updates all module information.</p>
+<pre class="syntax"><b>ld</b> ModuleName [<b>/f</b> FileName]
+</pre>
+<h2><a id="ddk_cmd_load_symbols_dbg"></a><a id="DDK_CMD_LOAD_SYMBOLS_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______ModuleName______"></a><a id="_______modulename______"></a><a id="_______MODULENAME______"></a>       <i>ModuleName</i>      </dt>
+<dd>
+<p>Specifies the name of the module whose symbols are to be loaded. <i>ModuleName</i> can contain a variety of wildcard characters and specifiers.</p>
+</dd>
+<dt><a id="________f_______FileName______"></a><a id="________f_______filename______"></a><a id="________F_______FILENAME______"></a>       <b>/f</b>       <i>FileName</i>      </dt>
+<dd>
+<p>Changes the name selected for the match. By default the module name is matched, but when <b>/f</b> is used the file name is matched instead of the module name. <i>FileName</i> can contain a variety of wildcard characters and specifiers. For more information on the syntax of wildcard characters and specifiers, see <a href="string_wildcard_syntax.htm">String Wildcard Syntax</a>.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>The debugger's default behavior is to use <i>lazy symbol loading</i> (also known as <a href="deferred_symbol_loading.htm">deferred symbol loading</a>). This means that symbols are not actually loaded until they are needed.</p>
+<p>The <b>ld</b> command, on the other hand, forces all symbols for the specified module to be loaded.</p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about deferred (lazy) symbol loading, see <a href="deferred_symbol_loading.htm">Deferred Symbol Loading</a>. For more information about other symbol options, see <a href="symbol_options.htm">Setting Symbol Options</a>. </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20ld (Load Symbols)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

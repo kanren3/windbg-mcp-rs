@@ -1,0 +1,70 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .servers command lists all debugging servers that have been established by this debugger."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.servers (List Debugging Servers)</title>
+
+<meta name="MS-HAID" content="r22_metacmds_S_2864ec63-b13b-488d-9989-16193e94ce9f.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._servers__list_debugging_servers_"></a>.servers (List Debugging Servers)</h1>
+</div>
+<p>The <b>.servers</b> command lists all debugging servers that have been established by this debugger.</p>
+<pre class="syntax">
+    <b>.servers</b> 
+</pre>
+<h2><a id="ddk_meta_list_debugging_servers_dbg"></a><a id="DDK_META_LIST_DEBUGGING_SERVERS_DBG"></a></h2>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>user mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets</b></p>
+</td>
+<td>
+<p>live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>all </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For full details on debugging servers, see <a href="remote_debugging_through_the_debugger.htm">Remote Debugging Through the Debugger</a>.</p>
+<h2>Remarks</h2>
+<p>The output of the <b>.servers</b> command lists all the debugging servers started by the debugger on which this command is issued.  The output is formatted so that it can be used literally as the argument for the -remote command-line option or pasted into the WinDbg dialog box.</p>
+<p>Each debugging server is identified by a unique ID. This ID can be used as the argument for the <a href="_endsrv__end_debugging_server_.htm"><b>.endsrv (End Debugging Server)</b></a> command, if you wish to terminate the debugging server.</p>
+<p>The <b>.servers</b> command does not list debugging servers started on this computer by different instances of the debugger, nor does it list process servers or KD connection servers.   </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.servers (List Debugging Servers)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

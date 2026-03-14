@@ -1,0 +1,506 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The BUGCODE_NDIS_DRIVER bug check has a value of 0x0000007C. This bug check indicates that a problem occurred with an NDIS driver."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0x7C: BUGCODE_NDIS_DRIVER</title>
+
+<meta name="MS-HAID" content="t05_bugs_60_91b81505-4a6e-4e6d-ab25-4b86f9a86e98.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0x7c__bugcode_ndis_driver"></a>Bug Check 0x7C: BUGCODE_NDIS_DRIVER</h1>
+</div>
+<p>The BUGCODE_NDIS_DRIVER bug check has a value of 0x0000007C. This bug check indicates that a problem occurred with an NDIS driver.  </p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2> BUGCODE_NDIS_DRIVER Parameters</h2>
+<p>The following parameters appear on the blue screen. Parameter 1 indicates the type of violation. The meaning of the other parameters depends on the value of Parameter 1.</p>
+<table>
+<tr>
+<th>Parameter 1</th>
+<th>Parameter 2</th>
+<th>Parameter 3</th>
+<th>Parameter 4</th>
+<th>Cause of Error</th>
+</tr>
+<tr>
+<td>
+<p>0x01</p>
+</td>
+<td>
+<p>The address of the miniport block</p>
+</td>
+<td>
+<p>The number of bytes that are requested</p>
+</td>
+<td>
+<p>The current IRQL</p>
+</td>
+<td>
+<p>A driver called <b>NdisMAllocateSharedMemory</b> at a raised IRQL.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x02</p>
+</td>
+<td>
+<p>The address of the miniport block</p>
+</td>
+<td>
+<p>The shared memory page that was corrupted</p>
+</td>
+<td>
+<p>The address of NDIS_WRAPPER_CONTEXT that keeps track of the driver's shared memory allocations</p>
+</td>
+<td>
+<p>During a call to <b>NdisMAllocateSharedMemory</b>, NDIS detected that a previously-allocated shared memory page had been corrupted. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x03</p>
+</td>
+<td>
+<p>The address of the miniport block</p>
+</td>
+<td>
+<p>The page that contains the shared memory</p>
+</td>
+<td>
+<p>The virtual address of the shared memory</p>
+</td>
+<td>
+<p>A driver called <b>NdisMFreeSharedMemory</b>[<b>Async</b>] with a shared memory pointer that had already been freed.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x04</p>
+</td>
+<td>
+<p>The address of NDIS_M_DRIVER_BLOCK</p>
+</td>
+<td>
+<p>The address of DRIVER_OBJECT</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p><b>AddDevice</b> was called with a driver that is not on the list of drivers that are registered with NDIS.</p>
+<p>(Enabled only on special instrumented NDIS.)
+       </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x05</p>
+<p>0x06</p>
+</td>
+<td>
+<p>The address of the miniport block</p>
+</td>
+<td>
+<p>The address of the packet descriptor that the driver uses</p>
+</td>
+<td>
+<p>The address of the packet array that contained this packet descriptor </p>
+</td>
+<td>
+<p>An Ethernet driver indicated that it received a packet by using a packet descriptor that the protocol stack is currently using.  </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x07</p>
+</td>
+<td>
+<p>The address of the miniport block</p>
+</td>
+<td>
+<p>The address of the packet descriptor that the driver uses</p>
+</td>
+<td>
+<p>The address of the packet array that contained this packet descriptor </p>
+</td>
+<td>
+<p>An FDDI driver indicated that it received a packet by using a packet descriptor that the protocol stack is currently using.  </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x08</p>
+</td>
+<td>
+<p>The address of the miniport block</p>
+</td>
+<td>
+<p>The address of NDIS_MINIPORT_INTERRUPT</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>A miniport driver did not deregister its interrupt during the halt process. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x09</p>
+</td>
+<td>
+<p>The address of the miniport block</p>
+</td>
+<td>
+<p>The address of the miniport driver's timer queue (NDIS_MINIPORT_TIMER)</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>A miniport driver stopped without successfully canceling all its timers.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x0A</p>
+</td>
+<td>
+<p>The address of NDIS_M_DRIVER_BLOCK</p>
+</td>
+<td>
+<p>The address of DRIVER_OBJECT</p>
+</td>
+<td>
+<p>The reference count for the miniport driver</p>
+</td>
+<td>
+<p>A miniport driver is getting unloaded prematurely.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x0B</p>
+</td>
+<td>
+<p>The address of the miniport block</p>
+</td>
+<td>
+<p>The address of NDIS_MINIPORT_INTERRUPT</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>A miniport driver failed its initialization without deregistering its interrupt.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x0C</p>
+</td>
+<td>
+<p>The address of the miniport block</p>
+</td>
+<td>
+<p>The address of the miniport driver's timer queue (NDIS_MINIPORT_TIMER)</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>A miniport driver failed its initialization without successfully canceling all its timers.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x0D</p>
+</td>
+<td>
+<p>The address of the miniport block</p>
+</td>
+<td>
+<p>The address of NDIS_MINIPORT_INTERRUPT</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>A miniport driver did not deregister its interrupt during the halt process. (The halt was called from the initialize routine after the miniport driver returned success from its initialize handler.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x0E</p>
+</td>
+<td>
+<p>The address of the miniport block</p>
+</td>
+<td>
+<p>The address of the miniport driver's timer queue (NDIS_MINIPORT_TIMER)</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>A miniport driver stopped without successfully canceling all its timers. (The halt was called from the initialize routine after the miniport driver returned success from its initialize handler.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x0F</p>
+</td>
+<td>
+<p>The address of the miniport block</p>
+</td>
+<td>
+<p>The reset status</p>
+</td>
+<td>
+<p>AddressingReset (BOOLEAN) </p>
+</td>
+<td>
+<p>A miniport driver called <b>NdisMResetComplete</b> without any pending reset request.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x10</p>
+</td>
+<td>
+<p>The address of the miniport block</p>
+</td>
+<td>
+<p>The address of NDIS_MINIPORT_INTERRUPT</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>After resuming from a low-power state, a miniport driver failed its initialization without deregistering its interrupt.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x11</p>
+</td>
+<td>
+<p>The address of the miniport block</p>
+</td>
+<td>
+<p>The address of the miniport driver's timer queue (NDIS_MINIPORT_TIMER)</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>After resuming from a low-power state, a miniport driver failed its initialization without successfully canceling all its timers.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x12</p>
+</td>
+<td>
+<p>The address of the miniport block</p>
+</td>
+<td>
+<p>The address of the packet descriptor that the driver uses</p>
+</td>
+<td>
+<p>The address of the packet array that contained this packet descriptor </p>
+</td>
+<td>
+<p>A miniport driver indicated that it received a packet by using a packet descriptor that the protocol stack is currently using.  </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x13</p>
+</td>
+<td>
+<p>The address of the miniport block</p>
+</td>
+<td>
+<p>The address of the packet descriptor that the driver uses</p>
+</td>
+<td>
+<p>The address of the packet array that contained this packet descriptor </p>
+</td>
+<td>
+<p>A Token-Ring miniport driver indicated that it received a packet by using a packet descriptor that the protocol stack currently uses.  </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x14</p>
+</td>
+<td>
+<p>The current IRQL value</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>An NDIS driver called NdisWaitEvent at IRQL &gt; PASSIVE_LEVEL. The function must be called at IRQL = PASSIVE_LEVEL.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x15</p>
+</td>
+<td>
+<p>The address of the miniport block</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>An NDIS 6 miniport driver was calling an NDIS 5 API. An NDIS 6 miniport driver cannot call NdisMQueryInformationComplete or NdisMSetInformationComplete.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x16</p>
+</td>
+<td>
+<p>The address of the protocol block</p>
+</td>
+<td>
+<p>The address of the context area that is allocated by the protocol driver</p>
+</td>
+<td>
+<p>The address of the open block </p>
+</td>
+<td>
+<p>NDIS encountered an invalid handle in a binding operation. </p>
+<p>A protocol driver's <b>ProtocolBindAdapterEx</b> function returned NDIS_STATUS_SUCCESS, either directly or asynchronously through <b>NdisCompleteBindAdapterEx</b>. However, the binding context information contains an invalid handle to a block that indicates the open state of the miniport adapter. In this case, the open handle is not <b>NULL</b>, but it cannot be referenced.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x17</p>
+</td>
+<td>
+<p>The address of the interface provider block</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>The NDIS driver was attempting to deregister as a network interface provider while an interface was still registered.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x1B</p>
+<p>Windows 8.1 and later</p>
+</td>
+<td>
+<p>The IfIndex of the higher layer</p>
+</td>
+<td>
+<p>The   IfIndex of the lower layer</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>A  driver attempted to add a circular binding to the ifStackTable.  This could be caused by incorrect use of <b>NdisIfAddIfStackEntry</b> or corruption of the stack table stored in the registry.
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x1C</p>
+<p>Windows 8.1 and later</p>
+</td>
+<td>
+<p>Handle to the miniport adapter. Use <a href="_ndiskd_miniport.htm"><b>!ndiskd.miniport</b></a>.</p>
+</td>
+<td>
+<p>The OID reqeust object ID (example: OID_RECEIVE_FILTER_CLEAR_FILTER)
+</p>
+</td>
+<td>
+<p>The status code (NDIS_STATUS_XXX) with which the OID request was completed </p>
+</td>
+<td>
+<p>The miniport driver illegally failed an OID request that must not be failed.  Certain types of OIDs must not be failed, or else memory leaks or system instability will result.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x1D</p>
+<p>Windows 8.1 and later</p>
+</td>
+<td>
+<p>Handle to the miniport adapter or filter module. Use <a href="_ndiskd_miniport.htm"><b>!ndiskd.miniport</b></a> or <a href="_ndiskd_filter.htm"><b>!ndiskd.filter</b></a>.</p>
+</td>
+<td>
+<p>Pointer to the <b>NDIS_OID_REQUEST</b> that was completed illegally</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>A miniport adapter or filter module completed an OID request with an illegal buffer size.  The OID request was completed with <code>BytesWritten &gt; InformationBufferLength</code>, which indicates a buffer overflow.
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x1E</p>
+<p>Windows 8.1 and later</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>Internal handle. Use <b>!ndiskd.ndisref</b>.
+</p>
+</td>
+<td>
+<p>Debug tag of the imbalanced reference count</p>
+</td>
+<td>
+<p>NDIS  attempted to dereference a value more times than it was referenced.  This can be caused by misusing NDIS APIs (for example, calling <b>NdisFreeIoWorkItem</b> twice on the same work item), or it can be caused by an internal issue in NDIS.  Two of these bug checks are likely to be related if Parameter 4 is the same, and likely to be unrelated if Parameter 4 is different.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Cause</h2>
+<p>Parameter 1 indicates the specific cause of the BUGCODE_NDIS_DRIVER bug check.</p>
+<p>If one of the bug check parameters specifies the address of the miniport block, you can obtain more information by using <a href="_ndiskd_miniport.htm"><b>!ndiskd.miniport</b></a> together with this address.</p>
+<p>If one of the bug check parameters specifies the address of the packet descriptor that the driver uses, you can obtain more information by using <a href="_ndiskd_pkt.htm"><b>!ndiskd.pkt</b></a> together with this address.  </p>
+<h2>Remarks</h2>
+<p>This bug check code occurs only on Microsoft Windows Server 2003 and later versions of Windows. In Windows 2000 and Windows XP, the corresponding code is <a href="bug_check_0xd2__bugcode_id_driver.htm"><b>bug check 0xD2</b></a> (BUGCODE_ID_DRIVER).</p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

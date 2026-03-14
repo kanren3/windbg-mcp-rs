@@ -1,0 +1,100 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !lookaside extension displays information about look-aside lists, resets the counters of look-aside lists, or modifies the depth of a look-aside list."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!lookaside</title>
+
+<meta name="MS-HAID" content="r27_exts_kernel_E_5bdcda33-310d-4e5c-a709-4852fccea3c8.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._lookaside"></a>!lookaside</h1>
+</div>
+<p>The <b>!lookaside</b> extension displays information about look-aside lists, resets the counters of look-aside lists, or modifies the depth of a look-aside list.</p>
+<pre class="syntax"><b>!lookaside [</b><i>Address</i><b> [</b><i>Options</i><b> [</b><i>Depth</i><b>]]]</b>
+<b>!lookaside [-all]</b>
+<b>!lookaside 0 [-all]</b></pre>
+<h2><a id="ddk__lookaside_dbg"></a><a id="DDK__LOOKASIDE_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Address______"></a><a id="_______address______"></a><a id="_______ADDRESS______"></a>       <i>Address</i>      </dt>
+<dd>
+<p>Specifies the hexadecimal address of a look-aside list to be displayed or modified.</p>
+<p>If <i>Address</i> is omitted (or 0) and the <b>-all</b> option is not specified, a set of well-known, standard system look-aside lists is displayed. The set of lists is not exhaustive; that is, it does not include all system look-aside lists. Also, the set does not include custom look-aside lists that were created by calls to <b>ExInitializePagedLookasideList</b> or <b>ExInitializeNPagedLookasideList</b>.</p>
+<p>If <i>Address</i> is omitted (or 0) and the <b>-all</b> option is specified, all look-aside lists are displayed.</p>
+</dd>
+<dt><a id="_______Options______"></a><a id="_______options______"></a><a id="_______OPTIONS______"></a>       <i>Options</i>      </dt>
+<dd>
+<p>Controls what operation will be taken. The following possible <i>Options</i> are supported. The default is zero:</p>
+<p></p>
+<dl>
+<dt><a id="0"></a>0</dt>
+<dd>
+<p>Displays information about the specified look-aside list or lists.</p>
+</dd>
+<dt><a id="1"></a>1</dt>
+<dd>
+<p>Resets the counters of the specified look-aside list. </p>
+</dd>
+<dt><a id="2"></a>2</dt>
+<dd>
+<p>Modifies the depth of the specified look-aside list. This option can only be used if <i>Address</i> is nonzero.</p>
+</dd>
+</dl>
+</dd>
+<dt><a id="_______Depth______"></a><a id="_______depth______"></a><a id="_______DEPTH______"></a>       <i>Depth</i>      </dt>
+<dd>
+<p>Specifies the new maximum depth of the specified look-aside list. This parameter is permitted only if <i>Address</i> is nonzero and <i>Options</i> is equal to 2. </p>
+</dd>
+</dl>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For information about look-aside lists, see the 
+       <a href="http://go.microsoft.com/fwlink/p/?linkid=201141">Windows Driver Kit (WDK) documentation</a> 
+       and <i>Microsoft Windows Internals</i>, by Mark Russinovich and David Solomon. (These 
+       resources may not be available in some languages and countries.)</p>
+<h2>Remarks</h2>
+<p>Look-aside lists are multiprocessor-safe mechanisms for managing pools of fixed-size entries from either paged or nonpaged memory.</p>
+<p>Look-aside lists are efficient, because the routines do not use spin locks on most platforms.</p>
+<p>Note that if the current depth of a look-aside list exceeds the maximum depth of that list, then freeing a structure associated with that list will result in freeing it into pool memory, rather than list memory. </p>
+<p>Here is an example of the output from this extension:</p>
+<pre class="syntax" xml:space="preserve"><code>!lookaside 0xfffff88001294f80
+
+Lookaside "" @ 0xfffff88001294f80  Tag(hex): 0x7366744e "Ntfs"
+    Type           =       0011  PagedPool RaiseIfAllocationFailure
+    Current Depth  =          0  Max Depth  =          4
+    Size           =        496  Max Alloc  =       1984
+    AllocateMisses =          8  FreeMisses =          0
+    TotalAllocates =     272492  TotalFrees =     272488
+    Hit Rate       =         99% Hit Rate   =        100%
+</code></pre>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>DLL</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Kdexts.dll</dt>
+</dl>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!lookaside%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

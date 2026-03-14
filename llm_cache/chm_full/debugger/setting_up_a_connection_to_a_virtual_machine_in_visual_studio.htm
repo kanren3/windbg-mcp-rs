@@ -1,0 +1,93 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="You can use Microsoft Visual Studio to set up and perform kernel-mode debugging of a virtual machine."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Setting Up Kernel-Mode Debugging of a Virtual Machine in Visual Studio</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.setting_up_a_connection_to_a_virtual_machine_in_visual_studio"></a>Setting Up Kernel-Mode Debugging of a Virtual Machine in Visual Studio</h1>
+</div>
+<p>You can use Microsoft Visual Studio to set up and perform kernel-mode debugging of a virtual machine. The virtual machine can be located on the same physical computer as the debugger or on a different computer that is connected to the same network. To use Visual Studio for kernel-mode debugging, you must have the Windows Driver Kit (WDK) integrated with Visual Studio. For information about how to install the integrated environment, see <a href="http://go.microsoft.com/fwlink/p?linkid=301383">Windows Driver Development</a>.</p>
+<p>As an alternative to using Visual Studio to set up debugging of a virtual machine, you can do the setup manually. For more information, see <a href="attaching_to_a_virtual_machine__kernel_mode_.htm">Setting Up Kernel-Mode Debugging of a Virtual Machine Manually</a>.</p>
+<p>The computer that runs the debugger is called the <i>host computer</i>, and the virtual machine that is being debugged is called the <i>target virtual machine</i>.</p>
+<h2><a id="Configuring_the_Target_Virtual_Machine"></a><a id="configuring_the_target_virtual_machine"></a><a id="CONFIGURING_THE_TARGET_VIRTUAL_MACHINE"></a>Configuring the Target Virtual Machine</h2>
+<ol>
+<li>
+<p>In the virtual machine, in an elevated Command Prompt window, enter the following commands.</p>
+<dl>
+<dd><b>bcdedit /debug on</b></dd>
+<dd><b>bcdedit /dbgsettings serial debugport:</b><i>n</i><b> baudrate:115200 
+</b><p>where <i>n</i> is the number of a COM port on the virtual machine.</p>
+</dd>
+</dl>
+<div class="alert"><b>Note</b>  By default, COM ports are not presented in generation 2 virtual machines. For information about how to create a COM port, see <a href="#generation_2_virtual_machines">Generation 2 Virtual Machines</a>.</div>
+<div> </div>
+</li>
+<li>Reboot the virtual machine.</li>
+<li>In the virtual machine, configure the COM port to map to a named pipe. 
+
+The debugger will connect through this pipe. For more information about how to create this pipe, see your virtual machine's documentation.</li>
+</ol>
+<h2><a id="Configuring_the_Host_Computer"></a><a id="configuring_the_host_computer"></a><a id="CONFIGURING_THE_HOST_COMPUTER"></a>Configuring the Host Computer</h2>
+<p>The host computer can be the same physical computer that is running the virtual machine, or it can be a separate computer.</p>
+<ol>
+<li>On the host computer, in Visual Studio, on the <b>Driver</b> menu, choose <b>Test &gt; Configure Computer</b>.</li>
+<li>Click <b>Add New Computer</b>.</li>
+<li>For <b>Computer name</b>, enter the name of the physical computer that is running the target virtual machine.</li>
+<li>Select <b>Manually configure debuggers and do not provision</b>, and click <b>Next</b>.</li>
+<li>For <b>Connection Type</b>, select <b>Serial</b>.</li>
+<li>Check <b>Pipe</b>, and check <b>Reconnect</b>.</li>
+<li>
+<p>If the debugger is running on the same computer as the virtual machine, enter the following for <b>Pipe name</b>:</p>
+<p><b>\\.\pipe\</b><i>PipeName</i>. </p>
+<p>If the debugger is running on a different computer from the virtual machine, enter the following for <b>Pipe name</b>:</p>
+<p><b>\\</b><i>VMHost</i><b>\pipe\</b><i>PipeName</i></p>
+<p>where, <i>VMHost</i> is the name of the physical computer that is running the target virtual machine, and <i>PipeName</i> is the name of the pipe that you associated with the COM port on the target virtual machine. </p>
+</li>
+<li>Click <b>Next</b>. Click <b>Finish</b>.</li>
+</ol>
+<h2><a id="Starting_the_Debugging_Session"></a><a id="starting_the_debugging_session"></a><a id="STARTING_THE_DEBUGGING_SESSION"></a>Starting the Debugging Session</h2>
+<ol>
+<li>On the host computer, in Visual Studio, on the <b>Tools</b> menu, choose <b>Attach to Process</b>.</li>
+<li>For <b>Transport</b>, choose <b>Windows Kernel Mode Debugger</b>.</li>
+<li>For <b>Qualifier</b>, select the name of the physical computer that is running the target virtual machine.</li>
+<li>Click <b>Attach</b>.</li>
+</ol>
+<h2><a id="generation_2_virtual_machines"></a><a id="GENERATION_2_VIRTUAL_MACHINES"></a>Generation 2 Virtual Machines</h2>
+<p>By default, COM ports are not presented in generation 2 virtual machines. You can add COM ports through PowerShell or WMI. For the COM ports to be displayed in the Hyper-V Manager console, they must be created with a path.</p>
+<p>To enable kernel debugging using a COM port on a generation 2 virtual machine, follow these steps:
+</p>
+<ol>
+<li>
+<p>Disable Secure Boot by entering this PowerShell command:</p><b>Set-VMFirmware –Vmname </b><i>VmName</i><b> –EnableSecureBoot Off
+</b><p>where <i>VmName</i> is the name of your virtual machine.</p>
+</li>
+<li>
+<p>Add a COM port to the virtual machine by entering this PowerShell command:</p><b>Set-VMComPort –VMName </b><i>VmName</i><b> 1 \\.\pipe\</b><i>PipeName</i><p>For example, the following command configures the first COM port on virtual machine TestVM to connect to named pipe TestPipe on the local computer.</p><b>Set-VMComPort –VMName TestVM 1 \\.\pipe\TestPipe
+</b></li>
+</ol>
+<p>For more information, see <a href="http://go.microsoft.com/fwlink/p/?Linkid=331326">Generation 2 Virtual Machine Overview</a>.</p>
+<h2><a id="related_topics"></a>Related topics</h2>
+<dl>
+<dt><a href="setting_up_kernel-mode_debugging_in_visual_studio.htm">Setting Up Kernel-Mode Debugging in Visual Studio</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Setting Up Kernel-Mode Debugging of a Virtual Machine in Visual Studio%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

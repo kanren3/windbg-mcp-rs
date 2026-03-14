@@ -1,0 +1,56 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Example 3: Setting a Flag by Using Its Hexadecimal Value"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Example 3:  Setting a Flag by Using Its Hexadecimal Value</title>
+
+<meta name="MS-HAID" content="GFlags_a617d9d1-9d7b-4010-8f87-a2e4e48fc03c.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.example_3___setting_a_flag_by_using_its_hexadecimal_value"></a>Example 3:  Setting a Flag by Using Its Hexadecimal Value</h1>
+</div>
+<h2><a id="ddk_example_3___setting_a_flag_by_using_its_hexadecimal_value_dtools"></a><a id="DDK_EXAMPLE_3___SETTING_A_FLAG_BY_USING_ITS_HEXADECIMAL_VALUE_DTOOLS"></a></h2>
+<p>The following command sets the system-wide <a href="enable_page_heap.htm">Enable page heap</a> flag. <b>Enable Page Heap</b> adds a guard page and other tracking features to each heap allocation.</p>
+<p>The command uses the <b>/r</b> parameter to indicate system-wide registry mode. To identify the flag, the command uses <b>2000000</b>, which represents 0x2000000, the hexadecimal value for <b>Enable page heap</b>.</p>
+<p>Although the command sets a flag, it omits the plus (+) sign. When using hexadecimal values, the sign is optional and add (+) is the default.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>gflags /r 2000000 </pre>
+</td>
+</tr>
+</table></span></div>
+<p>In response, GFlags displays the system-wide flags set in the registry. The display indicates that the command is successful. The <b>Enable page heap</b> feature will be enabled for all processes when Windows restarts.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>Current Boot Registry Settings are: 02000000
+    hpa - Enable page heap</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Example 3:  Setting a Flag by Using Its Hexadecimal Value%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

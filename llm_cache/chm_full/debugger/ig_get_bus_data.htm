@@ -1,0 +1,91 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The IG_GET_BUS_DATA Ioctl operation reads data from a system bus and the IG_SET_BUS_DATA Ioctl operation writes data to a system bus."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IG_GET_BUS_DATA</title>
+
+<meta name="MS-HAID" content="WdbgExts_Ref_090ca26a-5955-40c6-82c3-310a02a9d64d.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.ig_get_bus_data"></a>IG_GET_BUS_DATA</h1>
+</div>
+<p>The IG_GET_BUS_DATA <a href="ioctl.htm"><b>Ioctl</b></a> operation reads data from a system bus and the IG_SET_BUS_DATA <b>Ioctl</b> operation writes data to a system bus.  When calling <b>Ioctl</b> with <i>IoctlType</i> set to IG_GET_BUS_DATA or IG_SET_BUS_DATA, <i>IpvData</i> should contain an instance of the BUSDATA structure.</p>
+<pre class="syntax" xml:space="preserve"><code>typedef struct _GETSETBUSDATA {
+    ULONG  BusDataType;
+    ULONG  BusNumber;
+    ULONG  SlotNumber;
+    PVOID  Buffer;
+    ULONG  Offset;
+    ULONG  Length;
+} BUSDATA, *PBUSDATA;</code></pre>
+<h2><a id="Members"></a><a id="members"></a><a id="MEMBERS"></a>Members</h2>
+<p></p>
+<dl>
+<dt><a id="BusDataType"></a><a id="busdatatype"></a><a id="BUSDATATYPE"></a><b>BusDataType</b></dt>
+<dd>
+<p>Specifies the bus data type to use.  For details of allowed values, see the documentation for the BUS_DATA_TYPE enumeration in the Platform SDK.</p>
+</dd>
+<dt><a id="BusNumber"></a><a id="busnumber"></a><a id="BUSNUMBER"></a><b>BusNumber</b></dt>
+<dd>
+<p>Specifies the system-assigned number of the bus.  This is usually zero, unless the system has more than one bus of the same bus data type.</p>
+</dd>
+<dt><a id="SlotNumber"></a><a id="slotnumber"></a><a id="SLOTNUMBER"></a><b>SlotNumber</b></dt>
+<dd>
+<p>Specifies the logical slot number on the bus.</p>
+</dd>
+<dt><a id="Buffer"></a><a id="buffer"></a><a id="BUFFER"></a><b>Buffer</b></dt>
+<dd>
+<p>Specifies the buffer that contains the memory to write to the bus, or to receive the memory that is read from the bus.</p>
+<p>The size of <b>Buffer</b> must be at least the value of <b>Length</b>.</p>
+</dd>
+<dt><a id="Offset"></a><a id="offset"></a><a id="OFFSET"></a><b>Offset</b></dt>
+<dd>
+<p>Specifies the offset in the bus data to start reading from or writing to.</p>
+</dd>
+<dt><a id="Length"></a><a id="length"></a><a id="LENGTH"></a><b>Length</b></dt>
+<dd>
+<p>Specifies the number of bytes to read from or write to the bus when the <b>Ioctl</b> operation is called.  Upon returning, <b>Length</b> is set to the number of bytes actually read or written.</p>
+</dd>
+</dl>
+<h2><a id="Return_Value"></a><a id="return_value"></a><a id="RETURN_VALUE"></a>Return Value</h2>
+<p>If this <b>Ioctl</b> operation succeeds, the return value from <b>Ioctl</b> is <b>TRUE</b>; otherwise, it is <b>FALSE</b>.</p>
+<h2>Remarks</h2>
+<p>The parameters for the IG_GET_BUS_DATA and IG_SET_BUS_DATA <a href="ioctl.htm"><b>Ioctl</b></a> operations are the members of the BUSDATA structure.</p>
+<p>This operation is only available in kernel-mode debugging.</p>
+<p>The properties of the data in the bus depends on the system, bus, and slot.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Wdbgexts.h (include Wdbgexts.h or Dbgeng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="ioctl.htm"><b>Ioctl</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IG_GET_BUS_DATA%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,89 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The CreateThread callback method is called by the engine when a create-threaddebugging event occurs in the target."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IDebugEventCallbacks::CreateThread method</title>
+
+<meta name="MS-HAID" content="ComCallbacks_db1fe5dc-8392-4c79-a1ed-9752170eed3c.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.idebugeventcallbacks_createthread"></a>IDebugEventCallbacks::CreateThread method</h1>
+</div>
+<p>The <b>CreateThread</b> callback method is called by the engine when a create-threaddebugging event occurs in the target.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>HRESULT CreateThread(
+  [in] ULONG64 Handle,
+  [in] ULONG64 DataOffset,
+  [in] ULONG64 StartOffset
+);</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Parameters</h2>
+<dl>
+<dt><i>Handle</i> [in]</dt>
+<dd>
+<p>Specifies the handle for the thread whose creation caused the event.  If this information is not available, <i>Handle</i> will be <b>NULL</b>.</p>
+</dd>
+<dt><i>DataOffset</i> [in]</dt>
+<dd>
+<p>Specifies a block of data that the operating system maintains for this thread. The actual data in the block is operating system-specific.  If the operating system does not have such a block, <i>DataOffset</i> will be <b>NULL</b>.</p>
+</dd>
+<dt><i>StartOffset</i> [in]</dt>
+<dd>
+<p>Specifies the starting location in the target's virtual address space of the thread.  If this information is not available, <i>StartOffset</i> will be <b>NULL</b>.</p>
+</dd>
+</dl>
+<h2>Return value</h2>
+<p>This method returns a <a href="debug_status_xxx.htm"><b>DEBUG_STATUS_XXX</b></a> value, which indicates how the execution of the target should proceed after the engine processes this event.  For details on how the engine treats this value, see <a href="monitoring_events.htm">Monitoring Events</a>.</p>
+<h2>Remarks</h2>
+<p>This method is only called by the engine if the DEBUG_EVENT_CREATE_THREAD flag is set in the mask returned by <a href="idebugeventcallbacks_getinterestmask.htm"><b>IDebugEventCallbacks::GetInterestMask</b></a>.</p>
+<p>For more information about handling events, see <a href="monitoring_events.htm">Monitoring Events</a>.  For information about threads, see <a href="controlling_threads_and_processes.htm">Threads and Processes</a>.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Target platform</p>
+</th>
+<td width="70%">
+<dl>
+<dt></dt>
+</dl>
+</td>
+</tr>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Dbgeng.h (include Dbgeng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IDebugEventCallbacks::CreateThread method%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

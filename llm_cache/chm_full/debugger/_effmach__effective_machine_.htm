@@ -1,0 +1,135 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .effmach command displays or changes the processor mode that the debugger uses."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.effmach (Effective Machine)</title>
+
+<meta name="MS-HAID" content="r20_metacmds_E_6f7c197b-f6c5-4629-8106-03c9fc840971.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._effmach__effective_machine_"></a>.effmach (Effective Machine)</h1>
+</div>
+<p>The <b>.effmach</b> command displays or changes the processor mode that the debugger uses.</p>
+<pre class="syntax"><b>.effmach </b>[<i>MachineType</i>]</pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______MachineType______"></a><a id="_______machinetype______"></a><a id="_______MACHINETYPE______"></a>       <i>MachineType</i>      </dt>
+<dd>
+<p>Specifies the processor type that the debugger uses for this session. If you omit this parameter, the debugger displays the current machine type. </p>
+<p>You can enter one of the following machine types.</p>
+<table>
+<tr>
+<td>
+<p><b>Machine type</b></p>
+</td>
+<td>
+<p><b>Description</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>.</b></p>
+</td>
+<td>
+<p>Use the processor mode of the target computer's native processor mode. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>#</b></p>
+</td>
+<td>
+<p>Use the processor mode of the code that is executing for the most recent event.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>x86</b></p>
+</td>
+<td>
+<p>Use an x86-based processor mode.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>amd64</b></p>
+</td>
+<td>
+<p>Use an x64-based processor mode.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>ebc</b></p>
+</td>
+<td>
+<p>Use an EFI byte code processor mode.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets</b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Platforms</b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>The processor mode influences many debugger features: </p>
+<ul>
+<li>
+<p>Which processor is used for stack tracing.</p>
+</li>
+<li>
+<p>Whether the process uses 32-bit or 64-bit pointers.</p>
+</li>
+<li>
+<p>Which processor's register set is active.</p>
+</li>
+</ul>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.effmach (Effective Machine)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

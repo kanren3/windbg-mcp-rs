@@ -1,0 +1,172 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The SPECIAL_POOL_DETECTED_MEMORY_CORRUPTION bug check has a value of 0x000000C1. This indicates that the driver wrote to an invalid section of the special pool."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0xC1: SPECIAL_POOL_DETECTED_MEMORY_CORRUPTION</title>
+
+<meta name="MS-HAID" content="t06_bugs_B0_6421e635-2753-478b-be65-c52c820a8ef5.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0xc1__special_pool_detected_memory_corruption"></a>Bug Check 0xC1: SPECIAL_POOL_DETECTED_MEMORY_CORRUPTION</h1>
+</div>
+<p>The SPECIAL_POOL_DETECTED_MEMORY_CORRUPTION bug check has a value of 0x000000C1. This indicates that the driver wrote to an invalid section of the special pool.</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2> SPECIAL_POOL_DETECTED_MEMORY_CORRUPTION Parameters</h2>
+<p>The following parameters are displayed on the blue screen. Parameter 4 indicates the type of violation.</p>
+<table>
+<tr>
+<th>Parameter 1</th>
+<th>Parameter 2</th>
+<th>Parameter 3</th>
+<th>Parameter 4</th>
+<th>Cause of Error</th>
+</tr>
+<tr>
+<td>
+<p>Address that the driver tried to free</p>
+</td>
+<td>
+<p>Reserved  </p>
+</td>
+<td>
+<p>0 </p>
+</td>
+<td>
+<p>0x20</p>
+</td>
+<td>
+<p>A driver attempted to free pool which was not allocated.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Address that the driver tried to free</p>
+</td>
+<td>
+<p>Bytes requested</p>
+</td>
+<td>
+<p>Bytes calculated (actually given to the caller)</p>
+</td>
+<td>
+<p>0x21,</p>
+<p>0x22</p>
+</td>
+<td>
+<p>A driver attempted to free a bad address. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Address that the driver tried to free</p>
+</td>
+<td>
+<p>Address where bits are corrupted</p>
+</td>
+<td>
+<p>Reserved  </p>
+</td>
+<td>
+<p>0x23</p>
+</td>
+<td>
+<p>A driver freed an address, but nearby bytes within the same page have been corrupted.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Address that  the driver tried to free</p>
+</td>
+<td>
+<p>Address where bits are corrupted</p>
+</td>
+<td>
+<p>Reserved  </p>
+</td>
+<td>
+<p>0x24</p>
+</td>
+<td>
+<p>A driver freed an address, but bytes occurring after the end of the allocation have been overwritten.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Current IRQL</p>
+</td>
+<td>
+<p>Pool type</p>
+</td>
+<td>
+<p>Number of bytes</p>
+</td>
+<td>
+<p>0x30</p>
+</td>
+<td>
+<p>A driver attempted to allocate pool at an incorrect IRQL.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Current IRQL</p>
+</td>
+<td>
+<p>Pool type</p>
+</td>
+<td>
+<p>Address that the driver tried to free</p>
+</td>
+<td>
+<p>0x31</p>
+</td>
+<td>
+<p>A driver attempted to free pool at an incorrect IRQL.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Address that the driver tried to free</p>
+</td>
+<td>
+<p>Address where one bit is corrupted</p>
+</td>
+<td>
+<p>Reserved  </p>
+</td>
+<td>
+<p>0x32</p>
+</td>
+<td>
+<p>A driver freed an address, but nearby bytes within the same page have a single bit error. </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>The _POOL_TYPE codes are enumerated in ntddk.h. In particular, zero indicates nonpaged pool and one indicates paged pool.</p>
+<h2>Cause</h2>
+<p>A driver has written to an invalid section of the special pool.</p>
+<h2>Resolution</h2>
+<p>Obtain a backtrace of the current thread. This backtrace will usually reveal the source of the error.</p>
+<p>For information about the special pool, consult the Driver Verifier section of the Windows Driver Kit.  </p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

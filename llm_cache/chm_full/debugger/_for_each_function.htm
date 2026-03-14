@@ -1,0 +1,203 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !for_each_function extension executes a debugger command for each function, in a specified module, whose name matches a specified pattern."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!for_each_function</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._for_each_function"></a>!for_each_function</h1>
+</div>
+<p>The <b>!for_each_function</b>  extension executes a debugger command for each function, in a specified module, whose name matches a specified pattern.</p>
+<pre class="syntax"><b>!for_each_function -m:</b><i>ModuleName</i><b> -p:</b><i>Pattern</i><b> -c:</b><i>CommandString</i>
+<b>!for_each_function -?</b>
+</pre>
+<h2><a id="ddk__vad_dbg"></a><a id="DDK__VAD_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______-m_ModuleName______"></a><a id="_______-m_modulename______"></a><a id="_______-M_MODULENAME______"></a>       -m:<i>ModuleName</i>      </dt>
+<dd>
+<p>Specifies the module name. This name is typically the file name without the file name extension. In some cases, the module name differs significantly from the file name. </p>
+</dd>
+<dt><a id="-p_Pattern______"></a><a id="-p_pattern______"></a><a id="-P_PATTERN______"></a>-p:<i>Pattern</i>      </dt>
+<dd>
+<p>Specifies the pattern to be matched.</p>
+</dd>
+<dt><a id="_______-c_CommandString______"></a><a id="_______-c_commandstring______"></a><a id="_______-C_COMMANDSTRING______"></a>       -c:<i>CommandString</i>      </dt>
+<dd>
+<p>Specifies the debugger command to execute for each function, in the specified module, that matches the pattern.</p>
+<p>You can use the following aliases in <i>CommandString</i>.</p>
+<table>
+<tr>
+<th>Alias</th>
+<th>Data type</th>
+<th>Value</th>
+</tr>
+<tr>
+<td>
+<p>@#SymbolName</p>
+</td>
+<td>
+<p>string</p>
+</td>
+<td>
+<p>The symbol name.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>@#SymbolAddress</p>
+</td>
+<td>
+<p>ULONG64</p>
+</td>
+<td>
+<p>The symbol address.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>@#ModName</p>
+</td>
+<td>
+<p>string</p>
+</td>
+<td>
+<p>The module name.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>@#FunctionName</p>
+</td>
+<td>
+<p>string</p>
+</td>
+<td>
+<p>The function name.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+</dd>
+<dt><a id="_______-_______"></a>       -?      </dt>
+<dd>
+<p>Displays help for this extension.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<p>Ext.dll</p>
+<h2>Remarks</h2>
+<p>The following example shows how to list all function names, in the PCI module, that match the pattern *read*.</p>
+<div class="code"><span codelanguage="cmd"><table>
+<tr>
+<th>cmd</th>
+</tr>
+<tr>
+<td>
+<pre>1: kd&gt; !for_each_function -m:pci -p:*read* -c:.echo @#FunctionName
+
+PciReadDeviceConfig
+PciReadDeviceSpace
+PciReadSlotIdData
+PciExternalReadDeviceConfig
+PiRegStateReadStackCreationSettingsFromKey
+VmProxyReadDevicePathsFromRegistry
+PpRegStateReadCreateClassCreationSettings
+ExpressRootPortReadConfigSpace
+PciReadRomImage
+PciDevice_ReadConfig
+PciReadDeviceConfigEx
+PciReadSlotConfig
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p>If an alias is not preceded and followed by a blank space, you must put the alias inside the <a href="_______alias_interpreter_.htm"><b>${} Alias Interpreter</b></a> token.</p>
+<p>The following example shows how to list all symbols, in all modules, whose function names match the pattern *CreateFile*. The alias @#ModuleName is not preceded by a blank space. Therefore,  it is put inside the <a href="_______alias_interpreter_.htm"><b>${} Alias Interpreter</b></a> token.</p>
+<div class="alert"><b>Note</b>  Do not confuse the @#ModuleName alias with the @#ModName alias. The @#ModuleName alias belongs to the <a href="_for_each_module.htm"><b>!for_each_module</b></a> extension, and the @#ModName alias belongs to the <b>!for_each_function</b> extension.</div>
+<div> </div>
+<div class="code"><span codelanguage="cmd"><table>
+<tr>
+<th>cmd</th>
+</tr>
+<tr>
+<td>
+<pre>1: kd&gt; !for_each_module !for_each_function -m:${@#ModuleName} -p:*CreateFile* -c:.echo @#SymbolName
+nt!BiCreateFileDeviceElement
+nt!NtCreateFile
+...
+Wdf01000!FxFileObject::_CreateFileObject
+fltmgr!FltCreateFileEx2$fin$0
+fltmgr!FltCreateFileEx2
+...
+Ntfs!TxfIoCreateFile
+Ntfs!NtfsCreateFileLock
+...
+MpFilter!MpTxfpCreateFileEntryUnsafe
+mrxsmb10!MRxSmbFinishLongNameCreateFile
+...
+srv!SrvIoCreateFile
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p>You can put a sequence of commands in a command file, and use  <a href="_______________________a___run_script_file_.htm"><b>$$&gt;&lt; (Run Script File)</b></a> to execute those commands for each function that matches the pattern. Suppose that a file named Commands.txt contains the following commands:</p>
+<div class="code"><span codelanguage="cmd"><table>
+<tr>
+<th>cmd</th>
+</tr>
+<tr>
+<td>
+<pre>.echo
+.echo @#FunctionName
+u @#SymbolAddress L1
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p>In the following example, the commands in the Commands.text file are executed for each function, in the PCI module, that matches the pattern *read*.</p>
+<div class="code"><span codelanguage="cmd"><table>
+<tr>
+<th>cmd</th>
+</tr>
+<tr>
+<td>
+<pre>1: kd&gt; !for_each_function -m:pci -p:*read* -c:$$&gt;&lt;Commands.txt
+
+PciReadDeviceConfig
+pci!PciReadDeviceConfig [d:\wmm1\drivers\busdrv\pci\config.c @ 349]:
+fffff880`00f7b798 48895c2408      mov     qword ptr [rsp+8],rbx
+
+PciReadDeviceSpace
+pci!PciReadDeviceSpace [d:\wmm1\drivers\busdrv\pci\config.c @ 1621]:
+fffff880`00f7c044 48895c2408      mov     qword ptr [rsp+8],rbx
+
+...
+</pre>
+</td>
+</tr>
+</table></span></div>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="_for_each_module.htm"><b>!for_each_module</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!for_each_function%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

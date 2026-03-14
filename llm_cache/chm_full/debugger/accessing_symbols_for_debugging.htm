@@ -1,0 +1,50 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Accessing Symbols for Debugging"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Accessing Symbols for Debugging</title>
+
+<meta name="MS-HAID" content="r09_symbols_915002a2-2d93-4380-8918-f381f9a1e288.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.accessing_symbols_for_debugging"></a>Accessing Symbols for Debugging</h1>
+</div>
+<h2><a id="ddk_debugging_user_mode_processes_without_symbols_dbg"></a><a id="DDK_DEBUGGING_USER_MODE_PROCESSES_WITHOUT_SYMBOLS_DBG"></a></h2>
+<p>Setting up symbols correctly for debugging can be a challenging task, particularly for kernel debugging. It often requires that you know the names and releases of all products on your computer. The debugger must be able to locate each of the symbol files corresponding to the product releases and service packs.</p>
+<p>This can result in an extremely long symbol path consisting of a long list of directories.</p>
+<p>To simplify these difficulties in coordinating symbol files, the symbol files can be gathered into a <i>symbol store</i>, which is then accessed by a <i>symbol server</i>.  </p>
+<p>A symbol store is a collection of symbol files, an index, and a tool that can be used by an administrator to add and delete files. The files are indexed according to unique parameters such as the time stamp and image size. A symbol store can also hold executable image files which can be extracted using a symbol server.  Debugging Tools for Windows contains a symbol store creation tool called <a href="symstore.htm">SymStore</a>. </p>
+<p>A symbol server enables the debuggers to automatically retrieve the correct symbol files from a symbol store without the user needing to know product names, releases, or build numbers. Debugging Tools for Windows contains a symbol server called <a href="symsrv.htm">SymSrv</a>.  The  symbol server is activated by including a certain text string in the symbol path. Each time the debugger needs to load symbols for a newly loaded module, it calls the symbol server to locate the appropriate symbol files.</p>
+<p>If you wish to use a different method for your symbol search than that provided by SymSrv, you can create your own symbol server DLL.  For details on implementing such a symbol server, see <a href="other_symbol_servers.htm">Other Symbol Servers</a>.</p>
+<p>If you are performing user-mode debugging, you will need symbols for the target application.  If you are performing kernel-mode debugging, you will need symbols for the driver you are debugging, as well as the Windows public symbols.  Microsoft has created a symbol store with public symbols for Microsoft products; this symbol store is available on the internet.  These symbols can be loaded using the <a href="_symfix__set_symbol_store_path_.htm"><b>.symfix (Set Symbol Store Path)</b></a> command, as long as you have access to the internet while your debugger is running.  For more information or to determine how to manually install these symbols, see <a href="installing_windows_symbol_files.htm">Installing Windows Symbol Files</a>. </p>
+<p>This section includes:</p>
+<dl>
+<dd>
+<p><a href="installing_windows_symbol_files.htm">Installing Windows Symbol Files</a></p>
+</dd>
+<dd>
+<p><a href="symbol_stores_and_symbol_servers.htm">Symbol Stores and Symbol Servers</a></p>
+</dd>
+<dd>
+<p><a href="deferred_symbol_loading.htm">Deferred Symbol Loading</a></p>
+</dd>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Accessing Symbols for Debugging%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

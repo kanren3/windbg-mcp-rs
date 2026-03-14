@@ -1,0 +1,105 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The dds, dps, and dqs commands display the contents of memory in the given range. This memory is assumed to be a series of addresses in the symbol table. The corresponding symbols are displayed as well."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>dds, dps, dqs (Display Words and Symbols)</title>
+
+<meta name="MS-HAID" content="r16_cmds_C_4865ae85-0c91-47f6-ad21-fa4c1db674be.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.dds__dps__dqs__display_words_and_symbols_"></a>dds, dps, dqs (Display Words and Symbols)</h1>
+</div>
+<p>The <b>dds</b>, <b>dps</b>, and <b>dqs</b> commands display the contents of memory in the given range. This memory is assumed to be a series of addresses in the symbol table. The corresponding symbols are displayed as well.  </p>
+<pre class="syntax">dds [Options] [Range] 
+dqs [Options] [Range] 
+dps [Options] [Range] 
+</pre>
+<h2><a id="ddk_cmd_display_words_and_symbols_dbg"></a><a id="DDK_CMD_DISPLAY_WORDS_AND_SYMBOLS_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Options______"></a><a id="_______options______"></a><a id="_______OPTIONS______"></a>       <i>Options</i>      </dt>
+<dd>
+<p>Specifies one or more display options. Any of the following options can be included, except that no more than one <b>/p</b>* option can be indicated:</p>
+<p></p>
+<dl>
+<dt><a id="_c_Width"></a><a id="_c_width"></a><a id="_C_WIDTH"></a><b>/c </b><i>Width</i></dt>
+<dd>
+<p>Specifies the number of columns to use in the display. If this is omitted, the default number of columns depends on the display type. Because of the way symbols are displayed by these commands, it is usually best to use the default of only one data column.</p>
+</dd>
+<dt><a id="_p"></a><a id="_P"></a><b>/p</b></dt>
+<dd>
+<p>(Kernel-mode only)  Uses physical memory addresses for the display. The range specified by <i>Range</i> will be taken from physical memory rather than virtual memory.</p>
+</dd>
+<dt><a id="_p_c_"></a><a id="_P_C_"></a><b>/p[c]</b></dt>
+<dd>
+<p>(Kernel-mode only)  Same as <b>/p</b>, except that cached memory will be read. The brackets around <b>c</b> must be included.</p>
+</dd>
+<dt><a id="_p_uc_"></a><a id="_P_UC_"></a><b>/p[uc]</b></dt>
+<dd>
+<p>(Kernel-mode only)  Same as <b>/p</b>, except that uncached memory will be read. The brackets around <b>uc</b> must be included.</p>
+</dd>
+<dt><a id="_p_wc_"></a><a id="_P_WC_"></a><b>/p[wc]</b></dt>
+<dd>
+<p>(Kernel-mode only)  Same as <b>/p</b>, except that write-combined memory will be read. The brackets around <b>wc</b> must be included.</p>
+</dd>
+</dl>
+</dd>
+<dt><a id="_______Range______"></a><a id="_______range______"></a><a id="_______RANGE______"></a>       <i>Range</i>      </dt>
+<dd>
+<p>Specifies the memory area to display. For more syntax details, see <a href="address_and_address_range_syntax.htm">Address and Address Range Syntax</a>. If you omit <i>Range</i>, the command will display memory starting at the ending location of the last display command. If <i>Range</i> is omitted and no previous display command has been used, the display begins at the current instruction pointer. If a simple address is given, the default range length is 128 bytes.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>user mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>all </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For an overview of memory manipulation and a description of other memory-related commands, see <a href="reading_and_writing_memory.htm">Reading and Writing Memory</a>.</p>
+<h2>Remarks</h2>
+<p>The second character of <b>dds</b> is case-sensitive. The third character of all these commands is case-sensitive.</p>
+<p>The <b>dds</b> command displays double-word (4 byte) values like the <a href="d__da__db__dc__dd__dd__df__dp__dq__du__dw__dw__dyb__dyd__display_memor.htm"><b>dd</b></a> command. The <b>dqs</b> command displays quad-word (8 byte) values like the <b>dq</b> command. The <b>dps</b> command displays pointer-sized values (4 byte or 8 byte, depending on the target computer's architecture) like the <b>dp</b> command.</p>
+<p>Each of these words is treated as an address in the symbol table. The corresponding symbol information is displayed for each word.</p>
+<p>If line number information has been enabled, source file names and line numbers will be displayed when available.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20dds, dps, dqs (Display Words and Symbols)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

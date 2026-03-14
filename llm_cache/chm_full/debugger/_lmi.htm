@@ -1,0 +1,108 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !lmi extension displays detailed information about a module."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!lmi</title>
+
+<meta name="MS-HAID" content="r25_exts_general_He_736a1eee-5c20-404f-9fa3-58ae28617a47.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._lmi"></a>!lmi</h1>
+</div>
+<p>The <b>!lmi</b> extension displays detailed information about a module.</p>
+<pre class="syntax"><b>!lmi </b><i>Module</i></pre>
+<h2><a id="ddk__lmi_dbg"></a><a id="DDK__LMI_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Module______"></a><a id="_______module______"></a><a id="_______MODULE______"></a>       <i>Module</i>      </dt>
+<dd>
+<p>Specifies a loaded module, either by name or by base address.  
+		</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Windows 2000</b></p>
+</td>
+<td>
+<p>
+          Dbghelp.dll 
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Dbghelp.dll 
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p></p>
+<p>Module addresses can be determined by using the <a href="lm__list_loaded_modules_.htm"><b>lm (List Loaded Modules)</b></a> command.</p>
+<p>The <b>!lmi</b> extension analyzes the module headers and displays a formatted summary of the information therein. If the module headers are paged out, an error message is displayed. To see a more extensive display of header information, use the <a href="_dh.htm"><b>!dh</b></a> extension command.</p>
+<p>This command shows a number of fields, each with a different title. Some of these titles have specific meanings:</p>
+<ul>
+<li>
+<p>The <b>Image Name</b> field shows the name of the executable file, including the extension. Typically, the full path is included in user mode but not in kernel mode.</p>
+</li>
+<li>
+<p>The <b>Module</b> field shows the <i>module name</i>. This is usually just the file name without the extension. In a few cases, the module name differs significantly from the file name.</p>
+</li>
+<li>
+<p>The <b>Symbol Type</b> field shows information about the debugger's attempts to load this module's symbols. For an explanation of the various status values, see <a href="symbol_status_abbreviations.htm">Symbol Status Abbreviations</a>. If symbols have been loaded, the symbol file name follows this.</p>
+</li>
+<li>
+<p>The first address in the module is shown as <b>Base Address</b>. The size of the module is shown as <b>Size</b>. Thus, if <b>Base Address</b> is "faab4000" and <b>Size</b> is "2000", the module extends from 0xFAAB4000 to 0xFAAB5FFF, inclusive.</p>
+</li>
+</ul>
+<p>Here is an example:</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; lm 
+start    end        module name
+00400000 0042d000   Prymes     C (pdb symbols)              Prymes.pdb
+77e80000 77f35000   KERNEL32     (export symbols)           C:\WINNT\system32\KERNEL32.dll
+77f80000 77ffb000   ntdll        (export symbols)           ntdll.dll
+
+0:000&gt; !lmi 00400000
+Loaded Module Info: [00400000] 
+         Module: Prymes
+   Base Address: 00400000
+     Image Name: Prymes.exe
+   Machine Type: 332 (I386)
+     Time Stamp: 3c76c346 Fri Feb 22 14:16:38 2002
+           Size: 2d000
+       CheckSum: 0
+Characteristics: 230e stripped 
+Debug Data Dirs: Type Size     VA  Pointer
+                 MISC  110,     0,   77a00 [Data not mapped]
+    Symbol Type: EXPORT   - PDB not found
+    Load Report: export symbols</code></pre>
+<p>For an explanation of the abbreviations shown on the <b>Characteristics</b> line of this example, see <a href="symbol_status_abbreviations.htm">Symbol Status Abbreviations</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!lmi%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,47 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Memory Access"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Memory Access</title>
+
+<meta name="MS-HAID" content="Engine_DG_0552e376-f3fd-49c8-b1a0-52f4be375e08.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.memory_access"></a>Memory Access</h1>
+</div>
+<h2><a id="ddk_memory_access_dbx"></a><a id="DDK_MEMORY_ACCESS_DBX"></a></h2>
+<p>The <a href="introduction.htm#debugger_engine">debugger engine</a> provides <i>interfaces</i> to directly read from and write to the target's main memory, registers, and other data spaces.</p>
+<p>In user-mode debugging, only the virtual memory and registers can be accessed; the physical memory and other data spaces cannot be accessed.</p>
+<p>The debugger engine API always uses 64-bit addresses when referring to memory locations on the target.  </p>
+<p>If the target uses 32-bit addresses, the native 32-bit address will automatically be sign-extended by the engine to 64-bit addresses.  The engine will automatically convert between 64-bit addresses and native 32-bit addresses when communicating with the target.</p>
+<p>This section includes:</p>
+<dl>
+<dd>
+<p><a href="virtual_and_physical_memory.htm">Virtual and Physical Memory</a></p>
+</dd>
+<dd>
+<p><a href="registers.htm">Registers</a></p>
+</dd>
+<dd>
+<p><a href="other_data_spaces.htm">Other Data Spaces</a></p>
+</dd>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Memory Access%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

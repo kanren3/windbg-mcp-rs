@@ -1,0 +1,104 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !ruleinfo command displays information about a Driver Verifier rule."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!ruleinfo</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._ruleinfo"></a>!ruleinfo</h1>
+</div>
+<p>The <b>!ruleinfo</b> command displays information about a Driver Verifier rule.</p>
+<pre class="syntax"><b>!ruleinfo </b><i>RuleId</i><b> [</b><i>RuleState</i><b> [</b><i>SubState</i><b>]]</b></pre>
+<h2><a id="ddk__ptov_dbg"></a><a id="DDK__PTOV_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______RuleId______"></a><a id="_______ruleid______"></a><a id="_______RULEID______"></a>       <i>RuleId</i>      </dt>
+<dd>
+<p>The ID of the verifier rule. This is the first argument of  the <a href="bug_check_0xc4__driver_verifier_detected_violation.htm"><b>DRIVER_VERIFIER_DETECTED_VIOLATION</b></a> bug check.</p>
+</dd>
+<dt><a id="_______RuleState______"></a><a id="_______rulestate______"></a><a id="_______RULESTATE______"></a>       <i>RuleState</i>      </dt>
+<dd>
+<p>Additional state information about the violation. This is the third argument of  the <b>DRIVER_VERIFIER_DETECTED_VIOLATION</b> bug check.</p>
+</dd>
+<dt><a id="_______SubState______"></a><a id="_______substate______"></a><a id="_______SUBSTATE______"></a>       <i>SubState</i>      </dt>
+<dd>
+<p>Sub-state information about the violation. This is the fourth argument of  the <b>DRIVER_VERIFIER_DETECTED_VIOLATION</b> bug check.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<p>ext.dll</p>
+<h2>Remarks</h2>
+<p>This command applies only to rules in the Driver Verifier extension; that is, rules that have an ID greater than or equal to 0x10000.</p>
+<p>The following example shows the four arguments of a <a href="bug_check_0xc4__driver_verifier_detected_violation.htm"><b>DRIVER_VERIFIER_DETECTED_VIOLATION</b></a> bug check.</p>
+<pre class="syntax" xml:space="preserve"><code>DRIVER_VERIFIER_DETECTED_VIOLATION (c4)
+...
+Arguments:
+Arg1: 0000000000091001, ID of the 'NdisOidComplete' rule that was violated.
+Arg2: fffff800002d49d0, A pointer to the string describing the violated rule condition.
+Arg3: ffffe000027b8370, Address of internal rule state (second argument to !ruleinfo).
+Arg4: ffffe000027b83f8, Address of supplemental states (third argument to !ruleinfo).
+
+Debugging Details:
+------------------
+
+DV_VIOLATED_CONDITION:  This OID should only be completed with NDIS_STATUS_NOT_ACCEPTED, 
+                        NDIS_STATUS_SUCCESS, or NDIS_STATUS_PENDING.
+
+DV_MSDN_LINK: http://go.microsoft.com/fwlink/p/?linkid=278802
+
+DRIVER_OBJECT: ffffe0000277a2b0
+...
+
+STACK_TEXT:  
+ffffd000`2118ff58 fffff803`4c83afa2 : 00000000`000000c4 00000000`00000001 ...
+ffffd000`2118ff60 fffff803`4c83a8c0 : 00000000`00000003 00000000`00091001 ...
+...
+
+STACK_COMMAND:  kb
+
+FOLLOWUP_NAME:  Xxxx
+
+FAILURE_BUCKET_ID:  Xxxx
+...
+</code></pre>
+<p>In the preceding output, the rule ID (0x91001) is shown as Arg1. Arg3 and Arg4 are the addresses of rule state and substate information. You can pass the rule ID, the rule state, and the substate to <b>!ruleinfo</b> to get a description of the rule and a link to detailed documentation of the rule.</p>
+<pre class="syntax" xml:space="preserve"><code>3: kd&gt; !ruleinfo 0x91001 0xffffe000027b8370 0xffffe000027b83f8
+
+RULE_ID: 0x91001
+
+RULE_NAME: NdisOidComplete
+
+RULE_DESCRIPTION:
+This rule verifies if an NDIS miniport driver completes an OID correctly.
+Check RULE_STATE for Oid ( use !ndiskd.oid ), which can be one of the following:
+1) NULL,
+2) Pending OID, or
+3) Previous OID if no OID is pending.
+
+MSDN_LINK: http://go.microsoft.com/fwlink/p/?linkid=278802
+
+CONTEXT: Miniport 0xFFFFE0000283F1A0
+
+CURRENT_TIME (Timed Rules): 142 seconds
+
+RULE_STATE: 0xFFFFE000027B83F8</code></pre>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!ruleinfo%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

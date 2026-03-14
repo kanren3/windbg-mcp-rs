@@ -1,0 +1,155 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !list extension executes the specified debugger commands repeatedly, once for every element in a linked list."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!list</title>
+
+<meta name="MS-HAID" content="r25_exts_general_He_8deee1dc-d85a-4a95-a2da-9846d0507fbb.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._list"></a>!list</h1>
+</div>
+<p>The <b>!list</b> extension executes the specified debugger commands repeatedly, once for every element in a linked list.</p>
+<pre class="syntax"><b>!list -t </b>[<i>Module</i><b>!</b>]<i>Type</i><b>.</b><i>Field</i><b> -x "</b><i>Commands</i><b>" </b>[<b>-a</b> "<i>Arguments</i>"]<b> </b>[<i>Options</i>]<b> </b><i>StartAddress</i> 
+<b>!list " -t </b>[<i>Module</i><b>!</b>]<i>Type</i><b>.</b><i>Field</i><b> -x \"</b><i>Commands</i><b>\" </b>[<b>-a</b> \"<i>Arguments</i>\"]<b> </b>[<i>Options</i>]<b> </b><i>StartAddress</i><b> "</b> 
+<b>!list -h</b> 
+</pre>
+<h2><a id="ddk__list_dbg"></a><a id="DDK__LIST_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Module______"></a><a id="_______module______"></a><a id="_______MODULE______"></a>       <i>Module</i>      </dt>
+<dd>
+<p>An optional parameter specifying the module that defines this structure. If there is a chance that <i>Type</i> may match a valid symbol in a different module, you should include <i>Module</i> to eliminate the ambiguity.</p>
+</dd>
+<dt><a id="_______Type______"></a><a id="_______type______"></a><a id="_______TYPE______"></a>       <i>Type</i>      </dt>
+<dd>
+<p>Specifies the name of a data structure.</p>
+</dd>
+<dt><a id="_______Field______"></a><a id="_______field______"></a><a id="_______FIELD______"></a>       <i>Field</i>      </dt>
+<dd>
+<p>Specifies the field containing the list link. This can actually be a sequence of fields separated by periods (in other words, <b>Type.Field.Subfield.Subsubfield</b>, and so on).</p>
+</dd>
+<dt><a id="_______-x__Commands_"></a><a id="_______-x__commands_"></a><a id="_______-X__COMMANDS_"></a>       <b>-x "</b><i>Commands</i><b>"</b></dt>
+<dd>
+<p>Specifies the commands to execute. This can be any combination of debugger commands. It must be enclosed in quotation marks. If multiple commands are specified, separate them with semicolons, enclose the entire collection of <b>!list</b> arguments in quotation marks, and use an escape character ( \ ) before each quotation mark inside these outer quotation marks. If <i>Commands</i> is omitted, the default is <a href="d__da__db__dc__dd__dd__df__dp__dq__du__dw__dw__dyb__dyd__display_memor.htm"><b>dp (Display Memory)</b></a>.</p>
+</dd>
+<dt><a id="_______-a__Arguments_"></a><a id="_______-a__arguments_"></a><a id="_______-A__ARGUMENTS_"></a>       <b>-a "</b><i>Arguments</i><b>"</b></dt>
+<dd>
+<p>Specifies the arguments to pass to the <i>Commands</i> parameter. This must be enclosed in quotation marks. <i>Arguments</i> can be any valid argument string that would normally be allowed to follow this command, except that <i>Arguments</i> cannot contain quotation marks.  If the pseudo-register <b>$extret</b> is included in <i>Commands</i>, the <b>-a "</b><i>Arguments</i><b>"</b> parameter can be omitted.</p>
+</dd>
+<dt><a id="_______Options______"></a><a id="_______options______"></a><a id="_______OPTIONS______"></a>       <i>Options</i>      </dt>
+<dd>
+<p>Can be any number of the following options:</p>
+<p></p>
+<dl>
+<dt><a id="-e"></a><a id="-E"></a><b>-e</b></dt>
+<dd>
+<p>Echoes the command being executed for each element.</p>
+</dd>
+<dt><a id="-m_Max"></a><a id="-m_max"></a><a id="-M_MAX"></a><b>-m </b><i>Max</i></dt>
+<dd>
+<p>Specifies the maximum number of elements to execute the command for. </p>
+</dd>
+</dl>
+</dd>
+<dt><a id="_______StartAddress______"></a><a id="_______startaddress______"></a><a id="_______STARTADDRESS______"></a>       <i>StartAddress</i>      </dt>
+<dd>
+<p>Specifies the address of the first data structure. This is the address at the top of the structure, not necessarily the address of the link field.</p>
+</dd>
+<dt><a id="_______-h______"></a><a id="_______-H______"></a>       <b>-h</b>      </dt>
+<dd>
+<p>Displays some brief Help text for this extension in the Debugger Command window.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Windows 2000</b></p>
+</td>
+<td>
+<p>
+          Ext.dll
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Ext.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>The <b>!list</b> extension will go through the linked list and issue the specified command once for each list element.</p>
+<p>The pseudo-register <b>$extret</b> is set to the value of the list-entry address for each list element.  For each element, the command string <i>Commands</i> is executed.  This command string can reference this pseudo-register using the <b>$extret</b> syntax.  If this does not appear in the command string, the value of the list-entry address is appended to the end of the command string before execution.  If you need to specify where this value should appear in your command, you must specify this pseudo-register explicitly.</p>
+<p>This command sequence will run until the list terminates in a null pointer, or terminates by looping back onto the first element. If the list loops back onto a later element, this command will not stop. However, you can stop this command at any time by using <a href="ctrl_c__break_.htm"><b>CTRL+C</b></a> in KD and CDB, or <a href="debug___break.htm">Debug | Break</a> or CTRL+BREAK in WinDbg.</p>
+<p>Each time a command is executed, the address of the current structure will be used as the <i>default address</i> if the command being used has optional address parameters.</p>
+<p>Following are two examples of how to use this command in user mode. Note that kernel mode usage is also possible but follows a different syntax.</p>
+<p>As a simple example, assume that you have a structure whose type name is <b>MYTYPE</b>, and which has links within its <b>.links.Flink</b> and <b>.links.Blink</b> fields. You have a linked list that begins with the structure at 0x6BC000. The following extension command will go through the list and for each element will execute a <a href="d__da__db__dc__dd__dd__df__dp__dq__du__dw__dw__dyb__dyd__display_memor.htm"><b>dd</b></a> L2 command. Because no address is being specified to the <b>dd</b> command, it will take the address of the list head as the desired address. This causes the first two DWORDs in each structure to be displayed.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; !list -t MYTYPE.links.Flink -x "dd" -a "L2" 0x6bc00 </pre>
+</td>
+</tr>
+</table></span></div>
+<p>As a more complex example, consider the case of using <b>$extret</b>.  It follows the list of type _LIST_ENTRY at <b>RtlCriticalSectionList</b>.  For each element, it displays the first four DWORDS, and then displays the _RTL_CRITICAL_SECTION_DEBUG structure located at an offset of eight bytes prior to the <b>Flink</b> element of the list entry.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; !list "-t ntdll!_LIST_ENTRY.Flink -e -x \"dd @$extret l4; dt ntdll!_RTL_CRITICAL_SECTION_DEBUG @$extret-0x8\" ntdll!RtlCriticalSectionList"
+dd @$extret l4; dt ntdll!_RTL_CRITICAL_SECTION_DEBUG @$extret-0x8
+7c97c0c8  7c97c428 7c97c868 01010000 00000080
+   +0x000 Type             : 1
+   +0x002 CreatorBackTraceIndex : 0
+   +0x004 CriticalSection  : (null)
+   +0x008 ProcessLocksList : _LIST_ENTRY [ 0x7c97c428 - 0x7c97c868 ]
+   +0x010 EntryCount       : 0x1010000
+   +0x014 ContentionCount  : 0x80
+   +0x018 Spare            : [2] 0x7c97c100
+
+dd @$extret l4; dt ntdll!_RTL_CRITICAL_SECTION_DEBUG @$extret-0x8
+7c97c428  7c97c448 7c97c0c8 00000000 00000000
+   +0x000 Type             : 0
+   +0x002 CreatorBackTraceIndex : 0
+   +0x004 CriticalSection  : 0x7c97c0a0
+   +0x008 ProcessLocksList : _LIST_ENTRY [ 0x7c97c448 - 0x7c97c0c8 ]
+   +0x010 EntryCount       : 0
+   +0x014 ContentionCount  : 0
+   +0x018 Spare            : [2] 0</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!list%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

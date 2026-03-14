@@ -1,0 +1,169 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The PFN_LIST_CORRUPT bug check has a value of 0x0000004E. This indicates that the page frame number (PFN) list is corrupted."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0x4E: PFN_LIST_CORRUPT</title>
+
+<meta name="MS-HAID" content="t04_bugs_00_09225405-7266-4b07-b16d-cb8e67f8b10c.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0x4e__pfn_list_corrupt"></a>Bug Check 0x4E: PFN_LIST_CORRUPT</h1>
+</div>
+<p>The PFN_LIST_CORRUPT bug check has a value of 0x0000004E. This indicates that the page frame number (PFN) list is corrupted.</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2> PFN_LIST_CORRUPT Parameters</h2>
+<p>The following parameters are displayed on the blue screen. <i>Parameter 1</i> indicates the type of violation. The meaning of the other parameters depends on the value of <i>Parameter 1</i>.</p>
+<table>
+<tr>
+<th>Parameter 1</th>
+<th>Parameter 2</th>
+<th>Parameter 3</th>
+<th>Parameter 4</th>
+<th>Cause of Error</th>
+</tr>
+<tr>
+<td>
+<p>0x01</p>
+</td>
+<td>
+<p>The <b>ListHead</b> value that was corrupted</p>
+</td>
+<td>
+<p>The number of pages available </p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>The list head was corrupted.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x02</p>
+</td>
+<td>
+<p>The entry in the list that is being removed</p>
+</td>
+<td>
+<p>The highest physical page number </p>
+</td>
+<td>
+<p>The reference count of the entry being removed</p>
+</td>
+<td>
+<p>A list entry was corrupted.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x07</p>
+</td>
+<td>
+<p>The page frame number</p>
+</td>
+<td>
+<p>The current share count</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>A driver has unlocked a certain page more times than it locked it.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x8D</p>
+</td>
+<td>
+<p>The page frame number whose state is inconsistent</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>The page-free list is corrupted. This error code most likely indicates a hardware issue.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x8F</p>
+</td>
+<td>
+<p>New page number</p>
+</td>
+<td>
+<p>Old page number</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>The free or zeroed page listhead is corrupted.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x99</p>
+</td>
+<td>
+<p>Page frame number</p>
+</td>
+<td>
+<p>Current page state</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>A page table entry (PTE) or PFN is corrupted.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x9A</p>
+</td>
+<td>
+<p>Page frame number </p>
+</td>
+<td>
+<p>Current page state </p>
+</td>
+<td>
+<p>The reference count of the entry that is being removed </p>
+</td>
+<td>
+<p>A driver attempted to free a page that is still locked for IO. </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p></p>
+<h2>Cause</h2>
+<p>This error is typically caused by a driver passing a bad memory descriptor list. For example, the driver might have called <b>MmUnlockPages</b> twice with the same list.</p>
+<p>If a kernel debugger is available, examine the stack trace. </p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

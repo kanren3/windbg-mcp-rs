@@ -1,0 +1,191 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="You can use Microsoft Visual Studio to set up and perform kernel-mode debugging over a null-modem cable. Null-modem cables are serial cables that have been configured to send data between two serial ports."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Setting Up Kernel-Mode Debugging over a Serial Cable in Visual Studio</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.setting_up_a_null-modem_cable_connection_in_visual_studio"></a>Setting Up Kernel-Mode Debugging over a Serial Cable in Visual Studio</h1>
+</div>
+<p>You can use Microsoft Visual Studio to set up and perform kernel-mode debugging over a null-modem cable. Null-modem cables are serial cables that have been configured to send data between two serial ports. They are available at most computer stores. Do not confuse null-modem cables with standard serial cables. Standard serial cables do not connect serial ports to each other. For information about how null-modem cables are wired, see <a href="#null_modem_cable_wiring">Null-Modem Cable Wiring</a>.</p>
+<p>To use Visual Studio for kernel-mode debugging, you must have the Windows Driver Kit (WDK) integrated with Visual Studio. For information about how to install the integrated environment, see <a href="http://go.microsoft.com/fwlink/p?linkid=301383">Windows Driver Development</a>.</p>
+<p>As an alternative to using Visual Studio to set up serial debugging, you can do the setup manually. For more information, see <a href="setting_up_a_null_modem_cable_connection.htm">Setting Up Kernel-Mode Debugging over a Serial Cable Manually</a>.</p>
+<p>The computer that runs the debugger is called the <i>host computer</i>, and the computer being debugged is called the <i>target computer</i>.</p>
+<h2><a id="Configuring_the_host_and_target_computers"></a><a id="configuring_the_host_and_target_computers"></a><a id="CONFIGURING_THE_HOST_AND_TARGET_COMPUTERS"></a>Configuring the host and target computers</h2>
+<ol>
+<li>Begin configuring your host and target computer as described in Provision a computer for driver deployment and testing (WDK 8.1).</li>
+<li>On the host computer, in  Visual Studio, when you come to the Computer Configuration dialog box, select <b>Provision computer and choose debugger settings</b>.</li>
+<li>
+<p>For <b>Connection Type</b>, choose <b>Serial</b>.</p><img src="images/SetupSerialVs.png" alt="Screen shot showing an example of debugger settings with values for the following fields: Connection Type, Target Name, and Bus Parameters"/><p>For <b>Baud Rate</b>, accept the default value or enter the baud rate you want to use. For <b>Port</b>, enter the name of the COM port that you want to use for debugging on the host computer. For <b>Target Port</b>, enter the name of the COM port that you want to use for debugging on the target computer.</p>
+</li>
+<li>The configuration process takes several minutes and might automatically reboot the target computer once or twice. When the process is complete, click <b>Finish</b>.</li>
+</ol>
+<h2><a id="Starting_the_Debugging_Session"></a><a id="starting_the_debugging_session"></a><a id="STARTING_THE_DEBUGGING_SESSION"></a>Starting the Debugging Session</h2>
+<ol>
+<li>Connect the null-modem cable to the COM ports that you have chosen for debugging on the host and target computers.</li>
+<li>On the host computer, in Visual Studio, on the <b>Tools</b> menu, choose <b>Attach to Process</b>.</li>
+<li>For <b>Transport</b>, choose <b>Windows Kernel Mode Debugger</b>.</li>
+<li>For <b>Qualifier</b>, select the name of the target computer that you previously configured.</li>
+<li>Click <b>Attach</b>.</li>
+</ol>
+<h2><a id="Troubleshooting_Tips_for_Debugging_over_a_Serial_Cable"></a><a id="troubleshooting_tips_for_debugging_over_a_serial_cable"></a><a id="TROUBLESHOOTING_TIPS_FOR_DEBUGGING_OVER_A_SERIAL_CABLE"></a>Troubleshooting Tips for Debugging over a Serial Cable</h2>
+<h3><a id="Specify_correct_COM_ports_and_baud_rate"></a><a id="specify_correct_com_ports_and_baud_rate"></a><a id="SPECIFY_CORRECT_COM_PORTS_AND_BAUD_RATE"></a>Specify correct COM ports and baud rate</h3>
+<p>Determine the numbers of the COM ports you are using for debugging on the host and target computers. For example, suppose you have your null-modem cable connected to COM1 on the host computer and COM2 on the target computer. Also suppose you have chosen a baud rate of 115200.</p>
+<ol>
+<li>On the host computer, in Visual Studio, on the <b>Driver</b> menu, choose <b>Test &gt; Configure Computers</b>.</li>
+<li>Select the name of your test computer, and click <b>Next</b>.</li>
+<li>Select <b>Provision computer and choose debugger settings</b>. Click <b>Next</b>.</li>
+<li>If you are using COM1 on the host computer, for <b>Port</b>, enter com1. If you are using COM2 on the target computer, for <b>Target Port</b>, enter com2. </li>
+<li>If you have chosen to use a baud rate of 115200, for <b>Baud Rate</b>, enter 115200.</li>
+</ol>
+<p>You can double check the COM port and baud rate settings on the target computer by opening a Command Prompt window as Administrator, and entering <b>bcdedit /dbgsettings</b>. If you are using COM2 on the target computer and a baud rate of 115200, the output of <b>bcdedit</b> should show <code>debugport 2</code> and <code>baudrate 115200</code>.</p>
+<h2><a id="null_modem_cable_wiring"></a><a id="NULL_MODEM_CABLE_WIRING"></a>Null Modem Cable Wiring</h2>
+<p>The following tables show how null-modem cables are wired.</p>
+<h3><a id="9-pin_connector"></a><a id="9-PIN_CONNECTOR"></a>9-pin connector</h3>
+<table>
+<tr>
+<th>Connector 1</th>
+<th>Connector 2</th>
+<th>Signals</th>
+</tr>
+<tr>
+<td>2</td>
+<td>3</td>
+<td>Tx - Rx</td>
+</tr>
+<tr>
+<td>3</td>
+<td>2</td>
+<td>Rx - Tx</td>
+</tr>
+<tr>
+<td>7</td>
+<td>8</td>
+<td>RTS - CTS</td>
+</tr>
+<tr>
+<td>8</td>
+<td>7</td>
+<td>CTS - RTS</td>
+</tr>
+<tr>
+<td>4</td>
+<td>1+6</td>
+<td>DTR - (CD+DSR)</td>
+</tr>
+<tr>
+<td>1+6</td>
+<td>4</td>
+<td>(CD+DSR) - DTR</td>
+</tr>
+<tr>
+<td>5</td>
+<td>5</td>
+<td>Signal ground</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="25-pin_connector"></a><a id="25-PIN_CONNECTOR"></a>25-pin connector</h3>
+<table>
+<tr>
+<th>Connector 1</th>
+<th>Connector 2</th>
+<th>Signals</th>
+</tr>
+<tr>
+<td>2</td>
+<td>3</td>
+<td>Tx - Rx</td>
+</tr>
+<tr>
+<td>3</td>
+<td>2</td>
+<td>Rx - Tx</td>
+</tr>
+<tr>
+<td>4</td>
+<td>5</td>
+<td>RTS - CTS</td>
+</tr>
+<tr>
+<td>5</td>
+<td>4</td>
+<td>CTS - RTS</td>
+</tr>
+<tr>
+<td>6</td>
+<td>20</td>
+<td>DSR - DTR</td>
+</tr>
+<tr>
+<td>20</td>
+<td>6</td>
+<td>DTR - DSR</td>
+</tr>
+<tr>
+<td>7</td>
+<td>7</td>
+<td>Signal ground</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Signal_Abbreviations"></a><a id="signal_abbreviations"></a><a id="SIGNAL_ABBREVIATIONS"></a>Signal Abbreviations</h3>
+<table>
+<tr>
+<th>Abbreviation</th>
+<th>Signal</th>
+</tr>
+<tr>
+<td>Tx</td>
+<td>Transmit data</td>
+</tr>
+<tr>
+<td>Rx</td>
+<td>Receive data</td>
+</tr>
+<tr>
+<td>RTS</td>
+<td>Request to send</td>
+</tr>
+<tr>
+<td>CTS</td>
+<td>Clear to send</td>
+</tr>
+<tr>
+<td>DTR</td>
+<td>Data terminal ready</td>
+</tr>
+<tr>
+<td>DSR</td>
+<td>Data set ready</td>
+</tr>
+<tr>
+<td>CD</td>
+<td>Carrier detect</td>
+</tr>
+</table>
+<p> </p>
+<h2><a id="related_topics"></a>Related topics</h2>
+<dl>
+<dt><a href="setting_up_kernel-mode_debugging_in_visual_studio.htm">Setting Up Kernel-Mode Debugging in Visual Studio</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Setting Up Kernel-Mode Debugging over a Serial Cable in Visual Studio%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

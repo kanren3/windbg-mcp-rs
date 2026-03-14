@@ -1,0 +1,178 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The engine calls the KnownStructOutput callback function to request information about structures that the extension DLL can format for printing. The engine calls this function for the following reasons."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>KnownStructOutput callback function</title>
+
+<meta name="MS-HAID" content="Extensions_Ref_dfff8fda-36a7-42ab-9ad7-1698c352c028.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.knownstructoutput"></a>KnownStructOutput callback function</h1>
+</div>
+<p>The engine calls the <i>KnownStructOutput</i> callback function to request information about structures that the extension DLL can format for printing. The engine calls this function for the following reasons.</p>
+<ul>
+<li>Get a list of structures that the DLL can format for printing.</li>
+<li>Get a single-line representation of a particular structure.</li>
+<li>Ask whether a particular structure should have its name printed along with its single-line representation.</li>
+</ul>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>HRESULT CALLBACK KnownStructOutput(
+  _In_    ULONG   Flag,
+  _In_    ULONG64 Address,
+  _In_    PSTR    StructName,
+  _Out_   PSTR    Buffer,
+  _Inout_ PULONG  BufferSize
+);</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Parameters</h2>
+<dl>
+<dt><i>Flag</i> [in]</dt>
+<dd>
+<p>One of the following values, depending on what information the engine wants to obtain from the extension DLL.</p>
+<table>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>DEBUG_KNOWN_STRUCT_GET_NAMES</p>
+</td>
+<td>
+<p>Get a list of structure names.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_KNOWN_STRUCT_SUPPRESS_TYPE_NAME</p>
+</td>
+<td>
+<p>Ask whether a structure should have its  name printed.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_KNOWN_STRUCT_GET_SINGLE_LINE_OUTPUT</p>
+</td>
+<td>
+<p>Get  a single-line representation of a structure.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+</dd>
+<dt><i>Address</i> [in]</dt>
+<dd>
+<p><b>When getting a list of names:</b> Unused.</p>
+<p><b>When asking whether a name should be printed:</b> Unused.</p>
+<p><b>When getting a single-line representation:</b>  Specifies the location in the target's memory address space of the structure to be printed.</p>
+</dd>
+<dt><i>StructName</i> [in]</dt>
+<dd>
+<p><b>When getting a list of names:</b>  Unused.</p>
+<p><b>When asking whether a name should be printed:</b> Specifies the name of the structure.  This is one of the names returned from the DEBUG_KNOWN_STRUCT_GET_NAMES query.</p>
+<p><b>When getting a single-line representation:</b>  Specifies the name of the structure.  This is one of the names returned from the DEBUG_KNOWN_STRUCT_GET_NAMES query.</p>
+</dd>
+<dt><i>Buffer</i> [out]</dt>
+<dd>
+<p><b>When getting a list of names:</b>  Receives a list of the names of the structures that the extension can format for printing.  One null character must appear between each pair of names.  The list must be terminated with two null characters. The number of characters written to this buffer must not exceed the value of <i>BufferSize</i>.</p>
+<p><b>When asking whether a name should be printed:</b> Unused.</p>
+<p><b>When getting a single-line representation:</b>  Receives a representation  of the structure, identified by <i>StructName</i> and <i>Address</i>, as a string. The number of characters written to this buffer must not exceed the value of <i>BufferSize</i>.</p>
+</dd>
+<dt><i>BufferSize</i> [in, out]</dt>
+<dd>
+<p><b>When getting a list of names:</b>  On input, specifies the size, in characters, of  <i>Buffer</i>. On output, if the buffer is too small, receives the required buffer size.</p>
+<p><b>When asking whether a name should be printed:</b> Unused.</p>
+<p><b>When getting a single-line representation:</b>  On input, specifies the size, in characters, of <i>Buffer</i>. On output, if the buffer is too small, receives the required buffer size.</p>
+</dd>
+</dl>
+<h2>Return value</h2>
+<table>
+<tr>
+<th>Return code</th>
+<th>Description</th>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>S_OK</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p><b>When getting a list of names:</b><i> Buffer</i> contains the requested list of names.</p>
+<p><b>When asking whether a name should be printed:</b>  The printing of the name should be suppressed. That is, the name should not be printed.   </p>
+<p><b>When getting a single-line representation:</b><i> Buffer</i> contains the requested single-line representation.</p>
+</td>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>S_FALSE</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p><b>When getting a list of names:</b><i> BufferSize</i> was too small on input. On output, <i> BufferSize</i> contains the required buffer size.</p>
+<p><b>When asking whether a name should be printed:</b>  The printing of the name should not be suppressed. That is, the name should be printed.   </p>
+<p><b>When getting a single-line representation:</b><i> BufferSize</i> was too small on input. On output, <i> BufferSize</i> contains the required buffer size.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>All other return values indicate that the function failed.  The engine will continue ignoring the contents of <i>Buffer</i>.</p>
+<h2>Remarks</h2>
+<p>This function is optional.  An extension DLL only needs to export <b>KnownStructOutput</b> if it has the ability to format special structures for printing on a single line.  The engine looks for this function by name in the extension DLL.</p>
+<p>After initializing the extension DLL, the engine calls this function to query the DLL for the list of structure names it knows how to print.  Then, whenever the engine prints a summary of one of the structures whose name is in the list, it calls this function to format the structure for printing.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Target platform</p>
+</th>
+<td width="70%">
+<dl>
+<dt></dt>
+</dl>
+</td>
+</tr>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Dbgeng.h</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="debugextensioninitialize.htm"><i>DebugExtensionInitialize</i></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20KnownStructOutput callback function%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

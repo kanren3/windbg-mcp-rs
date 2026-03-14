@@ -1,0 +1,47 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Using Script Files"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Using Script Files</title>
+
+<meta name="MS-HAID" content="r05_use_start_1aa9e034-9f62-48a5-b48e-12b581f5d211.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.using_script_files"></a>Using Script Files</h1>
+</div>
+<h2><a id="ddk_using_script_files_dbg"></a><a id="DDK_USING_SCRIPT_FILES_DBG"></a></h2>
+<p>A <i>script file</i> is a text file that contains a sequence of debugger commands. There are a variety of ways for the debugger to load a script file and execute it. A script file can contain commands to be executed sequentially or can use a more complex flow of execution.</p>
+<p>To execute a script file, you can do one of the following:</p>
+<ul>
+<li>
+<p>(KD and CDB only; only when the debugger starts)  Create a script file that is named Ntsd.ini and put it in the directory where you are starting the debugger from. The debugger automatically executes this file when the debugger starts. To use a different file for the startup script file, specify the path and file name by using the <b>-cf</b> <a href="command_line_options.htm">command-line option</a> or by using the <b>IniFile</b> entry in the <a href="configuring_tools_ini.htm">Tools.ini</a> file.</p>
+</li>
+<li>
+<p>(KD and CDB only; when each session starts)  Create a script file and specify its path and file name by using the <b>-cfr</b> <a href="command_line_options.htm">command-line option</a>. The debugger automatically executes this script file when the debugger starts and every time that the target is restarted.  </p>
+</li>
+<li>
+<p>Use the <b>$&lt;</b>, <b>$&gt;&lt;</b>, <b>$$&lt;</b>, and <b>$$&gt;&lt;</b> commands to execute a script file after the debugger is running. For more information about the syntax, see <a href="_______________________a___run_script_file_.htm"><b>$&lt;, $&gt;&lt;, $&gt;&lt;, $$&gt;&lt; (Run Script File)</b></a>.</p>
+</li>
+</ul>
+<p>The <b>$&gt;&lt;</b> and <b>$$&gt;&lt;</b> commands differ from the other methods of running scripts in one important way. When you use these commands, the debugger opens the specified script file, replaces all carriage returns with semicolons, and executes the resulting text as a single command block. These commands are useful for running scripts that contain debugger command programs. For more information about these programs, see <a href="using_debugger_command_programs.htm">Using Debugger Command Programs</a>.X</p>
+<p>You cannot use commands that are available only in WinDbg (such as <a href="_srcfix___lsrcfix__use_source_server_.htm"><b>.lsrcfix (Use Local Source Server)</b></a>, <a href="_srcpath___lsrcpath__set_source_path_.htm"><b>.lsrcpath (Set Local Source Path)</b></a>, <a href="_open__open_source_file_.htm"><b>.open (Open Source File)</b></a>, and <a href="_write_cmd_hist__write_command_history_.htm"><b>.write_cmd_hist (Write Command History)</b></a>) in script files, even if the script file is executed in WinDbg. In addition, you cannot use the <a href="_beep__speaker_beep_.htm"><b>.beep (Speaker Beep)</b></a>, <a href="_cls__clear_screen_.htm"><b>.cls (Clear Screen)</b></a>, <a href="_hh__open_html_help_file_.htm"><b>.hh (Open HTML Help File)</b></a>, <a href="_idle_cmd__set_idle_command_.htm"><b>.idle_cmd (Set Idle Command)</b></a>, <a href="_remote__create_remote_exe_server_.htm"><b>.remote (Create Remote.exe Server)</b></a>, kernel-mode <a href="_restart__restart_kernel_connection_.htm"><b>.restart (Restart Kernel Connection)</b></a>, user-mode <a href="_restart__restart_target_application_.htm"><b>.restart (Restart Target Application)</b></a>, or <a href="_wtitle__set_window_title_.htm"><b>.wtitle (Set Window Title)</b></a> commands in a script file.  </p>
+<p>WinDbg supports the same scripts as KD and CDB, with one minor exception. You can use the <a href="_remote_exit__exit_debugging_client_.htm"><b>.remote_exit (Exit Debugging Client)</b></a> command only in a script file that KD or CDB uses.   You cannot exit from a debugging client though a script that is executed in WinDbg.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Using Script Files%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

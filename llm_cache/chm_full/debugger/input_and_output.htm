@@ -1,0 +1,37 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Input and Output"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Input and Output</title>
+
+<meta name="MS-HAID" content="Engine_Overview_21beeb6d-d7a0-454d-9f9d-ebbab52e3664.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.input_and_output"></a>Input and Output</h1>
+</div>
+<p>The input and output facilities of the <a href="introduction.htm#debugger_engine">debugger engine</a> can be used for interactive debugger operation and logging.  The input usually represents commands and responses that are typed by the user, and the output usually represents information presented to the user or sent to log files.</p>
+<p>The debugger engine maintains an <i>input stream</i> and an <i>output stream</i>.  Input can be requested from the input stream, and output sent to the output stream.</p>
+<p>When the <a href="input.htm"><b>Input</b></a> method is called to request input from the engine's input stream, the engine will call all the registered <a href="using_input_and_output.htm#input_callbacks">input callbacks</a> to inform them that it is waiting for input.  It then waits for the input callbacks to provide the input by calling the <a href="returninput.htm"><b>ReturnInput</b></a> method.</p>
+<p>When output is sent to the engine's output stream, the engine will call the registered <a href="using_input_and_output.htm#output_callbacks">output callbacks</a> passing the output to them.  When sending output to the output stream, it can be filtered by the client object; in which case, only output callbacks that are registered with particular client objects will receive the output.</p>
+<p>The input and output streams are transparently available to the remote clients.  Remote clients can request input and send output to the engine's input and output stream, and the engine will call the callbacks registered with remote clients to request input or send output.</p>
+<h3><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For details about using input and output, see <a href="using_input_and_output.htm">Using Input and Output</a>.  For more information about client objects and input and output callbacks, see <a href="client_objects.htm">Client Objects</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Input and Output%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

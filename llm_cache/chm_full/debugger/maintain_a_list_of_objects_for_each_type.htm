@@ -1,0 +1,72 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Maintain a list of objects for each type"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Maintain a list of objects for each type</title>
+
+<meta name="MS-HAID" content="GFlags_b8f49023-a9a9-45b7-b11c-4591667a09ca.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.maintain_a_list_of_objects_for_each_type"></a>Maintain a list of objects for each type</h1>
+</div>
+<h2><a id="ddk_maintain_a_list_of_objects_for_each_type_dtools"></a><a id="DDK_MAINTAIN_A_LIST_OF_OBJECTS_FOR_EACH_TYPE_DTOOLS"></a></h2>
+<p>The <b>Maintain a list of objects for each type</b> flag collects and maintains a list of active objects by object type, for example, event, mutex, and semaphore.</p>
+<table>
+<tr>
+<td>
+<p><b>Abbreviation</b></p>
+</td>
+<td>
+<p>otl</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Hexadecimal value</b></p>
+</td>
+<td>
+<p>0x4000</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+        Symbolic Name</b></p>
+</td>
+<td>
+<p>FLG_MAINTAIN_OBJECT_TYPELIST</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Destination</b></p>
+</td>
+<td>
+<p>System-wide registry entry</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="comments"></a><a id="COMMENTS"></a>Comments</h3>
+<p>To display the object list, use Open Handles (oh.exe), a tool included in the Windows 2000 Resource Kit, and now available for download from the <a href="http://go.microsoft.com/fwlink/p/?linkid=11233">Microsoft Windows 2000 Resource Kit</a> Web site. Because Open Handles automatically sets the OTL flag, but does not clear it, use <b>GFlags -otl</b> to clear the flag.</p>
+<div class="alert"><b>Note</b>    The linked lists created when you set this flag use eight bytes of overhead for each object. Remember to clear this flag when your analysis is complete.</div>
+<div> </div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Maintain a list of objects for each type%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

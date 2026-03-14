@@ -1,0 +1,116 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !bpid extension requests that a process on the target computer break into the debugger or requests that a user-mode debugger be attached to a process on the target computer."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!bpid</title>
+
+<meta name="MS-HAID" content="r26_exts_kernel_A_fb05d268-b407-4c26-84b7-b3ac841f588b.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._bpid"></a>!bpid</h1>
+</div>
+<p>The <b>!bpid</b> extension requests that a process on the target computer break into the debugger or requests that a user-mode debugger be attached to a process on the target computer.</p>
+<pre class="syntax">
+    <b>!bpid </b>[<i>Options</i>]<b> </b><i>PID</i> 
+</pre>
+<h2><a id="ddk__bpid_dbg"></a><a id="DDK__BPID_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Option______"></a><a id="_______option______"></a><a id="_______OPTION______"></a>       <i>Option</i>      </dt>
+<dd>
+<p>Controls the additional activities of this command. </p>
+<p>The valid values for <i>Option</i> appear in the following table.</p>
+<table>
+<tr>
+<td>
+<p><b>-a</b></p>
+</td>
+<td>
+<p>Attaches a new user-mode debugger to the process specified by <i>PID</i>. The user-mode debugger runs on the target machine.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>-s</b></p>
+</td>
+<td>
+<p>Adds a breakpoint that occurs in the WinLogon process immediately before the break in the user-mode process specified by <i>PID</i>. This allows the user to verify the request before attempting the action.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>-w</b></p>
+</td>
+<td>
+<p>Stores the request in the memory in the target computer. The target system can then repeat the request, but this is not usually necessary.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+</dd>
+<dt><a id="_______PID______"></a><a id="_______pid______"></a>       <i>PID</i>      </dt>
+<dd>
+<p>Specifies the process ID of the desired process on the target computer. If you are using this to control a user-mode debugger on the target computer, <i>PID</i> should be the process ID of the target application, not of the user-mode debugger. (Because process IDs are usually listed in decimal format, you might need to prefix this with <b>0n</b> or convert it to hexadecimal format.)</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000</b></p>
+</td>
+<td>
+<p>Unavailable </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later</b></p>
+</td>
+<td>
+<p>
+          Kdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>This extension command is supported on x86-based, x64-based, and Itanium-based target computers.</p>
+<h2>Remarks</h2>
+<p>This command is especially useful when redirecting input and output from a user-mode debugger to the kernel debugger. It causes the user-mode target application to break into the user-mode debugger, which in turn requests input from the kernel debugger. See <a href="controlling_the_user_mode_debugger_from_the_kernel_debugger.htm">Controlling the User-Mode Debugger from the Kernel Debugger</a> for details.</p>
+<p>If this command is used in another situation, the user-mode process calls <b>DbgBreakPoint</b>. This will usually break directly into the kernel debugger.</p>
+<p>The <b>-s</b> option causes a break in WinLogon just before the break in the specified process occurs. This is useful if you want to perform debugging actions within WinLogon's process context. The <a href="g__go_.htm"><b>g (Go)</b></a> command can then be used to move on to the second break.</p>
+<p>Note that there are ways in which this extension can fail to execute:</p>
+<ul>
+<li>
+<p> Lack of resources. The <b>!bpid</b> extension injects a thread into the target process, so the system must have enough resources to create a thread. Using the <b>-a</b> option requires even more system resources since <b>!bpid -a</b> must run a full instance of a debugger on the target computer. </p>
+</li>
+<li>
+<p> The loader lock is already held. Both <b>!bpid</b> and <b>!bpid -a</b> require a thread to run in the target process in order to make it break into the debugger. If another thread is holding the loader lock, then the <b>!bpid</b> thread will not be able to run and a break into the debugger may not occur. Thus, if <b>!bpid</b> fails when there is enough user-mode memory available for the target process, it is possible that the loader lock is held.</p>
+</li>
+<li>
+<p>Lack of permission. The operation of the !bpid extension requires permission sufficient for WinLogon to create a remote thread and attach a debugger to a given process.</p>
+</li>
+<li>
+<p>No access to ntsd.exe. If ntsd.exe is not found in a commonly known path, !bpid will fail to set an appropriate PID. Note that ntsd.exe is not included by default with Windows Vista.</p>
+</li>
+</ul>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!bpid%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

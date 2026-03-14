@@ -1,0 +1,84 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !dp extension in Ntsdexts.dll displays a CSR process.This extension command should not be confused with the dp (Display Memory) command, or with the !kdext*.dp extension command."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!dp (!ntsdexts.dp)</title>
+
+<meta name="MS-HAID" content="r31_exts_user_684518e3-bf26-4e75-b665-a0f30e104bfc.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._dp___ntsdexts_dp_"></a>!dp (!ntsdexts.dp)</h1>
+</div>
+<p>The <b>!dp</b> extension in Ntsdexts.dll displays a CSR process.</p>
+<p>This extension command should not be confused with the <a href="d__da__db__dc__dd__dd__df__dp__dq__du__dw__dw__dyb__dyd__display_memor.htm"><b>dp (Display Memory)</b></a> command, or with the <a href="_db___dc___dd___dp___dq___du___dw.htm"><b>!kdext*.dp</b></a> extension command.</p>
+<pre class="syntax">
+    <b>!dp </b>[<b>v</b>] [ <i>PID</i> | <i>CSR-Process</i> ]
+</pre>
+<h2><a id="ddk__ntsdexts_dp_dbg"></a><a id="DDK__NTSDEXTS_DP_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______v______"></a><a id="_______V______"></a>       <b>v</b>      </dt>
+<dd>
+<p>Verbose mode. Causes the display to include structure and thread list.</p>
+</dd>
+<dt><a id="_______PID______"></a><a id="_______pid______"></a>       <i>PID</i>      </dt>
+<dd>
+<p>Specifies the process ID of the CSR process.</p>
+</dd>
+<dt><a id="_______CSR-Process______"></a><a id="_______csr-process______"></a><a id="_______CSR-PROCESS______"></a>       <i>CSR-Process</i>      </dt>
+<dd>
+<p>Specifies the hexadecimal address of the CSR process.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000</b></p>
+</td>
+<td>
+<p>
+          Ntsdexts.dll
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Ntsdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>This extension displays the process address, process ID, sequence number, flags, and reference count. If verbose mode is selected, additional details are displayed, and thread information is shown for each process.</p>
+<p>If no process is specified, all processes are displayed.</p>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="_dt.htm"><b>!dt</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!dp (!ntsdexts.dp)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

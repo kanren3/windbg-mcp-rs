@@ -1,0 +1,42 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Debugging with Floating and Docked Windows"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Debugging with Floating and Docked Windows</title>
+
+<meta name="MS-HAID" content="r06_use_gui_6f898707-75d2-44c7-9cb9-9bf240b82102.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.debugging_with_floating_and_docked_windows"></a>Debugging with Floating and Docked Windows</h1>
+</div>
+<h2><a id="ddk_debugging_with_floating_and_docked_windows_dbg"></a><a id="DDK_DEBUGGING_WITH_FLOATING_AND_DOCKED_WINDOWS_DBG"></a></h2>
+<p>The features that are available in a debugging information window are not affected by whether the window is floating, docked, or docked in a tabbed collection.</p>
+<h3><a id="overview_of_the_window_configuration"></a><a id="OVERVIEW_OF_THE_WINDOW_CONFIGURATION"></a>Overview of the Window Configuration</h3>
+<p>A floating window is not connected to the WinDbg window or any other dock. Floating windows always appear directly in front of the WinDbg window.</p>
+<p>A docked window occupies a fixed position within the WinDbg window or in a separate dock.</p>
+<p>When two or more docked windows are tabbed together, they occupy the same position within the frame. You can see only one of these tabbed windows at one time. At the bottom of each tabbed window collection is a set of tabs. The selected tab indicates which window in the collection is visible.</p>
+<h3><a id="making_a_window_active"></a><a id="MAKING_A_WINDOW_ACTIVE"></a>Making a Window Active</h3>
+<p>You can make any window active, regardless of its position. When a floating window is active, it appears in the foreground. When a window that is inside an additional dock is active, that dock appears in the foreground. When a docked window within the WinDbg window is active, one or more floating windows might still obscure the docked window.</p>
+<p>To make a floating window or a docked window active, click its title bar. To make a docked window in a tabbed collection active, click its tab.</p>
+<p>You can also make a window active by using the WinDbg menu or toolbar. You can activate any window by clicking the window name at the bottom of the <b>Window</b> menu. You can also activate any window (other than a <a href="memory_window.htm">Memory window</a> or a <a href="source_window.htm">Source window</a>) by clicking its name on the <b>View</b> menu or clicking its toolbar button.</p>
+<p>Press CTRL+TAB to switch between debugging information windows. By pressing these keys repeatedly, you can scan through all of the windows, regardless of whether they are floating, docked by themselves, or part of a tabbed collection of docked windows. When you release the CTRL key, the window that you are currently viewing becomes active.</p>
+<p>The ALT+TAB shortcut keys are the standard Microsoft Windows shortcut keys to switch between the windows on the desktop. You can use these shortcut keys to switch between the WinDbg window and any additional docks that you have created. You can also make a dock active by clicking its button in the Windows taskbar.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Debugging with Floating and Docked Windows%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

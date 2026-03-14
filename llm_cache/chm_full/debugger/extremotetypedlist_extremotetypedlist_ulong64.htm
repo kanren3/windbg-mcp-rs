@@ -1,0 +1,129 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The ExtRemoteTypedList constructors create a new instance that wraps a typed singly-linked or doubly-linked list."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>ExtRemoteTypedList.ExtRemoteTypedList constructor</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.extremotetypedlist_extremotetypedlist_ulong64"></a>ExtRemoteTypedList.ExtRemoteTypedList constructor</h1>
+</div>
+<p>The <b>ExtRemoteTypedList</b> constructors create a new instance that wraps a typed singly-linked or doubly-linked list. </p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>ExtRemoteTypedList(
+  [in]                ULONG64  Head,
+  [in]                PCSTR    Type,
+  [in]                PCSTR    LinkField,
+  [in]                ULONG64  TypeModBase,
+  [in]                ULONG    TypeId,
+  [in, out, optional] PULONG64 CacheCookie,
+  [in]                bool     Double
+);</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Parameters</h2>
+<dl>
+<dt><i>Head</i> [in]</dt>
+<dd>
+<p>The location, in the target's memory, of the head of the list.  The head is not considered to be an item in the list.  The type of the head of the list is SINGLE_LIST_ENTRY or LIST_ENTRY.</p>
+</dd>
+<dt><i>Type</i> [in]</dt>
+<dd>
+<p>The type name for the list items.  <i>Type</i> can include a module qualifier (for example, <b>mymodule!mytype</b>).  If <i>TypeId</i> is not zero, <i>Type</i> is not used.</p>
+</dd>
+<dt><i>LinkField</i> [in]</dt>
+<dd>
+<p>The name of the field of the typed data structure that contains the pointer to the next list item.  This is either the SINGLE_LIST_ENTRY structure or the LIST_ENTRY structure embedded in the list item.</p>
+</dd>
+<dt><i>TypeModBase</i> [in]</dt>
+<dd>
+<p>The location in the target's memory of the base address of the module that contains the type specified by <i>TypeId</i>.  If <i>TypeId</i> is zero, <i>TypeModBase</i> is not used.</p>
+</dd>
+<dt><i>TypeId</i> [in]</dt>
+<dd>
+<p>The type ID of the type relative to the module specified by <i>TypeModBase</i>.  If <i>TypeId</i> is zero, <i>Type</i> is used to specify the type of the list items.</p>
+</dd>
+<dt><i>CacheCookie</i> [in, out, optional]</dt>
+<dd>
+<p>The cache cookie to use for caching the type information.  If <i>CacheCookie</i> is <b>NULL</b>, the debugger engine will search for the type information each time.</p>
+<p>
+	  For more information about <i>CacheCookie</i>, see the following methods:
+	  <ul>
+<li>
+<p><a href="extremotetyped_set_bool.htm"><b>ExtRemoteTyped::Set(bool)</b></a></p>
+</li>
+<li>
+<p><a href="extremotetyped_set_pcstr.htm"><b>ExtRemoteTyped::Set(pcstr)</b></a></p>
+</li>
+<li>
+<p><a href="extremotetyped_set_pcstr_ulong64.htm"><b>ExtRemoteTyped::Set(pcstr ulong64)</b></a></p>
+</li>
+<li>
+<p><a href="extremotetyped_set_pcstr_ulong64_bool.htm"><b>ExtRemoteTyped::Set(pcstr ulong64 bool)</b></a></p>
+</li>
+</ul>
+</p>
+</dd>
+<dt><i>Double</i> [in]</dt>
+<dd>
+<p>Specifies whether the list is singly-linked or doubly-linked.  If <i>Double</i> is <code>true</code>, the list is doubly-linked.  If <i>Double</i> is <code>false</code>, the list is singly-linked.</p>
+</dd>
+</dl>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Target platform</p>
+</th>
+<td width="70%">
+<dl>
+<dt></dt>
+</dl>
+</td>
+</tr>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Engextcpp.h (include Engextcpp.hpp)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="extremotetypedlist.htm"><b>ExtRemoteTypedList</b></a></dt>
+<dt><a href="extremotetypedlist_extremotetypedlist_extremotedata.htm"><b>ExtRemoteTypedList::ExtRemoteTypedList(ExtRemoteData)</b></a></dt>
+<dt><a href="extremotetyped_set_bool.htm"><b>ExtRemoteTyped::Set(bool)</b></a></dt>
+<dt><a href="extremotetyped_set_pcstr.htm"><b>ExtRemoteTyped::Set(pcstr)</b></a></dt>
+<dt><a href="extremotetyped_set_pcstr_ulong64.htm"><b>ExtRemoteTyped::Set(pcstr ulong64)</b></a></dt>
+<dt><a href="extremotetyped_set_pcstr_ulong64_bool.htm"><b>ExtRemoteTyped::Set(pcstr ulong64 bool)</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20ExtRemoteTypedList.ExtRemoteTypedList constructor%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

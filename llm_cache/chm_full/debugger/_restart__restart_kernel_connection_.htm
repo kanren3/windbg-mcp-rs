@@ -1,0 +1,72 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .restart command restarts the kernel connection.Do not confuse this command with the .restart (Restart Target Application) command, which works only in user mode."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.restart (Restart Kernel Connection)</title>
+
+<meta name="MS-HAID" content="r21_metacmds_L_f69b1b8a-144b-4099-9ef6-0ba58a7db533.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._restart__restart_kernel_connection_"></a>.restart (Restart Kernel Connection)</h1>
+</div>
+<p>The <b>.restart</b> command restarts the kernel connection.</p>
+<p>Do not confuse this command with the <a href="_restart__restart_target_application_.htm"><b>.restart (Restart Target Application)</b></a> command, which works only in user mode.</p>
+<pre class="syntax">
+    <b>.restart</b> 
+</pre>
+<h2><a id="ddk_meta_restart_kernel_connection_dbg"></a><a id="DDK_META_RESTART_KERNEL_CONNECTION_DBG"></a></h2>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<p>You can use the <b>.restart</b> command only in KD.</p>
+<table>
+<tr>
+<td>
+<p><b>
+          Modes</b></p>
+</td>
+<td>
+<p>Kernel mode only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets
+         </b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about reestablishing contact with the target, see <a href="synchronizing_with_the_target_computer.htm">Synchronizing with the Target Computer</a>.</p>
+<h2>Remarks</h2>
+<p>The <b>.restart</b> command is similar to the <a href="ctrl_r__re_synchronize_.htm"><b>CTRL+R (Re-synchronize)</b></a> command, except that <b>.restart</b> is even more extensive in its effect. This command is equivalent to ending the debugger and then attaching a new debugger to the target computer.</p>
+<p>The <b>.restart</b> command is most useful when you are performing <a href="remote_debugging_through_remote_exe.htm">remote debugging through remote.exe</a> and ending and restarting the debugger might be difficult. However, you cannot use <b>.restart</b> from a debugging client if you are performing remote debugging through the debugger.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.restart (Restart Kernel Connection)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

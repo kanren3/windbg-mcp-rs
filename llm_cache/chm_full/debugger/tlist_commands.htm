@@ -1,0 +1,122 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The syntax of the TList command is as follows:"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>TList Commands</title>
+
+<meta name="MS-HAID" content="TList_71813b71-7e39-4a60-8c79-3d0978efa204.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.tlist_commands"></a>TList Commands</h1>
+</div>
+<p>The syntax of the TList command is as follows:</p>
+<pre class="syntax">
+    <b>tlist [/p </b><i>ProcessName</i><b> | </b><i>PID</i><b> | </b><i>Pattern</i><b> | /t | /c | /e | /k | /m [</b><i>Module</i><b>] | /s | /v
+</b>
+   </pre>
+<h2><a id="ddk_tlist_commands_dtools"></a><a id="DDK_TLIST_COMMANDS_DTOOLS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______tlist______"></a><a id="_______TLIST______"></a>       <b>tlist</b>      </dt>
+<dd>
+<p>Without additional parameters, TList displays all running processes, their process identifiers (PIDs), and the title of the window in which they are running, if any.</p>
+</dd>
+<dt><a id="________p_______ProcessName______"></a><a id="________p_______processname______"></a><a id="________P_______PROCESSNAME______"></a>       <b>/p</b>       <i>ProcessName</i>      </dt>
+<dd>
+<p>Displays the process identifier (PID) of the specified process. </p>
+<p><i>ProcessName</i> is the name of the process (with or without file name extension), not a pattern. </p>
+<p>If the value of <i>ProcessName</i> does not match any running process, TList displays -1. If it matches more than one process name, TList displays only the PID of the first matching process. </p>
+</dd>
+<dt><a id="_______PID______"></a><a id="_______pid______"></a>       <i>PID</i>      </dt>
+<dd>
+<p>Displays detailed information about the process specified by the PID. For information about the display, see the "Remarks" section below. To find a process ID, type <b>tlist</b> without additional parameter.</p>
+</dd>
+<dt><a id="_______Pattern______"></a><a id="_______pattern______"></a><a id="_______PATTERN______"></a>       <i>Pattern</i>      </dt>
+<dd>
+<p>Displays detailed information about all processes whose names or window titles match the specified pattern. Pattern can be a complete name or a regular expression.</p>
+</dd>
+<dt><a id="________t______"></a><a id="________T______"></a>       <b>/t</b>      </dt>
+<dd>
+<p>Displays a task tree in which each process appears as a child of the process that created it.</p>
+</dd>
+<dt><a id="________c______"></a><a id="________C______"></a>       <b>/c</b>      </dt>
+<dd>
+<p>Displays the command line that started each process.</p>
+</dd>
+<dt><a id="________e______"></a><a id="________E______"></a>       <b>/e</b>      </dt>
+<dd>
+<p>Displays the session identifier for each process.</p>
+</dd>
+<dt><a id="________k______"></a><a id="________K______"></a>       <b>/k</b>      </dt>
+<dd>
+<p>Displays the COM components active in each process. </p>
+</dd>
+<dt><a id="________m_______Module______"></a><a id="________m_______module______"></a><a id="________M_______MODULE______"></a>       <b>/m</b>       <i>Module</i>      </dt>
+<dd>
+<p>Lists tasks in which the specified DLL or executable module is loaded. Module can be a complete module name or a module name pattern.</p>
+</dd>
+<dt><a id="________s______"></a><a id="________S______"></a>       <b>/s</b>      </dt>
+<dd>
+<p>Displays the services that are active in each process.</p>
+</dd>
+<dt><a id="________v______"></a><a id="________V______"></a>       <b>/v</b>      </dt>
+<dd>
+<p>Displays details of running processes including the process ID, session ID, window title, command line, and the services running in the process.</p>
+</dd>
+</dl>
+<h3><a id="comments"></a><a id="COMMENTS"></a>Comments</h3>
+<p>In its detailed display of a process (<b>tlist </b><i>PID</i> or <b>tlist </b><i>Pattern</i>), TList displays the following information.</p>
+<ul>
+<li>
+<p>Process ID, executable name, friendly name of the program.</p>
+</li>
+<li>
+<p>Current working directory (CWD).</p>
+</li>
+<li>
+<p>The command line that started the process (CmdLine).</p>
+</li>
+<li>
+<p>Current virtual address space values.</p>
+</li>
+<li>
+<p>Number of threads.</p>
+</li>
+<li>
+<p>A list of threads running in the process. For each thread, TList displays the thread ID (TID), the function that the thread is running, the address of the entry point, the address of the last reported error (if any), and the thread state.</p>
+</li>
+<li>
+<p>A list of the modules loaded for the process. For each module, TList displays the version number, attributes, virtual address of the module, and the module name. </p>
+</li>
+</ul>
+<p>When using the <b>/e</b> parameter, valid session identifiers appear in the process list only under the following conditions. Otherwise, the session identifier is zero (0). </p>
+<ul>
+<li>
+<p>On Windows 2000 and Windows Server 2003, at least one user must be connected to a session other than the console session.</p>
+</li>
+<li>
+<p>On Windows XP, Fast User Switching must be enabled and more than one user must be connected to the non-console session.</p>
+</li>
+<li>
+<p>On Windows Vista, where all processes are associated with two Terminal Services sessions by default, at least one user must be connected to the non-console session.</p>
+</li>
+</ul>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20TList Commands%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

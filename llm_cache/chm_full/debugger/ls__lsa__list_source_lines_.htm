@@ -1,0 +1,91 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The ls and lsa commands display a series of lines from the current source file and advance the current source line number."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>ls, lsa (List Source Lines)</title>
+
+<meta name="MS-HAID" content="r17_cmds_I_749f9260-c240-4b42-8c63-9aff24b40d5a.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.ls__lsa__list_source_lines_"></a>ls, lsa (List Source Lines)</h1>
+</div>
+<p>The <b>ls</b> and <b>lsa</b> commands display a series of lines from the current source file and advance the current source line number.</p>
+<p></p>
+<pre class="syntax"><b>ls</b> [<b>.</b>] [first] [<b>,</b> count] 
+<b>lsa</b> [<b>.</b>] address [<b>,</b> first [<b>,</b> count]] </pre>
+<h2><a id="ddk_cmd_list_source_lines_dbg"></a><a id="DDK_CMD_LIST_SOURCE_LINES_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______.______"></a>       <b>.</b>      </dt>
+<dd>
+<p>Causes the command to look for the source file that the debugger engine or the <a href="_srcpath___lsrcpath__set_source_path_.htm"><b>.srcpath (Set Source Path)</b></a> command are using. If the period (<b>.</b>) is not included, <b>ls</b> uses the file that was most recently loaded with the <a href="lsf__lsf___load_or_unload_source_file_.htm"><b>lsf (Load Source File)</b></a> command.</p>
+<p></p>
+</dd>
+<dt><a id="_______address______"></a><a id="_______ADDRESS______"></a>       <i>address</i>      </dt>
+<dd>
+<p>Specifies the address where the source display is to begin.</p>
+<p> For more information about the syntax, see <a href="address_and_address_range_syntax.htm">Address and Address Range Syntax</a>.</p>
+</dd>
+<dt><a id="_______first______"></a><a id="_______FIRST______"></a>       <i>first</i>      </dt>
+<dd>
+<p>Specifies the first line to display. The default value is the current line.</p>
+</dd>
+<dt><a id="_______count______"></a><a id="_______COUNT______"></a>       <i>count</i>      </dt>
+<dd>
+<p>Specifies the quantity of lines to display. The default value is 20 (0x14), unless you have changed the default value by using the <a href="lsp__set_number_of_source_lines_.htm"><b>lsp -a</b></a> command.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>After you run the <b>ls</b> or <b>lsa</b> command, the current line is redefined as the final line that is displayed plus one. The current line is used in future <b>ls</b>, <b>lsa</b>, and <a href="lsc__list_current_source_.htm"><b>lsc</b></a> commands.</p>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="lsc__list_current_source_.htm"><b>lsc (List Current Source)</b></a></dt>
+<dt><a href="lsf__lsf___load_or_unload_source_file_.htm"><b>lsf, lsf- (Load or Unload Source File)</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20ls, lsa (List Source Lines)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

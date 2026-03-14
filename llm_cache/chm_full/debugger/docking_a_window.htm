@@ -1,0 +1,67 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Docking a Window"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Docking a Window</title>
+
+<meta name="MS-HAID" content="r06_use_gui_7db57027-64e1-4b15-a07c-05b937364920.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.docking_a_window"></a>Docking a Window</h1>
+</div>
+<h2><a id="ddk_docking_a_window_dbg"></a><a id="DDK_DOCKING_A_WINDOW_DBG"></a></h2>
+<p>To dock a floating window, do one of the following:</p>
+<ul>
+<li>
+<p>Double-click the window's title bar.</p>
+</li>
+<li>
+<p>Open the shortcut menu by right-clicking the window's title bar or clicking the window's icon in the upper-right corner, and then click <b>Dock</b>.</p>
+</li>
+<li>
+<p>In the WinDbg window, on the <b>Window </b>menu, click <b>Dock All</b>. This command docks all of the windows except those that have the <b>Always floating</b> option selected on their individual shortcut menus.</p>
+</li>
+<li>
+<p>Drag the window to a docking location. This action causes the window to dock unless <b>Always floating</b> is selected on the shortcut menu for that window, or unless you press and hold the ALT key as you begin dragging the window.</p>
+</li>
+</ul>
+<p>When you dock a window by any method other than dragging it, WinDbg automatically positions the docked window. If the window has never been docked before, WinDbg moves the window to a new untabbed location within the WinDbg window. If the window has been docked before, WinDbg returns the window to its most recent docking location, which might be tabbed or untabbed.</p>
+<p>When you dock a window by dragging it, you can control its destination position. As you drag the window, you will see a semi-transparent outline of the window appear. This outline shows where the window will be docked if you release the mouse button at that point. The following rules determine where a dragged window is docked:</p>
+<ul>
+<li>
+<p>If you drag the mouse pointer over the WinDbg window when the window is empty or over an empty dock, and then you release the mouse button, the dragged window is docked in that location and completely fills the frame or dock.</p>
+</li>
+<li>
+<p>If you drag the mouse pointer over the left, right, top, or bottom portion of an already-docked window and then you release the mouse button, the dragged window is docked to the left, right, top, or bottom of the already-docked window, respectively.</p>
+</li>
+<li>
+<p>When you drag the mouse pointer over a floating window (including the original position of the window that you are dragging), no docking occurs. This exception means that you might have to drag other windows out of the way (or drag the current window two times) before you can move the window to where you want it.</p>
+</li>
+<li>
+<p>If you drag the mouse pointer to a position that is not inside the WinDbg frame or any other dock and then you release the mouse button, the dragged window remains floating.</p>
+</li>
+</ul>
+<p>All of the preceding rules apply to the mouse pointer location itself. They do not depend on where you originally clicked within the title bar of the window that you are dragging.</p>
+<h3><a id="re_docking"></a><a id="RE_DOCKING"></a>Re-docking</h3>
+<p>If you let WinDbg automatically dock a floating window that was previously docked, WinDbg tries to put the window in the same docking position that it previously occupied. Also, if you load a workspace, WinDbg tries to restore all of the debugging information windows to their previous positions, whether docked or floating.</p>
+<p>However, multiple instances of <a href="memory_window.htm">Memory windows</a> and <a href="source_window.htm">Source windows</a> are not distinguished when the docking position is saved. For example, if you combine the <a href="locals_window.htm">Locals window</a> together with a Memory window in a tabbed collection, and this state is saved and later restored, the Locals window joins <u>a</u> Memory window in a tabbed collection, but it might not be the same Memory window as before.</p>
+<p>If you load a workspace that includes one or more Source windows when the source files are inaccessible, those Source windows are not reopened. When this situation occurs, other windows that were tabbed together with those windows might return to the floating state. If you want to keep all of your Source windows tabbed together, you should include at least one source file that is always present, or include an additional window in the tabbed collection.  </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Docking a Window%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,147 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !slist extension displays a singly-linked list (SList)."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!slist</title>
+
+<meta name="MS-HAID" content="r25_exts_general_He_779bb5d6-033c-4b4d-b505-bed4d0eb81cd.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._slist"></a>!slist</h1>
+</div>
+<p>The <b>!slist</b> extension displays a singly-linked list (SList).</p>
+<pre class="syntax"><b>!slist </b><i>Address</i><b> [ </b><i>Symbol</i><b> [</b><i>Offset</i><b>] ]</b> 
+<b>!slist -?</b></pre>
+<h2><a id="ddk__slist_dbg"></a><a id="DDK__SLIST_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Address______"></a><a id="_______address______"></a><a id="_______ADDRESS______"></a>       <i>Address</i>      </dt>
+<dd>
+<p>Specifies the address of the SLIST_HEADER.</p>
+</dd>
+<dt><a id="_______Symbol______"></a><a id="_______symbol______"></a><a id="_______SYMBOL______"></a>       <i>Symbol</i>      </dt>
+<dd>
+<p>Specifies the data type to use for display. If <i>Symbol</i> is specified, the debugger will assume that each node of the SList is an instance of this data type when displaying it.</p>
+</dd>
+<dt><a id="_______Offset______"></a><a id="_______offset______"></a><a id="_______OFFSET______"></a>       <i>Offset</i>      </dt>
+<dd>
+<p>Specifies the byte offset of the SList pointer within the structure.</p>
+</dd>
+<dt><a id="_______-_______"></a>       <b>-?</b>      </dt>
+<dd>
+<p>Displays some brief Help text for this extension in the Debugger Command window.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Windows 2000
+         </b></p>
+</td>
+<td>
+<p>Unavailable </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Exts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>If you know the nature of the linked structures, the <i>Symbol</i> and <i>Offset</i> parameters are very useful.  To see the difference, here are two examples; the first omits the <i>Symbol</i> and <i>Offset</i> parameters, while the second includes them.</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; !slist ListHead
+SLIST HEADER:
+   +0x000 Alignment          : a000a002643e8
+   +0x000 Next               : 2643e8
+   +0x004 Depth              : a
+   +0x006 Sequence           : a
+
+SLIST CONTENTS:
+002643e8  002642c0 0000000a 6e676953 72757461
+002642c0  00264198 00000009 6e676953 72757461
+00264198  00264070 00000008 6e676953 72757461
+00264070  00263f48 00000007 6e676953 72757461
+00263f48  00261420 00000006 6e676953 72757461
+00261420  002612f8 00000005 6e676953 72757461
+002612f8  002611d0 00000004 6e676953 72757461
+002611d0  002610a8 00000003 6e676953 72757461
+002610a8  00260f80 00000002 6e676953 72757461
+00260f80  00000000 00000001 6e676953 72757461</code></pre>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; !slist ListHead _PROGRAM_ITEM 0
+SLIST HEADER:
+ +0x000 Alignment          : a000a002643e8
+   +0x000 Next               : 2643e8
+ +0x004 Depth              : a
+   +0x006 Sequence           : a
+
+SLIST CONTENTS:
+002643e8
+   +0x000 ItemEntry        : _SINGLE_LIST_ENTRY
+   +0x004 Signature        : 0xa
+   +0x008 Description      : [260]  "Signature is: 10"
+002642c0
+   +0x000 ItemEntry        : _SINGLE_LIST_ENTRY
+   +0x004 Signature        : 9
+   +0x008 Description      : [260]  "Signature is: 9"
+00264198
+   +0x000 ItemEntry        : _SINGLE_LIST_ENTRY
+   +0x004 Signature        : 8
+   +0x008 Description      : [260]  "Signature is: 8"
+00264070
+   +0x000 ItemEntry        : _SINGLE_LIST_ENTRY
+   +0x004 Signature        : 7
+   +0x008 Description      : [260]  "Signature is: 7"
+00263f48
+   +0x000 ItemEntry        : _SINGLE_LIST_ENTRY
+   +0x004 Signature        : 6
+   +0x008 Description      : [260]  "Signature is: 6"
+00261420
+   +0x000 ItemEntry        : _SINGLE_LIST_ENTRY
+   +0x004 Signature        : 5
+   +0x008 Description      : [260]  "Signature is: 5"
+002612f8
+   +0x000 ItemEntry        : _SINGLE_LIST_ENTRY
+   +0x004 Signature        : 4
+   +0x008 Description      : [260]  "Signature is: 4"
+002611d0
+   +0x000 ItemEntry        : _SINGLE_LIST_ENTRY
+   +0x004 Signature        : 3
+   +0x008 Description      : [260]  "Signature is: 3"
+002610a8
+   +0x000 ItemEntry        : _SINGLE_LIST_ENTRY
+   +0x004 Signature        : 2
+   +0x008 Description      : [260]  "Signature is: 2"
+00260f80
+   +0x000 ItemEntry        : _SINGLE_LIST_ENTRY
+   +0x004 Signature        : 1
+   +0x008 Description      : [260]  "Signature is: 1"</code></pre>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!slist%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,79 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The lsf and lsf- commands load or unload a source file."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>lsf, lsf- (Load or Unload Source File)</title>
+
+<meta name="MS-HAID" content="r17_cmds_I_93998d71-8deb-44fc-89fe-04e32f29e101.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.lsf__lsf___load_or_unload_source_file_"></a>lsf, lsf- (Load or Unload Source File)</h1>
+</div>
+<p>The <b>lsf</b> and <b>lsf-</b> commands load or unload a source file.</p>
+<pre class="syntax"><b>lsf</b> Filename 
+<b>lsf-</b> Filename</pre>
+<h2><a id="ddk_cmd_load_or_unload_source_file_dbg"></a><a id="DDK_CMD_LOAD_OR_UNLOAD_SOURCE_FILE_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Filename______"></a><a id="_______filename______"></a><a id="_______FILENAME______"></a>       <i>Filename</i>      </dt>
+<dd>
+<p>Specifies the file to load or unload. If this file is not located in the directory where the debugger was opened from, you must include an absolute or relative path. The file name must follow Microsoft Windows file name conventions. </p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>The <b>lsf</b> command loads a source file.</p>
+<p>The <b>lsf-</b> command unloads a source file. You can use this command to unload files that you previously loaded with <b>lsf</b> or automatically loaded source files. You cannot use <b>lsf- </b>to unload files that were loaded through WinDbg's <a href="file___open_source_file.htm">File | Open Source File</a> command or files that a WinDbg workspace loaded.  </p>
+<p>In CDB or KD, you can view source files in the <a href="debugger_command_window.htm">Debugger Command window</a>. In WinDbg, source files are loaded as new <a href="source_window.htm">Source windows</a>.</p>
+<p>For more information about source files, source paths, and other ways to load source files, see <a href="source_path.htm">Source Path</a>.</p>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="ls__lsa__list_source_lines_.htm"><b>ls, lsa (List Source Lines)</b></a></dt>
+<dt><a href="lsc__list_current_source_.htm"><b>lsc (List Current Source)</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20lsf, lsf- (Load or Unload Source File)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

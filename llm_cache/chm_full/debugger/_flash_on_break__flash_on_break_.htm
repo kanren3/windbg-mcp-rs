@@ -1,0 +1,81 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .flash_on_break command specifies whether the WinDbg taskbar entry flashes when WinDbg is minimized and the target breaks."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.flash_on_break (Flash on Break)</title>
+
+<meta name="MS-HAID" content="r20_metacmds_E_beab2b9e-7696-4dc5-b58d-db075c1e7399.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._flash_on_break__flash_on_break_"></a>.flash_on_break (Flash on Break)</h1>
+</div>
+<p>The <b>.flash_on_break</b> command specifies whether the WinDbg taskbar entry flashes when WinDbg is minimized and the target breaks.</p>
+<pre class="syntax">
+    <b>.flash_on_break on</b> 
+<b>.flash_on_break off</b> 
+<b>.flash_on_break</b> 
+</pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______on______"></a><a id="_______ON______"></a>       <b>on</b>      </dt>
+<dd>
+<p>Causes the WinDbg taskbar entry to flash if WinDbg is minimized and the target breaks into the debugger. This is the default behavior for WinDbg.</p>
+</dd>
+<dt><a id="_______off______"></a><a id="_______OFF______"></a>       <b>off</b>      </dt>
+<dd>
+<p>Prevents the WinDbg taskbar entry from flashing.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<p>The <b>.flash_on_break</b> command is available only in WinDbg. You cannot use this command in script files.</p>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets</b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Platforms</b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>If you use the <b>.flash_on_break</b> command without parameters, the debugger displays the current flash setting.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.flash_on_break (Flash on Break)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

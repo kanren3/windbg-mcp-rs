@@ -1,0 +1,41 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The procedures shown in this topic require that you have the Windows Driver Kit integrated into Visual Studio."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Setting Symbol and Executable Image Paths in Visual Studio</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.setting_symbol_and_source_paths_in_visual_studio"></a>Setting Symbol and Executable Image Paths in Visual Studio</h1>
+</div>
+<p>The procedures shown in this topic require that you have the Windows Driver Kit integrated into Visual Studio. To get the integrated environment, first install Microsoft Visual Studio, and then install the   Windows Driver Kit (WDK). For more information, see Windows Driver Development.</p>
+<h2><a id="Setting_the_Symbol_Path_by_Using_a_Property_Page"></a><a id="setting_the_symbol_path_by_using_a_property_page"></a><a id="SETTING_THE_SYMBOL_PATH_BY_USING_A_PROPERTY_PAGE"></a>Setting the Symbol Path by Using a Property Page</h2>
+<ol>
+<li>On the host computer, in Visual Studio, choose <b>Options</b> from the <b>Tools</b> menu. </li>
+<li>In the <b>Options</b> property box, navigate to <b>Debugging&gt;Symbols</b>. </li>
+<li>If you want to get symbols from a Microsoft symbol server, check <b>Microsoft Symbol Servers</b>.</li>
+<li>If you want to get symbols from folders on the host computer, check <b>Environment Variable: _NT_SYMBOL_PATH</b>. Then set the _NT_SYMBOL_PATH <a href="general_environment_variables.htm">environment variable</a>.</li>
+</ol>
+<h2><a id="Setting_the_Symbol_Path_by_Entering_a_Command"></a><a id="setting_the_symbol_path_by_entering_a_command"></a><a id="SETTING_THE_SYMBOL_PATH_BY_ENTERING_A_COMMAND"></a>Setting the Symbol Path by Entering a Command</h2>
+<p>In Visual Studio, in the Debugger Immediate Window, enter the <a href="_sympath__set_symbol_path_.htm"><b>.sympath (Set Symbol Path)</b></a> command.</p>
+<h2><a id="Setting_the_Executable_Image_Path_by_Entering_a_Command"></a><a id="setting_the_executable_image_path_by_entering_a_command"></a><a id="SETTING_THE_EXECUTABLE_IMAGE_PATH_BY_ENTERING_A_COMMAND"></a>Setting the Executable Image Path by Entering a Command</h2>
+<p>In Visual Studio, in the Debugger Immediate Window, enter the <a href="_exepath__set_executable_path_.htm"><b>.exepath (Set Executable Path)</b></a> command.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Setting Symbol and Executable Image Paths in Visual Studio%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

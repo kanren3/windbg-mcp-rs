@@ -1,0 +1,106 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The n command sets the default number base (radix) to the specified value or displays the current number base.Do not confuse this command with the ~n (Suspend Thread) command."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>n (Set Number Base)</title>
+
+<meta name="MS-HAID" content="r17_cmds_I_d2b1e43f-2f4b-4746-b038-0b360a63e458.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.n__set_number_base_"></a>n (Set Number Base)</h1>
+</div>
+<p>The <b>n</b> command sets the default number base (radix) to the specified value or displays the current number base.</p>
+<p>Do not confuse this command with the <a href="_n__suspend_thread_.htm"><b>~n (Suspend Thread)</b></a> command.</p>
+<pre class="syntax">n [Radix]</pre>
+<h2><a id="ddk_cmd_set_number_base_dbg"></a><a id="DDK_CMD_SET_NUMBER_BASE_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Radix______"></a><a id="_______radix______"></a><a id="_______RADIX______"></a>       <i>Radix</i>      </dt>
+<dd>
+<p>Specifies the default number base that is used for numeric display and entry. You can use one of the following values. </p>
+<table>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>8</p>
+</td>
+<td>
+<p>Octal </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>10</p>
+</td>
+<td>
+<p>Decimal</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>16</p>
+</td>
+<td>
+<p>Hexadecimal</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>If you omit <i>Radix</i>, the current default number base is displayed.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>The current radix affects the input and output of MASM expressions. It does not affect the input or output of C++ expressions. For more information about these expressions, see <a href="evaluating_expressions.htm">Evaluating Expressions</a>.</p>
+<p>The default radix is set to 16 when the debugger is started.</p>
+<p>In all MASM expressions, numeric values are interpreted as numbers in the current radix (16, 10, or 8). You can override the default radix by specifying the <b>0x</b> prefix (hexadecimal), the <b>0n</b> prefix (decimal), the <b>0t</b> prefix (octal), or the <b>0y</b> prefix (binary).</p>
+<p></p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20n (Set Number Base)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

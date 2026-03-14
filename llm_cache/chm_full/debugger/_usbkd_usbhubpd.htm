@@ -1,0 +1,108 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !usbkd.usbhubpd command displays information about a USB port."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!usbkd.usbhubpd</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._usbkd_usbhubpd"></a>!usbkd.usbhubpd</h1>
+</div>
+<p>The  <b>!usbkd.usbhubpd</b> command displays information about a USB port.</p>
+<pre class="syntax"><b>!usbkd.usbhubpd </b><i>StructAddr</i></pre>
+<h2><a id="ddk__devobj_dbg"></a><a id="DDK__DEVOBJ_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______StructAddr______"></a><a id="_______structaddr______"></a><a id="_______STRUCTADDR______"></a>       <i>StructAddr</i>      </dt>
+<dd>
+<p>Address  of a <b>usbhub!_HUB_PORT_DATA</b> structure. To get the addresses of these structures, use <a href="_usbkd_usbhubext.htm"><b>!usbhubext</b></a>.</p>
+</dd>
+</dl>
+<h2><a id="DLL"></a><a id="dll"></a>DLL</h2>
+<p>Usbkd.dll
+     </p>
+<h2>Examples</h2>
+<p>Here is one way to find the address of a <b>usbhub!_HUB_PORT_DATA</b>. First enter <a href="_usbkd_usb2tree.htm"><b>!usbkd.usb2tree</b></a>.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !usbkd.usb2tree
+...
+2)!ehci_info ffffe00001ca11a0 !devobj ffffe00001ca1050 PCI: VendorId 8086 DeviceId 293c RevisionId 0002 
+    RootHub !hub2_info ffffe000023201a0 !devstack ffffe00002320050
+        ...</code></pre>
+<p>In the preceding output, you can see the suggested command <b>!devstack ffffe00002320050</b>. Enter this command.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !kdexts.devstack ffffe00002320050
+
+  !DevObj           !DrvObj            !DevExt           ObjectName
+&gt; ffffe00002320050  \Driver\usbhub     ffffe000023201a0  0000002d
+  ffffe0000213c050  \Driver\usbehci    ffffe0000213c1a0  USBPDO-3
+...</code></pre>
+<p>In the preceding output, you can see that the address of the device extension for the FDO of the hub is <code>ffffe000023201a0</code>. </p>
+<p>Pass the address of the device extension to the <a href="_usbkd_usbhubext.htm"><b>!usbhubext</b></a> command.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !usbkd.usbhubext ffffe000023201a0
+
+FDO ffffe00002320050 PDO ffffe0000213c050 HubNumber# 3
+dt USBHUB!_DEVICE_EXTENSION_HUB ffffe000023201a0
+!usbhublog ffffe000023201a0
+RemoveLock ffffe00002320668
+FdoFlags ffffe00002320ba0
+
+CurrentPowerIrp: System (0000000000000000) Device (0000000000000000)
+...
+PORT DATA
+-------------------------------------------------------------------------------------------------------------------
+PortData 1: !port2_info ffffe000021bf000 Port State = PS_WAIT_CONNECT PortChangeLock: 0, Pcq_State: Pcq_Run_Idle             
+     PDO 0000000000000000 
+....
+</code></pre>
+<p>In the preceding output,  <code>ffffe000021bf000</code> is the address of a <b>_HUB_PORT_DATA</b> structure. Pass this address to <b>!usbhubpd</b>.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !usbkd.usbhubpd ffffe000021bf000
+PortNumber: 1
+Parent Hub FDO ffffe00002320050
+Device PDO &lt;NULL&gt;
+dt USBHUB!_HUB_PORT_DATA ffffe000021bf000
+dt USBHUB!_PORTDATA_FLAGS ffffe000021bf968
+
+PortChangelist: !usblist ffffe000021bf1c8, CL [Empty]
+
+Port Indicators Log (latest at bottom)
+-------------------------------------------------------------
+    Event           State                Next
+------------------------------------------------------------
+    [EMPTY]
+
+Port Change Queue History (latest at bottom)
+---------------------------------------------------------------------------------------------------------------------------------------
+    Event                State                    Next                     PcqEv_Suspend PcqEv_Resume  PcqEv_ChDone  Tag 
+---------------------------------------------------------------------------------------------------------------------------------------
+01. PCE_Resume           Pcq_Stop                 Pcq_Pause                              PcqEv_Reset   PcqEv_Reset   REQUEST_RESUME     
+...          Pcq_Run_wBusy            Pcq_Run_Idle                                                                            
+
+Port Status History (latest at bottom)
+-------------------------------------------------------------------------------------------------
+    Current State          Change Eve nt        PDO              CEOSP H/W Port REG Frame Inserted
+-------------------------------------------------------------------------------------------------
+01. PS_WAIT_CONNECT        REQUEST_PAUSE       0000000000000000 00000 100  Age:000 512498
+...</code></pre>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="usb_2_0_extensions.htm">USB 2.0 Debugger Extensions</a></dt>
+<dt><a href="http://go.microsoft.com/fwlink/p?LinkID=227351">Universal Serial Bus (USB) Drivers</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!usbkd.usbhubpd%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

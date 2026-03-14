@@ -1,0 +1,162 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !sysinfo extension reads and displays specified SMBIOS, Advanced Configuration and Power Interface (ACPI), and CPU information from a dump file or live system."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!sysinfo</title>
+
+<meta name="MS-HAID" content="r29_exts_kernel_Q_27f5f863-fecf-484c-b13b-8843b8e4337c.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._sysinfo"></a>!sysinfo</h1>
+</div>
+<p>The <b>!sysinfo</b> extension reads and displays specified SMBIOS, Advanced Configuration and Power Interface (ACPI), and CPU information from a dump file or live system.</p>
+<pre class="syntax"><b>!sysinfo cpuinfo [-csv [-noheaders]]</b>
+<b>!sysinfo cpumicrocode [-csv [-noheaders]]</b>
+<b>!sysinfo cpuspeed [-csv [-noheaders]]</b>
+<b>!sysinfo gbl [-csv [-noheaders]]</b>
+<b>!sysinfo machineid [-csv [-noheaders]]</b>
+<b>!sysinfo registers</b>
+<b>!sysinfo smbios [-csv [-noheaders]] {-debug | -devices | -memory | -power | -processor | -system | -v}</b> 
+<b>!sysinfo -?</b></pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______cpuinfo______"></a><a id="_______CPUINFO______"></a>       <b>cpuinfo</b>      </dt>
+<dd>
+<p>Displays information about the processor.</p>
+</dd>
+<dt><a id="_______cpumicrocode______"></a><a id="_______CPUMICROCODE______"></a>       <b>cpumicrocode</b>      </dt>
+<dd>
+<p>(GenuineIntel processors only)  Displays the initial and cached microcode processor versions. 
+		</p>
+</dd>
+<dt><a id="_______cpuspeed______"></a><a id="_______CPUSPEED______"></a>       <b>cpuspeed</b>      </dt>
+<dd>
+<p>Displays the maximum and current processor speeds.</p>
+</dd>
+<dt><a id="_______gbl______"></a><a id="_______GBL______"></a>       <b>gbl</b>      </dt>
+<dd>
+<p>Displays the BIOS list of ACPI tables.</p>
+</dd>
+<dt><a id="_______machineid______"></a><a id="_______MACHINEID______"></a>       <b>machineid</b>      </dt>
+<dd>
+<p>Displays machine ID information for the SMBIOS, BIOS, firmware, system, and baseboard.</p>
+</dd>
+<dt><a id="_______registers______"></a><a id="_______REGISTERS______"></a>       <b>registers</b>      </dt>
+<dd>
+<p>Displays machine-specific registers (MSRs).</p>
+</dd>
+<dt><a id="_______smbios______"></a><a id="_______SMBIOS______"></a>       <b>smbios</b>      </dt>
+<dd>
+<p>Displays the SMBIOS table. </p>
+</dd>
+<dt><a id="_______-csv______"></a><a id="_______-CSV______"></a>       <b>-csv</b>      </dt>
+<dd>
+<p>Displays all data in comma-separated, variable-length (CSV) format.</p>
+</dd>
+<dt><a id="_______-noheaders______"></a><a id="_______-NOHEADERS______"></a>       <b>-noheaders</b>      </dt>
+<dd>
+<p>Suppresses the header for the CSV format.</p>
+</dd>
+<dt><a id="_______-debug______"></a><a id="_______-DEBUG______"></a>       <b>-debug</b>      </dt>
+<dd>
+<p>Displays output in standard format and CSV format.</p>
+</dd>
+<dt><a id="_______-devices______"></a><a id="_______-DEVICES______"></a>       <b>-devices</b>      </dt>
+<dd>
+<p>Displays the device entries in the SMBIOS table. </p>
+</dd>
+<dt><a id="_______-memory______"></a><a id="_______-MEMORY______"></a>       <b>-memory</b>      </dt>
+<dd>
+<p>Displays the memory entries in the SMBIOS table.</p>
+</dd>
+<dt><a id="_______-power______"></a><a id="_______-POWER______"></a>       <b>-power</b>      </dt>
+<dd>
+<p>Displays the power entries in the SMBIOS table.</p>
+</dd>
+<dt><a id="_______-processor______"></a><a id="_______-PROCESSOR______"></a>       <b>-processor</b>      </dt>
+<dd>
+<p>Displays the processor entries in the SMBIOS table.</p>
+</dd>
+<dt><a id="_______-system______"></a><a id="_______-SYSTEM______"></a>       <b>-system</b>      </dt>
+<dd>
+<p>Displays the system entries in the SMBIOS table.</p>
+</dd>
+<dt><a id="_______-v______"></a><a id="_______-V______"></a>       <b>-v</b>      </dt>
+<dd>
+<p>Verbose. Displays the details of entries in the SMBIOS table.</p>
+</dd>
+<dt><a id="_______-_______"></a>       <b>-?</b>      </dt>
+<dd>
+<p>Displays help for this extension in the Debugger Command window.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000</b></p>
+</td>
+<td>
+<p>Unavailable</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Windows XP base system</b></p>
+<p><b>Windows 2003 base system</b></p>
+</td>
+<td>
+<p>Unavailable </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP, Service Pack 2 and later</b></p>
+<p><b>Windows 2003, Service Pack 1 and later</b></p>
+</td>
+<td>
+<p>
+          Kdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>This extension is useful only when the dump file is a System Crash File (.dmp) that has not been converted to a minidump file from a kernel or full dump file, or the live system has finished starting and is online (for example, at the log-in prompt).</p>
+<p>You can use any combination of the <b>-debug</b>, <b>-devices</b>, <b>-memory</b>, <b>-power</b>, <b>-processor</b>, <b>-system</b>,  and <b>-v</b> parameters in a single extension command.</p>
+<p>The following parameters are supported only on particular systems: </p>
+<ul>
+<li>
+<p>The <b>gbl</b> parameter works only when the target computer supports ACPI. </p>
+</li>
+<li>
+<p>The <b>smbios</b> parameter works only when the target computer supports SMBIOS. </p>
+</li>
+<li>
+<p>The <b>registers</b> parameter does not work on Itanium-based target computers, because they do not collect MSRs.</p>
+</li>
+</ul>
+<p>Microsoft makes every effort to remove personally identifiable information (PII) from these records. All PII is removed from dump files. However, on a live system, some PII may not yet be removed. As a result, PII fields will be reported as 0 or blank, even if they actually contain information. </p>
+<p>To stop execution of commands that include the <b>cpuinfo</b>, <b>gbl</b>, <b>registers</b>, or <b>smbios</b> parameters at any time, press CTRL+BREAK (in WinDbg) or CTRL+C (in KD).</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!sysinfo%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,177 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !dma extension displays information about the Direct Memory Access (DMA) subsystem, and the DMA Verifier option of Driver Verifier."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!dma</title>
+
+<meta name="MS-HAID" content="r26_exts_kernel_A_34cc0220-4255-4c62-a589-4df71a79dca8.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._dma"></a>!dma</h1>
+</div>
+<p>The <b>!dma</b> extension displays information about the Direct Memory Access (DMA) subsystem, and the <b>DMA Verifier</b> option of Driver Verifier.</p>
+<pre class="syntax"><b>!dma</b> 
+<b>!dma </b><i>Adapter</i><b> </b>[<i>Flags</i>]</pre>
+<h2><a id="ddk__dma_pg"></a><a id="DDK__DMA_PG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Adapter______"></a><a id="_______adapter______"></a><a id="_______ADAPTER______"></a>       <i>Adapter</i>      </dt>
+<dd>
+<p>Specifies the hexadecimal address of the DMA adapter to be displayed. If this is zero, all DMA adapters will be displayed.</p>
+</dd>
+<dt><a id="_______Flags______"></a><a id="_______flags______"></a><a id="_______FLAGS______"></a>       <i>Flags</i>      </dt>
+<dd>
+<p>Specifies the information to include in the display. This can be any combination of the following bits. The default is 0x1.</p>
+<p></p>
+<dl>
+<dt><a id="Bit_0__0x1_"></a><a id="bit_0__0x1_"></a><a id="BIT_0__0X1_"></a>Bit 0 (0x1)</dt>
+<dd>
+<p>Causes the display to include generic adapter information.</p>
+</dd>
+<dt><a id="Bit_1__0x2_"></a><a id="bit_1__0x2_"></a><a id="BIT_1__0X2_"></a>Bit 1 (0x2)</dt>
+<dd>
+<p>Causes the display to include map register information. (Only when DMA Verification is active.)</p>
+</dd>
+<dt><a id="Bit_2__0x4_"></a><a id="bit_2__0x4_"></a><a id="BIT_2__0X4_"></a>Bit 2 (0x4)</dt>
+<dd>
+<p>Causes the display to include common buffer information. (Only when DMA Verification is active.)</p>
+</dd>
+<dt><a id="Bit_3__0x8_"></a><a id="bit_3__0x8_"></a><a id="BIT_3__0X8_"></a>Bit 3 (0x8)</dt>
+<dd>
+<p>Causes the display to include scatter/gather list information. (Only when DMA Verification is active.)</p>
+</dd>
+<dt><a id="Bit_4__0x10_"></a><a id="bit_4__0x10_"></a><a id="BIT_4__0X10_"></a>Bit 4 (0x10)</dt>
+<dd>
+<p>Causes the display to include the device description for the hardware device. (Only when DMA Verification is active.)</p>
+</dd>
+<dt><a id="Bit_5__0x20_"></a><a id="bit_5__0x20_"></a><a id="BIT_5__0X20_"></a>Bit 5 (0x20)</dt>
+<dd>
+<p>Causes the display to include Wait context block information.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Windows 2000</b></p>
+</td>
+<td>
+<p>Unavailable </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later</b></p>
+</td>
+<td>
+<p>
+          Kdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For information about Driver Verifier, see the Windows Driver Kit (WDK) documentation. For information about DMA, see the Windows Driver Kit (WDK) documentation and <i>Microsoft Windows Internals</i> by Mark Russinovich David Solomon. (These resources may not be available in some languages 
+
+and countries.)</p>
+<h2>Remarks</h2>
+<p>Invalid arguments (for example, <b>!dma 1</b>) generate a brief help text. </p>
+<p>When the <b>!dma</b> extension is used with no parameters, it displays a concise list of all DMA adapters and their addresses. This can be used to obtain the address of an adapter for use in the longer versions of this command.</p>
+<p>Here is an example of how this extension can be used when the Driver Verifier's <b>DMA Verification</b> option is active:</p>
+<pre class="syntax" xml:space="preserve"><code>0:kd&gt; !dma
+
+Dumping all DMA adapters...
+
+Adapter: 82faebd0     Owner: SCSIPORT!ScsiPortGetUncachedExtension 
+Adapter: 82f88930     Owner: SCSIPORT!ScsiPortGetUncachedExtension 
+Adapter: 82f06cd0     Owner: NDIS!NdisMAllocateMapRegisters 
+Master adapter: 80076800</code></pre>
+<p>From this output, you can see that there are three DMA adapters in the system. SCSIPORT owns two and NDIS owns the third. To examine the NDIS adapter in detail, use the <b>!dma</b> extension with its address:</p>
+<pre class="syntax" xml:space="preserve"><code>0:kd&gt; !dma  82f06cd0
+Adapter: 82f06cd0     Owner: NDIS!NdisMAllocateMapRegisters (0x9fe24351)
+ MasterAdapter:       00000000
+   Adapter base Va      00000000
+   Map register base:   00000000
+ WCB:                 82f2b604
+   Map registers: 00000000 mapped, 00000000 allocated, 00000002 max
+
+   Dma verifier additional information:
+   DeviceObject: 82f98690
+   Map registers:        00000840 allocated, 00000000 freed
+   Scatter-gather lists: 00000000 allocated, 00000000 freed
+   Common buffers:       00000004 allocated, 00000000 freed
+   Adapter channels:     00000420 allocated, 00000420 freed
+   Bytes mapped since last flush: 000000f2</code></pre>
+<p>The first block of data is specific information that a HAL developer can use to debug the problem. For your purposes, the data below "Dma verifier additional information" is what is interesting. In this example, you see that NDIS has allocated 0x840 map registers. This is a huge number, especially because NDIS had indicated that it planned to use a maximum of two map registers. This adapter apparently does not use scatter/gather lists and has put away all its adapter channels. Look at the map registers in more detail:</p>
+<pre class="syntax" xml:space="preserve"><code>0:kd&gt; !dma  82f06cd0 2
+Adapter: 82f06cd0     Owner: NDIS!NdisMAllocateMapRegisters 
+...
+
+  Map register file 82f06c58 (0/2 mapped)
+     Double buffer mdl: 82f2c188
+     Map registers:
+        82f06c80: Not mapped
+        82f06c8c: Not mapped
+
+  Map register file 82f06228 (1/2 mapped)
+     Double buffer mdl: 82f1b678
+     Map registers:
+        82f06250: 00bc bytes mapped to f83c003c
+        82f0625c: Not mapped
+
+  Map register file 82fa5ad8 (1/2 mapped)
+     Double buffer mdl: 82f1b048
+     Map registers:
+        82fa5b00: 0036 bytes mapped to 82d17102
+        82fa5b0c: Not mapped
+...</code></pre>
+<p>In this example, you see that certain map registers have been mapped. Each <i>map register file</i> is an allocation of map registers by the driver. In other words, it represents a single call to <b>AllocateAdapterChannel</b>. NDIS collects a large number of these map register files, while some drivers create them one at a time and dispose of them when they are finished.</p>
+<p>The map register files are also the addresses that are returned to the device under the name "MapRegisterBase". Note that DMA verifier only hooks the first 64 map registers for each driver. The rest are ignored for reasons of space (each map register represents three physical pages).</p>
+<p>In this example, two map register files are in use. This means that the driver has mapped a buffer so it is visible to the hardware. In the first case, 0xBC bytes are mapped to the system virtual address 0xF83C003C.</p>
+<p>An examination of the common buffers reveals:</p>
+<pre class="syntax" xml:space="preserve"><code>0:kd&gt; !dma  82f06cd0 4
+Adapter: 82f06cd0     Owner: NDIS!NdisMAllocateMapRegisters 
+...
+   Common buffer allocated by NDIS!NdisMAllocateSharedMemory:
+      Length:           1000
+      Virtual address:  82e77000
+      Physical address: 2a77000
+
+   Common buffer allocated by NDIS!NdisMAllocateSharedMemory:
+      Length:           12010
+      Virtual address:  82e817f8
+      Physical address: 2a817f8
+
+   Common buffer allocated by NDIS!NdisMAllocateSharedMemory:
+      Length:           4300
+      Virtual address:  82e95680
+      Physical address: 2a95680
+
+   Common buffer allocated by NDIS!NdisMAllocateSharedMemory:
+      Length:           4800
+      Virtual address:  82e9d400
+      Physical address: 2a9d400</code></pre>
+<p>This is fairly straightforward; there are four common buffers of varying lengths. The physical and virtual addresses are all given.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!dma%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

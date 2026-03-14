@@ -1,0 +1,1319 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The DRIVER_VERIFIER_IOMANAGER_VIOLATION bug check has a value of 0x000000C9. This is the bug check code for all Driver Verifier I/O Verification violations."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0xC9: DRIVER_VERIFIER_IOMANAGER_VIOLATION </title>
+
+<meta name="MS-HAID" content="t06_bugs_B0_d7aeff7e-52b3-4060-8d68-39cce3102fd7.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0xc9__driver_verifier_iomanager_violation"></a>Bug Check 0xC9: DRIVER_VERIFIER_IOMANAGER_VIOLATION </h1>
+</div>
+<p>The DRIVER_VERIFIER_IOMANAGER_VIOLATION bug check has a value of 0x000000C9. This is the bug check code for all Driver Verifier <b>I/O Verification</b> violations.</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2> DRIVER_VERIFIER_IOMANAGER_VIOLATION  Parameters</h2>
+<p>When Driver Verifier is active and <b>I/O Verification</b> is selected, various I/O violations will cause this bug check to be issued. The following parameters will be displayed on the blue screen. Parameter 1 identifies the type of violation.</p>
+<table>
+<tr>
+<th>Parameter 1</th>
+<th>Parameter 2</th>
+<th>Parameter 3</th>
+<th>Parameter 4</th>
+<th>Cause of Error</th>
+</tr>
+<tr>
+<td>
+<p>0x01</p>
+</td>
+<td>
+<p>Address of IRP being freed</p>
+</td>
+<td>
+<p>0 </p>
+</td>
+<td>
+<p>0 </p>
+</td>
+<td>
+<p>The driver attempted to free an object whose type is not IO_TYPE_IRP.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x02</p>
+</td>
+<td>
+<p>Address of IRP being freed</p>
+</td>
+<td>
+<p>0 </p>
+</td>
+<td>
+<p>0 </p>
+</td>
+<td>
+<p>The driver attempted to free an IRP that is still associated with a thread.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x03</p>
+</td>
+<td>
+<p>Address of IRP being sent</p>
+</td>
+<td>
+<p>0 </p>
+</td>
+<td>
+<p>0 </p>
+</td>
+<td>
+<p>The driver passed <b>IoCallDriver</b> an IRP Type not equal to IRP_TYPE.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x04</p>
+</td>
+<td>
+<p>Address of device object</p>
+</td>
+<td>
+<p>0 </p>
+</td>
+<td>
+<p>0 </p>
+</td>
+<td>
+<p>The driver passed <b>IoCallDriver</b> an invalid device object.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x05</p>
+</td>
+<td>
+<p>Address of device object associated with offending driver</p>
+</td>
+<td>
+<p>IRQL before <b>IoCallDriver</b></p>
+</td>
+<td>
+<p>IRQL after <b>IoCallDriver</b></p>
+</td>
+<td>
+<p>The IRQL changed during a call to the driver dispatch routine.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x06</p>
+</td>
+<td>
+<p>IRP status</p>
+</td>
+<td>
+<p>Address of IRP being completed</p>
+</td>
+<td>
+<p>0 </p>
+</td>
+<td>
+<p>The driver called <b>IoCompleteRequest</b> with a status marked as pending (or equal to -1). </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x07</p>
+</td>
+<td>
+<p>Address of cancel routine</p>
+</td>
+<td>
+<p>Address of IRP being completed</p>
+</td>
+<td>
+<p>0 </p>
+</td>
+<td>
+<p>The driver called <b>IoCompleteRequest</b> while its cancel routine was still set.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x08</p>
+</td>
+<td>
+<p>Address of device object</p>
+</td>
+<td>
+<p>IRP major function code</p>
+</td>
+<td>
+<p>Exception status code</p>
+</td>
+<td>
+<p>The driver passed <b>IoBuildAsynchronousFsdRequest</b> an invalid buffer. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x09</p>
+</td>
+<td>
+<p>Address of device object</p>
+</td>
+<td>
+<p>I/O control code</p>
+</td>
+<td>
+<p>Exception status code</p>
+</td>
+<td>
+<p>The driver passed <b>IoBuildDeviceIoControlRequest</b> an invalid buffer.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x0A</p>
+</td>
+<td>
+<p>Address of device object</p>
+</td>
+<td>
+<p>0 </p>
+</td>
+<td>
+<p>0 </p>
+</td>
+<td>
+<p>The driver passed <b>IoInitializeTimer</b> a device object with an already-initialized timer. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x0C</p>
+</td>
+<td>
+<p>Address of I/O status block</p>
+</td>
+<td>
+<p>0 </p>
+</td>
+<td>
+<p>0 </p>
+</td>
+<td>
+<p>The driver passed an I/O status block to an IRP, but this block is allocated on a stack which has already unwound past that point.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x0D</p>
+</td>
+<td>
+<p>Address of user event object</p>
+</td>
+<td>
+<p>0 </p>
+</td>
+<td>
+<p>0 </p>
+</td>
+<td>
+<p>The driver passed a user event to an IRP, but this event is allocated on a stack which has already unwound past that point.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x0E</p>
+</td>
+<td>
+<p>Current IRQL</p>
+</td>
+<td>
+<p>Address of IRP</p>
+</td>
+<td>
+<p>0 </p>
+</td>
+<td>
+<p>The driver called <b>IoCompleteRequest</b> with IRQL &gt; DISPATCH_LEVEL.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x0F</p>
+</td>
+<td>
+<p>Address of the device object to which the IRP is being sent</p>
+</td>
+<td>
+<p>Pointer to the IRP</p>
+</td>
+<td>
+<p>Pointer to file object</p>
+</td>
+<td>
+<p>The driver sent a create request with a file object that has been closed, or that had its open canceled.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>In addition to the errors mentioned in the previous table, there are a number of <b>I/O Verification</b> errors that will cause Driver Verifier to halt the system, but which are not actually bug checks.</p>
+<p>These errors cause messages to be displayed on the blue screen, in a crash dump file, and in a kernel debugger. These messages will appear differently in each of these locations. When these errors occur, the hexadecimal bug check code 0xC9 and the bug check string DRIVER_VERIFIER_IOMANAGER_VIOLATION do <u>not</u> appear on the blue screen or in the debugger, although they will appear in a crash dump file.</p>
+<p>On the blue screen, the following data will be displayed:</p>
+<ul>
+<li>
+<p>The message <b>IO SYSTEM VERIFICATION ERROR</b>.  </p>
+</li>
+<li>
+<p>The message <b>WDM DRIVER ERROR </b><i>XXX</i>, where <i>XXX</i> is a hexadecimal code representing the specific error. (See the table below for a list of the I/O error codes and their meanings.)</p>
+</li>
+<li>
+<p>The name of the driver which caused the error.</p>
+</li>
+<li>
+<p>The address in the driver's code where the error was detected (Parameter 2). </p>
+</li>
+<li>
+<p>A pointer to the IRP (Parameter 3). </p>
+</li>
+<li>
+<p>A pointer to the device object (Parameter 4). </p>
+</li>
+</ul>
+<p>If a kernel-mode crash dump has been enabled, the following information will appear in the crash dump file:</p>
+<ul>
+<li>
+<p>The message <b>BugCheck 0xC9 (DRIVER_VERIFIER_IOMANAGER_VIOLATION)</b>.</p>
+</li>
+<li>
+<p>The hexadecimal I/O error code. (See the table below for a list of the I/O error codes and their meanings.)</p>
+</li>
+<li>
+<p>The address in the driver's code where the error was detected.</p>
+</li>
+<li>
+<p>A pointer to the IRP.</p>
+</li>
+<li>
+<p>A pointer to the device object.</p>
+</li>
+</ul>
+<p>If a kernel debugger is attached to the system which has caused this violation, the following information will be sent to the debugger:</p>
+<ul>
+<li>
+<p>The message <b>WDM DRIVER ERROR</b>, along with an assessment of the severity of the error.</p>
+</li>
+<li>
+<p>The name of the driver which caused the error.</p>
+</li>
+<li>
+<p>A descriptive string which explains the cause of this error. Often additional information is passed along, such as a pointer to the IRP. (See the table below for a list of these descriptive strings and what additional information is specified.)</p>
+</li>
+<li>
+<p>A query for further action. Possible responses are <b>b</b> (break), <b>i</b> (ignore), <b>z</b> (zap), <b>r</b> (remove), or <b>d</b> (disable). Instructing the operating system to continue allows you to see what would happen "down the line" if this error had not occurred. Of course, this often will lead to additional bug checks. The "zap" option will actually remove the breakpoint that caused this error to be discovered. </p>
+</li>
+</ul>
+<div class="alert"><b>Note</b>    No other bug checks can be ignored in this manner. Only this kind of <b>I/O Verification</b> errors can be ignored, and even these errors can only be ignored if a kernel debugger is attached.</div>
+<div> </div>
+<p>The following table lists those <b>I/O Verification</b> errors that can appear. </p>
+<table>
+<tr>
+<th>I/O Error Code</th>
+<th>Severity</th>
+<th>Cause of Error</th>
+</tr>
+<tr>
+<td>
+<p>0x200</p>
+</td>
+<td>
+<p>Unknown</p>
+</td>
+<td>
+<p>This code covers all unknown 
+        
+         <b>I/O Verification</b>
+        
+         errors.
+       </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x201</p>
+</td>
+<td>
+<p>Fatal error</p>
+</td>
+<td>
+<p>A device is deleting itself while there is another device beneath it in the driver stack. This may be because the caller has forgotten to call <b>IoDetachDevice</b> first, or the lower driver may have incorrectly deleted itself.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x202</p>
+</td>
+<td>
+<p>Fatal error</p>
+</td>
+<td>
+<p>A driver has attempted to detach from a device object that is not attached to anything. This may occur if detach was called twice on the same device object. (Device object specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x203</p>
+</td>
+<td>
+<p>Fatal error</p>
+</td>
+<td>
+<p>A driver has called <b>IoCallDriver</b> without setting the cancel routine in the IRP to <b>NULL</b>. (IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x204</p>
+</td>
+<td>
+<p>Fatal error</p>
+</td>
+<td>
+<p>The caller has passed in <b>NULL</b> as a device object. This is fatal. (IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x205</p>
+</td>
+<td>
+<p>Fatal error</p>
+</td>
+<td>
+<p>The caller is forwarding an IRP that is currently queued beneath it. The code handling IRPs returning STATUS_PENDING in this driver appears to be broken. (IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x206</p>
+</td>
+<td>
+<p>Fatal error</p>
+</td>
+<td>
+<p>The caller has incorrectly forwarded an IRP (control field not zeroed). The driver should use <b>IoCopyCurrentIrpStackLocationToNext</b> or <b>IoSkipCurrentIrpStackLocation</b>. (IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x207</p>
+</td>
+<td>
+<p>Fatal error</p>
+</td>
+<td>
+<p>The caller has manually copied the stack and has inadvertently copied the upper layer's completion routine. The driver should use <b>IoCopyCurrentIrpStackLocationToNext</b>. (IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x208</p>
+</td>
+<td>
+<p>Fatal error</p>
+</td>
+<td>
+<p>This IRP is about to run out of stack locations. Someone may have forwarded this IRP from another stack. (IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x209</p>
+</td>
+<td>
+<p>Fatal error</p>
+</td>
+<td>
+<p>The caller is completing an IRP that is currently queued beneath it. The code handling IRPs returning STATUS_PENDING in this driver appears to be broken. (IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x20A</p>
+</td>
+<td>
+<p>Fatal error</p>
+</td>
+<td>
+<p>The caller of <b>IoFreeIrp</b> is freeing an IRP that is still in use. (Original IRP and IRP in use specified.)  </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x20B</p>
+</td>
+<td>
+<p>Fatal error</p>
+</td>
+<td>
+<p>The caller of <b>IoFreeIrp</b> is freeing an IRP that is still in use. (IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x20C</p>
+</td>
+<td>
+<p>Fatal error</p>
+</td>
+<td>
+<p>The caller of <b>IoFreeIrp</b> is freeing an IRP that is still queued against a thread. (IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x20D</p>
+</td>
+<td>
+<p>Fatal error</p>
+</td>
+<td>
+<p>The caller of <b>IoInitializeIrp</b> has passed an IRP that was allocated with <b>IoAllocateIrp</b>. This is illegal and unnecessary, and has caused a quota leak. Check the documentation for <b>IoReuseIrp</b> if this IRP is being recycled.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x20E</p>
+</td>
+<td>
+<p>Non-fatal error  </p>
+</td>
+<td>
+<p>A PNP IRP has an invalid status. (Any PNP IRP must have its status initialized to STATUS_NOT_SUPPORTED.) (IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x20F</p>
+</td>
+<td>
+<p>Non-fatal error  </p>
+</td>
+<td>
+<p>A Power IRP has an invalid status. (Any Power IRP must have its status initialized to STATUS_NOT_SUPPORTED.) (IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x210</p>
+</td>
+<td>
+<p>Non-fatal error  </p>
+</td>
+<td>
+<p>A WMI IRP has an invalid status. (Any WMI IRP must have its status initialized to STATUS_NOT_SUPPORTED.) (IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x211</p>
+</td>
+<td>
+<p>Non-fatal error  </p>
+</td>
+<td>
+<p>The caller has forwarded an IRP while skipping a device object in the stack. The caller is probably sending IRPs to the PDO instead of to the device returned by <b>IoAttachDeviceToDeviceStack</b>. (IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x212</p>
+</td>
+<td>
+<p>Non-fatal error  </p>
+</td>
+<td>
+<p>The caller has trashed or has not properly copied the IRP's stack. (IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x213</p>
+</td>
+<td>
+<p>Non-fatal error  </p>
+</td>
+<td>
+<p>The caller has changed the status field of an IRP it does not understand. (IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x214</p>
+</td>
+<td>
+<p>Non-fatal error  </p>
+</td>
+<td>
+<p>The caller has changed the information field of an IRP it does not understand. (IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x215</p>
+</td>
+<td>
+<p>Non-fatal error  </p>
+</td>
+<td>
+<p>A non-successful non-STATUS_NOT_SUPPORTED IRP status for IRP_MJ_PNP is being passed down stack. (IRP specified.) Failed PNP IRPs must be completed.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x216</p>
+</td>
+<td>
+<p>Non-fatal error  </p>
+</td>
+<td>
+<p>The previously-set IRP_MJ_PNP status has been converted to STATUS_NOT_SUPPORTED. (IRP specified.) This failure status is reserved for use by the operating system. Drivers cannot fail a PnP IRP with this value.
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x217</p>
+</td>
+<td>
+<p>Non-fatal error  </p>
+</td>
+<td>
+<p>The driver has not handled a required IRP. The driver must update the status of the IRP to indicate whether or not it has been handled. (IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x218</p>
+</td>
+<td>
+<p>Non-fatal error  </p>
+</td>
+<td>
+<p>The driver has responded to an IRP that is reserved for other device objects elsewhere in the stack. (IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x219</p>
+</td>
+<td>
+<p>Non-fatal error  </p>
+</td>
+<td>
+<p>A non-successful non-STATUS_NOT_SUPPORTED IRP status for IRP_MJ_POWER is being passed down stack. (IRP specified.) Failed POWER IRPs must be completed.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x21A</p>
+</td>
+<td>
+<p>Non-fatal error  </p>
+</td>
+<td>
+<p>The previously-set IRP_MJ_POWER status has been converted to STATUS_NOT_SUPPORTED. (IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x21B</p>
+</td>
+<td>
+<p>Non-fatal error  </p>
+</td>
+<td>
+<p>A driver has returned a suspicious status. This is probably due to an uninitialized variable bug in the driver. (IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x21C</p>
+</td>
+<td>
+<p>Warning</p>
+</td>
+<td>
+<p>The caller has copied the IRP stack but not set a completion routine. This is inefficient -- use <b>IoSkipCurrentIrpStackLocation</b> instead. (IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x21D</p>
+</td>
+<td>
+<p>Fatal error</p>
+</td>
+<td>
+<p>An IRP dispatch handler has not properly detached from the stack below it upon receiving a remove IRP. (Device object, dispatch routine, and IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x21E</p>
+</td>
+<td>
+<p>Fatal error</p>
+</td>
+<td>
+<p>An IRP dispatch handler has not properly deleted its device object upon receiving a remove IRP. (Device object, dispatch routine, and IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x21F</p>
+</td>
+<td>
+<p>Non-fatal error  </p>
+</td>
+<td>
+<p>A driver has not filled out a dispatch routine for a required IRP major function. (IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x220</p>
+</td>
+<td>
+<p>Non-fatal error  </p>
+</td>
+<td>
+<p>IRP_MJ_SYSTEM_CONTROL has been completed by someone other than the ProviderId. This IRP should either have been completed earlier or should have been passed down. (IRP specified, along with the device object where it was targeted.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x221</p>
+</td>
+<td>
+<p>Fatal error</p>
+</td>
+<td>
+<p>An IRP dispatch handler for a PDO has deleted its device object, but the hardware has not been reported as missing in a bus relations query. (Device object, dispatch routine, and IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x222</p>
+</td>
+<td>
+<p>Fatal error</p>
+</td>
+<td>
+<p>A Bus Filter's IRP dispatch handler has detached upon receiving a remove IRP when the PDO is still alive. Bus Filters must clean up in <b>FastIoDetach</b> callbacks. (Device object, dispatch routine, and IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x223</p>
+</td>
+<td>
+<p>Fatal error</p>
+</td>
+<td>
+<p>An IRP dispatch handler for a bus filter has deleted its device object, but the PDO is still present. Bus filters must clean up in <b>FastIoDetach </b>callbacks. (Device object, dispatch routine, and IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x224</p>
+</td>
+<td>
+<p>Fatal error</p>
+</td>
+<td>
+<p>An IRP dispatch handler has returned a status that is inconsistent with the IRP's <b>IoStatus.Status</b> field. (Dispatch handler routine, IRP, IRP's IoStatus.Status, and returned Status specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x225</p>
+</td>
+<td>
+<p>Non-fatal error  </p>
+</td>
+<td>
+<p>An IRP dispatch handler has returned a status that is illegal (0xFFFFFFFF). This is probably due to an uninitialized stack variable. To debug this error, use the <a href="ln__list_nearest_symbols_.htm"><b>ln (List Nearest Symbols)</b></a> command with the specified address. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x226</p>
+</td>
+<td>
+<p>Fatal error</p>
+</td>
+<td>
+<p>An IRP dispatch handler has returned without passing down or completing this IRP, or someone forgot to return STATUS_PENDING. (IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x227</p>
+</td>
+<td>
+<p>Fatal error</p>
+</td>
+<td>
+<p>An IRP completion routine is in pageable code. (This is never permitted.) (Routine and IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x228</p>
+</td>
+<td>
+<p>Non-fatal error  </p>
+</td>
+<td>
+<p>A driver's completion routine has not marked the IRP pending if the <b>PendingReturned</b> field was set in the IRP passed to it. This may cause Windows to hang, especially if an error is returned by the stack. (Routine and IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x229</p>
+</td>
+<td>
+<p>Fatal error</p>
+</td>
+<td>
+<p>A cancel routine has been set for an IRP that is currently being processed by drivers lower in the stack, possibly stomping their cancel routine. (Routine and IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x22A</p>
+</td>
+<td>
+<p>Non-fatal error  </p>
+</td>
+<td>
+<p>The physical device object (PDO) has not responded to a required IRP. (IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x22B</p>
+</td>
+<td>
+<p>Non-fatal error  </p>
+</td>
+<td>
+<p>The physical device object (PDO) has forgotten to fill out the device relation list with the PDO for the <b>TargetDeviceRelation</b> query. (IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x22C</p>
+</td>
+<td>
+<p>Fatal error</p>
+</td>
+<td>
+<p>The code implementing the <b>TargetDeviceRelation</b> query has not called <b>ObReferenceObject</b> on the PDO. (IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x22D</p>
+</td>
+<td>
+<p>Non-fatal error  </p>
+</td>
+<td>
+<p>The caller has completed a IRP_MJ_PNP it didn't understand instead of passing it down. (IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x22E</p>
+</td>
+<td>
+<p>Non-fatal error  </p>
+</td>
+<td>
+<p>The caller has completed a successful IRP_MJ_PNP instead of passing it down. (IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x22F</p>
+</td>
+<td>
+<p>Non-fatal error  </p>
+</td>
+<td>
+<p>The caller has completed an untouched IRP_MJ_PNP (instead of passing the IRP down), or non-PDO has failed the IRP using illegal value of STATUS_NOT_SUPPORTED. (IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x230</p>
+</td>
+<td>
+<p>Non-fatal error  </p>
+</td>
+<td>
+<p>The caller has completed an IRP_MJ_POWER it didn't understand instead of passing it down. (IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x231</p>
+</td>
+<td>
+<p>Fatal error</p>
+</td>
+<td>
+<p>The caller has completed a successful IRP_MJ_POWER instead of passing it down. (IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x232</p>
+</td>
+<td>
+<p>Non-fatal error  </p>
+</td>
+<td>
+<p>The caller has completed an untouched IRP_MJ_POWER (instead of passing the IRP down), or non-PDO has failed the IRP using illegal value of STATUS_NOT_SUPPORTED. (IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x233</p>
+</td>
+<td>
+<p>Non-fatal error  </p>
+</td>
+<td>
+<p>The version field of the query capabilities structure in a query capabilities IRP was not properly initialized. (IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x234</p>
+</td>
+<td>
+<p>Non-fatal error  </p>
+</td>
+<td>
+<p>The size field of the query capabilities structure in a query capabilities IRP was not properly initialized. (IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x235</p>
+</td>
+<td>
+<p>Non-fatal error  </p>
+</td>
+<td>
+<p>The address field of the query capabilities structure in a query capabilities IRP was not properly initialized to -1. (IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x236</p>
+</td>
+<td>
+<p>Non-fatal error  </p>
+</td>
+<td>
+<p>The UI Number field of the query capabilities structure in a query capabilities IRP was not properly initialized to -1. (IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x237</p>
+</td>
+<td>
+<p>Fatal error</p>
+</td>
+<td>
+<p>A driver has sent an IRP that is restricted for system use only. (IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x238</p>
+</td>
+<td>
+<p>Warning</p>
+</td>
+<td>
+<p>The caller of <b>IoInitializeIrp</b> has passed an IRP that was allocated with <b>IoAllocateIrp</b>. This is illegal, unnecessary, and negatively impacts performance in normal use. If this IRP is being recycled, see <b>IoReuseIrp</b> in the Windows Driver Kit. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x239</p>
+</td>
+<td>
+<p>Warning</p>
+</td>
+<td>
+<p>The caller of <b>IoCompleteRequest</b> is completing an IRP that has never been forwarded via a call to <b>IoCallDriver</b> or <b>PoCallDriver</b>. This may be a bug. (IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x23A</p>
+</td>
+<td>
+<p>Fatal error</p>
+</td>
+<td>
+<p>A driver has forwarded an IRP at an IRQL that is illegal for this major code. (IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x23B</p>
+</td>
+<td>
+<p>Non-fatal error  </p>
+</td>
+<td>
+<p>The caller has changed the status field of an IRP it does not understand. (IRP specified.)</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>The following table lists additional <b>I/O Verification</b> errors that can appear in Windows XP and later. Some of these errors will only be revealed if <b>Enhanced I/O Verification</b> is activated. In Windows Vista and later, the <b>Enhanced I/O Verification</b> settings are included as part of <b>I/O Verification</b>.</p>
+<table>
+<tr>
+<th>I/O Error Code</th>
+<th>Severity</th>
+<th>Cause of Error</th>
+</tr>
+<tr>
+<td>
+<p>0x23C</p>
+</td>
+<td>
+<p>Fatal error</p>
+</td>
+<td>
+<p>A driver has completed an IRP without setting the cancel routine in the IRP to <b>NULL</b>. (IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x23D</p>
+</td>
+<td>
+<p>Non-fatal error  </p>
+</td>
+<td>
+<p>A driver has returned STATUS_PENDING but did not mark the IRP pending via a call to <b>IoMarkIrpPending</b>. (IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x23E</p>
+</td>
+<td>
+<p>Non-fatal error  </p>
+</td>
+<td>
+<p>A driver has marked an IRP pending but didn't return STATUS_PENDING. (IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x23F</p>
+</td>
+<td>
+<p>Fatal error</p>
+</td>
+<td>
+<p>A driver has not inherited the DO_POWER_PAGABLE bit from the stack it has attached to. (Device object specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x240</p>
+</td>
+<td>
+<p>Fatal error</p>
+</td>
+<td>
+<p>A driver is attempting to delete a device object that has already been deleted via a prior call to <b>IoDeleteDevice</b>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x241</p>
+</td>
+<td>
+<p>Fatal error</p>
+</td>
+<td>
+<p>A driver has detached its device object during a surprise remove IRP. (IRP and device object specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x242</p>
+</td>
+<td>
+<p>Fatal error</p>
+</td>
+<td>
+<p>A driver has deleted its device object during a surprise remove IRP. (IRP and device object specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x243</p>
+</td>
+<td>
+<p>Fatal error</p>
+</td>
+<td>
+<p>A driver has failed to clear the DO_DEVICE_INITIALIZING flag at the end of <b>AddDevice</b>. (Device object specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x244</p>
+</td>
+<td>
+<p>Fatal error</p>
+</td>
+<td>
+<p>A driver has not copied either the DO_BUFFERED_IO or the DO_DIRECT_IO flag from the device object it is attaching to. (Device object specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x245</p>
+</td>
+<td>
+<p>Fatal error</p>
+</td>
+<td>
+<p>A driver has set both the DO_BUFFERED_IO and the DO_DIRECT_IO flags. These flags are mutually exclusive. (Device object specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x246</p>
+</td>
+<td>
+<p>Fatal error</p>
+</td>
+<td>
+<p>A driver has failed to copy the <b>DeviceType</b> field from the device object it is attaching to. (Device object specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x247</p>
+</td>
+<td>
+<p>Fatal error</p>
+</td>
+<td>
+<p>A driver has failed an IRP that cannot legally be failed. (IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x248</p>
+</td>
+<td>
+<p>Fatal error</p>
+</td>
+<td>
+<p>A driver has added a device object that is not a PDO to a device relations query. (IRP and device object specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x249</p>
+</td>
+<td>
+<p>Non-fatal error  </p>
+</td>
+<td>
+<p>A driver has enumerated two child PDOs that returned identical Device IDs. (Both device objects specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x24A</p>
+</td>
+<td>
+<p>Fatal error</p>
+</td>
+<td>
+<p>A driver has mistakenly called a file I/O function with IRQL not equal to PASSIVE_LEVEL.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x24B</p>
+</td>
+<td>
+<p>Fatal error</p>
+</td>
+<td>
+<p>A driver has completed an IRP_MN_QUERY_DEVICE_RELATIONS request of type <b>TargetDeviceRelation</b> as successful, but did not properly fill out the request or forward the IRP to the underlying hardware stack. (Device object specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x24C</p>
+</td>
+<td>
+<p>Non-fatal error  </p>
+</td>
+<td>
+<p>A driver has returned STATUS_PENDING but did not mark the IRP pending by a call to <b>IoMarkIrpPending</b>. (IRP specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x24D</p>
+</td>
+<td>
+<p>Fatal error</p>
+</td>
+<td>
+<p>A driver has passed an invalid device object to a function that requires a PDO. (Device object specified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x300</p>
+</td>
+<td>
+<p>Non-fatal error  </p>
+</td>
+<td>
+<p>A driver has returned a suspicious status. This is probably due to an uninitialized variable bug in the driver.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x301</p>
+</td>
+<td>
+<p>Non-fatal error  </p>
+</td>
+<td>
+<p>A driver has forwarded an IRP at IRQL &gt; DISPATCH_LEVEL. (IRQL value specified)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x302</p>
+</td>
+<td>
+<p>Non-fatal error  </p>
+</td>
+<td>
+<p>A driver has forwarded an IRP at IRQL &gt;= APC_LEVEL. </p>
+<p>The I/O Manager will need to queue an APC to complete this request. The APC will not be able to run because the caller is already at APC level, so the caller is likely to deadlock. (IRQL value specified)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x306</p>
+</td>
+<td>
+<p>Non-fatal error  </p>
+</td>
+<td>
+<p>The driver is completing an IRP_MJ_PNP (major) and IRP_MN_REMOVE_DEVICE (minor) request with a failure status code.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x307</p>
+</td>
+<td>
+<p>Non-fatal error  </p>
+</td>
+<td>
+<p>The driver issued an I/O request with an event that was already signaled and received a STATUS_PENDING response. This can result in unwinding before the I/O is complete.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x310</p>
+</td>
+<td>
+<p>Non-fatal error  </p>
+</td>
+<td>
+<p>The driver is reinitializing an IRP that is still in use.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x311</p>
+</td>
+<td>
+<p>Non-fatal error  </p>
+</td>
+<td>
+<p>The driver is reinitializing an IRP that was created with IoMakeAssociatedIrp, IoBuildAsynchronousFsdRequest, IoBuildSynchronousFsdRequest, IoBuildDeviceIoControlRequest.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x312</p>
+</td>
+<td>
+<p>Non-fatal error  </p>
+</td>
+<td>
+<p>The caller provided the IRP Status Information field with a value that is greater than the output section of the system buffer.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Cause</h2>
+<p>See the description of each code in the Parameters section for a description of the cause.</p>
+<h2>Resolution</h2>
+<p>This bug check can only occur when Driver Verifier has been instructed to monitor one or more drivers. If you did not intend to use Driver Verifier, you should deactivate it. You might consider removing the driver which caused this problem as well.</p>
+<p>If you are the driver writer, use the information obtained through this bug check to fix the bugs in your code.</p>
+<p>For full details on Driver Verifier, see the Windows Driver Kit.  </p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

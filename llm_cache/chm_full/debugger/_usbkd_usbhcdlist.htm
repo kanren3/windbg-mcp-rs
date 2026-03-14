@@ -1,0 +1,65 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !usbkd.usbhcdlist command displays information about all USB host controllers that are represented by the USB port driver (Usbport.sys). For information about the USB port driver and the associated miniport drivers, see USB Driver Stack Architecture."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!usbkd.usbhcdlist</title>
+
+<meta name="MS-HAID" content="debugger._usbhcdlist"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._usbkd_usbhcdlist"></a>!usbkd.usbhcdlist</h1>
+</div>
+<p>The  <b>!usbkd.usbhcdlist</b> command displays information about all USB host controllers that are represented by the USB port driver (Usbport.sys). For information about the USB port driver and the associated miniport drivers, see <a href="http://go.microsoft.com/fwlink/p?LinkId=251983">USB Driver Stack Architecture</a>.</p>
+<pre class="syntax"><b>!usbkd.usbhcdlist</b></pre>
+<h2><a id="DLL"></a><a id="dll"></a>DLL</h2>
+<p>Usbkd.dll
+     </p>
+<h2>Examples</h2>
+<p>Here is an example of a portion of the output of <b>!usbhcdlist</b>.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !usbkd.usbhcdlist
+MINIPORT List @ fffff80001e5bbd0
+
+List of UHCI controllers
+-------------------------
+!drvobj ffffe00002000060 dt USBPORT!_USBPORT_MINIPORT_DRIVER ffffe00001f48010 Registration Packet ffffe00001f48048
+
+01
+...
+
+List of EHCI controllers
+-------------------------
+!drvobj ffffe00001fd33a0 dt USBPORT!_USBPORT_MINIPORT_DRIVER ffffe00001f48bd0 Registration Packet ffffe00001f48c08
+
+01. Xxxxx Corporation PCI: VendorID Xxxx DeviceID Xxxx RevisionId 0002
+    !devobj ffffe00001ca1050
+    !ehci_info ffffe00001ca11a0
+    Operational Registers ffffd000228bf020
+    Device Data ffffe00001ca2da0
+    !usbhcdlog ffffe00001ca11a0
+    nt!_KINTERRUPT ffffe000020abe78
+    Device Capabilities ffffe00001ca135c
+    Pending IRP's: 0, Transfers: 0 (Periodic(0), Async(0))</code></pre>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="usb_2_0_extensions.htm">USB 2.0 Debugger Extensions</a></dt>
+<dt><a href="http://go.microsoft.com/fwlink/p?LinkID=227351">Universal Serial Bus (USB) Drivers</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!usbkd.usbhcdlist%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

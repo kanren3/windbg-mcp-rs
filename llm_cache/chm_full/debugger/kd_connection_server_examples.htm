@@ -1,0 +1,106 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="KD Connection Server Examples"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>KD Connection Server Examples</title>
+
+<meta name="MS-HAID" content="r08_use_remote_65e3762f-cf24-450d-975e-bde5a0e96148.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.kd_connection_server_examples"></a>KD Connection Server Examples</h1>
+</div>
+<h2><a id="ddk_kd_connection_server_examples_dbg"></a><a id="DDK_KD_CONNECTION_SERVER_EXAMPLES_DBG"></a></h2>
+<p>Suppose a debugging technician is not present at the site where the computer to be debugged is located. The debugging technician asks someone at this site to connect this target computer to some other computer with a debug cable.</p>
+<p>Let this other computer be at IP address 127.0.0.42. The debug cable connects COM1 on this computer to whichever port has been debug-enabled on the target computer. The KD connection server is started with this command:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>E:\Debugging Tools for Windows&gt; kdsrv -t tcp:port=1027 </pre>
+</td>
+</tr>
+</table></span></div>
+<p>Then at the other location, the technician starts WinDbg as a smart client with this command:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>G:\Debugging Tools&gt; windbg -k kdsrv:server=@{tcp:server=127.0.0.42,port=1027},trans=@{com:port=com1,baud=57600} -y SymbolPath </pre>
+</td>
+</tr>
+</table></span></div>
+<p>The symbol path will be relative to the computer where the smart client is running.</p>
+<p>Here is another example. In this case, NPIPE protocol is chosen, and KD is used instead of WinDbg. The first user chooses a pipe name. This can be any alphanumeric string -- in this example, "KernelPipe". The first user opens an elevated Command Prompt window (Run as Administrator) and starts a debugging server by entering these commands:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>E:\Debugging Tools for Windows&gt; set _NT_DEBUG_PORT=com1 
+E:\Debugging Tools for Windows&gt; kdsrv -t npipe:pipe=KernelPipe </pre>
+</td>
+</tr>
+</table></span></div>
+<p>The technician is logged on to the client computer with an account that does not have access to the server computer. But the technician knows the username and password for an account that does have access to the server computer. The username for that account is Contoso. The technician enters the following command:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>net use \\BOX17\ipc$ /user:Contoso</pre>
+</td>
+</tr>
+</table></span></div>
+<p>When prompted, the technician enters the password for the Contoso account.</p>
+<p>The technician is not sure what name was used for the named pipe, so she queries 127.0.0.42 for KD connection servers:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>G:\Debugging Tools&gt; cdb -QR 127.0.0.42 
+Servers on 127.0.0.42:
+Debugger Server - npipe:Pipe=MainPipe
+Remote Process Server - npipe:Pipe=AnotherPipe
+Remote Kernel Debugger Server - npipe:Pipe=KernelPipe</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Three pipes are shown. However, only one is a KD connection server -- the others are a debugging server and a user-mode process server. The technician enters the following command can to start the smart client:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>G:\Debugging Tools&gt; kd -k kdsrv:server=@{npipe:server=127.0.0.42,pipe=KernelPipe},trans=@{com:baud=57600} -y SymbolPath </pre>
+</td>
+</tr>
+</table></span></div>
+<p>Notice that although the baud rate is specified, the port is not. This causes the debugger to default to the port specified by _NT_DEBUG_PORT on the computer where KdSrv is running. </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20KD Connection Server Examples%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

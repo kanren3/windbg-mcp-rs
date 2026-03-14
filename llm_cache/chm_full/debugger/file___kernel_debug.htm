@@ -1,0 +1,54 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="File | Kernel Debug"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>File | Kernel Debug</title>
+
+<meta name="MS-HAID" content="r36_gui_1_fe3f56e8-09fe-496d-a26e-8a692a70bc25.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.file___kernel_debug"></a>File | Kernel Debug</h1>
+</div>
+<h2><a id="ddk_file_kernel_debug_dbg"></a><a id="DDK_FILE_KERNEL_DEBUG_DBG"></a></h2>
+<p>Click <b>Kernel Debug</b> on the <b>File</b> menu to debug a target computer in kernel mode.</p>
+<p>This command is equivalent to pressing CTRL+K. You can use this command only when WinDbg is in dormant mode.</p>
+<h3><a id="dialog_box"></a><a id="DIALOG_BOX"></a>Dialog Box</h3>
+<p>When you click <b>Kernel Debug</b>, the <b>Kernel Debugging</b> dialog box appears with these tabs:</p>
+<ul>
+<li>
+<p>The <b>COM</b> tab indicates that the connection will use a COM port. In the <b>Baud Rate</b> box, enter the baud rate. In the <b>Port</b> box, enter the name of the COM port. For more information, see <a href="setting_up_a_null_modem_cable_connection.htm">Setting Up a Serial Connection Manually</a>.</p>
+<p>You can also use the COM tab to connect to virtual machine through a named pipe. In the <b>Port</b> box, enter <b>\\</b><i>VMHost</i><b>\pipe\</b><i>PipeName</i>. <i>VMHost</i> specifies the name of the physical computer on which the virtual machine is running. If the virtual machine is running on the same computer as the kernel debugger itself, use a single period (.) for <i>VMHost</i>. For more information, see <a href="attaching_to_a_virtual_machine__kernel_mode_.htm">Setting Up a Connection to a Virtual Machine</a>.</p>
+</li>
+<li>
+<p>The <b>1394</b> tab indicates that the connection will use 1394. In the <b>Channel</b> box, enter the 1394 channel number. 1394 debugging is supported only if both the host computer and target computer are running Windows XP or later versions of the Windows operating system. For more information, see <a href="setting_up_a_1394_cable_connection.htm">Setting Up a 1394 Connection Manually</a>.</p>
+</li>
+<li>
+<p>The <b>USB</b> tab indicates that the connection will use USB 2.0 or USB 3.0. In the <b>Target Name</b> box, enter the target name that you created when you configured the target computer. For more information, see <a href="setting_up_a_usb_2_0_debug_cable_connection.htm">Setting Up a USB 2.0 Connection Manually</a> and <a href="setting_up_a_usb_3_0_debug_cable_connection.htm">Setting Up a USB 3.0 Connection Manually</a>.</p>
+</li>
+<li>
+<p>The <b>NET</b> tab indicates that the connection will use Ethernet.  In the <b>Port Number</b> box, enter the port number that you specified when you configured the target computer. In the <b>Key</b> box, enter the key that was generated for you (or that you created) when you configured the target computer. For more information, see <a href="setting_up_a_network_debugging_connection.htm">Setting Up a Network Connection Manually</a>.</p>
+</li>
+<li>
+<p>The <b>Local</b> tab indicates that WinDbg will perform local kernel debugging. Local kernel debugging is supported only on Windows XP and later.</p>
+</li>
+</ul>
+<p>For more information and for other methods of beginning a kernel debugging session, see <a href="performing_kernel-mode_debugging_using_windbg.htm">Live Kernel-Mode Debugging Using WinDbg</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20File | Kernel Debug%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

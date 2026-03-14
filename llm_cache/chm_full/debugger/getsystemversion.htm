@@ -1,0 +1,158 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The GetSystemVersion method returns information that identifies the operating system on the computer that is running the current target."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IDebugControl::GetSystemVersion method</title>
+
+<meta name="MS-HAID" content="IDebugControl_92a4c34c-aa39-43e5-ad31-0ce26e45c246.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.getsystemversion"></a>IDebugControl::GetSystemVersion method</h1>
+</div>
+<p>The <b>GetSystemVersion</b> method returns information that identifies the operating system on the computer that is running the current target.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>HRESULT GetSystemVersion(
+  [out]           PULONG PlatformId,
+  [out]           PULONG Major,
+  [out]           PULONG Minor,
+  [out, optional] PSTR   ServicePackString,
+  [in]            ULONG  ServicePackStringSize,
+  [out, optional] PULONG ServicePackStringUsed,
+  [out]           PULONG ServicePackNumber,
+  [out, optional] PSTR   BuildString,
+  [in]            ULONG  BuildStringSize,
+  [out, optional] PULONG BuildStringUsed
+);</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Parameters</h2>
+<dl>
+<dt><i>PlatformId</i> [out]</dt>
+<dd>
+<p>Receives the platform ID. <i>PlatformId</i> is always VER_PLATFORM_WIN32_NT for NT-based Windows.   </p>
+</dd>
+<dt><i>Major</i> [out]</dt>
+<dd>
+<p>Receives 0xF if the target's operating system is a <i>free build</i>, or 0xC if the operating system is a <i>checked build</i>.</p>
+</dd>
+<dt><i>Minor</i> [out]</dt>
+<dd>
+<p>Receives the build number for the target's operating system.</p>
+</dd>
+<dt><i>ServicePackString</i> [out, optional]</dt>
+<dd>
+<p>Receives the string for the service pack level of the target computer.  If <i>ServicePackString</i> is <b>NULL</b>, this information is not returned.  If no service pack is installed, <i>ServicePackString</i> can be empty.</p>
+</dd>
+<dt><i>ServicePackStringSize</i> [in]</dt>
+<dd>
+<p>Specifies the size, in characters, of the buffer that <i>ServicePackString</i> specifies.</p>
+</dd>
+<dt><i>ServicePackStringUsed</i> [out, optional]</dt>
+<dd>
+<p>Receives the size, in characters, of the string of the service pack level.  If <i>ServicePackStringUsed</i> is <b>NULL</b>, this information is not returned.</p>
+</dd>
+<dt><i>ServicePackNumber</i> [out]</dt>
+<dd>
+<p>Receives the service pack level of the target's operating system.</p>
+</dd>
+<dt><i>BuildString</i> [out, optional]</dt>
+<dd>
+<p>Receives the string that identifies the build of the system.  If <i>BuildString</i> is <b>NULL</b>, this information is not returned.</p>
+</dd>
+<dt><i>BuildStringSize</i> [in]</dt>
+<dd>
+<p>Specifies the size, in characters, of the buffer that <i>BuildString</i> specifies.</p>
+</dd>
+<dt><i>BuildStringUsed</i> [out, optional]</dt>
+<dd>
+<p>Receives the size, in characters, of the string that identifies the build.  If <i>BuildStringUsed</i> is <b>NULL</b>, this information is not returned.</p>
+</dd>
+</dl>
+<h2>Return value</h2>
+<p>This method may also return error values.  See <a href="hresult_values.htm"><b>Return Values</b></a> for more details.</p>
+<table>
+<tr>
+<th>Return code</th>
+<th>Description</th>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>S_OK</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>The method was successful.</p>
+</td>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>S_FALSE</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>The method was successful. However, the <i>ServicePackString</i> buffer or the <i>BuildString</i> buffer were too small and the corresponding string was truncated.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>For more information, see <a href="target_information.htm">Target Information</a>.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Target platform</p>
+</th>
+<td width="70%">
+<dl>
+<dt></dt>
+</dl>
+</td>
+</tr>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Dbgeng.h (include Dbgeng.h or Ntddk.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="idebugcontrol.htm"><b>IDebugControl</b></a></dt>
+<dt><a href="idebugcontrol2.htm"><b>IDebugControl2</b></a></dt>
+<dt><a href="idebugcontrol3.htm"><b>IDebugControl3</b></a></dt>
+<dt><a href="getsystemversionstring.htm"><b>GetSystemVersionString</b></a></dt>
+<dt><a href="getsystemversionvalues.htm"><b>GetSystemVersionValues</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IDebugControl::GetSystemVersion method%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

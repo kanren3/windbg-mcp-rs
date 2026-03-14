@@ -1,0 +1,44 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="EngExtCpp Extension Libraries"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>EngExtCpp Extension Libraries</title>
+
+<meta name="MS-HAID" content="EngExtCpp_DG_00d3e401-1158-49e2-bab9-db76dfe271ca.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.engextcpp_extension_libraries"></a>EngExtCpp Extension Libraries</h1>
+</div>
+<h2><a id="ddk_anatomy_of_a_dbgeng_extension_dll_dbx"></a><a id="DDK_ANATOMY_OF_A_DBGENG_EXTENSION_DLL_DBX"></a></h2>
+<p>An EngExtCpp extension library is a DLL that uses the EngExtCpp extension framework found in EngExtCpp.h.  When this library is loaded by the debugger engine, its methods and functions can provide extra functionality or automation of tasks while performing user-mode or kernel-mode debugging on Microsoft Windows.</p>
+<p>The EngExtCpp extension framework is built on top of the <a href="writing_dbgeng_extension_code.htm">DbgEng extension framework</a>.  It offers the same debugger engine API for interaction with the debugger engine. but it also provides additional features to make common tasks simpler.</p>
+<p>If you performed a full install of Debugging Tools for Windows, a sample EngExtCpp extension called "extcpp" can be found in the sdk\samples\extcpp subdirectory of the installation directory.</p>
+<h3><a id="ext_class_and_extextension"></a><a id="EXT_CLASS_AND_EXTEXTENSION"></a>EXT_CLASS and ExtExtension</h3>
+<p>At the core of an EngExtCpp extension library is a single instance of the <a href="ext_class.htm"><b>EXT_CLASS</b></a> class.  An EngExtCpp extension library will provide the implementation of this class, which contains all the extension commands and methods for formatting structures that are exported by the library.</p>
+<p>EXT_CLASS is a subclass of <a href="extextension.htm"><b>ExtExtension</b></a>.  The single instance of this class is created using the <a href="ext_declare_globals.htm"><b>EXT_DECLARE_GLOBALS</b></a> macro which must appear exactly once in the source files for the extension library.</p>
+<p>When the extension library is loaded, the <a href="initialize.htm"><b>Initialize</b></a> method of the class is called by the engine, and the <a href="uninitialize.htm"><b>Uninitialize</b></a> method is called before unloading the class.  Additionally, the methods <a href="onsessionactive.htm"><b>OnSessionActive</b></a>, <a href="onsessioninactive.htm"><b>OnSessionInactive</b></a>, <a href="onsessionaccessible.htm"><b>OnSessionAccessible</b></a>, and <a href="onsessioninaccessible.htm"><b>OnSessionInaccessible</b></a> are called by the engine to notify the extension library of the state of the debugging session.</p>
+<h3><a id="extension_commands"></a><a id="EXTENSION_COMMANDS"></a>Extension Commands</h3>
+<p>The <a href="ext_class.htm"><b>EXT_CLASS</b></a> class can contain a number of methods that are used to execute extension commands.  Each extension command is declared in the EXT_CLASS class by using the <a href="ext_command_method.htm"><b>EXT_COMMAND_METHOD</b></a> macro.  The implementation of a command is defined by using the <a href="ext_command.htm"><b>EXT_COMMAND</b></a> macro.</p>
+<h3><a id="known_structures"></a><a id="KNOWN_STRUCTURES"></a>Known Structures</h3>
+<p>The <a href="ext_class.htm"><b>EXT_CLASS</b></a> class can contain a number of methods that use the <a href="extknownstructmethod.htm"><i>ExtKnownStructMethod</i></a> prototype.  The methods can be used by the engine to format instances of certain structure types for output.</p>
+<h3><a id="provided_values"></a><a id="PROVIDED_VALUES"></a>Provided Values</h3>
+<p>The <a href="ext_class.htm"><b>EXT_CLASS</b></a> class can contain a number of methods that use the <b>ExtProvideValueMethod</b> prototype.  The methods can be used by the engine to evaluate some pseudo-registers provided by the extension.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20EngExtCpp Extension Libraries%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

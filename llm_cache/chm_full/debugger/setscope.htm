@@ -1,0 +1,131 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The SetScope method sets the current scope."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IDebugSymbols::SetScope method</title>
+
+<meta name="MS-HAID" content="IDebugSymbols_20e96a86-b9c3-481f-9a26-319bac975e15.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.setscope"></a>IDebugSymbols::SetScope method</h1>
+</div>
+<p>The <b>SetScope</b> method sets the current scope.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>HRESULT SetScope(
+  [in]           ULONG64            InstructionOffset,
+  [in, optional] PDEBUG_STACK_FRAME ScopeFrame,
+  [in, optional] PVOID              ScopeContext,
+  [in]           ULONG              ScopeContextSize
+);</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Parameters</h2>
+<dl>
+<dt><i>InstructionOffset</i> [in]</dt>
+<dd>
+<p>Specifies the location in the process's virtual address space for the scope's current instruction.  This is only used if both <i>ScopeFrame</i> and <i>ScopeContext</i> are <b>NULL</b>; otherwise, it is ignored.</p>
+</dd>
+<dt><i>ScopeFrame</i> [in, optional]</dt>
+<dd>
+<p>Specifies the scope's stack frame.  For information about this structure, see <a href="debug_stack_frame.htm"><b>DEBUG_STACK_FRAME</b></a>.</p>
+</dd>
+<dt><i>ScopeContext</i> [in, optional]</dt>
+<dd>
+<p>Specifies the scope's <a href="scopes_and_symbol_groups.htm#thread_context">thread context</a>.  The type of the thread context is the CONTEXT structure for the target's effective processor.  The buffer <i>ScopeContext</i> must be large enough to hold this structure.  If <i>ScopeContext</i> is <b>NULL</b>, the current <a href="changing_contexts.htm#register_context">register context</a> is used instead.</p>
+</dd>
+<dt><i>ScopeContextSize</i> [in]</dt>
+<dd>
+<p>Specifies the size of the buffer <i>ScopeContext</i>.</p>
+</dd>
+</dl>
+<h2>Return value</h2>
+<p>This method may also return error values.  See <a href="hresult_values.htm"><b>Return Values</b></a> for more details.</p>
+<table>
+<tr>
+<th>Return code</th>
+<th>Description</th>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>S_OK</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>The scope identified by <i>InstructionOffset</i>, <i>ScopeFrame</i>, and <i>ScopeContext</i> is the same as the old scope.</p>
+</td>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>S_FALSE</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>The scope has changed.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>If only <i>InstructionOffset</i> is provided, the scope can be used to look up symbol names; however, the values of these symbols will not be available.</p>
+<p>To set the scope to a previous state, <i>ScopeContext</i> must be provided.  This is not always necessary (for example, if you only wish to access the symbols and not the <a href="x86_architecture.htm#registers">registers</a>).  To set the scope to a frame on the current stack, <a href="setscopeframebyindex.htm"><b>SetScopeFrameByIndex</b></a> can be used.</p>
+<p>For more information about scopes, see <a href="scopes_and_symbol_groups.htm">Scopes and Symbol Groups</a>.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Target platform</p>
+</th>
+<td width="70%">
+<dl>
+<dt></dt>
+</dl>
+</td>
+</tr>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Dbgeng.h (include Dbgeng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="idebugsymbols.htm"><b>IDebugSymbols</b></a></dt>
+<dt><a href="idebugsymbols2.htm"><b>IDebugSymbols2</b></a></dt>
+<dt><a href="idebugsymbols3.htm"><b>IDebugSymbols3</b></a></dt>
+<dt><a href="getscope.htm"><b>GetScope</b></a></dt>
+<dt><a href="resetscope.htm"><b>ResetScope</b></a></dt>
+<dt><a href="setscopeframebyindex.htm"><b>SetScopeFrameByIndex</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IDebugSymbols::SetScope method%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

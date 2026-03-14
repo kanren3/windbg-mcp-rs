@@ -1,0 +1,282 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The VIDEO_TDR_ ERROR bug check has a value of 0x00000116. This indicates that an attempt to reset the display driver and recover from a timeout failed."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0x116:  VIDEO_TDR_ERROR</title>
+
+<meta name="MS-HAID" content="t07_bugs_E0_1e65e767-d4db-4c1f-b706-2481592134d8.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0x116___video_tdr_error"></a>Bug Check 0x116:  VIDEO_TDR_ERROR</h1>
+</div>
+<p>The VIDEO_TDR_ ERROR bug check has a value of 0x00000116. This indicates that an attempt to reset the display driver and recover from a timeout failed.  </p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2>  VIDEO_TDR_ERROR Parameters</h2>
+<p>The following parameters are displayed on the blue screen. </p>
+<table>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>1</p>
+</td>
+<td>
+<p>The pointer to the internal TDR recovery context, if available. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>2</p>
+</td>
+<td>
+<p>A pointer into the responsible device driver module (for example, the owner tag). </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>3</p>
+</td>
+<td>
+<p>The error code of the last failed operation, if available. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>4</p>
+</td>
+<td>
+<p>Internal context dependent data, if available. </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p></p>
+<h2>Cause</h2>
+<p>A common stability problem in graphics occurs when the system appears completely frozen or hung while processing an end-user command or operation. Usually the GPU is busy processing intensive graphics operations, typically during game-play. No screen updates occur, and users assume that their system is frozen. Users usually wait a few seconds and then reboot the system by pressing the power button.
+
+Windows  tries to detect these problematic hang situations and dynamically recover a responsive desktop. 
+</p>
+<p> This process of detection and recovery is known as Timeout Detection and Recovery (TDR).  The default timeout is 2 seconds. In the TDR process for video cards, the operating system's GPU scheduler calls the display miniport driver's <i>DxgkDdiResetFromTimeout</i> function to reinitialize the driver and reset the GPU. </p>
+<p> During this process,  the operating system tells the driver not to access the hardware or memory and gives it a short time for currently running threads to complete. If the threads do not complete within the timeout, then the system bug checks with 0x116 VIDEO_TDR_FAILURE. For more information, see Thread Synchronization and TDR. </p>
+<p>The system can also bug check with VIDEO_TDR_FAILURE if a number of TDR events occur in a short period of time, by default more than five TDRs in one minute. </p>
+<p>If the recovery process  is successful, a message will be displayed, indicating that the "Display driver stopped responding and has recovered."
+</p>
+<p>
+     For more information, see Timeout Detection and Recovery (TDR), TDR Registry Keys and TDR changes in Windows 8 which are located in Debugging Tips for the Windows Display Driver Model (WDDM).
+    </p>
+<h2>Resolution</h2>
+<p>The GPU is taking more time than permitted to display graphics to your monitor. This behavior can occur for one or more of the following reasons:</p>
+<ul>
+<li>You may need to install the latest updates for your display driver, so that it properly supports the TDR process.
+</li>
+<li>Hardware issues that impact the ability of the video card to operate properly, including: <ul>
+<li>Over-clocked components, such as the motherboard</li>
+<li>Incorrect component compatibility and settings (especially memory configuration and timings)</li>
+<li>Insufficient system cooling</li>
+<li>Insufficient system power </li>
+<li>Defective parts (memory modules, motherboards, etc.) </li>
+</ul>
+</li>
+<li>Visual effects, or too many programs running in the background may be slowing your PC down so that the video card can not respond as necessary. </li>
+</ul>
+<p>The <a href="_analyze.htm"><b>!analyze</b></a> debug extension displays information about  the bug check and can be very helpful in determining the root cause.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>1: kd&gt; !analyze -v
+*******************************************************************************
+*                                                                             *
+*                        Bugcheck Analysis                                    *
+*                                                                             *
+*******************************************************************************
+
+VIDEO_TDR_FAILURE (116)
+Attempt to reset the display driver and recover from timeout failed.
+Arguments:
+Arg1: ffffe000c2c404c0, Optional pointer to internal TDR recovery context (TDR_RECOVERY_CONTEXT).
+Arg2: fffff8016470c14c, The pointer into responsible device driver module (e.g. owner tag).
+Arg3: ffffffffc000009a, Optional error code (NTSTATUS) of the last failed operation.
+Arg4: 0000000000000004, Optional internal context dependent data.
+
+...</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Also displayed will be the faulting module name</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>MODULE_NAME: nvlddmkm
+
+IMAGE_NAME:  nvlddmkm.sys
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p>You can use the <a href="lm__list_loaded_modules_.htm"><b>lm (List Loaded Modules)</b></a>command to display information about the faulting driver, including the timestamp. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>1: kd&gt; lmvm nvlddmkm
+Browse full module list
+start             end                 module name
+fffff801`63ec0000 fffff801`649a7000   nvlddmkm T (no symbols)           
+    Loaded symbol image file: nvlddmkm.sys
+    Image path: \SystemRoot\system32\DRIVERS\nvlddmkm.sys
+    Image name: nvlddmkm.sys
+    Browse all global symbols  functions  data
+    Timestamp:        Wed Jul  8 15:43:44 2015 (559DA7A0)
+    CheckSum:         00AA7491
+    ImageSize:        00AE7000
+    Translations:     0000.04b0 0000.04e4 0409.04b0 0409.04e4
+
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Parameter 1 contains a pointer to the TDR_RECOVERY_CONTEXT. As shown in the !analyze output, you can use the dt command to display this data. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>1: kd&gt; dt dxgkrnl!_TDR_RECOVERY_CONTEXT ffffe000c2c404c0
+   +0x000 Signature        : 0x52445476
+   +0x008 pState           : 0xffffe000`c2b12a40 ??
+   +0x010 TimeoutReason    : 9 ( TdrEngineTimeoutPromotedToAdapterReset )
+   +0x018 Tick             : _ULARGE_INTEGER 0xb2
+   +0x020 pAdapter         : 0xffffe000`c2a89010 DXGADAPTER
+   +0x028 pVidSchContext   : (null) 
+   +0x030 GPUTimeoutData   : _TDR_RECOVERY_GPU_DATA
+   +0x048 CrtcTimeoutData  : _TDR_RECOVERY_CONTEXT::&lt;unnamed-type-CrtcTimeoutData&gt;
+   +0x050 pProcessName     : (null) 
+   +0x058 DbgOwnerTag      : 0xfffff801`6470c14c
+   +0x060 PrivateDbgInfo   : _TDR_DEBUG_REPORT_PRIVATE_INFO
+   +0xb00 pDbgReport       : 0xffffe000`c2c3f750 _WD_DEBUG_REPORT
+   +0xb08 pDbgBuffer       : 0xffffc000`bd000000 Void
+   +0xb10 DbgBufferSize    : 0x37515
+   +0xb18 pDumpBufferHelper : (null) 
+   +0xb20 pDbgInfoExtension : 0xffffc000`ba7e47a0 _DXGKARG_COLLECTDBGINFO_EXT
+   +0xb28 pDbgBufferUpdatePrivateInfo : 0xffffc000`bd000140 Void
+   +0xb30 ReferenceCount   : 0n1
+   +0xb38 pResetCompletedEvent : (null) 
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Parameter 2 contains a pointer into the responsible device driver module (for example, the owner tag).</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>1: kd&gt; ub fffff8016470c14c
+nvlddmkm+0x84c132:
+fffff801`6470c132 cc              int     3
+fffff801`6470c133 cc              int     3
+fffff801`6470c134 48ff254d2deaff  jmp     qword ptr [nvlddmkm+0x6eee88 (fffff801`645aee88)]
+fffff801`6470c13b cc              int     3
+fffff801`6470c13c 48ff252d2eeaff  jmp     qword ptr [nvlddmkm+0x6eef70 (fffff801`645aef70)]
+fffff801`6470c143 cc              int     3
+fffff801`6470c144 48ff257d2deaff  jmp     qword ptr [nvlddmkm+0x6eeec8 (fffff801`645aeec8)]
+fffff801`6470c14b cc              int     3</pre>
+</td>
+</tr>
+</table></span></div>
+<p>You may wish to examine the stack trace using the <a href="k__kb__kc__kd__kp__kp__kv__display_stack_backtrace_.htm"><b>k, kb, kc, kd, kp, kP, kv (Display Stack Backtrace)</b></a> command. </p>
+<p></p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>1: kd&gt; k
+ # Child-SP          RetAddr           Call Site
+00 ffffd001`7d53d918 fffff801`61ba2b4c nt!KeBugCheckEx [d:\th\minkernel\ntos\ke\amd64\procstat.asm @ 122]
+01 ffffd001`7d53d920 fffff801`61b8da0e dxgkrnl!TdrBugcheckOnTimeout+0xec [d:\th\windows\core\dxkernel\dxgkrnl\core\dxgtdr.cxx @ 2731]
+02 ffffd001`7d53d960 fffff801`61b8dd7f dxgkrnl!ADAPTER_RENDER::Reset+0x15e [d:\th\windows\core\dxkernel\dxgkrnl\core\adapter.cxx @ 19443]
+03 ffffd001`7d53d990 fffff801`61ba2385 dxgkrnl!DXGADAPTER::Reset+0x177 [d:\th\windows\core\dxkernel\dxgkrnl\core\adapter.cxx @ 19316]
+04 ffffd001`7d53d9e0 fffff801`63c5fba7 dxgkrnl!TdrResetFromTimeout+0x15 [d:\th\windows\core\dxkernel\dxgkrnl\core\dxgtdr.cxx @ 2554]
+05 ffffd001`7d53da10 fffff801`63c47e5d dxgmms1!VidSchiRecoverFromTDR+0x11b [d:\th\windows\core\dxkernel\dxgkrnl\dxgmms1\vidsch\vidscher.cxx @ 1055]
+06 ffffd001`7d53dbc0 fffff801`aa55c698 dxgmms1!VidSchiWorkerThread+0x8d [d:\th\windows\core\dxkernel\dxgkrnl\dxgmms1\vidsch\vidschi.cxx @ 426]
+07 ffffd001`7d53dc00 fffff801`aa5c9306 nt!PspSystemThreadStartup+0x58 [d:\th\minkernel\ntos\ps\psexec.c @ 6845]
+08 ffffd001`7d53dc60 00000000`00000000 nt!KxStartSystemThread+0x16 [d:\th\minkernel\ntos\ke\amd64\threadbg.asm @ 80]
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p></p>
+<p>You can also set a breakpoint in the code leading up to this stop code and attempt to single step forward into the faulting code, if you can consistently reproduce the stop code.</p>
+<p>For more information see the following topics:</p>
+<p><a href="crash_dump_files.htm">Crash dump analysis using the Windows debuggers (WinDbg)</a></p>
+<p>If you are not equipped to use the Windows debugger to work on   this problem, you can use some basic troubleshooting techniques. </p>
+<ul>
+<li>
+<p>Check the System Log in Event Viewer for additional error messages that might help identify the device or driver that is causing this bug check. </p>
+</li>
+<li>
+<p>If a driver is identified in the bug check message, disable the driver or check with the manufacturer for driver updates. </p>
+</li>
+<li>Verify that all graphics related software such as DirectX and OpenGL are up to date, and any graphics intensive applications (such as games) are fully patched.</li>
+<li>
+<p>Confirm that any new hardware that is installed is compatible with the installed version of Windows. For example, you can get information about required hardware at <a href="https://www.microsoft.com/en-us/windows/windows-10-specifications">Windows 10
+
+Specifications</a>.</p>
+</li>
+<li>
+<p><b>Using Safe Mode</b></p>
+<p>Consider using Safe Mode to help isolate this issue. Using Safe Mode loads only the minimum required drivers and system services during the Windows startup. To enter Safe Mode, use <b>Update and Security</b> in Settings. Select <b>Recovery</b>-&gt;<b>Advanced startup</b> to  boot to maintenance mode. At the resulting menu, choose <b>Troubleshoot</b>-&gt; <b>Advanced Options</b> -&gt; <b>Startup Settings</b> -&gt; <b>Restart</b>. After Windows restarts to the <b>Startup Settings</b> screen, select option, 4, 5 or 6 to boot to Safe Mode. </p>
+<p>Safe Mode may be available by pressing a function key on boot, for example F8. Refer to information from the manufacturer for specific startup options.</p>
+</li>
+<li>
+<p>Run the Windows Memory Diagnostics tool, to test the memory. In the control panel search box, type Memory, and then click <b>Diagnose your computer's memory problems</b>.‌ After the test is run,  use Event viewer to view the results under  the System log. Look for the <i>MemoryDiagnostics-Results</i>
+entry to view the results.</p>
+</li>
+<li>
+<p>You can try running the hardware diagnostics supplied by the system manufacturer. </p>
+</li>
+<li>
+<p>For additional general troubleshooting information, see <a href="blue_screen_data.htm"><b>Blue Screen Data</b></a>. </p>
+</li>
+</ul>
+<h2>Remarks</h2>
+<p><b>Hardware certification requirements</b></p>
+<p></p>
+<p>
+For information  on requirements that hardware devices must meet when they implement TDR, refer to the WHCK documentation on <i>Device.Graphics…TDRResiliency</i>.
+</p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

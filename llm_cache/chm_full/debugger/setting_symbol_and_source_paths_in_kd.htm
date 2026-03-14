@@ -1,0 +1,71 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Setting Symbol and Executable Image Paths in KD"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Setting Symbol and Executable Image Paths in KD</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.setting_symbol_and_source_paths_in_kd"></a>Setting Symbol and Executable Image Paths in KD</h1>
+</div>
+<h2><a id="ddk_symbol_path_dbg"></a><a id="DDK_SYMBOL_PATH_DBG"></a>Symbol Path</h2>
+<p>The symbol path specifies the directories where the symbol files are located. For more information about symbols and symbol files, see <a href="symbols.htm">Symbols</a>.</p>
+<div class="alert"><b>Note</b>    If you are connected to the Internet or a corporate network, the most efficient way to access symbols is to use a symbol server. You can use a symbol server by using the srv* or symsrv* string within your symbol path. For more information about symbol servers, see <a href="symbol_stores_and_symbol_servers.htm">Symbol Stores and Symbol Servers</a>.</div>
+<div> </div>
+<p>To control the symbol path in KD, do one of the following:</p>
+<ul>
+<li>
+<p>Enter the <a href="_sympath__set_symbol_path_.htm"><b>.sympath (Set Symbol Path)</b></a> command. If you are using a symbol server, the <a href="_symfix__set_symbol_store_path_.htm"><b>.symfix (Set Symbol Store Path)</b></a> command is similar to <b>.sympath</b> but saves you typing.</p>
+</li>
+<li>
+<p>When you start the debugger, use the <b>-y</b> command-line option. See <a href="kd_command_line_options.htm"><b>KD Command-Line Options</b></a>.</p>
+</li>
+<li>
+<p>Before you start the debugger, use the _NT_SYMBOL_PATH and _NT_ALT_SYMBOL_PATH <a href="environment_variables.htm">environment variables</a> to set the path. The symbol path is created by appending _NT_SYMBOL_PATH after _NT_ALT_SYMBOL_PATH. (Typically, the path is set through the _NT_SYMBOL_PATH. However, you might want to use _NT_ALT_SYMBOL_PATH to override these settings in special cases, such as when you have private versions of shared symbol files.)</p>
+<div class="alert"><b>Note</b>  If you use the <b>-sins</b> command-line option, the debugger ignores the symbol path environment variable.</div>
+<div> </div>
+</li>
+</ul>
+<h2><a id="Executable_Image_Path"></a><a id="executable_image_path"></a><a id="EXECUTABLE_IMAGE_PATH"></a>Executable Image Path</h2>
+<h3><a id="ddk_executable_image_path_dbg"></a><a id="DDK_EXECUTABLE_IMAGE_PATH_DBG"></a></h3>
+<p>An executable file is a binary file that the processor can run. These files typically have the .exe, .dll, or .sys file name extension. Executable files are also known as modules, especially when executable files are described as units of a larger application. Before the Windows operating system runs an executable file, it loads it into memory. The copy of the executable file in memory is called the executable image or the image.</p>
+<div class="alert"><b>Note</b>    These terms are sometimes used imprecisely. For example, some documents might use "image" for the actual file on the disk. Also, Windows-based applications refer to the executable name, which typically includes the file name extension. But these applications refer to the module name, which does not include the file name extension. <p class="note">Also, the Windows kernel and HAL have special module names. For example, the <b>nt</b> module corresponds to the Ntoskrnl.exe file.</p>
+</div>
+<div> </div>
+<p>The executable image path specifies the directories that the binary executable files are located in.</p>
+<p>In most situations, the debugger knows the location of the executable files, so you do not have to set the path for this file. </p>
+<p>However, there are situations when this path is required. For example, kernel-mode <a href="small_memory_dump.htm">small memory dump</a> files do not contain all of the executable files that exist in memory at the time of a stop error (that is, a crash). Similarly, user-mode minidump files do not contain the application binaries. If you set the path of the executable files, the debugger can find these binary files.</p>
+<p>The debugger's executable image path is a string that consists of multiple directory paths, separated by semicolons. Relative paths are supported. However, unless you always start the debugger from the same directory, you should add a drive letter or a network share before each path. Network shares are also supported.  The debugger searches the executable image path recursively. That is, the debugger searches the subdirectories of each directory that is listed in this path.</p>
+<p>To control the executable image path in KD, do one of the following:</p>
+<ul>
+<li>
+<p>Enter the <a href="_exepath__set_executable_path_.htm"><b>.exepath (Set Executable Path)</b></a> command.</p>
+</li>
+<li>
+<p>When you start the debugger, use the <b>-i</b> command-line option. See <a href="kd_command_line_options.htm"><b>KD Command-Line Options</b></a>.</p>
+</li>
+<li>
+<p>Before you start the debugger, use the _NT_EXECUTABLE_IMAGE_PATH <a href="environment_variables.htm">environment variable</a> to set the path.</p>
+<div class="alert"><b>Note</b>  If you use the <b>-sins</b> command-line option, the debugger ignores the executable image path environment variable.</div>
+<div> </div>
+</li>
+</ul>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Setting Symbol and Executable Image Paths in KD%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

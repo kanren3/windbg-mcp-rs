@@ -1,0 +1,61 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Varieties of Kernel-Mode Dump Files"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Varieties of Kernel-Mode Dump Files</title>
+
+<meta name="MS-HAID" content="r10_dump_files_fb0158c7-161d-4959-9dd3-00be89aebd02.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.varieties_of_kernel_mode_dump_files"></a>Varieties of Kernel-Mode Dump Files</h1>
+</div>
+<h2><a id="ddk_varieties_of_kernel_mode_dump_files_dbg"></a><a id="DDK_VARIETIES_OF_KERNEL_MODE_DUMP_FILES_DBG"></a></h2>
+<p>There are five settings for kernel-mode crash dump files:</p>
+<dl>
+<dd>
+<p><a href="complete_memory_dump.htm">Complete Memory Dump</a></p>
+</dd>
+<dd>
+<p><a href="kernel_memory_dump.htm">Kernel Memory Dump</a></p>
+</dd>
+<dd>
+<p><a href="small_memory_dump.htm">Small Memory Dump</a></p>
+</dd>
+<dd>
+<p><a href="automatic_memory_dump.htm">Automatic Memory Dump</a></p>
+</dd>
+<dd>
+<p>Active Memory Dump</p>
+</dd>
+</dl>
+<p>The difference between these dump files is one of size. The <i>Complete Memory Dump</i> is the largest and contains the most information, the <i>Kernel Memory Dump</i> is somewhat smaller, and the <i>Small Memory Dump</i> is only 64 KB in size.</p>
+<p>If you select <i>Automatic Memory Dump</i>, the dump file is the same as a Kernel Memory Dump, but Windows has more flexibility in setting the size of the system paging file.</p>
+<p>The advantage to the larger files is that, since they contain more information, they are more likely to help you find the cause of the crash.</p>
+<p>The advantage of the smaller files is that they are smaller and written more quickly. Speed is often valuable; if you are running a server, you may want the server to reboot as quickly as possible after a crash, and the reboot will not take place until the dump file has been written.</p>
+<p>After a Complete Memory Dump or Kernel Memory Dump has been created, it is possible to create a Small Memory Dump file from the larger dump file. See the <a href="_dump__create_dump_file_.htm"><b>.dump (Create Dump File)</b></a> command for details.</p>
+<div class="alert"><b>Note</b>    Much information can be obtained by analyzing a kernel-mode dump file. However, no kernel-mode dump file can provide as much information as actually debugging the crash directly with a kernel debugger.</div>
+<div> </div>
+<h2><a id="related_topics"></a>Related topics</h2>
+<dl>
+<dt><a href="kernel_mode_dump_files.htm">Kernel-Mode Dump Files</a></dt>
+<dt><a href="enabling_a_kernel_mode_dump_file.htm">Enabling a Kernel-Mode Dump File</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Varieties of Kernel-Mode Dump Files%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

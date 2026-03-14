@@ -1,0 +1,189 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !tp extension displays thread pool information."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!tp</title>
+
+<meta name="MS-HAID" content="r25_exts_general_He_34e32d90-4794-4b65-a530-5af973be1710.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._tp"></a>!tp</h1>
+</div>
+<p>The <b>!tp</b> extension displays thread pool information.</p>
+<pre class="syntax"><b>!tp pool </b><i>Address</i><b> </b>[<i>Flags</i>] 
+<b>!tp tqueue </b><i>Address</i><b> </b>[<i>Flags</i>] 
+<b>!tp </b><i>ItemType Address</i><b> </b>[<i>Flags</i>] 
+<b>!tp </b><i>ThreadType</i><b> </b>[<i>Address</i>] 
+<b>!tp stats </b><i>Address</i><b> </b>[<i>Flags</i>] 
+<b>!tp wfac </b><i>Address</i> 
+<b>!tp wqueue </b><i>Address</i><b> </b><i>Priority Node</i> 
+<b>!tp -?</b></pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______pool_Address_____________"></a><a id="_______pool_address_____________"></a><a id="_______POOL_ADDRESS_____________"></a>       <b>pool</b><b> </b><i>Address</i>             </dt>
+<dd>
+<p>Causes the entire thread pool at <i>Address</i> to be displayed.  If <i>Address</i> is 0, then all thread pools will be displayed. </p>
+</dd>
+<dt><a id="_______tqueue_______Address______"></a><a id="_______tqueue_______address______"></a><a id="_______TQUEUE_______ADDRESS______"></a>       <b>tqueue</b><b>       </b><i>Address</i>      </dt>
+<dd>
+<p>Causes the active timer queue at <i>Address</i> to be displayed. </p>
+</dd>
+<dt><a id="_______ItemType_Address______"></a><a id="_______itemtype_address______"></a><a id="_______ITEMTYPE_ADDRESS______"></a>       <i>ItemType Address</i>      </dt>
+<dd>
+<p>Causes the specified thread pool item to be displayed.  <i>Address</i> specifies the address of the item.  <i>ItemType</i> specifies the type of the item; this can include any of the following possibilities:</p>
+<p></p>
+<dl>
+<dt><a id="obj"></a><a id="OBJ"></a><b>obj</b></dt>
+<dd>
+<p>A generic pool item (such as an IO item) will be displayed.</p>
+</dd>
+<dt><a id="timer"></a><a id="TIMER"></a><b>timer</b></dt>
+<dd>
+<p>A timer item will be displayed.</p>
+</dd>
+<dt><a id="wait"></a><a id="WAIT"></a><b>wait</b></dt>
+<dd>
+<p>A wait item will be displayed.</p>
+</dd>
+<dt><a id="work"></a><a id="WORK"></a><b>work</b></dt>
+<dd>
+<p>A work item will be displayed.</p>
+</dd>
+</dl>
+</dd>
+<dt><a id="_______ThreadType__Address_"></a><a id="_______threadtype__address_"></a><a id="_______THREADTYPE__ADDRESS_"></a>       <i>ThreadType</i> [<i>Address</i>]</dt>
+<dd>
+<p>Causes threads of the specified type to be displayed.  If <i>Address</i> is included and nonzero, then only the thread at this address is displayed.  If <i>Address</i> is 0, all threads matching <i>ThreadType</i> are displayed.  If <i>Address</i> is omitted, only the threads matching <i>ThreadType</i> associated with the current thread are displayed.  <i>ThreadType</i> specifies the type of the thread to be displayed; this can include any of the following possibilities:</p>
+<p></p>
+<dl>
+<dt><a id="waiter"></a><a id="WAITER"></a><b>waiter</b></dt>
+<dd>
+<p>A thread pool waiter thread will be displayed. </p>
+</dd>
+<dt><a id="worker"></a><a id="WORKER"></a><b>worker</b></dt>
+<dd>
+<p>A thread pool worker thread will be displayed. </p>
+</dd>
+</dl>
+</dd>
+<dt><a id="stats__Address_"></a><a id="stats__address_"></a><a id="STATS__ADDRESS_"></a><b>stats</b><b> [</b><i>Address</i><b>]</b></dt>
+<dd>
+<p>Causes the debug statistics of the current thread to be displayed.  <i>Address</i> may be omitted, but if it is specified, it must equal -1 (negative one), to represent the current thread. </p>
+</dd>
+<dt><a id="_______wfac_______Address______"></a><a id="_______wfac_______address______"></a><a id="_______WFAC_______ADDRESS______"></a>       <b>wfac</b><b>       </b><i>Address</i>      </dt>
+<dd>
+<p>
+       (Windows 7 and later only)  Causes the worker factory at <i>Address</i> to be displayed.  The specified <i>Address</i> must be a valid nonzero address. </p>
+</dd>
+<dt><a id="_______wqueue_______Address______"></a><a id="_______wqueue_______address______"></a><a id="_______WQUEUE_______ADDRESS______"></a>       <b>wqueue</b><b>       </b><i>Address</i>      </dt>
+<dd>
+<p>
+       (Windows 7 and later only)  Causes display of a work queue and NUMA node that matche the following: a specified priority, a specified NUMA node, and the pool, at a specified address, to which the NUMA node belongs.  <i>Address</i> specifies the address of the pool. When the <b>wqueue</b> parameter is used, it must be followed by <i>Address</i>, <i>Priority</i>, and <i>Node</i>. </p>
+</dd>
+<dt><a id="_______Priority______"></a><a id="_______priority______"></a><a id="_______PRIORITY______"></a>       <i>Priority</i>      </dt>
+<dd>
+<p>
+       (Windows 7 and later only)  Specifies the priority levels of the work queues to be displayed. <i>Priority</i> can be any of the following values: </p>
+<p></p>
+<dl>
+<dt><a id="0"></a><b>0</b></dt>
+<dd>
+<p>Work queues with high priority are displayed. </p>
+</dd>
+</dl>
+<p></p>
+<dl>
+<dt><a id="1"></a><b>1</b></dt>
+<dd>
+<p>Work queues with normal priority are displayed. </p>
+</dd>
+</dl>
+<p></p>
+<dl>
+<dt><a id="2"></a><b>2</b></dt>
+<dd>
+<p>Work queues with low priority are displayed. </p>
+</dd>
+</dl>
+<p></p>
+<dl>
+<dt><a id="-1"></a><b>-1</b></dt>
+<dd>
+<p>All work queues are displayed.  </p>
+</dd>
+</dl>
+</dd>
+<dt><a id="_______Node______"></a><a id="_______node______"></a><a id="_______NODE______"></a>       <i>Node</i>      </dt>
+<dd>
+<p>
+       (Windows 7 and later only)  Specifies a NUMA node belonging to the pool specified by <i>Address</i>. If <i>Node</i> is -1 (negative one), all NUMA nodes are displayed. </p>
+</dd>
+<dt><a id="_______Flags______"></a><a id="_______flags______"></a><a id="_______FLAGS______"></a>       <i>Flags</i>      </dt>
+<dd>
+<p>Specifies what the display should contain. This can be a sum of any of the following bit values (the default is 0x0):</p>
+<p></p>
+<dl>
+<dt><a id="Bit_0__0x1_"></a><a id="bit_0__0x1_"></a><a id="BIT_0__0X1_"></a>Bit 0 (0x1)</dt>
+<dd>
+<p>Causes the display to be single-line output.  This bit value has no effect on the output when an <i>ItemType</i> is displayed.</p>
+</dd>
+<dt><a id="Bit_1__0x2_"></a><a id="bit_1__0x2_"></a><a id="BIT_1__0X2_"></a>Bit 1 (0x2)</dt>
+<dd>
+<p>Causes the display to include member information.</p>
+</dd>
+<dt><a id="Bit_2__0x4_"></a><a id="bit_2__0x4_"></a><a id="BIT_2__0X4_"></a>Bit 2 (0x4)</dt>
+<dd>
+<p>This flag is relevant only when the <b>pool</b> option is used.  In Windows XP, Windows Server 2003, Windows Vista, and Windows Server 2008, this flag causes the display to include the pool work queue.  In Windows 7 and later, this flag causes the display to include all the pool's work queues that are at normal priority, and all NUMA nodes. </p>
+</dd>
+</dl>
+</dd>
+<dt><a id="_______-_______"></a>       <b>-?</b>      </dt>
+<dd>
+<p>Displays a brief help text for this extension in the Debugger Command window.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000</b></p>
+</td>
+<td>
+<p>Unavailable</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Exts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For information about thread pooling, see the Microsoft Windows SDK documentation.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!tp%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

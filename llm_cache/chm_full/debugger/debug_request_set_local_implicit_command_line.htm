@@ -1,0 +1,55 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="DEBUG_REQUEST_SET_LOCAL_IMPLICIT_COMMAND_LINE"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>DEBUG_REQUEST_SET_LOCAL_IMPLICIT_COMMAND_LINE</title>
+
+<meta name="MS-HAID" content="IDebugAdvanced_bf5124cd-b4b0-4e56-865d-93e6a418f8ee.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.debug_request_set_local_implicit_command_line"></a>DEBUG_REQUEST_SET_LOCAL_IMPLICIT_COMMAND_LINE</h1>
+</div>
+<p>The DEBUG_REQUEST_SET_LOCAL_IMPLICIT_COMMAND_LINE <a href="request.htm"><b>Request</b></a> operation sets the <a href="introduction.htm#debugger_engine">debugger engine</a>'s implicit command line.</p>
+<p>
+<p><b>Parameters</b></p>
+</p>
+<dl>
+<dt><a id="InBuffer"></a><a id="inbuffer"></a><a id="INBUFFER"></a><i>InBuffer</i></dt>
+<dd>
+<p>The new implicit command line.  The type of <i>InBuffer</i> is a pointer to a Unicode string (PWSTR).  The pointer is copied but the string it points to is not copied.</p>
+</dd>
+<dt><a id="OutBuffer"></a><a id="outbuffer"></a><a id="OUTBUFFER"></a><i>OutBuffer</i></dt>
+<dd>
+<p>Not used.</p>
+</dd>
+</dl>
+<h2>Remarks</h2>
+<p>The implicit command line can be used as the command line when creating a process.  The process creation options (<a href="debug_create_process_options.htm"><b>DEBUG_CREATE_PROCESS_OPTIONS</b></a>) contain an option for using the implicit command line instead of a supplied command line when creating a process.</p>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="request.htm"><b>Request</b></a></dt>
+<dt><a href="debug_create_process_options.htm"><b>DEBUG_CREATE_PROCESS_OPTIONS</b></a></dt>
+<dt><a href="debug_request_get_additional_create_options.htm"><b>DEBUG_REQUEST_GET_ADDITIONAL_CREATE_OPTIONS</b></a></dt>
+<dt><a href="debug_request_set_additional_create_options.htm"><b>DEBUG_REQUEST_SET_ADDITIONAL_CREATE_OPTIONS</b></a></dt>
+<dt><a href="createprocess2.htm"><b>CreateProcess2</b></a></dt>
+<dt><a href="createprocessandattach2.htm"><b>CreateProcessAndAttach2</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20DEBUG_REQUEST_SET_LOCAL_IMPLICIT_COMMAND_LINE%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

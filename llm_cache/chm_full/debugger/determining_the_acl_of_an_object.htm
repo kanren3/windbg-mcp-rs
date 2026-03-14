@@ -1,0 +1,83 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Determining the ACL of an Object"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Determining the ACL of an Object</title>
+
+<meta name="MS-HAID" content="t01_basic_9890adda-ffa5-4270-b66d-3b055947a030.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.determining_the_acl_of_an_object"></a>Determining the ACL of an Object</h1>
+</div>
+<h2><a id="ddk_determining_the_acl_of_an_object_dbg"></a><a id="DDK_DETERMINING_THE_ACL_OF_AN_OBJECT_DBG"></a></h2>
+<p>You can use the debugger to examine the access control list (ACL) of an object.</p>
+<p></p>
+<p>The following method can be used if you are performing kernel debugging. To use it while you are performing user-mode debugging, you need to redirect control to a kernel debugger. See <a href="controlling_the_user_mode_debugger_from_the_kernel_debugger.htm">Controlling the User-Mode Debugger from the Kernel Debugger</a> for details.</p>
+<p>First, use the <a href="_object.htm"><b>!object</b></a> debugger extension with the name of the object in question:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !object \BaseNamedObjects\AgentToWkssvcEvent
+Object: ffbb8a98  Type: (80e30e70) Event
+    ObjectHeader: ffbb8a80
+    HandleCount: 2  PointerCount: 3
+    Directory Object: e14824a0  Name: AgentToWkssvcEvent</code></pre>
+<p>This shows that the object header has address 0xFFBB8A80. Use the <a href="dt__display_type_.htm"><b>dt (Display Type)</b></a> command with this address and the <b>nt!_OBJECT_HEADER</b> structure name:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; dt nt!_OBJECT_HEADER ffbb8a80
+   +0x000 PointerCount     : 3
+   +0x004 HandleCount      : 2
+   +0x004 NextToFree       : 0x00000002
+ +0x008 Type             : 0x80e30e70
+   +0x00c NameInfoOffset   : 0x10 ''
+ +0x00d HandleInfoOffset : 0 ''
+   +0x00e QuotaInfoOffset  : 0 ''
+   +0x00f Flags            : 0x20 ' '
+   +0x010 ObjectCreateInfo : 0x8016b460
+   +0x010 QuotaBlockCharged : 0x8016b460
+   +0x014 SecurityDescriptor : 0xe11f08b6
+   +0x018 Body             : _QUAD</code></pre>
+<p>The security descriptor pointer value is shown as 0xE11F08B6. The lowest 3 bits of this value represent an offset past the beginning of this structure, so you should ignore them. In other words, the SECURITY_DESCRIPTOR structure actually begins at 0xE11F08B6 &amp; ~0x7. Use the <a href="_sd.htm"><b>!sd</b></a> extension on this address:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !sd e11f08b0
+-&gt;Revision: 0x1
+-&gt;Sbz1    : 0x0
+-&gt;Control : 0x8004
+            SE_DACL_PRESENT
+ SE_SELF_RELATIVE
+-&gt;Owner   : S-1-5-32-544
+-&gt;Group   : S-1-5-18
+-&gt;Dacl    : 
+-&gt;Dacl    : -&gt;AclRevision: 0x2
+-&gt;Dacl    : -&gt;Sbz1       : 0x0
+-&gt;Dacl    : -&gt;AclSize    : 0x44
+-&gt;Dacl    : -&gt;AceCount   : 0x2
+-&gt;Dacl    : -&gt;Sbz2       : 0x0
+-&gt;Dacl    : -&gt;Ace[0]: -&gt;AceType: ACCESS_ALLOWED_ACE_TYPE
+-&gt;Dacl    : -&gt;Ace[0]: -&gt;AceFlags: 0x0
+-&gt;Dacl    : -&gt;Ace[0]: -&gt;AceSize: 0x14
+-&gt;Dacl    : -&gt;Ace[0]: -&gt;Mask : 0x001f0003
+-&gt;Dacl    : -&gt;Ace[0]: -&gt;SID: S-1-5-18
+
+-&gt;Dacl    : -&gt;Ace[1]: -&gt;AceType: ACCESS_ALLOWED_ACE_TYPE
+-&gt;Dacl    : -&gt;Ace[1]: -&gt;AceFlags: 0x0
+-&gt;Dacl    : -&gt;Ace[1]: -&gt;AceSize: 0x18
+-&gt;Dacl    : -&gt;Ace[1]: -&gt;Mask : 0x00120001
+-&gt;Dacl    : -&gt;Ace[1]: -&gt;SID: S-1-5-32-544
+
+-&gt;Sacl    :  is NULL</code></pre>
+<p>This displays the security information for this object.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Determining the ACL of an Object%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

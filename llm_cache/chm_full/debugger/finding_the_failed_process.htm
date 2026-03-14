@@ -1,0 +1,168 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Finding the Failed Process"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Finding the Failed Process</title>
+
+<meta name="MS-HAID" content="t13_advanced_27379023-e6dc-46ee-a2b5-2d8783e2782d.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.finding_the_failed_process"></a>Finding the Failed Process</h1>
+</div>
+<h2><a id="ddk_finding_the_failed_process_dbg"></a><a id="DDK_FINDING_THE_FAILED_PROCESS_DBG"></a></h2>
+<p>Before finding the failed process, make sure that you are in the context of the accepting processor. To determine the accepting processor, use the <a href="_pcr.htm"><b>!pcr</b></a> extension on each processor and looking for the processor for which an exception handler has been loaded. The exception handler of the accepting processor has an address other than 0xFFFFFFFF. </p>
+<p>For example, because the address of <b>NtTib.ExceptionList</b> on this processor, is 0xFFFFFFFF, this is not the processor with the failed process:</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !pcr 
+PCR Processor 0 @ffdff000
+ NtTib.ExceptionList: ffffffff
+            NtTib.StackBase: 80470650
+           NtTib.StackLimit: 8046d860
+         NtTib.SubSystemTib: 00000000
+              NtTib.Version: 00000000
+          NtTib.UserPointer: 00000000
+              NtTib.SelfTib: 00000000
+
+                    SelfPcr: ffdff000
+                       Prcb: ffdff120
+                       Irql: 00000000
+                        IRR: 00000000
+                        IDR: ffffffff
+              InterruptMode: 00000000
+                        IDT: 80036400
+                        GDT: 80036000
+                        TSS: 80257000
+
+              CurrentThread: 8046c610
+                 NextThread: 00000000
+                 IdleThread: 8046c610
+
+                  DpcQueue: </code></pre>
+<p>However, the results for Processor 1 are quite different. In this case, the value of <b>NtTib.ExceptionList</b> is <b>f0823cc0</b>, not 0xFFFFFFFF, indicating that this is the processor on which the exception occurred.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; ~1 
+1: kd&gt; !pcr
+PCR Processor 1 @81497000
+ NtTib.ExceptionList: f0823cc0
+            NtTib.StackBase: f0823df0
+           NtTib.StackLimit: f0821000
+         NtTib.SubSystemTib: 00000000
+              NtTib.Version: 00000000
+          NtTib.UserPointer: 00000000
+              NtTib.SelfTib: 00000000
+
+                    SelfPcr: 81497000
+                       Prcb: 81497120
+                       Irql: 00000000
+ IRR: 00000000
+                        IDR: ffffffff
+              InterruptMode: 00000000
+                        IDT: 8149b0e8
+ GDT: 8149b908
+                        TSS: 81498000
+
+              CurrentThread: 81496d28
+                 NextThread: 00000000
+                 IdleThread: 81496d28
+
+                  DpcQueue: </code></pre>
+<p>When you are in the correct processor context, the <a href="_process.htm"><b>!process</b></a> extension displays the currently running process.</p>
+<p>The most interesting parts of the process dump are: </p>
+<ul>
+<li>
+<p>The times (a high value indicates that process might be the culprit). </p>
+</li>
+<li>
+<p>The handle count (this is the number in parentheses after <b>ObjectTable</b> in the first entry).</p>
+</li>
+<li>
+<p>The thread status (many processes have multiple threads). If the current process is <i>Idle</i>, it is likely that either the machine is truly idle or it hung due to some unusual problem.</p>
+</li>
+</ul>
+<p>Although using the <b>!process 0 7</b> extension is the best way to find the problem on a hung system, it is sometimes too much information to filter. Instead, use a <b>!process 0 0</b> and then a <b>!process</b> on the process handle for CSRSS and any other suspicious processes. </p>
+<p>When using a <b>!process 0 7</b>, many of the threads might be marked "kernel stack not resident" because those stacks are paged out. If those pages are still in the cache that is in transition, you can get more information by using a <b>.cache decodeptes</b> before <b>!process 0 7</b>:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; .cache decodeptes 
+kd&gt; !process 0 7 </code></pre>
+<p>If you can identify the failing process, use <b>!process </b><i>&lt;process&gt;</i><b> 7</b> to show the kernel stacks for each thread in the process. This output can identify the problem in kernel mode and reveal what the suspect process is calling.</p>
+<p>In addition to <b>!process</b>, the following extensions can help to determine the cause of an unresponsive computer:</p>
+<table>
+<tr>
+<th>Extension</th>
+<th>Effect</th>
+</tr>
+<tr>
+<td>
+<p><a href="_ready.htm"><b>!ready</b></a></p>
+</td>
+<td>
+<p>Identifies the threads that are ready to run, in order of priority.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="_locks___kdext__locks_.htm"><b>!kdext*.locks</b></a></p>
+</td>
+<td>
+<p>Identifies any held resource locks, in case there is a deadlock with retail time outs.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="_vm.htm"><b>!vm</b></a></p>
+</td>
+<td>
+<p>Checks the virtual memory usage.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="_poolused.htm"><b>!poolused</b></a></p>
+</td>
+<td>
+<p>Determines whether one type of pool allocation is disproportionately large (pool tagging required).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="_memusage.htm"><b>!memusage</b></a></p>
+</td>
+<td>
+<p>Checks the physical memory status.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="_heap.htm"><b>!heap</b></a></p>
+</td>
+<td>
+<p>Checks the validity of the heap.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="_irpfind.htm"><b>!irpfind</b></a></p>
+</td>
+<td>
+<p>Searches nonpaged pool for active IRPs.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>If the information provided does not indicate an unusual condition, try setting a breakpoint at <b>ntoskrnl!KiSwapThread</b> to determine whether the processor is stuck in one process or if it is still scheduling other processes. If it is not stuck, set breakpoints in common functions, such as <b>NtReadFile</b>, to determine whether the computer is stuck in a specific code path.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Finding the Failed Process%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

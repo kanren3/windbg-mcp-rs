@@ -1,0 +1,197 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The GetDebuggeeType2 method describes the nature of the current target."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IDebugControl7::GetDebuggeeType2 method</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.idebugcontrol7_getdebuggeetype2"></a>IDebugControl7::GetDebuggeeType2 method</h1>
+</div>
+<p>The GetDebuggeeType2 method describes the nature of the current target. </p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>void GetDebuggeeType2(
+  [in]  ULONG  Flags,
+  [out] PULONG Class,
+  [out] PULONG Qualifier
+);</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Parameters</h2>
+<dl>
+<dt><i>Flags</i> [in]</dt>
+<dd>
+<p>Takes a single flag, DEBUG_EXEC_FLAGS_NONBLOCK, that indicates whether the function GetDebuggeeType2 should own the engine critical section object (g_EngineLock) before finding the debuggee type.
+
+</p>
+<p>If the Flag is present, then the function  will try to own the critical section. If that fails, it  will continue without blocking the caller thread.
+</p>
+<p>If the flag is not passed in, then the function will wait for the engine critical section to become available before continuing.</p>
+</dd>
+<dt><i>Class</i> [out]</dt>
+<dd>
+<p>Receives the class of the current target.  It will be set to one of the values in the following table.</p>
+<table>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>DEBUG_CLASS_UNINITIALIZED</p>
+</td>
+<td>
+<p>There is no current target.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_CLASS_KERNEL</p>
+</td>
+<td>
+<p>The current target is a kernel-mode target.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_CLASS_USER_WINDOWS</p>
+</td>
+<td>
+<p>The current target is a user-mode target.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+</dd>
+<dt><i>Qualifier</i> [out]</dt>
+<dd>
+<p>Provides more details about the type of the target.  Its interpretation depends on the value of <i>Class</i>.  When class is DEBUG_CLASS_UNINITIALIZED, <i>Qualifier</i> returns zero.  The following values are applicable for kernel-mode targets.</p>
+<table>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>DEBUG_KERNEL_CONNECTION</p>
+</td>
+<td>
+<p>The current target is a live kernel being debugged in the standard way (using a COM port, 1394 bus, or named pipe).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_KERNEL_LOCAL</p>
+</td>
+<td>
+<p>The current target is the local kernel.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_KERNEL_EXDI_DRIVER</p>
+</td>
+<td>
+<p>The current target is a live kernel connected using eXDI drivers.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_KERNEL_SMALL_DUMP</p>
+</td>
+<td>
+<p>The current target is a kernel-mode Small Memory Dump file.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_KERNEL_DUMP</p>
+</td>
+<td>
+<p>The current target is a kernel-mode Kernel Memory Dump file.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_KERNEL_FULL_DUMP</p>
+</td>
+<td>
+<p>The current target is a kernel-mode Complete Memory Dump file.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>The following values are applicable for user-mode targets.</p>
+<table>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>DEBUG_USER_WINDOWS_PROCESS</p>
+</td>
+<td>
+<p>The current target is a user-mode process on the same computer as the <a href="introduction.htm#debugger_engine">debugger engine</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_USER_WINDOWS_PROCESS_SERVER</p>
+</td>
+<td>
+<p>The current target is a user-mode process connected using a process server.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_USER_WINDOWS_SMALL_DUMP</p>
+</td>
+<td>
+<p>The current target is a user-mode Minidump file.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_USER_WINDOWS_DUMP</p>
+</td>
+<td>
+<p>The current target is a Full User-Mode Dump file.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+</dd>
+</dl>
+<h2>Return value</h2>
+<p>This method does not return a value.</p>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="idebugcontrol7.htm"><b>IDebugControl7</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IDebugControl7::GetDebuggeeType2 method%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

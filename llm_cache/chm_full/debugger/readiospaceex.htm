@@ -1,0 +1,105 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The ReadIoSpaceEx function is an extended version of ReadIoSpace."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>ReadIoSpaceEx function</title>
+
+<meta name="MS-HAID" content="WdbgExts_Ref_96fa3635-35d1-4d58-835a-96754480170a.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.readiospaceex"></a>ReadIoSpaceEx function</h1>
+</div>
+<p>The <b>ReadIoSpaceEx</b> function is an extended version of <a href="readiospace.htm"><b>ReadIoSpace</b></a>. It reads not only the system I/O locations, but also I/O locations on a bus. <b>ReadIoSpace</b> works like <b>ReadIoSpaceEx</b>, except that it defaults <i>interfacetype</i> to ISA, <i>busnumber</i> to zero, and <i>addressspace</i> to 1.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>__inline VOID ReadIoSpaceEx(
+   ULONG  address,
+   PULONG data,
+   PULONG size,
+   ULONG  interfacetype,
+   ULONG  busnumber,
+   ULONG  addressspace
+);</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Parameters</h2>
+<dl>
+<dt><i>address</i> </dt>
+<dd>
+<p>Specifies the I/O address to read from.</p>
+</dd>
+<dt><i>data</i> </dt>
+<dd>
+<p>Specifies the address of a variable to hold the data read. This must be at least the number of bytes contained in <i>size</i>.</p>
+</dd>
+<dt><i>size</i> </dt>
+<dd>
+<p>Specifies the address of a variable that contains the number of bytes to read. <i>Size</i> must be 1, 2, or 4. After the data is read, <i>size</i> will contain the number of bytes actually read.</p>
+</dd>
+<dt><i>interfacetype</i> </dt>
+<dd>
+<p>Specifies the type of interface on which the extended I/O space exists. Possible values include ISA, EISA, and MCA. For more information, see ntddk.h, which is available as part of Windows Driver Kit.</p>
+</dd>
+<dt><i>busnumber</i> </dt>
+<dd>
+<p>Specifies the number of the bus on which the extended I/O space exists. This is typically zero, unless there is more than one bus of a given type.</p>
+</dd>
+<dt><i>addressspace</i> </dt>
+<dd>
+<p>This is typically 1.</p>
+</dd>
+</dl>
+<h2>Return value</h2>
+<p>None</p>
+<h2>Remarks</h2>
+<p>If you are writing 64-bit code, you should use <a href="readiospaceex64.htm"><b>ReadIoSpaceEx64</b></a> instead. See <a href="32_bit_pointers_and_64_bit_pointers.htm">32-Bit Pointers and 64-Bit Pointers</a> for details.</p>
+<p>If you are writing a WdbgExts extension, include <b>wdbgexts.h</b>. If you are writing a DbgEng extension that calls this function, include <b>wdbgexts.h</b> before <b>dbgeng.h</b> (see <a href="writing_dbgeng_extension_code.htm">Writing DbgEng Extension Code</a> for details).
+</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Target platform</p>
+</th>
+<td width="70%">
+<dl>
+<dt></dt>
+</dl>
+</td>
+</tr>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Wdbgexts.h (include Wdbgexts.h, Wdbgexts.h, or Dbgeng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20ReadIoSpaceEx function%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

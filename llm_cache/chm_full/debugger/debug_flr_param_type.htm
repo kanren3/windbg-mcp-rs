@@ -1,0 +1,85 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The values of DEBUG_FLR_PARAM_TYPE enumeration are tags that indicate the kind of information that is stored in failure analysis entry."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>DEBUG_FLR_PARAM_TYPE enumeration</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.debug_flr_param_type"></a>DEBUG_FLR_PARAM_TYPE enumeration</h1>
+</div>
+<p>The values of <b>DEBUG_FLR_PARAM_TYPE</b> enumeration are tags that indicate the kind of information that is stored in <a href="failure_analysis_entries.htm">failure analysis entry</a>.</p>
+<p>The <b>DEBUG_FLR_PARAM_TYPE</b> enumeration is also called the <a href="fa_tag.htm"><b>FA_TAG</b></a> enumeration.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>typedef enum _DEBUG_FLR_PARAM_TYPE { 
+  DEBUG_FLR_INVALID        = 0,
+  DEBUG_FLR_RESERVED,
+  DEBUG_FLR_DRIVER_OBJECT,
+  ...,
+  DEBUG_FLR_MASK_ALL       = 0xFFFFFFFF
+} DEBUG_FLR_PARAM_TYPE;</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Constants</h2>
+<dl>
+<dt><a id="DEBUG_FLR_INVALID"></a><a id="debug_flr_invalid"></a><b>DEBUG_FLR_INVALID</b></dt>
+<dd></dd>
+<dt><a id="DEBUG_FLR_RESERVED"></a><a id="debug_flr_reserved"></a><b>DEBUG_FLR_RESERVED</b></dt>
+<dd></dd>
+<dt><a id="DEBUG_FLR_DRIVER_OBJECT"></a><a id="debug_flr_driver_object"></a><b>DEBUG_FLR_DRIVER_OBJECT</b></dt>
+<dd></dd>
+<dt><a id="..."></a><b>...</b></dt>
+<dd></dd>
+<dt><a id="DEBUG_FLR_MASK_ALL"></a><a id="debug_flr_mask_all"></a><b>DEBUG_FLR_MASK_ALL</b></dt>
+<dd></dd>
+</dl>
+<h2>Remarks</h2>
+<p>There are several hundred tags in the <b>DEBUG_FLR_PARAM_TYPE</b> enumeration. You can see all the tags in the extsfns.h header file, which in the Debugging Tools for Windows package.</p>
+<p>The tags are grouped by categories, with the first entry of a new category being assigned an explicit value.  For example, the tags that are used for structured data begin with DEBUG_FLR_STACK = 0x200000.</p>
+<p>For more information about tags, see <a href="writing_an_analysis_extension_to_extend__analyze.htm#failure_analysis_entries_tags_and_data_types">Failure Analysis Entries, Tags, and Data Types</a></p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Extsfns.h</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="writing_an_analysis_extension_to_extend__analyze.htm">Writing an Analysis Extension Plug-in to Extend !analyze</a></dt>
+<dt><a href="failure_analysis_entries.htm">Failure Analysis Entries</a></dt>
+<dt><a href="fa_tag.htm"><b>FA_TAG enumeration</b></a></dt>
+<dt><a href="idebugfailureanalysis2.htm"><b>IDebugFailureAnalysis2</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20DEBUG_FLR_PARAM_TYPE enumeration%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

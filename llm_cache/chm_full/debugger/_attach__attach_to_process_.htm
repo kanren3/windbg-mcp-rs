@@ -1,0 +1,111 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .attach command attaches to a new target application."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.attach (Attach to Process)</title>
+
+<meta name="MS-HAID" content="r19_metacmds_A_8c6d47be-d1e0-4d39-b0cd-14ac56c87de5.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._attach__attach_to_process_"></a>.attach (Attach to Process)</h1>
+</div>
+<p>The <b>.attach</b> command attaches to a new target application.</p>
+<pre class="syntax"><b>.attach </b>[<b>-premote</b> <i>RemoteOptions</i>]<b> </b><i>AttachOptions</i><b> </b><i>PID</i></pre>
+<h2><a id="ddk_meta_attach_to_process_dbg"></a><a id="DDK_META_ATTACH_TO_PROCESS_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______RemoteOptions______"></a><a id="_______remoteoptions______"></a><a id="_______REMOTEOPTIONS______"></a>       <i>RemoteOptions</i>      </dt>
+<dd>
+<p>Specifies a process server to attach to. The options are the same as those for the command line <b>-premote</b> option. See <a href="activating_a_smart_client.htm"><b>Activating a Smart Client</b></a> for syntax details.</p>
+</dd>
+<dt><a id="_______AttachOptions______"></a><a id="_______attachoptions______"></a><a id="_______ATTACHOPTIONS______"></a>       <i>AttachOptions</i>      </dt>
+<dd>
+<p>Specifies how the attach is to be done. This can include any of the following options:</p>
+<p></p>
+<dl>
+<dt><a id="-b"></a><a id="-B"></a><b>-b</b></dt>
+<dd>
+<p>(Windows XP and later)  Prevents the debugger from requesting an initial break-in when attaching to a target process. This can be useful if the application is already suspended, or if you want to avoid creating a break-in thread in the target.</p>
+</dd>
+<dt><a id="-e"></a><a id="-E"></a><b>-e</b></dt>
+<dd>
+<p>(Windows XP and later)  Allows the debugger to attach to a process that is already being debugged. See <a href="reattaching_to_the_target_application.htm">Re-attaching to the Target Application</a> for details.</p>
+</dd>
+<dt><a id="-k"></a><a id="-K"></a><b>-k</b></dt>
+<dd>
+<p>(Windows XP and later)  Begins a local kernel debugging session.  See <a href="performing_local_kernel_debugging.htm">Performing Local Kernel Debugging</a> for details.</p>
+</dd>
+<dt><a id="-f"></a><a id="-F"></a><b>-f</b></dt>
+<dd>
+<p>Freezes all threads in all target applications, except in the new target being attached to. These threads will remain frozen until an exception occurs in the newly-attached process. Note that an initial breakpoint qualifies as an exception. Individual threads can be unfrozen by using the <a href="_u__unfreeze_thread_.htm"><b>~u (Unfreeze Thread)</b></a> command.</p>
+</dd>
+<dt><a id="-r"></a><a id="-R"></a><b>-r</b></dt>
+<dd>
+<p>(Windows XP and later)</p>
+<p>  Causes the debugger to start the target process running when it attaches to it. This can be useful if the application is already suspended and you want it to resume execution. </p>
+</dd>
+<dt><a id="-v"></a><a id="-V"></a><b>-v</b></dt>
+<dd>
+<p>Causes the specified process to be debugged noninvasively. </p>
+</dd>
+</dl>
+</dd>
+<dt><a id="_______PID______"></a><a id="_______pid______"></a>       <i>PID</i>      </dt>
+<dd>
+<p>Specifies the process ID of the new target application.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>user mode only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>live debugging only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>all </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>This command can be used when CDB is dormant, or if it is already debugging one or more processes. It cannot be used when WinDbg is dormant.</p>
+<p>If this command is successful, the debugger will attach to the specified process the next time the debugger issues an execution command. If this command is used several times in a row, execution will have to be requested as many times as this command was used.</p>
+<p>Because execution is not permitted during noninvasive debugging, the debugger is not able to noninvasively debug more than one process at a time. This also means that using the <b>.attach -v</b> command may render an already-existing invasive debugging session less useful.</p>
+<p>Multiple target processes will always be executed together, unless some of their threads are frozen or suspended.</p>
+<p>If you wish to attach to a new process and freeze all your existing targets, use the <b>-f</b> option. For example, you might be debugging a crash in a client application and want to attach to the server process without letting the client application continue running.</p>
+<p>If the <b>-premote</b> option is used, the new process will be part of a new system. For details, see <a href="debugging_multiple_targets.htm">Debugging Multiple Targets</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.attach (Attach to Process)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

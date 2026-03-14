@@ -1,0 +1,315 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Remote Tool Examples"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Remote Tool Examples</title>
+
+<meta name="MS-HAID" content="Remote_e07461cc-da34-4f2f-969c-c7f886759303.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.remote_tool_examples"></a>Remote Tool Examples</h1>
+</div>
+<h2><a id="ddk_remote_tool_examples_dtools"></a><a id="DDK_REMOTE_TOOL_EXAMPLES_DTOOLS"></a></h2>
+<p>The examples in this section demonstrate the use of the Remote tool and show sample input and output.</p>
+<h3><a id="basic_server_command"></a><a id="BASIC_SERVER_COMMAND"></a>Basic Server Command</h3>
+<p>The following command starts a remote session on the computer.</p>
+<p>The command uses the <b>/s</b> parameter to indicate a server-side command. It uses the command, <b>cmd</b>, to start the Windows command shell (Cmd.exe), and names the session <b>test1</b>.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>remote /s cmd test1</pre>
+</td>
+</tr>
+</table></span></div>
+<p>In response, the Remote tool starts the session and displays the command that clients would use to connect to the session.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>**************************************
+***********     REMOTE    ************
+***********     SERVER    ************
+**************************************
+To Connect: Remote /C SERVER06 "test1"
+
+Microsoft Windows XP [Version 5.1.2600]
+(C) Copyright 1985-2001 Microsoft Corp.</pre>
+</td>
+</tr>
+</table></span></div>
+<h3><a id="basic_client_command"></a><a id="BASIC_CLIENT_COMMAND"></a>Basic Client Command</h3>
+<p>The following command connects to a remote session on the Server01 computer. The command uses the <b>/c</b> parameter to indicate a client-side command. It specifies the name of the server computer, <b>Server01</b>, and the name of the session on that computer, <b>test1</b>.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>remote /c server01 test1</pre>
+</td>
+</tr>
+</table></span></div>
+<p>In response, the Remote tool displays a message reporting that the client computer is connected to the session on the server computer. The message displays the name of the server computer and local user (<b>Server04 user1</b>).</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>**************************************
+***********     REMOTE    ************
+***********     CLIENT    ************
+**************************************
+Connected...
+
+Microsoft Windows XP [Version 5.1.2600]
+(C) Copyright 1985-2001 Microsoft Corp.
+
+C:\Program Files\Debugging Tools for Windows&gt;
+**Remote: Connected to SERVER04 user1 [Tue 9:39 AM]</pre>
+</td>
+</tr>
+</table></span></div>
+<p>After the client connects to the server, the commands typed at the command prompt on the client and server computers appear on both displays.. </p>
+<p>For example, if you type <b>dir</b> at the command prompt of the client computer, the directory display appears in the Command Prompt window on both the client and server computers.</p>
+<h3><a id="using_server_options"></a><a id="USING_SERVER_OPTIONS"></a>Using Server Options</h3>
+<p>The following server-side command starts a remote session with the NTSD debugger. </p>
+<p>The command uses the <b>/s</b> parameter to indicate a server-side command. The next parameter, <b>"ntsd -d -v"</b>, is the console command that starts the debugger, along with the debugger options. Because the console command includes spaces, it is enclosed in quotation marks. The command includes a name for the session, <b>debugit</b>. </p>
+<p>The command uses the <b>/u</b> parameter to permit only administrators of the computer and a particular user, User03 in Domain01, to connect to the session. It uses the <b>/f</b> and <b>/b</b> options to specify black text (foreground) on a white background. </p>
+<p>Finally, the command uses the <b>/-v</b> parameter to make the session invisible to user queries. Debugger sessions are visible by default.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>remote /s "ntsd -d -v" DebugIt /u Administrators /u Domain01\User03 
+/f black /b white /-v</pre>
+</td>
+</tr>
+</table></span></div>
+<p>In response, the Remote tool creates a session named DebugIt and starts NTSD with the specified parameters. The message indicates that only the specified users have permission to connect. It also changes the command window to the specified colors.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>**************************************
+***********     REMOTE    ************
+***********     SERVER    ************
+**************************************
+
+Protected Server!  Only the following users or groups can connect:
+    Administrators
+    Domain01\User03
+To Connect: Remote /C SERVER06 "debugit"
+
+Microsoft Windows XP [Version 5.1.2600]
+(C) Copyright 1985-2001 Microsoft Corp.</pre>
+</td>
+</tr>
+</table></span></div>
+<h3><a id="using_client_options"></a><a id="USING_CLIENT_OPTIONS"></a>Using Client Options</h3>
+<p>The following command connects to the remote session with the NTSD debugger that was started in the previous example. </p>
+<p>The command uses the <b>/c</b> parameter to indicate a client-side command. It specifies the name of the server computer, <b>server06</b>, and the name of the remote session, <b>debugit</b>. </p>
+<p>The command also includes the <b>/k</b> parameter to specify the location of a keyword color file.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>remote /c server06 debugit /k c:\remote_client.txt</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The color file includes the following text:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>Registry
+white, blue
+Token
+red, white</pre>
+</td>
+</tr>
+</table></span></div>
+<p>This text instructs the Remote tool to display lines of output with the word "registry" (not case sensitive) in white text on a blue background and to display lines of output with the word "token" in red text on a white background.</p>
+<p>In response, the Remote tool connects the client to the server session and displays the following message.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>**************************************
+***********     REMOTE    ************
+***********     CLIENT    ************
+**************************************
+Connected...
+
+Microsoft Windows XP [Version 5.1.2600]
+(C) Copyright 1985-2001 Microsoft Corp.</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The client can now send commands to the NTSD debugger on the server computer. The output from the command appears on both the client and server computers. </p>
+<p>Lines of output with the word "registry" are displayed on the client computer in white text on a blue background, and lines of output with the word "kernel" in red text on a white background.</p>
+<h3><a id="querying_a_session"></a><a id="QUERYING_A_SESSION"></a>Querying a Session</h3>
+<p>The Remote tool includes a query parameter (<b>/q</b>) that displays a list of remote sessions on a particular computer. The display includes only visible sessions (debugger sessions started without the <b>/-v</b> parameter and non-debugger sessions started with the <b>/v</b> parameter).</p>
+<p>You can query for sessions from the server or client computers. You must specify the computer name, even when querying for sessions on the local computer.</p>
+<p>The following command queries for sessions on the local computer, <b>Server04</b>.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>remote /q Server04</pre>
+</td>
+</tr>
+</table></span></div>
+<p>In response, the Remote tool reports that there are no remote sessions running on the local computer.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>Querying server \\Server04
+No Remote servers running on \\Server04</pre>
+</td>
+</tr>
+</table></span></div>
+<p>In contrast, in response to a query about sessions on a different computer, <b>Server06</b>, the Remote tool lists the sessions running on that computer.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>Querying server \\Server06
+
+Visible sessions on server Server06:
+
+ntsd                            [Remote /C SERVER06 "debug"] visible
+cmd                             [Remote /C SERVER06 "test"] visible</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The display lists the visible sessions, the console programs running on those sessions (NTSD and the Command Prompt window), and the command that connects to the session. The session name appears in the command syntax in quotation marks.</p>
+<p>The display does not show the permissions established for these sessions, if any. Therefore, the display might include sessions that you do not have permission to join.</p>
+<h3><a id="using_the_session_commands"></a><a id="USING_THE_SESSION_COMMANDS"></a>Using the Session Commands</h3>
+<p>You can use the remote session commands at any time during a remote session.</p>
+<p>The following command sends a message to all computers connected to the session. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>@M I think I found the problem.</pre>
+</td>
+</tr>
+</table></span></div>
+<p>As a result, the message appears in the Command Prompt windows of all computers in the session. The message includes the computer name and the day and time of the message.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>@m I think I found the problem.     [SERVER01       Wed 11:53 AM]</pre>
+</td>
+</tr>
+</table></span></div>
+<p>When the message is sent from the server computer, "Local" appears in the label instead of the computer name.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>@m I think I found the problem.     [Local       Wed 11:52 AM]</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The following command generates a pop-up message that appears on the server computer. On all client computers in the session, it writes a message to the Command Prompt window.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>@P Did you see that?</pre>
+</td>
+</tr>
+</table></span></div>
+<p>On client computers, the pop-up message appears in the command window.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>From SERVER02  [Wed 11:58 AM]
+
+ Did you see that?</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The time that appears in the message label is always the time on the server computer, even if the client computer that sent the message is in a different time zone.</p>
+<h3><a id="ending_a_remote_session"></a><a id="ENDING_A_REMOTE_SESSION"></a>Ending a Remote Session</h3>
+<p>The following examples demonstrate how to use the remote session commands to disconnect a client computer from a session and to end a remote session. Only the server computer that started the remote session can end it.</p>
+<p>To disconnect a client computer from a remote session, on the client computer, type <b>@q</b>.</p>
+<p>In response, the following message appears on the client computer that disconnected.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>*** SESSION OVER ***</pre>
+</td>
+</tr>
+</table></span></div>
+<p>On all other computers in the session, the Remote tool posts a message with the name of the computer and user who disconnected, and the day and time of the disconnect.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>**Remote:  Disconnected from SERVER04 User01  [Wed 12:01 PM]</pre>
+</td>
+</tr>
+</table></span></div>
+<p>To end a remote session, on the server computer, type <b>@k</b>. This command automatically disconnects the clients, and then ends the session.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Remote Tool Examples%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

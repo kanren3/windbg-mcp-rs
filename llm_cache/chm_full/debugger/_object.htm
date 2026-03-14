@@ -1,0 +1,167 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !object extension displays information about a system object."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!object</title>
+
+<meta name="MS-HAID" content="r28_exts_kernel_N_ce7c0939-9122-41e1-bffb-27f4e5855af6.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._object"></a>!object</h1>
+</div>
+<p>The <b>!object</b> extension displays information about a system object.</p>
+<pre class="syntax"><b>!object </b><i>Address</i><b> [</b><i>Flags</i><b>]</b> 
+<b>!object </b><i>Path</i>
+<b>!object 0 </b><i>Name</i> 
+<b>!object -p</b>
+<b>!object </b>{<b>-h</b>|<b>-?</b>}</pre>
+<h2><a id="ddk__object_dbg"></a><a id="DDK__OBJECT_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Address______"></a><a id="_______address______"></a><a id="_______ADDRESS______"></a>       <i>Address</i>      </dt>
+<dd>
+<p>If the first argument is a nonzero hexadecimal number, it specifies the hexadecimal address of the system object to be displayed.</p>
+</dd>
+<dt><a id="_______Flags______"></a><a id="_______flags______"></a><a id="_______FLAGS______"></a>       <i>Flags</i>      </dt>
+<dd>
+<p>Specifies the level of detail in the command output.</p>
+<p>Set <i>Flags</i> to a bitwise OR of these values:</p>
+<p></p>
+<dl>
+<dt><a id="0x0"></a><a id="0X0"></a><b>0x0</b></dt>
+<dd>
+<p>Display object type.</p>
+</dd>
+<dt><a id="0x1"></a><a id="0X1"></a><b>0x1</b></dt>
+<dd>
+<p>Display object type, object name, and reference counts.</p>
+</dd>
+<dt><a id="0x8"></a><a id="0X8"></a><b>0x8</b></dt>
+<dd>
+<p>Display the contents of an object directory or the target of a symbolic link. This flag has an effect only if <b>0x1</b> is also set.</p>
+</dd>
+<dt><a id="0x10"></a><a id="0X10"></a><b>0x10</b></dt>
+<dd>
+<p>Display optional object headers.</p>
+</dd>
+<dt><a id="0x20"></a><a id="0X20"></a><b>0x20</b></dt>
+<dd>
+<p>Display the full path to a named object. This flag has an effect only if <b>0x1</b> is also set.</p>
+</dd>
+</dl>
+<p>The  <i>Flags</i> parameter is optional. The default value is 0x9.</p>
+</dd>
+<dt><a id="_______Path______"></a><a id="_______path______"></a><a id="_______PATH______"></a>       <i>Path</i>      </dt>
+<dd>
+<p>If the first argument begins with a backslash (\), <b>!object</b> interprets it as an object path name. When this option is used, the display will be arranged according to the directory structure used by the Object Manager.</p>
+</dd>
+<dt><a id="_______Name______"></a><a id="_______name______"></a><a id="_______NAME______"></a>       <i>Name</i>      </dt>
+<dd>
+<p>If the first argument is zero, the second argument is interpreted as the name of a class of system objects for which to display all instances.</p>
+</dd>
+<dt><a id="_______-p"></a><a id="_______-P"></a><b>       -p</b></dt>
+<dd>
+<p>Display private object name spaces.</p>
+</dd>
+<dt><a id="-h-_"></a><a id="-H-_"></a>{<b>-h</b>|<b>-?</b>}</dt>
+<dd>
+<p>Display help for this command.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<p>Kdexts.dll</p>
+<h3><a id="Examples"></a><a id="examples"></a><a id="EXAMPLES"></a>Examples</h3>
+<p>This example passes the path of the \Device directory to <b>!object</b>. The output lists all objects in the \Device directory.
+    </p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !object \Device
+Object: ffffc00b074166a0  Type: (ffffe0083b768690) Directory
+    ObjectHeader: ffffc00b07416670 (new version)
+    HandleCount: 0  PointerCount: 224
+    Directory Object: ffffc00b074092e0  Name: Device
+
+    Hash Address          Type          Name
+    ---- -------          ----          ----
+     00  ffffe0083e6a61f0 Device        00000044
+         ffffe0083dcc4050 Device        00000030
+         ffffe0083d34f050 Device        NDMP2
+         ffffe0083bdf7060 Device        NTPNP_PCI0002
+         ...
+         ffffe0083b85d060 Device        USBPDO-8
+         ffffe0083d33d050 Device        USBFDO-6
+         ...
+         ffffe0083bdf0060 Device        NTPNP_PCI0001</code></pre>
+<p>Choose one of listed objects, say USBPDO-8. Pass the address of USBPDO-8 (ffffe0083b85d060) to <b>!objec</b>t. Set <i>Flags</i> to 0x0 to get minimal information.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !object ffffe0083b85d060 0x0
+Object: ffffe0083b85d060  Type: (ffffe0083b87df20) Device
+    ObjectHeader: ffffe0083b85d030 (new version)</code></pre>
+<p>Include name and reference count information for the same object by setting <i>Flags</i> to 0x1.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !object ffffe0083b85d060 0x1
+Object: ffffe0083b85d060  Type: (ffffe0083b87df20) Device
+    ObjectHeader: ffffe0083b85d030 (new version)
+    HandleCount: 0  PointerCount: 6
+    Directory Object: ffffc00b074166a0  Name: USBPDO-8</code></pre>
+<p>Get optional header information for the same object by setting <i>Flags</i> to 0x10.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !object ffffe0083b85d060 0x10
+Object: ffffe0083b85d060  Type: (ffffe0083b87df20) Device
+    ObjectHeader: ffffe0083b85d030 (new version)
+Optional Headers: 
+    NameInfo(ffffe0083b85d010)</code></pre>
+<p>The following example calls <b>!object</b> twice for a Directory object. The first time, the contents of the directory are not displayed because the 0x8 flag is not set. The second time, the contents of the directory are displayed because both the 0x8 and 0x1 flags are set (Flags = 0x9).</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !object ffffc00b07481d00 0x1
+Object: ffffc00b07481d00  Type: (ffffe0083b768690) Directory
+    ObjectHeader: ffffc00b07481cd0 (new version)
+    HandleCount: 0  PointerCount: 3
+    Directory Object: ffffc00b07481eb0  Name: Filters
+
+0: kd&gt; !object ffffc00b07481d00 0x9
+Object: ffffc00b07481d00  Type: (ffffe0083b768690) Directory
+    ObjectHeader: ffffc00b07481cd0 (new version)
+    HandleCount: 0  PointerCount: 3
+    Directory Object: ffffc00b07481eb0  Name: Filters
+
+    Hash Address          Type          Name
+    ---- -------          ----          ----
+     19  ffffe0083c5f56e0 Device        FltMgrMsg
+     21  ffffe0083c5f5060 Device        FltMgr</code></pre>
+<p>The following example calls <b>!object</b> twice for a SymbolicLink object. The first time, the target of the symbolic link is not displayed because the 0x8 flag is not set. The second time, the target of the symbolic link is splayed because both the 0x8 and 0x1 flags are set (Flags = 0x9).</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !object ffffc00b07628fb0 0x1
+Object: ffffc00b07628fb0  Type: (ffffe0083b769450) SymbolicLink
+    ObjectHeader: ffffc00b07628f80 (new version)
+    HandleCount: 0  PointerCount: 1
+    Directory Object: ffffc00b074166a0  Name: Ip6
+
+0: kd&gt; !object ffffc00b07628fb0 0x9
+Object: ffffc00b07628fb0  Type: (ffffe0083b769450) SymbolicLink
+    ObjectHeader: ffffc00b07628f80 (new version)
+    HandleCount: 0  PointerCount: 1
+    Directory Object: ffffc00b074166a0  Name: Ip6
+    Target String is '\Device\Tdx'</code></pre>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For information about objects and the object manager, see the Microsoft Windows SDK documentation, the Windows Driver Kit (WDK) documentation, and <i>Microsoft Windows Internals</i>, by Mark Russinovich and David Solomon.</p>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="object_reference_tracing.htm">Object Reference Tracing</a></dt>
+<dt><a href="_obtrace.htm"><b>!obtrace</b></a></dt>
+<dt><a href="_handle.htm"><b>!handle</b></a></dt>
+<dt><a href="determining_the_acl_of_an_object.htm">Determining the ACL of an Object</a></dt>
+<dt><a href="kernel_mode_extensions.htm">Kernel-Mode Extension Commands</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!object%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

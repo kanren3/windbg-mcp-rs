@@ -1,0 +1,85 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !gdikdx.verifier extension displays the status of Driver Verifier during the verification of a graphics driver."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!gdikdx.verifier</title>
+
+<meta name="MS-HAID" content="r33_exts_ACPI_482b405a-48e6-46b0-960e-2afdfe4cbba0.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._gdikdx_verifier"></a>!gdikdx.verifier</h1>
+</div>
+<p>The <b>!gdikdx.verifier</b> extension displays the status of Driver Verifier during the verification of a graphics driver.</p>
+<p></p>
+<pre class="syntax">
+    <b>!gdikdx.verifier </b>[-<i>Flags</i>] 
+</pre>
+<h2><a id="ddk__gdikdx_verifier_dbg"></a><a id="DDK__GDIKDX_VERIFIER_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Flags______"></a><a id="_______flags______"></a><a id="_______FLAGS______"></a>       <i>Flags</i>      </dt>
+<dd>
+<p>Specifies what information will be displayed in the output from this command. Any combination of the following (preceded by a hyphen) is allowed:
+		</p>
+<p></p>
+<dl>
+<dt><a id="d"></a><a id="D"></a><b>d</b></dt>
+<dd>
+<p>Causes the display to include statistics on <b>Memory Pool Tracking</b>. This includes the address, size, and tag of each pool.  
+		</p>
+</dd>
+<dt><a id="h__or___"></a><a id="H__OR___"></a><b>h</b> (or <b>?</b>)</dt>
+<dd>
+<p>Displays some brief Help text for this command in the Debugger Command window.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000
+         </b></p>
+</td>
+<td>
+<p>
+          Gdikdx.dll
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>Unavailable </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For information about Driver Verifier, see the Windows Driver Kit (WDK) documentation.</p>
+<h2>Remarks</h2>
+<p>When verifying drivers that are not graphics drivers, the standard kernel-mode extension <a href="_verifier.htm"><b>!verifier</b></a> should be used instead of <b>!gdikdx.verifier</b>.</p>
+<p>Regardless of which flags are selected, this extension will display the Driver Verifier options that are active. It will also display statistics on the frequency of random failure.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!gdikdx.verifier%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

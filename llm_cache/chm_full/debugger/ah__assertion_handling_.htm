@@ -1,0 +1,100 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The ah command controls the assertion handling status for specific addresses."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>ah (Assertion Handling)</title>
+
+<meta name="MS-HAID" content="r15_cmds_A_274a23d4-4805-4ed5-afb0-a256284f7e84.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.ah__assertion_handling_"></a>ah (Assertion Handling)</h1>
+</div>
+<p>The <b>ah</b> command controls the assertion handling status for specific addresses.</p>
+<pre class="syntax"><b>ahb </b>[<i>Address</i>] 
+<b>ahi </b>[<i>Address</i>] 
+<b>ahd </b>[<i>Address</i>] 
+<b>ahc</b> 
+<b>ah</b> 
+</pre>
+<h2><a id="ddk_cmd_assertion_handling_dbg"></a><a id="DDK_CMD_ASSERTION_HANDLING_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______ahb______"></a><a id="_______AHB______"></a>       <b>ahb</b>      </dt>
+<dd>
+<p>Breaks into the debugger if an assertion fails at the specified address.</p>
+</dd>
+<dt><a id="_______ahi"></a><a id="_______AHI"></a>       <b>ahi</b></dt>
+<dd>
+<p>Ignores an assertion failure at the specified address.</p>
+</dd>
+<dt><a id="_______ahd______"></a><a id="_______AHD______"></a>       <b>ahd</b>      </dt>
+<dd>
+<p>Deletes any assertion-handling information at the specified address. This deletion causes the debugger to return to its default state for that address.</p>
+</dd>
+<dt><a id="_______Address______"></a><a id="_______address______"></a><a id="_______ADDRESS______"></a>       <i>Address</i>      </dt>
+<dd>
+<p>Specifies the address of the instruction whose assertion-handling status is being set. If you omit this parameter, the debugger uses the current program counter.</p>
+</dd>
+<dt><a id="_______ahc"></a><a id="_______AHC"></a>       <b>ahc</b></dt>
+<dd>
+<p>Deletes all assertion-handling information for the current process.</p>
+</dd>
+<dt><a id="_______ah______"></a><a id="_______AH______"></a>       <b>ah</b>      </dt>
+<dd>
+<p>Displays the current assertion-handling settings.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>Live debugging only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about break status and handling status, descriptions of all event codes, a list of the default status for all events, and details about other methods of controlling this status, see <a href="controlling_exceptions_and_events.htm">Controlling Exceptions and Events</a>.</p>
+<h2>Remarks</h2>
+<p>The <b>ah*</b> command controls the assertion handling status for a specific address. The <a href="sx__sxd__sxe__sxi__sxn__sxr__sx___set_exceptions_.htm"><b>sx* asrt</b></a> command controls the global assertion handling status. If you use <b>ah*</b> for a certain address and then an assert occurs there, the debugger responds based on the <b>ah*</b> settings and ignores the <b>sx* asrt</b> settings.</p>
+<p>When the debugger encounters an assertion, the debugger first checks whether handling has been configured for that specific address. If you have not configured the handling, the debugger uses the global setting.</p>
+<p>The <b>ah*</b> command affects only the current process. When the current process ends, all status settings are lost. </p>
+<p>Assertion handling status affects only STATUS_ASSERTION_EXCEPTION exceptions. This handling does not affect the kernel-mode ASSERT routine. </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20ah (Assertion Handling)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,94 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The ExtRemoteTypedList class extends the ExtRemoteList class. The ExtRemoteTypedList class adds type information allowing each item in the list to be represented by an instance of the ExtRemoteTyped class."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>ExtRemoteTypedList class</title>
+
+<meta name="MS-HAID" content="EngExtCpp_Ref_5e1242e6-5704-4b87-85e1-b02a41fc4243.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.extremotetypedlist"></a>ExtRemoteTypedList class</h1>
+</div>
+<p>The <b>ExtRemoteTypedList</b> class extends the <a href="extremotelist.htm"><b>ExtRemoteList</b></a> class.  The <b>ExtRemoteTypedList</b> class adds type information allowing each item in the list to be represented by an instance of the <a href="extremotetyped.htm"><b>ExtRemoteTyped</b></a> class.</p>
+<p>The <b>ExtRemoteTypedList</b> class includes the following constructors and methods:</p>
+<dl>
+<dd>
+<p><a href="extremotetypedlist_extremotetypedlist_extremotedata.htm"><b>ExtRemoteTypedList::ExtRemoteTypedList(ExtRemoteData)</b></a></p>
+</dd>
+<dd>
+<p><a href="extremotetypedlist_extremotetypedlist_ulong64.htm"><b>ExtRemoteTypedList::ExtRemoteTypedList(ULONG64)</b></a></p>
+</dd>
+<dd>
+<p><a href="extremotetypedlist_settypeandlink.htm"><b>SetTypeAndLink</b></a></p>
+</dd>
+<dd>
+<p><a href="extremotetypedlist_gettypednodeptr.htm"><b>GetTypedNodePtr</b></a></p>
+</dd>
+<dd>
+<p><a href="extremotetypedlist_gettypednode.htm"><b>GetTypedNode</b></a></p>
+</dd>
+</dl>
+<pre class="syntax" xml:space="preserve"><code>class ExtRemoteTypedList : public ExtRemoteList
+{
+public:
+    PCSTR  m_Type;
+    ULONG64  m_TypeModBase;
+    ULONG  m_TypeId;
+};</code></pre>
+<p></p>
+<dl>
+<dt><a id="m_Type"></a><a id="m_type"></a><a id="M_TYPE"></a><b>m_Type</b></dt>
+<dd>
+<p>The type name for the list items.  <i>Type</i> can include a module qualifier (for example, <b>mymodule!mytype</b>).  If <b>m_TypeId</b> is not zero, <i>Type</i> is not used.</p>
+</dd>
+<dt><a id="m_TypeModBase"></a><a id="m_typemodbase"></a><a id="M_TYPEMODBASE"></a><b>m_TypeModBase</b></dt>
+<dd>
+<p>The location in the target's memory of the base address of the module that contains the type specified by <b>m_TypeId</b>.  If <b>m_TypeId</b> is zero, <b>m_TypeModBase</b> is not used.</p>
+</dd>
+<dt><a id="m_TypeId"></a><a id="m_typeid"></a><a id="M_TYPEID"></a><b>m_TypeId</b></dt>
+<dd>
+<p>The type ID of the type relative to the module specified by <b>m_TypeModBase</b>.  If <b>m_TypeId</b> is zero, <b>m_Type</b> is used to specify the type of the list items.</p>
+</dd>
+</dl>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Engextcpp.h (include Engextcpp.hpp)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="extremotelist.htm"><b>ExtRemoteList</b></a></dt>
+<dt><a href="extremotetyped.htm"><b>ExtRemoteTyped</b></a></dt>
+<dt><a href="extremotetypedlist_extremotetypedlist_extremotedata.htm"><b>ExtRemoteTypedList::ExtRemoteTypedList(ExtRemoteData)</b></a></dt>
+<dt><a href="extremotetypedlist_extremotetypedlist_ulong64.htm"><b>ExtRemoteTypedList::ExtRemoteTypedList(ULONG64)</b></a></dt>
+<dt><a href="extremotetypedlist_gettypednode.htm"><b>GetTypedNode</b></a></dt>
+<dt><a href="extremotetypedlist_gettypednodeptr.htm"><b>GetTypedNodePtr</b></a></dt>
+<dt><a href="extremotetypedlist_settypeandlink.htm"><b>SetTypeAndLink</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20ExtRemoteTypedList class%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,81 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Use the following commands to record and analyze the heap memory allocations in a running process. This analysis focuses on stack traces."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Analyze a Running Process</title>
+
+<meta name="MS-HAID" content="UMDH_ce82902d-1a62-4d44-b6bc-170f1b842e2f.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.analyze_a_running_process"></a>Analyze a Running Process</h1>
+</div>
+<p>Use the following commands to record and analyze the heap memory allocations in a running process. This analysis focuses on stack traces.</p>
+<pre class="syntax">
+    <b>umdh -p:</b><i>PID </i><b>[-f:</b><i>Log</i><b>F</b><i>ile</i><b>] [-v[:</b><i>MsgFile</i><b>]] | [-g] | [-h]
+</b>
+   </pre>
+<h2><a id="ddk_analyze_a_running_process_dtools"></a><a id="DDK_ANALYZE_A_RUNNING_PROCESS_DTOOLS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______-p_PID______"></a><a id="_______-p_pid______"></a><a id="_______-P_PID______"></a>       <b>-p:</b><i>PID</i>      </dt>
+<dd>
+<p>Specifies the process to analyze. <i>PID </i> is the process ID of the process. This parameter is required. </p>
+<p>To find the PID of a running process, use Task Manager, Tasklist (Windows XP and later operating systems), or <a href="tlist.htm">TList</a>.</p>
+</dd>
+<dt><a id="_______-f_LogFile______"></a><a id="_______-f_logfile______"></a><a id="_______-F_LOGFILE______"></a>       <b>-f:</b><i>LogFile</i>      </dt>
+<dd>
+<p>Saves the log contents in a text file. By default, UMDH writes the log to stdout (command window).</p>
+<p><i>LogFile</i> specifies the path (optional) and name of the file. If you specify an existing file, UMDH overwrites the file.</p>
+<div class="alert"><b>Note</b>    If UMDH was not started in Administrator mode, or attempts to write to "protected" paths, it will be denied access.</div>
+<div> </div>
+</dd>
+<dt><a id="_______-v__MsgFile_"></a><a id="_______-v__msgfile_"></a><a id="_______-V__MSGFILE_"></a>       <b>-v[:</b><i>MsgFile</i><b>]</b></dt>
+<dd>
+<p>Verbose mode. Generates detailed informational and error messages. By default, UMDH writes these messages to stderr.</p>
+<p><i>MsgFile</i> specifies the path (optional) and name of a text file. When you use this variable, UMDH writes the verbose messages to the specified file, instead of to stderr. If you specify an existing file, UMDH overwrites the file.</p>
+</dd>
+<dt><a id="_______-g"></a><a id="_______-G"></a>       <b>-g</b></dt>
+<dd>
+<p>Logs the heap blocks that are not referenced by the process ("garbage collection").</p>
+</dd>
+<dt><a id="_______-h"></a><a id="_______-H"></a>       <b>-h</b></dt>
+<dd>
+<p>Displays help. </p>
+</dd>
+</dl>
+<h3><a id="comments"></a><a id="COMMENTS"></a>Comments</h3>
+<p>On Windows 2000, if UMDH is reporting errors finding the stack trace database, and you have enabled the <b>Create user mode stack trace database</b> option in <a href="gflags.htm">GFlags</a>, you might have a symbol file conflict. To resolve it, copy the DBG and PDB symbol files for the application to the same directory, and try again.</p>
+<h3><a id="sample_usage"></a><a id="SAMPLE_USAGE"></a>Sample Usage</h3>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>umdh -?
+umdh -p:2230
+umdh -p:2230  -f:dump_allocations.txt
+umdh -p:2230 -f:c:\Log1.txt -v:c:\Msg1.txt
+umdh -p:2230 -g -f:garbage.txt</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Analyze a Running Process%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

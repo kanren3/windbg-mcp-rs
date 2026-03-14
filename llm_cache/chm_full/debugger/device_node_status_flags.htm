@@ -1,0 +1,164 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Device Node Status Flags"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Device Node Status Flags</title>
+
+<meta name="MS-HAID" content="t12_drivers_79d0e68e-d9ca-4eaa-9140-318a0836d7b3.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.device_node_status_flags"></a>Device Node Status Flags</h1>
+</div>
+<h2><a id="ddk_device_node_status_flags_dbg"></a><a id="DDK_DEVICE_NODE_STATUS_FLAGS_DBG"></a></h2>
+<p>The Device Node Status flags describe the status of a device.</p>
+<p>The most important flags are:</p>
+<p></p>
+<dl>
+<dt><a id="DNF_MADEUP__0x00000001_"></a><a id="dnf_madeup__0x00000001_"></a><a id="DNF_MADEUP__0X00000001_"></a><b>DNF_MADEUP (0x00000001)</b></dt>
+<dd>
+<p>The device was created and is owned by the PnP Manager. It was not created by a bus driver.</p>
+</dd>
+<dt><a id="DNF_DUPLICATE__0x00000002_"></a><a id="dnf_duplicate__0x00000002_"></a><a id="DNF_DUPLICATE__0X00000002_"></a><b>DNF_DUPLICATE (0x00000002)</b></dt>
+<dd>
+<p>The device node is a duplicate of another enumerated device node.</p>
+</dd>
+<dt><a id="DNF_HAL_NODE__0x00000004_"></a><a id="dnf_hal_node__0x00000004_"></a><a id="DNF_HAL_NODE__0X00000004_"></a><b>DNF_HAL_NODE (0x00000004)</b></dt>
+<dd>
+<p>The device node is the root node created by the hardware abstraction layer (HAL).</p>
+</dd>
+<dt><a id="DNF_REENUMERATE__0x00000008_"></a><a id="dnf_reenumerate__0x00000008_"></a><a id="DNF_REENUMERATE__0X00000008_"></a><b>DNF_REENUMERATE (0x00000008)</b></dt>
+<dd>
+<p>The device needs to be re-enumerated.</p>
+</dd>
+<dt><a id="DNF_ENUMERATED__0x00000010_"></a><a id="dnf_enumerated__0x00000010_"></a><a id="DNF_ENUMERATED__0X00000010_"></a><b>DNF_ENUMERATED (0x00000010)</b></dt>
+<dd>
+<p>The PDO for the device was exposed by its parent.</p>
+</dd>
+<dt><a id="DNF_IDS_QUERIED__0x00000020_"></a><a id="dnf_ids_queried__0x00000020_"></a><a id="DNF_IDS_QUERIED__0X00000020_"></a><b>DNF_IDS_QUERIED (0x00000020)</b></dt>
+<dd>
+<p>The operating system should send IRP_MN_QUERY_ID requests to the device driver.</p>
+</dd>
+<dt><a id="DNF_HAS_BOOT_CONFIG__0x00000040_"></a><a id="dnf_has_boot_config__0x00000040_"></a><a id="DNF_HAS_BOOT_CONFIG__0X00000040_"></a><b>DNF_HAS_BOOT_CONFIG (0x00000040)</b></dt>
+<dd>
+<p>The device has resources assigned by the BIOS. The device is considered pseudo-started and needs to participate in rebalancing.</p>
+</dd>
+<dt><a id="DNF_BOOT_CONFIG_RESERVED__0x00000080_"></a><a id="dnf_boot_config_reserved__0x00000080_"></a><a id="DNF_BOOT_CONFIG_RESERVED__0X00000080_"></a><b>DNF_BOOT_CONFIG_RESERVED (0x00000080)</b></dt>
+<dd>
+<p>The boot resources of the device are reserved.</p>
+</dd>
+<dt><a id="DNF_NO_RESOURCE_REQUIRED__0x00000100_"></a><a id="dnf_no_resource_required__0x00000100_"></a><a id="DNF_NO_RESOURCE_REQUIRED__0X00000100_"></a><b>DNF_NO_RESOURCE_REQUIRED (0x00000100)</b></dt>
+<dd>
+<p>The device does not require resources.</p>
+</dd>
+<dt><a id="DNF_RESOURCE_REQUIREMENTS_NEED_FILTERED__0x00000200_"></a><a id="dnf_resource_requirements_need_filtered__0x00000200_"></a><a id="DNF_RESOURCE_REQUIREMENTS_NEED_FILTERED__0X00000200_"></a><b>DNF_RESOURCE_REQUIREMENTS_NEED_FILTERED (0x00000200)</b></dt>
+<dd>
+<p>The device's resource requirements list is a filtered list.</p>
+</dd>
+<dt><a id="DNF_RESOURCE_REQUIREMENTS_CHANGED__0x00000400_"></a><a id="dnf_resource_requirements_changed__0x00000400_"></a><a id="DNF_RESOURCE_REQUIREMENTS_CHANGED__0X00000400_"></a><b>DNF_RESOURCE_REQUIREMENTS_CHANGED (0x00000400)</b></dt>
+<dd>
+<p>The device's resource requirements list has changed.</p>
+</dd>
+<dt><a id="DNF_NON_STOPPED_REBALANCE__0x00000800_"></a><a id="dnf_non_stopped_rebalance__0x00000800_"></a><a id="DNF_NON_STOPPED_REBALANCE__0X00000800_"></a><b>DNF_NON_STOPPED_REBALANCE (0x00000800)</b></dt>
+<dd>
+<p>The device can be restarted with new resources without being stopped.</p>
+</dd>
+<dt><a id="DNF_LEGACY_DRIVER__0x00001000_"></a><a id="dnf_legacy_driver__0x00001000_"></a><a id="DNF_LEGACY_DRIVER__0X00001000_"></a><b>DNF_LEGACY_DRIVER (0x00001000)</b></dt>
+<dd>
+<p>The device's controlling driver is a non-PnP driver.</p>
+</dd>
+<dt><a id="DNF_HAS_PROBLEM__0x00002000_"></a><a id="dnf_has_problem__0x00002000_"></a><a id="DNF_HAS_PROBLEM__0X00002000_"></a><b>DNF_HAS_PROBLEM (0x00002000)</b></dt>
+<dd>
+<p>The device has a problem and will be removed.</p>
+</dd>
+<dt><a id="DNF_HAS_PRIVATE_PROBLEM__0x00004000_"></a><a id="dnf_has_private_problem__0x00004000_"></a><a id="DNF_HAS_PRIVATE_PROBLEM__0X00004000_"></a><b>DNF_HAS_PRIVATE_PROBLEM (0x00004000)</b></dt>
+<dd>
+<p>The device reported PNP_DEVICE_FAILED without also reporting PNP_DEVICE_RESOURCE_REQUIREMENTS_CHANGED.</p>
+</dd>
+<dt><a id="DNF_HARDWARE_VERIFICATION__0x00008000_"></a><a id="dnf_hardware_verification__0x00008000_"></a><a id="DNF_HARDWARE_VERIFICATION__0X00008000_"></a><b>DNF_HARDWARE_VERIFICATION (0x00008000)</b></dt>
+<dd>
+<p>The device node has hardware verification.</p>
+</dd>
+<dt><a id="DNF_DEVICE_GONE__0x00010000_"></a><a id="dnf_device_gone__0x00010000_"></a><a id="DNF_DEVICE_GONE__0X00010000_"></a><b>DNF_DEVICE_GONE (0x00010000)</b></dt>
+<dd>
+<p>The device's PDO is no longer returned in an IRP_QUERY_RELATIONS request.</p>
+</dd>
+<dt><a id="DNF_LEGACY_RESOURCE_DEVICENODE__0x00020000_"></a><a id="dnf_legacy_resource_devicenode__0x00020000_"></a><a id="DNF_LEGACY_RESOURCE_DEVICENODE__0X00020000_"></a><b>DNF_LEGACY_RESOURCE_DEVICENODE (0x00020000)</b></dt>
+<dd>
+<p>The device node was created for legacy resource allocation.</p>
+</dd>
+<dt><a id="DNF_NEEDS_REBALANCE__0x00040000_"></a><a id="dnf_needs_rebalance__0x00040000_"></a><a id="DNF_NEEDS_REBALANCE__0X00040000_"></a><b>DNF_NEEDS_REBALANCE (0x00040000)</b></dt>
+<dd>
+<p>The device node has triggered rebalancing.</p>
+</dd>
+<dt><a id="DNF_LOCKED_FOR_EJECT__0x00080000_"></a><a id="dnf_locked_for_eject__0x00080000_"></a><a id="DNF_LOCKED_FOR_EJECT__0X00080000_"></a><b>DNF_LOCKED_FOR_EJECT (0x00080000)</b></dt>
+<dd>
+<p>The device is being ejected or is related to a device that is being ejected.</p>
+</dd>
+<dt><a id="DNF_DRIVER_BLOCKED__0x00100000_"></a><a id="dnf_driver_blocked__0x00100000_"></a><a id="DNF_DRIVER_BLOCKED__0X00100000_"></a><b>DNF_DRIVER_BLOCKED (0x00100000)</b></dt>
+<dd>
+<p>One or more of the drivers for the device node have been blocked from loading.</p>
+</dd>
+<dt><a id="DNF_CHILD_WITH_INVALID_ID__0x00200000_"></a><a id="dnf_child_with_invalid_id__0x00200000_"></a><a id="DNF_CHILD_WITH_INVALID_ID__0X00200000_"></a><b>DNF_CHILD_WITH_INVALID_ID (0x00200000)</b></dt>
+<dd>
+<p>One or more children of the device node have invalid IDs.</p>
+</dd>
+<dt><a id="DNF_ASYNC_START_NOT_SUPPORTED__0x00400000_"></a><a id="dnf_async_start_not_supported__0x00400000_"></a><a id="DNF_ASYNC_START_NOT_SUPPORTED__0X00400000_"></a><b>DNF_ASYNC_START_NOT_SUPPORTED (0x00400000)</b></dt>
+<dd>
+<p>The device does not support asynchronous starts.</p>
+</dd>
+<dt><a id="DNF_ASYNC_ENUMERATION_NOT_SUPPORTED__0x00800000_"></a><a id="dnf_async_enumeration_not_supported__0x00800000_"></a><a id="DNF_ASYNC_ENUMERATION_NOT_SUPPORTED__0X00800000_"></a><b>DNF_ASYNC_ENUMERATION_NOT_SUPPORTED (0x00800000)</b></dt>
+<dd>
+<p>The device does not support asynchronous enumeration.</p>
+</dd>
+<dt><a id="DNF_LOCKED_FOR_REBALANCE__0x01000000_"></a><a id="dnf_locked_for_rebalance__0x01000000_"></a><a id="DNF_LOCKED_FOR_REBALANCE__0X01000000_"></a><b>DNF_LOCKED_FOR_REBALANCE (0x01000000)</b></dt>
+<dd>
+<p>The device is locked for rebalancing.</p>
+</dd>
+<dt><a id="DNF_UNINSTALLED__0x02000000_"></a><a id="dnf_uninstalled__0x02000000_"></a><a id="DNF_UNINSTALLED__0X02000000_"></a><b>DNF_UNINSTALLED (0x02000000)</b></dt>
+<dd>
+<p>An IRP_MN_QUERY_REMOVE_DEVICE request is in progress for the device.</p>
+</dd>
+<dt><a id="DNF_NO_LOWER_DEVICE_FILTERS__0x04000000_"></a><a id="dnf_no_lower_device_filters__0x04000000_"></a><a id="DNF_NO_LOWER_DEVICE_FILTERS__0X04000000_"></a><b>DNF_NO_LOWER_DEVICE_FILTERS (0x04000000)</b></dt>
+<dd>
+<p>There is no Registry entry of the lower-device-filters type for the device.</p>
+</dd>
+<dt><a id="DNF_NO_LOWER_CLASS_FILTERS__0x08000000_"></a><a id="dnf_no_lower_class_filters__0x08000000_"></a><a id="DNF_NO_LOWER_CLASS_FILTERS__0X08000000_"></a><b>DNF_NO_LOWER_CLASS_FILTERS (0x08000000)</b></dt>
+<dd>
+<p>There is no Registry entry of the lower-class-filters type for the device.</p>
+</dd>
+<dt><a id="DNF_NO_SERVICE__0x10000000_"></a><a id="dnf_no_service__0x10000000_"></a><a id="DNF_NO_SERVICE__0X10000000_"></a><b>DNF_NO_SERVICE (0x10000000)</b></dt>
+<dd>
+<p>There is no Registry entry of the service the for the device.</p>
+</dd>
+<dt><a id="DNF_NO_UPPER_DEVICE_FILTERS__0x20000000_"></a><a id="dnf_no_upper_device_filters__0x20000000_"></a><a id="DNF_NO_UPPER_DEVICE_FILTERS__0X20000000_"></a><b>DNF_NO_UPPER_DEVICE_FILTERS (0x20000000)</b></dt>
+<dd>
+<p>There is no Registry entry of the upper-device-filters type for the device.</p>
+</dd>
+<dt><a id="DNF_NO_UPPER_CLASS_FILTERS__0x40000000_"></a><a id="dnf_no_upper_class_filters__0x40000000_"></a><a id="DNF_NO_UPPER_CLASS_FILTERS__0X40000000_"></a><b>DNF_NO_UPPER_CLASS_FILTERS (0x40000000)</b></dt>
+<dd>
+<p>There is no Registry entry of the upper-class-filters type for the device.</p>
+</dd>
+<dt><a id="DNF_WAITING_FOR_FDO__0x80000000_"></a><a id="dnf_waiting_for_fdo__0x80000000_"></a><a id="DNF_WAITING_FOR_FDO__0X80000000_"></a><b>DNF_WAITING_FOR_FDO (0x80000000)</b></dt>
+<dd>
+<p>Enumeration of the device is waiting until the driver attaches its FDO.</p>
+</dd>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Device Node Status Flags%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

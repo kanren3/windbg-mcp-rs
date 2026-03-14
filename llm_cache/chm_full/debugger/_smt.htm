@@ -1,0 +1,87 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !smt extension displays a summary of the simultaneous multithreaded processor information."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!smt</title>
+
+<meta name="MS-HAID" content="r29_exts_kernel_Q_f5d8532e-0006-4bf1-9f5e-12f690e3ec63.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._smt"></a>!smt</h1>
+</div>
+<p>The <b>!smt</b> extension displays a summary of the simultaneous multithreaded processor information. </p>
+<pre class="syntax">
+    <b>!smt</b>
+</pre>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Windows 2000
+         </b></p>
+</td>
+<td>
+<p>Unavailable </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Kdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>Here is an example:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>lkd&gt; !smt 
+SMT Summary:
+------------
+   KeActiveProcessors: **------------------------------ (00000003)
+        KiIdleSummary: -------------------------------- (00000000)
+ No PRCB     Set Master SMT Set                                     IAID
+  0 820f4820 Master     **------------------------------ (00000003)  00
+  1 87a4d120 820f4820   **------------------------------ (00000003)  01
+
+Maximum cores per physical processor:   2
+Maximum logical processors per core:    1</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The <b>No</b> column indicates the number of the processor.</p>
+<p>The <b>PRCB</b> column indicates the address of the processor control block for the processor.  Each logical processor is listed separately.</p>
+<p>Each physical processor has exactly one logical processor listed as the <b>Master</b> under the <b>Set Master</b> column.</p>
+<p>The <b>SMT Set</b> column lists the processor's simultaneous multithreaded processor set information.</p>
+<p>The <b>IAID</b> column lists the initial Advanced Programmable Interrupt Controller identifier (APIC ID). On a true x64 computer, each processor starts with a hard-coded initial APIC ID. This ID value can be retrieved through the CPUID instruction. On certain other computers, the initial APIC ID is not necessarily unique across all processors, so the APIC ID that is accessible through the APIC's memory-mapped input/output (MMIO) space can be modified. This technique enables software to allocate unique APIC IDs for all processors within the computer. Depending on the target computer's processors, the <b>IAID</b> column may show this ID or may be blank.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!smt%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

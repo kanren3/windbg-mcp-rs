@@ -1,0 +1,73 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Loading Debugger Extension DLLs"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Loading Debugger Extension DLLs</title>
+
+<meta name="MS-HAID" content="r08_use_remote_ac80d1f3-ff3f-4374-9e70-2a73b84ac647.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.loading_debugger_extension_dlls"></a>Loading Debugger Extension DLLs</h1>
+</div>
+<h2><a id="ddk_loading_debugger_extension_dlls_dbg"></a><a id="DDK_LOADING_DEBUGGER_EXTENSION_DLLS_DBG"></a></h2>
+<p>There are several methods of loading debugger extension DLLs, as well as controlling the default debugger extension DLL and the default debugger extension path:</p>
+<ul>
+<li>
+<p>(Before starting the debugger)  Use the _NT_DEBUGGER_EXTENSION_PATH <a href="environment_variables.htm">environment variable</a> to set the default path for extension DLLs. This can be a number of directory paths, separated by semicolons.</p>
+</li>
+<li>
+<p>Use the <a href="_load___loadby__load_extension_dll_.htm"><b>.load (Load Extension DLL)</b></a> command to load a new DLL.</p>
+</li>
+<li>
+<p>Use the <a href="_unload__unload_extension_dll_.htm"><b>.unload (Unload Extension DLL)</b></a> command to unload a DLL.</p>
+</li>
+<li>
+<p>Use the <a href="_unloadall__unload_all_extension_dlls_.htm"><b>.unloadall (Unload All Extension DLLs)</b></a> command to unload all debugger extensions.</p>
+</li>
+<li>
+<p>(Before starting the debugger; CDB only)  Use the <a href="configuring_tools_ini.htm">tools.ini</a> file to set the default extension DLL.</p>
+</li>
+<li>
+<p>(Before starting the debugger)  Use the <b>-a </b><a href="command_line_options.htm">command-line option</a> to set the default extension DLL.</p>
+</li>
+<li>
+<p>Use the <a href="_extpath__set_extension_path_.htm"><b>.extpath (Set Extension Path)</b></a> command to set the extension DLL search path.</p>
+</li>
+<li>
+<p>Use the <a href="_setdll__set_default_extension_dll_.htm"><b>.setdll (Set Default Extension DLL)</b></a> command to set the default extension DLL.</p>
+</li>
+<li>
+<p>Use the <a href="_chain__list_debugger_extensions_.htm"><b>.chain (List Debugger Extensions)</b></a> command to display all loaded debugger extension modules, in their default search order.</p>
+</li>
+</ul>
+<p>You can also load an extension DLL simply by using the full <b>!</b><i>module</i><b>.</b><i>extension</i> syntax the first time you issue a command from that module. See <a href="using_debugger_extension_commands.htm">Using Debugger Extension Commands</a> for details.</p>
+<p>The extension DLLs that you are using must match the operating system of the target computer. The extension DLLs that ship with the Debugging Tools for Windows package are each placed in a different subdirectory of the installation directory:</p>
+<ul>
+<li>
+<p>The winxp directory contains extensions that can be used with Windows XP and later versions of Windows.</p>
+</li>
+<li>
+<p>The winext directory contains extensions that can be used with any version of Windows. The dbghelp.dll module, located in the base directory of Debugging Tools for Windows, also contains extensions of this type.</p>
+</li>
+</ul>
+<p>If you write your own debugger extensions, you can place them in any directory. However, it is advised that you place them in a new directory and add that directory to the debugger extension path.</p>
+<p>There can be as many as 32 extension DLLs loaded.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Loading Debugger Extension DLLs%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

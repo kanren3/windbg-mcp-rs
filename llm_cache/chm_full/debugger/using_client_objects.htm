@@ -1,0 +1,53 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Using Client Objects"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Using Client Objects</title>
+
+<meta name="MS-HAID" content="Engine_DG_4902f2ee-669d-4691-b52b-bf48e4e84f40.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.using_client_objects"></a>Using Client Objects</h1>
+</div>
+<p>For an overview of the role of client objects in interacting with the debugger engine, see <a href="client_objects.htm">Client Objects</a>.</p>
+<p>In general, a client's methods may be called only from the thread in which the client was created. Typically, methods called from the wrong thread will fail immediately.  The notable exception to this rule is the method <a href="createclient.htm"><b>CreateClient</b></a>; this method may be called from any thread, and returns a new client that can be used in the thread from which it was called.  Other exceptions are documented in the reference section.</p>
+<p>A string describing a client object is returned by the method <a href="getidentity.htm"><b>GetIdentity</b></a> or can be written to the engine's output stream using <a href="outputidentity.htm"><b>OutputIdentity</b></a>.</p>
+<h3><a id="com_interfaces"></a><a id="COM_INTERFACES"></a>COM Interfaces</h3>
+<p>The debugger engine API contains several COM like interfaces; they implement the <b>IUnknown</b> interface.</p>
+<p>The interfaces described in the section <a href="client_com_interfaces.htm">Debug Engine Interfaces</a> is implemented by the client (though not necessarily at the latest version).  You may use the COM method <b>IUnknown::QueryInterface</b> to obtain each of these interfaces from any of the others.</p>
+<p>The clients implement the <b>IUnknown</b> COM interface and use it for maintaining reference counts and interface selection. However, the clients are not registered COM objects.  The method <b>IUnknown::AddRef</b> is used to increment the reference count on the object, and the method <b>IUnknown::Release</b> is used to decrement the reference count.  When <b>IUnknown::QueryInterface</b> is called, the reference count is incremented, so when a client interface pointer is no longer needed <b>IUnknown::Release</b> should be called to decrement the reference count.</p>
+<p>The reference count will be initialized to one when the client object is created using <a href="debugcreate.htm"><b>DebugCreate</b></a> or <a href="debugconnect.htm"><b>DebugConnect</b></a>.</p>
+<p>See the Platform SDK for more information about when reference counts should be incremented and decremented.</p>
+<p><b>IUnknown::QueryInterface</b>, <b>DebugCreate</b>, and <b>DebugConnect</b> each take an interface ID as one of their arguments.  This interface ID can be obtained using the <b>__uuidof</b> operator. For example:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>IDebugClient * debugClient;
+HRESULT Hr = DebugCreate( __uuidof(IDebugClient), (void **)&amp;debugClient );</pre>
+</td>
+</tr>
+</table></span></div>
+<div class="alert"><b>Important</b>  The IDebug* interfaces such as <a href="idebugeventcallbacks.htm"><b>IDebugEventCallbacks</b></a> interface, although COM like, are not proper COM APIs. Calling these interfaces from managed code is an unsupported scenario. Issues such as garbage collection and thread ownership, lead to system instability when the interfaces are called with managed code.</div>
+<div> </div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Using Client Objects%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

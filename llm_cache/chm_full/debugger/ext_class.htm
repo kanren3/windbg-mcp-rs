@@ -1,0 +1,75 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The EXT_CLASS constant specifies the name of the C++ class that represents the EngExtCpp extension library."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>EXT_CLASS</title>
+
+<meta name="MS-HAID" content="EngExtCpp_Ref_731f5b1a-bf23-4c78-8c2e-663dd7c35793.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.ext_class"></a>EXT_CLASS</h1>
+</div>
+<p>The EXT_CLASS constant specifies the name of the C++ class that represents the EngExtCpp extension library.</p>
+<pre class="syntax">
+    #ifndef EXT_CLASS
+    #define EXT_CLASS Extension
+    #endif
+   </pre>
+<h2>Remarks</h2>
+<p>The default value of EXT_CLASS is <b>Extension</b>.  You can change this value  by defining EXT_CLASS before you include the header file Engextcpp.hpp.</p>
+<p>Each extension command in the library is declared as a member of the class EXT_CLASS using the macro <a href="ext_command_method.htm"><b>EXT_COMMAND_METHOD</b></a>.  For example, a library with two extension commands, <b>extcmd</b> and <b>anotherextcmd</b>, could define the class EXT_CLASS as follows:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>class EXT_CLASS : public ExtExtension
+{
+public:
+    EXT_COMMAND_METHOD(extcmd);
+    EXT_COMMAND_METHOD(anotherextcmd);
+}</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Extension commands that have been declared by using EXT_COMMAND_METHOD should be defined by using <a href="ext_command.htm"><b>EXT_COMMAND</b></a> and should be exported from the library.</p>
+<p>The <a href="ext_declare_globals.htm"><b>EXT_DECLARE_GLOBALS</b></a> macro creates a single instance of the EXT_CLASS class.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Engextcpp.h (include Engextcpp.hpp)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="ext_command.htm"><b>EXT_COMMAND</b></a></dt>
+<dt><a href="ext_command_method.htm"><b>EXT_COMMAND_METHOD</b></a></dt>
+<dt><a href="ext_declare_globals.htm"><b>EXT_DECLARE_GLOBALS</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20EXT_CLASS%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,353 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The WDF_VIOLATION bug check has a value of 0x0000010D. This indicates that Kernel-Mode Driver Framework (KMDF) detected that Windows found an error in a framework-based driver."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0x10D:  WDF_VIOLATION</title>
+
+<meta name="MS-HAID" content="t07_bugs_E0_2efba818-9311-481e-9be6-27fe44474a2c.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0x10d___wdf_violation"></a>Bug Check 0x10D:  WDF_VIOLATION</h1>
+</div>
+<p>The WDF_VIOLATION bug check has a value of 0x0000010D.  This indicates that Kernel-Mode Driver Framework (KMDF) detected that Windows found an error in a framework-based driver.</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2>  WDF_VIOLATION Parameters</h2>
+<p>The following parameters are displayed on the blue screen. Parameter 1 indicates the specific error code of the bug check.  Parameter 4 is reserved.  </p>
+<table>
+<tr>
+<th>Parameter 1</th>
+<th>Parameter 2</th>
+<th>Parameter 3</th>
+<th>Cause of Error</th>
+</tr>
+<tr>
+<td>
+<p>0x1</p>
+</td>
+<td>
+<p>Pointer to a WDF_POWER_ROUTINE_TIMED_OUT_DATA structure </p>
+</td>
+<td>
+<p>Reserved </p>
+</td>
+<td>
+<p>A framework-based driver has timed out during a power operation.  This typically means that the device stack did not set the DO_POWER_PAGABLE bit and a driver attempted a pageable operation after the paging device stack was powered down.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x2</p>
+</td>
+<td>
+<p>Reserved </p>
+</td>
+<td>
+<p>Reserved </p>
+</td>
+<td>
+<p>An attempt is being made to acquire a lock that is currently being held.  </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x3</p>
+</td>
+<td>
+<p>WDFREQUEST handle </p>
+</td>
+<td>
+<p>The number of outstanding references that remain on both buffers </p>
+</td>
+<td>
+<p>Windows Driver Framework Verifier has encountered a fatal error.  In particular, an I/O request was completed, but a framework request object cannot be deleted because there are outstanding references to the input buffer, the output buffer, or both.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x4</p>
+</td>
+<td>
+<p>Reserved </p>
+</td>
+<td>
+<p>The caller's address </p>
+</td>
+<td>
+<p>A <b>NULL</b> parameter was passed to a function that required a non-<b>NULL</b> value. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x5</p>
+</td>
+<td>
+<p>The handle value passed in </p>
+</td>
+<td>
+<p>Reserved </p>
+</td>
+<td>
+<p>A framework object handle of the incorrect type was passed to a framework object method. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x6</p>
+</td>
+<td></td>
+<td></td>
+<td>
+<p>See table below.
+       </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x7</p>
+</td>
+<td>
+<p>The handle of the framework object </p>
+</td>
+<td>
+<p>Reserved </p>
+</td>
+<td>
+<p>A driver attempted to delete a framework object incorrectly by calling <b>WdfObjectDereference</b> to delete a handle instead of calling <b>WdfObjectDelete</b>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x8</p>
+</td>
+<td>
+<p>The handle of the DMA transaction object </p>
+</td>
+<td>
+<p>Reserved </p>
+</td>
+<td>
+<p>An operation occurred on a DMA transaction object while it was not in the correct state.  </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x9</p>
+</td>
+<td></td>
+<td></td>
+<td>
+<p>Currently unused. 
+       </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0xA</p>
+</td>
+<td>
+<p>A pointer to a WDF_QUEUE_FATAL_ERROR_DATA structure </p>
+</td>
+<td>
+<p>Reserved </p>
+</td>
+<td>
+<p>A fatal error has occurred while processing a request that is currently in the queue. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0xB</p>
+</td>
+<td></td>
+<td></td>
+<td>
+<p>See table below.
+       </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0xC</p>
+</td>
+<td>
+<p>WDFDEVICE handle</p>
+</td>
+<td>
+<p>Pointer to new PnP IRP</p>
+</td>
+<td>
+<p>A new state-changing PnP IRP arrived while the driver was processing another state-changing PnP IRP.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0xD</p>
+</td>
+<td>
+<p>WDFDEVICE handle</p>
+</td>
+<td>
+<p>Pointer to power IRP</p>
+</td>
+<td>
+<p>A device's power policy owner received a power IRP that it did not request. There might be multiple power policy owners, but only one is allowed. A KMDF driver can change power policy ownership by calling <b>WdfDeviceInitSetPowerPolicyOwnership</b>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0xE</p>
+</td>
+<td>
+<p>IRQL at which the event callback function was called.</p>
+</td>
+<td>
+<p>IRQL at which the event callback function returned.</p>
+</td>
+<td>
+<p>An event callback function did not return at the same IRQL at which it was called. The callback function changed the IRQL directly or indirectly (for example, by acquiring a spinlock, which raises IRQL to DISPATCH_LEVEL, but not releasing the spinlock).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0xF</p>
+</td>
+<td>
+<p>Address of an event callback function.</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>An event callback function entered a critical region, but it did not leave the critical region before returning.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p><b>Parameter 1 is equal to 0x6</b></p>
+<p>If Parameter 1 is equal to 0x6, then a fatal error was made in handling a WDF request.  In this case, Parameter 2 further specifies the type of fatal error that has been made, as defined by the enumeration WDF_REQUEST_FATAL_ERROR.</p>
+<table>
+<tr>
+<th>Parameter 2</th>
+<th>Parameter 3</th>
+<th>Cause of Error</th>
+</tr>
+<tr>
+<td>
+<p>0x1</p>
+</td>
+<td>
+<p>The address of the IRP </p>
+</td>
+<td>
+<p>No more I/O stack locations are available to format the underlying IRP. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x2</p>
+</td>
+<td>
+<p>The WDF request handle value </p>
+</td>
+<td>
+<p>An attempt was made to format a framework request object that did not contain an IRP.  </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x3</p>
+</td>
+<td>
+<p>The WDF request handle value </p>
+</td>
+<td>
+<p>The driver attempted to send a framework request that has already been sent to an I/O target.  </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x4</p>
+</td>
+<td>
+<p>A pointer to a WDR_REQUEST_FATAL_ERROR_INFORMATION_LENGTH_MISMATCH_DATA structure that contains a pointer to the IRP, a WDF request handle value, an IRP major function, and the number of bytes attempted to be written </p>
+</td>
+<td>
+<p>The driver has completed a framework request, but has written more bytes to the output buffer than are specified in the IRP.  </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p><b>Parameter 1 is equal to 0xB</b></p>
+<p>If Parameter 1 is equal to 0xB, then an attempt to acquire or release a lock was invalid.  In this case, Parameter 3 further specifies the error that has been made.</p>
+<table>
+<tr>
+<th>Parameter 2</th>
+<th>Parameter 3</th>
+<th>Cause of Error</th>
+</tr>
+<tr>
+<td>
+<p>The handle value </p>
+</td>
+<td>
+<p>0x0</p>
+</td>
+<td>
+<p>A handle passed to <b>WdfObjectAcquireLock</b> or <b>WdfObjectReleaseLock</b> represents an object that does not support synchronization locks.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>A WDF spin lock handle </p>
+</td>
+<td>
+<p>0x1</p>
+</td>
+<td>
+<p>The spin lock is being released by a thread that did not acquire it.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Cause</h2>
+<p>See the description of each code in the Parameters section for an explanation of the cause.</p>
+<h2>Resolution</h2>
+<p>The <a href="_analyze.htm"><b>!analyze</b></a> debug extension displays information about  the bug check and can be very helpful in gathering information, such as the faulting code module.</p>
+<p>Typically, the WDF dump file will yield further information on the driver that caused this bug check. Use this command to look at the log file. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; !wdfkd.wdflogdump &lt;WDF_Driver_Name&gt;</pre>
+</td>
+</tr>
+</table></span></div>
+<p></p>
+<p>If Parameter 1 is equal to <b>0x2</b>, examine the caller's stack to determine the lock in question.</p>
+<p>If Parameter 1 is equal to <b>0x3</b>, the driver's Kernel-Mode Driver Framework error log will include details about the outstanding references.</p>
+<p>If Parameter 1 is equal to <b>0x4</b>, use the <a href="ln__list_nearest_symbols_.htm"><b>ln debugger</b></a> command with the value of <i>Parameter 3</i> as its argument to determine which function requires a non-<b>NULL</b> parameter.</p>
+<p>If Parameter 1 is equal to <b>0x7</b>, use the <b>!wdfkd.wdfhandle</b><i>Parameter 2</i> extension command to determine the handle type. </p>
+<p>If Parameter 1 is equal to <b>0xA</b>, then the WDF_QUEUE_FATAL_ERROR_DATA structure will indicate either the problematic request or the queue handle.  It will also indicate the NTSTATUS, if not STATUS_SUCCESS, when available.</p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

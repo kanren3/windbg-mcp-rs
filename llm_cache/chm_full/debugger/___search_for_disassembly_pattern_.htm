@@ -1,0 +1,133 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The number sign (#) command searches for the specified pattern in the disassembly code."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title># (Search for Disassembly Pattern)</title>
+
+<meta name="MS-HAID" content="r15_cmds_A_dc5ce1c6-3040-4d0a-82b7-fcfb9d62b486.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.___search_for_disassembly_pattern_"></a># (Search for Disassembly Pattern)</h1>
+</div>
+<p>The number sign (<b>#</b>) command searches for the specified pattern in the disassembly code.</p>
+<pre class="syntax"><b># </b>[<i>Pattern</i>] [<i>Address</i> [ L <i>Size</i> ]]<b> </b></pre>
+<h2><a id="ddk_cmd_search_for_disassembly_pattern_dbg"></a><a id="DDK_CMD_SEARCH_FOR_DISASSEMBLY_PATTERN_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Pattern______"></a><a id="_______pattern______"></a><a id="_______PATTERN______"></a>       <i>Pattern</i>      </dt>
+<dd>
+<p>Specifies the pattern to search for in the disassembly code. <i>Pattern</i> can contain a variety of wildcard characters and specifiers. For more information about the syntax, see <a href="string_wildcard_syntax.htm">String Wildcard Syntax</a>. If you want to include spaces in <i>Pattern</i>, you must enclose the pattern in quotation marks. The pattern is not case sensitive. If you have previously used the <b>#</b> command and you omit <i>Pattern</i>, the command reuses the most recently used pattern.</p>
+</dd>
+<dt><a id="_______Address______"></a><a id="_______address______"></a><a id="_______ADDRESS______"></a>       <i>Address</i>      </dt>
+<dd>
+<p>Specifies the address where the search begins. For more information about the syntax, see <a href="address_and_address_range_syntax.htm">Address and Address Range Syntax</a>.</p>
+</dd>
+<dt><a id="_______Size______"></a><a id="_______size______"></a><a id="_______SIZE______"></a>       <i>Size</i>      </dt>
+<dd>
+<p>Specifies the number of instructions to search. If you omit <i>Size</i>, the search continues until the first match occurs.  </p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about assembly debugging and related commands, see <a href="debugging_in_assembly_mode.htm">Debugging in Assembly Mode</a>.</p>
+<h2>Remarks</h2>
+<p>If you previously used the <b>#</b> command and you omit <i>Address</i>, the search begins where the previous search ended.</p>
+<p>This command works by searching the disassembled text for the specified pattern. You can use this command to find register names, constants, or any other string that appears in the disassembly output. You can repeat the command without the <i>Address</i> parameter to find successive occurrences of the pattern.</p>
+<p>You can view disassembly instructions by using the <a href="u__unassemble_.htm"><b>u (Unassemble)</b></a> command or by using the <a href="disassembly_window.htm">Disassembly window</a> in WinDbg. The disassembly display contains up to four parts: Address offset, Binary code, Assembly language mnemonic, and Assembly language details. The following example shows a possible display.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0040116b    45          inc         ebp            
+0040116c    fc          cld                        
+0040116d    8945b0      mov         eax,[ebp-0x1c] </pre>
+</td>
+</tr>
+</table></span></div>
+<p>The <b>#</b> command can search for text within any single part of the disassembly display. For example, you could use <b>#  eax  0040116b</b> to find the <b>mov eax,[ebp-0x1c]</b> instruction at address 0040116d. The following commands also find this instruction.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>#  [ebp?0x  0040116b 
+#  mov  0040116b 
+#  8945*  0040116b 
+#  116d  0040116b </pre>
+</td>
+</tr>
+</table></span></div>
+<p>However, you cannot search for <b>mov eax*</b> as a single unit, because <b>mov</b> and <b>eax</b> appear in different parts of the display. Instead, use <b>mov*eax</b>.</p>
+<p>As an additional example, you could issue the following command to search for the first reference to the <b>strlen</b> function after the entry point <b>main</b>.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre># strlen main</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Similarly, you could issue the following two commands to find the first <b>jnz</b> instruction after address 0x779F9FBA and then find the next <b>jnz</b> instruction after that.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre># jnz 779f9fba# </pre>
+</td>
+</tr>
+</table></span></div>
+<p>When you omit <i>Pattern</i> or <i>Address</i>, their values are based on the previous use of the <b>#</b> command. If you omit either parameter the first time that you issue the <b>#</b> command, no search is performed. However, the values of <i>Pattern</i> and <i>Address</i> are initialized even in this situation. </p>
+<p>If you include <i>Pattern</i> or <i>Address</i>, its value is set to the entered value. If you omit <i>Address</i>, it is initialized to the current value of the program counter. If you omit <i>Pattern</i>, it is initialized to an empty pattern.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20# (Search for Disassembly Pattern)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

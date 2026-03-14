@@ -1,0 +1,79 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .apply_dbp command applies the current process' existing data breakpoints to the specified register context."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.apply_dbp (Apply Data Breakpoint to Context)</title>
+
+<meta name="MS-HAID" content="r19_metacmds_A_b9e14456-09b9-431f-89fa-b50fd865be97.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._apply_dbp__apply_data_breakpoint_to_context_"></a>.apply_dbp (Apply Data Breakpoint to Context)</h1>
+</div>
+<p>The <b>.apply_dbp</b> command applies the current process' existing data breakpoints to the specified register context.  </p>
+<pre class="syntax">
+    <b>.apply_dbp </b>[<b>/m</b> <i>Context</i>] 
+
+</pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="________m_______Context______"></a><a id="________m_______context______"></a><a id="________M_______CONTEXT______"></a><b>       /m       </b><i>Context</i>      </dt>
+<dd>
+<p>Specifies the address of a register context (CONTEXT structure) in memory to which to apply the current process' data breakpoints. </p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>user mode and kernel mode </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>live target only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>all</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about breakpoints controlled by the processor, see <a href="processor_breakpoints___ba_breakpoints_.htm">Processor Breakpoints (ba Breakpoints)</a>. For more information about the register context (thread context), see <a href="changing_contexts.htm#register_context">Register Context</a>. </p>
+<h2>Remarks</h2>
+<p>Breakpoints that are controlled by the processor are called <i>data breakpoints</i> or <i>processor breakpoints</i>. These breakpoints are created by the <a href="ba__break_on_access_.htm"><b>ba (Break on Access)</b></a> command. </p>
+<p>These breakpoints are associated with a memory location in the address space of a specific process.  The <b>.apply_dbp</b> command modifies the specified register context so that these data breakpoints will be active when this context is used.</p>
+<p>If the <b>/m</b> <i>Address</i> parameter is not used, data breakpoints will be applied to the current register context.</p>
+<p>This command can only be used if the target is in native machine mode.  For example, if the target is running on a 64-bit machine emulating an x86 processor using <i>WOW64</i>, this command cannot be used.</p>
+<p>One example of a time this command is useful is when you are in an exception filter.  The <b>.apply_dbp</b> command can update the exception filter's stored context.  Data breakpoints will then be applied when the exception filter exits and the stored context is resumed. Without such a modification it is possible that data breakpoints would be lost.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.apply_dbp (Apply Data Breakpoint to Context)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

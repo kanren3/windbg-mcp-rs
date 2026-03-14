@@ -1,0 +1,125 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="In user mode, the .kill command ends a process that is being debugged."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.kill (Kill Process)</title>
+
+<meta name="MS-HAID" content="r20_metacmds_E_5c2717e9-eef2-4d91-9a54-33653ba7f904.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._kill__kill_process_"></a>.kill (Kill Process)</h1>
+</div>
+<p>
+    In user mode, the <b>.kill</b> command ends a process that is being debugged.</p>
+<p>
+    In kernel mode, the <b>.kill</b> command ends a process on the target computer.</p>
+<p>User-Mode Syntax</p>
+<pre class="syntax"><b>.kill </b>[ <b>/h</b> | <b>/n</b> ]</pre>
+<p>Kernel-Mode Syntax</p>
+<pre class="syntax"><b>.kill </b><i>Process</i> </pre>
+<h2><a id="ddk_meta_kill_process_dbg"></a><a id="DDK_META_KILL_PROCESS_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="________h______"></a><a id="________H______"></a>       <b>/h</b>      </dt>
+<dd>
+<p>
+       (User mode only)  Any outstanding debug event will be continued and marked as handled.  This is the default.</p>
+</dd>
+<dt><a id="________n______"></a><a id="________N______"></a>       <b>/n</b>      </dt>
+<dd>
+<p>
+       (User mode only)  Any outstanding debug event will be continued without being marked as handled.</p>
+</dd>
+<dt><a id="_______Process______"></a><a id="_______process______"></a><a id="_______PROCESS______"></a>       <i>Process</i>      </dt>
+<dd>
+<p>Specifies the address of the process to be terminated. If <i>Process</i> is omitted or zero, the default process for the current system state will be terminated.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<p>In kernel mode, this command is supported on Microsoft Windows Server 2003 and later versions of Windows.</p>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>user mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets</b></p>
+</td>
+<td>
+<p>live debugging only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>all </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>In user mode, this command ends a process that is being debugged. If the debugger is attached to a child process, you can use <b>.kill</b> to end the child process without ending the parent process. For more information, see Examples.</p>
+<p>In kernel mode, this command schedules the selected process on the target computer for termination. The next time that the target can run (for example, by using a <a href="g__go_.htm"><b>g (Go)</b></a> command), the specified process is ended.</p>
+<p>You cannot use this command during local kernel debugging.</p>
+<h2>Examples</h2>
+<p><b>Using .childdbg</b></p>
+<p>Suppose you attach a debugger to parent process (Parent.exe) before it creates a child process. You can enter the command <a href="_childdbg__debug_child_processes_.htm"><b>.childdbg 1</b></a> to tell the debugger to attach to any child process that the parent creates.</p>
+<pre class="syntax" xml:space="preserve"><code>1:001&gt; .childdbg 1
+Processes created by the current process will be debugged</code></pre>
+<p>Now let the parent process run, and break in after it has created the child process. Use the <a href="___process_status_.htm"><b>| (Process Status)</b></a> command to see the process numbers for the parent and child processes.</p>
+<pre class="syntax" xml:space="preserve"><code>0:002&gt; |*
+.  0	id: 7f8	attach	name: C:\Parent\x64\Debug\Parent.exe
+   1	id: 2d4	child	name: notepad.exe</code></pre>
+<p>In the preceding output, the number of the child process (notepad.exe) is 1. The dot (.) at the beginning of the first line tells us that the parent process is the current process. To make the child process the current process, enter <b>|1s</b>.</p>
+<pre class="syntax" xml:space="preserve"><code>0:002&gt; |1s
+...
+1:001&gt; |*
+#  0	id: 7f8	attach	name: C:\Parent\x64\Debug\Parent.exe
+.  1	id: 2d4	child	name: notepad.exe</code></pre>
+<p>To kill the child process, enter the command <b>.kill</b>. The parent process continues to run.</p>
+<pre class="syntax" xml:space="preserve"><code>1:001&gt; .kill
+Terminated.  Exit thread and process events will occur.
+1:001&gt; g</code></pre>
+<p><b>Using the -o parameter</b></p>
+<p>When you start WinDbg or CDB, you can use the <b>-o</b> parameter to tell the debugger that it should attach to child processes. For example, the following command starts WinDbg, which starts and attaches to Parent.exe. When Parent.exe creates a child process, WinDbg attaches to the child process.</p>
+<p><b>windbg -g -G -o Parent.exe</b></p>
+<p>For more information, see <a href="windbg_command_line_options.htm"><b>WinDbg Command-Line Options</b></a> and <a href="cdb_command_line_options.htm"><b>CDB Command-Line Options</b></a>.</p>
+<div class="code"></div>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Version</p>
+</th>
+<td width="70%">
+<p>Versions:(Kernel mode) Supported in Windows Server 2003 and later.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.kill (Kill Process)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

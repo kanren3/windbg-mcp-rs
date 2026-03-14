@@ -1,0 +1,38 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="dbgerr001: PEB is Paged Out"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>dbgerr001: PEB is Paged Out</title>
+
+<meta name="MS-HAID" content="r35_errors_667dd8f2-ca73-47fd-84f3-fe5837ba1e77.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.dbgerr001__peb_is_paged_out"></a>dbgerr001: PEB is Paged Out</h1>
+</div>
+<h2><a id="ddk_dbgerr001_dbg"></a><a id="DDK_DBGERR001_DBG"></a></h2>
+<p>Debugger error <b>dbgerr001</b> displays the message "PEB is paged out." This error indicates that the process environment block (PEB) is not accessible.</p>
+<p>To load symbols, the debugger looks at the list of modules loaded by the operating system. The pointer to the user-mode module list is one of the items stored in the PEB.</p>
+<p>In order to reclaim memory, the Memory Manager may page out user-mode data to make space for other process or kernel mode components.</p>
+<p>When this error occurs, it means that the debugger has detected that the PEB data structure for this process is no longer readable. Most likely, is has been paged out to disk.</p>
+<p>Without this data structure, the debugger cannot determine what images the symbols should be loaded for.</p>
+<div class="alert"><b>Note</b>    This only affects symbol files for the user-mode modules. Kernel-mode modules and symbols are not affected, as they are tracked in a different list.</div>
+<div> </div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20dbgerr001: PEB is Paged Out%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

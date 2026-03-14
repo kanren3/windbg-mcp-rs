@@ -1,0 +1,162 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The process server that is included in Debugging Tools for Windows is called DbgSrv (dbgsrv.exe). To activate a process server, open an elevated Command Prompt window (Run as Administrator), and enter the dbgsrv command."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Activating a Process Server</title>
+
+<meta name="MS-HAID" content="r08_use_remote_33648b79-ab94-4cba-97b1-6865130e9de8.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.activating_a_process_server"></a>Activating a Process Server</h1>
+</div>
+<p>The process server that is included in Debugging Tools for Windows is called DbgSrv (dbgsrv.exe). To activate a process server, open an elevated Command Prompt window (Run as Administrator), and enter the <b>dbgsrv</b> command.</p>
+<div class="alert"><b>Note</b>  You can activate a process server without having elevated privileges, and debugging clients will be able to connect to the server. However, clients will not be able to discover a process server unless it was activated with elevated privileges. For information about how to discover debugging servers, see <a href="searching_for_process_servers.htm">Searching for Process Servers</a>.</div>
+<div> </div>
+<p>DbgSrv supports several transport protocols: named pipe (NPIPE), TCP, COM port, secure pipe (SPIPE), and secure sockets layer (SSL).   </p>
+<pre class="syntax">
+<b>dbgsrv -t npipe:pipe=</b><i>PipeName</i><b>[,hidden][,password=</b><i>Password</i><b>][,IcfEnable] [[-sifeo </b><i>Executable</i><b>] -c[s] </b><i>AppCmdLine</i><b>] [-x | -pc] 
+
+dbgsrv -t tcp:port=</b><i>Socket</i><b>[,hidden][,password=</b><i>Password</i><b>][,ipversion=6][,IcfEnable] [[-sifeo </b><i>Executable</i><b>] -c[s] </b><i>AppCmdLine</i><b>] [-x | -pc] 
+
+dbgsrv -t tcp:port=</b><i>Socket</i><b>,clicon=</b><i>Client</i><b>[,password=</b><i>Password</i><b>][,ipversion=6] [[-sifeo </b><i>Executable</i><b>] -c[s] </b><i>AppCmdLine</i><b>] [-x | -pc] 
+
+dbgsrv -t com:port=</b><i>COMPort</i><b>,baud=</b><i>BaudRate</i><b>,channel=</b><i>COMChannel</i><b>[,hidden][,password=</b><i>Password</i><b>] [[-sifeo </b><i>Executable</i><b>] -c[s] </b><i>AppCmdLine</i><b>] [-x | -pc] 
+
+dbgsrv -t spipe:proto=</b><i>Protocol</i><b>,{certuser=</b><i>Cert</i><b>|machuser=</b><i>Cert</i><b>},pipe=</b><i>PipeName</i><b>[,hidden][,password=</b><i>Password</i><b>] [[-sifeo </b><i>Executable</i><b>] -c[s] </b><i>AppCmdLine</i><b>] [-x | -pc] 
+
+dbgsrv -t ssl:proto=</b><i>Protocol</i><b>,{certuser=</b><i>Cert</i><b>|machuser=</b><i>Cert</i><b>},port=</b><i>Socket</i><b>[,hidden][,password=</b><i>Password</i><b>] [[-sifeo </b><i>Executable</i><b>] -c[s] </b><i>AppCmdLine</i><b>] [-x | -pc] 
+
+dbgsrv -t ssl:proto=</b><i>Protocol</i><b>,{certuser=</b><i>Cert</i><b>|machuser=</b><i>Cert</i><b>},port=</b><i>Socket</i><b>,clicon=</b><i>Client</i><b>[,password=</b><i>Password</i><b>] [[-sifeo </b><i>Executable</i><b>] -c[s] </b><i>AppCmdLine</i><b>] [-x | -pc] 
+</b></pre>
+<h2><a id="ddk_activating_a_process_server_dbg"></a><a id="DDK_ACTIVATING_A_PROCESS_SERVER_DBG"></a></h2>
+<p>The parameters in the previous commands have the following possible values:</p>
+<p></p>
+<dl>
+<dt><a id="________pipe_________PipeName"></a><a id="________pipe_________pipename"></a><a id="________PIPE_________PIPENAME"></a><b>
+       pipe=
+       </b><i>PipeName</i></dt>
+<dd>
+<p>When NPIPE or SPIPE protocol is used, <i>PipeName</i> is a string that will serve as the name of the pipe. Each pipe name should identify a unique process server. If you attempt to reuse a pipe name, you will receive an error message. <i>PipeName</i> must not contain spaces or quotation marks. <i>PipeName</i> can include a numerical <b>printf</b>-style format code, such as <b>%x</b> or <b>%d</b>. The process server will replace this with the process ID of DbgSrv. A second such code will be replaced with the thread ID of DbgSrv.</p>
+<div class="alert"><b>Note</b>  You might need to enable file and printer sharing on the computer that is running the process server. In Control Panel, navigate to <b>Network and Internet &gt; Network and Sharing Center&gt; Advanced sharing settings</b>. Select <b>Turn on file and printer sharing</b>.</div>
+<div> </div>
+</dd>
+<dt><a id="________port_________Socket"></a><a id="________port_________socket"></a><a id="________PORT_________SOCKET"></a><b>
+       port=
+       </b><i>Socket</i></dt>
+<dd>
+<p>When TCP or SSL protocol is used, <i>Socket</i> is the socket port number.</p>
+<p>It is also possible to specify a range of ports separated by a colon. DbgSrv will check each port in this range to see if it is free. If it finds a free port and no error occurs, the process server will be created. The smart client will have to specify the actual port being used to connect to the server. To determine the actual port, use any of the methods described in <a href="searching_for_process_servers.htm"><b>Searching for Process Servers</b></a>; when this process server is displayed, the port will be followed by two numbers separated by a colon. The first number will be the actual port used; the second can be ignored. For example, if the port was specified as <b>port=51:60</b>, and port 53 was actually used, the search results will show "port=53:60". (If you are using the <b>clicon</b> parameter to establish a reverse connection, the smart client can specify a range of ports in this manner, while the process server must specify the actual port used.)</p>
+</dd>
+<dt><a id="________clicon_________Client"></a><a id="________clicon_________client"></a><a id="________CLICON_________CLIENT"></a><b>
+       clicon=
+       </b><i>Client</i></dt>
+<dd>
+<p>When TCP or SSL protocol is used and the <b>clicon</b> parameter is specified, a <i>reverse connection</i> will be opened. This means that the process server will try to connect to the smart client, instead of letting the client initiate the contact. This can be useful if you have a firewall that is preventing a connection in the usual direction. <i>Client</i> specifies the network name or IP address of the computer on which the smart client exists or will be created. The two initial backslashes (\\) are optional.</p>
+<p>Since the process server is looking for one specific client, you cannot connect multiple clients to the server if you use this method. If the connection is refused or is broken you will have to restart the process server. A reverse-connection process server will not appear when someone uses the <b>-QR</b> command-line option to display all active servers.</p>
+<div class="alert"><b>Note</b>    When <b>clicon</b> is used, it is best to start the smart client before the process server is created, although the usual order (server before client) is also permitted.</div>
+<div> </div>
+</dd>
+<dt><a id="port_________COMPort"></a><a id="port_________comport"></a><a id="PORT_________COMPORT"></a><b>port=
+       </b><i>COMPort</i></dt>
+<dd>
+<p>When COM protocol is used, <i>COMPort</i> specifies the COM port to be used. The prefix "COM" is optional -- for example, both "com2" and "2" are acceptable.</p>
+</dd>
+<dt><a id="baud_________BaudRate"></a><a id="baud_________baudrate"></a><a id="BAUD_________BAUDRATE"></a><b>baud=
+       </b><i>BaudRate</i></dt>
+<dd>
+<p>When COM protocol is used, <i>BaudRate</i> specifies the baud rate at which the connection will run. Any baud rate that is supported by the hardware is permitted.</p>
+</dd>
+<dt><a id="channel_________COMChannel"></a><a id="channel_________comchannel"></a><a id="CHANNEL_________COMCHANNEL"></a><b>channel=
+       </b><i>COMChannel</i></dt>
+<dd>
+<p>If COM protocol is used, <i>COMChannel</i> specifies the COM channel to be used in communicating with the debugging client. This can be any value between 0 and 254, inclusive. You can use a single COM port for multiple connections using different channel numbers. (This is different from the use of a COM ports for a debug cable -- in that situation you cannot use channels within a COM port.)</p>
+</dd>
+<dt><a id="________proto_________Protocol"></a><a id="________proto_________protocol"></a><a id="________PROTO_________PROTOCOL"></a><b>
+       proto=
+       </b><i>Protocol</i></dt>
+<dd>
+<p>If SSL or SPIPE protocol is used, <i>Protocol</i> specifies the Secure Channel (S-Channel) protocol. This can be any one of the strings tls1, pct1, ssl2,  or ssl3.</p>
+</dd>
+<dt><a id="Cert"></a><a id="cert"></a><a id="CERT"></a><i>Cert</i></dt>
+<dd>
+<p>If SSL or SPIPE protocol is used, <i>Cert</i> specifies the certificate. This can either be the certificate name or the certificate's thumbprint (the string of hexadecimal digits given by the certificate's snapin). If the syntax <b>certuser=</b><i>Cert</i> is used, the debugger will look up the certificate in the system store (the default store). If the syntax <b>machuser=</b><i>Cert</i> is used, the debugger will look up the certificate in the machine store. The specified certificate must support server authentication.</p>
+</dd>
+<dt><a id="________hidden"></a><a id="________HIDDEN"></a><b>
+       hidden</b></dt>
+<dd>
+<p>Prevents the process server from appearing when someone uses the <b>-QR</b> command-line option to display all active servers.</p>
+</dd>
+<dt><a id="________password_________Password"></a><a id="________password_________password"></a><a id="________PASSWORD_________PASSWORD"></a><b>
+       password=
+       </b><i>Password</i></dt>
+<dd>
+<p>Requires a smart client to supply the specified password in order to connect to the process server. <i>Password</i> can be any alphanumeric string, up to twelve characters in length.</p>
+<div class="alert"><b>Warning</b>    Using a password with TCP, NPIPE, or COM protocol only offers a small amount of protection, because the password is not encrypted.  When a password is used with SSL or SPIPE protocol, it is encrypted. If you want to establish a secure remote session, you must use SSL or SPIPE protocol.</div>
+<div> </div>
+</dd>
+<dt><a id="________ipversion_6"></a><a id="________IPVERSION_6"></a><b>
+       ipversion=6</b></dt>
+<dd>
+<p>
+       (Debugging Tools for Windows 6.6.07 and earlier only) Forces the debugger to use IP version 6  rather than version 4 when using TCP to connect to the Internet.  In Windows Vista and later versions, the debugger attempts to auto-default to IP version 6, making this option unnecessary.  </p>
+</dd>
+<dt><a id="________IcfEnable"></a><a id="________icfenable"></a><a id="________ICFENABLE"></a><b>
+       IcfEnable</b></dt>
+<dd>
+<p>
+       (Windows XP and later versions only)  Causes the debugger to enable the necessary port connections for TCP or named pipe communication when the Internet Connection Firewall is active. By default, the Internet Connection Firewall disables the ports used by these protocols. When <b>
+       IcfEnable</b> is used with a TCP connection, the debugger causes Windows to open the port specified by the <i>Socket</i> parameter. When <b>
+       IcfEnable</b> is used with a named pipe connection, the debugger causes Windows to open the ports used for named pipes (ports 139 and 445). The debugger does not close these ports after the connection terminates. </p>
+</dd>
+<dt><a id="-sifeo__________Executable"></a><a id="-sifeo__________executable"></a><a id="-SIFEO__________EXECUTABLE"></a><b>-sifeo 
+        </b><i>Executable</i></dt>
+<dd>
+<p>Suspends the Image File Execution Option (IFEO) value for the given image.  <i>Executable</i> should include the file name of the executable image, including the file name extensions. The <b>-sifeo</b> option allows DbgSrv to be set as the IFEO debugger for an image created by the <b>
+       -c</b> option, without causing recursive invocation due to the IFEO setting. This option can be used only if <b>
+       -c</b> is used. </p>
+</dd>
+<dt><a id="________-c"></a><a id="________-C"></a><b>
+       -c</b></dt>
+<dd>
+<p>Causes DbgSrv to create a new process. You can use this to create a process that you intend to debug. This is similar to spawning a new process from the debugger, except that this process will not be debugged when it is created. To debug this process, determine its PID and use the <b>-p</b> option when starting the smart client to debug this process. </p>
+</dd>
+<dt><a id="s"></a><a id="S"></a><b>s</b></dt>
+<dd>
+<p>Causes the newly-created process to be immediately suspended. If you are using this option, it is recommended that you use CDB as your smart client, and that you start the smart client with the <b>-pb</b> command-line option, in conjunction with <b>-p PID</b>. If you include the <b>-pb</b> option on the command line, the process will resume when the debugger attaches to it; otherwise you can resume the process with the <a href="_m__resume_thread_.htm"><b>~*m</b></a> command. </p>
+</dd>
+<dt><a id="AppCmdLine"></a><a id="appcmdline"></a><a id="APPCMDLINE"></a><i>AppCmdLine</i></dt>
+<dd>
+<p>Specifies the full command line of the process to be created. <i>AppCmdLine</i> can be either a Unicode or ASCII string, and can include any printable character. All text that appears after the <b>-c[s]</b> parameter will be taken to form the string <i>AppCmdLine</i>.</p>
+</dd>
+<dt><a id="-x"></a><a id="-X"></a><b>-x</b></dt>
+<dd>
+<p>Causes the remainder of the command line to be ignored. This option is useful if you are launching DbgSrv from an application that may append unwanted text to its command line.</p>
+</dd>
+<dt><a id="________-pc"></a><a id="________-PC"></a><b>
+       -pc</b></dt>
+<dd>
+<p>Causes the remainder of the command line to be ignored. This option is useful if you are launching DbgSrv from an application that may append unwanted text to its command line. A syntax error results if <b>
+       -pc</b> is the final element on the DbgSrv command line. Aside from this restriction, <b>
+       -pc</b> is identical to <b>-x</b>.  </p>
+</dd>
+</dl>
+<p>You can start any number of process servers on one computer. However, this is generally unnecessary, since one process server can be used by any number of smart clients (each engaged in a different debugging session).</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Activating a Process Server%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,341 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="SymChk uses the following syntax:"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>SymChk Command-Line Options</title>
+
+<meta name="MS-HAID" content="SymChk_b85bc2c3-7b60-48dd-8095-0e3b28ce4af1.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.symchk_command_line_options"></a>SymChk Command-Line Options</h1>
+</div>
+<p>SymChk uses the following syntax: </p>
+<pre class="syntax"><b>symchk [/r] [/v | /q ] </b><i>FileNames</i><b> /s[</b><i>Opts</i><b>] </b><i>SymbolPath</i><b> </b><i>Options</i><b>
+
+symchk [/r] [/v | /q ] /ie </b><i>ExeFile</i><b> /s[</b><i>Opts</i><b>] </b><i>SymbolPath</i><b> </b><i>Options</i><b>
+
+symchk [/r] [/v | /q ] /id </b><i>DumpFile</i><b> /s[</b><i>Opts</i><b>] </b><i>SymbolPath</i><b> </b><i>Options</i><b>
+
+symchk [/r] [/v | /q ] /ih </b><i>HotFixFile</i><b> /s[</b><i>Opts</i><b>] </b><i>SymbolPath</i><b> </b><i>Options</i><b>
+
+symchk [/r] [/v | /q ] /ip </b><i>ProcessID</i><b> /s[</b><i>Opts</i><b>] </b><i>SymbolPath</i><b> </b><i>Options</i><b>
+
+symchk [/r] [/v | /q ] /it </b><i>TextFileList</i><b> /s[</b><i>Opts</i><b>] </b><i>SymbolPath Options</i><b>
+
+symchk [/r] [/v | /q ] /om </b><i>Manifest FileNames</i><b>
+
+symchk [/v | /q ] /im </b><i>ManifestList </i><b>/s[</b><i>Opts</i><b>] </b><i>SymbolPath Options</i><b>
+
+symchk [/v | /q ] /om </b><i>Manifest </i><b>/ie </b><i>ExeFile</i><b>
+
+symchk [/v | /q ] /om </b><i>Manifest </i><b>/id </b><i>DumpFile</i><b>
+
+symchk [/v | /q ] /om </b><i>Manifest </i><b>/ih </b><i>HotFixFile</i><b>
+
+symchk [/v | /q ] /om </b><i>Manifest </i><b>/ip </b><i>ProcessFile</i><b>
+
+symchk [/v | /q ] /om </b><i>Manifest </i><b>/it </b><i>TextFileList</i><b>
+</b>
+   </pre>
+<h2><a id="ddk_symchk_command_line_options_dtoolq"></a><a id="DDK_SYMCHK_COMMAND_LINE_OPTIONS_DTOOLQ"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="________r______"></a><a id="________R______"></a>       <b>/r</b>      </dt>
+<dd>
+<p>If <i>Files</i> specifies a directory, the <b>/r</b> option causes SymChk to recursively search all subdirectories under this directory for program files.</p>
+</dd>
+<dt><a id="________v______"></a><a id="________V______"></a>       <b>/v</b>      </dt>
+<dd>
+<p>Displays verbose information. This includes the file name of every program file whose symbols were investigated and whether it passed, failed, or was ignored.  </p>
+</dd>
+<dt><a id="________q______"></a><a id="________Q______"></a>       <b>/q</b>      </dt>
+<dd>
+<p>Enables quiet mode. All output will be suppressed (unless the <b>/ot</b> option is included).</p>
+</dd>
+<dt><a id="_______FileNames______"></a><a id="_______filenames______"></a><a id="_______FILENAMES______"></a>       <i>FileNames</i>      </dt>
+<dd>
+<p>Specifies the program files whose symbols are to be checked. Absolute paths, relative paths, and UNC paths are permitted. An asterisk (<b>*</b>) wildcard is permitted. If <i>FileNames</i> ends in a slash, it is taken to be a directory name, and all files within that directory are checked. If <i>FileNames</i> contains spaces, it must be enclosed in quotation marks.</p>
+</dd>
+<dt><a id="________ie_______ExeFile______"></a><a id="________ie_______exefile______"></a><a id="________IE_______EXEFILE______"></a>       <b>/ie</b>       <i>ExeFile</i>      </dt>
+<dd>
+<p>Specifies the name of a program that is currently executing. The symbols for this program will be checked. <i>ExeFile</i> must include the name of the file and file extension (usually .exe), but no path information. If there are two different executables with the same name, this option is not recommended. <i>ExeFile</i> can specify any program, including a kernel-mode driver. If <i>ExeFile</i> is a single asterisk ( <b>*</b> ), SymChk will check the symbols for all running processes, including drivers.  </p>
+</dd>
+<dt><a id="________id_______DumpFile______"></a><a id="________id_______dumpfile______"></a><a id="________ID_______DUMPFILE______"></a>       <b>/id</b>       <i>DumpFile</i>      </dt>
+<dd>
+<p>Specifies a memory dump file. The symbols for this dump file will be checked.</p>
+</dd>
+<dt><a id="________ih_______HotFixFile______"></a><a id="________ih_______hotfixfile______"></a><a id="________IH_______HOTFIXFILE______"></a>       <b>/ih</b>       <i>HotFixFile</i>      </dt>
+<dd>
+<p>Specifies a self-extracting Hotfix CAB file.</p>
+</dd>
+<dt><a id="________ip_______ProcessID______"></a><a id="________ip_______processid______"></a><a id="________IP_______PROCESSID______"></a>       <b>/ip</b>       <i>ProcessID</i>      </dt>
+<dd>
+<p>Specifies the process ID of a program that is currently executing. The symbols for this program will be checked. <i>ProcessID</i> must be specified as a decimal number. There are two special wildcards supported:</p>
+<ul>
+<li>
+<p>If <i>ProcessID</i> is zero ( <b>0</b> ), SymChk will check the symbols for all running drivers.</p>
+</li>
+<li>
+<p>If <i>ProcessID</i> is a single asterisk ( <b>*</b> ), SymChk will check the symbols for all running processes, including drivers.</p>
+</li>
+</ul>
+</dd>
+<dt><a id="________it_______TextFileList______"></a><a id="________it_______textfilelist______"></a><a id="________IT_______TEXTFILELIST______"></a>       <b>/it</b>       <i>TextFileList</i>      </dt>
+<dd>
+<p>Specifies a text file that contains a list of program files. The symbols for all these programs will be checked. <i>TextFileList</i> must specify exactly one file (by relative, absolute, or UNC path, but with no wildcards); if it contains spaces it should be enclosed in quotation marks. Within this file, each line indicates a program file (by relative, absolute, or UNC paths), and an asterisk wildcard (<b>*</b>) is permitted. However, any line using this wildcard must use a relative path.</p>
+<p> If a line in this file contains spaces, it should be enclosed in quotation marks. A semicolon within this file is a comment character -- everything between a semicolon and the end of the line will be ignored.</p>
+</dd>
+<dt><a id="________im_______ManifestList______"></a><a id="________im_______manifestlist______"></a><a id="________IM_______MANIFESTLIST______"></a>       <b>/im</b>       <i>ManifestList</i>      </dt>
+<dd>
+<p>Specifies that the input to the command is a manifest file previously created by using the <b>/om</b> parameter. The manifest file contains information about the files for which symbols are retrieved. For more information about using a manifest file, see <a href="using_a_manifest_file_with_symchk.htm">Using a Manifest File with SymChk</a>. </p>
+</dd>
+<dt><a id="________om_______Manifest______"></a><a id="________om_______manifest______"></a><a id="________OM_______MANIFEST______"></a>       <b>/om</b>       <i>Manifest</i>      </dt>
+<dd>
+<p>Specifies that a manifest file is created. The manifest file contains information about a set of files for which symbols will be retrieved, by using the <b>/im</b> parameter, at a later time.</p>
+</dd>
+<dt><a id="________s_Opts__SymbolPath"></a><a id="________s_opts__symbolpath"></a><a id="________S_OPTS__SYMBOLPATH"></a>       <b>/s</b>[<i>Opts</i>] <i>SymbolPath</i></dt>
+<dd>
+<p>Specifies the directories containing symbols. Absolute paths, relative paths, and UNC paths are permitted. Any number of directories can be specified -- multiple directories should be separated with semicolons. If <i>SymbolPath</i> contains spaces, it must be enclosed in quotation marks. If you wish to specify a symbol server within this path, you should use one of the following syntaxes:</p>
+<pre class="syntax" xml:space="preserve"><code>srv*DownstreamStore*\\Server\Share
+srv*\\Server\Share</code></pre>
+<p> It is not recommended that you omit the <b>/s</b>[<i>Opts</i>] <i>SymbolPath</i> parameter, but if it is omitted, SymChk will point to the public symbol store by using the following default path:</p>
+<pre class="syntax" xml:space="preserve"><code>srv*%SystemRoot%\symbols*https://msdl.microsoft.com/download/symbols</code></pre>
+<p>Any number of the following options can follow <b>/s</b>. There can be no space between the <b>/s</b> and these options:</p>
+<p></p>
+<dl>
+<dt><a id="e"></a><a id="E"></a><b>e</b></dt>
+<dd>
+<p>SymChk will check each path individually instead of checking all paths at once.</p>
+</dd>
+<dt><a id="u"></a><a id="U"></a><b>u</b></dt>
+<dd>
+<p>Downstream stores will be updated. If the symbol path includes a downstream store, the symbol store will be searched for the symbol files. Only symbol stores that are being checked by SymChk will be updated.</p>
+</dd>
+<dt><a id="p"></a><a id="P"></a><b>p</b></dt>
+<dd>
+<p>Force checking for private symbols. Public symbols will be treated as not matching. The <b>p</b> option implies <b>e</b> and <b>u</b>, and cannot be used with <b>s</b>.</p>
+</dd>
+<dt><a id="s"></a><a id="S"></a><b>s</b></dt>
+<dd>
+<p>Force checking for public (split) symbols. Private symbols will be treated as not matching. The <b>s</b> option implies <b>e</b> and <b>u</b>, and cannot be used with <b>p</b>.</p>
+</dd>
+</dl>
+</dd>
+<dt><a id="_______Options______"></a><a id="_______options______"></a><a id="_______OPTIONS______"></a>       <i>Options</i>      </dt>
+<dd>
+<p>The available options are divided into several classes. Each class of options controls a different set of features.</p>
+<p><b>Output options.</b> Any number of the following options can be specified. These options can be abbreviated by using <b>/o</b> only once -- for example, <b>/oi /oe</b> can be written as <b>/oie</b>.</p>
+<table>
+<tr>
+<th>Option</th>
+<th>Effect</th>
+</tr>
+<tr>
+<td>
+<p><b>/oe</b></p>
+</td>
+<td>
+<p>Output will include individual errors.  This option is only useful if <b>/q</b> is used, because individual errors are automatically displayed if quiet mode hasn't been activated.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>/op</b></p>
+</td>
+<td>
+<p>Output will list each file that passes. (By default, SymChk only displays files that fail testing.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>/oi</b></p>
+</td>
+<td>
+<p>Output will list each file that was ignored. (By default, SymChk only displays files that fail testing.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>/od</b></p>
+</td>
+<td>
+<p>Output will include full details. Same as <b>/oe /op /oi</b>. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>/ot</b></p>
+</td>
+<td>
+<p>Output will include result totals. This option is only useful if <b>/q</b> is used, because these totals are automatically displayed if quiet mode hasn't been activated.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>/ob</b></p>
+</td>
+<td>
+<p>The full path for binaries will be included in all output messages.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>/os</b></p>
+</td>
+<td>
+<p>The full path for symbols will be included in all output messages.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>/oc </b><i>Dir</i></p>
+</td>
+<td>
+<p>SymChk will create a traditional symbol tree in the directory <i>Dir</i> that contains a list of all the symbol files checked.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p><b>DBG file options.</b> These options control how SymChk checks <i>.dbg</i> symbol files. Only one of the following options can be specified.</p>
+<table>
+<tr>
+<th>Option</th>
+<th>Effect</th>
+</tr>
+<tr>
+<td>
+<p><b>/ds</b></p>
+</td>
+<td>
+<p>SymChk will verify that .dbg information was stripped from the executable and only appears in the .dbg file, and that the executable points to the .dbg file. If the program was built without .dbg symbol files, this option has no effect. This is the default.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>/de</b></p>
+</td>
+<td>
+<p>SymChk will verify that .dbg information was not stripped from the executable and that the executable does not point to a .dbg file. If the program was built without .dbg symbol files, this option has no effect.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>/dn</b></p>
+</td>
+<td>
+<p>SymChk will verify that .dbg information is not present in the image, and that the image does not point to a .dbg file.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p><b>PDB file options.</b> These options control how SymChk checks .pdb symbol files. Only one of the following options can be specified.  </p>
+<table>
+<tr>
+<th>Option</th>
+<th>Effect</th>
+</tr>
+<tr>
+<td>
+<p><b>/pf</b></p>
+</td>
+<td>
+<p>SymChk performs no checking on the contents of the .pdb file -- it just verifies that the files exist and match the binary. This is the default.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>/ps</b></p>
+</td>
+<td>
+<p>SymChk will verify that the .pdb files have been stripped of source line, data type, and global information.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>/pt</b></p>
+</td>
+<td>
+<p>SymChk will verify that the .pdb files contain data type information.  </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p><b>Filtering options.</b> These options control how module filtering is performed when SymChk is checking processes or dump files. Only one of the following options can be specified.</p>
+<table>
+<tr>
+<th>Option</th>
+<th>Effect</th>
+</tr>
+<tr>
+<td>
+<p><b>/fm </b><i>Module</i></p>
+</td>
+<td>
+<p>SymChk will only check dump files or processes associated with the specified module. <i>Module</i> must include the full filename, but must not include any part of the directory path.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p><b>Symbol checking options.</b> Any number of the following options can be specified.</p>
+<table>
+<tr>
+<th>Option</th>
+<th>Effect</th>
+</tr>
+<tr>
+<td>
+<p><b>/cs</b></p>
+</td>
+<td>
+<p>SymChk won't verify that CodeView data is present. (By default, the presence of CodeView data is verified.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>/cc</b></p>
+</td>
+<td>
+<p>When SymChk is checking a hotfix CAB file, it will not look for symbols inside the cab. (By default, SymChk will look for symbols in the cab as well as in the provided symbol path.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>/ea </b><i>File</i></p>
+</td>
+<td>
+<p>SymChk won't verify symbols for the programs listed in the specified file. This allows you to veto certain programs that would otherwise be verified. <i>File</i> must specify exactly one file (by relative, absolute, or UNC path, but without wildcards); if it contains spaces it should be enclosed in quotation marks. Within <i>File</i>, each line indicates a program file (by relative, absolute, or UNC paths); no wildcards are permitted. If a line in this file contains spaces it should be enclosed in quotation marks. A semicolon within this file is a comment character -- everything between a semicolon and the end of the line will be ignored. If a symbol server is being used, symbols for these programs will not be copied to the downstream store.  </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>/ee </b><i> File</i></p>
+</td>
+<td>
+<p>Error messages for those programs listed in the specified file are suppressed. "Success" and "ignore" messages will appear as usual, and symbol files will be copied to the downstream store as usual. The format of <i>File</i> and the format of its contents are the same as that for <b>/ea </b><i>File</i>.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+</dd>
+</dl>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about SymChk, see <a href="using_symchk.htm">Using SymChk</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20SymChk Command-Line Options%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

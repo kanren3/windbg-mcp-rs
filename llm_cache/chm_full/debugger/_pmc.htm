@@ -1,0 +1,103 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !pmc extension displays the Performance Monitor Counter (PMC) register at the specified address."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!pmc</title>
+
+<meta name="MS-HAID" content="r28_exts_kernel_N_e2bb4a96-9a23-4425-ac75-2a0894a644b6.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._pmc"></a>!pmc</h1>
+</div>
+<p>The <b>!pmc</b> extension displays the Performance Monitor Counter (PMC) register at the specified address.</p>
+<p>This extension is supported only on an Itanium-based target computer.</p>
+<pre class="syntax"><b>!pmc </b>[<b>-</b> <i>Option</i>]<b> </b><i>Expression</i><b> </b>[<i>DisplayLevel</i>]</pre>
+<div class="alert"><b>Important</b>  This command has been deprecated  in the Windows Debugger Version 10.0.14257 and later, and is no longer available.</div>
+<div> </div>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Option______"></a><a id="_______option______"></a><a id="_______OPTION______"></a>       <i>Option</i>      </dt>
+<dd>
+<p>Can be any one of the following values:</p>
+<p></p>
+<dl>
+<dt><a id="gen"></a><a id="GEN"></a><b>gen</b></dt>
+<dd>
+<p>Displays the register as a generic PMC register.</p>
+</dd>
+<dt><a id="btb"></a><a id="BTB"></a><b>btb</b></dt>
+<dd>
+<p>Displays the register as a branch trace buffer (BTB) PMC register.</p>
+</dd>
+</dl>
+</dd>
+<dt><a id="_______Expression______"></a><a id="_______expression______"></a><a id="_______EXPRESSION______"></a>       <i>Expression</i>      </dt>
+<dd>
+<p>Specifies the hexadecimal address of a PMC. The expressions <b>@kpfcgen</b> and <b>@kpfcbtb</b> can be used as values for this parameter. </p>
+<p>If <i>Expression</i> is <b>@kpfcgen</b>, the debugger displays the current processor PMC register as a generic PMC register. You can also display the current processor PMC register as a generic PMC register by setting <i>Option</i> to <b>gen</b> and using <b>@kpfc4</b>, <b>@kpfc5</b>, <b>@kpfc6</b>, or <b>@kpfc7</b> for the <i>Expression</i> value. </p>
+<p>If <i>Expression</i> is <b>@kpfcbtb</b>, the debugger displays the current processor PMC register as a BTB PMC register. You can also display the current processor PMC register as a BTB PMC register by setting <i>Option</i> to <b>btb</b> and using @kpfc12 for the <i>Expression</i> value. </p>
+</dd>
+<dt><a id="_______DisplayLevel______"></a><a id="_______displaylevel______"></a><a id="_______DISPLAYLEVEL______"></a>       <i>DisplayLevel</i>      </dt>
+<dd>
+<p>Can be any one of the following values:</p>
+<p></p>
+<dl>
+<dt><a id="0"></a><b>0</b></dt>
+<dd>
+<p>Displays only the values of each PMC register field. This is the default.</p>
+</dd>
+<dt><a id="1"></a><b>1</b></dt>
+<dd>
+<p>Displays detailed information about the PMC register fields that are not reserved or ignored.</p>
+</dd>
+<dt><a id="2"></a><b>2</b></dt>
+<dd>
+<p>Displays detailed information about all PMC register fields, including those that are ignored or reserved.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Windows 2000</b></p>
+</td>
+<td>
+<p>Unavailable</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Kdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!pmc%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

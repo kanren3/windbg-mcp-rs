@@ -1,0 +1,34 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Debugging BIOS Code"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Debugging BIOS Code</title>
+
+<meta name="MS-HAID" content="r07_use_operation_89b2c296-6e86-45cc-86b6-511f423f8989.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.debugging_bios_code"></a>Debugging BIOS Code</h1>
+</div>
+<h2><a id="ddk_debugging_bios_code_dbg"></a><a id="DDK_DEBUGGING_BIOS_CODE_DBG"></a></h2>
+<p>BIOS code is not built from standard assembly code, so it requires different debugging techniques.</p>
+<p>On an x86-based processor, the BIOS uses 16-bit code. To disassemble this code, use the <a href="ux__unassemble_x86_bios_.htm"><b>ux (Unassemble x86 BIOS)</b></a> command. To display information about the Intel Multiprocessor Specification (MPS), use the <a href="_mps.htm"><b>!mps</b></a> extension.</p>
+<p>If you are debugging ACPI BIOS code, the preceding commands do not work, because ACPI BIOS is written in ACPI Machine Language (AML). To disassemble this code, you should use <a href="_amli_u.htm"><b>!amli u</b></a>. For more information about this kind of debugging, see <a href="acpi_debugging.htm">ACPI Debugging</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Debugging BIOS Code%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

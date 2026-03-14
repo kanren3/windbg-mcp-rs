@@ -1,0 +1,79 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !winrterr sets the debugger reporting mode for Windows Runtime errors."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!winrterr</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._winrterr"></a>!winrterr</h1>
+</div>
+<p>The <b>!winrterr</b> sets the debugger reporting mode for Windows Runtime errors.</p>
+<pre class="syntax"><b>!winrterr</b> Mode
+<b>!winrterr</b></pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="Mode"></a><a id="mode"></a><a id="MODE"></a><i>Mode</i></dt>
+<dd>
+<p>The following table describes the possible values for <i>Mode</i>.</p>
+<p></p>
+<table>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+<tr>
+<td width="40%">
+<p><a id="report"></a><a id="REPORT"></a>report</p>
+</td>
+<td width="60%">
+<p>When a Windows Runtime error occurs, the error and  related text are displayed in the debugger, but execution contunues. This is the default mode.</p>
+</td>
+</tr>
+<tr>
+<td width="40%">
+<p><a id="break"></a><a id="BREAK"></a>break</p>
+</td>
+<td width="60%">
+<p>When a Windows Runtime error occurs, the error and  related text are displayed in the debugger, and execution stops.</p>
+</td>
+</tr>
+<tr>
+<td width="40%">
+<p><a id="quiet"></a><a id="QUIET"></a>quiet</p>
+</td>
+<td width="60%">
+<p>When a Windows Runtime error occurs, nothing is displayed in the debugger, and execution continues. </p>
+</td>
+</tr>
+</table>
+<p> </p>
+</dd>
+</dl>
+<p>If <i>Mode</i> is omitted, <b>!winrterr</b> displays the current reporting mode. If the debugger has broken in as a result of a Windows Runtime error, the error and related text are also displayed.</p>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="windows_runtime_debugger_commands.htm">Windows Runtime Debugger Commands</a></dt>
+<dt><a href="_hstring.htm"><b>!hstring</b></a></dt>
+<dt><a href="_hstring2.htm"><b>!hstring2</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!winrterr%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,101 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Starting with Windows Driver Kit (WDK) 8.0, the driver development environment and the Windows debugger are integrated into Microsoft Visual Studio."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Debugging Environments</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.debuggers_in_the_debugging_tools_for_windows_package"></a>Debugging Environments</h1>
+</div>
+<p>Starting with  Windows Driver Kit (WDK) 8.0, the driver development environment and the Windows debugger are integrated into Microsoft Visual Studio.</p>
+<p>After you install Visual Studio and the WDK, you have six available debugging environments:</p>
+<ul>
+<li>Visual Studio with integrated Windows debugger</li>
+<li>Microsoft Windows Debugger (WinDbg)</li>
+<li>Microsoft Kernel Debugger (KD)</li>
+<li>NTKD</li>
+<li>Microsoft Console Debugger (CDB)</li>
+<li>Microsoft NT Symbolic Debugger (NTSD)</li>
+</ul>
+<p>The following sections describe the debugging environments.</p>
+<h3><a id="Visual_Studio_with_integrated_Windows_debugger"></a><a id="visual_studio_with_integrated_windows_debugger"></a><a id="VISUAL_STUDIO_WITH_INTEGRATED_WINDOWS_DEBUGGER"></a>Visual Studio with integrated Windows debugger</h3>
+<p>Starting with  WDK 8.0, the driver development environment and the Windows debugger are integrated into Visual Studio. In this integrated environment, most of the tools you need for coding, building, packaging, testing, debugging, and deploying a driver are available in the Visual Studio user interface.</p>
+<p>Typically kernel-mode debugging requires two computers. The debugger runs on the <i>host computer</i> and the code being debugged runs on the <i>target computer</i>. With the the Windows debugger integrated into Visual Studio, you can perform a wide variety of debugging tasks, including those shown in the following list, from the host computer.</p>
+<ul>
+<li>Configure a set of target computers for debugging.</li>
+<li>Configure the debugging connections to a set of target computers.</li>
+<li>Launch a kernel-mode debugging session between the host computer and a target computer.</li>
+<li>Debug a user-mode process on the host computer.</li>
+<li>Debug a user-mode process on a target computer.</li>
+<li>Connect to remote debugging sessions.</li>
+<li>View assembly code and source code.</li>
+<li>View and manipulate local variables, parameters, and other symbols.</li>
+<li>View and manipulate memory.</li>
+<li>Navigate  call stacks.</li>
+<li>Set breakpoints.</li>
+<li>Execute debugger commands.</li>
+</ul>
+<p>You can also build drivers, deploy drivers, and run driver tests from within the Visual Studio user interface. If you make use of the Visual Studio integration provided by both the WDK and Debugging Tools for Windows, you can perform almost all of the driver development, packaging, deployment, testing, and debugging tasks from within Visual Studio on the host computer. Here are some of the WDK capabilities that have been integrated into Visual Studio.</p>
+<ul>
+<li>Configure a set of target computers for driver testing.</li>
+<li>Create and sign a driver package.</li>
+<li>Deploy a driver package to a target computer.</li>
+<li>Install and load a driver on a target computer.</li>
+<li>Test a driver on a target computer.</li>
+</ul>
+<h3><a id="WinDbg"></a><a id="windbg"></a><a id="WINDBG"></a>WinDbg</h3>
+<p>Microsoft Windows Debugger (WinDbg) is a powerful Windows-based debugger that is capable of both user-mode and kernel-mode debugging. WinDbg provides debugging for the Windows kernel, kernel-mode drivers, and system services, as well as user-mode applications and drivers.</p>
+<p>WinDbg uses the Visual Studio debug symbol formats for source-level debugging. It can access any symbol or variable from a module that has PDB symbol files, and can access any public function's name that is exposed by modules that were compiled with COFF symbol files (such as Windows .dbg files).</p>
+<p>WinDbg can view source code, set breakpoints, view variables (including C++ objects), stack traces, and memory. Its Debugger Command window allows the user to issue a wide variety of commands.</p>
+<p>For kernel-mode debugging, WinDbg typically requires two computers (the host computer and the target computer). WinDbg also supports various remote debugging options for both user-mode and kernel-mode targets.</p>
+<p>WinDbg is a graphical-interface counterpart to CDB/NTSD and to KD/NTKD.</p>
+<h3><a id="KD"></a><a id="kd"></a>KD</h3>
+<p>Microsoft Kernel Debugger (KD) is a character-based console program that enables in-depth analysis of kernel-mode activity on all NT-based operating systems.  You can use KD can to debug kernel-mode components and drivers, or to monitor the behavior of the operating system itself. KD also supports multiprocessor debugging.</p>
+<p>Typically, KD does not run on the computer being debugged. You need two computers (the <i>host computer</i> and the <i>target computer</i>) for kernel-mode debugging.</p>
+<h3><a id="NTKD"></a><a id="ntkd"></a>NTKD</h3>
+<p>There is a variation of the KD debugger named NTKD. It is identical to KD in every way, except that it spawns a new text window when it is started, whereas KD inherits the Command Prompt window from which it was invoked.</p>
+<h3><a id="CDB"></a><a id="cdb"></a>CDB</h3>
+<p>Microsoft Console Debugger (CDB) is a character-based console program that enables low-level analysis of Windows user-mode memory and constructs. CDB is extremely powerful for debugging a program that is currently running or has recently crashed (live analysis), yet simple to set up. It can be used to investigate the behavior of a working application. In the case of a failing application, CDB can be used to obtain a stack trace or to look at the guilty parameters. It works well across a network (using a remote access server), as it is character-based.</p>
+<p>With CDB, you can display and execute program code, set breakpoints, and examine and change values in memory. CDB can analyze binary code by disassembling it and displaying assembly instructions. It can also analyze source code directly.</p>
+<p>Because CDB can access memory locations through addresses or global symbols, you can refer to data and instructions by name rather than by address, making it easy to locate and debug specific sections of code. CDB supports debugging multiple threads and processes. It is extensible, and can read and write both paged and non-paged memory.</p>
+<p>If the target application is itself a console application, the target will share the console window with CDB. To spawn a separate console window for a target console application, use the <i>-2</i> command-line option.</p>
+<h3><a id="NTSD"></a><a id="ntsd"></a>NTSD</h3>
+<p>There is a variation of the CDB debugger named Microsoft NT Symbolic Debugger (NTSD). It is identical to CDB in every way, except that it spawns a new text window when it is started, whereas CDB inherits the Command Prompt window from which it was invoked.</p>
+<p>Like CDB, NTSD is fully capable of debugging both console applications and graphical Windows programs. (The name <i>Console Debugger</i> is used to indicate the fact that CDB is classified as a console application; it does not imply that the target application must be a console application.)</p>
+<p>Since the <b>start</b> command can also be used to spawn a new console window, the following two constructions will give the same results:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>start cdb parameters 
+ntsd parameters</pre>
+</td>
+</tr>
+</table></span></div>
+<p> It is possible to redirect the input and output from NTSD (or CDB)  so that it can be controlled from a kernel debugger (either Visual Studio, WinDbg, or KD). If this technique is used with NTSD, no console window will appear at all. Controlling NTSD from the kernel debugger is therefore especially useful, since it results in an extremely light-weight debugger that places almost no burden on the computer containing the target application. This combination can be used to debug system processes, shutdown, and the later stages of boot up. See <a href="controlling_the_user_mode_debugger_from_the_kernel_debugger.htm">Controlling the User-Mode Debugger from the Kernel Debugger</a> for details.</p>
+<h2><a id="related_topics"></a>Related topics</h2>
+<dl>
+<dt><a href="introduction6.htm">Windows Debugging</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Debugging Environments%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

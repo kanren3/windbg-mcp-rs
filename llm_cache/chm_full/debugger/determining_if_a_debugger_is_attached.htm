@@ -1,0 +1,44 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Determining if a Debugger is Attached"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Determining if a Debugger is Attached</title>
+
+<meta name="MS-HAID" content="t02_debugfns_a9bb1d20-f18d-4905-a632-2da4637bde68.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.determining_if_a_debugger_is_attached"></a>Determining if a Debugger is Attached</h1>
+</div>
+<h2><a id="ddk_determining_if_a_debugger_is_attached_dbg"></a><a id="DDK_DETERMINING_IF_A_DEBUGGER_IS_ATTACHED_DBG"></a></h2>
+<p>Kernel-mode code can determine the status of kernel debugging by using the following variables and routines:</p>
+<ul>
+<li>
+<p>(Windows XP and later)  The KD_DEBUGGER_ENABLED global kernel variable indicates whether kernel debugging is enabled.</p>
+</li>
+<li>
+<p>(Windows XP and later)  The KD_DEBUGGER_NOT_PRESENT global kernel variable indicates whether a kernel debugger is currently attached.</p>
+</li>
+<li>
+<p>(Windows Server 2003 and later)  The <b>KdRefreshDebuggerNotPresent</b> routine refreshes the value of KD_DEBUGGER_NOT_PRESENT.</p>
+</li>
+</ul>
+<p>For complete documentation, see the Windows Driver Kit.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Determining if a Debugger is Attached%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

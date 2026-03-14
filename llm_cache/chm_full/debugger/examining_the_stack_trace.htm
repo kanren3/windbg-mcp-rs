@@ -1,0 +1,33 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Examining the Stack Trace"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Examining the Stack Trace</title>
+
+<meta name="MS-HAID" content="Engine_DG_0756bc19-99ad-464e-9978-6965c4714540.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.examining_the_stack_trace"></a>Examining the Stack Trace</h1>
+</div>
+<p>A <i>call stack</i> contains the data for the functions calls made by a thread.  The data for each function call is called a <i>stack frame</i> and includes the return address, parameters passed to the function, and the function's local variables.  Each time a function call is made a new stack frame is pushed onto the top of the stack.  When that function returns, the stack frame is popped off the stack.</p>
+<p>Each thread has its own call stack, representing the calls made in that thread.</p>
+<p>To get a stack trace, use the methods <a href="getstacktrace.htm"><b>GetStackTrace</b></a> and <a href="getcontextstacktrace.htm"><b>GetContextStackTrace</b></a>.  A stack trace can be printed using <a href="outputstacktrace.htm"><b>OutputStackTrace</b></a> and <a href="outputcontextstacktrace.htm"><b>OutputContextStackTrace</b></a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Examining the Stack Trace%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

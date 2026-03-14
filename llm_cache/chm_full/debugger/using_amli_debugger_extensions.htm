@@ -1,0 +1,199 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Using AMLI Debugger Extensions"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Using AMLI Debugger Extensions</title>
+
+<meta name="MS-HAID" content="t11_rpc_acpi_568f3787-95ad-41ea-9eb5-d5fd9d9bca0c.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.using_amli_debugger_extensions"></a>Using AMLI Debugger Extensions</h1>
+</div>
+<h2><a id="ddk_using_amli_debugger_extensions_dbg"></a><a id="DDK_USING_AMLI_DEBUGGER_EXTENSIONS_DBG"></a></h2>
+<p>In Windows XP and later versions of Windows, AMLI Debugger extension commands are contained in the extension module Kdexts.dll and use the following syntax:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !amli command [parameters] </code></pre>
+<p>In Windows 2000, these extension commands are contained in Acpikd.dll and use the following syntax:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !acpikd.amli command [parameters] </code></pre>
+<p>As with any extension module, after it has been loaded you can omit the <b>acpikd</b> prefix.</p>
+<p>If you are at the AMLI Debugger prompt, you can execute any of these extension commands by simply entering the <i>command</i> name without the <b>!amli</b> prefix:</p>
+<pre class="syntax" xml:space="preserve"><code>AMLI(? for help)-&gt; command [parameters] </code></pre>
+<p>When you are at this prompt, the <b>!amli debugger</b> command is not available (because it would be meaningless). Also, the help command ( <b>?</b> ) at this prompt shows all AMLI Debugger extensions and commands, while the <b>!amli ?</b> extension only displays help on actual extensions.</p>
+<table>
+<tr>
+<th>Action</th>
+<th>Extension Command</th>
+</tr>
+<tr>
+<td>
+<p>Display Help </p>
+</td>
+<td>
+<p><a href="_amli__.htm"><b>!amli ?</b></a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Set AML Breakpoint </p>
+</td>
+<td>
+<p><a href="_amli_bp.htm"><b>!amli bp</b></a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>List AML Breakpoints </p>
+</td>
+<td>
+<p><a href="_amli_bl.htm"><b>!amli bl</b></a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Disable AML Breakpoint </p>
+</td>
+<td>
+<p><a href="_amli_bd.htm"><b>!amli bd</b></a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Enable AML Breakpoint </p>
+</td>
+<td>
+<p><a href="_amli_be.htm"><b>!amli be</b></a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Clear AML Breakpoint </p>
+</td>
+<td>
+<p><a href="_amli_bc.htm"><b>!amli bc</b></a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Enter AMLI Debugger </p>
+</td>
+<td>
+<p><a href="_amli_debugger.htm"><b>!amli debugger</b></a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Display Event Log </p>
+</td>
+<td>
+<p><a href="_amli_dl.htm"><b>!amli dl</b></a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Clear Event Log </p>
+</td>
+<td>
+<p><a href="_amli_cl.htm"><b>!amli cl</b></a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Display Heap</p>
+</td>
+<td>
+<p><a href="_amli_dh.htm"><b>!amli dh</b></a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Display Data Object </p>
+</td>
+<td>
+<p><a href="_amli_do.htm"><b>!amli do</b></a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Display Stack </p>
+</td>
+<td>
+<p><a href="_amli_ds.htm"><b>!amli ds</b></a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Display Namespace Object </p>
+</td>
+<td>
+<p><a href="_amli_dns.htm"><b>!amli dns</b></a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Find Namespace Object </p>
+</td>
+<td>
+<p><a href="_amli_find.htm"><b>!amli find</b></a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Display Nearest Method </p>
+</td>
+<td>
+<p><a href="_amli_ln.htm"><b>!amli ln</b></a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>List All Contexts </p>
+</td>
+<td>
+<p><a href="_amli_lc.htm"><b>!amli lc</b></a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Display Context Information </p>
+</td>
+<td>
+<p><a href="_amli_r.htm"><b>!amli r</b></a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Unassemble AML Code </p>
+</td>
+<td>
+<p><a href="_amli_u.htm"><b>!amli u</b></a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Set AMLI Debugger Options </p>
+</td>
+<td>
+<p><a href="_amli_set.htm"><b>!amli set</b></a></p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p></p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Using AMLI Debugger Extensions%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

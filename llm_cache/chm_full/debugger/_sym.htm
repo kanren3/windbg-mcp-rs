@@ -1,0 +1,87 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !sym extension controls noisy symbol loading and symbol prompts."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!sym</title>
+
+<meta name="MS-HAID" content="r25_exts_general_He_eb506027-9394-4d21-9b60-0b55af479e0d.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._sym"></a>!sym</h1>
+</div>
+<p>The <b>!sym</b> extension controls noisy symbol loading and symbol prompts.</p>
+<pre class="syntax"><b>!sym</b> 
+<b>!sym noisy</b> 
+<b>!sym quiet</b> 
+<b>!sym prompts</b> 
+<b>!sym prompts off</b></pre>
+<h2><a id="ddk__sym_dbg"></a><a id="DDK__SYM_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______noisy______"></a><a id="_______NOISY______"></a>       <b>noisy</b>      </dt>
+<dd>
+<p>Activates noisy symbol loading.</p>
+</dd>
+<dt><a id="_______quiet______"></a><a id="_______QUIET______"></a>       <b>quiet</b>      </dt>
+<dd>
+<p>Deactivates noisy symbol loading.</p>
+</dd>
+<dt><a id="_______prompts______"></a><a id="_______PROMPTS______"></a>       <b>prompts</b>      </dt>
+<dd>
+<p>Allows authentication dialog boxes to appear when SymSrv receives an authentication request.</p>
+</dd>
+<dt><a id="_______prompts_off______"></a><a id="_______PROMPTS_OFF______"></a>       <b>prompts off      </b></dt>
+<dd>
+<p>Suppresses all authentication dialog boxes when SymSrv receives an authentication request. This may result in SymSrv being unable to access symbols over the internet.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000</b></p>
+</td>
+<td>
+<p>
+          Dbghelp.dll 
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Dbghelp.dll 
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>If the <b>!sym</b> extension is used with no arguments, the current state of noisy symbol loading and symbol prompting is displayed.</p>
+<p>The <b>!sym noisy</b> and <b>!sym quiet</b> extensions control noisy symbol loading. For details and for other methods of displaying and changing this option, see <a href="symbol_options.htm#symopt_debug">SYMOPT_DEBUG</a>.</p>
+<p>The <b>!sym prompts</b> and <b>!sym prompts off</b> extensions control whether authentication dialogs are displayed when SymSrv encounters an authentication request. These commands must be followed by <a href="_reload__reload_module_.htm"><b>.reload (Reload Module)</b></a> for them to take effect. Authentication requests may be sent by proxy servers, internet firewalls, smart card readers, and secure websites. For details and for other methods of changing this option, see <a href="firewalls_and_proxy_servers.htm">Firewalls and Proxy Servers</a>.</p>
+<div class="alert"><b>Note</b>    Noisy symbol loading should not be confused with noisy source loading -- that is controlled by the <a href="_srcnoisy__noisy_source_loading_.htm"><b>.srcnoisy (Noisy Source Loading)</b></a> command.</div>
+<div> </div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!sym%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

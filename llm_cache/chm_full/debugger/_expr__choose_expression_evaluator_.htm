@@ -1,0 +1,88 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .expr command specifies the default expression evaluator."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.expr (Choose Expression Evaluator)</title>
+
+<meta name="MS-HAID" content="r20_metacmds_E_9a36ade0-e6ed-44d8-b399-9e64f4651383.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._expr__choose_expression_evaluator_"></a>.expr (Choose Expression Evaluator)</h1>
+</div>
+<p>The <b>.expr</b> command specifies the default expression evaluator.</p>
+<pre class="syntax">
+    <b>.expr /s masm</b> 
+<b>.expr /s c++</b> 
+<b>.expr /q</b> 
+<b>.expr</b> 
+</pre>
+<h2><a id="ddk_meta_choose_expression_evaluator_dbg"></a><a id="DDK_META_CHOOSE_EXPRESSION_EVALUATOR_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="________s_masm______"></a><a id="________S_MASM______"></a>       <b>/s masm</b>      </dt>
+<dd>
+<p>Changes the default expression type to Microsoft Assembler expression evaluator (MASM). This type is the default value when you start the debugger.</p>
+</dd>
+<dt><a id="________s_c________"></a><a id="________S_C________"></a>       <b>/s c++</b>      </dt>
+<dd>
+<p>Changes the default expression type to the C++ expression evaluator.</p>
+</dd>
+<dt><a id="________q______"></a><a id="________Q______"></a>       <b>/q      </b></dt>
+<dd>
+<p>Displays the list of possible expression types.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Platforms
+         </b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>When you use the <b>.expr</b> command without an argument, the debugger displays the current default expression type.</p>
+<p>The <a href="____evaluate_c___expression_.htm"><b>?? (Evaluate C++ Expression)</b></a> command, the </p>
+<p>Watch window, and the <a href="locals_window.htm">Locals window</a> always use C++ expression syntax. All other commands and debugging information windows use the default expression evaluator.</p>
+<p>For more information about how to control which syntax is used, see <a href="evaluating_expressions.htm">Evaluating Expressions</a>. For more information about the syntax, see <a href="numerical_expression_syntax.htm">Numerical Expression Syntax</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.expr (Choose Expression Evaluator)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

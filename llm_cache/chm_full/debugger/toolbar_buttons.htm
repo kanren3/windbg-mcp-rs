@@ -1,0 +1,185 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Toolbar Buttons"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Toolbar Buttons</title>
+
+<meta name="MS-HAID" content="r37_gui_2_1d4d089a-a763-419f-a172-174815e9773c.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.toolbar_buttons"></a>Toolbar Buttons</h1>
+</div>
+<h2><a id="ddk_toolbar_buttons_dbg"></a><a id="DDK_TOOLBAR_BUTTONS_DBG"></a></h2>
+<p>Except for the breakpoint button, each button on the toolbar is equivalent to a menu command. For a full description of each button's effects, see the page for the corresponding menu command.</p>
+<p>The buttons on the toolbar have the following effects.</p>
+<table>
+<tr>
+<th>Button</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><img src="images/tbopen.png" alt="Screen shot of the Open Source File button"/></td>
+<td>
+<p>Opens a source file as a read-only file. Equivalent to <a href="file___open_source_file.htm">File | Open Source File</a>. </p>
+</td>
+</tr>
+<tr>
+<td><img src="images/tbcut.png" alt="Screen shot of the Cut button"/></td>
+<td>
+<p>Removes the selected text from the active window and puts it on the clipboard. Equivalent to <a href="edit___cut.htm">Edit | Cut</a>. </p>
+</td>
+</tr>
+<tr>
+<td><img src="images/tbcopy.png" alt="Screen shot of the Copy button"/></td>
+<td>
+<p>Copies the selected text from the active window to the clipboard. Equivalent to <a href="edit___copy.htm">Edit | Copy</a>. </p>
+</td>
+</tr>
+<tr>
+<td><img src="images/tbpaste.png" alt="Screen shot of the Paste button"/></td>
+<td>
+<p>Pastes the text on the clipboard to where the cursor is located. Equivalent to <a href="edit___paste.htm">Edit | Paste</a>. </p>
+</td>
+</tr>
+<tr>
+<td><img src="images/tbgo.png" alt="Screen shot of the Go button"/></td>
+<td>
+<p>Starts or resumes execution. Execution continues until a breakpoint is reached, an exception or event occurs, the process ends, or the debugger breaks into the target. Equivalent to <a href="debug___go.htm">Debug | Go</a>.</p>
+</td>
+</tr>
+<tr>
+<td><img src="images/tbrestart.png" alt="Screen shot of the Restart button"/></td>
+<td>
+<p>Restarts execution at the beginning of the process. Equivalent to <a href="debug___restart.htm">Debug | Restart</a>.</p>
+</td>
+</tr>
+<tr>
+<td><img src="images/tbstop.png" alt="Screen shot of the Stop Debugging button"/></td>
+<td>
+<p>Stops execution and terminates the target process permanently. Equivalent to <a href="debug___stop_debugging.htm">Debug | Stop Debugging</a>.</p>
+</td>
+</tr>
+<tr>
+<td><img src="images/tbbreak.png" alt="Screen shot of the Break button"/></td>
+<td>
+<p>In user mode, this button stops the process and its threads. In kernel mode, this button breaks into the target computer. Control is returned to the debugger. This button is also useful for cutting off long <a href="the_debugger_command_window.htm">Debugger Command window</a> displays. Equivalent to <a href="debug___break.htm">Debug | Break</a>. </p>
+</td>
+</tr>
+<tr>
+<td><img src="images/tbinto.png" alt="Screen shot of the Step Into button"/></td>
+<td>
+<p>Executes a single instruction. If the instruction is a function call, the debugger steps into the function. Equivalent to <a href="debug___step_into.htm">Debug | Step Into</a>.</p>
+</td>
+</tr>
+<tr>
+<td><img src="images/tbover.png" alt="Screen shot of the Step Over button"/></td>
+<td>
+<p>Executes a single instruction. If the instruction is a function call, the debugger executes the whole function in one step. Equivalent to <a href="debug___step_over.htm">Debug | Step Over</a>.</p>
+</td>
+</tr>
+<tr>
+<td><img src="images/tbout.png" alt="Screen shot of the Step Out button"/></td>
+<td>
+<p>Executes the rest of the current function, and breaks when the function return is completed. Equivalent to <a href="debug___step_out.htm">Debug | Step Out</a>.</p>
+</td>
+</tr>
+<tr>
+<td><img src="images/tbcursor.png" alt="Screen shot of the Run to Cursor button"/></td>
+<td>
+<p>Executes all instructions from the current instruction up to the instruction marked in the active Disassembly window or Source window. Equivalent to <a href="debug___run_to_cursor.htm">Debug | Run to Cursor</a>. </p>
+</td>
+</tr>
+<tr>
+<td><img src="images/tbbp.png" alt="Screen shot of the Breakpoints button"/></td>
+<td>
+<p><b>If the active window is a Source or Disassembly window:</b>  Inserts a breakpoint at the current line. (If there already is a breakpoint set at the current line, this button removes the breakpoint.)</p>
+<p><b>Otherwise:</b>  Opens the <b>Breakpoints</b> dialog box like <a href="edit___breakpoints.htm">Edit | Breakpoints</a>. </p>
+</td>
+</tr>
+<tr>
+<td><img src="images/tbcmd.png" alt="Screen shot of the Command button"/></td>
+<td>
+<p>Opens or activates the <a href="the_debugger_command_window.htm">Debugger Command</a> window. Equivalent to <a href="view___command.htm">View | Command</a>. </p>
+</td>
+</tr>
+<tr>
+<td><img src="images/tbwatch.png" alt="Screen shot of the Watch button"/></td>
+<td>
+<p>Opens or activates the Watch window. Equivalent to <a href="view___watch.htm">View | Watch</a>. </p>
+</td>
+</tr>
+<tr>
+<td><img src="images/tblocal.png" alt="Screen shot of the Locals button"/></td>
+<td>
+<p>Opens or activates the Locals window. Equivalent to <a href="view___locals.htm">View | Locals</a>. </p>
+</td>
+</tr>
+<tr>
+<td><img src="images/tbreg.png" alt="Screen shot of the Registers button"/></td>
+<td>
+<p>Opens or activates the Registers window. Equivalent to <a href="view___registers.htm">View | Registers</a>. </p>
+</td>
+</tr>
+<tr>
+<td><img src="images/tbmem.png" alt="Screen shot of the Memory button"/></td>
+<td>
+<p>Opens a new Memory window. Equivalent to <a href="view___memory.htm">View | Memory</a>. </p>
+</td>
+</tr>
+<tr>
+<td><img src="images/tbcall.png" alt="Screen shot of the Call Stack button"/></td>
+<td>
+<p>Opens or activates the Calls window. Equivalent to <a href="view___call_stack.htm">View | Call Stack</a>. </p>
+</td>
+</tr>
+<tr>
+<td><img src="images/tbdisasm2.png" alt="Screen shot of the Disassembly button"/></td>
+<td>
+<p>Opens or activates the Disassembly window. Equivalent to <a href="view___disassembly.htm">View | Disassembly</a>. </p>
+</td>
+</tr>
+<tr>
+<td><img src="images/tbspad.png" alt="Screen shot of the Scratch Pad button"/></td>
+<td>
+<p>Opens or activates the Scratch Pad. Equivalent to <a href="view___scratch_pad.htm">View | Scratch Pad</a>. </p>
+</td>
+</tr>
+<tr>
+<td><img src="images/tbsrcasm.png" alt="Screen shot of the Source Mode button"/></td>
+<td>
+<p>Switches between source-mode and assembly-mode debugging. Equivalent to selecting or clearing <a href="debug___source_mode.htm">Debug | Source Mode</a>.</p>
+</td>
+</tr>
+<tr>
+<td><img src="images/tbfont.png" alt="Screen shot of the Font button"/></td>
+<td>
+<p>Enables you to change the font that is used in the debugging information windows. Equivalent to <a href="view___font.htm">View | Font</a>.</p>
+</td>
+</tr>
+<tr>
+<td><img src="images/tbopt.png" alt="Screen shot of the Options button"/></td>
+<td>
+<p>Displays the <b>Options</b> dialog box. Equivalent to <a href="view___options.htm">View | Options</a>.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Toolbar Buttons%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

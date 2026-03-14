@@ -1,0 +1,130 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Example 6: Clearing All Flags"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Example 6:  Clearing All Flags</title>
+
+<meta name="MS-HAID" content="GFlags_601b999a-1d1c-4bd4-a30c-da58d51f7ac2.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.example_6___clearing_all_flags"></a>Example 6:  Clearing All Flags</h1>
+</div>
+<h2><a id="ddk_example_6___clearing_all_flags_dtools"></a><a id="DDK_EXAMPLE_6___CLEARING_ALL_FLAGS_DTOOLS"></a></h2>
+<p>This example demonstrates two different ways to clear all flags set in the registry and for the session:</p>
+<ul>
+<li>
+<p>Subtract the current flag value.</p>
+</li>
+<li>
+<p>Subtract high values.</p>
+</li>
+</ul>
+<div class="alert"><b>Note</b>    The methods demonstrated by this example clear flags only. They do not reset the maximum stack trace size or kernel special pool tag to the default values. </div>
+<div> </div>
+<h3><a id="Subtract_the_Current_Flag_Value"></a><a id="subtract_the_current_flag_value"></a><a id="SUBTRACT_THE_CURRENT_FLAG_VALUE"></a>Subtract the Current Flag Value</h3>
+<p>The following command clears all flags set in the system-wide flag entry in the registry by subtracting the current value of the entry. In this example, the current value is 0xE0. The command uses the <b>/r</b> parameter to indicate the system-wide registry mode and the E0 value with a minus sign (-) to subtract E0 from the flag value.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>gflags /r -E0 </pre>
+</td>
+</tr>
+</table></span></div>
+<p>In response, GFlags displays the revised value of system-wide flag registry entry. A value of zero indicates that the command is successful and that there are no longer any system-wide flags set in the registry.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>Current Boot Registry Settings are: 00000000 </pre>
+</td>
+</tr>
+</table></span></div>
+<p>Note that the following commands have the same effect as the command used in this example and can be used interchangeably:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>gflags /r -20 -40 -80 
+gflags /r -hfc -hpc -hvc </pre>
+</td>
+</tr>
+</table></span></div>
+<h3><a id="Subtract_High_Values"></a><a id="subtract_high_values"></a><a id="SUBTRACT_HIGH_VALUES"></a>Subtract High Values</h3>
+<p>The following command clears all system-wide flags by subtracting high values (0xFFFFFFFF) from the system-wide flag setting.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>gflags /r -ffffffff </pre>
+</td>
+</tr>
+</table></span></div>
+<p>In response, GFlags displays the revised value of the system-wide flag entry. A value of zero indicates that the command is successful and that there are no longer any system-wide flags set in the registry.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>Current Boot Registry Settings are: 00000000 </pre>
+</td>
+</tr>
+</table></span></div>
+<div class="alert"><b>Tip</b>  
+       Type this command into Notepad, then save the file as clearflag.bat. Thereafter, to clear all flags, just type <b>ClearFlag</b>. </div>
+<div> </div>
+<p>Finally, the following example demonstrates that the intuitive method of clearing all flags does not work.</p>
+<p>The following command appears to set the value of the system-wide flag entry to 0. However, it actually adds zero to the system-wide flag value. In this example, the current value of the system-wide flag entry is 0xE0.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>gflags /r 0 </pre>
+</td>
+</tr>
+</table></span></div>
+<p>In response, GFlags displays the system-wide flag value after the command completes:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>Current Boot Registry Settings are: 000000e0
+    hfc - Enable heap free checking
+    hpc - Enable heap parameter checking
+    hvc - Enable heap validation on call</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The command has no effect because it adds the value 0 to system-wide flag entry.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Example 6:  Clearing All Flags%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

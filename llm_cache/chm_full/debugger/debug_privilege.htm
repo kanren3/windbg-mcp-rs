@@ -1,0 +1,93 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The debug privilege allows someone to debug a process that they wouldn’t otherwise have access to. For example, a process running as a user with the debug privilege enabled on its token can debug a service running as local system."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Debug Privilege</title>
+
+<meta name="MS-HAID" content="r07_use_operation_20d9b919-3b1a-4913-84cb-200bc527ce71.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.debug_privilege"></a>Debug Privilege</h1>
+</div>
+<p>
+<p>The debug privilege allows someone to debug a process that they wouldn’t otherwise have access to. For example, a process running as a user with the debug privilege enabled on its token can debug a service running as local system.</p>
+</p>
+<h2><a id="ddk_reading_and_writing_registers_and_flags_dbg"></a><a id="DDK_READING_AND_WRITING_REGISTERS_AND_FLAGS_DBG"></a></h2>
+<p>Debug privilege is a security policy setting that allows users to attach a debugger to a process or to the kernel. An administrator can modify a security policy for a user group to include or to remove this functionality. Developers who are debugging their own applications do not need this user privilege. Developers who are debugging system components or who are debugging remote components will need this user privilege. This user privilege provides complete access to sensitive and critical operating system components. By default, this property is enabled for users with Administrator rights. A user with Administrator privileges can enable this property for other user groups. </p>
+<h3><a id="modifying_debug_privilege_for_a_process"></a><a id="MODIFYING_DEBUG_PRIVILEGE_FOR_A_PROCESS"></a>Modifying Debug Privilege for a Process</h3>
+<p>The following code example shows how to enable the debug privilege in your process. This enables you to debug other processes that you wouldn't have access to otherwise.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>//
+//  SetPrivilege enables/disables process token privilege.
+//
+BOOL SetPrivilege(HANDLE hToken, LPCTSTR lpszPrivilege, BOOL bEnablePrivilege)
+{
+    LUID luid;
+    BOOL bRet=FALSE;
+
+    if (LookupPrivilegeValue(NULL, lpszPrivilege, &amp;luid))
+    {
+        TOKEN_PRIVILEGE tp;
+
+        tp.PrivilegeCount=1;
+        tp.Privileges[0].Luid=luid;
+        tp.Privileges[0].Attributes=(bEnablePrivilege) ? SE_PRIVILEGE_ENABLED: 0;
+        //
+        //  Enable the privilege or disable all privileges.
+        //
+        if (AdjustTokenPrivileges(hToken, FALSE, &amp;tp, NULL, (PTOKEN_PRIVILEGES)NULL, (PDWORD)NULL))
+        {
+            //
+            //  Check to see if you have proper access.
+            //  You may get "ERROR_NOT_ALL_ASSIGNED".
+            //
+            bRet=(GetLastError() == ERROR_SUCCESS);
+        }
+    }
+    return bRet;
+}</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The following  example shows how to use this function:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>HANDLE hProcess=GetCurrentProcess();
+HANDLE hToken;
+
+if (OpenProcessToken(hProcess, TOKEN_ADJUST_PRIVILEGES, &amp;hToken))
+{
+    SetPrivilege(hToken, SE_DEBUG_NAME, TRUE);
+    CloseHandle(hToken);
+}</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Debug Privilege%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

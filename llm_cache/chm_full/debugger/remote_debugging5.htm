@@ -1,0 +1,39 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Remote Debugging"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Remote Debugging</title>
+
+<meta name="MS-HAID" content="Engine_Overview_f8e73c32-45d6-4928-9189-f5592ce63fc3.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.remote_debugging5"></a>Remote Debugging</h1>
+</div>
+<p>Remote debugging occurs when a client's communication with a target is indirect, for example, through a network connection.  When remote debugging, more than one instance of the debugger engine can be involved in debugging a target. However, exactly one of these instances is responsible for the debugging session; this instance is called the <i>host engine</i>.</p>
+<p>There are many possible configurations: the client object can be created in the host engine (smart clients), or a different instance of the engine (debugging clients); the host engine can be connected directly to the target (debugging server); or a proxy can be directly connected to the target (process server and kernel connection server).</p>
+<p>Multiple clients can simultaneously connect to the host engine.  And the host engine can connect to multiple targets in the same debugging session.  Optionally, there can be one or more proxies between the clients and the host engine and between the host engine and each target.</p>
+<p>Smart clients are client objects that communicate directly with the host engine.  A debugging client is created by calling <a href="debugconnect.htm"><b>DebugConnect</b></a>; the client communicates with the host engine using RPC calls that represent method calls in the engine's API (including calls that the host engine makes to the client's <a href="client_objects.htm#callback_objects">callback objects</a>).</p>
+<p>A debugging server is an engine instance that communicates directly with the target and is also the host engine.  Process servers and kernel connection servers communicate directly with the target but are not the host engine.  The host engine communicates with the process server, or kernel connection server, by sending low-level memory, processor, and operating system requests, and the server sends back the results.</p>
+<div class="alert"><b>Note</b>    A typical two-computer setup for kernel debugging--where one computer is the target and the other the host computer--is not considered to be remote debugging as there is only one instance of the engine (on the host computer) and it communicates directly with the target.</div>
+<div> </div>
+<h3><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For details about performing remote debugging, see <a href="remote_targets.htm">Remote Targets</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Remote Debugging%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

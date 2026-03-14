@@ -1,0 +1,43 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Debug | Event Filters"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Debug | Event Filters</title>
+
+<meta name="MS-HAID" content="r37_gui_2_b880b0b4-0347-4af1-b467-e2282de0406a.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.debug___event_filters"></a>Debug | Event Filters</h1>
+</div>
+<h2><a id="ddk_debug_event_filters_dbg"></a><a id="DDK_DEBUG_EVENT_FILTERS_DBG"></a></h2>
+<p>Click <b>Event Filters</b> on the <b>Debug</b> menu to open the <b>Event Filters</b> dialog box. In this dialog box, you can configure the break status and handling status of exceptions and events.</p>
+<h3><a id="dialog_box"></a><a id="DIALOG_BOX"></a>Dialog Box</h3>
+<p>The <b>Event Filters</b> dialog box lists all events that the debugger recognizes. You may add numbered exceptions to the list that will then be displayed.</p>
+<p>To change the break status for an event, select the event and then click one of the <b>Execution</b> option buttons (<b>Enabled</b>, <b>Disabled</b>, <b>Output</b>, or <b>Ignore</b>).</p>
+<p>To change the handling status for an event, select the event and then click one of the <b>Continue</b> option buttons (<b>Handled</b> or <b>Not Handled</b>).</p>
+<p>To add a new numbered exception, click <b>Add</b>. When the <b>Exception Filter</b> dialog box appears, enter the exception code, click the appropriate button for the break status and handling status, and then click <b>OK</b>.</p>
+<p>To remove a numbered exception, select the exception and then click <b>Remove</b>. You cannot remove the standard events.</p>
+<p>When you set the status for the <b>Load module</b> or <b>Unload module</b> events, you can limit this status to a specific module. Click <b>Argument</b>, enter the name of the module or the base address of the module in the <b>Filter Argument</b> dialog box, and then click <b>OK</b>. You can use <a href="string_wildcard_syntax.htm">wildcards</a> when you specify the base address. If you do not specify a module, the break occurs when any module is loaded or unloaded.</p>
+<p>When you set the status for the <b>Debuggee output</b> event, you can limit this status to a specific output pattern. Click <b>Argument</b>, enter the output pattern in the <b>Filter Argument</b> dialog box, and then click <b>OK</b>. If you do not specify an output pattern, the break occurs for any output.  </p>
+<p>If you want to set automatic commands that are executed if the event breaks into the debugger, select the event and then click <b>Commands</b>. The <b>Filter Command</b> dialog box will appear. Enter any commands that you want into the <b>Command</b> or <b>Second-chance Command</b> box. Separate multiple commands by using semicolons and do not enclose these commands in quotation marks.</p>
+<h3><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about break status and handling status, all event codes, the default status for all events, and other methods of controlling this status, see <a href="controlling_exceptions_and_events.htm">Controlling Exceptions and Events</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Debug | Event Filters%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

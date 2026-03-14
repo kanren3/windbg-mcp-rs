@@ -1,0 +1,34 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="In KD, you can view and edit registers by entering the r (Registers) command. You can customize the display by using several options or by using the rm (Register Mask) command."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Viewing and Editing Registers in KD</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.viewing_and_editing_registers_in_kd"></a>Viewing and Editing Registers in KD</h1>
+</div>
+<p>
+     Registers are small volatile memory units that are located on the CPU. Many registers are dedicated to specific uses, and other registers are available for user-mode applications to use. The x86-based and x64-based processors have different collections of registers available. For more information about the registers on each processor, see <a href="processor_architecture.htm">Processor Architecture</a>.</p>
+<p>In KD, you can view and edit registers by entering the <a href="r__registers_.htm"><b>r (Registers)</b></a> command.  You can customize the display by using several options or by using the <a href="rm__register_mask_.htm"><b>rm (Register Mask)</b></a> command.</p>
+<p>Registers are also automatically displayed every time that the target stops. If you are stepping through your code with the <a href="p__step_.htm"><b>p (Step)</b></a> or <a href="t__trace_.htm"><b>t (Trace)</b></a> commands, you see a register display at every step. To stop this display, use the <b>r </b>option when you use these commands.</p>
+<p>On an x86-based processor, the <b>r</b> option also controls several one-bit registers known as flags. To change these flags, you use a slightly different syntax than when changing regular registers. For more information about these flags and an explanation of this syntax, see <a href="x86_architecture.htm#x86_flags">x86 Flags</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Viewing and Editing Registers in KD%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

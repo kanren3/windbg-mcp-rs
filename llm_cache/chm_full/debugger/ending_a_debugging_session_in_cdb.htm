@@ -1,0 +1,62 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="You can exit CDB by entering the q (Quit) command. This command also closes the application that you are debugging."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Ending a Debugging Session in CDB</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.ending_a_debugging_session_in_cdb"></a>Ending a Debugging Session in CDB</h1>
+</div>
+<p>You can exit CDB by entering the <a href="q__qq__quit_.htm"><b>q (Quit)</b></a> command. This command also closes the application that you are debugging.</p>
+<p></p>
+<p>The <a href="qd__quit_and_detach_.htm"><b>qd (Quit and Detach)</b></a> command detaches CDB from the target application, exits the debugger, and leaves the target application running. If you used the <b>-pd</b> command-line option when you started the debugger, detaching occurs if the session is ended for any reason. (This technique makes <b>-pd</b> especially useful when you are debugging a sensitive process, such as the Client Server Run-Time Subsystem (CSRSS), that you do not want to end.)</p>
+<p>If the debugger is not responding, you can exit by pressing <a href="ctrl_b__quit_local_debugger_.htm"><b>CTRL+B</b></a> and then ENTER. This method is a secondary exit mechanism. It abruptly ends the debugger and is similar to ending a process through Task Manager or by closing the window.</p>
+<p>To end a user-mode debugging session, return the debugger to dormant mode, and close the target application, you can use the following method:</p>
+<ul>
+<li>
+<p>Enter the <a href="_kill__kill_process_.htm"><b>.kill (Kill Process)</b></a> command.</p>
+</li>
+</ul>
+<p>To end a user-mode debugging session, return the debugger to dormant mode, and set the target application running again, you can use the following methods:</p>
+<ul>
+<li>
+<p>
+         Enter the <a href="_detach__detach_from_process_.htm"><b>.detach (Detach from Process)</b></a> command. If you are debugging multiple targets, this command detaches from the current target and continues the debugging session with the remaining targets.</p>
+</li>
+<li>
+<p>
+         Enter the <a href="qd__quit_and_detach_.htm"><b>qd (Quit and Detach)</b></a> command.</p>
+</li>
+<li>
+<p>
+         Enter the <a href="q__qq__quit_.htm"><b>q (Quit)</b></a> command, if you started the debugger with the <b>-pd</b> option. </p>
+</li>
+</ul>
+<p>To end a user-mode debugging session, return the debugger to dormant mode, but leave the target application in the debugging state, you can use the following method:</p>
+<ul>
+<li>
+<p>
+         Enter the <a href="_abandon__abandon_process_.htm"><b>.abandon (Abandon Process)</b></a> command.</p>
+</li>
+</ul>
+<p>For more information about reattaching to the target, see <a href="reattaching_to_the_target_application.htm">Reattaching to the Target Application</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Ending a Debugging Session in CDB%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

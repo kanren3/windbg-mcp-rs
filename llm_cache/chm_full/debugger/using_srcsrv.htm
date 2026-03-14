@@ -1,0 +1,51 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Using SrcSrv"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Using SrcSrv</title>
+
+<meta name="MS-HAID" content="SymChk_d332dbdb-c1be-4ece-b677-ace2a7eda0cd.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.using_srcsrv"></a>Using SrcSrv</h1>
+</div>
+<p>To use <a href="srcsrv.htm">SrcSrv</a> with WinDbg, KD, NTSD, or CDB, verify that you have installed a recent version of the Debugging Tools for Windows package (version 6.3 or later). Then, include the text  <code>srv*</code> in the source path, separated by semicolons from any directories that are also in the source path.</p>
+<p>For example:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>.srcpath srv*;c:\someSourceCode</pre>
+</td>
+</tr>
+</table></span></div>
+<p>If the source path is set as shown in the preceding example, the debugger first uses <a href="srcsrv.htm">SrcSrv</a> to retrieve source files from locations specified in the target modules' symbol files. If SrcSrv is unable to retrieve a source file, the debugger attempts to retrieve it from c:\someSourceCode. Regardless of whether srv* is the first element in the path or appears later, the debugger always uses SymSrv before it searches any other directories listed in the path.</p>
+<p>If a source file is retrieved by <a href="srcsrv.htm">SrcSrv</a>, it remains on your hard drive after the debugging session is over. Source files are stored locally in the src subdirectory of the home directory (unlike the symbol server, the source server does not specify a local cache in the <code>srv*</code> syntax itself). The home directory defaults to the Debugging Tools for Windows installation directory; it can be changed by using the <a href="_homedir.htm"><b>!homedir</b></a> extension or by setting the DBGHELP_HOMEDIR environment variable. If the src subdirectory of the home directory does not already exist, it is created.</p>
+<h3><a id="debugging_srcsrv"></a><a id="DEBUGGING_SRCSRV"></a>Debugging SrcSrv</h3>
+<p>If you experience any trouble extracting the source files from the debugger, start the debugger with the -n command-line parameter to view the actual source extraction commands along with the output of those commands.  The !sym noisy command does the same thing, but you may have already missed important information from previous extraction attempts.  This is because the debugger gives up trying to access source from version control repositories that appear to be unreachable. </p>
+<h3><a id="retrieving_source_files"></a><a id="RETRIEVING_SOURCE_FILES"></a>Retrieving Source Files</h3>
+<p>If you use the <a href="_open__open_source_file_.htm"><b>.open (Open Source File)</b></a> command to open a new source file through <a href="srcsrv.htm">SrcSrv</a>, you must include the -m Address parameter.</p>
+<p>To facilitate the use of <a href="srcsrv.htm">SrcSrv</a> from tools other than the debuggers listed previously, the DbgHelp API provides access to SrcSrv functionality through the <b>SymGetSourceFile</b> function. To retrieve the name of the source file to be retrieved, call the <b>SymEnumSourceFiles</b> or <b>SymGetLineFromAddr64</b> function.  For more details on the DbgHelp API, see the dbghelp.chm documentation, which can be found in the sdk/help subdirectory of the Debugging Tools for Windows installation directory, or see <a href="http://go.microsoft.com/fwlink/p/?linkid=125231">Debug Help Library</a> on MSDN. </p>
+<h3><a id="using_agestore_to_reduce_the_cache_size"></a><a id="USING_AGESTORE_TO_REDUCE_THE_CACHE_SIZE"></a>Using AgeStore to Reduce the Cache Size</h3>
+<p>Any source files downloaded by <a href="srcsrv.htm">SrcSrv</a> remain on your hard drive after the debugging session is over.  To control the size of the source cache, the AgeStore tool can be used to delete cached files that are older than a specified date or to reduce the contents of the cache below a specified size.  For details, see <a href="agestore.htm">AgeStore</a>. </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Using SrcSrv%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

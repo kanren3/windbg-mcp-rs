@@ -1,0 +1,225 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="To activate the repeater connection, you will usually first start the server, then start the repeater, then start the client.It is also possible to start the repeater first and then the server."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Activating a Repeater</title>
+
+<meta name="MS-HAID" content="r08_use_remote_84c581f8-a117-4e6a-b9a8-77b31755d596.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.activating_a_repeater"></a>Activating a Repeater</h1>
+</div>
+<p>To activate the repeater connection, you will usually first start the server, then start the repeater, then start the client.</p>
+<p>It is also possible to start the repeater first and then the server. But unless you are using the <b>clicon</b> parameter to establish a reverse connection, the client must always be started last.</p>
+<h2><a id="step_one__starting_the_server"></a><a id="STEP_ONE__STARTING_THE_SERVER"></a>Step One: Starting the Server</h2>
+<p>The server can be a debugging server, a process server, or a KD connection server. You start this as you normally would, except that the transport protocol settings will be used to connect to the repeater, not the client. For details, see <a href="activating_a_debugging_server.htm"><b>Activating a Debugging Server</b></a>, <a href="activating_a_process_server.htm"><b>Activating a Process Server</b></a>, or <a href="activating_a_kd_connection_server.htm"><b>Activating a KD Connection Server</b></a>.</p>
+<p>If you use a password when creating the server, this password will be required when the client attaches, but not when the repeater is created.</p>
+<p>If you use the <b>hidden</b> parameter, the server will be hidden as usual. The repeater itself is always hidden.</p>
+<h2><a id="step_two__starting_the_repeater"></a><a id="STEP_TWO__STARTING_THE_REPEATER"></a>Step Two: Starting the Repeater</h2>
+<p>The repeater that is included in Debugging Tools for Windows is called DbEngPrx (dbengprx.exe).</p>
+<p>DbEngPrx understands the following transport protocols: named pipe (NPIPE), TCP, and COM port.  </p>
+<p>If your client and server are using secure sockets layer (SSL) protocol, you should use TCP protocol for the repeater. If your client and server are using secure pipe (SPIPE) protocol, you should use NPIPE protocol for the repeater. The repeater will pass on whatever data it receives -- it does not interpret, encrypt, or decrypt any information. All encryption and decryption will be done by the client and the server.</p>
+<p>The syntax for the DbEnPrx command line is as follows:</p>
+<h2><a id="ddk_activating_a_repeater_dbg"></a><a id="DDK_ACTIVATING_A_REPEATER_DBG"></a></h2>
+<p><b>dbengprx [-p] -c  </b><i>ClientTransport </i><b> -s </b><i> ServerTransport</i></p>
+<p>The parameters in the previous commands have the following possible values:</p>
+<p></p>
+<dl>
+<dt><a id="________-p"></a><a id="________-P"></a><b>
+       -p</b></dt>
+<dd>
+<p>Causes DbEngPrx to continue existing even after all connections to it are dropped.</p>
+</dd>
+<dt><a id="ClientTransport"></a><a id="clienttransport"></a><a id="CLIENTTRANSPORT"></a><i>ClientTransport</i></dt>
+<dd>
+<p>Specifies the protocol settings to be used in connecting to the server. The protocol should match that used when the server was created. The protocol syntaxes are as follows:</p>
+<pre class="syntax" xml:space="preserve"><code>npipe:server=Server,pipe=PipeName[,password=Password] 
+tcp:server=Server,port=Socket[,password=Password][,ipversion=6] 
+tcp:clicon=Server,port=Socket[,password=Password][,ipversion=6] 
+com:port=COMPort,baud=BaudRate,channel=COMChannel[,password=Password] </code></pre>
+<p>The protocol parameters have the following meanings:</p>
+<p></p>
+<dl>
+<dt><a id="Server"></a><a id="server"></a><a id="SERVER"></a><i>Server</i></dt>
+<dd>
+<p>This is the network name or IP address of the computer on which the server was created. The two initial backslashes (\\) are optional.   </p>
+</dd>
+</dl>
+<p></p>
+<dl>
+<dt><a id="________pipe_________PipeName"></a><a id="________pipe_________pipename"></a><a id="________PIPE_________PIPENAME"></a><b>
+       pipe=
+       </b><i>PipeName</i></dt>
+<dd>
+<p>If NPIPE or SPIPE protocol is used, <i>PipeName</i> is the name that was given to the pipe when the server was created.</p>
+</dd>
+</dl>
+<p></p>
+<dl>
+<dt><a id="________port_________Socket"></a><a id="________port_________socket"></a><a id="________PORT_________SOCKET"></a><b>
+       port=
+       </b><i>Socket</i></dt>
+<dd>
+<p>If TCP or SSL protocol is used, <i>Socket</i> is the same socket port number that was used when the server was created.</p>
+</dd>
+</dl>
+<p></p>
+<dl>
+<dt><a id="clicon"></a><a id="CLICON"></a><b>clicon</b></dt>
+<dd>
+<p>Specifies that the server will try to connect to the repeater through a reverse connection. <i>ClientTransport</i> must use <b>clicon</b> if and only if the server is using <b>clicon</b>. In most cases, the repeater is started before the server when a reverse connection is used.</p>
+</dd>
+</dl>
+<p></p>
+
+<p></p>
+<dl>
+<dt><a id="port_________COMPort"></a><a id="port_________comport"></a><a id="PORT_________COMPORT"></a><b>port=
+       </b><i>COMPort</i></dt>
+<dd>
+<p>If COM protocol is used, <i>COMPort</i> specifies the COM port to be used. The prefix "COM" is optional -- for example, both "com2" and "2" are acceptable.</p>
+</dd>
+</dl>
+<p></p>
+<dl>
+<dt><a id="baud_________BaudRate"></a><a id="baud_________baudrate"></a><a id="BAUD_________BAUDRATE"></a><b>baud=
+       </b><i>BaudRate</i></dt>
+<dd>
+<p>If COM protocol is used, <i>BaudRate</i> should match the baud rate chosen when the server was created.</p>
+</dd>
+</dl>
+<p></p>
+<dl>
+<dt><a id="channel_________COMChannel"></a><a id="channel_________comchannel"></a><a id="CHANNEL_________COMCHANNEL"></a><b>channel=
+       </b><i>COMChannel</i></dt>
+<dd>
+<p>If COM protocol is used, <i>COMChannel</i> should match the channel number chosen when the server was created.</p>
+</dd>
+</dl>
+<p></p>
+<dl>
+<dt><a id="________password_________Password"></a><a id="________password_________password"></a><a id="________PASSWORD_________PASSWORD"></a><b>
+       password=
+       </b><i>Password</i></dt>
+<dd>
+<p>If a password was used when the server was created, <i>Password</i> must be supplied in order to create the debugging client. It must match the original password. Passwords are case-sensitive. If the wrong password is supplied, the error message will specify "Error 0x80004005."</p>
+</dd>
+</dl>
+<p></p>
+<dl>
+<dt><a id="________ipversion_6"></a><a id="________IPVERSION_6"></a><b>
+       ipversion=6</b></dt>
+<dd>
+<p>(Debugging Tools for Windows 6.6.07 and earlier only) Forces the debugger to use IP version 6 rather than version 4 when using TCP to connect to the Internet.  In Windows Vista and later versions, the debugger attempts to auto-default to IP version 6, making this option unnecessary.  </p>
+</dd>
+</dl>
+</dd>
+<dt><a id="ServerTransport"></a><a id="servertransport"></a><a id="SERVERTRANSPORT"></a>ServerTransport</dt>
+<dd>
+<p>Specifies the protocol settings that will be used when the client connects to the repeater. The possible protocol syntaxes are:</p>
+<pre class="syntax" xml:space="preserve"><code>npipe:pipe=PipeName[,hidden][,password=Password][,IcfEnable] 
+tcp:port=Socket[,hidden][,password=Password][,IcfEnable] 
+tcp:port=Socket,clicon=Client[,password=Password] 
+com:port=COMPort,baud=BaudRate,channel=COMChannel[,hidden][,password=Password] </code></pre>
+<p>The protocol parameters have the following meanings:</p>
+<p></p>
+<dl>
+<dt><a id="________pipe_________PipeName"></a><a id="________pipe_________pipename"></a><a id="________PIPE_________PIPENAME"></a><b>
+       pipe=
+       </b><i>PipeName</i></dt>
+<dd>
+<p>When NPIPE or SPIPE protocol is used, <i>PipeName</i> is a string that will serve as the name of the pipe. Each pipe name should identify a unique repeater. If you attempt to reuse a pipe name, you will receive an error message. <i>PipeName</i> must not contain spaces or quotation marks. <i>PipeName</i> can include a numerical <b>printf</b>-style format code, such as <b>%x</b> or <b>%d</b>. The repeater will replace this with the process ID of DbEngPrx. A second such code will be replaced with the thread ID of DbEngPrx.  </p>
+</dd>
+</dl>
+<p></p>
+<dl>
+<dt><a id="________port_________Socket"></a><a id="________port_________socket"></a><a id="________PORT_________SOCKET"></a><b>
+       port=
+       </b><i>Socket</i></dt>
+<dd>
+<p>When TCP or SSL protocol is used, <i>Socket</i> is the socket port number.</p>
+<p>It is also possible to specify a range of ports separated by a colon. DbEngPrx will check each port in this range to see if it is free. If it finds a free port and no error occurs, the repeater will be created. The client will have to specify the actual port being used to connect to the repeater. To determine the actual port, search for the repeater;  when this repeater is displayed, the port will be followed by two numbers separated by a colon. The first number will be the actual port used; the second can be ignored. For example, if the port was specified as <b>port=51:60</b>, and port 53 was actually used, the search results will show "port=53:60". (If you are using the <b>clicon</b> parameter to establish a reverse connection, the client can specify a range of ports in this manner, while the repeater must specify the actual port used.)</p>
+</dd>
+</dl>
+<p></p>
+<dl>
+<dt><a id="clicon_Client"></a><a id="clicon_client"></a><a id="CLICON_CLIENT"></a><b>clicon=</b><i>Client</i></dt>
+<dd>
+<p>When TCP or SSL protocol is used and the <b>clicon</b> parameter is specified, a <i>reverse connection</i> will be opened. This means that the repeater will try to connect to the client, instead of letting the client initiate the contact. This can be useful if you have a firewall that is preventing a connection in the usual direction. <i>Client</i> specifies the network name or IP address of the computer on which the client exists or will be created. The two initial backslashes (\\) are optional.</p>
+<p>Since the repeater is looking for one specific client, you cannot connect multiple clients to the repeater if you use this method. If the connection is refused or is broken you will have to restart the repeater.</p>
+<p>When <b>clicon</b> is used, it is best to start the client before the repeater is created, although the usual order (repeater before client) is also permitted.</p>
+</dd>
+</dl>
+<p></p>
+
+<p></p>
+<dl>
+<dt><a id="port_________COMPort"></a><a id="port_________comport"></a><a id="PORT_________COMPORT"></a><b>port=
+       </b><i>COMPort</i></dt>
+<dd>
+<p>When COM protocol is used, <i>COMPort</i> specifies the COM port to be used. The prefix "COM" is optional -- for example, both "com2" and "2" are acceptable. You cannot use the same COM port in the <i>ClientTransport</i> and the <i>ServerTransport</i>.</p>
+</dd>
+</dl>
+<p></p>
+<dl>
+<dt><a id="baud_________BaudRate"></a><a id="baud_________baudrate"></a><a id="BAUD_________BAUDRATE"></a><b>baud=
+       </b><i>BaudRate</i></dt>
+<dd>
+<p>When COM protocol is used, <i>BaudRate</i> specifies the baud rate at which the connection will run. Any baud rate that is supported by the hardware is permitted. If you are using COM protocol in both the <i>ClientTransport</i> and the <i>ServerTransport</i> you may specify different baud rates, but naturally the slower rate will be the limit on how fast the client and server can communicate with each other.</p>
+</dd>
+</dl>
+<p></p>
+<dl>
+<dt><a id="channel_________COMChannel"></a><a id="channel_________comchannel"></a><a id="CHANNEL_________COMCHANNEL"></a><b>channel=
+       </b><i>COMChannel</i></dt>
+<dd>
+<p>If COM protocol is used, <i>COMChannel</i> specifies the COM channel to be used in communicating with the client. This can be any value between 0 and 254, inclusive. You can use a single COM port for multiple connections using different channel numbers. (This is different from the use of a COM ports for a debug cable -- in that situation you cannot use channels within a COM port.)</p>
+</dd>
+</dl>
+<p></p>
+<dl>
+<dt><a id="hidden"></a><a id="HIDDEN"></a><b>hidden</b></dt>
+<dd>
+<p>Prevents the server from appearing when another debugger displays all active servers.</p>
+</dd>
+</dl>
+<p></p>
+<dl>
+<dt><a id="________password_________Password"></a><a id="________password_________password"></a><a id="________PASSWORD_________PASSWORD"></a><b>
+       password=
+       </b><i>Password</i></dt>
+<dd>
+<p>Requires a client to supply the specified password in order to connect to the debugging session. <i>Password</i> can be any alphanumeric string.</p>
+</dd>
+</dl>
+<p></p>
+<dl>
+<dt><a id="IcfEnable"></a><a id="icfenable"></a><a id="ICFENABLE"></a><b>IcfEnable</b></dt>
+<dd>
+<p>(Windows XP and later versions only)  Causes the debugger to enable the necessary port connections for TCP or named pipe communication when the Internet Connection Firewall is active. By default, the Internet Connection Firewall disables the ports used by these protocols. When <b>IcfEnable</b> is used with a TCP connection, the debugger causes Windows to open the port specified by the <i>Socket</i> parameter. When <b>IcfEnable</b> is used with a named pipe connection, the debugger causes Windows to open the ports used for named pipes (ports 139 and 445). The debugger does not close these ports after the connection terminates. </p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h3><a id="step_three__starting_the_client"></a><a id="STEP_THREE__STARTING_THE_CLIENT"></a>Step Three: Starting the Client</h3>
+<p>The client should be a debugging client or a smart client -- whichever corresponds to your server type. For details, see <a href="activating_a_debugging_client.htm"><b>Activating a Debugging Client</b></a>, <a href="activating_a_smart_client.htm"><b>Activating a Smart Client</b></a>, or <a href="activating_a_smart_client__kernel_mode_.htm"><b>Activating a Smart Client (Kernel Mode)</b></a>.</p>
+<p>If the server rejects the connection (for example, if you supply an incorrect password), both the repeater and the client will be shut down. You will have to restart both of them to reestablish contact with the server.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Activating a Repeater%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

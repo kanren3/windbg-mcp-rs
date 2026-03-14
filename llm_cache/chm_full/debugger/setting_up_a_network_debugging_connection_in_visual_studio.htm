@@ -1,0 +1,118 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="You can use Microsoft Visual Studio to set up and perform kernel-mode debugging over an Ethernet network."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Setting Up Kernel-Mode Debugging over a Network Cable in Visual Studio</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.setting_up_a_network_debugging_connection_in_visual_studio"></a>Setting Up Kernel-Mode Debugging over a Network Cable in Visual Studio</h1>
+</div>
+<p>You can use Microsoft Visual Studio to set up and perform kernel-mode debugging over an Ethernet network. To use Visual Studio for kernel-mode debugging, you must have the Windows Driver Kit (WDK) integrated with Visual Studio. For information about how to install the integrated environment, see <a href="http://go.microsoft.com/fwlink/p?linkid=301383">Windows Driver Development</a>.</p>
+<p>As an alternative to using Visual Studio to set up Ethernet debugging, you can do the setup manually. For more information, see <a href="setting_up_a_network_debugging_connection.htm">Setting Up Kernel-Mode Debugging over a Network Cable Manually</a>.</p>
+<p>Debugging over an Ethernet network has the following advantages compared to debugging over other types of cable:</p>
+<ul>
+<li>The host and target computers can be anywhere on the local network.</li>
+<li>It is easy to debug many target computers from one host computer.</li>
+<li>Network cable is inexpensive and readily available.</li>
+<li>Given any two computers, it is likely that they will both have Ethernet adapters. It is less likely that they will both have serial ports or both have 1394 ports.</li>
+</ul>
+<p>The computer that runs the debugger is called the <i>host computer</i>, and the computer that is being debugged is called the <i>target computer</i>. The host computer must be running Windows XP or later, and the target computer must be running Windows 8 or later. </p>
+<h2><a id="Supported_network_adapters"></a><a id="supported_network_adapters"></a><a id="SUPPORTED_NETWORK_ADAPTERS"></a>Supported network adapters</h2>
+<p>The host computer can use any wired or wireless network adapter, but the target computer must use a network adapter that is supported by Debugging Tools for Windows. For a list of supported network adapters, see <a href="supported_ethernet_nics_for_network_kernel_debugging_in_windows_8_1.htm">Supported Ethernet NICs for Network Kernel Debugging in Windows 8.1</a>.</p>
+<h2><a id="Configuring_the_host_and_target_computer"></a><a id="configuring_the_host_and_target_computer"></a><a id="CONFIGURING_THE_HOST_AND_TARGET_COMPUTER"></a>Configuring the host and target computer</h2>
+<ol>
+<li>Connect the network adapter of the target computer to a network hub or switch using standard CAT5 (or higher-level) network cable. Do not use a crossover cable, and do not use a crossover port in your hub or switch. Connect the network adapter of the host computer to a network hub or switch using a standard cable or a wireless connection.</li>
+<li>Begin configuring your host and target computers as described in Provision a computer for driver deployment and testing (WDK 8.1).</li>
+<li>On the host computer, in Visual Studio, when you come to the Computer Configuration dialog box, select <b>Provision computer and choose debugger settings</b>.</li>
+<li>
+<p>For <b>Connection Type</b>, choose <b>Network</b>.</p><img src="images/SetupNetVs.png" alt="Screen shot showing an example of debugger settings with values for the following fields: Connection Type, Target Name, and Bus Parameters"/><p>For <b>Port Number</b>, accept the default value or fill in a value of your choice.  You can choose any number from 49152 through 65535. The port that you choose will be opened for exclusive access by the debugger running on the host computer. Take care to choose a port number that is not used by any other applications that run on the host computer.</p>
+<div class="alert"><b>Note</b>  The range of port numbers that can be used for network debugging might be limited by your company's network policy. There is no way to tell from the host computer what the limitations are. To determine whether your company's policy limits the range of ports that can be used for network debugging, check with your network administrators.</div>
+<div> </div>
+<p> For <b>Key</b>, we strongly recommend that you use the automatically generated  default value. However, you can enter your own key if you prefer. For more information, see <a href="#creating_your_own_key">Creating your own key</a> later in this topic. For <b>Host IP</b>, accept the default value. This is the IP address of your host computer.</p>
+<p>If your target computer has only one network adapter, you can leave <b>Bus Parameters</b>   empty. If there is more than one network adapter on the target computer, use Device Manager on the target computer to determine the PCI bus, device, and function numbers for the adapter you want to use for debugging. For <b>Bus Parameters</b>, enter <i>b</i>.<i>d</i>.<i>f</i> where <i>b</i>, <i>d</i>, and <i>f</i> are the bus number, device number, and function number of the adapter.</p>
+</li>
+<li>The configuration process takes several minutes and might automatically reboot the target computer once or twice. When the process is complete, click <b>Finish</b>.</li>
+</ol>
+<div class="alert"><b>Caution</b>  If your target computer is in a docking station, and you have network debugging enabled for a network adapter that is part of the docking station, do not remove the computer from the docking station. If you need to remove the target computer from the docking station, disable kernel debugging first. To disable kernel debugging on the target computer, open a Command Prompt window as Administrator and enter the command<b> bcdedit /debug off</b>. Reboot the target computer.</div>
+<div> </div>
+<div class="alert"><b>Note</b>  If you intend to install the Hyper-V role on the target computer, see <a href="setting_up_network_debugging_of_a_virtual_machine_host.htm">Setting Up Network Debugging of a Virtual Machine Host</a>.</div>
+<div> </div>
+<h2><a id="Verifying_dbgsettings_on_the_Target_Computer"></a><a id="verifying_dbgsettings_on_the_target_computer"></a><a id="VERIFYING_DBGSETTINGS_ON_THE_TARGET_COMPUTER"></a>Verifying dbgsettings on the Target Computer</h2>
+<p>On the target computer, open a Command Prompt window as Administrator, and enter these commands:</p>
+<p><b>bcdedit /dbgsettings</b></p>
+<p><b>bcdedit /enum</b></p>
+<pre class="syntax" xml:space="preserve"><code>...
+key                     RF8...KNE
+debugtype               NET
+hostip                  10.125.5.10
+port                    50001
+dhcp                    Yes
+...
+busparams               0.29.7
+...</code></pre>
+<p>Verify that <i>debugtype</i>  is NET and <i>port</i> is the port number you specified in Visual Studio on the host computer. Also verify that <i>key</i> is the key that was automatically generated (or you specified) in Visual Studio.</p>
+<p>If you entered <b>Bus Parameters</b> in Visual Studio, verify that <i>busparams</i> matches the bus parameters you specified.</p>
+<p>If you do not see the value you entered for <b>Bus Parameters</b>, enter this command:</p>
+<p><b>bcdedit /set "{dbgsettings}" busparams </b><i>b</i><b>.</b><i>d</i><b>.</b><i>f</i></p>
+<p>where <i>b</i>, <i>d</i>, and <i>f</i> are the bus, device, and function numbers of the network adapter on the target computer that you have chosen to use for debugging.</p>
+<p>For example:</p>
+<p><b>bcdedit /set "{dbgsettings}" busparams 0.29.7</b></p>
+<h2><a id="Starting_the_Debugging_Session"></a><a id="starting_the_debugging_session"></a><a id="STARTING_THE_DEBUGGING_SESSION"></a>Starting the Debugging Session</h2>
+<ol>
+<li>On the host computer, in Visual Studio, on the <b>Tools</b> menu, choose <b>Attach to Process</b>.</li>
+<li>For <b>Transport</b>, choose <b>Windows Kernel Mode Debugger</b>.</li>
+<li>For <b>Qualifier</b>, select the name of the target computer that you previously configured.</li>
+<li>Click <b>Attach</b>.</li>
+</ol>
+<h2><a id="Allowing_the_debugger_through_the_firewall"></a><a id="allowing_the_debugger_through_the_firewall"></a><a id="ALLOWING_THE_DEBUGGER_THROUGH_THE_FIREWALL"></a>Allowing the debugger through the firewall</h2>
+<p>When you first attempt to establish a network debugging connection, you might be prompted to allow the debugging application (Microsoft Visual Studio) through the firewall. Client versions of Windows display the prompt, but Server versions of Windows do not display the prompt. Respond to the prompt by checking the boxes for all three network types: domain, private, and public. If you do not get the prompt, or if you did not check the boxes when the prompt was available, you must use Control Panel to allow access through the firewall. Open <b>Control Panel &gt; System and Security</b>, and click <b>Allow an app through Windows Firewall</b>. In the list of applications, use the check boxes to allow Visual Studio through the firewall. Restart Visual Studio.</p>
+<h2><a id="creating_your_own_key"></a><a id="CREATING_YOUR_OWN_KEY"></a>Creating Your Own Key</h2>
+<p>To keep the target computer secure,  packets that travel between the host and target computers must be encrypted. We strongly recommend that you use an automatically generated encryption key (provided by the Visual Studio configuration wizard) when you configure the target computer). However, you can choose to create your own key. Network debugging uses a 256-bit key that is specified as four 64-bit values, in base 36, separated by periods. Each 64-bit value is specified by using up to 13 characters. Valid characters are the letters a through z and the digits 0 through 9. Special characters are not allowed. The following list gives examples of valid (although not strong) keys:</p>
+<ul>
+<li>1.2.3.4</li>
+<li>abc.123.def.456</li>
+<li>dont.use.previous.keys</li>
+</ul>
+<h2><a id="troubleshooting_tips_for_debugging_over_a_network_cable"></a><a id="TROUBLESHOOTING_TIPS_FOR_DEBUGGING_OVER_A_NETWORK_CABLE"></a>Troubleshooting Tips for Debugging over a Network Cable</h2>
+<h3><a id="Debugging_application_must_be_allowed_through_firewall"></a><a id="debugging_application_must_be_allowed_through_firewall"></a><a id="DEBUGGING_APPLICATION_MUST_BE_ALLOWED_THROUGH_FIREWALL"></a>Debugging application must be allowed through firewall</h3>
+<p>Your debugger (WinDbg or KD) must have access through the firewall. You can use Control Panel to allow access through the firewall. Open <b>Control Panel &gt; System and Security</b>, and click <b>Allow an app through Windows Firewall</b>. In the list of applications, use the check boxes to allow Visual Studio through the firewall. Restart Visual Studio.</p>
+<h3><a id="Port_number_must_be_in_range_allowed_by_network_policy"></a><a id="port_number_must_be_in_range_allowed_by_network_policy"></a><a id="PORT_NUMBER_MUST_BE_IN_RANGE_ALLOWED_BY_NETWORK_POLICY"></a>Port number must be in range allowed by network policy</h3>
+<p>The range of port numbers that can be used for network debugging might be limited by your company's network policy. To determine whether your company's policy limits the range of ports that can be used for network debugging, check with your network administrator. </p>
+<p>Use the following procedure if you need to change the port number.</p>
+<ol>
+<li>On the host computer, in Visual Studio, on the <b>Driver</b> menu, choose <b>Test &gt; Configure Computers</b>.</li>
+<li>Select the name of your test computer, and click <b>Next</b>.</li>
+<li>Select <b>Provision computer and choose debugger settings</b>. Click <b>Next</b>.</li>
+<li>For <b>Port Number</b>, enter a number that is in the range allowed by your network administrator. Click <b>Next</b>.</li>
+<li>The reconfiguration process takes a few minutes and automatically reboots the target computer. When the process is complete, click <b>Next</b> and <b>Finish</b>.</li>
+</ol>
+<h3><a id="Specify_busparams_if_target_computer_has_multiple_network_adapters"></a><a id="specify_busparams_if_target_computer_has_multiple_network_adapters"></a><a id="SPECIFY_BUSPARAMS_IF_TARGET_COMPUTER_HAS_MULTIPLE_NETWORK_ADAPTERS"></a>Specify busparams if target computer has multiple network adapters</h3>
+<p>If your target computer has more than one network adapter, you must specify the bus, device, and function numbers of the network adapter that you intend to use for debugging. To specify the bus parameters, open Device Manager, and locate the network adapter that you want to use for debugging. Open the property page for the network adapter, and make a note of the bus number, device number, and function number. In an elevated Command Prompt Window, enter the following command, where <i>b</i>, <i>d</i>, and <i>f</i> are the bus, device and function numbers in decimal format:</p>
+<p><b>bcdedit -set "{dbgsettings}" busparams </b><i>b</i><b>.</b><i>d</i><b>.</b><i>f</i></p>
+<p>Reboot the target computer.</p>
+<h2><a id="related_topics"></a>Related topics</h2>
+<dl>
+<dt><a href="setting_up_kernel-mode_debugging_in_visual_studio.htm">Setting Up Kernel-Mode Debugging in Visual Studio</a></dt>
+<dt><a href="supported_ethernet_nics_for_network_kernel_debugging_in_windows_8_1.htm">Supported Ethernet NICs for Network Kernel Debugging in Windows 8.1</a></dt>
+<dt><a href="supported_ethernet_nics_for_network_kernel_debugging_in_windows_8.htm">Supported Ethernet NICs for Network Kernel Debugging in Windows 8</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Setting Up Kernel-Mode Debugging over a Network Cable in Visual Studio%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

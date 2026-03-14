@@ -1,0 +1,57 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="When you install Debugging Tools for Windows, you get both a 32-bit set of tools and a 64-bit set of tools."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Choosing the 32-Bit or 64-Bit Debugging Tools</title>
+
+<meta name="MS-HAID" content="r02_setup_1_bec62139-3e78-4a5a-9ff0-b525fe703d98.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.choosing_a_32_bit_or_64_bit_debugger_package"></a>Choosing the 32-Bit or 64-Bit Debugging Tools</h1>
+</div>
+<p>When you install Debugging Tools for Windows, you get both a 32-bit set of tools and a 64-bit set of tools. If you use the Microsoft Visual Studio <a href="debuggers_in_the_debugging_tools_for_windows_package.htm">debugging environment</a>, you don't have to be concerned about whether to use the 32- or 64-bit set because Visual Studio automatically chooses the correct debugging tools.</p>
+<p> If you are using one of the other debugging environments (WinDbg, KD, CDB, or NTSD), you have to make the choice yourself. To determine which set of debugging tools to use, you need to know the type of processor that is running on your host computer and whether the host computer is running a 32- or 64-bit version of Windows.</p>
+<p>The computer that runs the debugger is called the <i>host computer</i>, and the computer being debugged is called the <i>target computer</i>.</p>
+<h3><a id="Host_computer_running_a_32-bit_version_of_Windows"></a><a id="host_computer_running_a_32-bit_version_of_windows"></a><a id="HOST_COMPUTER_RUNNING_A_32-BIT_VERSION_OF_WINDOWS"></a>Host computer running a 32-bit version of Windows</h3>
+<p>If your host computer is running a 32-bit version of Windows, use the 32-bit debugging tools. (This situation applies to both x86-based and x64-based targets.) </p>
+<h3><a id="x64-based_host_computer_running_a_64-bit_version_of_Windows"></a><a id="x64-based_host_computer_running_a_64-bit_version_of_windows"></a><a id="X64-BASED_HOST_COMPUTER_RUNNING_A_64-BIT_VERSION_OF_WINDOWS"></a>x64-based host computer running a 64-bit version of Windows</h3>
+<p>If your host computer uses an x64-based processor and is running a 64-bit version of Windows,  the following rules apply:</p>
+<ul>
+<li>
+<p>If you are analyzing a dump file, you can use either the 32-bit debugging tools or the 64-bit debugging tools.  (It is not important whether the dump file is a user-mode dump file or a kernel-mode dump file, and it is not important whether the dump file was made on an x86-based or an x64-based platform.) </p>
+</li>
+<li>
+<p>If you are performing live kernel-mode debugging, you can use either the 32-bit debugging tools or the x64 debugging tools. (This situation applies to both x86-based and x64-based targets.) </p>
+</li>
+<li>
+<p>
+      If you are debugging live user-mode code that is running on the same computer as the debugger, use the 64-bit tools for debugging 64-bit code and 32-bit code running on WOW64. To set the debugger for 32-bit or 64-bit mode, use the <a href="_effmach__effective_machine_.htm"><b>.effmach</b></a> command. 
+     </p>
+</li>
+<li>
+<p> If you are debugging live 32-bit user-mode code that is running on a separate target computer, use the 32-bit debugging tools.</p>
+</li>
+</ul>
+<h2><a id="related_topics"></a>Related topics</h2>
+<dl>
+<dt><a href="introduction6.htm">Windows Debugging</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Choosing the 32-Bit or 64-Bit Debugging Tools%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

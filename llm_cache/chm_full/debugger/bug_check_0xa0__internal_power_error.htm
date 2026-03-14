@@ -1,0 +1,1152 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The INTERNAL_POWER_ERROR bug check has a value of 0x000000A0. This bug check indicates that the power policy manager experienced a fatal error."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0xA0: INTERNAL_POWER_ERROR</title>
+
+<meta name="MS-HAID" content="t05_bugs_60_00b973c0-99da-4a14-a605-a7cb9ee1eabd.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0xa0__internal_power_error"></a>Bug Check 0xA0: INTERNAL_POWER_ERROR</h1>
+</div>
+<p>The INTERNAL_POWER_ERROR bug check has a value of 0x000000A0. This bug check indicates that the power policy manager experienced a fatal error.</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2> INTERNAL_POWER_ERROR Parameters</h2>
+<p>The following parameters appear on the blue screen. Parameter 1 indicates the type of violation. The meaning of the other parameters depends on the value of Parameter 1.</p>
+<table>
+<tr>
+<th>Parameter 1</th>
+<th>Parameter 2</th>
+<th>Parameter 3</th>
+<th>Parameter 4</th>
+<th>Cause</th>
+</tr>
+<tr>
+<td>
+<p>0x1</p>
+</td>
+<td>
+<p><b>1:</b> A device has overrun its maximum number of reference counts.</p>
+<p><b>2, 3, or 4: </b> (Windows Server 2003, Windows XP, and Windows 2000 only) Too many inrush power IRPs have been queued.</p>
+<p><b>5:</b> (Windows Server 2003, Windows XP, and Windows 2000 only) The power IRP has been sent to a passive level device object.</p>
+<p><b>6:</b> The system has failed to allocate a necessary power IRP.</p>
+</td>
+<td>
+<p>If Parameter 2 has a value of 1, the maximum number of references allowed.</p>
+<p>If Parameter 2 has a value of 2, 3, or 4, the maximum number of pending IRPs allowed.</p>
+<p>If Parameter 2 has a value of 6, the target device object.</p>
+</td>
+<td>If Parameter 2 has value of 6, indicates whether this is a system (0x0) or device (0x1) power IRP.</td>
+<td>
+<p>An error occurred during the handling of the power I/O request packet (IRP). </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x2</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>Reserved </p>
+</td>
+<td>
+<p>Reserved </p>
+</td>
+<td>
+<p>An internal failure has occurred while attempting to process a power event. For more information, see <a href="#parameter_1_equals_0x2">Debugging bug check 0xA0 when parameter 1 equals 0x2</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x3</p>
+</td>
+<td>
+<p>The expected checksum </p>
+</td>
+<td>
+<p>The actual checksum </p>
+</td>
+<td>
+<p>The line number of the failure </p>
+</td>
+<td>
+<p>The checksum for a hibernation context page does not match its expected checksum. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x4</p>
+</td>
+<td>
+<p>The expected checksum </p>
+</td>
+<td>
+<p>The actual checksum </p>
+</td>
+<td>
+<p>The line number of the failure</p>
+</td>
+<td>
+<p>The checksum for a page about to be written to the hibernation file does not match its expected checksum. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x5</p>
+</td>
+<td>
+<p>Reserved </p>
+</td>
+<td>
+<p>Reserved </p>
+</td>
+<td>
+<p>Reserved </p>
+</td>
+<td>
+<p>An unknown shutdown code has been sent to the system shutdown handler. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x7</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>Reserved </p>
+</td>
+<td>
+<p>Reserved </p>
+</td>
+<td>
+<p>An unhandled exception has occurred. For more information, see <a href="#parameter_1_equals_0x7">Debugging bug check 0xA0 when parameter 1 equals 0x7</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x8</p>
+</td>
+<td>
+<p>This parameter is always set to 0x100.</p>
+</td>
+<td>
+<p>The device object</p>
+</td>
+<td>
+<p> POWER_CHANNEL_SUMMARY</p>
+<p></p>
+</td>
+<td>
+<p>A fatal error occurred while processing a system power event.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x9</p>
+</td>
+<td>
+<p>Status code</p>
+</td>
+<td>
+<p>Mirroring phase</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>A fatal error occured while preparing the hibernate file.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0xA</p>
+</td>
+<td>
+<p><b>0:</b> A bug check was requested immediately upon resuming.</p>
+<p><b>1:</b> A bug check was requested during resume after all non-pageable
+                     devices had been powered on.</p>
+<p><b>2:</b> A bug check was requested during resume after all devices
+                     had been powered on.</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>A bug check was requested when waking for debugging purposes.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0xB</p>
+</td>
+<td>
+<p>Size of the hibernation file.</p>
+</td>
+<td>
+<p>Hibernation progress before running out of space</p>
+<p><b>0:</b> HIBERFILE_PROGRESS_FREE_MAP</p>
+<p><b>1:</b> HIBERFILE_PROGRESS_RESUME_CONTEXT</p>
+<p><b>2:</b> HIBERFILE_PROGRESS_PROCESSOR_STATEE</p>
+<p><b>3:</b> HIBERFILE_PROGRESS_MEMORY_RANGES</p>
+<p><b>4:</b> HIBERFILE_PROGRESS_TABLE_PAGES</p>
+<p><b>5:</b> HIBERFILE_PROGRESS_MEMORY_IMAGE</p>
+</td>
+<td>
+<p>Size of the remaining memory ranges.</p>
+</td>
+<td>
+<p>The hibernation file is too small.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0xC</p>
+</td>
+<td>
+<p>Status code</p>
+</td>
+<td>
+<p>Dump stack context</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>The dump stack failed to initialize.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x101</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>Exception pointer.</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>An unhandled exception occured while processing a system power event. For more information, see <a href="#parameter_1_equals_0x101">Debugging bug check 0xA0 when parameter 1 equals 0x101</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x102</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>DUMP_INITIALIZATION_CONTEXT</p>
+</td>
+<td>
+<p>POP_HIBER_CONTEXT</p>
+</td>
+<td>
+<p>The hibernation working buffer size is not page aligned.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x103</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>POP_HIBER_CONTEXT</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>All working pages have failed to be accounted for during the hibernation process.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x104</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>POP_HIBER_CONTEXT</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>An attempt was made to map internal hibernation memory while
+                the internal memory structures were locked.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x105</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>POP_HIBER_CONTEXT</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>An attempt was made to map internal hibernation memory with
+                an unsupported memory type flag.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x106</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>The memory descriptor list (MDL)</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>A memory descriptor list was created during the hibernation process which
+                describes memory that is not paged-aligned.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x107</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>POP_HIBER_CONTEXT</p>
+</td>
+<td>
+<p>PO_MEMORY_RANGE_ARRAY</p>
+</td>
+<td>
+<p>A data mismatch has occurred in the internal hibernation data
+                structures.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x108</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>POP_HIBER_CONTEXT</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>The disk subsystem failed to properly write part of the hibernation
+                file.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x109</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>Expected checksum</p>
+</td>
+<td>
+<p>Actual checksum</p>
+</td>
+<td>
+<p>The checksum for the processor state data does not match its
+                expected checksum.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x10A</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>POP_HIBER_CONTEXT</p>
+</td>
+<td>
+<p>NTSTATUS</p>
+</td>
+<td>
+<p>The disk subsystem failed to properly read or write part of the hibernation
+                file.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x10B</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>Current hibernation progress</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>An attempt was made to mark pages for the boot phase of hibernation
+                at the wrong time using the PoSetHiberRange API.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x10C</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>Flags provided to the API</p>
+</td>
+<td>
+<p>Length to mark</p>
+</td>
+<td>
+<p>The PoSetHiberRange API was called with invalid parameters.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x200</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>DEVICE_OBJECT</p>
+</td>
+<td>
+<p>DEVICE_OBJECT_POWER_EXTENSION</p>
+</td>
+<td>
+<p>An unknown device type is being checked for an idle state.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x300</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>DEVICE_OBJECT</p>
+</td>
+<td>
+<p>IRP</p>
+</td>
+<td>
+<p>An unknown status was returned from a battery power IRP.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x301</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>DEVICE_OBJECT</p>
+</td>
+<td>
+<p>IRP</p>
+</td>
+<td>
+<p>The battery has entered an unknown state.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x400</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>IO_STACK_LOCATION</p>
+</td>
+<td>
+<p>DEVICE_OBJECT</p>
+</td>
+<td>
+<p>A device has overrun its maximum number of reference counts.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x401</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>Pending IRP list</p>
+</td>
+<td>
+<p>DEVICE_OBJECT</p>
+</td>
+<td>
+<p>Too many inrush power IRPs have been queued.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x402</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>Pending IRP list</p>
+</td>
+<td>
+<p>DEVICE_OBJECT</p>
+</td>
+<td>
+<p>Too many inrush power IRPs have been queued.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x403</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>Pending IRP list</p>
+</td>
+<td>
+<p>DEVICE_OBJECT</p>
+</td>
+<td>
+<p>Too many inrush power IRPs have been queued.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x404</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>IO_STACK_LOCATION</p>
+</td>
+<td>
+<p>DEVICE_OBJECT</p>
+</td>
+<td>
+<p>A power IRP has been sent to a passive-level device object.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x500</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>IRP</p>
+</td>
+<td>
+<p>DEVICE_OBJECT</p>
+</td>
+<td>
+<p> An unknown status was returned from a thermal power IRP.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x600</p>
+</td>
+<td>
+<p>DEVICE_OBJECT PDO</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>A driver has attempted a duplicate registration with the Power
+                Runtime Framework.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x601</p>
+</td>
+<td>
+<p>POP_FX_DEVICE device</p>
+</td>
+<td>
+<p>PEP_DEVICE_REGISTER PEP</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>No Power Engine Plugins accepted device registration.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x602</p>
+</td>
+<td>
+<p>DEVICE_NODE device node</p>
+</td>
+<td>
+<p>Sleep count</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>Device node sleep count does not match its activation count.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x603</p>
+</td>
+<td>
+<p>POP_FX_PLUGIN</p>
+</td>
+<td>
+<p>Work request type</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>A Power Engine Plugin made an invalid work request.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x605</p>
+</td>
+<td>
+<p>Notification ID</p>
+</td>
+<td>
+<p>POP_FX_PLUGIN</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>A Power Engine Plugin failed to accept mandatory device power
+                management notification.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x606</p>
+</td>
+<td>
+<p>POP_FX_COMPONENT</p>
+</td>
+<td>
+<p>POP_FX_COMPONENT_FLAGS</p>
+</td>
+<td>
+<p>New condition for the component</p>
+</td>
+<td>
+<p>A Power Engine Plugin attempted to transition a critical system
+                resource component to an Active (or Idle) condition when the resource
+                was already Active (or Idle).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x607</p>
+</td>
+<td>
+<p>POP_FX_DEVICE</p>
+</td>
+<td>
+<p>NTSTATUS</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>The acquisition of a runtime power management framework device-removal lock failed when it was required to succeed.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x608</p>
+</td>
+<td>
+<p>POP_FX_COMPONENT</p>
+</td>
+<td>
+<p>POP_FX_COMPONENT_FLAGS</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>A driver has attempted to transition a component to idle without
+                a preceding active request.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x609</p>
+</td>
+<td>
+<p>POP_FX_PLUGIN</p>
+</td>
+<td>
+<p>POP_FX_DEVICE</p>
+</td>
+<td>
+<p>Duplicate Request Type</p>
+<p><b>0:</b> DevicePowerRequired</p>
+<p><b>1:</b> DevicePowerNotRequired</p>
+</td>
+<td>
+<p>A Power Engine Plugin has requested either device power required
+                or device power not required without an intervening request
+                of the opposite type.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x610</p>
+</td>
+<td>
+<p>POP_FX_PLUGIN</p>
+</td>
+<td>
+<p>POP_FX_DEVICE</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>A Power Engine Plugin has requested device power not required
+                while a previous device power required request is outstanding.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x611</p>
+</td>
+<td>
+<p>POP_FX_PLUGIN</p>
+</td>
+<td>
+<p>POP_FX_DEVICE</p>
+</td>
+<td>
+<p>Invalid component index</p>
+</td>
+<td>
+<p>A Power Engine Plugin has requested an operation on an invalid
+                component.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x612</p>
+</td>
+<td>
+<p>POP_FX_PLUGIN PowerEnginePlugin</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>A Power Engine Plugin has requested additional work to be done
+                in the context of a device notification where no buffer was
+                supplied by PO for the request.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x613</p>
+</td>
+<td>
+<p>POP_FX_DEVICE</p>
+</td>
+<td>
+<p>Component index</p>
+</td>
+<td>
+<p>Operation</p>
+<p><b>0:</b> Complete device power not required</p>
+<p><b>1: </b>Report device powered on</p>
+<p><b>2:</b> Complete idle condition</p>
+</td>
+<td>
+<p>A driver has attempted to complete a request when no such
+                outstanding request is pending.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x614</p>
+</td>
+<td>
+<p>POP_FX_DEVICE</p>
+</td>
+<td>
+<p>Component index</p>
+</td>
+<td>
+<p>Illegal parameter</p>
+<p><b>0:</b> PO_FX_FLAG_BLOCKING used at IRQL &gt;= DISPATCH_LEVEL</p>
+<p><b>1:</b> PO_FX_FLAG_BLOCKING and PO_FX_FLAG_ASYNC_ONLY both specified</p>
+<p><b>2:</b> Invalid component index</p>
+</td>
+<td>
+<p>A driver has requested an active/idle transition on a component
+                with an illegal parameter.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x615</p>
+</td>
+<td>
+<p>POP_FX_PLUGIN</p>
+</td>
+<td>
+<p>POP_FX_COMPONENT</p>
+</td>
+<td>
+<p>Illegal Action</p>
+<p><b>0:</b> Component not in idle state 0</p>
+<p><b>1:</b>Component is already active</p>
+<p><b>2:</b> No outstanding activation request</p>
+<p><b>3:</b> Outstanding idle state transition</p>
+</td>
+<td>
+<p>A Power Engine Plugin has illegally indicated the completion of
+                a component activation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x616</p>
+</td>
+<td>
+<p>POP_FX_PLUGIN</p>
+</td>
+<td>
+<p>POP_FX_COMPONENT</p>
+</td>
+<td>
+<p>Illegal Action</p>
+<p><b>0:</b> Invalid idle state</p>
+<p><b>1:</b> Component is already in the requested state</p>
+<p><b>2:</b> Requested a non-zero idle state without passing through idle state 0</p>
+</td>
+<td>
+<p>A Power Engine Plugin has illegally requested a component idle
+                state transition.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x666</p>
+</td>
+<td>
+<p>PPOP_PEP_ACTIVITY</p>
+</td>
+<td>
+<p>New activity type</p>
+<p><b>0:</b> DevicePowerOn</p>
+<p><b>1:</b> ComponentIdleStateChange</p>
+<p><b>2:</b> ComponentActivating</p>
+<p><b>3:</b> ComponentActive</p>
+<p><b>4:</b> DevicePowerOff</p>
+<p><b>5:</b> DeviceSuspend</p>
+</td>
+<td>
+<p>Conflicting activity type</p>
+<p><b>0:</b> DevicePowerOn</p>
+<p><b>1:</b> ComponentIdleStateChange</p>
+<p><b>2:</b> ComponentActivating</p>
+<p><b>3:</b> ComponentActive</p>
+<p><b>4:</b> DevicePowerOff</p>
+<p><b>5:</b> DeviceSuspend</p>
+</td>
+<td>
+<p>The default Power Engine Plugin has attempted to trigger a new
+                activity that conflicts with another activity.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x667</p>
+</td>
+<td>
+<p>POP_PEP_ACTIVITY</p>
+</td>
+<td>
+<p>Activity type</p>
+<p><b>0:</b> DevicePowerOn</p>
+<p><b>1:</b> ComponentIdleStateChange</p>
+<p><b>2:</b> ComponentActivating</p>
+<p><b>3:</b> ComponentActive</p>
+<p><b>4:</b> DevicePowerOff</p>
+<p><b>5:</b> DeviceSuspend</p>
+</td>
+<td>
+<p>POP_PEP_ACTIVITY_STATUS</p>
+</td>
+<td>
+<p>Default Power Engine Plugin has attempted to complete an
+                activity that is not running.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x700</p>
+</td>
+<td>
+<p>PEPHANDLE</p>
+</td>
+<td>
+<p>PEP_PPM_IDLE_SELECT</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>A Power Engine Plugin has specified invalid processor idle
+                dependencies.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x701</p>
+</td>
+<td>
+<p>The index of the selected idle state of the hung processor</p>
+</td>
+<td>
+<p>The PRCB address of the hung processor</p>
+</td>
+<td>
+<p>The index of the hung processor</p>
+</td>
+<td>
+<p>A processor was not able to complete an idle transition within
+                the allocated interval. This indicates the specified processor
+                is hung.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x702</p>
+</td>
+<td>
+<p>The index of the selected idle state of the processor</p>
+</td>
+<td>
+<p>The idle synchronization state of the processor</p>
+</td>
+<td>
+<p>The PRCB address of the hung processor</p>
+</td>
+<td>
+<p>A processor woke up from a non-interruptible state without the 
+                the OS initiating an explicit wake through the PEP (using the
+                necessary PPM idle synchronization).</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Resolution</h2>
+<p><b>General Notes</b></p>
+<p>In the preceding table, several of the parameters are pointers to structures. For example, if Parameter 2 is listed as DEVICE_OBJECT, then Parameter 2 is a pointer to a DEVICE_OBJECT structure. Some of the structures are defined in wdm.h, which is included in the Windows Driver Kit. For example, the following structures are defined in wdm.h.</p>
+<ul>
+<li>EXCEPTION_POINTERS</li>
+<li>DEVICE_OBJECT</li>
+<li>IO_STACK_LOCATION</li>
+<li>PEP_DEVICE_REGISTER</li>
+</ul>
+<p>Some of the structures that appear in the preceding table are not defined in any public header file. You can see the definitions of those structures by using the <a href="dt__display_type_.htm"><b>dt</b></a> debugger command. The following example shows how to use the <b>dt</b> command to see the <b>DEVICE_OBJECT_POWER_EXTENSION</b> structure.</p>
+<pre class="syntax" xml:space="preserve"><code>3: kd&gt; dt nt!DEVICE_OBJECT_POWER_EXTENSION
+   +0x000 IdleCount        : Uint4B
+   +0x004 BusyCount        : Uint4B
+   +0x008 BusyReference    : Uint4B
+   +0x00c TotalBusyCount   : Uint4B
+   +0x010 ConservationIdleTime : Uint4B
+   +0x014 PerformanceIdleTime : Uint4B
+   +0x018 DeviceObject     : Ptr64 _DEVICE_OBJECT
+   +0x020 IdleList         : _LIST_ENTRY
+   +0x030 IdleType         : _POP_DEVICE_IDLE_TYPE
+   +0x034 IdleState        : _DEVICE_POWER_STATE
+   +0x038 CurrentState     : _DEVICE_POWER_STATE
+   +0x040 Volume           : _LIST_ENTRY
+   +0x050 Specific         : &lt;unnamed-tag&gt;
+</code></pre>
+<p>The following procedures will help you debug certain instances of this bug check.</p><a id="parameter_1_equals_0x2"></a><a id="PARAMETER_1_EQUALS_0X2"></a><p><b>Debugging bug check 0xA0 when Parameter 1 equals 0x2</b></p>
+<ol>
+<li>Examine the stack. Look for the <b>ntoskrnl!PopExceptionFilter</b> function. This function contains the following code as its first argument.<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre> (error_code &lt;&lt; 16) | _LINE_</pre>
+</td>
+</tr>
+</table></span></div>
+<p>If the caller is <b>PopExceptionFilter</b>, the first argument to this function is of type PEXCEPTION_POINTERS. Note the value of this argument.</p>
+</li>
+<li>Use the  <a href="dt__display_type_.htm"><b>dt (Display Type)</b></a>  command and specify the value that you found in the previous step as <i>argument</i>.<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>dt nt!_EXCEPTION_POINTERS argument </pre>
+</td>
+</tr>
+</table></span></div>
+<p>This command displays the structure.  Note the address of the context record.</p>
+</li>
+<li>Use the  <a href="_cxr__display_context_record_.htm"><b>.cxr (Display Context Record)</b></a>  command and specify the context record that you found in the previous step as <i>record</i>.<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>.cxr record </pre>
+</td>
+</tr>
+</table></span></div>
+<p>This command sets the  register context  to the proper value.</p>
+</li>
+<li>
+<p>Use a variety of commands to analyze the source of the error. Start with  <a href="k__kb__kc__kd__kp__kp__kv__display_stack_backtrace_.htm"><b>kb (Display Stack Backtrace)</b></a> . </p>
+</li>
+</ol><a id="parameter_1_equals_0x7"></a><a id="PARAMETER_1_EQUALS_0X7"></a><p><b>Debugging bug check 0xA0 when Parameter 1 equals 0x7</b></p>
+<ol>
+<li>
+<p>Examine the stack. Look for the <b>ntoskrnl!PopExceptionFilter</b> function. The first argument to this function is of type PEXCEPTION_POINTERS. Note the value of this argument.</p>
+</li>
+<li>Use the  <a href="dt__display_type_.htm"><b>dt (Display Type)</b></a>  command and specify the value that you found in the previous step as <i>argument</i>.<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>dt nt!_EXCEPTION_POINTERS argument </pre>
+</td>
+</tr>
+</table></span></div>
+<p>This command displays the structure. Note the address of the context record.</p>
+</li>
+<li>Use the  <a href="_cxr__display_context_record_.htm"><b>.cxr (Display Context Record)</b></a>  command and specify the context record that you found in the previous step as <i>record</i>.<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>.cxr record </pre>
+</td>
+</tr>
+</table></span></div>
+<p>This command sets the  register context to the proper value.</p>
+</li>
+<li>
+<p>Use a variety of commands to analyze the source of the error. Start with  <a href="k__kb__kc__kd__kp__kp__kv__display_stack_backtrace_.htm"><b>kb (Display Stack Backtrace)</b></a> . </p>
+</li>
+</ol><a id="parameter_1_equals_0x101"></a><a id="PARAMETER_1_EQUALS_0X101"></a><p><b>Debugging bug check 0xA0 when Parameter 1 equals 0x101</b></p>
+<ol>
+<li>Use the  <a href="dt__display_type_.htm"><b>dt (Display Type)</b></a>  command and specify the value of Parameter 3 as <i>argument</i>.<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>dt nt!_EXCEPTION_POINTERS argument </pre>
+</td>
+</tr>
+</table></span></div>
+<p>This command displays the structure. Note the address of the context record.</p>
+</li>
+<li>Use the  <a href="_cxr__display_context_record_.htm"><b>.cxr (Display Context Record)</b></a>  command and specify the context record that you found the previous step as <i>record</i>.<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>.cxr record </pre>
+</td>
+</tr>
+</table></span></div>
+<p>This command sets the  register context to the proper value.</p>
+</li>
+<li>
+<p>Use a variety of commands to analyze the source of the error. Start with  <a href="k__kb__kc__kd__kp__kp__kv__display_stack_backtrace_.htm"><b>kb (Display Stack Backtrace)</b></a> . </p>
+</li>
+</ol>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

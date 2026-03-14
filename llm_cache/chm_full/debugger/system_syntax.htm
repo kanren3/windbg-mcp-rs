@@ -1,0 +1,74 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="System Syntax"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>System Syntax</title>
+
+<meta name="MS-HAID" content="r13_syntax_ab2cedff-c069-4bc2-b75d-a56914229093.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.system_syntax"></a>System Syntax</h1>
+</div>
+<h2><a id="ddk_system_syntax_dbg"></a><a id="DDK_SYSTEM_SYNTAX_DBG"></a></h2>
+<p>Many debugger commands have process identifiers as their parameters.</p>
+<p>Two vertical bars ( || ) appear before the system identifier. The system identifier can be one of the following values.</p>
+<table>
+<tr>
+<th>System identifier</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p><b>||.</b></p>
+</td>
+<td>
+<p>The current system</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>||#</b></p>
+</td>
+<td>
+<p>The system that caused the current exception or debug event.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>||*</b></p>
+</td>
+<td>
+<p>All systems.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>||</b><i>ddd</i></p>
+</td>
+<td>
+<p>The system whose ordinal is <i>ddd</i>. </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>Systems are assigned ordinals in the order that the debugger attaches to them.</p>
+<p>When debugging begins, the current system is the one that caused the present exception or debug event (or the one that the debugger most recently attached to). That system remains the current system until you specify a new one by using a <a href="__s__set_current_system_.htm"><b>||s (Set Current System)</b></a> command or by using the <a href="processes_and_threads_window.htm">Processes and Threads window</a> in WinDbg.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20System Syntax%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

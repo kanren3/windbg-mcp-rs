@@ -1,0 +1,75 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Use the following commands to analyze User-Mode Dump Heap (UMDH) logs that were created by running UMDH with the syntax described in Analyze a Running Process."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Analyze UMDH Logs</title>
+
+<meta name="MS-HAID" content="UMDH_c7556c73-4880-45bb-b2be-dddec81093c7.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.analyze_umdh_logs"></a>Analyze UMDH Logs</h1>
+</div>
+<p>Use the following commands to analyze User-Mode Dump Heap (UMDH) logs that were created by running UMDH with the syntax described in <a href="analyze_a_running_process.htm"><b>Analyze a Running Process</b></a>. This analysis focuses on allocations, instead of stack traces.</p>
+<p>You can analyze a single log file or compare logs from different runs to detect the changes in the program or driver's memory dump allocations over time.</p>
+<pre class="syntax"><b>umdh [-d] [-v] [-l] </b><i>File1</i><b> [</b><i>File2</i><b>] [-h | ?]</b></pre>
+<h2><a id="ddk_analyze_umdh_logs_dtools"></a><a id="DDK_ANALYZE_UMDH_LOGS_DTOOLS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______-d______"></a><a id="_______-D______"></a>       <b>-d</b>      </dt>
+<dd>
+<p>Displays numeric data in decimal numbers. The default is hexadecimal.</p>
+</dd>
+<dt><a id="_______-v______"></a><a id="_______-V______"></a>       <b>-v</b>      </dt>
+<dd>
+<p>Verbose mode. Includes the traces, as well as summary information. The traces are most helpful when analyzing a single log file.</p>
+</dd>
+<dt><a id="_______-l______"></a><a id="_______-L______"></a>       <b>-l</b>      </dt>
+<dd>
+<p>Includes file names and line numbers in the log. (Please note that the parameter is the lowercased letter "L," not the number one.)</p>
+</dd>
+<dt><a id="_______File1__File2_"></a><a id="_______file1__file2_"></a><a id="_______FILE1__FILE2_"></a>       <i>File1 </i>[<i>File2</i>]</dt>
+<dd>
+<p>Specifies the UMDH log files to analyze. </p>
+<p>UMDH creates log files when you run it in the <a href="analyze_a_running_process.htm"><b>analyze a running process</b></a> mode and save the log content in a text file (<b>-f</b>).</p>
+<p>When you specify one log file, UMDH analyzes the file and displays the function calls in each trace in descending order of bytes allocated. </p>
+<p>When you specify two log files, UMDH compares the files and displays in descending order the function calls whose allocations have grown the most between the two trials.</p>
+</dd>
+<dt><a id="_______-h____"></a><a id="_______-H____"></a>       <b>-h | ?</b></dt>
+<dd>
+<p>Displays help.</p>
+</dd>
+</dl>
+<h3><a id="sample_usage"></a><a id="SAMPLE_USAGE"></a>Sample Usage</h3>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>umdh dump.txt
+umdh -d -v dump.txt
+umdh dump1.txt dump2.txt</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Remarks</h2>
+<p>Suppose you have two computers: a <i>logging computer</i> where you create a UMDH log and an <i>analysis computer</i> where you analyze the UMDH log. The symbol path on your analysis computer must point to the symbols for the version of Windows that was loaded on the logging computer at the time the log was made. Do not point the symbol path on the analysis computer to a symbol server. If you do, UMDH will retrieve symbols for the version of Windows that is running on the analysis computer, and UMDH will not display meaningful results.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Analyze UMDH Logs%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

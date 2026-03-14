@@ -1,0 +1,67 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Symbols in the Middle"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Symbols in the Middle</title>
+
+<meta name="MS-HAID" content="r08_use_remote_a8696130-ff1b-4f54-9341-24de2a93942e.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.symbols_in_the_middle"></a>Symbols in the Middle</h1>
+</div>
+<h2><a id="ddk_symbols_in_the_middle_dbg"></a><a id="DDK_SYMBOLS_IN_THE_MIDDLE_DBG"></a></h2>
+<p>In this scenario, you have three computers. The first has the target application, the second has the symbols, and the third has the technician.</p>
+<p>Since the smart client behaves like a regular debugger in every way, it can be used as a debugging server at the same time. This allows you to link three machines together with the smart client in the middle.</p>
+<p>First, you start a process server on the computer \\BOXA:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>dbgsrv -t npipe:pipe=FarPipe </pre>
+</td>
+</tr>
+</table></span></div>
+<p>The middle machine, named \\BOXB, starts the debugger with both the <b>-premote</b> and <b>-server</b> parameters. Suppose the PID of the target application is 400 and the symbol path is G:\MySymbols:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>cdb -server npipe:pipe=NearPipe -premote npipe:server=BOXA,pipe=FarPipe -v -y g:\mysymbols -p 400 </pre>
+</td>
+</tr>
+</table></span></div>
+<p>Then a debugging client on a third machine can be started as follows:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>windbg -remote npipe:server=BOXB,pipe=NearPipe </pre>
+</td>
+</tr>
+</table></span></div>
+<p>The third machine is then used to control the debugging, while the second machine is where the actual processing is done and the symbols are accessed.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Symbols in the Middle%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

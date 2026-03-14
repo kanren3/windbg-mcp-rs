@@ -1,0 +1,170 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The DPC_WATCHDOG_VIOLATION bug check has a value of 0x00000133."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0x133 DPC_WATCHDOG_VIOLATION</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0x133_dpc_watchdog_violation"></a>Bug Check 0x133 DPC_WATCHDOG_VIOLATION</h1>
+</div>
+<p>The DPC_WATCHDOG_VIOLATION bug check has a value of 0x00000133. This bug check indicates that the DPC watchdog executed, either because it detected a single long-running deferred procedure call (DPC), or because the system spent a prolonged time at an interrupt request level (IRQL) of DISPATCH_LEVEL or above.  The value of Parameter 1 indicates whether a single DPC exceeded a timeout, or whether the system cumulatively spent an extended period of time at IRQL DISPATCH_LEVEL or above. DPCs should not run longer than 100 microseconds and ISRs should not run longer than 25 microseconds, however the actual timeout values on the system are set much higher.</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2>DPC_WATCHDOG_VIOLATION Parameters</h2>
+<p>The following parameters are displayed on the blue screen. <i>Parameter 1</i> indicates the type of violation. The meaning of the other parameters depends on the value of <i>Parameter 1</i>.</p>
+<table>
+<tr>
+<th>Parameter 1</th>
+<th>Parameter 2</th>
+<th>Parameter 3</th>
+<th>Parameter 4</th>
+<th>Cause of Error</th>
+</tr>
+<tr>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>The DPC time count (in ticks)</p>
+</td>
+<td>
+<p>The DPC time allotment (in ticks).
+</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>  A single DPC or ISR exceeded its time allotment. The offending component can usually be identified with a stack trace.
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>1</p>
+</td>
+<td>
+<p>The watchdog period</p>
+</td>
+<td>
+<p>Reserved </p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>The system cumulatively spent an extended period of time at
+            IRQL DISPATCH_LEVEL or above. The offending component can usually be identified with a stack trace.
+</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Cause</h2>
+<p>The <a href="_analyze.htm"><b>!analyze</b></a> debug extension displays information about  the bug check and can be very helpful in determining the root cause.</p>
+<p><b>Parameter 1 = 0</b></p>
+<p>In this example, the tick count of 501 exceeds the DPC time allotment of 500. The image name indicates that this code was executing when the bug check occurred.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0: kd&gt; !analyze -v
+*******************************************************************************
+*                                                                             *
+*                        Bugcheck Analysis                                    *
+*                                                                             *
+*******************************************************************************
+
+DPC_WATCHDOG_VIOLATION (133)
+The DPC watchdog detected a prolonged run time at an IRQL of DISPATCH_LEVEL
+or above.
+Arguments:
+Arg1: 0000000000000000, A single DPC or ISR exceeded its time allotment. The offending
+	component can usually be identified with a stack trace.
+Arg2: 0000000000000501, The DPC time count (in ticks).
+Arg3: 0000000000000500, The DPC time allotment (in ticks).
+Arg4: 0000000000000000
+
+...
+
+IMAGE_NAME:  BthA2DP.sys
+...
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Use the following debugger commands to gather more information for failures with a parameter of 0:</p>
+<p><a href="k__kb__kc__kd__kp__kp__kv__display_stack_backtrace_.htm"><b>k (Display Stack Backtrace)</b></a> to look at what code was running when the stop code occurred.  </p>
+<p>You may want to use the u, ub, uu (Unassemble) command to look deeper into the specifics of a the code that was running.</p>
+<p>The <a href="_pcr.htm"><b>!pcr</b></a> extension displays the current status of the Processor Control Region (PCR) on a specific processor. In the output will be the address of the Prcb</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>                     Prcb: fffff80309974180</pre>
+</td>
+</tr>
+</table></span></div>
+<p></p>
+<p>You can use the <a href="dt__display_type_.htm"><b>dt (Display Type)</b></a> command to display additional information about the DPCs and the DPC Watchdog. For the address use the Prcb  listed in the !pcr output:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>dt nt!_KPRCB fffff80309974180 Dpc* 
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p><b>Parameter 1 = 1</b></p>
+<p>For parameter of 1, the code may not stop in the offending area of code. In this case one approach is to use the event tracing to attempt to track down which driver is exceeding it's normal execution duration.</p>
+<p>For more information see the following topics:</p>
+<p><a href="crash_dump_files.htm">Crash dump analysis using the Windows debuggers (WinDbg)</a></p>
+<p><a href="analyzing_a_kernel_mode_dump_file_with_windbg.htm">Analyzing a Kernel-Mode Dump File with WinDbg</a></p>
+<p><a href="using_the__analyze_extension.htm">Using the !analyze Extension</a> and <a href="_analyze.htm">!analyze</a></p>
+<h2>Remarks</h2>
+<p>In general this stop code is caused by faulty driver code that under certain conditions, does not complete its work within the allotted time frame.</p>
+<p>If you are not equipped to use the Windows debugger to  this problem, you should use some basic troubleshooting techniques. </p>
+<ul>
+<li>
+<p>If a driver is identified in the bug check message, to isolate the issue, disable the driver. Check with the manufacturer for driver updates. </p>
+</li>
+<li>
+<p>Check the System Log in Event Viewer for additional error messages that might help identify the device or driver that is causing bug check 0x133. </p>
+</li>
+<li>
+<p>Confirm that any new hardware that is installed is compatible with the installed version of Windows. For example, you can get information about required hardware at <a href="https://www.microsoft.com/en-us/windows/windows-10-specifications">Windows 10
+
+Specifications</a>.</p>
+</li>
+<li>
+<p>For additional general troubleshooting information, see <a href="blue_screen_data.htm"><b>Blue Screen Data</b></a>. </p>
+</li>
+</ul>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

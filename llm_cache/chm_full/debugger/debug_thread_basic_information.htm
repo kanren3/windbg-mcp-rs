@@ -1,0 +1,173 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The DEBUG_THREAD_BASIC_INFORMATION structure describes an operating system thread."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>DEBUG_THREAD_BASIC_INFORMATION structure</title>
+
+<meta name="MS-HAID" content="Structures_e48c9daa-ce4f-4131-9ca6-cb1a7a129fcc.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.debug_thread_basic_information"></a>DEBUG_THREAD_BASIC_INFORMATION structure</h1>
+</div>
+<p>The DEBUG_THREAD_BASIC_INFORMATION structure describes an operating system thread.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>typedef struct _DEBUG_THREAD_BASIC_INFORMATION {
+  ULONG   Valid;
+  ULONG   ExitStatus;
+  ULONG   PriorityClass;
+  ULONG   Priority;
+  ULONG64 CreateTime;
+  ULONG64 ExitTime;
+  ULONG64 KernelTime;
+  ULONG64 UserTime;
+  ULONG64 StartOffset;
+  ULONG64 Affinity;
+}  DEBUG_THREAD_BASIC_INFORMATION, *PDEBUG_THREAD_BASIC_INFORMATION;</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Members</h2>
+<dl>
+<dt><b>Valid</b></dt>
+<dd>
+<p>A bitset that specifies which other members of the structure contain valid information. A member of the structure is valid if the corresponding bit flag is set in <b>Valid</b>.</p>
+<table>
+<tr>
+<th>Flag</th>
+<th>Members</th>
+</tr>
+<tr>
+<td>
+<p>DEBUG_TBINFO_EXIT_STATUS</p>
+</td>
+<td>
+<p><b>ExitStatus</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_TBINFO_PRIORITY_CLASS</p>
+</td>
+<td>
+<p><b>PriorityClass</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_TBINFO_PRIORITY</p>
+</td>
+<td>
+<p><b>Priority</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_TBINFO_TIMES</p>
+</td>
+<td>
+<p><b>CreateTime</b>, <b>ExitTime</b>, <b>KernelTime</b>, <b> UserTime</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_TBINFO_START_OFFSET</p>
+</td>
+<td>
+<p><b>StartOffset</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_TBINFO_AFFINITY</p>
+</td>
+<td>
+<p><b>Affinity</b></p>
+</td>
+</tr>
+</table>
+<p> </p>
+</dd>
+<dt><b>ExitStatus</b></dt>
+<dd>
+<p>The exit code of the thread. If the thread is still running, <b>ExitStatus</b> is set to STILL_ACTIVE.</p>
+<p><b>ExitStatus</b> is only valid if the  DEBUG_TBINFO_EXIT_STATUS bit flag is set in <b>Valid</b>.</p>
+</dd>
+<dt><b>PriorityClass</b></dt>
+<dd>
+<p>The priority class of the thread. The priority classes are defined by the <i>XXX</i>_PRIORITY_CLASS constants in WinBase.h. For more information about thread priority classes, see the Platform SDK.</p>
+<p><b>PriorityClass</b> is only valid if the DEBUG_TBINFO_PRIORITY_CLASS bit flag is set in <b>Valid</b>.</p>
+</dd>
+<dt><b>Priority</b></dt>
+<dd>
+<p>The priority of the thread relative to the priority class. Some thread priorities are defined by the THREAD_PRIORITY_<i>XXX</i> constants in WinBase.h.  For more information about thread priorities,  see the Platform SDK.</p>
+<p><b>Priority</b> is only valid if the DEBUG_TBINFO_PRIORITY bit flag is set in <b>Valid</b>.</p>
+</dd>
+<dt><b>CreateTime</b></dt>
+<dd>
+<p>The creation time of the thread.</p>
+<p><b>CreateTime</b> is only valid if the DEBUG_TBINFO_TIMES bit flag is set in <b>Valid</b>.</p>
+</dd>
+<dt><b>ExitTime</b></dt>
+<dd>
+<p>The exit time of the thread.</p>
+<p><b>ExitTime</b> is only valid if the DEBUG_TBINFO_TIMES bit flag is set in <b>Valid</b>.</p>
+</dd>
+<dt><b>KernelTime</b></dt>
+<dd>
+<p>The amount of time the thread has executed in kernel mode.</p>
+<p><b>KernelTime</b> is only valid if the DEBUG_TBINFO_TIMES bit flag is set in <b>Valid</b>.</p>
+</dd>
+<dt><b>UserTime</b></dt>
+<dd>
+<p>The amount of time the thread has executed in user-mode.</p>
+<p><b>UserTime</b> is only valid if the DEBUG_TBINFO_TIMES bit flag is set in <b>Valid</b>.</p>
+</dd>
+<dt><b>StartOffset</b></dt>
+<dd>
+<p>The starting address of the thread.</p>
+<p><b>StartOffset</b> is only valid if the DEBUG_TBINFO_START_OFFSET bit flag is set in <b>Valid</b>.</p>
+</dd>
+<dt><b>Affinity</b></dt>
+<dd>
+<p>The thread affinity mask for the thread in a Symmetric Multiple Processor (SMP) computer. For more information about the thread affinity mask, see the Platform SDK.</p>
+<p><b>Affinity</b> is only valid if the DEBUG_TBINFO_AFFINITY bit flag is set in <b>Valid</b>.</p>
+</dd>
+</dl>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>DbgEng.h (include DbgEng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20DEBUG_THREAD_BASIC_INFORMATION structure%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

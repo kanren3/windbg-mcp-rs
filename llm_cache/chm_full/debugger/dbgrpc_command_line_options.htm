@@ -1,0 +1,109 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The DbgRpc command line must always contain exactly one of the -l, -e, -t, -c, or -a switches. The options following these switches depend on the switch used. The -s, -p, and -r options can be used with any other options."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>DbgRpc Command-Line Options</title>
+
+<meta name="MS-HAID" content="r12_cmdline_37869b07-780b-4f69-9a4f-69e21cc9759d.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.dbgrpc_command_line_options"></a>DbgRpc Command-Line Options</h1>
+</div>
+<p>The DbgRpc command line must always contain exactly one of the -l, -e, -t, -c, or -a switches. The options following these switches depend on the switch used. The -s, -p, and -r options can be used with any other options.</p>
+<pre class="syntax">
+    <b>dbgrpc [-s </b><i>Server</i><b> -p </b><i>ProtSeq</i><b>] [-r </b><i>Radix</i><b>] -l -P </b><i>ProcessID</i><b> -L </b><i>CellID1</i><b>.</b><i>CellID2</i><b> 
+
+dbgrpc [-s </b><i>Server</i><b> -p </b><i>ProtSeq</i><b>] [-r </b><i>Radix</i><b>] -e [-E </b><i>EndpointName</i><b>] 
+
+dbgrpc [-s </b><i>Server</i><b> -p </b><i>ProtSeq</i><b>] [-r </b><i>Radix</i><b>] -t -P </b><i>ProcessID</i><b> [-T </b><i>ThreadID</i><b>] 
+
+dbgrpc [-s </b><i>Server</i><b> -p </b><i>ProtSeq</i><b>] [-r </b><i>Radix</i><b>] [-c|-a] [-C </b><i>CallID</i><b>] [-I </b><i>IfStart</i><b>] [-N </b><i>ProcNum</i><b>] [-P </b><i>ProcessID</i><b>] 
+
+dbgrpc -? 
+</b>
+   </pre>
+<h2><a id="ddk_dbgrpc_command_line_options_dbg"></a><a id="DDK_DBGRPC_COMMAND_LINE_OPTIONS_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______-s_______Server______"></a><a id="_______-s_______server______"></a><a id="_______-S_______SERVER______"></a>       <b>-s</b>       <i>Server</i>      </dt>
+<dd>
+<p>Allows DbgRpc to view information from a remote machine. The server name should not be preceded by slash marks. For more information about using DbgRpc remotely, see <a href="using_the_dbgrpc_tool.htm">Using the DbgRpc Tool</a>.</p>
+</dd>
+<dt><a id="_______-p_______ProtSeq______"></a><a id="_______-p_______protseq______"></a><a id="_______-P_______PROTSEQ______"></a>       <b>-p</b>       <i>ProtSeq</i>      </dt>
+<dd>
+<p>Specifies the remote transport to be used. The possible values of <i>ProtSeq</i> are <b>ncacn_ip_tcp</b> (TCP protocol) and <b>ncacn_np</b> (named pipe protocol). TCP protocol is recommended. For more information about using DbgRpc remotely, see <a href="using_the_dbgrpc_tool.htm">Using the DbgRpc Tool</a>. </p>
+</dd>
+<dt><a id="_______-r_______Radix______"></a><a id="_______-r_______radix______"></a><a id="_______-R_______RADIX______"></a>       <b>-r</b>       <i>Radix</i>      </dt>
+<dd>
+<p>Specifies the radix to be used for the command parameters. The default is base 16. If the <b>-r</b> parameter is used, it should be placed first on the line, since it only affects parameters listed after itself. It does not affect the output of the DbgRpc tool.  </p>
+</dd>
+<dt><a id="_______-l______"></a><a id="_______-L______"></a>       <b>-l</b>      </dt>
+<dd>
+<p>Displays RPC state information for the specified cell. For an example, see <a href="get_rpc_cell_information.htm">Get RPC Cell Information</a>.</p>
+</dd>
+<dt><a id="_______ProcessID______"></a><a id="_______processid______"></a><a id="_______PROCESSID______"></a>       <i>ProcessID</i>      </dt>
+<dd>
+<p>Specifies the process ID (PID) of a process. When the <b>-l</b> option is being used, this should be the process whose server contains the desired cell. When the <b>-t</b> option is being used, this should be the process containing the desired thread. When the <b>-c</b> or <b>-a</b> options are being used, this parameter is optional; it should be the server process that owns the calls you wish to display.</p>
+</dd>
+<dt><a id="CellID1.CellID2______"></a><a id="cellid1.cellid2______"></a><a id="CELLID1.CELLID2______"></a><i>CellID1</i>.<i>CellID2</i>      </dt>
+<dd>
+<p>Specifies the number of the cell to be displayed.</p>
+</dd>
+<dt><a id="_______-e______"></a><a id="_______-E______"></a>       <b>-e</b>      </dt>
+<dd>
+<p>Searches the system's RPC state information for endpoint information. For an example, see <a href="get_rpc_endpoint_information.htm">Get RPC Endpoint Information</a>.</p>
+</dd>
+<dt><a id="_______EndpointName______"></a><a id="_______endpointname______"></a><a id="_______ENDPOINTNAME______"></a>       <i>EndpointName</i>      </dt>
+<dd>
+<p>Specifies the number of the endpoint to be displayed. If omitted, the endpoints for all processes on the system are displayed. </p>
+</dd>
+<dt><a id="_______-t______"></a><a id="_______-T______"></a>       <b>-t</b>      </dt>
+<dd>
+<p>Searches the system's RPC state information for thread information. For an example, see <a href="get_rpc_thread_information.htm">Get RPC Thread Information</a>.</p>
+</dd>
+<dt><a id="_______ThreadID______"></a><a id="_______threadid______"></a><a id="_______THREADID______"></a>       <i>ThreadID</i>      </dt>
+<dd>
+<p>Specifies the thread ID of the thread to be displayed. If omitted, all threads in the specified process will be displayed.</p>
+</dd>
+<dt><a id="_______-c______"></a><a id="_______-C______"></a>       <b>-c</b>      </dt>
+<dd>
+<p>Searches the system's RPC state information for server-side call (SCALL) information. For an example, see <a href="get_rpc_call_information.htm">Get RPC Call Information</a>.</p>
+</dd>
+<dt><a id="_______-a______"></a><a id="_______-A______"></a>       <b>-a</b>      </dt>
+<dd>
+<p>Searches the system's RPC state information for client call (CCALL) information. For an example, see <a href="get_rpc_client_call_information.htm">Get RPC Client Call Information</a>. <u>This option requires full RPC state information.</u></p>
+</dd>
+<dt><a id="_______CallID______"></a><a id="_______callid______"></a><a id="_______CALLID______"></a>       <i>CallID</i>      </dt>
+<dd>
+<p>Specifies the call ID. This parameter is optional; include it only if you want to display calls matching a specific <i>CallID</i> value.</p>
+</dd>
+<dt><a id="_______IfStart______"></a><a id="_______ifstart______"></a><a id="_______IFSTART______"></a>       <i>IfStart</i>      </dt>
+<dd>
+<p>Specifies the first DWORD of the interface's universally unique identifier (UUID) on which the call was made. This parameter is optional; include it only if you want to display calls matching a specific <i>IfStart</i> value.</p>
+</dd>
+<dt><a id="_______ProcNum______"></a><a id="_______procnum______"></a><a id="_______PROCNUM______"></a>       <i>ProcNum</i>      </dt>
+<dd>
+<p>Specifies the procedure number of this call. (The RPC Run-Time identifies individual routines from an interface by numbering them by position in the IDL file -- the first routine in the interface is 0, the second 1, and so on.)  This parameter is optional; include it only if you want to display calls matching a specific <i>ProcNum</i> value.</p>
+</dd>
+</dl>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about debugging Microsoft Remote Procedure Call (RPC), see <a href="rpc_debugging.htm">RPC Debugging</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20DbgRpc Command-Line Options%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

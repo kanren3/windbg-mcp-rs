@@ -1,0 +1,82 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The MUST_SUCCEED_POOL_EMPTY bug check has a value of 0x00000041. This indicates that a kernel-mode thread has requested too much must-succeed pool."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0x41: MUST_SUCCEED_POOL_EMPTY</title>
+
+<meta name="MS-HAID" content="t04_bugs_00_ad205170-319b-43a3-9a57-ee353154dd2c.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0x41__must_succeed_pool_empty"></a>Bug Check 0x41: MUST_SUCCEED_POOL_EMPTY</h1>
+</div>
+<p>The MUST_SUCCEED_POOL_EMPTY bug check has a value of 0x00000041. This indicates that a kernel-mode thread has requested too much must-succeed pool.</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2> MUST_SUCCEED_POOL_EMPTY Parameters</h2>
+<p>The following parameters are displayed on the blue screen.</p>
+<table>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>1</p>
+</td>
+<td>
+<p>The size of the request that could not be satisfied </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>2</p>
+</td>
+<td>
+<p>The number of pages used from nonpaged pool </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>3</p>
+</td>
+<td>
+<p>The number of requests from nonpaged pool larger than PAGE_SIZE </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>4</p>
+</td>
+<td>
+<p>The number of pages available </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Cause</h2>
+<p>In Microsoft Windows 2000, only a small amount of must-succeed pool is permitted. In Windows XP and later, no driver is permitted to request must-succeed pool.</p>
+<p>If a must-succeed request cannot be filled, this bug check is issued.</p>
+<h2>Resolution</h2>
+<p>Replace or rewrite the driver which is making the request. A driver should not request must-succeed pool. Instead, it should ask for normal pool and gracefully handle the scenario where the pool is temporarily empty.</p>
+<p>The <a href="k__kb__kc__kd__kp__kp__kv__display_stack_backtrace_.htm"><b>kb (Display Stack Backtrace)</b></a> command will show the driver that caused the error.</p>
+<p>Additionally, it is possible that a second component has depleted the must-succeed pool. To determine if this is the case, first use the <b>kb</b> command. Then use <a href="_vm.htm"><b>!vm 1</b></a> to display total pool usage, <a href="_poolused.htm"><b>!poolused 2</b></a> to display per-tag nonpaged pool usage, and <b>!poolused 4</b> to display per-tag paged pool usage. The component associated with the tag using the most pool is probably the source of the problem.</p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

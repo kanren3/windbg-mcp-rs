@@ -1,0 +1,120 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .context command specifies which page directory of a process will be used for the user-mode address context, or displays the current user-mode address context."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.context (Set User-Mode Address Context)</title>
+
+<meta name="MS-HAID" content="r19_metacmds_A_649c5127-f473-4518-aa6b-490c2a68d4f8.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._context__set_user_mode_address_context_"></a>.context (Set User-Mode Address Context)</h1>
+</div>
+<p>The <b>.context</b> command specifies which page directory of a process will be used for the user-mode address context, or displays the current user-mode address context.</p>
+<pre class="syntax"><b>.context </b>[<i>PageDirectoryBase</i>]</pre>
+<h2><a id="ddk_meta_set_user_mode_address_context_dbg"></a><a id="DDK_META_SET_USER_MODE_ADDRESS_CONTEXT_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______PageDirectoryBase______"></a><a id="_______pagedirectorybase______"></a><a id="_______PAGEDIRECTORYBASE______"></a>       <i>PageDirectoryBase</i>      </dt>
+<dd>
+<p>Specifies the base address for a page directory of a desired process. The user-mode address context will be set to this page directory. If <i>PageDirectoryBase</i> is zero, the user-mode address context will be set to the page directory for the current system state. If <i>PageDirectoryBase</i> is omitted, the current user-mode address context is displayed.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Modes</b></p>
+</td>
+<td>
+<p>kernel mode only  </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets
+         </b></p>
+</td>
+<td>
+<p>live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Platforms
+         </b></p>
+</td>
+<td>
+<p>all   </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about the user-mode address context and other context settings, see <a href="changing_contexts.htm">Changing Contexts</a>.</p>
+<h2>Remarks</h2>
+<p>Generally, when you are doing kernel debugging, the only visible user-mode address space is the one associated with the current process.</p>
+<p>The <b>.context</b> command instructs the kernel debugger to use the specified page directory as the <i>user-mode address context</i>. After this command is executed, the debugger will have access to this virtual address space. The page tables for this address space will be used to interpret all user-mode memory addresses. This allows you to read and write to this memory.</p>
+<p>The <a href="_process__set_process_context_.htm"><b>.process (Set Process Context)</b></a> command has a similar effect. However, the <b>.context</b> command sets the user-mode address context to a specific page directory, while the <b>.process</b> command sets the <i>process context</i> to a specific process. On an x86 processor, these two commands have essentially the same effect. However, on an Itanium processor, a single process may have more than one page directory. In this case, the <b>.process</b> command is more powerful, because it will allow access to all the page directories associated with a process. See <a href="changing_contexts.htm#process_context">Process Context</a> for more details.</p>
+<p>If you are doing live debugging, you should issue a <a href="_cache__set_cache_size_.htm"><b>.cache forcedecodeuser</b></a> command in addition to the <b>.context</b> command. This forces the debugger to look up the physical addresses of the memory space needed. (This can be slow, because it often means a huge amount of data must be transferred across the debug cable.)</p>
+<p>If you are doing crash dump debugging, the <a href="_cache__set_cache_size_.htm"><b>.cache</b></a> command is not needed. However, you will not have access to any portions of the virtual address space of the user-mode process that were paged to disk when the crash occurred.</p>
+<p>Here is an example. Use the <a href="_process.htm"><b>!process</b></a> extension to find the directory base for the desired process:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !process 0 0
+**** NT ACTIVE PROCESS DUMP ****
+PROCESS fe5039e0  SessionId: 0  Cid: 0008    Peb: 00000000  ParentCid: 0000
+    DirBase: 00030000  ObjectTable: fe529b68  TableSize:  50.
+    Image: System
+
+...
+
+PROCESS fe3c0d60  SessionId: 0  Cid: 0208    Peb: 7ffdf000  ParentCid: 00d4
+ DirBase: 0011f000  ObjectTable: fe3d0f48  TableSize:  30.
+    Image: regsvc.exe</code></pre>
+<p>Now use the <b>.context</b> command with this page directory base.</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; .context 0011f000</code></pre>
+<p>This enables you to examine the address space in various ways. For example, here is the output of the <a href="_peb.htm"><b>!peb</b></a> extension:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !peb
+PEB at 7FFDF000
+    InheritedAddressSpace:    No
+    ReadImageFileExecOptions: No
+    BeingDebugged:            No
+    ImageBaseAddress:         01000000
+    Ldr.Initialized: Yes
+    Ldr.InInitializationOrderModuleList: 71f40 . 77f68
+    Ldr.InLoadOrderModuleList: 71ec0 . 77f58
+    Ldr.InMemoryOrderModuleList: 71ec8 . 77f60
+        01000000 C:\WINNT\system32\regsvc.exe
+        77F80000 C:\WINNT\System32\ntdll.dll
+        77DB0000 C:\WINNT\system32\ADVAPI32.dll
+        77E80000 C:\WINNT\system32\KERNEL32.DLL
+        77D40000 C:\WINNT\system32\RPCRT4.DLL
+        77BE0000 C:\WINNT\system32\secur32.dll
+    SubSystemData:     0
+    ProcessHeap:       70000
+    ProcessParameters: 20000
+        WindowTitle:  'C:\WINNT\system32\regsvc.exe'
+        ImageFile:    'C:\WINNT\system32\regsvc.exe'
+        CommandLine:  'C:\WINNT\system32\regsvc.exe'
+        DllPath:     'C:\WINNT\system32;.;C:\WINNT\System32;C:\WINNT\system;C:\WINNT;C:\WINNT\system32;C:\WINNT;C:\WINNT\System32\Wbem;C:\PROGRA~1\COMMON~1\AUTODE~1'
+        Environment:  0x10000</code></pre>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.context (Set User-Mode Address Context)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

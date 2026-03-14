@@ -1,0 +1,75 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !amli r extension displays information about the current context or the specified context."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!amli r</title>
+
+<meta name="MS-HAID" content="r33_exts_ACPI_cbd0459e-74f3-4c10-bbb4-efe5bb46893e.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._amli_r"></a>!amli r</h1>
+</div>
+<p>The <b>!amli r</b> extension displays information about the current context or the specified context.</p>
+<p>Syntax</p>
+<pre class="syntax"><b>!amli r </b>[<i>ContextAddress</i>]</pre>
+<h2><a id="ddk__amli_r_dbg"></a><a id="DDK__AMLI_R_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______ContextAddress______"></a><a id="_______contextaddress______"></a><a id="_______CONTEXTADDRESS______"></a>       <i>ContextAddress</i>      </dt>
+<dd>
+<p>Specifies the address of the context block to be displayed. The address of a context block can be determined from the <b>Ctxt</b> field in the <a href="_amli_lc.htm"><b>!amli lc</b></a> display. If <i>ContextAddress</i> is prefixed with two percent signs (<b>%%</b>), it is interpreted as a physical address. Otherwise, it is interpreted as a virtual address. If this parameter is omitted, the current context is displayed. </p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<p>
+          Kdexts.dll</p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For information about related commands and their uses, see <a href="the_amli_debugger.htm">The AMLI Debugger</a>.</p>
+<h2>Remarks</h2>
+<p>If the AMLI Debugger prompt appears suddenly, this is a useful command to use.</p>
+<p>For example, the following command will display the current context of the interpreter:</p>
+<pre class="syntax" xml:space="preserve"><code>AMLI(? for help)-&gt; r
+
+Context=c18b4000*, Queue=00000000, ResList=00000000
+ThreadID=c15a6618, Flags=00000010
+StackTop=c18b5eec, UsedStackSize=276 bytes, FreeStackSize=7636 bytes
+LocalHeap=c18b40c0, CurrentHeap=c18b40c0, UsedHeapSize=88 bytes
+Object=\_WAK, Scope=\_WAK, ObjectOwner=c18b4108, SyncLevel=0
+AsyncCallBack=ff06b5d0, CallBackData=0, CallBackContext=c99efddc
+
+MethodObject=\_WAK
+80e0ff5c: Local0=Unknown()
+80e0ff70: Local1=Unknown()
+80e0ff84: Local2=Unknown()
+80e0ff98: Local3=Unknown()
+80e0ffac: Local4=Unknown()
+80e0ffc0: Local5=Unknown()
+80e0ffd4: Local6=Unknown()
+80e0ffe8: Local7=Unknown()
+80e0e040: RetObj=Unknown()
+
+Next AML Pointer: ffffffff80e630df:[\_WAK+16]
+
+ffffffff80e630df : If(S4BW
+ffffffff80e630e5 : {
+ffffffff80e630e5 : | Store(Zero, S4BW)
+ffffffff80e630eb : }</code></pre>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!amli r%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

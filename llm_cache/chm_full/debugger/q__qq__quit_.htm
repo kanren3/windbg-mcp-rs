@@ -1,0 +1,68 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The q and qq commands end the debugging session."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>q, qq (Quit)</title>
+
+<meta name="MS-HAID" content="r17_cmds_I_27fbcb2b-e3e7-470e-bab9-29dd7a115129.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.q__qq__quit_"></a>q, qq (Quit)</h1>
+</div>
+<p>The <b>q</b> and <b>qq</b> commands end the debugging session. (In CDB and KD, this command also exits the debugger itself. In WinDbg, this command returns the debugger to dormant mode.)</p>
+<p></p>
+<pre class="syntax"><b>q</b> 
+<b>qq</b> </pre>
+<h2><a id="ddk_cmd_quit_dbg"></a><a id="DDK_CMD_QUIT_DBG"></a></h2>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>In user-mode debugging, the <b>q</b> command ends the debugging session and closes the target application.</p>
+<p>In kernel-mode debugging, the <b>q</b> command saves the log file and ends the debugging session. The target computer remains locked.</p>
+<p>If this command does not work in KD, press <a href="ctrl_r__re_synchronize_.htm"><b>CTRL+R+ENTER</b></a> on the debugger keyboard, and then retry the <b>q</b> command. If this action does not work, you must use CTRL+B+ENTER to exit the debugger.</p>
+<p>The <b>qq</b> command behaves exactly like the <b>q</b> command, unless you are performing remote debugging. During remote debugging, the <b>q</b> command has no effect, but the <b>qq</b> command ends the debugging server. For more information about this effect, see <a href="remote_debugging_through_the_debugger.htm">Remote Debugging Through the Debugger</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20q, qq (Quit)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,195 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !thread extension displays summary information about a thread on the target system, including the ETHREAD block. This command can be used only during kernel-mode debugging."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!thread</title>
+
+<meta name="MS-HAID" content="r29_exts_kernel_Q_127b52f2-51ff-49c3-9392-7059a2f5a723.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._thread"></a>!thread</h1>
+</div>
+<p>The <b>!thread</b> extension displays summary information about a thread on the target system, including the ETHREAD block. This command can be used only during kernel-mode debugging.</p>
+<p>This extension command is not the same as the <a href="_thread__set_register_context_.htm"><b>.thread (Set Register Context)</b></a> command.</p>
+<p>Syntax</p>
+<pre class="syntax"><b>!thread </b>[<b>-p</b>]<b> </b>[<b>-t</b>]<b> </b>[<i>Address</i> [<i>Flags</i>]]</pre>
+<h2><a id="ddk__thread_dbg"></a><a id="DDK__THREAD_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______-p______"></a><a id="_______-P______"></a>       <b>-p</b>      </dt>
+<dd>
+<p>Displays summary information about the process that owns the thread.</p>
+</dd>
+<dt><a id="_______-t______"></a><a id="_______-T______"></a>       <b>-t</b>      </dt>
+<dd>
+<p>When this option is included, <i>Address</i> is the thread ID, not the thread address.</p>
+</dd>
+<dt><a id="_______Address______"></a><a id="_______address______"></a><a id="_______ADDRESS______"></a>       <i>Address</i>      </dt>
+<dd>
+<p>Specifies the hexadecimal address of the thread on the target computer. If <i>Address</i> is -1 or omitted, it indicates the current thread.</p>
+</dd>
+<dt><a id="_______Flags______"></a><a id="_______flags______"></a><a id="_______FLAGS______"></a>       <i>Flags</i>      </dt>
+<dd>
+<p>Specifies the level of detail to display. <i>Flags</i> can be any combination of the following bits. If <i>Flags</i> is 0, only a minimal amount of information is displayed. The default is 0x6: </p>
+<p></p>
+<dl>
+<dt><a id="Bit_1__0x2_"></a><a id="bit_1__0x2_"></a><a id="BIT_1__0X2_"></a>Bit 1 (0x2)</dt>
+<dd>
+<p>Displays the thread's wait states.</p>
+</dd>
+<dt><a id="Bit_2__0x4_"></a><a id="bit_2__0x4_"></a><a id="BIT_2__0X4_"></a>Bit 2 (0x4)</dt>
+<dd>
+<p>If this bit is used without Bit 1 (0x2), it has no effect. If this bit is used with Bit 1, the thread is displayed with a stack trace.</p>
+</dd>
+<dt><a id="Bit_3__0x8_"></a><a id="bit_3__0x8_"></a><a id="BIT_3__0X8_"></a>Bit 3 (0x8)</dt>
+<dd>
+<p>Adds the return address, the stack pointer, and (on Itanium systems) the <b>bsp</b> register value to the information displayed for each function and suppresses the display of function arguments.</p>
+</dd>
+<dt><a id="Bit_4__0x10_"></a><a id="bit_4__0x10_"></a><a id="BIT_4__0X10_"></a>Bit 4 (0x10)</dt>
+<dd>
+<p>  Sets the process context equal to the process that owns the specified thread for the duration of this command. This results in more accurate display of thread stacks. </p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<p>
+          Kdexts.dll
+         </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For information about threads in kernel mode, see <a href="changing_contexts.htm">Changing Contexts</a>. For more information about analyzing processes and threads, see <i>Microsoft Windows Internals</i>, by Mark Russinovich and David Solomon. </p>
+<h2>Remarks</h2>
+<p>Here is an example using Windows 10: </p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !thread 0xffffcb088f0a4480            
+THREAD ffffcb088f0a4480  Cid 0e34.3814  Teb: 0000001a27ca6000 Win32Thread: 0000000000000000 RUNNING on processor 0
+Not impersonating
+DeviceMap                 ffffb80842016c20
+Owning Process            ffffcb08905397c0       Image:         MsMpEng.exe
+Attached Process          N/A            Image:         N/A
+Wait Start TickCount      182835891      Ticks: 0
+Context Switch Count      5989           IdealProcessor: 3             
+UserTime                  00:00:01.046
+KernelTime                00:00:00.296
+Win32 Start Address 0x00007ffb3b2fd1b0
+Stack Init ffff95818476add0 Current ffff958184769d30
+Base ffff95818476b000 Limit ffff958184765000 Call 0000000000000000
+Priority 8 BasePriority 8 PriorityDecrement 0 IoPriority 2 PagePriority 5
+Child-SP          RetAddr           : Args to Child                                                           : Call Site
+fffff802`59858c68 fffff801`b56d24aa : ffffcb08`8fd68010 00000000`00000000 fffff802`58259600 00000000`00000008 : nt!DbgBreakPointWithStatus [d:\rs2\minkernel\ntos\rtl\amd64\debugstb.asm @ 130] 
+fffff802`59858c70 ffffcb08`8fd68010 : 00000000`00000000 fffff802`58259600 00000000`00000008 ffffcb08`8f0a4400 : 0xfffff801`b56d24aa
+fffff802`59858c78 00000000`00000000 : fffff802`58259600 00000000`00000008 ffffcb08`8f0a4400 00000000`00000019 : 0xffffcb08`8fd68010</code></pre>
+<p>Use commands like <a href="_process.htm"><b>!process</b></a> to locate the address or thread ID  of the  thread you are interested in.</p>
+<p></p>
+<p>The useful information in the <b>!thread</b> display is explained in the following table.</p>
+<table>
+<tr>
+<th>Parameter</th>
+<th>Meaning</th>
+</tr>
+<tr>
+<td>
+<p><b>Thread address</b></p>
+</td>
+<td>
+<p>The hexadecimal number after the word <i>THREAD</i> is the address of the ETHREAD block. In the preceding example, the thread address is 0xffffcb088f0a4480 .</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+        Thread ID</b></p>
+</td>
+<td>
+<p>The two hexadecimal numbers after the word <i>Cid</i> are the process ID and the thread ID: <i>process ID.thread ID</i>. In the preceding example, the process ID is 0x0e34,  and the thread ID is 0x3814.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+        Thread Environment Block (TEB)
+       </b></p>
+</td>
+<td>
+<p>The hexadecimal number after the word <i>Teb</i> is the address of the thread environment block (TEB).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>System Service Dispatch Table</b></p>
+</td>
+<td>
+<p>The hexadecimal number after the word <i>Win32Thread</i> is the address of the system service dispatch table. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Thread State</b></p>
+</td>
+<td>
+<p>The thread state is displayed at the end of the line that begins with the word <i>RUNNING</i>. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+        Owning Process</b></p>
+</td>
+<td>
+<p>The hexadecimal number after the words <i>Owning Process</i> is the address of the EPROCESS for the process that owns this thread.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+        Start Address</b></p>
+</td>
+<td>
+<p>The hexadecimal number after the words <i>Start Address</i> is the thread start address. This might appear in symbolic form.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>User Thread Function</b></p>
+</td>
+<td>
+<p>The hexadecimal number after the words <i>Win32 Start Address</i> is the address of the user thread function.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+        Priority</b></p>
+</td>
+<td>
+<p>The priority information for the thread follows the word <i>Priority</i>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Stack trace</b></p>
+</td>
+<td>
+<p>A stack trace for the thread appears at the end of this display.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!thread%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

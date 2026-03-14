@@ -1,0 +1,117 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The GetCommand method returns the command string that is executed when a breakpoint is triggered."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IDebugBreakpoint::GetCommand method</title>
+
+<meta name="MS-HAID" content="ComOther_4bb08d44-5a99-4177-b8a4-8926f1e45dcf.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.getcommand"></a>IDebugBreakpoint::GetCommand method</h1>
+</div>
+<p>The <b>GetCommand</b>  method returns the command string that is executed when a breakpoint is triggered.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>HRESULT GetCommand(
+  [out, optional] PSTR   Buffer,
+  [in]            ULONG  BufferSize,
+  [out, optional] PULONG CommandSize
+);</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Parameters</h2>
+<dl>
+<dt><i>Buffer</i> [out, optional]</dt>
+<dd>
+<p>The command string that is executed when the breakpoint is triggered.  If <i>Buffer</i> is <b>NULL</b>, this information is not returned.</p>
+</dd>
+<dt><i>BufferSize</i> [in]</dt>
+<dd>
+<p>The size, in characters, of the buffer that <i>Buffer</i> points to.</p>
+</dd>
+<dt><i>CommandSize</i> [out, optional]</dt>
+<dd>
+<p>The size of the command string.  If <i>CommandSize</i> is <b>NULL</b>, this information is not returned.</p>
+</dd>
+</dl>
+<h2>Return value</h2>
+<table>
+<tr>
+<th>Return code</th>
+<th>Description</th>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>S_OK</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>The method was successful.</p>
+</td>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>S_FALSE</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>The method was successful, but the buffer was not large enough to hold the command string and so the command string was truncated to fit.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>This method can also return error values.  For more information, see <a href="hresult_values.htm"><b>Return Values</b></a>.</p>
+<h2>Remarks</h2>
+<p>The command string is a list of debugger commands that are separated by semicolons.  These commands are executed every time that the breakpoint is triggered.  The commands are executed before the engine informs any event callbacks that the breakpoint has been triggered.</p>
+<p>The <a href="getparameters.htm"><b>GetParameters</b></a> method also returns the size of the breakpoint's command, <i>CommandSize</i>.</p>
+<p>For more information about breakpoint properties, see <a href="controlling_breakpoint_flags_and_parameters.htm">Controlling Breakpoint Flags and Parameters</a>.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Target platform</p>
+</th>
+<td width="70%">
+<dl>
+<dt></dt>
+</dl>
+</td>
+</tr>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Dbgeng.h (include Dbgeng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IDebugBreakpoint::GetCommand method%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

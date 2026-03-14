@@ -1,0 +1,101 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Robots" content="noindex, nofollow"/>
+<meta name="Description" content="Glossary page"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>C</title>
+
+<meta name="MS-HAID" content="dbg_glossary_b06af58a-5ee8-44e1-855d-951cac7e4969.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.c"></a>C</h1>
+</div>
+<dl>
+<dt><a id="c___expression"></a><a id="C___EXPRESSION"></a><b>C++ expression</b></dt>
+<dd>
+<p>An expression that can be evaluated by the C++ expression evaluator.</p>
+</dd>
+<dt><a id="c_call_stack"></a><a id="C_CALL_STACK"></a><b>C call stack</b></dt>
+<dd>
+<p>See
+     call stack.</p>
+</dd>
+<dt><a id="call_stack"></a><a id="CALL_STACK"></a><b>call stack</b></dt>
+<dd>
+<p>The set of stack frames for each thread containing representing the function calls made by the thread.  Each time a function call is made a new stack frame is pushed onto the top of the stack.  When that function returns, the stack frame is popped off the stack.</p>
+<p>Sometimes referred to as the or simply the .</p>
+</dd>
+<dt><a id="callback_object"></a><a id="CALLBACK_OBJECT"></a><b>callback object</b></dt>
+<dd>
+<p>See
+     event callbacks, input callbacks, and output callbacks.</p>
+</dd>
+<dt><a id="checked_build"></a><a id="CHECKED_BUILD"></a><b>checked build</b></dt>
+<dd>
+<p>Two different builds of each NT-based operating system exist:</p>
+<ul>
+<li>The  (or ) of Windows is the end-user version of the operating system.  For details, see free build. </li>
+<li>The  (or ) of Windows serves as a testing and debugging aid in the developing of the operating system and kernel-mode drivers. The checked build contains extra error checking, argument verification, and debugging information that is not available in the free build. , making it easier to trace the cause of problems in system software. A checked system or driver can help isolate and track down driver problems that can cause unpredictable behavior, result in memory leaks, or result in improper device configuration.</li>
+</ul>
+<p>Although the checked build provides extra protection, it consumes more memory and disk space than the free build. System and driver performance is slower, because additional code paths are executed due to parameter checking and output of diagnostic messages, and some alternate implementations of kernel functions are used.</p>
+<p>The checked build of Windows should not be confused with a driver that has been built in one of the Checked Build Environments of the Windows Driver Kit (WDK).</p>
+</dd>
+<dt><a id="child_symbol"></a><a id="CHILD_SYMBOL"></a><b>child symbol</b></dt>
+<dd>
+<p>A symbol that is contained in another symbol.  For example, the symbol for a member in a structure is a child of the symbol for that structure.</p>
+</dd>
+<dt><a id="client"></a><a id="CLIENT"></a><b>client</b></dt>
+<dd>
+<p>See 
+     client object.</p>
+</dd>
+<dt><a id="client_object"></a><a id="CLIENT_OBJECT"></a><b>client object</b></dt>
+<dd>
+<p>A client object is used for interaction with the debugger engine.  It holds per-client state, and provides implementations for the top-level interfaces in the debugger engine API.</p>
+</dd>
+<dt><a id="client_thread"></a><a id="CLIENT_THREAD"></a><b>client thread</b></dt>
+<dd>
+<p>The thread in which the client object was created.  In general, a client's methods may be called only from this thread.  The debugger engine uses this thread to make all calls to the callback object registered with the client.</p>
+</dd>
+<dt><a id="code_breakpoint"></a><a id="CODE_BREAKPOINT"></a><b>code breakpoint</b></dt>
+<dd>
+<p>See
+     software breakpoint.</p>
+</dd>
+<dt><a id="crash_dump_file"></a><a id="CRASH_DUMP_FILE"></a><b>crash dump file</b></dt>
+<dd>
+<p>A file that contains a snapshot of certain memory regions and other data related to an application or operating system.  A crash dump file can be stored and then used to debug the application or operating system at a later time.</p>
+<p>A user-mode crash dump file can be created by Windows when an application crashes, and a kernel-mode crash dump file can be created by special Windows routines when Windows itself crashes.  There are several different types of crash dump files.</p>
+</dd>
+<dt><a id="current_process"></a><a id="CURRENT_PROCESS"></a><b>current process</b></dt>
+<dd>
+<p>The process that the debugger engine is currently controlling.  When an event occurs, the current process is set to the event process.</p>
+</dd>
+<dt><a id="current_target"></a><a id="CURRENT_TARGET"></a><b>current target</b></dt>
+<dd>
+<p>The target that the debugger engine is currently controlling.  When an event occurs, the current target is set to the event target.</p>
+</dd>
+<dt><a id="current_thread"></a><a id="CURRENT_THREAD"></a><b>current thread</b></dt>
+<dd>
+<p>The thread that the debugger engine is currently controlling.  When an event occurs, the current thread is set to the event thread.</p>
+</dd>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20C%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

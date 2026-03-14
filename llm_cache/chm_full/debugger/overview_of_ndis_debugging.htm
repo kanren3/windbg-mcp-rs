@@ -1,0 +1,34 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Overview of NDIS Debugging"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Overview of NDIS Debugging</title>
+
+<meta name="MS-HAID" content="t11~0_ndis_502bdcc7-da10-4b08-92ec-0bbe8163eaa5.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.overview_of_ndis_debugging"></a>Overview of NDIS Debugging</h1>
+</div>
+<p>The two primary tools for debugging a network driver are debug tracing and the Network Driver Interface Specification (NDIS) extensions.  For more information on debug tracing, see <a href="enabling_ndis_debug_tracing.htm">Enabling NDIS Debug Tracing</a>.  For more information on the NDIS debugging extensions, see <a href="ndis_extensions__ndiskd_dll_.htm">NDIS Extensions</a>, which provides a complete list of the extension commands found in the extension module Ndiskd.dll.  The Windows 2000 version of this extension module appears in the w2kfre and w2kchk directories. The Windows XP and later version of this extension module appear in the winxp directory.</p>
+<p>An additional tool for debugging a network driver is the collection of regular debugging extensions, which are useful for obtaining debugging information.  For example, entering <a href="_stacks.htm"><b>!stacks 2 ndis!</b></a> displays all threads in the stack beginning with <b>ndis!</b>.  This information can be useful for debugging hangs and stalls.</p>
+<p>There is also an NDIS-specific bug check code, bug check 0x7C (BUGCODE_NDIS_DRIVER).  For a complete list of its parameters,  see <a href="bug_check_0x7c__bugcode_ndis_driver.htm"><b>Bug Check 0x7C</b></a>.  </p>
+<p>Another useful tool for testing an NDIS driver is NDIS Verifier.  For more information, consult the NDIS Verifier topic in the Windows Driver Kit (WDK) documentation.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Overview of NDIS Debugging%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

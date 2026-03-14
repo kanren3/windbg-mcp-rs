@@ -1,0 +1,182 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The ba command sets a processor breakpoint (often called, less accurately, a data breakpoint). This breakpoint is triggered when the specified memory is accessed."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>ba (Break on Access)</title>
+
+<meta name="MS-HAID" content="r15_cmds_A_12b97b7c-4264-440b-8422-f1c7cf647113.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.ba__break_on_access_"></a>ba (Break on Access)</h1>
+</div>
+<p>The <b>ba</b> command sets a processor breakpoint (often called, less accurately, a <i>data breakpoint</i>). This breakpoint is triggered when the specified memory is accessed.</p>
+<p>User-Mode</p>
+<pre class="syntax">[~Thread] ba[ID] Access Size [Options] [Address [Passes]] ["CommandString"]</pre>
+<p>Kernel-Mode</p>
+<pre class="syntax">ba[ID] Access Size [Options] [Address [Passes]] ["CommandString"]</pre>
+<h2><a id="ddk_cmd_break_on_access_dbg"></a><a id="DDK_CMD_BREAK_ON_ACCESS_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Thread______"></a><a id="_______thread______"></a><a id="_______THREAD______"></a>       <i>Thread</i>      </dt>
+<dd>
+<p>Specifies the thread that the breakpoint applies to. For more information about syntax, see <a href="thread_syntax.htm">Thread Syntax</a>. You can specify threads only in user mode. </p>
+</dd>
+<dt><a id="_______ID______"></a><a id="_______id______"></a>       <i>ID</i>      </dt>
+<dd>
+<p>Specifies an optional number that identifies the breakpoint. If you do not specify <i>ID</i>, the first available breakpoint number is used. You cannot add space between <b>ba</b> and the ID number. Each processor supports only a limited number of processor breakpoints, but there is no restriction on the value of the <i>ID</i> number. If you enclose <i>ID</i> in square brackets ([]), <i>ID</i> can include any expression. For more information about the syntax, see <a href="numerical_expression_syntax.htm">Numerical Expression Syntax</a>. </p>
+</dd>
+<dt><a id="_______Access______"></a><a id="_______access______"></a><a id="_______ACCESS______"></a>       <i>Access</i>      </dt>
+<dd>
+<p>Specifies the type of access that satisfies the breakpoint. This parameter can be one of the following values.</p>
+<table>
+<tr>
+<th>Option</th>
+<th>Action</th>
+</tr>
+<tr>
+<td>
+<p><b>e</b> (execute)</p>
+</td>
+<td>
+<p>Breaks into the debugger when the CPU retrieves an instruction from the specified address.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>r</b> (read/write)</p>
+</td>
+<td>
+<p>Breaks into the debugger when the CPU reads or writes at the specified address.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>w</b> (write)</p>
+</td>
+<td>
+<p>Breaks into the debugger when the CPU writes at the specified address.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>i</b> (i/o)</p>
+</td>
+<td>
+<p>(Microsoft Windows XP and later versions, kernel mode only, x86-based systems only)  Breaks into the debugger when the I/O port at the specified <i>Address</i> is accessed.  </p>
+</td>
+</tr>
+</table>
+<p> </p>
+</dd>
+<dt><a id="_______Size______"></a><a id="_______size______"></a><a id="_______SIZE______"></a>       <i>Size</i>      </dt>
+<dd>
+<p>Specifies the size of the location, in bytes, to monitor for access. On an x86-based processor, this parameter can be 1, 2, or 4. However, if <i>Access</i> equals <b>e</b>, <i>Size</i> must be 1. </p>
+<p>On an x64-based processor, this parameter can be 1, 2, 4, or 8. However, if <i>Access</i> equals <b>e</b>, <i>Size</i> must be 1. </p>
+</dd>
+<dt><a id="_______Options______"></a><a id="_______options______"></a><a id="_______OPTIONS______"></a>       <i>Options</i>      </dt>
+<dd>
+<p>Specifies breakpoint options. You can use any number of the following options, except as indicated:</p>
+<p></p>
+<dl>
+<dt><a id="_1"></a><b>/1</b></dt>
+<dd>
+<p>Creates a "one-shot" breakpoint. After this breakpoint is triggered, the breakpoint is permanently removed from the breakpoint list.</p>
+</dd>
+<dt><a id="_p_EProcess"></a><a id="_p_eprocess"></a><a id="_P_EPROCESS"></a><b>/p </b><i>EProcess</i></dt>
+<dd>
+<p>(Kernel mode only)  Specifies a process that is associated with this breakpoint. <i>EProcess</i> should be the actual address of the EPROCESS structure, not the PID. The breakpoint is triggered only if it is encountered in the context of this process.</p>
+</dd>
+<dt><a id="_t_EThread"></a><a id="_t_ethread"></a><a id="_T_ETHREAD"></a><b>/t </b><i>EThread</i></dt>
+<dd>
+<p>(Kernel mode only)  Specifies a thread that is associated with this breakpoint. <i>EThread</i> should be the actual address of the ETHREAD structure, not the thread ID. The breakpoint is triggered only if it is encountered in the context of this thread. If you use <b>/p </b><i>EProcess</i> and <b>/t </b><i>EThread</i> , you can enter them in either order. </p>
+</dd>
+<dt><a id="_c_MaxCallStackDepth"></a><a id="_c_maxcallstackdepth"></a><a id="_C_MAXCALLSTACKDEPTH"></a><b>/c </b><i>MaxCallStackDepth</i></dt>
+<dd>
+<p>Causes the breakpoint to be active only when the call stack depth is less than <i>MaxCallStackDepth</i>. You cannot combine this option together with <b>/C</b>. </p>
+</dd>
+<dt><a id="_C_MinCallStackDepth"></a><a id="_c_mincallstackdepth"></a><a id="_C_MINCALLSTACKDEPTH"></a><b>/C </b><i>MinCallStackDepth</i></dt>
+<dd>
+<p>Causes the breakpoint to be active only when the call stack depth is larger than <i>MinCallStackDepth</i>. You cannot combine this option together with <b>/c</b>. </p>
+</dd>
+</dl>
+</dd>
+<dt><a id="_______Address______"></a><a id="_______address______"></a><a id="_______ADDRESS______"></a>       <i>Address</i>      </dt>
+<dd>
+<p>Specifies any valid address. If the application accesses memory at this address, the debugger stops execution and displays the current values of all registers and flags. This address must be an offset and suitably aligned to match the <i>Size</i> parameter. (For example, if <i>Size</i> is 4, <i>Address</i> must be a multiple of 4.) If you omit <i>Address</i>, the current instruction pointer is used. For more information about the syntax, see <a href="address_and_address_range_syntax.htm">Address and Address Range Syntax</a>. </p>
+</dd>
+<dt><a id="_______Passes______"></a><a id="_______passes______"></a><a id="_______PASSES______"></a>       <i>Passes</i>      </dt>
+<dd>
+<p>Specifies the number of times the breakpoint is passed by until it activates. This number can be any 16-bit value. The number of times the program counter passes through this point <u>without</u> breaking is one less than the value of this number. Therefore, omitting this number is the same as setting it equal to 1. Note also that this number counts only the times that the application <i>executes</i> past this point. Stepping or tracing past this point does not count. After the full count is reached, you can reset this number only by clearing and resetting the breakpoint. </p>
+</dd>
+<dt><a id="_______CommandString______"></a><a id="_______commandstring______"></a><a id="_______COMMANDSTRING______"></a>       <i>CommandString</i>      </dt>
+<dd>
+<p>Specifies a list of commands to execute every time that the breakpoint is encountered the specified number of times. These commands are executed only if the breakpoint is hit after you issue a <a href="g__go_.htm"><b>g (Go)</b></a> command, instead of after a <a href="t__trace_.htm"><b>t (Trace)</b></a> or <a href="p__step_.htm"><b>p (Step)</b></a> command. Debugger commands in <i>CommandString</i> can include parameters. </p>
+<p>You must enclose this command string in quotation marks, and you should separate multiple commands by semicolons. You can use standard C control characters (such as <b>\n</b> and <b>\"</b>). Semicolons that are contained in second-level quotation marks (<b>\"</b>) are interpreted as part of the embedded quoted string.</p>
+<p>This parameter is optional. </p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>Live debugging only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>All</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information on processor breakpoints, see <a href="processor_breakpoints___ba_breakpoints_.htm">Processor Breakpoints (ba Breakpoints)</a>. For more information about and examples of using breakpoints, other breakpoint commands and methods of controlling breakpoints, and information about how to set breakpoints in user space from a kernel debugger, see <a href="using_breakpoints.htm">Using Breakpoints</a>. For more information about conditional breakpoints, see <a href="setting_a_conditional_breakpoint.htm">Setting a Conditional Breakpoint</a>.</p>
+<h2>Remarks</h2>
+<p>The debugger uses the <i>ID</i> number to refer to the breakpoint in later <a href="bc__breakpoint_clear_.htm"><b>bc (Breakpoint Clear)</b></a>, <a href="bd__breakpoint_disable_.htm"><b>bd (Breakpoint Disable)</b></a>, and <a href="be__breakpoint_enable_.htm"><b>be (Breakpoint Enable)</b></a> commands.</p>
+<p>Use the <a href="bl__breakpoint_list_.htm"><b>bl (Breakpoint List)</b></a> command to list all existing breakpoints, their ID numbers, and their status.</p>
+<p>Use the <a href="_bpcmds__display_breakpoint_commands_.htm"><b>.bpcmds (Display Breakpoint Commands)</b></a> command to list all existing breakpoints, their ID numbers, and the commands that were used to create them.</p>
+<p>Each processor breakpoint has a size associated with it.  For example, a <b>w</b> (write) processor breakpoint could be set at the address 0x70001008 with a size of four bytes. This would monitor the block of addresses from 0x70001008 to 0x7000100B, inclusive. If this block of memory is written to, the breakpoint will be triggered. </p>
+<p>It can happen that the processor performs an operation on a memory region that <i>overlaps</i> with, but is not identical to, the specified region. In this example, a single write operation that includes the range 0x70001000 to 0x7000100F, or a write operation that includes only the byte at 0x70001009, would be an overlapping operation. In such a situation, whether the breakpoint is triggered is processor-dependent. You should consult the processor manual for specific details. To take one specific instance, on an x86 processor, a read or write breakpoint is triggered whenever the accessed range overlaps the breakpoint range.  </p>
+<p>Similarly, if an <b>e</b> (execute) breakpoint is set on the address 0x00401003, and then a two-byte instruction spanning the addresses 0x00401002 and 0x00401003 is executed, the result is processor-dependent. Again, consult the processor architecture manual for details. </p>
+<p>The processor distinguishes between breakpoints set by a user-mode debugger and breakpoints set by a kernel-mode debugger. A user-mode processor breakpoint does not affect any kernel-mode processes. A kernel-mode processor breakpoint might or might not affect a user-mode process, depending on whether the user-mode code is using the debug register state and whether there is a user-mode debugger that is attached.</p>
+<p>To apply the current process' existing data breakpoints to a different register context, use the <a href="_apply_dbp__apply_data_breakpoint_to_context_.htm"><b>.apply_dbp (Apply Data Breakpoint to Context)</b></a> command.</p>
+<p>On a multiprocessor computer, each processor breakpoint applies to all processors. For example, if the current processor is 3 and you use the command <code>ba e1 MyAddress</code> to put a breakpoint at MyAddress, any processor -- not only processor 3 -- that executes at that address triggers the breakpoint. (This holds for software breakpoints as well.) </p>
+<p>You cannot create multiple processor breakpoints at the same address that differ only in their <i>CommandString</i> values. However, you can create multiple breakpoints at the same address that have different restrictions (for example, different values of the <b>/p</b>, <b>/t</b>, <b>/c</b>, and <b>/C</b> options).</p>
+<p>For more details on processor breakpoints, and additional restrictions that apply to them, see <a href="processor_breakpoints___ba_breakpoints_.htm">Processor Breakpoints (ba Breakpoints)</a>. </p>
+<p>The following examples show the <b>ba</b> command. The following command sets a breakpoint for read access on 4 bytes of the variable myVar.</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; ba r4 myVar</code></pre>
+<p>The following command adds a breakpoint on all serial ports with addresses from 0x3F8 through 0x3FB. This breakpoint is triggered if anything is read or written to these ports.</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; ba i4 3f8</code></pre>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20ba (Break on Access)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

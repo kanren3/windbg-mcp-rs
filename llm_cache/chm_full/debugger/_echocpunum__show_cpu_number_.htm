@@ -1,0 +1,82 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .echocpunum command turns on or turns off the display of the processor number when you are debugging a multiprocessor target computer."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.echocpunum (Show CPU Number)</title>
+
+<meta name="MS-HAID" content="r20_metacmds_E_f2fa92bc-df92-47ce-bcfe-cbd523ec25ff.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._echocpunum__show_cpu_number_"></a>.echocpunum (Show CPU Number)</h1>
+</div>
+<p>The <b>.echocpunum</b> command turns on or turns off the display of the processor number when you are debugging a multiprocessor target computer.</p>
+<pre class="syntax">.echocpunum 0 
+.echocpunum 1 
+.echocpunum </pre>
+<h2><a id="ddk_meta_show_cpu_number_dbg"></a><a id="DDK_META_SHOW_CPU_NUMBER_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______0______"></a>       <b>0</b>      </dt>
+<dd>
+<p>Turns off the display of the processor number. </p>
+</dd>
+<dt><a id="_______1______"></a>       <b>1</b>      </dt>
+<dd>
+<p>Turns on the display of the processor number.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Modes
+         </b></p>
+</td>
+<td>
+<p>Kernel mode only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>Live debugging only  </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Platforms</b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about how to debug multiprocessor computers, see <a href="multiprocessor_syntax.htm">Multiprocessor Syntax</a>.</p>
+<h2>Remarks</h2>
+<p>If you use the <b>.echocpunum</b> command without any arguments, the display of processor numbers is turned on or off, and the new state is displayed.</p>
+<p>By default, the display is turned off.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.echocpunum (Show CPU Number)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

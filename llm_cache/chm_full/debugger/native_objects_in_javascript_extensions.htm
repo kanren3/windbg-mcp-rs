@@ -1,0 +1,1345 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Native debugger objects represent various constructs and behaviors of the debugger environment. The objects can be passed into (or acquired in) JavaScript extensions to manipulate the state of the debugger."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Native Debugger Objects in JavaScript Extensions</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.native_objects_in_javascript_extensions"></a>Native Debugger Objects in JavaScript Extensions</h1>
+</div>
+<p>Native debugger objects represent various constructs and behaviors of the debugger environment. The objects can be passed into (or acquired in) JavaScript extensions to manipulate the state of the debugger.</p>
+<p>Example debugger objects include the following.</p>
+<ul>
+<li>Session</li>
+<li>Threads / Thread</li>
+<li>Processes / Process</li>
+<li>Stack Frames / Stack Frame</li>
+<li>Local Variables</li>
+<li>Modules / Module</li>
+<li>Utility</li>
+<li>State</li>
+<li>Settings</li>
+</ul>
+<p>For example the host.namespace.Debugger.Utility.Control.ExecuteCommand object can be used to send the u command to the debugger with following two lines of JavaScript code. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>  var ctl = host.namespace.Debugger.Utility.Control;   
+  var output = ctl.ExecuteCommand("u");</pre>
+</td>
+</tr>
+</table></span></div>
+<p>This topic describes how to work with common objects and provides reference information on their attributes and behaviors.</p>
+<dl>
+<dd><a href="#Extending">Extending the Debugger via the Data Model</a></dd>
+<dd><a href="#Extending_Debugger_Object">Extending a Debugger Object in JavaScript</a></dd>
+<dd><a href="#Debugger_Objects">Debugger Objects in JavaScript Extensions</a></dd>
+<dd><a href="#Host_APIs">Host APIs for JavaScript Extensions</a></dd>
+<dd><a href="#Data_Model">Data Model Concepts in JavaScript</a></dd>
+<dd><a href="#Design_Considerations">Debugger Data Model Design Considerations</a></dd>
+</dl>
+<p>For general information about working with JavaScript, see <a href="javascript_debugger_scripting.htm">JavaScript Debugger Scripting</a>. For JavaScript examples that use the debugger objects, see <a href="javascript_debugger_example_scripts.htm">JavaScript Debugger Example Scripts</a>. For information about working with the settings objects, see <a href="_settings__set_debug_settings_.htm"><b>.settings (Set Debug Settings)</b></a>.</p>
+<p>To explore the objects available  in a debugger session, use the <a href="dx__display_visualizer_variables_.htm"><b>dx (Display NatVis Expression)</b></a> command. For example, you can display some of the top level debugger objects with this dx command.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0: kd&gt; dx -r2 Debugger
+Debugger                
+    Sessions         : [object Object]
+        [0x0]            : Remote KD: KdSrv:Server=@{&lt;Local&gt;},Trans=@{NET:Port=50000,Key=1.2.3.4,Target}
+    Settings        
+        Debug           
+        Display         
+        EngineInitialization
+        Extensions      
+        Input           
+        Sources         
+        Symbols         
+        AutoSaveSettings : false
+    State           
+        DebuggerVariables
+        PseudoRegisters 
+        Scripts         
+        UserVariables   
+    Utility         
+        Collections     
+        Control         
+        Objects   </pre>
+</td>
+</tr>
+</table></span></div>
+<p>All of the items listed above are clickable DML and can be recursed further down to view  the debugger object structure.</p>
+<h2><a id="Extending"></a><a id="extending"></a><a id="EXTENDING"></a>Extending the Debugger via the Data Model</h2>
+<p>The debugger data model allows for the creation of an interface to information about applications and drivers in Windows that has the following attributes.</p>
+<ul>
+<li>Is discoverable and organized- a logically structured name space can be queried using the dx command. </li>
+<li>Can be queried using LINQ- This allows for extraction and sorting of data using a standard query language. </li>
+<li>Can be logically and consistently extended - Extensible using  techniques described in this topic with debugger scripting providers such as Natvis and JavaScript.</li>
+</ul>
+<h2><a id="Extending_Debugger_Object"></a><a id="extending_debugger_object"></a><a id="EXTENDING_DEBUGGER_OBJECT"></a>Extending a Debugger Object in JavaScript</h2>
+<p>In addition to being able to  create a visualizer in JavaScript, script extensions can also modify the core concepts of the debugger - sessions, processes, threads, stacks, stack frames, local variables - and even publish themselves as extension points that other extensions can consume. </p>
+<p>This section describes how to extend a core concept within the debugger. 
+
+Extensions which are built to be shared  should conform to the guidelines presented in <a href="#Design">Debugger Data Model Design Considerations</a>. 
+</p>
+<p></p>
+<p><b>Registering an Extension</b></p>
+<p>A script can register the fact that it provides an extension through an entry in the array returned from the initializeScript method.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>function initializeScript()
+{
+    return [new host.namedModelParent(comProcessExtension, "Debugger.Models.Process")];
+}</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The presence of a host.namedModelParent object within the returned array indicates to the debugger that a given prototype object or ES6 class (comProcessExtension in this case) is going to be a parent data model to the model which is registered under the name Debugger.Models.Process. </p>
+<p></p>
+<p><b>Debugger Object Extension Points</b></p>
+<p>The following debugger extension points are integral to the debugger and available to be used by script providers such as JavaScript. </p>
+<table>
+<tr>
+<td>Debugger.Models.Sessions </td>
+<td>The list of sessions (targets) that the debugger is attached to</td>
+</tr>
+<tr>
+<td>Debugger.Models.Session</td>
+<td>An individual session (target) that the debugger is attached to (live user mode, KD, etc...)</td>
+</tr>
+<tr>
+<td>Debugger.Models.Processes</td>
+<td> The list of processes within a session</td>
+</tr>
+<tr>
+<td>Debugger.Models.Threads </td>
+<td>The list of threads within a process</td>
+</tr>
+<tr>
+<td>Debugger.Models.Thread</td>
+<td> An individual thread within a process (regardless of whether user or kernel mode)</td>
+</tr>
+<tr>
+<td>Debugger.Models.Stack </td>
+<td>The stack of a thread</td>
+</tr>
+<tr>
+<td>Debugger.Models.StackFrames </td>
+<td>The collection of frames which make up a stack</td>
+</tr>
+<tr>
+<td>Debugger.Models.StackFrame</td>
+<td>  An individual stack frame within a stack</td>
+</tr>
+<tr>
+<td>Debugger.Models.LocalVariables </td>
+<td> The local variables within a stack frame</td>
+</tr>
+<tr>
+<td>Debugger.Models.Parameters </td>
+<td>The parameters for a call within a stack frame</td>
+</tr>
+<tr>
+<td>Debugger.Models.Module </td>
+<td>An individual module within the address space of a process</td>
+</tr>
+</table>
+<p> </p>
+<p></p>
+<p><b>Addtional Data Model Objects</b></p>
+<p>In addition, there are some additional data model objects that are defined by the core data model.</p>
+<table>
+<tr>
+<td>DataModel.Models.Intrinsic</td>
+<td>An intrinsic value (ordinals, floats, etc...)</td>
+</tr>
+<tr>
+<td>DataModel.Models.String</td>
+<td> A string</td>
+</tr>
+<tr>
+<td>DataModel.Models.Array</td>
+<td> A native array</td>
+</tr>
+<tr>
+<td>DataModel.Models.Guid</td>
+<td> A GUID</td>
+</tr>
+<tr>
+<td>DataModel.Models.Error </td>
+<td> An error object</td>
+</tr>
+<tr>
+<td>DataModel.Models.Concepts.Iterable </td>
+<td> Applied to every object which is iterable</td>
+</tr>
+<tr>
+<td>DataModel.Models.Concepts.StringDisplayable</td>
+<td> Applied to every object which has a display string conversion</td>
+</tr>
+</table>
+<p> </p>
+<p><b>Example COM Debugger Object Extension Overview</b></p>
+<p>Let's consider an example. Imagine that you want to create a debugger extension to display information specific to  COM, such as the global interface table (GIT).</p>
+<p>In the past, there might be an existing debugger extension with a number of commands which provide a means to access things about COM. One command might display process centric information (the global interface table for instance). Another command might provide thread centric information such as what apartment code is executing within. You might need to know about and load a second debugger extension to explore other aspects of COM.  </p>
+<p>Instead of having a set of hard to discover commands, a JavaScript extension can modify the debugger's concept of what a process and a thread is, to add this information in a way that's natural, explorable, and composable with other debugger extensions.</p>
+<p></p>
+<p><b>User or Kernel Mode Debugger Object Extension </b></p>
+<p>The debugger and the debugger objects have different behavior in user and kernel mode. When you create your debugger model objects you need to decide which environments you will be working in. Because we will be working with COM in user mode, we will create and test this com extension in user mode. In other situations, you may be able to create a debugger JavaScript that will work in both user and kernel mode debugging.</p>
+<p></p>
+<p><b>Creating a Sub-Namespace</b></p>
+<p>Going back to our example, we can define a prototype or ES6 class, <i>comProcessExtension</i> which contains the set of things we want to add to a process object. </p>
+<div class="alert"><b>Important</b>   The intent with the sub-namespace is to create a logically structured and  naturally explorable paradigm.  For example, avoid dumping unrelated items into the same sub-namespace. Carefully review the information discussed in <a href="#Design">Debugger Data Model Design Considerations</a> before creating a sub-namespace.</div>
+<div> </div>
+<p>In this code snippet, we create add a sub-namespace called 'COM' on to the existing process debugger object.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>var comProcessExtension =
+{
+    //
+    // Add a sub-namespace called 'COM' on process.
+    //
+    get COM()
+    {
+        //
+        // What is 'this' below...?  It's the debugger's process object.  Yes -- this means that there is a cross-language
+        // object hierarchy here.  A C++ object implemented in the debugger has a parent model (prototype) which is
+        // implemented in JavaScript.
+        //
+        return new comNamespace(this);
+    }
+}</pre>
+</td>
+</tr>
+</table></span></div>
+<p><b>Namespace Implementation</b></p>
+<p>Next, create the object which implements the sub-namespace COM on a process.</p>
+<div class="alert"><b>Important</b>  <p class="note">There can be multiple processes (whether attached to such in user mode
+        or under KD).  This extension cannot assume that the present state of the debugger is the
+        what the user intended.  Someone can capture &lt;someProcess&gt;.COM in a variable and modify it, which can lead to presenting information from the wrong process context. The solution is to add code in the extension so that each instantiation will keep track of what process it is attached to. For this code sample, this information is passed via the ''this'' pointer of the property.
+        </p>
+<p class="note"><code>this.__process = process;
+</code></p>
+</div>
+<div> </div>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>class comNamespace
+{
+    constructor(process)
+    {
+        //
+        // This is an entirely JavaScript object.  Each instantiation of a comNamespace will keep track
+        // of what process it is attached to (passed via the ''this'' pointer of the property getter
+        // we authored above.
+        //
+        this.__process = process;
+    }
+	
+    get GlobalObjects()
+    {
+        return new globalObjects(this.__process);
+    }
+}</pre>
+</td>
+</tr>
+</table></span></div>
+<p><b>Implementation logic for the COM global interface table</b></p>
+<p></p>
+<p> To separate this out the  implementation logic for the COM global interface table more clearly, we'll define one ES6 class, <i>gipTable </i>which abstracts away the COM GIP table and another, <i>globalObjects</i>, which is what will get returned from the GlobalObjects() getter defined in the Namespace Implementation code snip shown above. All of these details can be hidden inside the closure of initializeScript to avoid publishing any of these internal details out into the debugger namespace.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>// gipTable:
+//
+// Internal class which abstracts away the GIP Table.  It iterates objects of the form
+// {entry : GIPEntry, cookie : GIT cookie}
+//
+class gipTable
+{
+    constructor(gipProcess)
+    {
+        //
+        // Windows 8 through certain builds of Windows 10, it's in CGIPTable::_palloc.  In certain builds
+        // of Windows 10 and later, this has been moved to GIPEntry::_palloc.  We need to check which.
+        //
+        var gipAllocator = undefined;
+        try
+        {
+            gipAllocator = host.getModuleSymbol("combase.dll", "CGIPTable::_palloc", "CPageAllocator", gipProcess)._pgalloc;
+        }
+        catch(err)
+        {
+        }
+
+        if (gipAllocator == undefined)
+        {
+            gipAllocator = host.getModuleSymbol("combase.dll", "GIPEntry::_palloc", "CPageAllocator", gipProcess)._pgalloc;
+        }
+
+        this.__data = {
+            process : gipProcess,
+            allocator : gipAllocator,
+            pageList : gipAllocator._pPageListStart,
+            pageCount : gipAllocator._cPages,
+            entriesPerPage : gipAllocator._cEntriesPerPage,
+            bytesPerEntry : gipAllocator._cbPerEntry,
+            PAGESHIFT : 16,
+            PAGEMASK : 0x0000FFFF,
+            SEQNOMASK : 0xFF00
+        };
+    }
+
+    *[Symbol.iterator]()
+    {
+        for (var pageNum = 0; pageNum &lt; this.__data.pageCount; ++pageNum)
+        {
+            var page = this.__data.pageList[pageNum];
+            for (var entryNum = 0; entryNum &lt; this.__data.entriesPerPage; ++entryNum)
+            {
+                var entryAddress = page.address.add(this.__data.bytesPerEntry * entryNum);
+                var gipEntry = host.createPointerObject(entryAddress, "combase.dll", "GIPEntry *", this.__data.process);
+                if (gipEntry.cUsage != -1 &amp;&amp; gipEntry.dwType != 0)
+                {
+                    yield {entry : gipEntry, cookie : (gipEntry.dwSeqNo | (pageNum &lt;&lt; this.__data.PAGESHIFT) | entryNum)};
+                }
+            }
+        }
+    }
+
+    entryFromCookie(cookie)
+    {
+        var sequenceNo = (cookie &amp; this.__data.SEQNOMASK);
+        cookie = cookie &amp; ~sequenceNo;
+        var pageNum = (cookie &gt;&gt; this.__data.PAGESHIFT);
+        if (pageNum &lt; this.__data.pageCount)
+        {
+            var page = this.__data.pageList[pageNum];
+            var entryNum = (cookie &amp; this.__data.PAGEMASK);
+            if (entryNum &lt; this.__data.entriesPerPage)
+            {
+                var entryAddress = page.address.add(this.__data.bytesPerEntry * entryNum);
+                var gipEntry = host.createPointerObject(entryAddress, "combase.dll", "GIPEntry *", this.__data.process);
+                if (gipEntry.cUsage != -1 &amp;&amp; gipEntry.dwType != 0 &amp;&amp; gipEntry.dwSeqNo == sequenceNo)
+                {
+                    return {entry : gipEntry, cookie : (gipEntry.dwSeqNo | (pageNum &lt;&lt; this.__data.PAGESHIFT) | entryNum)};
+                }
+            }
+        }
+
+        //
+        // If this exception flows back to C/C++, it will be a failed HRESULT (according to the type of error -- here E_BOUNDS)
+        // with the message being encapsulated by an error object.
+        //
+        throw new RangeError("Unable to find specified value");
+    }
+}
+
+
+
+
+
+// globalObjects:
+//
+// The class which presents how we want the GIP table to look to the data model.  It iterates the actual objects
+// in the GIP table indexed by their cookie.
+//
+class globalObjects
+{
+    constructor(process)
+    {
+        this.__gipTable = new gipTable(process);
+    }
+
+    *[Symbol.iterator]()
+    {
+        for (var gipCombo of this.__gipTable)
+        {
+            yield new host.indexedValue(gipCombo.entry.pUnk, [gipCombo.cookie]);
+        }
+    }
+
+    getDimensionality()
+    {
+        return 1;
+    }
+
+    getValueAt(cookie)
+    {
+        return this.__gipTable.entryFromCookie(cookie).entry.pUnk;
+    }
+}</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Lastly, use host.namedModelRegistration to register the new COM functionality.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>function initializeScript()
+{
+    return [new host.namedModelParent(comProcessExtension, "Debugger.Models.Process"),
+            new host.namedModelRegistration(comNamespace, "Debugger.Models.ComProcess")];
+}</pre>
+</td>
+</tr>
+</table></span></div>
+<p></p>
+<p>Save the code to GipTableAbstractor.js using an application such as notepad.</p>
+<p>Here is the process information available in user mode before loading this extension.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000:x86&gt; dx @$curprocess
+@$curprocess                 : DataBinding.exe
+    Name             : DataBinding.exe
+    Id               : 0x1b9c
+    Threads         
+    Modules  </pre>
+</td>
+</tr>
+</table></span></div>
+<p>Load the JavaScript scripting provider and the extension.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000:x86&gt; !load jsprovider.dll
+0:000:x86&gt; .scriptload C:\JSExtensions\GipTableAbstractor.js
+JavaScript script successfully loaded from 'C:\JSExtensions\GipTableAbstractor.js'</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Then use the dx command to display information about the process using the predefined @$curprocess. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000:x86&gt; dx @$curprocess
+@$curprocess                 : DataBinding.exe
+    Name             : DataBinding.exe
+    Id               : 0x1b9c
+    Threads         
+    Modules         
+    COM              : [object Object]</pre>
+</td>
+</tr>
+</table></span></div>
+<p></p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000:x86&gt; dx @$curprocess.COM
+@$curprocess.COM                 : [object Object]
+    GlobalObjects    : [object Object]
+0:000:x86&gt; dx @$curprocess.COM.GlobalObjects
+@$curprocess.COM.GlobalObjects                 : [object Object]
+    [0x100]          : 0x12f4fb0 [Type: IUnknown *]
+    [0x201]          : 0x37cfc50 [Type: IUnknown *]
+    [0x302]          : 0x37ea910 [Type: IUnknown *]
+    [0x403]          : 0x37fcfe0 [Type: IUnknown *]
+    [0x504]          : 0x12fe1d0 [Type: IUnknown *]
+    [0x605]          : 0x59f04e8 [Type: IUnknown *]
+    [0x706]          : 0x59f0eb8 [Type: IUnknown *]
+    [0x807]          : 0x59f5550 [Type: IUnknown *]
+    [0x908]          : 0x12fe340 [Type: IUnknown *]
+    [0xa09]          : 0x5afcb58 [Type: IUnknown *]</pre>
+</td>
+</tr>
+</table></span></div>
+<p>This table is also programmatically accessible via GIT cookie.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000:x86&gt; dx @$curprocess.COM.GlobalObjects[0xa09]
+@$curprocess.COM.GlobalObjects[0xa09]                 : 0x5afcb58 [Type: IUnknown *]
+    [+0x00c] __abi_reference_count [Type: __abi_FTMWeakRefData]
+    [+0x014] __capture        [Type: Platform::Details::__abi_CapturePtr]</pre>
+</td>
+</tr>
+</table></span></div>
+<p><b>Extending Debugger Object Concepts with LINQ</b></p>
+<p>In addition to being able to extend objects like process and thread, JavaScript can extend concepts associated with the data model as well. For example, it is possible to add a new LINQ method to every iterable. Consider an example extension, "DuplicateDataModel" which duplicates every entry in an iterable N times. The following code shows how this could be implemented.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>function initializeScript()
+{
+    var newLinqMethod =
+    {
+        Duplicate : function *(n)
+        {
+            for (var val of this)
+            {
+                for (var i = 0; i &lt; n; ++i)
+                {
+                    yield val;
+                }
+            };
+        }
+    };
+
+    return [new host.namedModelParent(newLinqMethod, "DataModel.Models.Concepts.Iterable")];
+}</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Save the code to DuplicateDataModel.js using an application such as notepad.</p>
+<p>Load the JavaScript scripting provider if necessary and then load the  DuplicateDataModel.js extension.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000:x86&gt; !load jsprovider.dll
+0:000:x86&gt; .scriptload C:\JSExtensions\DuplicateDataModel.js
+JavaScript script successfully loaded from 'C:\JSExtensions\DuplicateDataModel.js'</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Use the dx command to test the new Duplicate function.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0: kd&gt; dx -r1 Debugger.Sessions.First().Processes.First().Threads.Duplicate(2),d
+Debugger.Sessions.First().Processes.First().Threads.Duplicate(2),d                 : [object Generator]
+    [0]              : nt!DbgBreakPointWithStatus (fffff800`9696ca60) 
+    [1]              : nt!DbgBreakPointWithStatus (fffff800`9696ca60) 
+    [2]              : intelppm!MWaitIdle+0x18 (fffff805`0e351348) 
+    [3]              : intelppm!MWaitIdle+0x18 (fffff805`0e351348) 
+…</pre>
+</td>
+</tr>
+</table></span></div>
+<p></p>
+<h2><a id="Debugger_Objects"></a><a id="debugger_objects"></a><a id="DEBUGGER_OBJECTS"></a>Debugger Objects in JavaScript Extensions</h2>
+<p><b>Passing Native Objects</b></p>
+<p>Debugger objects  can be passed into or acquired in JavaScript extensions in a variety of ways.</p>
+<ul>
+<li>They can be passed to JavaScript functions or methods</li>
+<li>They can be the instance object for a JavaScript prototype (as a  visualizer, for instance)</li>
+<li>They can be returned from host methods designed to create native debugger objects</li>
+<li>They can be returned from host methods designed to create debugger native objects</li>
+</ul>
+<p>Debugger objects that are passed to a JavaScript extension have a set of functionality that is described in this section.</p>
+<ul>
+<li>Property Access</li>
+<li>Projected Names</li>
+<li>Special Types Pertaining to Native Debugger Objects</li>
+<li>Additional Attributes</li>
+</ul>
+<p><b>Property Access</b></p>
+<p>While there are some properties on objects which are placed there by the JavaScript provider itself, the majority of properties on a native object which enters JavaScript are provided by the data model. This means that for a property access --- object.propertyName or object[propertyName], the following will occur.</p>
+<ul>
+<li>If <i>propertyName</i> is the name of a property projected onto the object by the JavaScript provider itself, it will resolve to this first; otherwise</li>
+<li>If <i>propertyName</i> is the name of a key projected onto the object by the data model (another Visualizer), it will resolve to this name second; otherwise</li>
+<li>If <i>propertyName</i> is the name of a field of the native object, it will resolve to this name third; otherwise</li>
+<li>If object is a pointer, the pointer will be dereferenced, and the cycle above will continue (a projected property of the dereferenced object followed by a key followed by a native field)</li>
+</ul>
+<p>The normal means of property access in JavaScript -- object.propertyName and object[propertyName] -- will access the underlying native fields of an object, much as the 'dx' command would within the debugger. </p>
+<p><b>Projected Names</b></p>
+<p>The following properties (and methods) are projected onto native objects which enter JavaScript.</p>
+<table>
+<tr>
+<th>Method</th>
+<th>Signature	</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>hostContext</td>
+<td>Property</td>
+<td>Returns an object which represents the context the object is within (the address space, debug target, etc...)</td>
+</tr>
+<tr>
+<td>targetLocation</td>
+<td>Property</td>
+<td>Returns an object which is an abstraction of where the object is within an address space (virtual address, register, sub-register, etc...)</td>
+</tr>
+<tr>
+<td>targetSize</td>
+<td>Property</td>
+<td>Returns the size of the object (effectively: sizeof(&lt;TYPE OF OBJECT&gt;)</td>
+</tr>
+<tr>
+<td>addParentModel </td>
+<td>.addParentModel(object) </td>
+<td>Adds a new parent model (akin to a JavaScript prototype but on the data mdoel side) to the object 
+</td>
+</tr>
+<tr>
+<td>removeParentModel</td>
+<td> .removeParentModel(object) </td>
+<td>Removes a given parent model from the object 
+</td>
+</tr>
+<tr>
+<td>runtimeTypedObject </td>
+<td>Property </td>
+<td>Performs analysis on the object and tries to convert it to the runtime (most derived) type 
+</td>
+</tr>
+</table>
+<p> </p>
+<p>If the object is a pointer, the following properties (and methods) are projected onto the pointer which enters JavaScript: </p>
+<table>
+<tr>
+<th>Property Name  </th>
+<th>Signature </th>
+<th>Description</th>
+</tr>
+<tr>
+<td>add  </td>
+<td>.add(value) </td>
+<td>Performs pointer math addition between the pointer and the specified value</td>
+</tr>
+<tr>
+<td>address Property Returns the address of the pointer as a 64-bit ordinal object (a library type) </td>
+<td>Property</td>
+<td> Returns the address of the pointer as a 64-bit ordinal object (a library type) </td>
+</tr>
+<tr>
+<td>dereference </td>
+<td>.dereference() </td>
+<td>Dereferences the pointer and returns the underlying object </td>
+</tr>
+<tr>
+<td>isNull </td>
+<td>Property </td>
+<td>Returns whether or not the pointer value is nullptr (0) </td>
+</tr>
+</table>
+<p> </p>
+<p><b>Special Types Pertaining to Native Debugger Objects</b></p>
+<p><b>Location Objects</b></p>
+<p>The location object which is returned from the targetLocation property of a native object contains the following properties (and methods). </p>
+<table>
+<tr>
+<th>Property Name  </th>
+<th>Signature </th>
+<th>Description</th>
+</tr>
+<tr>
+<td>add  </td>
+<td>.add(value) </td>
+<td>Adds an absolute byte offset to the location.</td>
+</tr>
+<tr>
+<td>subtract </td>
+<td>.subtract(value) </td>
+<td> Subtracts an absolute byte offset from the location.   </td>
+</tr>
+</table>
+<p> </p>
+<p><b>Additional Attributes</b></p>
+<p><b>Iterability</b></p>
+<p>Any object which is understood as iterable by the data model (it is a native array or it has a visualizer (NatVis or otherwise) which makes it iterable) will have an iterator function (indexed via the ES6 standard Symbol.iterator) placed upon it. This means that you can iterate a native object in JavaScript as follows.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>function iterateNative(nativeObject)
+{
+    for (var val of nativeObject)
+    {
+        // 
+        // val will contain each element iterated from the native object.  This would be each element of an array,
+        // each element of an STL structure which is made iterable through NatVis, each element of a data structure
+        // which has a JavaScript iterator accessible via [Symbol.iterator], or each element of something
+        // which is made iterable via support of IIterableConcept in C/C++.
+        //
+    }
+}</pre>
+</td>
+</tr>
+</table></span></div>
+<p></p>
+<p><b>Indexability</b></p>
+<p>Objects which are understood as indexable in one dimension via ordinals (e.g.: native arrays) will be indexable in JavaScript via the standard property access operator -- object[index]. If an object is indexable by name or is indexable in more than one dimension, the getValueAt and setValueAt methods will be projected onto the object so that JavaScript code can utilize the indexer. </p>
+<p></p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>function indexNative(nativeArray)
+{
+    var first = nativeArray[0];
+}</pre>
+</td>
+</tr>
+</table></span></div>
+<p></p>
+<p><b>String Conversion</b></p>
+<p>Any native object which has a display string conversion via support of IStringDisplayableConcept or a NatVis DisplayString element will have that string conversion accessible via the standard JavaScript toString method. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>function stringifyNative(nativeObject)
+{
+    var myString = nativeObject.toString();
+}</pre>
+</td>
+</tr>
+</table></span></div>
+<h2><a id="Creating_Native_Debugger_Objects"></a><a id="creating_native_debugger_objects"></a><a id="CREATING_NATIVE_DEBUGGER_OBJECTS"></a>Creating Native Debugger Objects</h2>
+<p>As mentioned, a JavaScript script can get access to native objects by having them passed into JavaScript in one of several ways or it can create them through calls to the host library. Use the following functions to create native debugger objects.</p>
+<p></p>
+<table>
+<tr>
+<th>Method</th>
+<th>Signature	</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>host.getModuleSymbol	</p>
+</td>
+<td>
+<p>getModuleSymbol(moduleName, symbolName, [contextInheritor])	</p>
+<p>getModuleSymbol(moduleName, symbolName, [typeName], [contextInheritor])</p>
+</td>
+<td>
+<p>Returns an object for a global symbol within a particular module. The module name and symbol name are strings.</p>
+<p>If the optional <i>contextInheritor </i>argument is supplied, the module and symbol will be looked up within the same context (address space, debug target) as the passed object. If the argument is not supplied, the module and symbol will be looked up in the debugger's current context. A JavaScript extension which is not a one-off test script should always supply an explicit context.
+</p>
+<p>If the optional typeName argument is supplied, the symbol will be assumed to be of the passed type and the type indicated in symbol(s) will be ignored. Note that any caller which expects to operate on public symbols for a module should always supply an explicit type name.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>host.createPointerObject	</p>
+</td>
+<td>
+<p>createPointerObject(address, moduleName, typeName, [contextInheritor])	</p>
+</td>
+<td>
+<p>Creates a pointer object at the specified address or location. The module name and type name are strings.</p>
+<p>If the optional <i>contextInheritor </i>argument is supplied, the module and symbol will be looked up within the same context (address space, debug target) as the passed object. If the argument is not supplied, the module and symbol will be looked up in the debugger's current context. A JavaScript extension which is not a one-off test script should always supply an explicit context.
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>host.createTypedObject	</p>
+</td>
+<td>
+<p>createTypedObject(location, moduleName, typeName, [contextInheritor])	</p>
+</td>
+<td>
+<p>Creates a object which represents a native typed object within the address space of a debug target at the specified location. The module name and type name are strings. </p>
+<p>If the optional <i>contextInheritor </i>argument is supplied, the module and symbol will be looked up within the same context (address space, debug target) as the passed object. If the argument is not supplied, the module and symbol will be looked up in the debugger's current context. A JavaScript extension which is not a one-off test script should always supply an explicit context.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p></p>
+<h2><a id="Host_APIs"></a><a id="host_apis"></a><a id="HOST_APIS"></a>Host APIs for JavaScript Extensions</h2>
+<p>The JavaScript provider inserts an object called host into the global namespace of every script which it loads. This object provides access to critical functionality for the script as well as access to the namespace of the debugger. It is set up in two phases.</p>
+<ul>
+<li>
+<p><b>Phase 1</b>: Before any script executes, the host object only contains the minimal set of functionality necessary for a script to initialize itself and register its extensibility points (both as producer and consumer). The root and initialization code is not intended to manipulate the state of a debug target or perform complex operations and, as such, the host is not fully populated until after the initializeScript method returns.
+
+</p>
+</li>
+<li>
+<p><b>Phase 2</b>: After initializeScript returns, the host object is populated with everything necessary to manipulate the state of debug targets.</p>
+</li>
+</ul>
+<p></p>
+<p><b>Host Object Level </b></p>
+<p>A few key pieces of functionality are directly under the host object. The remainder are sub-namespaced. Namespaces include the following.</p>
+<table>
+<tr>
+<th>Namespace</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>diagnostics</td>
+<td>Functionality to assist in the diagnosis and debugging of script code</td>
+</tr>
+<tr>
+<td>memory</td>
+<td>Functionality to enable memory reading and writing within a debug target</td>
+</tr>
+</table>
+<p> </p>
+<p></p>
+<p></p>
+<p><b>Root Level </b></p>
+<p>Directly within the host object, the following properties, methods, and constructors can be found.</p>
+<table>
+<tr>
+<th>Name</th>
+<th>Signature</th>
+<th>Phase Present</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>createPointerObject</td>
+<td>
+<p>createPointerObject(address, moduleName, typeName, [contextInheritor])</p>
+</td>
+<td>2</td>
+<td>Creates a pointer object at the specified address or location.  The module name and type name are strings.  The optional <b>contextInheritor</b> argument works as with getModuleSymbol.</td>
+</tr>
+<tr>
+<td>createTypedObject</td>
+<td>
+<p>createTypedObject(location, moduleName, typeName, [contextInheritor])</p>
+</td>
+<td>2</td>
+<td>Creates a object which represents a native typed object within the address space of a debug target at the specified location.  The module name and type name are strings.  The optional contextInheritor argument works as with getModuleSymbol.</td>
+</tr>
+<tr>
+<td>currentProcess</td>
+<td>
+<p>Property</p>
+</td>
+<td>2</td>
+<td>Returns the object representing the current process of the debugger</td>
+</tr>
+<tr>
+<td>currentSession</td>
+<td>
+<p>Property</p>
+</td>
+<td>2</td>
+<td>Returns the object representing the current session of the debugger (which target, dump, etc...) is being debugged</td>
+</tr>
+<tr>
+<td>currentThread</td>
+<td>
+<p>Property</p>
+</td>
+<td>2</td>
+<td>Returns the object representing the current thread of the debugger</td>
+</tr>
+<tr>
+<td>evaluateExpression</td>
+<td>
+<p>evaluateExpression(expression, [contextInheritor])</p>
+</td>
+<td>2</td>
+<td>This calls into the debug host to evaluate an expression using the language of the debug target only.  If the optional <i>contextInheritor</i>  argument is supplied, the expression will be evaluated in the context (e.g.: address space and debug target) of the argument; otherwise, it will be evaluated in the current context of the debugger</td>
+</tr>
+<tr>
+<td>evaluateExpressionInContext</td>
+<td>
+<p>evaluateExpressionInContext(context, expression)</p>
+</td>
+<td>2</td>
+<td>This calls into the debug host to evaluate an expression using the language of the debug target only.  The context argument indicates the implicit this pointer to utilize for the evaluation.  The expression will be evaluated in the context (e.g.: address space and debug target) indicated by the <i>context</i> argument.</td>
+</tr>
+<tr>
+<td>getModuleSymbol</td>
+<td>
+<p>getModuleSymbol(moduleName, symbolName, [contextInheritor])</p>
+</td>
+<td>2</td>
+<td>Returns an object for a global symbol within a particular module.  The module name and symbol name are strings.  If the optional <i>contextInheritor</i> argument is supplied, the module and symbol will be looked up within the same context (address space, debug target) as the passed object.  If the argument is not supplied, the module and symbol will be looked up in the debugger's current context.  A JavaScript extension which is not a one-off script should always supply an explicit context</td>
+</tr>
+<tr>
+<td>getNamedModel</td>
+<td>
+<p>getNamedModel(modelName)</p>
+</td>
+<td>2</td>
+<td>Returns the data model which was registered against a given name.  Note that it is perfectly legal to call this against a name which is not yet registered.  Doing so will create a stub for that name and manipulations of the stub will be made to the actual object upon registration</td>
+</tr>
+<tr>
+<td>indexedValue</td>
+<td>
+<p>new indexedValue(value, indicies)</p>
+</td>
+<td>2</td>
+<td>A constructor for an object which can be returned from a JavaScript iterator in order to assign a default set of indicies to the iterated value.  The set of indicies must be expressed as a JavaScript array.</td>
+</tr>
+<tr>
+<td>Int64</td>
+<td>
+<p>new Int64(value, [highValue])</p>
+</td>
+<td>1</td>
+<td>This constructs a library Int64 type.  The single argument version will take any value which can pack into an Int64 (without conversion) and place it into such.  If an optional second argument is supplied, a conversion of the first argument is packed into the lower 32-bits and a conversion of the second argument is packed into the upper 32 bits.</td>
+</tr>
+<tr>
+<td>namedModelParent</td>
+<td>
+<p>new namedModelParent(object, name)</p>
+</td>
+<td>1</td>
+<td>A constructor for an object intended to be placed in the array returned from <b>initializeScript</b>, this represents using a JavaScript prototype or ES6 class as a data model parent extension of a data model with the given name</td>
+</tr>
+<tr>
+<td>namedModelRegistration</td>
+<td>
+<p>new namedModelRegistration(object, name)</p>
+</td>
+<td>1</td>
+<td>A constructor for an object intended to be placed in the array returned from <b>initializeScript</b>, this represents the registration of a JavaScript prototype or ES6 class as a data model via a known name so that other extensions can find and extend</td>
+</tr>
+<tr>
+<td>namespace</td>
+<td>
+<p>Property</p>
+</td>
+<td>2</td>
+<td>Gives direct access to the root namespace of the debugger.  One could, for example, access the process list of the first debug target via host.namespace.Debugger.Sessions.First().Processes using this property</td>
+</tr>
+<tr>
+<td>registerNamedModel</td>
+<td>
+<p>registerNamedModel(object, modelName)</p>
+</td>
+<td>2</td>
+<td>This registers a JavaScript prototype or ES6 class as a data model under the given name.  Such a registration allows the prototype or class to be located and extended by other scripts or other debugger extensions.  Note that a script should prefer to return a <b>namedModelRegistration</b> object from its <b>initializeScript</b> method rather than doing this imperatively.  Any script which makes changes imperatively is required to have an <b>initializeScript</b> method in order to clean up.</td>
+</tr>
+<tr>
+<td>registerExtensionForTypeSignature</td>
+<td>
+<p>registerExtensionForTypeSignature(object, typeSignature)</p>
+</td>
+<td>2</td>
+<td>This registers a JavaScript prototype or ES6 class as an extension data model for a native type as given by the supplied type signature.  Note that a script should prefer to return a  <b>typeSignatureExtension</b> object from its <b>initializeScript</b>  method rather than doing this imperatively.  Any script which makes changes imperatively is required to have an <b>initializeScript</b>  method in order to clean up.</td>
+</tr>
+<tr>
+<td>registerPrototypeForTypeSignature</td>
+<td>
+<p>registerPrototypeForTypeSignature(object, typeSignature)</p>
+</td>
+<td>2</td>
+<td>This registers a JavaScript prototype or ES6 class as the canonical data model (e.g.: visualizer) for a native type as given by the supplied type signature.  Note that a script should prefer to return a <b>typeSignatureExtension</b> object from its <b>initializeScript</b> method rather than doing this imperatively.  Any script which makes changes imperatively is required to have an <b>uninitializeScript</b>method in order to clean up.</td>
+</tr>
+<tr>
+<td>parseInt64</td>
+<td>
+<p>parseInt64(string, [radix])</p>
+</td>
+<td>1</td>
+<td>This method acts similarly to the standard JavaScript parseInt method except that it returns a library Int64 type instead.  If a radix is supplied, the parse will occur in either base 2, 8, 10, or 16 as indicated.</td>
+</tr>
+<tr>
+<td>typeSignatureExtension</td>
+<td>
+<p>new typeSignatureExtension(object, typeSignature, [moduleName], [minVersion], [maxVersion])</p>
+</td>
+<td>1</td>
+<td>A constructor for an object intended to be placed in the array returned from <b>initializeScript</b>, this represents an extension of a native type described via a type signature by a JavaScript prototype or ES6 class.  Such a registration "adds fields" to the debugger's visualization of any type which matches the signature rather than taking it over entirely.  An optional module name and version can restrict the registration.  Versions are specified as "1.2.3.4" style strings.</td>
+</tr>
+<tr>
+<td>typeSignatureRegistration</td>
+<td>
+<p>new typeSignatureRegistration(object, typeSignature, [moduleName], [minVersion], [maxVersion])</p>
+</td>
+<td>1</td>
+<td>A constructor for an object intended to be placed in the array returned from <b>initializeScript</b>, this represents a canonical registration of a JavaScript prototype or ES6 class against a native type signature.  Such a registration "takes over" the debugger's visualization of any type which matches the signature rather than merely than extending it.  An optional module name and version can restrict the registration.  Versions are specified as "1.2.3.4" style strings.</td>
+</tr>
+<tr>
+<td>unregisterNamedModel</td>
+<td>
+<p>unregisterNamedModel(modelName)</p>
+</td>
+<td>2</td>
+<td>This unregisters a data model from lookup by the given name undoing any operation performed by <b>registerNamedModel</b></td>
+</tr>
+<tr>
+<td>unregisterExtensionForTypeSignature</td>
+<td>
+<p>unregisterExtensionForTypeSignature(object, typeSignature, [moduleName], [minVersion], [maxVersion])</p>
+</td>
+<td>2</td>
+<td>This unregisters a JavaScript prototype or ES6 class from being an extension data model for a native type as given by the supplied type signature.  It is the logical undo of registerExtensionForTypeSignature.  Note that a script should prefer to return a <b>typeSignatureExtension</b> object from its <b>initializeScript</b> method rather than doing this imperatively.  Any script which makes changes imperatively is required to have an <b>initializeScript</b> method in order to clean up.  An optional module name and version can restrict the registration.  Versions are specified as "1.2.3.4" style strings.</td>
+</tr>
+<tr>
+<td>unregisterPrototypeForTypeSignature</td>
+<td>
+<p>unregisterPrototypeForTypeSignature(object, typeSignature, [moduleName], [minVersion], [maxVersion])</p>
+</td>
+<td>2</td>
+<td>This unregisters a JavaScript prototype or ES6 class from being the canonical data model (e.g.: visualizer) for a native type as given by the supplied type signature.  It is the logical undo of registerPrototypeForTypeSignature.  Note that a script should prefer to return a <b>typeSignatureRegistration</b> object from its <b>initializeScript</b> method rather than doing this imperatively.  Any script which makes changes imperatively is required to have an <b>uninitializeScript</b> method in order to clean up.  An optional module name and version can restrict the registration.  Versions are specified as "1.2.3.4" style strings.</td>
+</tr>
+</table>
+<p> </p>
+<p><b>Diagnostics Functionality</b></p>
+<p>The diagnostics sub-namespace of the host object contains the following.</p>
+<table>
+<tr>
+<th>Name</th>
+<th>Signature</th>
+<th>Phase Present</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>debugLog</td>
+<td>debugLog(object...)</td>
+<td>1</td>
+<td>This provides printf style debugging to a script extension.  At present, output from debugLog is routed to the output console of the debugger.  At a later point in time, there are plans to provide flexibility on  routing this output.  NOTE: This should not be used as a means of printing user output to console.  It may not be routed there in the future. </td>
+</tr>
+</table>
+<p> </p>
+<p></p>
+<p><b>Memory Functionality</b></p>
+<p>The memory sub-namespace of the host object contains the following.</p>
+<table>
+<tr>
+<th>Name</th>
+<th>Signature</th>
+<th>Phase Present</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>readMemoryValues</td>
+<td>
+<p>readMemoryValues(location, numElements, [elementSize], [isSigned], [contextInheritor])</p>
+</td>
+<td>2</td>
+<td>This reads a raw array of values from the address space of the debug target and places a typed array on top of the view of this memory.  The supplied location can be an address (a 64-bit value), a location object, or a native pointer.  The size of the array is indicated by the <i>numElements</i> argument.  The size (and type) of each element of the array is given by the optional <i>elementSize</i> and <i>isSigned </i>arguments.  If no such arguments are supplied, the default is byte (unsigned / 1 byte).  If the optional <i>contextInheritor</i> argument is supplied, memory will be read in the context (e.g.: address space and debug target) indicated by the argument; otherwise, it will be read from the debugger's current context.  Note that using this method on 8, 16, and 32-bit values results in a fast typed view being placed over the read memory.  Using this method on 64-bit values results in an array of 64-bit library types being constructed which is significantly more expensive!</td>
+</tr>
+<tr>
+<td>readString</td>
+<td>
+<p>readString(location, [contextInheritor])</p>
+<p>readString(location, [length], [contextInheritor])</p>
+</td>
+<td>2</td>
+<td>This reads a narrow (current code page) string from the address space of a debug target, converts it to UTF-16, and returns the result as a JavaScript string.  It may throw an exception if the memory could not be read.  The supplied location can be an address (a 64-bit value), a location object, or a native char*.  If the optional <i>contextInheritor</i> argument is supplied, memory will be read in the context (e.g.: address space and debug target) indicated by the argument; otherwise, it will be read from the debugger's current context.  If the optional <i>length</i> argument is supplied, the read string will be of the specified length.</td>
+</tr>
+<tr>
+<td>readWideString</td>
+<td>
+<p>readWideString(location, [contextInheritor])</p>
+<p>readWideString(location, [length], [contextInheritor])</p>
+</td>
+<td>2</td>
+<td>This reads a wide(UTF-16) string from the address space of a debug target and returns the result as a JavaScript string.  It may throw an exception if the memory could not be read.  The supplied location can be an address (a 64-bit value), a location object, or a native wchar_t*.  If the optional <i>contextInheritor</i> argument is supplied, memory will be read in the context (e.g.: address space and debug target) indicated by the argument; otherwise, it will be read from the debugger's current context.  If the optional <i>length</i> argument is supplied, the read string will be of the specified length.</td>
+</tr>
+</table>
+<p> </p>
+<h2><a id="Data_Model"></a><a id="data_model"></a><a id="DATA_MODEL"></a>Data Model Concepts in JavaScript</h2>
+<p><b>Data Model Mapping</b></p>
+<p>The following data model concepts map to JavaScript.</p>
+<table>
+<tr>
+<th>Concept</th>
+<th>Native Interface</th>
+<th>JavaScript Equivalent</th>
+</tr>
+<tr>
+<td>String Conversion</td>
+<td>IStringDisplayableConcept</td>
+<td>standard: toString(...){...}</td>
+</tr>
+<tr>
+<td>Iterability</td>
+<td>IIterableConcept</td>
+<td>standard: [Symbol.iterator](){...}</td>
+</tr>
+<tr>
+<td>Indexability</td>
+<td>IIndexableConcept</td>
+<td>protocol: getDimensionality(...) / getValueAt(...) / setValueAt(...)</td>
+</tr>
+<tr>
+<td>Runtime Type Conversion</td>
+<td>IPreferredRuntimeTypeConcept</td>
+<td>protocol: getPreferredRuntimeTypedObject(...)</td>
+</tr>
+</table>
+<p> </p>
+<p></p>
+<p><b>String Conversion</b></p>
+<p>The string conversion concept (IStringDisplayableConcept) directly translates to the standard JavaScript <b>toString</b> method. As all JavaScript objects have a string conversion (provided by Object.prototype if not provided elsewhere), every JavaScript object returned to the data model can be converted to a display string. Overriding the string conversion simply requires implementing your own toString.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>class myObject
+{
+    //
+    // This method will be called whenever any native code calls IStringDisplayableConcept::ToDisplayString(...)
+    //
+    toString()
+    { 
+        return "This is my own string conversion!";
+    }
+}</pre>
+</td>
+</tr>
+</table></span></div>
+<p><b>Iterability</b></p>
+<p>The data model's concept of whether an object is iterable or not maps directly to the ES6 protocol of whether an object is iterable. Any object which has a [Symbol.iterator] method is considered iterable. Implementation of such will make the object iterable. </p>
+<p>An object which is only iterable can have an implementation such as follows.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>class myObject
+{
+    //
+    // This method will be called whenever any native code calls IIterableConcept::GetIterator
+    //
+    *[Symbol.iterator]()
+    {
+        yield "First Value";
+        yield "Second Value";
+        yield "Third Value";
+    }
+}</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Special consideration must be given for objects which are both iterable and indexable as the objects returned from the iterator must include the index as well as the value via a special return type. </p>
+<p></p>
+<p><b>Iterable and Indexable</b></p>
+<p>An object which is iterable and indexable requires a special return value from the iterator. Instead of yielding the values, the iterator yields instances of indexedValue. The indicies are passed as an array in the second argument to the indexedValue constructor. They can be multi-dimensional but must match the dimensionality returned in the indexer protocol. </p>
+<p>This code shows an  example implementaion. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>class myObject
+{
+    //
+    // This method will be called whenever any native code calls IIterableConcept::GetIterator
+    //
+    *[Symbol.iterator]()
+    {
+        //
+        // Consider this a map which mapped 42-&gt;"First Value", 99-&gt;"Second Value", and 107-&gt;"Third Value"
+        //
+        yield new host.indexedValue("First Value", [42]);
+        yield new host.indexedValue("Second Value", [99]);
+        yield new host.indexedValue("Third Value", [107]);
+    }
+}</pre>
+</td>
+</tr>
+</table></span></div>
+<p><b>Indexability</b></p>
+<p>Unlike JavaScript, the data model makes a very explicit differentiation between property access and indexing. Any JavaScript object which wishes to present itself as indexable in the data model must implement a protocol consisting of a getDimensionality method which returns the dimensionality of the indexer and an optional pair of getValueAt and setValueAt methods which perform reads and writes of the object at supplied indicies. It is acceptable to  omit either the getValueAt or setValueAt methods if the object is read-only or write-only</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>class myObject
+{
+    //
+    // This method will be called whenever any native code calls IIndexableConcept::GetDimensionality or IIterableConcept::GetDefaultIndexDimensionality
+    //
+    getDimensionality()
+    {
+        //
+        // Pretend we are a two dimensional array.
+        //
+        return 2;
+    } 
+
+    //
+    // This method will be called whenever any native code calls IIndexableConcept::GetAt
+    //
+    getValueAt(row, column)
+    {
+        return this.__values[row * this.__columnCount + column];
+    }
+
+    //
+    // This method will be called whenever any native code calls IIndexableConcept::SetAt
+    //
+    setValueAt(value, row, column)
+    {
+        this.__values[row * this.__columnCount + column] = value;
+    }
+}</pre>
+</td>
+</tr>
+</table></span></div>
+<p><b>Runtime Type Conversion</b></p>
+<p>This is only relevant for JavaScript prototypes/classes which are registered against type system (native) types. The debugger is often capable of performing analysis (e.g. Run-Time Type Information (RTTI) / v-table analysis) to determine the true runtime type of an object from a static type expressed in code. A data model registered against a native type can override this behavior via an implementation of the IPreferredRuntimeTypeConcept. Likewise, a JavaScript class or prototype registered against a native object can provide its own implementation via implementation of a protocol consisting of the getPreferredRuntimeTypedObject method. </p>
+<p>Note that while this method can technically return anything, it is considered bad form for it to return something which isn't really the runtime type or a derived type. Such can result in significant confusion for users of the debugger. Overriding this method can, however, be valuable for things such as C-style header+object styles of implementation, etc... </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>class myNativeModel
+{
+    //
+    // This method will be called whenever the data model calls IPreferredRuntimeTypeConcept::CastToPreferredRuntimeType
+    //
+    getPreferredRuntimeTypedObject()
+    {
+        var loc = this.targetLocation;
+
+        //
+        // Perform analysis...
+        //
+        var runtimeLoc = loc.Add(runtimeObjectOffset);
+  
+        return host.createTypedObject(runtimeLoc, runtimeModule, runtimeTypeName);
+    }
+}</pre>
+</td>
+</tr>
+</table></span></div>
+<h2><a id="Design_Considerations"></a><a id="design_considerations"></a><a id="DESIGN_CONSIDERATIONS"></a>Debugger Data Model Design Considerations</h2>
+<p><b>Design Principles</b></p>
+<p>Consider the following principles to make your  debugger extensions present information that is discoverable, queryable, and scriptable. </p>
+<ul>
+<li>Information is close to where it is needed.  For example, information on a registry key should be displayed as part of a local variable that contains a registry key handle.
+</li>
+<li>Information is structured. For  example, information about a registry key is presented in separate fields such as key type, key ACL, key name, and value. This means that the individual fields can be accessed without parsing text.
+</li>
+<li>Information is consistent. Information about registry key handles is presented in as similar a way as possible to information about file handles.</li>
+</ul>
+<p>Avoid these approaches that do not support these principles.</p>
+<ul>
+<li>Do not structure your items into a single flat "Kitchen sink". An organized hierarchy allows users to browse for the information they are looking for without prior knowledge of what they are looking for and supports discoverability.</li>
+<li>Do not convert a classic dbgeng extension by simply moving it to the model while still outputting screens of raw text. This is not composable with other extensions and cannot be queried with LINQ expressions.  Instead break the data into separate,  queryable fields.</li>
+</ul>
+<p></p>
+<p><b>Naming Guidelines</b></p>
+<ul>
+<li>Capitalization of fields should be PascalCase.   An exception could be considered for names that are widely known in another casing, such as jQuery.
+</li>
+<li>Avoid using special characters that would not normally be used in a C++ identifier. For example, avoid using names such as "Total Length" (that contains a space), or "[size]" (that contains square brackets). This convention allows for easier consumption from scripting languages where these characters are not allowed as part of identifiers, and also allows easier consumption from the command window.</li>
+</ul>
+<p></p>
+<p><b>Organization and Hierarchy Guidelines</b></p>
+<ul>
+<li>Do not extend the top level of the debugger namespace. Instead, you should extend an existing node in the debugger so that the information is displayed where it is most relevant. </li>
+<li>Do not duplicate concepts. If you are creating a data model extension that lists additional information about a concept that already exists in the debugger, extend the existing information rather than trying to replace it with new information. In other words, an extension that displays details about a module should extend the existing <i>Module</i> object rather than creating a new list of modules.</li>
+<li>Free floating utility commands must be part of the <i>Debugger.Utility</i> namespace.  They should also be sub-namespaced appropriately (e.g.<i> Debugger.Utility.Collections.FromListEntry</i>)
+</li>
+</ul>
+<p></p>
+<p><b>Backwards Compatibility and Breaking Changes</b></p>
+<p>A script that is published should not break compatibility with other scripts that depend on it. For example, if a function is published to the model, it should remain in the same location and with the same parameters, whenever possible.</p>
+<p></p>
+<p><b>No Use of Outside Resources</b></p>
+<ul>
+<li>Extensions must not spawn external processes. External processes can interfere with the behavior of the debugger, and will misbehave in various remote debugger scenarios (e.g. dbgsrv remotes, ntsd remotes, and "ntsd -d remotes")</li>
+<li>Extensions must not display any user interface. Displaying user interface elements will behave incorrectly on remote debugging scenarios, and can break console debugging scenarios.</li>
+<li>Extensions must not manipulate the debugger engine or debugger UI through undocumented methods. This causes compatibility problems and will behave incorrectly on debugger clients with different UI.</li>
+<li>Extensions must access target information only through the documented debugger APIs. Trying to access information about a target through win32 APIs will fail for many remote scenarios, and even some local debugging scenarios across security boundaries.</li>
+</ul>
+<p></p>
+<p><b>No Use of Dbgeng Specific Features </b></p>
+<p>Scripts that are intended to be used as extensions must not rely on dbgeng-specific features whenever possible (such as executing "classic" debugger extensions). Scripts should be usable on top of any debugger that hosts the data model. </p>
+<p></p>
+<h2><a id="Testing_Debugger_Extensions"></a><a id="testing_debugger_extensions"></a><a id="TESTING_DEBUGGER_EXTENSIONS"></a>Testing Debugger Extensions</h2>
+<p>Extensions are expected to work in a wide range of scenarios. While some extensions may be specific to a scenario (such as a kernel debugging scenario), most extensions should be expected to work in all scenarios, or have metadata indicating the supported scenarios.</p>
+<p>Kernel Mode </p>
+<ul>
+<li>Live kernel debugging</li>
+<li>Kernel dump debugging
+ </li>
+</ul>
+<p>User Mode</p>
+<ul>
+<li>Live user mode debugging</li>
+<li>User mode dump debugging</li>
+</ul>
+<p>In addition, consider these debugger usage scenarios</p>
+<ul>
+<li>Multi-process debugging
+ </li>
+<li>Multi-session debugging (e.g. dump + live user within a single session)
+</li>
+</ul>
+<p><b>Remote Debugger Usage</b></p>
+<p>Test for proper operation with the remote debugger usage scenarios.</p>
+<ul>
+<li>dbgsrv remotes</li>
+<li>ntsd remotes</li>
+<li>ntsd -d remotes</li>
+</ul>
+<p>For more information,  see <a href="debugging_using_cdb_and_ntsd.htm">Debugging Using CDB and NTSD</a> and <a href="activating_a_process_server.htm"><b>Activating a Process Server</b></a>.</p>
+<p></p>
+<p><b>Regression testing</b></p>
+<p>Investigate the use of test automation that can verify the functionality of your extensions, as new versions of the debugger are released. </p>
+<p></p>
+<p></p>
+<h2><a id="related_topics"></a>Related topics</h2>
+<dl>
+<dt><a href="javascript_debugger_scripting.htm">JavaScript Debugger Scripting</a></dt>
+<dt><a href="javascript_debugger_example_scripts.htm">JavaScript Debugger Example Scripts</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Native Debugger Objects in JavaScript Extensions%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

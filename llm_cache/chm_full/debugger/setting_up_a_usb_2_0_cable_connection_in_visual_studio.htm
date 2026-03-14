@@ -1,0 +1,127 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="You can use Microsoft Visual Studio to set up and perform kernel-mode debugging over a USB 2.0 cable."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Setting Up Kernel-Mode Debugging over a  USB 2.0 Cable in Visual Studio</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.setting_up_a_usb_2_0_cable_connection_in_visual_studio"></a>Setting Up Kernel-Mode Debugging over a  USB 2.0 Cable in Visual Studio</h1>
+</div>
+<p>You can use Microsoft Visual Studio to set up and perform kernel-mode debugging over a USB 2.0 cable. To use Visual Studio for kernel-mode debugging, you must have the Windows Driver Kit (WDK) integrated with Visual Studio. For information about how to install the integrated environment, see <a href="http://go.microsoft.com/fwlink/p?linkid=301383">Windows Driver Development</a>.</p>
+<p>As an alternative to using Visual Studio to set up USB 2.0 debugging, you can do the setup manually. For more information, see <a href="setting_up_a_usb_2_0_debug_cable_connection.htm">Setting Up Kernel-Mode Debugging over a USB 2.0 Cable Manually</a>.</p>
+<p>The computer that runs the debugger is called the <i>host computer</i>, and the computer that is being debugged is called the <i>target computer</i>. </p>
+<p>Debugging over a USB 2.0 connection requires the following hardware:</p>
+<ul>
+<li>
+<p>A Universal Serial Bus (USB) 2.0 debug cable.  This cable is not a standard USB 2.0 cable, because it has an extra hardware component that makes it compatible with the USB2 Debug Device Functional Specification.  You can find these cables by doing an Internet search for "USB 2.0 debug cable".  </p>
+</li>
+<li>
+<p>On the host computer, an EHCI (USB 2.0) host controller</p>
+</li>
+<li>
+<p>On the target computer, an EHCI (USB 2.0) host controller that supports debugging  </p>
+</li>
+</ul>
+<h2><a id="Identifying_a_Debug_Port_on_the_Target_Computer"></a><a id="identifying_a_debug_port_on_the_target_computer"></a><a id="IDENTIFYING_A_DEBUG_PORT_ON_THE_TARGET_COMPUTER"></a>Identifying a Debug Port on the Target Computer</h2>
+<ol>
+<li>On the target computer, launch the UsbView tool. The UsbView tool is included in Debugging Tools for Windows.</li>
+<li>In UsbView, locate all of the host controllers that are compatible with the EHCI specification. For example, you could look for controllers that are listed as Enhanced.</li>
+<li>
+<p>In UsbView, expand the nodes of the EHCI host controllers. Look for an indication that a host controller supports debugging, and look for the number of the debug port. For example, UsbView displays this output for an EHCI host controller that supports debugging on port 1. </p>
+<pre class="syntax" xml:space="preserve"><code>Xxx xxx xxx USB2 Enhanced Host Controller - 293A
+...
+Debug Port Number:  1
+Bus.Device.Function (in decimal): 0.29.7</code></pre>
+<div class="alert"><b>Note</b>  Many EHCI host controllers support debugging on port 1, but some EHCI host controllers support debugging on port 2.</div>
+<div> </div>
+</li>
+<li>
+<p>Make a note of the bus, device, and function numbers for the EHCI controller that you intend to use for debugging. UsbView displays these number. In the preceding example, the bus number is 0, the device number is 29, and the function number is 7. </p>
+</li>
+<li>
+<p>After you have identified the EHCI controller and the port number that supports debugging, the next step is to locate the physical USB connector that is associated with the correct port number. To find the physical connector, plug any USB 2.0 device into any USB connector on the target computer. Refresh UsbView to see where your  device is located. If UsbView shows your device connected to the EHCI host controller and port  that you identified as the debug port, then you have found a physical USB connector that you can use for debugging. It could be that there is no external physical USB connector that is associated with a debug port on an EHCI controller. In that case, you can look for a physical USB connector inside the computer. Perform the same steps to determine whether the internal USB connector is suitable for kernel debugging. If you cannot find a physical USB connector (either external or internal) that is associated with a debug port, then you cannot use the computer as a target for debugging over a USB 2.0 cable.</p>
+<div class="alert"><b>Note</b>  See <a href="setting_up_a_usb_2_0_debug_cable_connection.htm#what_if_usbview_shows_a_debug_capable_port">this remark</a> for an exception.</div>
+<div> </div>
+</li>
+</ol>
+<h2><a id="Connecting_the_USB_debug_cable"></a><a id="connecting_the_usb_debug_cable"></a><a id="CONNECTING_THE_USB_DEBUG_CABLE"></a>Connecting the USB debug cable</h2>
+<ol>
+<li>Verify that the host computer is not configured to be the target of USB debugging. (If necessary, open a Command Prompt window as Administrator, enter <b>bcdedit /debug off</b>, and reboot.)</li>
+<li>On the host computer, use UsbView to find the EHCI host controllers and ports that support debugging. If possible, plug one end of the USB 2.0 debug cable into an EHCI port (on the host computer) that does not support debugging. Otherwise, plug the cable into any EHCI port on the host computer.</li>
+<li>Plug the other end of the USB 2.0 debug cable into the connector that you identified previously on the target computer.</li>
+</ol>
+<h2><a id="Configuring_the_host_and_target_computers"></a><a id="configuring_the_host_and_target_computers"></a><a id="CONFIGURING_THE_HOST_AND_TARGET_COMPUTERS"></a>Configuring the host and target computers</h2>
+<ol>
+<li>Begin configuring your host and target computers as described in Provision a computer for driver deployment and testing (WDK 8.1).</li>
+<li>On the host computer, in Visual Studio, when you come to the Computer Configuration dialog box, select <b>Provision computer and choose debugger settings</b>.</li>
+<li>
+<p>For <b>Connection Type</b>, choose <b>USB</b>.</p><img src="images/SetupUsb2Vs.png" alt="Screen shot showing an example of debugger settings with values for the following fields: Connection Type, Target Name, and Bus Parameters"/><p>For <b>Target Name</b>, enter a string to represent the target computer. This string does not have to be the official name of the target computer; it can be any string that you create as long as it meets these restrictions:</p>
+<ul>
+<li>The maximum length of the string is 24 characters.</li>
+<li>The only characters in the string are the hyphen (-), the underscore(_), the digits 0 through 9, and the letters A through Z (upper or lower case).</li>
+</ul>
+<p>If you have more than one USB host controller on the target computer, enter a <b>Bus Parameters</b> value of <i>b</i>.<i>d</i>.<i>f</i>, where <i>b</i>, <i>d</i>, and <i>f</i> are the bus, device, and function numbers for the USB host controller that you intend to use for debugging on the target computer. The bus, device, and function numbers must be in decimal format (example: 0.29.7).</p>
+</li>
+<li>The configuration process takes several minutes and might automatically reboot the target computer once or twice. When the process is complete, click <b>Finish</b>.</li>
+</ol>
+<h2><a id="Verifying_dbgsettings_on_the_Target_Computer"></a><a id="verifying_dbgsettings_on_the_target_computer"></a><a id="VERIFYING_DBGSETTINGS_ON_THE_TARGET_COMPUTER"></a>Verifying dbgsettings on the Target Computer</h2>
+<p>On the target computer, open a Command Prompt window as Administrator, and enter these commands:</p>
+<p><b>bcdedit /dbgsettings</b></p>
+<p><b>bcdedit /enum</b></p>
+<pre class="syntax" xml:space="preserve"><code>...
+targetname              MyUsbTarget
+debugtype               USB
+debugport               1
+baudrate                115200
+...
+busparams               0.29.7
+...</code></pre>
+<p>Verify that <i>debugtype</i>  is USB and <i>targetname</i> is the name you specified in Visual Studio on the host computer. You can ignore the values of <i>debugport</i> and <i>baudrate</i>; they do not apply to debugging over USB.</p>
+<p>If you entered <b>Bus Parameters</b> in Visual Studio, verify that <i>busparams</i> matches the bus parameters you specified.</p>
+<p>If you do not see the value you entered for <b>Bus Parameters</b>, enter this command:</p>
+<p><b>bcdedit /set "{dbgsettings}" busparams </b><i>b</i><b>.</b><i>d</i><b>.</b><i>f</i></p>
+<p>where <i>b</i>, <i>d</i>, and <i>f</i> are the bus, device, and function numbers of the EHCI controller on the target computer that you have chosen to use for debugging.</p>
+<p>Example:</p>
+<p><b>bcdedit /set "{dbgsettings}" busparams 0.29.7</b></p>
+<p>Reboot the target computer.</p>
+<h2><a id="Starting_a_Debugging_Session_for_the_First_Time"></a><a id="starting_a_debugging_session_for_the_first_time"></a><a id="STARTING_A_DEBUGGING_SESSION_FOR_THE_FIRST_TIME"></a>Starting a Debugging Session for the First Time</h2>
+<ol>
+<li>Connect a USB 2.0 debug cable to the USB 2.0 ports that you have chosen for debugging on the host and target computers.</li>
+<li>On the host computer, open Visual Studio as Administrator.</li>
+<li>On the <b>Tools</b> menu, choose <b>Attach to Process</b>.</li>
+<li>For <b>Transport</b>, choose <b>Windows Kernel Mode Debugger</b>.</li>
+<li>For <b>Qualifier</b>, select the name of the target computer that you previously configured.</li>
+<li>Click <b>Attach</b>.</li>
+</ol>
+<p>At this point, the USB debug driver gets installed on the host computer. This is why it is important to run Visual Studio as Administrator. After the USB debug driver is installed, you do not need to run as Administrator for subsequent debugging sessions.</p>
+<h2><a id="Starting_a_Debugging_Session"></a><a id="starting_a_debugging_session"></a><a id="STARTING_A_DEBUGGING_SESSION"></a>Starting a Debugging Session</h2>
+<ol>
+<li>On the host computer, in Visual Studio, on the <b>Tools</b> menu, choose <b>Attach to Process</b>.</li>
+<li>For <b>Transport</b>, choose <b>Windows Kernel Mode Debugger</b>.</li>
+<li>For <b>Qualifier</b>, select the target name that you entered during configuration.</li>
+<li>Click <b>Attach</b>.</li>
+</ol>
+<h2><a id="related_topics"></a>Related topics</h2>
+<dl>
+<dt><a href="setting_up_kernel-mode_debugging_in_visual_studio.htm">Setting Up Kernel-Mode Debugging in Visual Studio</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Setting Up Kernel-Mode Debugging over a  USB 2.0 Cable in Visual Studio%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

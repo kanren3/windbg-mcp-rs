@@ -1,0 +1,339 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !for_each_module extension executes a debugger command one time for each loaded module."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!for_each_module</title>
+
+<meta name="MS-HAID" content="r24_exts_general_A_50f76fa1-c26f-418f-8cd0-4cfdecc3b07e.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._for_each_module"></a>!for_each_module</h1>
+</div>
+<p>The <b>!for_each_module</b> extension executes a debugger command one time for each loaded module.</p>
+<pre class="syntax"><b>!for_each_module ["</b><i>CommandString</i><b>"]</b>
+<b>!for_each_module -?</b></pre>
+<h2><a id="ddk__for_each_module_dbg"></a><a id="DDK__FOR_EACH_MODULE_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______CommandString______"></a><a id="_______commandstring______"></a><a id="_______COMMANDSTRING______"></a>       <i>CommandString</i>      </dt>
+<dd>
+<p>Specifies the debugger commands to execute one time for each module in the debugger's module list. If <i>CommandString</i> includes multiple commands, you must separate them with semicolons and enclose <i>CommandString</i> in quotation marks. If you include multiple commands, the individual commands within <i>CommandString</i> cannot contain quotation marks.</p>
+<p>You can use the following aliases in <i>CommandString</i> or in any script that the commands in <i>CommandString</i> executes.</p>
+<table>
+<tr>
+<th>Alias</th>
+<th>Data type</th>
+<th>Value</th>
+</tr>
+<tr>
+<td>
+<p>@#FileVersion</p>
+</td>
+<td>
+<p>string</p>
+</td>
+<td>
+<p>The file version of the module.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>@#ProductVersion</p>
+</td>
+<td>
+<p>string</p>
+</td>
+<td>
+<p>The product version of the module.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>@#ModuleIndex</p>
+</td>
+<td>
+<p>ULONG</p>
+</td>
+<td>
+<p>The module number. Modules are enumerated consecutively, starting with zero.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>@#ModuleName</p>
+</td>
+<td>
+<p>string</p>
+</td>
+<td>
+<p>The module name. This name is typically the file name without the file name extension. In some situations, the module name differs significantly from the file name.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>@#ImageName</p>
+</td>
+<td>
+<p>string</p>
+</td>
+<td>
+<p>The name of the executable file, including the file name extension. Typically, the full path is included in user mode but not in kernel mode.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>@#LoadedImageName</p>
+</td>
+<td>
+<p>string</p>
+</td>
+<td>
+<p>Unless Microsoft CodeView symbols are present, this alias is the same as the image name.   </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>@#MappedImageName</p>
+</td>
+<td>
+<p>string</p>
+</td>
+<td>
+<p>In most situations, this alias is <b>NULL</b>. If the debugger is mapping an image file (for example, during minidump debugging), this alias is the name of the mapped image.  </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>@#SymbolFileName</p>
+</td>
+<td>
+<p>string</p>
+</td>
+<td>
+<p>The path and name of the symbol file. If you have not loaded any symbols, this alias is the name of the executable file instead.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>@#ModuleNameSize</p>
+</td>
+<td>
+<p>ULONG</p>
+</td>
+<td>
+<p>The string length of the module name string, plus one.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>@#ImageNameSize</p>
+</td>
+<td>
+<p>ULONG</p>
+</td>
+<td>
+<p>The string length of the image name string, plus one.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>@#LoadedImageNameSize</p>
+</td>
+<td>
+<p>ULONG</p>
+</td>
+<td>
+<p>The string length of the loaded image name string, plus one.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>@#MappedImageNameSize</p>
+</td>
+<td>
+<p>ULONG</p>
+</td>
+<td>
+<p>The string length of the mapped image name string, plus one.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>@#SymbolFileNameSize</p>
+</td>
+<td>
+<p>ULONG</p>
+</td>
+<td>
+<p>The string length of the symbol file name string, plus one.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>@#Base</p>
+</td>
+<td>
+<p>ULONG64</p>
+</td>
+<td>
+<p>The address of the start of the image.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>@#Size</p>
+</td>
+<td>
+<p>ULONG</p>
+</td>
+<td>
+<p>The size of the image, in bytes.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>@#End</p>
+</td>
+<td>
+<p>ULONG64</p>
+</td>
+<td>
+<p>The address of the end of the image.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>@#TimeDateStamp</p>
+</td>
+<td>
+<p>ULONG</p>
+</td>
+<td>
+<p>The time and date stamp of the image. If you want to expand this time and date stamp into a readable date, use the <a href="_formats__show_number_formats_.htm"><b>.formats (Show Number Formats)</b></a> command.</p>
+</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>
+<p>@#Checksum</p>
+</td>
+<td>
+<p>ULONG</p>
+</td>
+<td>
+<p>The checksum of the module.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>@#Flags</p>
+</td>
+<td>
+<p>ULONG</p>
+</td>
+<td>
+<p>The module flags. For a list of the DEBUG_MODULE_<i>Xxx</i> values, see Dbgeng.h.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>@#SymbolType</p>
+</td>
+<td>
+<p>USHORT</p>
+</td>
+<td>
+<p>The symbol type. For a list of the DEBUG_SYMTYPE_<i>Xxx</i> values, see Dbgeng.h.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>These aliases are all replaced before <i>CommandString</i> is executed for each module and before any other parsing occurs. These aliases are case sensitive. You must add a space before the alias and a space after it, even if the alias is enclosed in parentheses. If you use C++ expression syntax, you must reference these aliases as @@( @#<i>alias</i>). </p>
+<p>These aliases are available only during the lifetime of the call to <b>!for_each_module</b>. Do not confuse them with pseudo-registers, fixed-name aliases, or user-named aliases.</p>
+</dd>
+<dt><a id="_______-_______"></a>       -?      </dt>
+<dd>
+<p>Displays some Help text for this extension in the <a href="debugger_command_window.htm">Debugger Command window</a>.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p>
+          Windows 2000
+         </p>
+</td>
+<td>
+<p>
+          Ext.dll
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+          Windows XP and later
+         </p>
+</td>
+<td>
+<p>
+          Ext.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about how to define and use aliases as shortcuts for entering character strings (including use of the ${ } token), see <a href="using_aliases.htm">Using Aliases</a>.</p>
+<h2>Remarks</h2>
+<p>If you do not specify any arguments, the <b>!for_each_module</b> extension displays general information about the loaded modules. This information is similar to the information that the following command shows.</p>
+<pre class="syntax" xml:space="preserve"><code>!for_each_module .echo @#ModuleIndex : @#Base @#End @#ModuleName @#ImageName  @#LoadedImageName</code></pre>
+<p>For more information about loaded and unloaded modules, use the <a href="lm__list_loaded_modules_.htm"><b>lm (List Loaded Modules)</b></a> command.</p>
+<p>If you enable verbose debugger output, the debugger displays the total number of loaded and unloaded modules when the extension is called, and the debugger displays detailed information about each module (including the values of each available alias) before <i>CommandString</i> is executed for that module.</p>
+<p>The following examples show how to use the <b>!for_each_module</b> extension. The following commands display the global debug flags.</p>
+<pre class="syntax" xml:space="preserve"><code>!for_each_module x ${@#ModuleName}!*Debug*Flag*
+!for_each_module x ${@#ModuleName}!g*Debug*</code></pre>
+<p>The following command checks for binary corruption in every loaded module, by using the <a href="_chkimg.htm"><b>!chkimg</b></a> extension:</p>
+<pre class="syntax" xml:space="preserve"><code>!for_each_module !chkimg @#ModuleName</code></pre>
+<p>The following command searches for the pattern "MZ" in every loaded image.</p>
+<pre class="syntax" xml:space="preserve"><code>!for_each_module s-a @#Base @#End "MZ"</code></pre>
+<p>The following example demonstrates the use of @#FileVersion and @#ProductVersion for each module name:</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; !for_each_module .echo @#ModuleName fver = @#FileVersion pver = @#ProductVersion 
+USER32 fver = 6.0.6000.16438 (vista_gdr.070214-1610) pver = 6.0.6000.16438
+kernel32 fver = 6.0.6000.16386 (vista_rtm.061101-2205) pver = 6.0.6000.16386
+ntdll fver = 6.0.6000.16386 (vista_rtm.061101-2205) pver = 6.0.6000.16386
+notepad fver = 6.0.6000.16386 (vista_rtm.061101-2205) pver = 6.0.6000.16386
+WINSPOOL fver = 6.0.6000.16386 (vista_rtm.061101-2205) pver = 6.0.6000.16386
+COMCTL32 fver = 6.10 (vista_rtm.061101-2205) pver = 6.0.6000.16386
+SHLWAPI fver = 6.0.6000.16386 (vista_rtm.061101-2205) pver = 6.0.6000.16386
+msvcrt fver = 7.0.6000.16386 (vista_rtm.061101-2205) pver = 7.0.6000.16386
+GDI32 fver = 6.0.6000.16386 (vista_rtm.061101-2205) pver = 6.0.6000.16386
+RPCRT4 fver = 6.0.6000.16525 (vista_gdr.070716-1600) pver = 6.0.6000.16525
+SHELL32 fver = 6.0.6000.16513 (vista_gdr.070626-1505) pver = 6.0.6000.16513
+ole32 fver = 6.0.6000.16386 (vista_rtm.061101-2205) pver = 6.0.6000.16386
+ADVAPI32 fver = 6.0.6000.16386 (vista_rtm.061101-2205) pver = 6.0.6000.16386
+COMDLG32 fver = 6.0.6000.16386 (vista_rtm.061101-2205) pver = 6.0.6000.16386</code></pre>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!for_each_module%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,765 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !heap extension displays heap usage information, controls breakpoints in the heap manager, detects leaked heap blocks, searches for heap blocks, or displays page heap information."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!heap</title>
+
+<meta name="MS-HAID" content="r25_exts_general_He_6f575a41-220b-4f5d-b82b-a4d7ed3a79bf.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._heap"></a>!heap</h1>
+</div>
+<p></p>
+<p>The <b>!heap</b> extension displays heap usage information, controls breakpoints in the heap manager, detects leaked heap blocks, searches for heap blocks, or displays page heap information.   </p>
+<p>This extension supports the segment heap and the NT heap. Use !heap with no parameter to list all heaps and their type.</p>
+<pre class="syntax"><b>!heap </b>[<i>HeapOptions</i>]<b> </b>[<i>ValidationOptions</i>]<b> </b>[<i>Heap</i>] 
+<b>!heap -b </b>[{<b>alloc</b>|<b>realloc</b>|<b>free</b>} [<i>Tag</i>]]<b> </b>[<i>Heap</i> | <i>BreakAddress</i>] 
+<b>!heap -B </b>{<b>alloc</b>|<b>realloc</b>|<b>free</b>}<b> </b>[<i>Heap</i> | <i>BreakAddress</i>] 
+<b>!heap -l</b> 
+<b>!heap -s </b>[<i>SummaryOptions</i>]<b> </b>[<i>StatHeapAddress</i>] 
+<b>!heap -i </b><i>HeapAddress</i>
+<b>!heap -x </b>[<b>-v</b>]<b> </b><i>Address</i> 
+<b>!heap -p </b>[<i>PageHeapOptions</i>] 
+<b>!heap -srch </b>[<i>Size</i>]<b> </b><i>Pattern</i>
+<b>!heap -flt </b><i>FilterOptions</i>
+<b>!heap -stat </b>[<b>-h</b> <i>Handle</i> [<b>-grp</b> <i>GroupBy</i> [<i>MaxDisplay</i>]]]
+<b>!heap </b>[<b>-p</b>]<b> -?</b>
+<b>!heap -triage [</b><i>Handle</i><b> | </b><i>Address</i><b>]</b> 
+</pre>
+<h2><a id="Segment_and_NT_Heap_Parameters"></a><a id="segment_and_nt_heap_parameters"></a><a id="SEGMENT_AND_NT_HEAP_PARAMETERS"></a>Segment and NT Heap Parameters</h2>
+<p>These parameters work with Segment and NT heaps.</p>
+<p></p>
+<dl>
+<dt><a id="_______-s______"></a><a id="_______-S______"></a>       <b>-s</b>      </dt>
+<dd>
+<p>  Specifies that summary information is being requested.  If <i>SummaryOptions</i> and <i>StatHeapAddress</i> are omitted, then summary information is displayed for all heaps associated with the current process.    </p>
+</dd>
+<dt><a id="_______SummaryOptions______"></a><a id="_______summaryoptions______"></a><a id="_______SUMMARYOPTIONS______"></a>       <i>SummaryOptions</i>      </dt>
+<dd>
+<p>  Can be any combination of the following options. The <i>SummaryOptions</i> are not case-sensitive. Type !heap -s -? for additional information.</p>
+<table>
+<tr>
+<th>Option</th>
+<th>Effect</th>
+</tr>
+<tr>
+<td>
+<p><b>-v</b></p>
+</td>
+<td>
+<p>Verifies all data blocks.  </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>-b</b><b> </b><i>BucketSize</i></p>
+</td>
+<td>
+<p>Specifies the bucket size.  The default is 1024 bits.  </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>-d</b><b> </b><i>DumpBlockSize</i></p>
+</td>
+<td>
+<p>Specifies the bucket size.  </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>-a</b></p>
+</td>
+<td>
+<p>Dumps all heap blocks.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>-c</b></p>
+</td>
+<td>
+<p>Specifies that the contents of each block should be displayed.  </p>
+</td>
+</tr>
+</table>
+<p> </p>
+</dd>
+<dt><a id="_______-triage__Handle___Address___"></a><a id="_______-triage__handle___address___"></a><a id="_______-TRIAGE__HANDLE___ADDRESS___"></a>       <b>-triage [</b><i>Handle </i><b>| </b><i>Address</i><b>] </b> </dt>
+<dd>
+<p>
+        Causes the debugger to automatically search for failures in a process's heaps. If a heap handle is specified as an argument, that heap is            examined; otherwise, all the heaps are searched for one            that contains the given address, and if one is found, it is examined. Using <b>-triage</b> is the only way to validate low-fragmentation heap (LFH) corruption.</p>
+</dd>
+<dt><a id="_______-x_-v_"></a><a id="_______-X_-V_"></a>       <b>-x</b><b> </b>[<b>-v</b>] </dt>
+<dd>
+<p>Causes the debugger to search for the heap block containing the specified address. If -v is added, the command will search the entire virtual memory space of the current process for pointers to this heap block.</p>
+</dd>
+<dt><a id="_______-l______"></a><a id="_______-L______"></a>       <b>-l</b>      </dt>
+<dd>
+<p>  Causes the debugger to detect leaked heap blocks.</p>
+</dd>
+<dt><a id="_______-i________Address______-h_HeapAddress______"></a><a id="_______-i________address______-h_heapaddress______"></a><a id="_______-I________ADDRESS______-H_HEAPADDRESS______"></a>       <b>-i</b><b>        </b><i>Address</i><b>      -h </b><i>HeapAddress</i>      </dt>
+<dd>
+<p>
+         Displays information about the specified <i>Heap</i>.    </p>
+</dd>
+<dt><a id="_______Address______"></a><a id="_______address______"></a><a id="_______ADDRESS______"></a>       <i>Address</i>      </dt>
+<dd>
+<p>Specifies the address to search for.</p>
+</dd>
+<dt><a id="_______-_______"></a>       <b>-?</b>      </dt>
+<dd>
+<p>Displays some brief Help text for this extension in the Debugger Command window.  Use <b>!heap -?</b> for generic help, and <b>!heap -p -?</b> for page heap help. </p>
+</dd>
+</dl>
+<h2><a id="ddk__heap_dbg"></a><a id="DDK__HEAP_DBG"></a>NT Heap Parameters</h2>
+<p>These parameters work only with the NT Heap.</p>
+<p></p>
+<dl>
+<dt><a id="_______HeapOptions______"></a><a id="_______heapoptions______"></a><a id="_______HEAPOPTIONS______"></a>       <i>HeapOptions</i>      </dt>
+<dd>
+<p>Can be any combination of the following options. The <i>HeapOptions</i> values are case-sensitive.</p>
+<table>
+<tr>
+<th>Option</th>
+<th>Effect</th>
+</tr>
+<tr>
+<td>
+<p><b>-v</b></p>
+</td>
+<td>
+<p>Causes the debugger to validate the specified heap.</p>
+<div class="alert"><b>Note</b>  This option does not detect low fragmentation heap (LFH) corruption. Use <b>-triage</b> instead.</div>
+<div> </div>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>-a</b></p>
+</td>
+<td>
+<p>Causes the display to include all information for the specified heap.  Size, in this case, is rounded up to the heap granularity. (Running <b>!heap</b> with the <b>-a</b> option is equivalent to running it with the three options <b>-h -f -m</b>, which can take a long time.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>-h</b></p>
+</td>
+<td>
+<p>Causes the display to include all  non-LFH entries for the specified heap.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>-hl</b></p>
+</td>
+<td>
+<p>Causes the display to include all the entries for the specified heap(s), including LFH entries.
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>-f</b></p>
+</td>
+<td>
+<p>Causes the display to include all the free list entries for the specified heap.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>-m</b></p>
+</td>
+<td>
+<p>Causes the display to include all the segment entries for the specified heap.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>-t</b></p>
+</td>
+<td>
+<p>Causes the display to include the tag information for the specified heap.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>-T</b></p>
+</td>
+<td>
+<p>Causes the display to include the pseudo-tag entries for the specified heap.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>-g</b></p>
+</td>
+<td>
+<p>Causes the display to include the global tag information. Global tags are associated with each untagged allocation.  </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>-s</b></p>
+</td>
+<td>
+<p>Causes the display to include summary information for the specified heap.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>-k</b></p>
+</td>
+<td>
+<p>(x86-based targets only)  Causes the display to include the stack backtrace associated with each entry.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+</dd>
+<dt><a id="_______ValidationOptions______"></a><a id="_______validationoptions______"></a><a id="_______VALIDATIONOPTIONS______"></a>       <i>ValidationOptions</i>      </dt>
+<dd>
+<p>Can be any single one of the following options. The <i>ValidationOptions</i> are case-sensitive.</p>
+<table>
+<tr>
+<th>Option</th>
+<th>Effect</th>
+</tr>
+<tr>
+<td>
+<p><b>-D</b></p>
+</td>
+<td>
+<p>Disables validate-on-call for the specified heap.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>-E</b></p>
+</td>
+<td>
+<p>Enables validate-on-call for the specified heap.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>-d</b></p>
+</td>
+<td>
+<p>Disables heap checking for the specified heap.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>-e</b></p>
+</td>
+<td>
+<p>Enables heap checking for the specified heap.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+</dd>
+<dt><a id="_______-i________Heap_Address______or_HeapAddress______"></a><a id="_______-i________heap_address______or_heapaddress______"></a><a id="_______-I________HEAP_ADDRESS______OR_HEAPADDRESS______"></a>       <b>-i</b><b>        </b><i>Heap</i><b> </b><i>Address</i><b>      or </b><i>HeapAddress</i>      </dt>
+<dd>
+<p>
+         Displays information about the specified <i>Heap</i>.    </p>
+</dd>
+<dt><a id="_______BreakAddress______"></a><a id="_______breakaddress______"></a><a id="_______BREAKADDRESS______"></a>       <i>BreakAddress</i>      </dt>
+<dd>
+<p>Specifies the address of a block where a breakpoint is to be set or removed.</p>
+</dd>
+<dt><a id="_______-b______"></a><a id="_______-B______"></a>       <b>-b</b>      </dt>
+<dd>
+<p>Causes the debugger to create a conditional breakpoint in the heap manager. The <b>-b</b> option can be followed by <b>alloc</b>, <b>realloc</b>, or <b>free</b>; this specifies whether the breakpoint will be activated by allocating, reallocating, or freeing memory. If <i>BreakAddress</i> is used to specify the address of the block, the breakpoint type can be omitted. If <i>Heap</i> is used to specify the heap address or heap index, the type must be included, as well as the <i>Tag</i> parameter.</p>
+</dd>
+<dt><a id="_______Tag______"></a><a id="_______tag______"></a><a id="_______TAG______"></a>       <i>Tag</i>      </dt>
+<dd>
+<p>Specifies the tag name within the heap.</p>
+</dd>
+<dt><a id="_______-B______"></a><a id="_______-b______"></a>       <b>-B</b>      </dt>
+<dd>
+<p>Causes the debugger to remove a conditional breakpoint from the heap manager. The breakpoint type (<b>alloc</b>, <b>realloc</b>, or <b>free</b>) must be specified, and must be the same as that used with the <b>-b</b> option.   </p>
+</dd>
+<dt><a id="_______StatHeapAddress______"></a><a id="_______statheapaddress______"></a><a id="_______STATHEAPADDRESS______"></a>       <i>StatHeapAddress</i>      </dt>
+<dd>
+<p>Specifies the address of the heap. If this is 0 or omitted, all heaps associated with the current process are displayed.  </p>
+</dd>
+<dt><a id="_______-p______"></a><a id="_______-P______"></a>       <b>-p</b>      </dt>
+<dd>
+<p>Specifies that page heap information is being requested. If this is used without any <i>PageHeapOptions</i>, all page heaps will be displayed.</p>
+</dd>
+<dt><a id="_______PageHeapOptions______"></a><a id="_______pageheapoptions______"></a><a id="_______PAGEHEAPOPTIONS______"></a>       <i>PageHeapOptions</i>      </dt>
+<dd>
+<p>Can be any single one of the following options. The <i>PageHeapOptions</i> are case-sensitive.  If no options are specified, then all possible page heap handles will be displayed.  </p>
+<table>
+<tr>
+<th>Option</th>
+<th>Effect</th>
+</tr>
+<tr>
+<td>
+<p><b>-h</b><b> </b><i>Handle</i></p>
+</td>
+<td>
+<p>Causes the debugger to display detailed information about a page heap with handle <i>Handle</i>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>-a</b><b> </b><i>Address</i></p>
+</td>
+<td>
+<p>Causes the debugger to find the page heap whose block  contains <i>Address</i>. Full details of how this address relates to full-page heap blocks will be included, such as whether this address is part of a page heap, its offset inside the block, and whether the block is allocated or was freed.  Stack traces are included whenever available.  When using this option, size is displayed in multiples of the heap allocation granularity.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>-t</b>[<b>c</b>|<b>s</b>]<b> </b>[<i>Traces</i>]</p>
+</td>
+<td>
+<p>Causes the debugger to display the collected traces of the heavy heap users. <i>Traces</i> specifies the number of traces to display; the default is four. If there are more traces than the specified number, the earliest traces are displayed. If <b>-t</b> or <b>-tc</b> is used, the traces are sorted by count usage. If <b>-ts</b> is used, the traces are sorted by size. (The <b>-tc</b> and <b>-ts</b> options are supported in Windows XP only; the <b>-t</b> option is supported only in Windows XP and earlier versions of Windows.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>-fi</b><b> </b>[<i>Traces</i>]</p>
+</td>
+<td>
+<p>  Causes the debugger to display the most recent fault injection traces. <i>Traces</i> specifies the quantity to be displayed; the default is 4.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>-all</b></p>
+</td>
+<td>
+<p>Causes the debugger to display detailed information about all page heaps.  </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>-?</b></p>
+</td>
+<td>
+<p>Causes the debugger to display page heap help, including a diagram of heap blocks. (These diagrams can also be seen in the following Remarks section.)</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>Before you can use any <b>!heap -p</b> extension command, the page heap must be enabled for your target process. See details in the following Remarks section.</p>
+</dd>
+<dt><a id="_______-srch______"></a><a id="_______-SRCH______"></a>       <b>-srch</b>      </dt>
+<dd>
+<p>  Scans all heaps for the given pattern.</p>
+</dd>
+<dt><a id="_______Pattern______"></a><a id="_______pattern______"></a><a id="_______PATTERN______"></a>       <i>Pattern</i>      </dt>
+<dd>
+<p>Specifies a pattern for which to look.</p>
+</dd>
+<dt><a id="_______Size______"></a><a id="_______size______"></a><a id="_______SIZE______"></a>       <i>Size</i>      </dt>
+<dd>
+<p>Can be any single one of the following options. This specifies the size of the pattern.  The '-' is required.</p>
+<table>
+<tr>
+<th>Option</th>
+<th>Effect</th>
+</tr>
+<tr>
+<td>
+<p><b>-b</b></p>
+</td>
+<td>
+<p>The pattern is one BYTE in size.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>-w</b></p>
+</td>
+<td>
+<p>The pattern is one WORD in size.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>-d</b></p>
+</td>
+<td>
+<p>The pattern is one DWORD in size.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>-q</b></p>
+</td>
+<td>
+<p>The pattern is one QWORD in size.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>If none of the above are specified, then the pattern is assumed to be of the same size as the machine pointer.</p>
+</dd>
+<dt><a id="_______-flt______"></a><a id="_______-FLT______"></a>       <b>-flt</b>      </dt>
+<dd>
+<p>  Limits the display to include only heaps with the specified size or size range.</p>
+</dd>
+<dt><a id="_______FilterOptions______"></a><a id="_______filteroptions______"></a><a id="_______FILTEROPTIONS______"></a>       <i>FilterOptions</i>      </dt>
+<dd>
+<p>
+       Can be any single one of the following options. The <i>FilterOptions</i> are case-sensitive.</p>
+<table>
+<tr>
+<th>Option</th>
+<th>Effect</th>
+</tr>
+<tr>
+<td>
+<p><b>s</b><b> </b><i>Size</i></p>
+</td>
+<td>
+<p>Limits the display to include only heaps of the specified size.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>r</b><b> </b><i>SizeMin</i><b> </b><i>SizeMax</i></p>
+</td>
+<td>
+<p>Limits the display to include only heaps within the specified size range.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+</dd>
+<dt><a id="_______-stat______"></a><a id="_______-STAT______"></a>       <b>-stat</b>      </dt>
+<dd>
+<p>  Displays usage statistics for the specified heap.</p>
+</dd>
+<dt><a id="_______-h________Handle______"></a><a id="_______-h________handle______"></a><a id="_______-H________HANDLE______"></a>       <b>-h        </b><i>Handle</i>      </dt>
+<dd>
+<p>  Causes usage statistics for only the heap at <i>Handle</i> to be displayed.  If <i>Handle</i> is 0 or omitted, then usage statistics for all heaps are displayed.  </p>
+</dd>
+<dt><a id="_______-grp________GroupBy______"></a><a id="_______-grp________groupby______"></a><a id="_______-GRP________GROUPBY______"></a>       <b>-grp</b><b>        </b><i>GroupBy</i>      </dt>
+<dd>
+<p>Reorders the display as specified by <i>GroupBy</i>.  The options for <i>GroupBy</i> can be found in the following table.</p>
+<table>
+<tr>
+<th>Option</th>
+<th>Effect</th>
+</tr>
+<tr>
+<td>
+<p><b>A</b></p>
+</td>
+<td>
+<p>Displays the usage statistics according to allocation size.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>B</b></p>
+</td>
+<td>
+<p>Displays the usage statistics according to block count.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>S</b></p>
+</td>
+<td>
+<p>Displays the usage statistics according to the total size of each allocation.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+</dd>
+<dt><a id="_______MaxDisplay______"></a><a id="_______maxdisplay______"></a><a id="_______MAXDISPLAY______"></a>       <i>MaxDisplay</i>      </dt>
+<dd>
+<p>Limits the output to only <i>MaxDisplay</i> number of lines.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+<dl>
+<dt>
+          Ext.dll
+          </dt>
+<dt>Exts.dll
+          </dt>
+</dl>
+</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For information about heaps, see the Microsoft Windows SDK documentation, the Windows Driver Kit (WDK) documentation, and <i>Microsoft Windows Internals</i> by Mark Russinovich and David Solomon. (These resources may not be available in some languages 
+
+and countries.)
+</p>
+<h2>Remarks</h2>
+<p>This extension command can be used to perform a variety of tasks.</p>
+<p>The standard <b>!heap</b> command is used to display heap information for the current process. (This should be used only for user-mode processes. The <a href="_pool.htm"><b>!pool</b></a> extension command should be used for system processes.)</p>
+<p>The <b>!heap -b</b> and <b>!heap -B</b> commands are used to create and delete conditional breakpoints in the heap manager.</p>
+<p>The <b>!heap -l</b> command detects leaked heap blocks. It uses a garbage collector algorithm to detect all busy blocks from the heaps that are not referenced anywhere in the process address space. For huge applications, it can take a few minutes to complete. This command is only available in Windows XP and later versions of Windows.</p>
+<p>The <b>!heap -x</b> command searches for a heap block containing a given address. If the <b>-v</b> option is used, this command will additionally search the entire virtual memory space of the current process for pointers to this heap block. This command is only available in Windows XP and later versions of Windows.</p>
+<p>The <b>!heap -p</b> command displays various forms of page heap information.  Before using <b>!heap -p</b>, you must enable the page heap for the target process. This is done through the Global Flags (gflags.exe) utility. To do this, start the utility, fill in the name of the target application in the <b>Image File Name</b> text box, select <b>Image File Options</b> and <b>Enable page heap</b>, and click <b>Apply</b>. Alternatively, you can start the Global Flags utility from a Command Prompt window by typing <b>gflags /i </b><i>xxx.exe</i><b> +hpa</b>, where <i>xxx.exe</i> is the name of the target application.</p>
+<p>The <b>!heap -p -t[c|s]</b> commands are not supported beyond Windows XP.  Use the <a href="umdh.htm">UMDH</a> tool provided with the debugger package to obtain similar results.</p>
+<p>The <b>!heap -srch</b> command displays those heap entries that contain a certain specified pattern.  </p>
+<p>The <b>!heap -flt</b> command limits the display to only heap allocations of a specified size.  </p>
+<p>The <b>!heap -stat</b> command displays heap usage statistics.  </p>
+<p>Here is an example of the standard <b>!heap</b> command:</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; !ntsdexts.heap -a
+Index   Address  Name      Debugging options enabled
+  1:   00250000 
+    Segment at 00250000 to 00350000 (00056000 bytes committed)
+    Flags:               50000062
+    ForceFlags:          40000060
+    Granularity:         8 bytes
+    Segment Reserve:     00100000
+    Segment Commit:      00004000
+    DeCommit Block Thres:00000400
+    DeCommit Total Thres:00002000
+    Total Free Size:     000003be
+    Max. Allocation Size:7ffddfff
+    Lock Variable at:    00250b54
+    Next TagIndex:       0012
+    Maximum TagIndex:    07ff
+    Tag Entries:         00350000
+    PsuedoTag Entries:   00250548
+    Virtual Alloc List:  00250050
+    UCR FreeList:        002504d8
+    128-bit bitmap of free lists
+    FreeList Usage:      00000014 00000000 00000000 00000000
+              Free    Free
+              List    List
+              #       Head      Blink      Flink
+    FreeList[ 00 ] at 002500b8: 002a4378 . 002a4378
+                                0x02 - HEAP_ENTRY_EXTRA_PRESENT
+                                0x04 - HEAP_ENTRY_FILL_PATTERN
+        Entry     Prev    Cur   0x10 - HEAP_ENTRY_LAST_ENTRY
+
+Address   Size    Size  flags
+002a4370: 00098 . 01c90 [14] - free
+    FreeList[ 02 ] at 002500c8: 0025cb30 . 002527b8
+002527b0: 00058 . 00010 [04] - free
+0025cb28: 00088 . 00010 [04] - free
+    FreeList[ 04 ] at 002500d8: 00269a08 . 0026e530
+0026e528: 00038 . 00020 [04] - free
+0026a4d0: 00038 . 00020 [06] - free
+0026f9b8: 00038 . 00020 [04] - free
+0025cda0: 00030 . 00020 [06] - free
+00272660: 00038 . 00020 [04] - free
+0026ab60: 00038 . 00020 [06] - free
+00269f20: 00038 . 00020 [06] - free
+00299818: 00038 . 00020 [04] - free
+0026c028: 00038 . 00020 [06] - free
+00269a00: 00038 . 00020 [46] - free
+ 
+    Segment00 at 00250b90:
+Flags:           00000000
+Base:            00250000
+First Entry:     00250bc8
+Last Entry:      00350000
+Total Pages:     00000080
+Total UnCommit:  00000055
+Largest UnCommit:000aa000
+UnCommitted Ranges: (1)
+    002a6000: 000aa000
+
+    Heap entries for Segment00 in Heap 250000
+                        0x01 - HEAP_ENTRY_BUSY            
+                        0x02 - HEAP_ENTRY_EXTRA_PRESENT   
+                        0x04 - HEAP_ENTRY_FILL_PATTERN    
+                        0x08 - HEAP_ENTRY_VIRTUAL_ALLOC   
+                        0x10 - HEAP_ENTRY_LAST_ENTRY      
+                        0x20 - HEAP_ENTRY_SETTABLE_FLAG1  
+                        0x40 - HEAP_ENTRY_SETTABLE_FLAG2  
+Entry     Prev    Cur   0x80 - HEAP_ENTRY_SETTABLE_FLAG3  
+
+Address   Size    Size  flags       (Bytes used)    (Tag name)
+00250000: 00000 . 00b90 [01] - busy (b90)
+00250b90: 00b90 . 00038 [01] - busy (38) 
+00250bc8: 00038 . 00040 [07] - busy (24), tail fill (NTDLL!LDR Database)
+00250c08: 00040 . 00060 [07] - busy (48), tail fill (NTDLL!LDR Database)
+00250c68: 00060 . 00028 [07] - busy (10), tail fill (NTDLL!LDR Database)
+00250c90: 00028 . 00060 [07] - busy (48), tail fill (NTDLL!LDR Database)
+00250cf0: 00060 . 00050 [07] - busy (38), tail fill (Objects=  80)
+00250d40: 00050 . 00048 [07] - busy (2e), tail fill (NTDLL!LDR Database)
+00250d88: 00048 . 00c10 [07] - busy (bf4), tail fill (Objects&gt;1024)
+00251998: 00c10 . 00030 [07] - busy (12), tail fill (NTDLL!LDR Database)
+...
+002525c0: 00030 . 00060 [07] - busy (48), tail fill (NTDLL!LDR Database)
+00252620: 00060 . 00050 [07] - busy (38), tail fill (NTDLL!LDR Database)
+00252670: 00050 . 00040 [07] - busy (22), tail fill (NTDLL!CSRSS Client)
+002526b0: 00040 . 00040 [07] - busy (24), tail fill (Objects=  64)
+002526f0: 00040 . 00040 [07] - busy (24), tail fill (Objects=  64)
+00252730: 00040 . 00028 [07] - busy (10), tail fill (Objects=  40)
+00252758: 00028 . 00058 [07] - busy (3c), tail fill (Objects=  88)
+002527b0: 00058 . 00010 [04] free fill
+002527c0: 00010 . 00058 [07] - busy (3c), tail fill (NTDLL!LDR Database)
+00252818: 00058 . 002d0 [07] - busy (2b8), tail fill (Objects= 720)
+00252ae8: 002d0 . 00330 [07] - busy (314), tail fill (Objects= 816)
+00252e18: 00330 . 00330 [07] - busy (314), tail fill (Objects= 816)
+00253148: 00330 . 002a8 [07] - busy (28c), tail fill (NTDLL!LocalAtom)
+002533f0: 002a8 . 00030 [07] - busy (18), tail fill (NTDLL!LocalAtom)
+00253420: 00030 . 00030 [07] - busy (18), tail fill (NTDLL!LocalAtom)
+00253450: 00030 . 00098 [07] - busy (7c), tail fill (BASEDLL!LMEM)
+002534e8: 00098 . 00060 [07] - busy (44), tail fill (BASEDLL!TMP)
+00253548: 00060 . 00020 [07] - busy (1), tail fill (Objects=  32)
+00253568: 00020 . 00028 [07] - busy (10), tail fill (Objects=  40)
+00253590: 00028 . 00030 [07] - busy (16), tail fill (Objects=  48)
+...
+0025ccb8: 00038 . 00060 [07] - busy (48), tail fill (NTDLL!LDR Database)
+0025cd18: 00060 . 00058 [07] - busy (3c), tail fill (NTDLL!LDR Database)
+0025cd70: 00058 . 00030 [07] - busy (18), tail fill (NTDLL!LDR Database)
+0025cda0: 00030 . 00020 [06] free fill (NTDLL!Temporary)
+0025cdc0: 00020 . 00258 [07] - busy (23c), tail fill (Objects= 600)
+0025d018: 00258 . 01018 [07] - busy (1000), tail fill (Objects&gt;1024)
+0025e030: 01018 . 00060 [07] - busy (48), tail fill (NTDLL!LDR Database)
+...
+002a4190: 00028 . 00118 [07] - busy (100), tail fill (BASEDLL!GMEM)
+002a42a8: 00118 . 00030 [07] - busy (18), tail fill (Objects=  48)
+002a42d8: 00030 . 00098 [07] - busy (7c), tail fill (Objects= 152)
+002a4370: 00098 . 01c90 [14] free fill
+002a6000:      000aa000      - uncommitted bytes.</code></pre>
+<p>Here is an example of the <b>!heap -l</b> command:</p>
+<pre class="syntax" xml:space="preserve"><code>1:0:011&gt; !heap -l
+1:Heap 00170000
+Heap 00280000
+Heap 00520000
+Heap 00b50000
+Heap 00c60000
+Heap 01420000
+Heap 01550000
+Heap 016d0000
+Heap 019b0000
+Heap 01b40000
+Scanning VM ...
+Entry     User      Heap      Segment       Size  PrevSize  Flags
+----------------------------------------------------------------------
+001b2958  001b2960  00170000  00000000        40        18  busy extra
+001b9cb0  001b9cb8  00170000  00000000        80       300  busy extra
+001ba208  001ba210  00170000  00000000        80        78  busy extra
+001cbc90  001cbc98  00170000  00000000        e0        48  busy extra
+001cbd70  001cbd78  00170000  00000000        d8        e0  busy extra
+001cbe90  001cbe98  00170000  00000000        68        48  busy extra
+001cbef8  001cbf00  00170000  00000000        58        68  busy extra
+001cc078  001cc080  00170000  00000000        f8       128  busy extra
+001cc360  001cc368  00170000  00000000        80        50  busy extra
+001cc3e0  001cc3e8  00170000  00000000        58        80  busy extra
+001fe550  001fe558  00170000  00000000       150       278  busy extra
+001fe6e8  001fe6f0  00170000  00000000        48        48  busy extra
+002057a8  002057b0  00170000  00000000        58        58  busy extra
+00205800  00205808  00170000  00000000        48        58  busy extra
+002058b8  002058c0  00170000  00000000        58        70  busy extra
+00205910  00205918  00170000  00000000        48        58  busy extra
+00205958  00205960  00170000  00000000        90        48  busy extra
+00246970  00246978  00170000  00000000        60        88  busy extra
+00251168  00251170  00170000  00000000        78        d0  busy extra user_flag
+00527730  00527738  00520000  00000000        40        40  busy extra
+00527920  00527928  00520000  00000000        40        80  busy extra
+21 leaks detected.</code></pre>
+<p>The table in this example contains all 21 leaks found.</p>
+<p>Here is an example of the <b>!heap -x</b> command:</p>
+<pre class="syntax" xml:space="preserve"><code>0:011&gt; !heap 002057b8 -x
+Entry     User      Heap      Segment       Size  PrevSize  Flags
+----------------------------------------------------------------------
+002057a8  002057b0  00170000  00170640        58        58  busy extra</code></pre>
+<p>Here is an example of the <b>!heap -x -v</b> command:</p>
+<p></p>
+<pre class="syntax" xml:space="preserve"><code>1:0:011&gt; !heap 002057b8 -x -v
+1:Entry     User      Heap      Segment       Size  PrevSize  Flags
+----------------------------------------------------------------------
+002057a8  002057b0  00170000  00170640        58        58  busy extra
+
+Search VM for address range 002057a8 - 002057ff : 00205990 (002057d0),</code></pre>
+<p>In this example, there is a pointer to this heap block at address 0x00205990.</p>
+<p>Here is an example of the <b>!heap -flt s</b> command:</p>
+<pre class="syntax" xml:space="preserve"><code>0:001&gt;!heap -flt s 0x50</code></pre>
+<p>This will display all of the allocations of size 0x50.</p>
+<p>Here is an example of the <b>!heap -flt r</b> command:</p>
+<pre class="syntax" xml:space="preserve"><code>0:001&gt;!heap -flt r 0x50 0x80</code></pre>
+<p>This will display each allocation whose size is between 0x50 and 0x7F.  </p>
+<p>Here is an example of the <b>!heap -srch</b> command.</p>
+<pre class="syntax" xml:space="preserve"><code>0:001&gt; !heap -srch 77176934
+    _HEAP @ 00090000
+   in HEAP_ENTRY: Size : Prev Flags - UserPtr UserSize - state
+        00099A48: 0018 : 0005 [01] - 00099A50 (000000B8) - (busy)
+          ole32!CALLFRAME_CACHE&lt;INTERFACE_HELPER_CLSID&gt;::`vftable'
+    _HEAP @ 00090000
+   in HEAP_ENTRY: Size : Prev Flags - UserPtr UserSize - state
+        00099B58: 0018 : 0005 [01] - 00099B60 (000000B8) - (busy)
+          ole32!CALLFRAME_CACHE&lt;INTERFACE_HELPER_CLSID&gt;::`vftable'</code></pre>
+<p>The following diagrams show the arrangement of heap blocks. </p>
+<p>
+     Light page heap block -- allocated:
+    </p>
+<pre class="syntax" xml:space="preserve"><code> +-----+---------------+---+                                  
+ |     |               |   |                                  
+ +-----+---------------+---+                                  
+    ^         ^          ^                                    
+    |         |          8 suffix bytes (filled with 0xA0)    
+    |         User allocation (filled with E0 if zeroing not requested) 
+    Block header (starts with 0xABCDAAAA and ends with 0xDCBAAAAA) </code></pre>
+<p>
+     Light page heap block -- freed:</p>
+<pre class="syntax" xml:space="preserve"><code> +-----+---------------+---+                                  
+ |     |               |   |                                  
+ +-----+---------------+---+                                  
+    ^         ^          ^                                    
+    |         |          8 suffix bytes (filled with 0xA0)    
+    |         User allocation (filled with F0 bytes)          
+    Block header (starts with 0xABCDAAA9 and ends with 0xDCBAAA9) </code></pre>
+<p>
+     Full page heap block -- allocated:
+    </p>
+<pre class="syntax" xml:space="preserve"><code> +-----+---------+---+-------                                 
+ |     |         |   |  ... N/A page                          
+ +-----+---------+---+-------                                 
+    ^       ^      ^                                          
+    |       |      0-7 suffix bytes (filled with 0xD0)        
+    |       User allocation (if zeroing not requested, filled   
+            with E0 in Windows 2000 and C0 in Windows XP)       
+    Block header (starts with 0xABCDBBBB and ends with 0xDCBABBBB) </code></pre>
+<p>
+     Full page heap block -- freed:
+    </p>
+<pre class="syntax" xml:space="preserve"><code> +-----+---------+---+-------                                 
+ |     |         |   |  ... N/A page                          
+ +-----+---------+---+-------                                 
+    ^       ^      ^                                          
+    |       |      0-7 suffix bytes (filled with 0xD0)        
+    |       User allocation (filled with F0 bytes)            
+    Block header (starts with 0xABCDBBA and ends with 0xDCBABBBA) </code></pre>
+<p>To see the stack trace of the allocation or the freeing of a heap block or full page heap block, use <a href="dt__display_type_.htm"><b>dt DPH_BLOCK_INFORMATION</b></a> with the header address, followed by <a href="dds__dps__dqs__display_words_and_symbols_.htm"><b>dds</b></a> with the block's <b>StackTrace</b> field.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!heap%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,85 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Scopes and Symbol Groups"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Scopes and Symbol Groups</title>
+
+<meta name="MS-HAID" content="Engine_DG_8c597bf6-d707-45da-94c9-c88a4199c329.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.scopes_and_symbol_groups"></a>Scopes and Symbol Groups</h1>
+</div>
+<h2><a id="ddk_scopes_and_symbol_groups_dbx"></a><a id="DDK_SCOPES_AND_SYMBOL_GROUPS_DBX"></a></h2>
+<p>A <i>symbol group</i> contains a set of symbols for efficient manipulation as a group.  A symbol group can be created and populated manually or can be automatically generated and updated based on symbols in lexical scopes, such as local variables and function arguments.  The interface <a href="idebugsymbolgroup.htm">IDebugSymbolGroup</a> is used to represent a symbol group.</p>
+<p>There are two ways to create a symbol group.  An empty symbol group is returned by <a href="createsymbolgroup.htm"><b>CreateSymbolGroup</b></a>, and the symbol group for the current lexical scope is returned by <a href="getscopesymbolgroup.htm"><b>GetScopeSymbolGroup</b></a>.</p>
+<div class="alert"><b>Note</b>  
+       The symbol group generated from the current scope is a snapshot of the local variables.  If any execution occurs in the target, the symbols may no longer be accurate.  Also, if the current scope changes, the symbol group will no longer represent the <i>current</i> scope (because it will continue to represent the scope for which it was created).</div>
+<div> </div>
+<p>Symbols can be added to a symbol group using <a href="addsymbol.htm"><b>AddSymbol</b></a>, and removed using <a href="removesymbolbyindex.htm"><b>RemoveSymbolByIndex</b></a> or <a href="removesymbolbyname.htm"><b>RemoveSymbolByName</b></a>.  The method <a href="outputastype.htm"><b>OutputAsType</b></a> tells the debugger to use a different symbol type when handling a symbol's data.  </p>
+<div class="alert"><b>Note</b>  
+       The values for scoped symbols may not be accurate.  In particular, the machine architecture and compiler optimizations may prevent the debugger from accurately determining a symbol's value.</div>
+<div> </div>
+<p>The <i>symbol entry information</i> is a description of a symbol, including its location and its type.  To find this information for a symbol in a module, use the <a href="getsymbolentryinformation.htm"><b>IDebugSymbols3::GetSymbolEntryInformation</b></a>.  To find this information for a symbol in a symbol group, use <a href="getsymbolentryinformation2.htm"><b>IDebugSymbolGroup2::GetSymbolEntryInformation</b></a>.  See <a href="debug_symbol_entry.htm"><b>DEBUG_SYMBOL_ENTRY</b></a> for details of the symbol entry information.</p>
+<p>The following methods return information about a symbol in a symbol group:</p>
+<ul>
+<li>
+<p><a href="getsymbolname.htm"><b>GetSymbolName</b></a> returns the name of the symbol.</p>
+</li>
+<li>
+<p><a href="getsymboloffset.htm"><b>GetSymbolOffset</b></a> returns the absolute address in the target's virtual address space of the symbol, if the symbol has an absolute address.</p>
+</li>
+<li>
+<p><a href="getsymbolregister.htm"><b>GetSymbolRegister</b></a> returns the register containing the symbol, if the symbol is contained in a register.</p>
+</li>
+<li>
+<p><a href="getsymbolsize.htm"><b>GetSymbolSize</b></a> returns the size of the data for the symbol.</p>
+</li>
+<li>
+<p><a href="getsymboltypename.htm"><b>GetSymbolTypeName</b></a> returns the name of the symbol's type.</p>
+</li>
+<li>
+<p><a href="getsymbolvaluetext.htm"><b>GetSymbolValueText</b></a> returns the value of the symbol as a string.</p>
+</li>
+</ul>
+<p>If a symbol is stored in a register or in a memory location known to the debugger engine, its value can be changed using <a href="writesymbol.htm"><b>WriteSymbol</b></a>.</p>
+<p>A symbol is a <i>parent symbol</i> if it contains other symbols. For example, a structure contains its members.  A symbol is a <i>child symbol</i> if it is contained in another symbol.  A symbol may be both a parent and child symbol.  Each symbol group has a flat structure and contains parent symbols and their children.  Each symbol has a <i>depth</i> -- symbols without parents in the symbol group have a depth of zero, and the depth of each child symbol is one greater than the depth of its parent.  The children of a parent symbol may or may not be present in the symbol group.  When the children are present in the symbol group, the parent symbol is referred to as <i>expanded</i>.  To add or remove the children of a symbol in a symbol group, use <a href="expandsymbol.htm"><b>ExpandSymbol</b></a>.</p>
+<p>The number of symbols in a symbol group is returned by <a href="getnumbersymbols.htm"><b>GetNumberSymbols</b></a>.  The <i>index</i> of a symbol in a symbol group is an identification number; the index ranges from zero to the number of symbols minus one.  Each time a symbol is added to or removed from a symbol group -- for example, by expanding a symbol -- the index of all the symbols in the symbol group may change.</p>
+<p>The symbol parameters, including information about parent-child relationships, can be found by using <a href="getsymbolparameters.htm"><b>GetSymbolParameters</b></a>. This method returns a <a href="debug_symbol_parameters.htm"><b>DEBUG_SYMBOL_PARAMETERS</b></a> structure.</p>
+<p>The symbols in a symbol group can be printed to the debugger's output stream using the method <a href="outputsymbols.htm"><b>OutputSymbols</b></a>.</p>
+<h3><a id="scopes"></a><a id="SCOPES"></a>Scopes</h3>
+<p>The <i>current scope</i>, or <i>current local context</i>, determines the local variables exposed by the debugger engine.  The scope has three components:</p>
+<ol>
+<li>
+<p>A stack frame.</p>
+</li>
+<li>
+<p>A current instruction.</p>
+</li>
+<li>
+<p>A register context. </p>
+</li>
+</ol>
+<p>If the stack frame is at the top of the call stack, the current instruction is the instruction that resulted in the last event.  Otherwise the current instruction is the function call which resulted in the next higher stack frame.</p>
+<p>The methods <a href="getscope.htm"><b>GetScope</b></a> and <a href="setscope.htm"><b>SetScope</b></a> can be used to get and set the current scope.  When an event occurs, the current scope is set to the scope of the event.  The current scope can be reset to the scope of the last event using <a href="resetscope.htm"><b>ResetScope</b></a>.</p>
+<h3><a id="thread_context"></a><a id="THREAD_CONTEXT"></a>Thread Context</h3>
+<p>The <i>thread context</i> is the state preserved by Windows when switching threads.  This is similar to the register context, except that there is some kernel-only processor state that is part of the register context but not the thread context.  This extra state is available as registers during kernel-mode debugging.</p>
+<p>The thread context is represented by the CONTEXT structure defined in ntddk.h.  This structure is platform-dependent and its interpretation depends on the effective processor type.  The methods <a href="getthreadcontext.htm"><b>GetThreadContext</b></a> and <a href="setthreadcontext.htm"><b>SetThreadContext</b></a> can be used to get and set the thread context.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Scopes and Symbol Groups%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

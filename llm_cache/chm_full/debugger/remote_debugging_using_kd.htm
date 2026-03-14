@@ -1,0 +1,51 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Remote debuggng involves two debuggers running at two different locations."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Remote Debugging Using KD</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.remote_debugging_using_kd"></a>Remote Debugging Using KD</h1>
+</div>
+<p>Remote debuggng involves two debuggers running at two different locations. The debugger that performs the debugging is called the <i>debugging server</i>. The second debugger, called the <i>debugging client</i>, controls the debugging session from a remote location. To establish a remote session, you must set up the debugging server first and then activate the debugging client.</p>
+<p>The code that is being debugged could be running on the same computer that is running the debugging server, or it could be running on a separate computer. If the debugging server is performing user-mode debugging, then the process that is being debugged can run on the same computer as the debugging server. If the debugging server is performing kernel-mode debugging, then the code being debugged would typcially run on a separate target computer.</p>
+<p>The following diagram illustrates a remote session where the debugging server, running on a host computer, is performing kernel-mode debugging of code that is running on a separate target computer.</p><img src="images/ClientServerTarget.png" alt="Diagram that shows remote, host, and target computers"/><p>There are several transport protocols you can use for a remote debugging connection: TCP, NPIPE, SPIPE, SSL, and COM Port. Suppose you have chosen to use TCP as the protocol and you have chosen to use KD as both the debugging client and the debugging server. You can use the following procedure to establish a remote kernel-mode debugging session:</p>
+<ol>
+<li> On  the host computer, open KD and establish a kernel-mode debugging session with a target computer. (See <a href="performing_kernel-mode_debugging_using_kd.htm">Performing Kernel-Mode Debugging Using KD</a>.)</li>
+<li>Break in by pressing CRTL-Break.</li>
+<li>
+<p>Enter the following command.</p><b>.server tcp:port=5005</b><div class="alert"><b>Note</b>  The port number 5005 is arbitrary. The port number is your choice.</div>
+<div> </div>
+</li>
+<li>
+<p>KD will respond with output similar to the following.</p>
+<pre class="syntax" xml:space="preserve"><code>Server started.  Client can connect with any of these command lines
+0: &lt;debugger&gt; -remote tcp:Port=5005,Server=YourHostComputer
+</code></pre>
+</li>
+<li>
+<p>On the remote computer, open a Command Prompt window, and enter the following command.</p><b>kd -remote tcp:Port=5005,Server=</b><i>YourHostComputer</i><p>where <i>YourHostComputer</i> is the name of your host computer, which is running the debugging server.</p>
+</li>
+</ol>
+<h2><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h2>
+<p> For complete information about launching KD (and establishing remote debugging) at the command line, see <a href="kd_command_line_options.htm"><b>KD Command-Line Options</b></a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Remote Debugging Using KD%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

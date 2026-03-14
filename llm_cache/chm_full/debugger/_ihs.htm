@@ -1,0 +1,102 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !ihs extension displays the interrupt history record for the specified processor, using program counter symbols."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!ihs</title>
+
+<meta name="MS-HAID" content="r27_exts_kernel_E_520ba4ba-72ab-48ee-931e-ab78ab1b981d.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._ihs"></a>!ihs</h1>
+</div>
+<p>The <b>!ihs</b> extension displays the interrupt history record for the specified processor, using program counter symbols. </p>
+<pre class="syntax"><b>!ihs </b><i>Processor</i> </pre>
+<div class="alert"><b>Important</b>  This command has been deprecated  in the Windows Debugger Version 10.0.14257 and later, and is no longer available.</div>
+<div> </div>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Processor______"></a><a id="_______processor______"></a><a id="_______PROCESSOR______"></a>       <i>Processor</i>      </dt>
+<dd>
+<p>Specifies a processor. If <i>Processor</i> is omitted, the current processor is used.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Windows 2000
+         </b></p>
+</td>
+<td>
+<p>Unavailable</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Kdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>This extension command can only be used with an Itanium target computer.</p>
+<h2>Remarks</h2>
+<p>To display the interrupt history record without using program counter symbols, use the <a href="_ih.htm"><b>!ih</b></a> extension. To enable the interrupt history record, add <b>/configflag=32</b> to the boot entry options.</p>
+<p>Here is an example of the output from this extension:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !ihs
+Total # of interruptions = 2093185
+Vector              IIP                   IPSR          ExtraField            IIP Symbol
+        VHPT FAULT  e0000000830d3190      1010092a6018  IFA=      6fc00a0200c nt!MiAgeAndEstimateAvailableInWorkingSet+0x70
+        VHPT FAULT  e0000000830d33d0      1010092a6018  IFA= 1ffffe00001de2d0 nt!MiAgeAndEstimateAvailableInWorkingSet+0x2b0
+        VHPT FAULT  e0000000830d33d0      1010092a6018  IFA= 1ffffe01befff338 nt!MiAgeAndEstimateAvailableInWorkingSet+0x2b0
+        VHPT FAULT  e0000000830d3190      1010092a6018  IFA=      6fc00a0200c nt!MiAgeAndEstimateAvailableInWorkingSet+0x70
+        VHPT FAULT  e0000000830d33d0      1010092a6018  IFA= 1ffffe00001d9188 nt!MiAgeAndEstimateAvailableInWorkingSet+0x2b0
+        VHPT FAULT  e0000000830d3880      1010092a6018  IFA= 1ffffe01befff250 nt!MiAgeAndEstimateAvailableInWorkingSet+0x760
+        VHPT FAULT  e0000000830d3fb0      1010092a6018  IFA= e0000165f82dc1c0 nt!MiCheckAndSetSystemTrimCriteria+0x190
+        VHPT FAULT  e000000083063390      1010092a6018  IFA= e0000000fffe0018 nt!KeQuerySystemTime+0x30
+     THREAD SWITCH  e000000085896040  e00000008588c040  OSP= e0000165f82dbd40 
+        VHPT FAULT  e00000008329b130      1210092a6018  IFA= e0000165f7edaf30 nt!IopProcessWorkItem+0x30
+ VHPT FAULT  e0000165f7eda640      1210092a6018  IFA= e0000165fff968a9 netbios!RunTimerForLana+0x60
+    PROCESS SWITCH  e0000000818bbe10  e000000085896040  OSP= e0000165f8281de0 
+        VHPT FAULT  e00000008307cfc0      1010092a2018  IFA= e00000008189fe50 nt!SwapFromIdle+0x1e0
+EXTERNAL INTERRUPT  e0000000830623b0      1010092a6018  IVR=               d0 nt!Kil_TopOfIdleLoop
+        VHPT FAULT  e00000008314e310      1010092a2018  IFA= e0000165f88203f0 nt!KdReceivePacket+0x10
+        VHPT FAULT  e000000083580760      1010092a2018  IFA= e0000000f00ff3fd hal!READ_PORT_UCHAR+0x80
+    PROCESS SWITCH  e00000008558c990  e0000000818bbe10  OSP= e00000008189fe20 
+        VHPT FAULT  e00000008307cfc0      1010092a2018  IFA= e0000165f02433f0 nt!SwapFromIdle+0x1e0
+        VHPT FAULT          77cfbda0      1013082a6018  IFA=         77cfbda0 0x0000000077cfbda0
+        VHPT FAULT          77cfbdb0      1213082a6018  IFA=      6fbfee0ff98 0x0000000077cfbdb0
+ DATA ACCESS BIT          77b8e150      1213082a6018  IFA=         77c16ab8 0x0000000077b8e150
+ VHPT FAULT          77ed5d60      1013082a6018  IFA=      6fbfffa6048 0x0000000077ed5d60
+   DATA ACCESS BIT          77ed5d60      1213082a6018  IFA=         77c229c0 0x0000000077ed5d60
+ DATA ACCESS BIT          77b8e1b0      1013082a6018  IFA=         77c1c320 0x0000000077b8e1b0
+      USER SYSCALL          77cafa40        10082a6018  Num=               42 0x0000000077cafa40
+ VHPT FAULT  e00000008344dc20      1010092a6018  IFA= e000010600703784 nt!ExpLookupHandleTableEntry+0x20
+...</code></pre>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!ihs%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

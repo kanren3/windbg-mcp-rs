@@ -1,0 +1,100 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .asm command controls how disassembly code will be displayed."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.asm (Change Disassembly Options)</title>
+
+<meta name="MS-HAID" content="r19_metacmds_A_45ed0606-0809-4a40-82bb-d8a34fb02fd2.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._asm__change_disassembly_options_"></a>.asm (Change Disassembly Options)</h1>
+</div>
+<p>The <b>.asm</b> command controls how disassembly code will be displayed. </p>
+<pre class="syntax"><b>.asm 
+.asm[-] </b><i>Options</i></pre>
+<h2><a id="ddk_meta_change_disassembly_options_dbg"></a><a id="DDK_META_CHANGE_DISASSEMBLY_OPTIONS_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______-______"></a>       <b>-</b>      </dt>
+<dd>
+<p>Causes the specified options to be disabled. If no minus sign is used, the specified options will be enabled.</p>
+</dd>
+<dt><a id="_______Options______"></a><a id="_______options______"></a><a id="_______OPTIONS______"></a>       <i>Options</i>      </dt>
+<dd>
+<p>Can be any number of the following options:</p>
+<p></p>
+<dl>
+<dt><a id="ignore_output_width"></a><a id="IGNORE_OUTPUT_WIDTH"></a><b>ignore_output_width</b></dt>
+<dd>
+<p>Prevents the debugger from checking the width of lines in the disassembly display.</p>
+</dd>
+<dt><a id="no_code_bytes"></a><a id="NO_CODE_BYTES"></a><b>no_code_bytes</b></dt>
+<dd>
+<p>(x86 and x64 targets only)  Suppresses the display of raw bytes.</p>
+</dd>
+<dt><a id="source_line"></a><a id="SOURCE_LINE"></a><b>source_line</b></dt>
+<dd>
+<p>Prefixes each line of disassembly with the line number of the source code. </p>
+</dd>
+<dt><a id="verbose"></a><a id="VERBOSE"></a><b>verbose</b></dt>
+<dd>
+<p>(Itanium target only)  Causes bundle-type information to be displayed along with the standard disassembly information.  </p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Modes</b></p>
+</td>
+<td>
+<p>user mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets</b></p>
+</td>
+<td>
+<p>live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Platforms</b></p>
+</td>
+<td>
+<p>all </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For a description of assembly debugging and related commands, see <a href="debugging_in_assembly_mode.htm">Debugging in Assembly Mode</a>.</p>
+<h2>Remarks</h2>
+<p>Using <b>.asm</b> by itself displays the current state of the options.</p>
+<p>This command affects the display of any disassembly instructions in the Debugger Command window. In WinDbg it also changes the contents of the Disassembly window.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.asm (Change Disassembly Options)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

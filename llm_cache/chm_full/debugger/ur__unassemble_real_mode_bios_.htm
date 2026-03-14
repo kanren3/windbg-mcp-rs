@@ -1,0 +1,83 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The ur command displays an assembly translation of the specified 16-bit real-mode code."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>ur (Unassemble Real Mode BIOS)</title>
+
+<meta name="MS-HAID" content="r18_cmds_S_22bbfc70-f75a-4c22-8de1-54808eab3a34.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.ur__unassemble_real_mode_bios_"></a>ur (Unassemble Real Mode BIOS)</h1>
+</div>
+<p>The <b>ur</b> command displays an assembly translation of the specified 16-bit real-mode code.</p>
+<pre class="syntax">
+    <b>ur</b> Range 
+<b>ur</b> Address
+<b>ur</b> 
+</pre>
+<h2><a id="ddk_cmd_unassemble_real_mode_bios_dbg"></a><a id="DDK_CMD_UNASSEMBLE_REAL_MODE_BIOS_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Range______"></a><a id="_______range______"></a><a id="_______RANGE______"></a>       <i>Range</i>      </dt>
+<dd>
+<p>Specifies the memory range that contains the instructions to disassemble. For more information about the syntax, see <a href="address_and_address_range_syntax.htm">Address and Address Range Syntax</a>.</p>
+</dd>
+<dt><a id="_______Address______"></a><a id="_______address______"></a><a id="_______ADDRESS______"></a>       <i>Address</i>      </dt>
+<dd>
+<p>Specifies the beginning of the memory range to disassemble. Eight instructions (on an x86-based processor) or nine instructions (on an Itanium-based processor) are unassembled. For more information about the syntax, see <a href="address_and_address_range_syntax.htm">Address and Address Range Syntax</a>.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about how to debug BIOS code, see <a href="debugging_bios_code.htm">Debugging BIOS Code</a>.</p>
+<h2>Remarks</h2>
+<p>If you do not specify <i>Range</i> or <i>Address</i>, the disassembly begins at the current address and extends eight instructions (on an x86-based processor) or nine instructions (on an Itanium-based processor).</p>
+<p>If you are examining 16-bit real-mode code on an x86-based processor, both the <b>ur</b> command and the <a href="u__unassemble_.htm"><b>u (Unassemble)</b></a> command give correct results.</p>
+<p>However, if real-mode code exists in a location where the debugger is not  expecting it (for example, a non-x86 computer that is running or emulating x86-based BIOS code from a plug-in card), you must use <b>ur</b> to correctly disassemble this code.</p>
+<p>If you use <b>ur</b> on 32-bit or 64-bit code, the command tries to disassemble the code as if it were 16-bit code. This situation produces meaningless results.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20ur (Unassemble Real Mode BIOS)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

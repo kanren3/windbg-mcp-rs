@@ -1,0 +1,79 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .trap command displays the trap frame register state and also sets the register context."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.trap (Display Trap Frame)</title>
+
+<meta name="MS-HAID" content="r22_metacmds_S_1c1078f3-5311-4695-be7d-0e10e76750d7.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._trap__display_trap_frame_"></a>.trap (Display Trap Frame)</h1>
+</div>
+<p>The <b>.trap</b> command displays the trap frame register state and also sets the register context.</p>
+<p></p>
+<pre class="syntax"><b>.trap </b>[<i>Address</i>]</pre>
+<h2><a id="ddk_meta_display_trap_frame_dbg"></a><a id="DDK_META_DISPLAY_TRAP_FRAME_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Address______"></a><a id="_______address______"></a><a id="_______ADDRESS______"></a>       <i>Address</i>      </dt>
+<dd>
+<p>Hexadecimal address of the trap frame on the target system. Omitting the address does not display any trap frame information, but it does reset the register context.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>kernel mode only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets</b></p>
+</td>
+<td>
+<p>live, crash dump  </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Platforms
+         </b></p>
+</td>
+<td>
+<p>all </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about the register context and other context settings, see <a href="changing_contexts.htm">Changing Contexts</a>.</p>
+<h2>Remarks</h2>
+<p>The <b>.trap</b> command displays the important registers for the specified trap frame.</p>
+<p></p>
+<p>This command also instructs the kernel debugger to use the specified context record as the register context. After this command is executed, the debugger will have access to the most important registers and the stack trace for this thread. This register context persists until you allow the target to execute or use another register context command (<a href="_thread__set_register_context_.htm"><b>.thread</b></a>, <a href="_cxr__display_context_record_.htm"><b>.cxr</b></a>, or <b>.trap</b>). See <a href="changing_contexts.htm#register_context">Register Context</a> for full details.</p>
+<p>This extension is commonly used when debugging bug check 0xA and 0x7F.   For details and an example, see <a href="bug_check_0xa__irql_not_less_or_equal.htm"><b>Bug Check 0xA</b></a> (IRQL_NOT_LESS_OR_EQUAL).   </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.trap (Display Trap Frame)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

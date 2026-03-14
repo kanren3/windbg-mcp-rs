@@ -1,0 +1,147 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The CreateProcess2Wide method executes the specified command to create a new process."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IDebugClient5::CreateProcess2Wide method</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.createprocess2wide"></a>IDebugClient5::CreateProcess2Wide method</h1>
+</div>
+<p>The <b>CreateProcess2Wide</b> method executes the specified command to create a new process.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>HRESULT CreateProcess2Wide(
+  [in]           ULONG64 Server,
+  [in]           PWSTR   CommandLine,
+  [in]           PVOID   OptionsBuffer,
+  [in]           ULONG   OptionsBufferSize,
+  [in, optional] PCWSTR  InitialDirectory,
+  [in, optional] PCWSTR  Environment
+);</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Parameters</h2>
+<dl>
+<dt><i>Server</i> [in]</dt>
+<dd>
+<p>Specifies the process server that will be attached to the process.  If <i>Server</i> is zero, the engine will create the local process without using a process server.</p>
+</dd>
+<dt><i>CommandLine</i> [in]</dt>
+<dd>
+<p>Specifies the command line to execute to create the new process.</p>
+</dd>
+<dt><i>OptionsBuffer</i> [in]</dt>
+<dd>
+<p>Specifies the process creation options.  <i>OptionsBuffer</i> is a pointer to a <a href="debug_create_process_options.htm"><b>DEBUG_CREATE_PROCESS_OPTIONS</b></a> structure.</p>
+</dd>
+<dt><i>OptionsBufferSize</i> [in]</dt>
+<dd>
+<p>Specifies the size of the buffer <i>OptionsBuffer</i>.  This should be set to <b>sizeof(DEBUG_CREATE_PROCESS_OPTIONS)</b>.</p>
+</dd>
+<dt><i>InitialDirectory</i> [in, optional]</dt>
+<dd>
+<p>Specifies the starting directory for the process.  If <i>InitialDirectory</i> is <b>NULL</b>, the current directory for the process server is used.</p>
+</dd>
+<dt><i>Environment</i> [in, optional]</dt>
+<dd>
+<p>Specifies an environment block for the new process.  An environment block consists of a null-terminated block of null-terminated strings.  Each string is of the form:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>name=value</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Note that the last two characters of the environment block are both <b>NULL</b>: one to terminate the string and one to terminate the block.</p>
+<p>If <i>Environment</i> is set to <b>NULL</b>, the new process inherits the environment block of the process server.  If the DEBUG_CREATE_PROCESS_THROUGH_RTL flag is set in <i>OptionsBuffer</i>, then <i>Environment</i> must be <b>NULL</b>.</p>
+</dd>
+</dl>
+<h2>Return value</h2>
+<p>This method may also return error values.  See <a href="hresult_values.htm"><b>Return Values</b></a> for more details.</p>
+<table>
+<tr>
+<th>Return code</th>
+<th>Description</th>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>S_OK</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>The method was successful.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>This method is available only for live user-mode debugging.</p>
+<p>If <i>CreateFlags</i> contains either of the flags DEBUG_PROCESS or DEBUG_ONLY_THIS_PROCESS, the engine will also attach to the newly created process. This is similar to the behavior of <a href="createprocessandattach2.htm"><b>CreateProcessAndAttach2</b></a> with its argument <i>ProcessId</i> set to zero.</p>
+<p>For more information about creating and attaching to live user-mode targets, see <a href="live_user_mode_targets.htm">Live User-Mode Targets</a>.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Target platform</p>
+</th>
+<td width="70%">
+<dl>
+<dt></dt>
+</dl>
+</td>
+</tr>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Dbgeng.h (include Dbgeng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="idebugclient5.htm"><b>IDebugClient5</b></a></dt>
+<dt><a href="createprocessandattach2.htm"><b>CreateProcessAndAttach2</b></a></dt>
+<dt><a href="attachprocess.htm"><b>AttachProcess</b></a></dt>
+<dt><a href="_create__create_process_.htm"><b>.create (Create Process)</b></a></dt>
+<dt><a href="connectprocessserver.htm"><b>ConnectProcessServer</b></a></dt>
+<dt><a href="createprocess2.htm"><b>CreateProcess2</b></a></dt>
+<dt><a href="getrunningprocesssystemids.htm"><b>GetRunningProcessSystemIds</b></a></dt>
+<dt><a href="getrunningprocessdescription.htm"><b>GetRunningProcessDescription</b></a></dt>
+<dt><a href="detachcurrentprocess.htm"><b>DetachCurrentProcess</b></a></dt>
+<dt><a href="terminatecurrentprocess.htm"><b>TerminateCurrentProcess</b></a></dt>
+<dt><a href="abandoncurrentprocess.htm"><b>AbandonCurrentProcess</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IDebugClient5::CreateProcess2Wide method%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

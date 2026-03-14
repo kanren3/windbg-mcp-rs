@@ -1,0 +1,105 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .srcfix and .lsrcfix commands automatically set the source path to indicate that a source server will be used."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.srcfix, .lsrcfix (Use Source Server)</title>
+
+<meta name="MS-HAID" content="r22_metacmds_S_7aa8be7d-3947-4880-9823-91395c6cd8d0.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._srcfix___lsrcfix__use_source_server_"></a>.srcfix, .lsrcfix (Use Source Server)</h1>
+</div>
+<p>The <b>.srcfix</b> and <b>.lsrcfix</b> commands automatically set the source path to indicate that a source server will be used.</p>
+<pre class="syntax"><b>.srcfix</b>[<b>+</b>]<b> </b>[<i>Paths</i>] 
+<b>.lsrcfix</b>[<b>+</b>]<b> </b>[<i>Paths</i>] 
+</pre>
+<h2><a id="ddk_meta_use_source_server_dbg"></a><a id="DDK_META_USE_SOURCE_SERVER_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="______________"></a>       <b>+</b>      </dt>
+<dd>
+<p>Causes the existing source path to be preserved, and <b>; srv*</b> to be appended to the end. If the <b>+</b> is not used, the existing source path is replaced.</p>
+</dd>
+<dt><a id="_______Paths______"></a><a id="_______paths______"></a><a id="_______PATHS______"></a>       <i>Paths</i>      </dt>
+<dd>
+<p>Specifies one or more additional paths to append to the end of the new source path.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<p>The <b>.srcfix</b> command is available on all debuggers. The <b>.lsrcfix</b> command is available only in WinDbg and cannot be used in script files.</p>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>user mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets</b></p>
+</td>
+<td>
+<p>live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>all </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information on setting the local source path for a remote client, see <a href="windbg_command_line_options.htm"><b>WinDbg Command-Line Options</b></a>. For details about <a href="srcsrv.htm">SrcSrv</a>, see <a href="using_a_source_server.htm">Using a Source Server</a>. For details on the source path and the local source path, see <a href="source_path.htm">Source Path</a>. For more information about commands that can be used while performing remote debugging through the debugger, see <a href="controlling_a_remote_debugging_session.htm">Controlling a Remote Debugging Session</a>.</p>
+<h2>Remarks</h2>
+<p>When you add <code>srv*</code> to the source path, the debugger uses <a href="srcsrv.htm">SrcSrv</a> to retrieve source files from locations specified in the target modules' symbol files. Using <code>srv*</code> in the source path is fundamentally different from using <code>srv*</code> in the symbol path. In the symbol path, you can specify a symbol server location along with the <code>srv*</code> (for example, <code>.sympath SRV*https://msdl.microsoft.com/download/symbols</code>). In the source path, srv* stands alone, separated from all other elements by semicolons.</p>
+<p>When this command is issued from a debugging client, <b>.srcfix</b> sets the source path to use a source server on the debugging server, while <b>.lsrcfix</b> does the same on the local machine.</p>
+<p>These commands are the same as the <a href="_srcpath___lsrcpath__set_source_path_.htm"><b>.srcpath (Set Source Path)</b></a> and <b>.lsrcpath (Set Local Source Path)</b> commands followed by the <b>srv*</b> source path element.  Thus, the following two commands are equivalent:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>.srcfix[+] [Paths] 
+.srcpath[+] srv*[;Paths] </pre>
+</td>
+</tr>
+</table></span></div>
+<p>Similarly, the following two commands are equivalent:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>.lsrcfix[+] [Paths] 
+.lsrcpath[+] srv*[;Paths] </pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.srcfix, .lsrcfix (Use Source Server)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

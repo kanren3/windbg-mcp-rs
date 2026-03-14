@@ -1,0 +1,346 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="C++ Numbers and Operators"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>C++ Numbers and Operators</title>
+
+<meta name="MS-HAID" content="r13_syntax_372599d3-a780-4c57-9219-05575c604059.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.c___numbers_and_operators"></a>C++ Numbers and Operators</h1>
+</div>
+<h2><a id="ddk_c_numbers_and_operators_dbg"></a><a id="DDK_C_NUMBERS_AND_OPERATORS_DBG"></a></h2>
+<p>The C++ expression parser supports all forms of C++ expression syntax. The syntax includes all data types (including pointers, floating-point numbers, and arrays) and all C++ unary and binary operators.</p>
+<h3><a id="numbers_in_c___expressions"></a><a id="NUMBERS_IN_C___EXPRESSIONS"></a>Numbers in C++ Expressions</h3>
+<p>Numbers in C++ expressions are interpreted as decimal numbers, unless you specify them in another manner. To specify a hexadecimal integer, add <b>0x</b> before the number. To specify an octal integer, add <b>0</b> (zero) before the number.</p>
+<p>The default debugger radix does not affect how you enter C++ expressions. You cannot directly enter a binary number (except by nesting a MASM expression within the C++ expression).</p>
+<p>You can enter a hexadecimal 64-bit value in the <i>xxxxxxxx</i><b>`</b><i>xxxxxxxx</i> format. (You can also omit the grave accent ( <b>`</b> ).) Both formats produce the same value.</p>
+<p>You can use the <b>L</b>, <b>U</b>, and <b>I64</b> suffixes with integer values. The actual size of the number that is created depends on the suffix and the number that you enter. For more information about this interpretation, see a C++ language reference.</p>
+<p>The <i>output</i> of the C++ expression evaluator keeps the data type that the C++ expression rules specify. However, if you use this expression as an argument for a command, a cast is always made. For example, you do not have to cast integer values to pointers when they are used as addresses in command arguments. If the expression's value cannot be validly cast to an integer or a pointer, a syntax error occurs.</p>
+<p>You can use the <b>0n</b> (decimal) prefix for some <i>output</i>, but you cannot use it for C++ expression input.</p>
+<h3><a id="characters_and_strings_in_c___expressions"></a><a id="CHARACTERS_AND_STRINGS_IN_C___EXPRESSIONS"></a>Characters and Strings in C++ Expressions</h3>
+<p>You can enter a character by surrounding it with single quotation marks ( ' ). The standard C++ escape characters are permitted.</p>
+<p>You can enter string literals by surrounding them with double quotation marks ( " ). You can use <b>\"</b> as an escape sequence within such a string. However, strings have no meaning to the <a href="evaluating_expressions.htm">expression evaluator</a>.</p>
+<h3><a id="symbols_in_c___expressions"></a><a id="SYMBOLS_IN_C___EXPRESSIONS"></a>Symbols in C++ Expressions</h3>
+<p>In a C++ expression, each symbol is interpreted according to its type. Depending on what the symbol refers to, it might be interpreted as an integer, a data structure, a function pointer, or any other data type. If you use a symbol that does not correspond to a C++ data type (such as an unmodified module name) within a C++ expression, a syntax error occurs.</p>
+<p>If the symbol might be ambiguous, you can add a module name and an exclamation point ( <b>!</b> ) or only an exclamation point before the symbol. For more information about symbol recognition, see <a href="symbol_syntax_and_symbol_matching.htm">Symbol Syntax and Symbol Matching</a>.</p>
+<p>You can use a grave accent ( <b>`</b> ) or an apostrophe ( <b>'</b> ) in a symbol name only if you add a module name and exclamation point before the symbol name.</p>
+<p>When you add the <b>&lt;</b> and <b>&gt;</b> delimiters after a template name, you can add spaces between these delimiters.  </p>
+<h3><a id="operators_in_c___expressions"></a><a id="OPERATORS_IN_C___EXPRESSIONS"></a>Operators in C++ Expressions</h3>
+<p>You can always use parentheses to override precedence rules.</p>
+<p>If you enclose part of a C++ expression in parentheses and add two at signs (<b>@@</b>) before the expression, the expression is interpreted according to MASM expression rules. You cannot add a space between the two at signs and the opening parenthesis. The final value of this expression is passed to the C++ expression evaluator as a ULONG64 value. You can also specify the expression evaluator by using <b>@@c++( ... )</b> or <b>@@masm( ... )</b>.</p>
+<p>Data types are indicated as usual in the C++ language. The symbols that indicate arrays ( <b>[ ]</b> ), pointer members ( <b>-&gt;</b> ), UDT members ( <b>.</b> ), and members of classes ( <b>::</b> ) are all recognized. All arithmetic operators are supported, including assignment and side-effect operators. However, you cannot use the <b>new</b>, <b>delete</b>, and <b>throw</b> operators, and you cannot actually call a function.</p>
+<p>Pointer arithmetic is supported and offsets are scaled correctly. Note that you cannot add an offset to a function pointer. (If you have to add an offset to a function pointer, cast the offset to a character pointer first.)</p>
+<p>As in C++, if you use operators with invalid data types, a syntax error occurs. The debugger's C++ expression parser uses slightly more relaxed rules than most C++ compilers, but all major rules are enforced. For example, you cannot shift a non-integer value.</p>
+<p>You can use the following operators. The operators in each cell take precedence over those in lower cells. Operators in the same cell are of the same precedence and are parsed from left to right. As with C++, expression evaluation ends when its value is known. This ending enables you to effectively use expressions such as <b>?? myPtr &amp;&amp; *myPtr</b>.</p>
+<table>
+<tr>
+<th>Operator</th>
+<th>Meaning</th>
+</tr>
+<tr>
+<td>
+<p><i>Expression </i><b>// </b><i>Comment</i></p>
+</td>
+<td>
+<p>Ignore all subsequent text</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><i>Class</i><b> :: </b><i>Member</i></p>
+<p><i>Class</i><b> ::~</b><i>Member</i></p>
+<p><b>:: </b><i>Name</i></p>
+</td>
+<td>
+<p>Member of class</p>
+<p>Member of class (destructor)</p>
+<p>Global</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><i>Structure</i><b> . </b><i>Field</i></p>
+<p><i>Pointer</i><b> -&gt; </b><i>Field</i></p>
+<p><i>Name</i><b> [</b><i>integer</i><b>]</b></p>
+<p><i>LValue </i><b>++</b></p>
+<p><i>LValue</i><b> --</b></p>
+<p><b>dynamic_cast &lt;</b><i>type</i><b>&gt;(</b><i>Value</i><b>)</b></p>
+<p><b>static_cast &lt;</b><i>type</i><b>&gt;(</b><i>Value</i><b>)</b></p>
+<p><b>reinterpret_cast &lt;</b><i>type</i><b>&gt;(</b><i>Value</i><b>)</b></p>
+<p><b>const_cast &lt;</b><i>type</i><b>&gt;(</b><i>Value</i><b>)</b></p>
+</td>
+<td>
+<p>Field in a structure</p>
+<p>Field in referenced structure</p>
+<p>Array subscript</p>
+<p>Increment (after evaluation)</p>
+<p>Decrement (after evaluation)</p>
+<p>Typecast (always performed)</p>
+<p>Typecast (always performed)</p>
+<p>Typecast (always performed)</p>
+<p>Typecast (always performed)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>(</b><i>type</i><b>) </b><i>Value</i></p>
+<p><b>sizeof</b><i> value</i></p>
+<p><b>sizeof( </b><i> type</i><b> )</b></p>
+<p><b>++ </b><i>LValue</i></p>
+<p><b>-- </b><i>LValue</i></p>
+<p><b>~ </b><i>Value</i></p>
+<p><b>! </b><i>Value</i></p>
+<p><i>Value</i></p>
+<p><b>+ </b><i>Value</i></p>
+<p><b>&amp; </b><i>LValue</i></p>
+<p><b>* </b><i>Value</i></p>
+</td>
+<td>
+<p>Typecast (always performed)</p>
+<p>Size of expression</p>
+<p>Size of data type</p>
+<p>Increment (before evaluation)</p>
+<p>Decrement (before evaluation)</p>
+<p>Bit complement</p>
+<p>Not (Boolean)</p>
+<p>Unary minus</p>
+<p>Unary plus</p>
+<p>Address of data type</p>
+<p>Dereference</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><i>Structure</i><b> . * </b><i>Pointer</i></p>
+<p><i>Pointer</i><b> -&gt; * </b><i>Pointer</i></p>
+</td>
+<td>
+<p>Pointer to member of structure</p>
+<p>Pointer to member of referenced structure</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><i>Value</i><b> * </b><i>Value</i></p>
+<p><i>Value</i><b> / </b><i>Value</i></p>
+<p><i>Value</i><b> % </b><i>Value</i></p>
+</td>
+<td>
+<p>Multiplication</p>
+<p>Division</p>
+<p>Modulus</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><i>Value</i><b> + </b><i>Value</i></p>
+<p><i>Value</i><b> - </b><i>Value</i></p>
+</td>
+<td>
+<p>Addition</p>
+<p>Subtraction</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><i>Value</i><b> &lt;&lt; </b><i>Value</i></p>
+<p><i>Value</i><b> &gt;&gt; </b><i>Value</i></p>
+</td>
+<td>
+<p>Bitwise shift left</p>
+<p>Bitwise shift right</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><i>Value</i><b> &lt; </b><i>Value</i></p>
+<p><i>Value</i><b> &lt;= </b><i>Value</i></p>
+<p><i>Value</i><b> &gt; </b><i>Value</i></p>
+<p><i>Value</i><b> &gt;= </b><i>Value</i></p>
+</td>
+<td>
+<p>Less than (comparison)</p>
+<p>Less than or equal (comparison)</p>
+<p>Greater than (comparison)</p>
+<p>Greater than or equal (comparison)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><i>Value</i><b> == </b><i>Value</i></p>
+<p><i>Value</i><b> != </b><i>Value</i></p>
+</td>
+<td>
+<p>Equal (comparison)</p>
+<p>Not equal (comparison)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><i>Value</i><b> &amp; </b><i>Value</i></p>
+</td>
+<td>
+<p>Bitwise AND</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><i>Value</i><b> ^ </b><i>Value</i></p>
+</td>
+<td>
+<p>Bitwise XOR (exclusive OR)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><i>Value</i><b> | </b><i>Value</i></p>
+</td>
+<td>
+<p>Bitwise OR</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><i>Value</i><b> &amp;&amp; </b><i>Value</i></p>
+</td>
+<td>
+<p>Logical AND</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><i>Value</i><b> || </b><i>Value</i></p>
+</td>
+<td>
+<p>Logical OR</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><i>LValue</i><b> =</b><i>Value</i></p>
+<p><i>LValue</i><b> *= </b><i>Value</i></p>
+<p><i>LValue</i><b> /= </b><i>Value</i></p>
+<p><i>LValue</i><b> %=</b><i>Value</i></p>
+<p><i>LValue</i><b> +=</b><i>Value</i></p>
+<p><i>LValue</i><b> -= </b><i>Value</i></p>
+<p><i>LValue</i><b> &lt;&lt;= </b><i>Value</i></p>
+<p><i>LValue</i><b> &gt;&gt;= </b><i>Value</i></p>
+<p><i>LValue</i><b> &amp;= </b><i>Value</i></p>
+<p><i>LValue</i><b> |= </b><i>Value</i></p>
+<p><i>LValue</i><b> ^= </b><i>Value</i></p>
+</td>
+<td>
+<p>Assign</p>
+<p>Multiply and assign</p>
+<p>Divide and assign</p>
+<p>Modulo and assign</p>
+<p>Add and assign</p>
+<p>Subtract and assign</p>
+<p>Shift left and assign</p>
+<p>Shift right and assign</p>
+<p>AND and assign</p>
+<p>OR and assign</p>
+<p>XOR and assign</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><i>Value</i><b> ? </b><i>Value</i><b> : </b><i>Value</i></p>
+</td>
+<td>
+<p>Conditional evaluation</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><i>Value</i><b> , </b><i>Value</i></p>
+</td>
+<td>
+<p>Evaluate all values, and then discard all except the rightmost value</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="registers_and_pseudo_registers_in_c___expressions"></a><a id="REGISTERS_AND_PSEUDO_REGISTERS_IN_C___EXPRESSIONS"></a>Registers and Pseudo-Registers in C++ Expressions</h3>
+<p>You can use registers and pseudo-registers within C++ expressions. You must add an at sign ( <b>@</b> ) before the register or pseudo-register.</p>
+<p>The expression evaluator automatically performs the proper cast. Actual registers and integer-value pseudo-registers are cast to ULONG64. All addresses are cast to PUCHAR, <b>$thread</b> is cast to ETHREAD*, <b>$proc</b> is cast to EPROCESS*, <b>$teb</b> is cast to TEB*, and <b>$peb</b> is cast to PEB*.</p>
+<p>You cannot change a register or pseudo-register by an assignment or side-effect operator. You must use the <a href="r__registers_.htm"><b>r (Registers)</b></a> command to change these values.</p>
+<p>For more information about registers and pseudo-registers, see <a href="register_syntax.htm">Register Syntax</a> and <a href="pseudo_register_syntax.htm">Pseudo-Register Syntax</a>.</p>
+<h3><a id="macros_in_c___expressions"></a><a id="MACROS_IN_C___EXPRESSIONS"></a>Macros in C++ Expressions</h3>
+<p>You can use macros within C++ expressions. You must add a number sign (#) before the macros.</p>
+<p>You can use the following macros. These macros have the same definitions as the Microsoft Windows macros with the same name. (The Windows macros are defined in Winnt.h.)</p>
+<table>
+<tr>
+<th>Macro</th>
+<th>Return Value</th>
+</tr>
+<tr>
+<td>
+<p>#CONTAINING_RECORD(<i>Address</i>, <i>Type</i>, <i>Field</i>)</p>
+</td>
+<td>
+<p>Returns the base address of an instance of a structure, given the type of the structure and the address of a field within the structure.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>#FIELD_OFFSET(<i>Type</i>, <i>Field</i>)</p>
+</td>
+<td>
+<p>Returns the byte offset of a named field in a known structure type.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>#RTL_CONTAINS_FIELD (<i>Struct</i>, <i>Size</i>, <i>Field</i>)</p>
+</td>
+<td>
+<p>Indicates whether the given byte size includes the desired field.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>#RTL_FIELD_SIZE(<i>Type</i>, <i>Field</i>)</p>
+</td>
+<td>
+<p>Returns the size of a field in a structure of known type, without requiring the type of the field.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>#RTL_NUMBER_OF(<i>Array</i>)</p>
+</td>
+<td>
+<p>Returns the number of elements in a statically sized array.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>#RTL_SIZEOF_THROUGH_FIELD(<i>Type</i>, <i>Field</i>)</p>
+</td>
+<td>
+<p>Returns the size of a structure of known type, up through and including a specified field.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20C++ Numbers and Operators%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

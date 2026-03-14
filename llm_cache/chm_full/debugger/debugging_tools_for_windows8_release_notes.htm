@@ -1,0 +1,50 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Debugging Tools For Windows8 Release Notes"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Debugging Tools For Windows8 Release Notes</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.debugging_tools_for_windows8_release_notes"></a>Debugging Tools For Windows8 Release Notes</h1>
+</div>
+<h2><a id="Channel_number_for_1394_debugging_in_Visual_Studio"></a><a id="channel_number_for_1394_debugging_in_visual_studio"></a><a id="CHANNEL_NUMBER_FOR_1394_DEBUGGING_IN_VISUAL_STUDIO"></a>Channel number for 1394 debugging in Visual Studio</h2>
+<p>If you use Microsoft Visual Studio to perform kernel-mode debugging over a 1394 cable, set the channel to a decimal integer between 1 and 62 inclusive. Do not set the channel to 0 when you first set up debugging. Because the default channel value is 0, the software assumes there is no change and does not update the settings. If you must use channel 0, first use an alternate channel (1 through 62) and then switch to channel 0.</p>
+<h2><a id="Inline_function_debugging_is_on_by_default"></a><a id="inline_function_debugging_is_on_by_default"></a><a id="INLINE_FUNCTION_DEBUGGING_IS_ON_BY_DEFAULT"></a>Inline function debugging is on by default</h2>
+<p>In Windows 8, debugging of inline functions is turned on by default. The command <b>.inline 0</b> turns off inline function debugging, and the command <b>.inline 1</b> turns on inline function debugging.</p>
+<h2><a id="Invalid_port_number_in_configuration_page_for_network_debugging"></a><a id="invalid_port_number_in_configuration_page_for_network_debugging"></a><a id="INVALID_PORT_NUMBER_IN_CONFIGURATION_PAGE_FOR_NETWORK_DEBUGGING"></a>Invalid port number in configuration page for network debugging</h2>
+<p><b>Issue:</b> If an invalid port number is entered in the configuration page for kernel-mode network debugging, the configuration succeeds but the debugger on the host computer cannot connect to the target computer.</p>
+<p><b>Workaround:</b> Make sure the port number is valid. Valid port numbers range from 49152–65535. Also, your company might have restrictions on which ports can be used for network debugging. To ensure that a valid port number is entered, please check your internal IP Security Policy.</p>
+<h2><a id="Use_of_.remote_tool_in_command_line"></a><a id="use_of_.remote_tool_in_command_line"></a><a id="USE_OF_.REMOTE_TOOL_IN_COMMAND_LINE"></a>Use of .remote tool in command line</h2>
+<p><b>Issue:</b> The use of <b>.remote</b> tool in the command line crashes the interface as it creates old style remote.exe using npipe.</p>
+<p><b>Workaround:</b> Use the <b>.server</b> command instead.</p>
+<h2><a id="Design_features_for_Visual_Studio"></a><a id="design_features_for_visual_studio"></a><a id="DESIGN_FEATURES_FOR_VISUAL_STUDIO"></a>Design features for Visual Studio</h2>
+<ul>
+<li>Automatic provisioning of a machine includes both user mode and kernel mode bootstrapping, regardless of which one is chosen. This requires two restarts for provisioning and takes between 8–20 minutes.</li>
+<li>Support for attaching only one process at a time.</li>
+<li>During a debugging session in Windows Debugger Extension for Visual Studio, exceptions are managed using the command line.</li>
+</ul>
+<h2><a id="Global_design_features"></a><a id="global_design_features"></a><a id="GLOBAL_DESIGN_FEATURES"></a>Global design features</h2>
+<ul>
+<li>User must run in an elevated context in order to install the USB 3.0 XHCI filter driver. If the user is not running elevated, the PnP manager returns an error message that does not inform the user that elevation is the problem.</li>
+<li>If kernel debugging is enabled, the device used for kernel debugging should not be removed from the system while the device is still turned on. If the device is removed, the system will hang and will need to be restarted.</li>
+</ul>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Debugging Tools For Windows8 Release Notes%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

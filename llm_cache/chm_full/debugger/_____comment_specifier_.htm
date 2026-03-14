@@ -1,0 +1,39 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="If two dollar signs ( $$ ) appear at the start of a command, then the rest of the line is treated as a comment, unless the comment is terminated by a semicolon."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>$$  (Comment Specifier)</title>
+
+<meta name="MS-HAID" content="r14_tokens_a3068665-cb8d-44d6-b392-d0ddfad8583c.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._____comment_specifier_"></a>$$  (Comment Specifier)</h1>
+</div>
+<p>If two dollar signs ( <b>$$</b> ) appear at the start of a command, then the rest of the line is treated as a comment, unless the comment is terminated by a semicolon.</p>
+<pre class="syntax"><b>$$ </b>[<i>any text</i>]</pre>
+<h2>Remarks</h2>
+<p>The <b>$$</b> token is parsed like any other debugger command.  Therefore, if you want to create a comment after another command, you must precede the <b>$$</b> token with a semicolon.</p>
+<p>The <b>$$</b> token will cause the text after it to be ignored until the end of the line or until a semicolon is encountered. A semicolon terminates the comment; text after the semicolon is parsed as a standard command. This differs from <a href="____comment_line_specifier_.htm"><b>*  (Comment Line Specifier)</b></a>, which makes the remainder of the line a comment even if a semicolon is present.</p>
+<p>For example, the following command will display <b>eax</b> and <b>ebx</b>, but not <b>ecx</b>:</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; r eax; $$ some text; r ebx; * more text; r ecx </code></pre>
+<p>Text prefixed by the <a href="____comment_line_specifier_.htm"><b>*</b></a> or <b>$$</b> tokens is not processed in any way. If you are performing remote debugging, a comment entered in the debugging server will not be visible in the debugging client, nor vice-versa. If you wish to make comment text appear in the Debugger Command window in a way visible to all parties, you should use <a href="_echo__echo_comment_.htm"><b>.echo (Echo Comment)</b></a>.</p>
+<p></p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20$$  (Comment Specifier)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

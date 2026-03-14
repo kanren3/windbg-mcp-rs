@@ -1,0 +1,52 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Controlling a Remote Debugging Session"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Controlling a Remote Debugging Session</title>
+
+<meta name="MS-HAID" content="r08_use_remote_6a360dc5-a228-4746-a24e-13fc94f80fe2.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.controlling_a_remote_debugging_session"></a>Controlling a Remote Debugging Session</h1>
+</div>
+<h2><a id="ddk_controlling_a_remote_debugging_session_dbg"></a><a id="DDK_CONTROLLING_A_REMOTE_DEBUGGING_SESSION_DBG"></a></h2>
+<p>Once the remote session has been started, commands can be entered into either the debugging server or the debugging client. If there are multiple clients, any of them can enter commands. Once ENTER is pressed, the command is transmitted to the debugging server and executed.</p>
+<p>Whenever one user enters a command, all users will see the command itself and its output. If this command was issued from a debugging client, all other users will see an identification, preceding the command, of which user issued the command. Commands issued from the debugging server do not have this prefix.</p>
+<p>After a command is executed by one user, other users who are connected through KD or CDB will not see a new command prompt. On the other hand, users of WinDbg will see the prompt in the bottom panel of the Debugger Command window continuously, even when the debugger engine is running. Neither of these should be a cause for alarm; any user can enter a command at any time, and the engine will execute these commands in the order they were received.</p>
+<p>Actions made through the WinDbg interface will also be executed by the debugging server.</p>
+<p></p>
+<h3><a id="communication_between_users"></a><a id="COMMUNICATION_BETWEEN_USERS"></a>Communication Between Users</h3>
+<p>Whenever a new debugging client connects to the session, all other users will see a message that this client has connected. No message is displayed when a client disconnects.</p>
+<p>The <a href="_clients__list_debugging_clients_.htm"><b>.clients (List Debugging Clients)</b></a> command will list all clients currently connected to the debugging session.</p>
+<p>The <a href="_echo__echo_comment_.htm"><b>.echo (Echo Comment)</b></a> command is useful for sending messages from one user to another.</p>
+<h3><a id="windbg_workspaces"></a><a id="WINDBG_WORKSPACES"></a>WinDbg Workspaces</h3>
+<p>When WinDbg is being used as a debugging client, its workspace will only save values set through the graphical interface. Changes made through the Debugger Command window will not be saved. (This guarantees that only changes made by the local client will be reflected, since the Debugger Command window will accept input from all clients as well as the debugging server.)</p>
+<h3><a id="file_paths"></a><a id="FILE_PATHS"></a>File Paths</h3>
+<p>The symbol path, executable image path, and extension DLL path are all interpreted as file paths relative to the Debugging Tools for Windows installation folder on the debugging server.</p>
+<p>When WinDbg is used as a debugging client, it has its own <i>local source path</i> as well. All source-related commands will access the source files on the local computer. Therefore, the proper paths have to be set on any client or server that will use source commands.</p>
+<p>This multiple-path system allows a debugging client to use source-related commands without actually sharing the source files with other clients or with the server. This is useful if there are private or confidential source files which one of the users has access to.</p>
+<h3><a id="canceling_the_debugging_server"></a><a id="CANCELING_THE_DEBUGGING_SERVER"></a>Canceling the Debugging Server</h3>
+<p>The <a href="_endsrv__end_debugging_server_.htm"><b>.endsrv (End Debugging Server)</b></a> command can be used to terminate a debugging server. If the debugger has established multiple debugging servers, you can cancel some of them while leaving others running.</p>
+<p>Terminating a server will prevent any future clients from attaching to it. It will not cut off any clients that are currently attached through the server.  </p>
+<h3><a id="exiting_the_debugger_and_terminating_the_session"></a><a id="EXITING_THE_DEBUGGER_AND_TERMINATING_THE_SESSION"></a>Exiting the Debugger and Terminating the Session</h3>
+<p>To exit from one debugging client without terminating the server, you must issue a command from that specific client. If this client is KD or CDB, use the <a href="ctrl_b__quit_local_debugger_.htm"><b>CTRL+B</b></a> key to exit. If you are using a script to run KD or CDB, use <a href="_remote_exit__exit_debugging_client_.htm"><b>.remote_exit (Exit Debugging Client)</b></a>. If this client is WinDbg, choose <b>Exit</b> from the <b>File</b> menu to exit.</p>
+<p>To terminate the entire session and exit the debugging server, use the <a href="q__qq__quit_.htm"><b>q (Quit)</b></a> command. This command can be entered from <u>any</u> server or client, and it will terminate the entire session for all users.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Controlling a Remote Debugging Session%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

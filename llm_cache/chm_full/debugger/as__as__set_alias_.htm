@@ -1,0 +1,155 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The as and aS commands define a new alias or redefine an existing one."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>as, aS (Set Alias)</title>
+
+<meta name="MS-HAID" content="r15_cmds_A_55827b17-9e6d-45ce-8f48-a2a78000a00c.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.as__as__set_alias_"></a>as, aS (Set Alias)</h1>
+</div>
+<p>The <b>as</b> and <b>aS</b> commands define a new alias or redefine an existing one.</p>
+<pre class="syntax"><b>as </b><i>Name</i><b> </b><i>EquivalentLine</i> 
+<b>aS </b><i>Name</i><b> </b><i>EquivalentPhrase</i> 
+<b>aS </b><i>Name</i><b> "</b><i>EquivalentPhrase</i><b>"</b> 
+<b>as /e </b><i>Name</i><b> </b><i>EnvironmentVariable</i> 
+<b>as /ma </b><i>Name</i><b> </b><i>Address</i> 
+<b>as /mu </b><i>Name</i><b> </b><i>Address</i> 
+<b>as /msa </b><i>Name</i><b> </b><i>Address</i> 
+<b>as /msu </b><i>Name</i><b> </b><i>Address</i> 
+<b>as /x </b><i>Name</i><b> </b><i>Expression</i> 
+<b>aS /f </b><i>Name</i><b> </b><i>File</i> 
+<b>as /c </b><i>Name</i><b> </b><i>CommandString</i> 
+</pre>
+<h2><a id="ddk_cmd_set_alias_dbg"></a><a id="DDK_CMD_SET_ALIAS_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Name______"></a><a id="_______name______"></a><a id="_______NAME______"></a>       <i>Name</i>      </dt>
+<dd>
+<p>Specifies the alias name. This name can be any text string that does not contain a space or the ENTER keystroke and does not begin with "al", "as", "aS", or "ad". <i>Name</i> is case sensitive.</p>
+</dd>
+<dt><a id="_______EquivalentLine______"></a><a id="_______equivalentline______"></a><a id="_______EQUIVALENTLINE______"></a>       <i>EquivalentLine</i>      </dt>
+<dd>
+<p>Specifies the alias equivalent. <i>EquivalentLine</i> is case sensitive. You must add at least one space between <i>Name</i> and <i>EquivalentLine</i>. The number of spaces between these two parameters is not important. The alias equivalent never contains leading spaces. After these spaces, <i>EquivalentLine</i> includes the rest of the line. Semicolons, quotation marks, and spaces are treated as literal characters, and trailing spaces are included.</p>
+</dd>
+<dt><a id="_______EquivalentPhrase______"></a><a id="_______equivalentphrase______"></a><a id="_______EQUIVALENTPHRASE______"></a>       <i>EquivalentPhrase</i>      </dt>
+<dd>
+<p>Specifies the alias equivalent. <i>EquivalentPhrase</i> is case sensitive. You must add at least one space between <i>Name</i> and <i>EquivalentPhrase</i>. The number of spaces between these two parameters is not important. The alias equivalent never contains leading spaces. </p>
+<p>You can enclose <i>EquivalentPhrase</i> in quotation marks ("). Regardless of whether you use quotation marks, <i>EquivalentPhrase</i> can contain spaces, commas, and single quotation marks ('). If you enclose <i>EquivalentPhrase</i> in quotation marks, it can include semicolons, but not additional quotation marks. If you do not enclose <i>EquivalentPhrase</i> in quotation marks, it can include quotation marks in any location other than the first character, but it cannot include semicolons. Trailing spaces are included regardless of whether you use quotation marks.</p>
+</dd>
+<dt><a id="________e______"></a><a id="________E______"></a>       <b>/e</b>      </dt>
+<dd>
+<p>Sets the alias equivalent equal to the environment variable that <i>EnvironmentVariable</i> specifies.</p>
+</dd>
+<dt><a id="_______EnvironmentVariable______"></a><a id="_______environmentvariable______"></a><a id="_______ENVIRONMENTVARIABLE______"></a>       <i>EnvironmentVariable</i>      </dt>
+<dd>
+<p>Specifies the environment variable that is used to determine the alias equivalent. The debugger's environment is used, not the target's. If you started the debugger at a Command Prompt window, the environment variables in that window are used.</p>
+</dd>
+<dt><a id="________ma______"></a><a id="________MA______"></a>       <b>/ma</b>      </dt>
+<dd>
+<p>Sets the alias equivalent equal to the null-terminated ASCII string that begins at <i>Address</i>.</p>
+</dd>
+<dt><a id="________mu______"></a><a id="________MU______"></a>       <b>/mu</b>      </dt>
+<dd>
+<p>Sets the alias equivalent equal to the null-terminated Unicode string that begins at <i>Address</i>.</p>
+</dd>
+<dt><a id="________msa______"></a><a id="________MSA______"></a>       <b>/msa</b>      </dt>
+<dd>
+<p>Sets the alias equivalent equal to the ANSI_STRING structure that is located at <i>Address</i>.</p>
+</dd>
+<dt><a id="________msu______"></a><a id="________MSU______"></a>       <b>/msu</b>      </dt>
+<dd>
+<p>Sets the alias equivalent equal to the UNICODE_STRING structure that is  located at <i>Address</i>.</p>
+</dd>
+<dt><a id="_______Address______"></a><a id="_______address______"></a><a id="_______ADDRESS______"></a>       <i>Address</i>      </dt>
+<dd>
+<p>Specifies the location of the virtual memory that is used to determine the alias equivalent.</p>
+</dd>
+<dt><a id="________x______"></a><a id="________X______"></a>       <b>/x</b>      </dt>
+<dd>
+<p>Sets the alias equivalent equal to the 64-bit value of <i>Expression</i>.</p>
+</dd>
+<dt><a id="_______Expression______"></a><a id="_______expression______"></a><a id="_______EXPRESSION______"></a>       <i>Expression</i>      </dt>
+<dd>
+<p>Specifies the expression to evaluate. This value becomes the alias equivalent. For more information about the syntax, see <a href="numerical_expression_syntax.htm">Numerical Expression Syntax</a>.</p>
+</dd>
+<dt><a id="________f______"></a><a id="________F______"></a>       <b>/f</b>      </dt>
+<dd>
+<p>Sets the alias equivalent equal to the contents of the <i>File</i> file. You should always use the <b>/f</b> switch together with <b>aS</b>, not with <b>as</b>. </p>
+</dd>
+<dt><a id="_______File______"></a><a id="_______file______"></a><a id="_______FILE______"></a>       <i>File</i>      </dt>
+<dd>
+<p>Specifies the file whose contents become the alias equivalent. <i>File</i> can contain spaces, but you should never enclose <i>File</i> in quotation marks. If you specify an invalid file, you receive an "Out of memory" error message.</p>
+</dd>
+<dt><a id="________c______"></a><a id="________C______"></a>       <b>/c</b>      </dt>
+<dd>
+<p>Sets the alias equivalent equal to the output of the commands that <i>CommandString</i> specifies. The alias equivalent includes carriage returns if they are present within the command display and a carriage return at the end of the display of each command (even if you specify only one command). </p>
+</dd>
+<dt><a id="_______CommandString______"></a><a id="_______commandstring______"></a><a id="_______COMMANDSTRING______"></a>       <i>CommandString</i>      </dt>
+<dd>
+<p>Specifies the commands whose outputs become the alias equivalent. This string can include any number of commands that are separated by semicolons.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about how to use aliases, see <a href="using_aliases.htm">Using Aliases</a>.</p>
+<h2>Remarks</h2>
+<p>If you do not use any switches, the <b>as</b> command uses the rest of the line as the alias equivalent. </p>
+<p>You can end the <b>aS</b> command by a semicolon. This technique is useful in a script when you have to put all commands on a single line. Note that if the portion of the line after the semicolon requires expansion of the alias, you must enclose that second portion of the line in a new block. The following example produces the expected output, 0x6.</p>
+<pre class="syntax" xml:space="preserve"><code>0:001&gt; aS /x myAlias 5 + 1; .block{.echo myAlias}
+0x6</code></pre>
+<p>If you omit the new block, you do not get the expected output. That is because the expansion of a newly set alias does not happen until a new code block is entered. In the following example, the new block is omitted, and the output is the text "myAlias" instead of the expected value 0x6.</p>
+<pre class="syntax" xml:space="preserve"><code>0:001&gt; aS /x myAlias 5 + 1; .echo myAlias
+myAlias</code></pre>
+<p>For more information about using aliases in scripts, see <a href="using_aliases.htm">Using Aliases</a>.</p>
+<p>If you use a <b>/e</b>, <b>/ma</b>, <b>/mu</b>, <b>/msa</b>, <b>/msu</b>, or <b>/x</b> switch, the <b>as</b> and <b>aS</b> commands work the same and the command ends if a semicolon is encountered.</p>
+<p>If <i>Name</i> is already the name of an existing alias, that alias is redefined.</p>
+<p>You can use the <b>as</b> or <b>aS</b> command to create or change any user-named alias. But you cannot use the command to control a fixed-name alias ($u0 to $u9).</p>
+<p>You can use the <b>/ma</b>, <b>/mu</b>, <b>/msa</b>, <b>/msu</b>, <b>/f</b>, and <b>/c</b> switches to create an alias that contains carriage returns. However, you cannot use an alias that contains carriage returns to execute multiple commands in sequence. Instead, you must use semicolons.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20as, aS (Set Alias)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

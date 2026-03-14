@@ -1,0 +1,93 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Executing Until a Specified State is Reached"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Executing Until a Specified State is Reached</title>
+
+<meta name="MS-HAID" content="t01_basic_e0823c22-0440-4864-bddd-0673589fc88b.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.executing_until_a_specified_state_is_reached"></a>Executing Until a Specified State is Reached</h1>
+</div>
+<h2><a id="ddk_determining_the_acl_of_an_object_dbg"></a><a id="DDK_DETERMINING_THE_ACL_OF_AN_OBJECT_DBG"></a></h2>
+<p>There are several ways to cause the target to execute until a specified state is reached.</p>
+<h3><a id="using_a_breakpoint_to_control_execution"></a><a id="USING_A_BREAKPOINT_TO_CONTROL_EXECUTION"></a>Using a Breakpoint to Control Execution</h3>
+<p>One method is to use a breakpoint.  The simplest breakpoint halts execution when the program counter reaches a specified address.  A more complex breakpoint can:</p>
+<ul>
+<li>
+<p>be triggered only when this address is executed by a specific thread, </p>
+</li>
+<li>
+<p>allow a specified number of passes through this address before being triggered, </p>
+</li>
+<li>
+<p>automatically issue a specified command when it is triggered, or </p>
+</li>
+<li>
+<p>watch a specified address in non-executable memory, being triggered when that memory is read or written to.</p>
+</li>
+</ul>
+<p>For details on how to set and control breakpoints, see <a href="using_breakpoints.htm">Using Breakpoints</a>.</p>
+<p>A more complicated way to execute until a specified state is reached is to use a <i>conditional breakpoint</i>.  This kind of breakpoint is set at a certain address, but is only triggered if a specified condition holds.  For details, see <a href="setting_a_conditional_breakpoint.htm">Setting a Conditional Breakpoint</a>. </p>
+<h3><a id="breakpoints_and_pseudo_registers"></a><a id="BREAKPOINTS_AND_PSEUDO_REGISTERS"></a>Breakpoints and Pseudo-Registers</h3>
+<p>In specifying the desired state, it is often helpful to use <i>automatic pseudo-registers</i>.  These are variables controlled by the debugger which allow you to reference a variety of values related to the target state.</p>
+<p>For example, the following breakpoint uses the <b>$thread</b> pseudo-register, which is always equal to the value of the current thread.  It resolves to the value of the current thread when it is used in a command.  By using <b>$thread</b> as the argument of the <b>/t</b> parameter of the <a href="bp__bu__bm__set_breakpoint_.htm"><b>bp (Set Breakpoint)</b></a> command, you can create a breakpoint that will be triggered every time that <b>NtOpenFile</b> is called by the thread which was active at the time you issued the <b>bp</b> command:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; bp /t @$thread nt!ntopenfile</pre>
+</td>
+</tr>
+</table></span></div>
+<p>This breakpoint will not be triggered when any other thread calls <b>NtOpenFile</b>.</p>
+<p>For a list of automatic pseudo-registers, see <a href="pseudo_register_syntax.htm">Pseudo-Register Syntax</a>.</p>
+<h3><a id="using_a_script_file_to_control_execution"></a><a id="USING_A_SCRIPT_FILE_TO_CONTROL_EXECUTION"></a>Using a Script File to Control Execution</h3>
+<p>Another way to execute until a specified state is reached is to create a script file that calls itself recursively, testing the desired state in each iteration.</p>
+<p>Typically, this script file will contain the <a href="_if.htm"><b>.if</b></a> and <a href="_else.htm"><b>.else</b></a> tokens.  You can use a command such as <a href="t__trace_.htm"><b>t (Trace)</b></a> to execute a single step, and then test the condition in question.</p>
+<p>For example, if you wish to execute until the <b>eax</b> register contains the value 0x1234, you can create a script file called <i>eaxstep</i> that contains the following line:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>.if (@eax == 1234) { .echo 1234 } .else { t "$&lt;eaxstep" }
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Then issue the following command from the Debugger Command window:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>t "$&lt;eaxstep"</pre>
+</td>
+</tr>
+</table></span></div>
+<p>This <b>t</b> command will execute a single step, and then execute the quoted command.  This command happens to be <a href="_______________________a___run_script_file_.htm"><b>$&lt; (Run Script File)</b></a>, which runs the <i>eaxstep</i> file.  The script file tests the value of <b>eax</b>, runs the <b>t</b> command, and then calls itself recursively.  This continues until the <b>eax</b> register equals 0x1234, at which point the <a href="_echo__echo_comment_.htm"><b>.echo (Echo Comment)</b></a> command prints a message to the Debugger Command window, and execution stops.</p>
+<p>For details on script files, see <a href="using_script_files.htm">Using Script Files</a> and <a href="using_debugger_command_programs.htm">Using Debugger Command Programs</a>. </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Executing Until a Specified State is Reached%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

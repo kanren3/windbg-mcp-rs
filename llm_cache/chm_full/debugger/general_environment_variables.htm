@@ -1,0 +1,151 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="General Environment Variables"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>General Environment Variables</title>
+
+<meta name="MS-HAID" content="r12_cmdline_067c8775-4c54-4443-b4f5-3233dfa9d00f.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.general_environment_variables"></a>General Environment Variables</h1>
+</div>
+<h2><a id="ddk_general_environment_variables_dbg"></a><a id="DDK_GENERAL_ENVIRONMENT_VARIABLES_DBG"></a></h2>
+<p>The following table lists the environment variables that can be used in both user-mode and kernel-mode debugging.</p>
+<table>
+<tr>
+<th>Variable</th>
+<th>Meaning</th>
+</tr>
+<tr>
+<td>
+<p>_NT_DEBUGGER_EXTENSION_PATH = <i>Path</i></p>
+</td>
+<td>
+<p>Specifies the path that the debugger will first search for extension DLLs. <i>Path</i> can contain a drive letter followed by a colon (<b>:</b>). Separate multiple directories with semicolons (<b>;</b>). For details, see <a href="loading_debugger_extension_dlls.htm">Loading Debugger Extension DLLs</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>_NT_EXECUTABLE_IMAGE_PATH = <i>Path</i></p>
+</td>
+<td>
+<p>Specifies the path containing the binary executable files. <i>Path</i> can contain a drive letter followed by a colon (<b>:</b>). Separate multiple directories with semicolons (<b>;</b>).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>_NT_SOURCE_PATH = <i>Path</i></p>
+</td>
+<td>
+<p>Specifies the path containing the source files for the target. <i>Path</i> can contain a drive letter followed by a colon (<b>:</b>). Separate multiple directories with semicolons (<b>;</b>). For details, and for other ways to change this path, see <a href="source_path.htm">Source Path</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>_NT_SYMBOL_PATH = <i>Path</i></p>
+</td>
+<td>
+<p>Specifies the root of a directory tree containing the symbol files. <i>Path</i> can contain a drive letter followed by a colon (<b>:</b>). Separate multiple directories with semicolons (<b>;</b>). For details, and for other ways to change this path, see <a href="symbol_path.htm">Symbol Path</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>_NT_ALT_SYMBOL_PATH = <i>Path</i></p>
+</td>
+<td>
+<p>Specifies an alternate symbol path searched before _NT_SYMBOL_PATH. This is useful for keeping private versions of symbol files. <i>Path</i> can contain a drive letter followed by a colon (<b>:</b>). Separate multiple directories with semicolons (<b>;</b>). For details, see <a href="symbol_path.htm">Symbol Path</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>_NT_SYMBOL_PROXY = <i>Proxy</i><b>:</b><i>Port</i></p>
+</td>
+<td>
+<p>Specifies the proxy server to be used by SymSrv. For details, see <a href="firewalls_and_proxy_servers.htm">Firewalls and Proxy Servers</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>_NT_DEBUG_HISTORY_SIZE = <i>Number</i></p>
+</td>
+<td>
+<p>Specifies the number of commands in the command history that can be accessed during remote debugging. Because commands vary in length, the number of lines available may not exactly match <i>Number</i>. For details, and for other ways to change this number, see <a href="using_debugger_commands.htm">Using Debugger Commands</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>_NT_DEBUG_LOG_FILE_OPEN = <i>Filename</i></p>
+</td>
+<td>
+<p>(CDB and KD only)  Specifies the log file to which the debugger should send output. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>_NT_DEBUG_LOG_FILE_APPEND = <i>Filename</i></p>
+</td>
+<td>
+<p>(CDB and KD only)  Specifies the log file to which the debugger should append output. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>_NT_EXPR_EVAL = {<b>masm</b> | <b>c++</b>} </p>
+</td>
+<td>
+<p>Specifies the default expression evaluator. If <b>masm</b> is specified, MASM expression syntax will be used. If <b>c++</b> is specified, C++ expression syntax will be used. MASM expression syntax is the default. See <a href="evaluating_expressions.htm">Evaluating Expressions</a> for details.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>_NO_DEBUG_HEAP</p>
+</td>
+<td>
+<p>(Windows XP and later)  Specifies that the debug heap should not be used for user-mode debugging.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DBGENG_NO_DEBUG_PRIVILEGE </p>
+</td>
+<td>
+<p>Prevents processes spawned by the debugger from inheriting SeDebugPrivilege. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DBGHELP_HOMEDIR </p>
+</td>
+<td>
+<p>Specifies the path for the root of the default downstream store used by SymSrv and SrcSrv.  <i>Path</i> can contain a drive letter followed by a colon (<b>:</b>). Separate multiple directories with semicolons (<b>;</b>). </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>SRCSRV_INI_FILE </p>
+</td>
+<td>
+<p>Specifies the path and name of the configuration file used by <a href="srcsrv.htm">SrcSrv</a>. By default, the path is the srcsrv subdirectory of the Debugging Tools for Windows installation directory, and the file name is Srcsrv.ini. See <a href="source_indexing.htm">Source Indexing</a> for details. </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20General Environment Variables%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,156 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Once the KD connection server has been activated, you can create a smart client on another computer and begin a debugging session.There are two ways to start a smart client: by starting KD or WinDbg with the kernel protocol kdsrv, or by using the WinDbg graphical interface.You need to specify the remote transfer protocol used by the KD connection server. You can also specify the protocol for the actual kernel connection between the KD connection server and the target computer, or you can use the default.The general syntax for starting a smart client depends on the protocol used. The following options exist:"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Activating a Smart Client (Kernel Mode)</title>
+
+<meta name="MS-HAID" content="r08_use_remote_122caeda-8e60-485f-bb27-eb3c284de650.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.activating_a_smart_client__kernel_mode_"></a>Activating a Smart Client (Kernel Mode)</h1>
+</div>
+<p>Once the KD connection server has been activated, you can create a smart client on another computer and begin a debugging session.</p>
+<p>There are two ways to start a smart client: by starting KD or WinDbg with the kernel protocol <b>kdsrv</b>, or by using the WinDbg graphical interface.</p>
+<p>You need to specify the remote transfer protocol used by the KD connection server. You can also specify the protocol for the actual kernel connection between the KD connection server and the target computer, or you can use the default.</p>
+<p>The general syntax for starting a smart client depends on the protocol used. The following options exist:</p>
+<pre class="syntax"><i>Debugger</i><b> -k kdsrv:server=@{npipe:server=</b><i>Server</i><b>,pipe=</b><i>PipeName</i><b>[,password=</b><i>Password</i><b>]},trans=@{</b><i>ConnectType</i><b>} [</b><i>Options</i><b>]
+
+</b><i>Debugger</i><b> -k kdsrv:server=@{tcp:server=</b><i>Server</i><b>,port=</b><i>Socket</i><b>[,password=</b><i>Password</i><b>][,ipversion=6]},trans=@{</b><i>ConnectType</i><b>} [</b><i>Options</i><b>]
+
+</b><i>Debugger</i><b> -k kdsrv:server=@{tcp:clicon=</b><i>Server</i><b>,port=</b><i>Socket</i><b>[,password=</b><i>Password</i><b>][,ipversion=6]},trans=@{</b><i>ConnectType</i><b>} [</b><i>Options</i><b>]
+
+</b><i>Debugger</i><b> -k kdsrv:server=@{com:port=</b><i>COMPort</i><b>,baud=</b><i>BaudRate</i><b>,channel=</b><i>COMChannel</i><b>[,password=</b><i>Password</i><b>]},trans=@{</b><i>ConnectType</i><b>} [</b><i>Options</i><b>]
+
+</b><i>Debugger</i><b> -k kdsrv:server=@{spipe:proto=</b><i>Protocol</i><b>,{certuser=</b><i>Cert</i><b>|machuser=</b><i>Cert</i><b>},server=</b><i>Server</i><b>,pipe=</b><i>PipeName</i><b>[,password=</b><i>Password</i><b>]},trans=@{</b><i>ConnectType</i><b>} [</b><i>Options</i><b>]
+
+</b><i>Debugger</i><b> -k kdsrv:server=@{ssl:proto=</b><i>Protocol</i><b>,{certuser=</b><i>Cert</i><b>|machuser=</b><i>Cert</i><b>},server=</b><i>Server</i><b>,port=</b><i>Socket</i><b>[,password=</b><i>Password</i><b>]},trans=@{</b><i>ConnectType</i><b>} [</b><i>Options</i><b>]
+
+</b><i>Debugger</i><b> -k kdsrv:server=@{ssl:proto=</b><i>Protocol</i><b>,{certuser=</b><i>Cert</i><b>|machuser=</b><i>Cert</i><b>},clicon=</b><i>Server</i><b>,port=</b><i>Socket</i><b>[,password=</b><i>Password</i><b>]},trans=@{</b><i>ConnectType</i><b>} [</b><i>Options</i><b>]
+</b></pre>
+<p>To use the graphical interface to connect to a KD connection server, WinDbg must be in dormant mode -- it must either have been started with no command-line parameters, or it must have ended the previous debugging session. Select the <b>File | Connect to Remote Stub</b> menu command. When the <b>Connect to Remote Stub Server</b> dialog box appears, enter one of the following strings into the <b>Connection string</b> text box:</p>
+<pre class="syntax">
+<b>npipe:server=</b><i>Server</i><b>,pipe=</b><i>PipeName</i><b>[,password=</b><i>Password</i><b>] 
+
+tcp:server=</b><i>Server</i><b>,port=</b><i>Socket</i><b>[,password=</b><i>Password</i><b>][,ipversion=6] 
+
+tcp:clicon=</b><i>Server</i><b>,port=</b><i>Socket</i><b>[,password=</b><i>Password</i><b>][,ipversion=6] 
+
+com:port=</b><i>COMPort</i><b>,baud=</b><i>BaudRate</i><b>,channel=</b><i>COMChannel</i><b>[,password=</b><i>Password</i><b>] 
+
+spipe:proto=</b><i>Protocol</i><b>,{certuser=</b><i>Cert</i><b>|machuser=</b><i>Cert</i><b>},server=</b><i>Server</i><b>,pipe=</b><i>PipeName</i><b>[,password=</b><i>Password</i><b>] 
+
+ssl:proto=</b><i>Protocol</i><b>,{certuser=</b><i>Cert</i><b>|machuser=</b><i>Cert</i><b>},server=</b><i>Server</i><b>,port=</b><i>Socket</i><b>[,password=</b><i>Password</i><b>] 
+
+ssl:proto=</b><i>Protocol</i><b>,{certuser=</b><i>Cert</i><b>|machuser=</b><i>Cert</i><b>},clicon=</b><i>Server</i><b>,port=</b><i>Socket</i><b>[,password=</b><i>Password</i><b>] 
+</b></pre>
+<p>Alternatively, you can use the <b>Browse</b> button to locate active KD connection servers. See <a href="file___connect_to_remote_stub.htm">File | Connect to Remote Stub</a> for details.</p>
+<h2><a id="ddk_activating_a_smart_client_kernel_mode__dbg"></a><a id="DDK_ACTIVATING_A_SMART_CLIENT_KERNEL_MODE__DBG"></a></h2>
+<p>The parameters in the preceding commands have the following possible values:</p>
+<p></p>
+<dl>
+<dt><a id="________Debugger"></a><a id="________debugger"></a><a id="________DEBUGGER"></a><i>
+       Debugger</i></dt>
+<dd>
+<p>This can be KD or WinDbg.</p>
+</dd>
+<dt><a id="Server"></a><a id="server"></a><a id="SERVER"></a><i>Server</i></dt>
+<dd>
+<p>This is the network name or IP address of the computer on which the KD connection server was created.The two initial backslashes (\\) are optional on the command line, but are not permitted in the WinDbg dialog box.</p>
+</dd>
+<dt><a id="________pipe_________PipeName"></a><a id="________pipe_________pipename"></a><a id="________PIPE_________PIPENAME"></a><b>
+       pipe=
+       </b><i>PipeName</i></dt>
+<dd>
+<p>If NPIPE or SPIPE protocol is used, <i>PipeName</i> is the name that was given to the pipe when the KD connection server was created.</p>
+<p>If you are not logged on to the client computer with an account that has access to the server computer, you must provide a user name and password. On the client computer, in a Command Prompt window, enter the following command.</p>
+<p><b>net use \\</b><i>Server</i><b>\ipc$ /user:</b><i>UserName</i></p>
+<p>where <i>Server</i> is the name of the server computer, and <i>UserName</i> is the name of an account that has access to the server computer.</p>
+<p>When you are prompted, enter the password for <i>UserName</i>.</p>
+<p>After this command succeeds, you can activate a smart client by using <b>-k kdsrv</b> or by using the WinDbg graphical interface.</p>
+</dd>
+<dt><a id="________port_________Socket"></a><a id="________port_________socket"></a><a id="________PORT_________SOCKET"></a><b>
+       port=
+       </b><i>Socket</i></dt>
+<dd>
+<p>If TCP or SSL protocol is used, <i>Socket</i> is the same socket port number that was used when the KD connection server was created.</p>
+</dd>
+<dt><a id="clicon"></a><a id="CLICON"></a><b>clicon</b></dt>
+<dd>
+<p>Specifies that the KD connection server will try to connect to the smart client through a reverse connection. The client must use <b>clicon</b> if and only if the server is using <b>clicon</b>. In most cases, the smart client is started before the KD connection server when a reverse connection is used.</p>
+</dd>
+<dt><a id="port_________COMPort"></a><a id="port_________comport"></a><a id="PORT_________COMPORT"></a><b>port=
+       </b><i>COMPort</i></dt>
+<dd>
+<p>If COM protocol is used, <i>COMPort</i> specifies the COM port to be used. The prefix "COM" is optional -- for example, both "com2" and "2" are acceptable.</p>
+</dd>
+<dt><a id="baud_________BaudRate"></a><a id="baud_________baudrate"></a><a id="BAUD_________BAUDRATE"></a><b>baud=
+       </b><i>BaudRate</i></dt>
+<dd>
+<p>If COM protocol is used, <i>BaudRate</i> should match the baud rate chosen when the KD connection server was created.</p>
+</dd>
+<dt><a id="channel_________COMChannel"></a><a id="channel_________comchannel"></a><a id="CHANNEL_________COMCHANNEL"></a><b>channel=
+       </b><i>COMChannel</i></dt>
+<dd>
+<p>If COM protocol is used, <i>COMChannel</i> should match the channel number chosen when the KD connection server was created.</p>
+</dd>
+<dt><a id="________proto_________Protocol"></a><a id="________proto_________protocol"></a><a id="________PROTO_________PROTOCOL"></a><b>
+       proto=
+       </b><i>Protocol</i></dt>
+<dd>
+<p>If SSL or SPIPE protocol is used, <i>Protocol</i> should match the secure protocol used when the KD connection server was created.</p>
+</dd>
+<dt><a id="________Cert"></a><a id="________cert"></a><a id="________CERT"></a><i>
+       Cert</i></dt>
+<dd>
+<p>If SSL or SPIPE protocol is used, you should use the identical <b>certuser=</b><i>Cert</i> or <b>machuser=</b><i>Cert</i> parameter that was used when the KD connection server was created.</p>
+</dd>
+<dt><a id="________password_________Password"></a><a id="________password_________password"></a><a id="________PASSWORD_________PASSWORD"></a><b>
+       password=
+       </b><i>Password</i></dt>
+<dd>
+<p>If a password was used when the KD connection server was created, <i>Password</i> must be supplied in order to create the smart client. It must match the original password. Passwords are case-sensitive. If the wrong password is supplied, the error message will specify "Error 0x80004005."</p>
+</dd>
+<dt><a id="________ipversion_6"></a><a id="________IPVERSION_6"></a><b>
+       ipversion=6</b></dt>
+<dd>
+<p>
+       (Debugging Tools for Windows 6.6.07 and earlier only) Forces the debugger to use IP version 6 rather than version 4 when using TCP to connect to the Internet.  In Windows Vista and later versions, the debugger attempts to auto-default to IP version 6, making this option unnecessary.  </p>
+</dd>
+<dt><a id="________trans___________ConnectType_________"></a><a id="________trans___________connecttype_________"></a><a id="________TRANS___________CONNECTTYPE_________"></a><b>
+       trans=@{
+       </b><i>ConnectType</i><b>
+       }</b></dt>
+<dd>
+<p>Tells the debugger how to connect to the target. The following kernel connection protocols are permitted:</p>
+<pre class="syntax" xml:space="preserve"><code>com:port=ComPort,baud=BaudRate 
+1394:channel=1394Channel[,symlink=1394Protocol] 
+usb2:targetname=String 
+com:pipe,port=\\VMHost\pipe\PipeName[,resets=0][,reconnect]
+com:modem </code></pre>
+<p>For information about these protocols, see <a href="getting_set_up_for_debugging.htm">Getting Set Up for Debugging</a>. You can omit any of the parameters for these protocols -- for example, you can say <b>trans=@{com:}</b> -- and the debugger will default to the values specified by the environment variables on the computer where KdSrv is running.</p>
+</dd>
+<dt><a id="Options"></a><a id="options"></a><a id="OPTIONS"></a><i>Options</i></dt>
+<dd>
+<p>Any additional command-line parameters can be placed here. See <a href="command_line_options.htm">Command-Line Options</a> for a full list.</p>
+</dd>
+</dl>
+<p>Since the KD connection server simply acts as a gateway for the smart client, the additional <i>Options</i> will be the same as those you would use if you were starting a kernel debugger on computer where KdSrv is running. The exception to this is any option that specifies a path or filename will be taken as a path on the computer where the smart client is running. </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Activating a Smart Client (Kernel Mode)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

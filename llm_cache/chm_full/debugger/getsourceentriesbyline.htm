@@ -1,0 +1,188 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The GetSourceEntriesByLine method queries symbol information and returns locations in the target's memory that correspond to lines in a source file."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IDebugSymbols3::GetSourceEntriesByLine method</title>
+
+<meta name="MS-HAID" content="IDebugSymbols_b750f895-6583-49a6-be03-c373f89808a7.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.getsourceentriesbyline"></a>IDebugSymbols3::GetSourceEntriesByLine method</h1>
+</div>
+<p>The <b>GetSourceEntriesByLine</b>  method queries symbol information and returns locations in the target's memory that correspond to lines in a source file.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>HRESULT GetSourceEntriesByLine(
+  [in]            ULONG                      Line,
+  [in]            PCSTR                      File,
+  [in]            ULONG                      Flags,
+  [out, optional] PDEBUG_SYMBOL_SOURCE_ENTRY Entries,
+  [in]            ULONG                      EntriesCount,
+  [out, optional] PULONG                     EntriesAvailable
+);</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Parameters</h2>
+<dl>
+<dt><i>Line</i> [in]</dt>
+<dd>
+<p>Specifies the line in the source file for which to query.  The number for the first line is <b>1</b>.</p>
+</dd>
+<dt><i>File</i> [in]</dt>
+<dd>
+<p>Specifies the source file.  The symbols for each module in the target are queried for this file.</p>
+</dd>
+<dt><i>Flags</i> [in]</dt>
+<dd>
+<p>Specifies bit flags that control the behavior of this method.  <i>Flags</i> can be any combination of values from the following table.</p>
+<table>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>DEBUG_GSEL_NO_SYMBOL_LOADS</p>
+</td>
+<td>
+<p>The <a href="introduction.htm#debugger_engine">debugger engine</a> will only search for the file among the modules whose symbols have already been loaded.  Symbols for the other modules will not be loaded.</p>
+<p>If this option is not set, the debugger engine will load the symbols for all modules until it finds the file specified in <i>File</i>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_GSEL_ALLOW_LOWER</p>
+</td>
+<td>
+<p>Include all the lines in <i>File</i> before <i>Line</i> in the result.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_GSEL_ALLOW_HIGHER</p>
+</td>
+<td>
+<p>Include all the lines in <i>File</i> after <i>Line</i> in the result.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_GSEL_NEAREST_ONLY</p>
+</td>
+<td>
+<p>Only return at most one result.  If DEBUG_GSEL_ALLOW_LOWER or DEBUG_GSEL_ALLOW_HIGHER are set, the returned result will be for a line close to <i>Line</i> but cannot be <i>Line</i> if there is no symbol information for that line.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>To use the default set of flags, set <i>Flags</i> to DEBUG_GSEL_DEFAULT.  This has all the flags in the previous table turned off.</p>
+</dd>
+<dt><i>Entries</i> [out, optional]</dt>
+<dd>
+<p>Receives the locations in the target's memory that correspond to the source lines queried for.  Each entry in this array is of type <a href="debug_symbol_source_entry.htm"><b>DEBUG_SYMBOL_SOURCE_ENTRY</b></a> and contains the source line number along with a location in the target's memory.</p>
+</dd>
+<dt><i>EntriesCount</i> [in]</dt>
+<dd>
+<p>Specifies the number of entries in the <i>Entries</i> array.</p>
+</dd>
+<dt><i>EntriesAvailable</i> [out, optional]</dt>
+<dd>
+<p>Receives the number of locations that match the query found in the target's memory.</p>
+</dd>
+</dl>
+<h2>Return value</h2>
+<p>These methods can also return error values.  See <a href="hresult_values.htm"><b>Return Values</b></a> for more details.</p>
+<table>
+<tr>
+<th>Return code</th>
+<th>Description</th>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>S_OK</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>The method was successful.</p>
+</td>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>S_FALSE</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>The method was successful.  However, the <i>Entries</i> array was not large enough to hold all the results that matched the query and the extra results were discarded.</p>
+</td>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>E_NOINTERFACE</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>The query yielded no results.  This includes the case where the symbol information was not available for the specified file.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>These methods can be used by debugger applications to fetch locations in the target's memory for setting breakpoints or matching source code with disassembled instructions.  For example, setting the flags DEBUG_GSEL_ALLOW_HIGHER and DEBUG_GSEL_NEAREST_ONLY will return the target's memory location for the first piece of code starting at the specified line.</p>
+<p>For more information about source files, see <a href="using_source_files.htm">Using Source Files</a>.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Target platform</p>
+</th>
+<td width="70%">
+<dl>
+<dt></dt>
+</dl>
+</td>
+</tr>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Dbgeng.h (include Dbgeng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="idebugsymbols3.htm"><b>IDebugSymbols3</b></a></dt>
+<dt><a href="debug_symbol_source_entry.htm"><b>DEBUG_SYMBOL_SOURCE_ENTRY</b></a></dt>
+<dt><a href="getsourcefilelineoffsets.htm"><b>GetSourceFileLineOffsets</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IDebugSymbols3::GetSourceEntriesByLine method%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

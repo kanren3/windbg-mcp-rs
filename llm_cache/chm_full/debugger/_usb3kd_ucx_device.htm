@@ -1,0 +1,108 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !usb3kd.ucx_device extension displays information about a USB device in the USB 3.0 tree. The display is based on data structures maintained by the USB host controller extension driver (UcxVersion.sys)."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!usb3kd.ucx_device</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._usb3kd_ucx_device"></a>!usb3kd.ucx_device</h1>
+</div>
+<p>The  <a href="_usb3kd_device_info.htm"><b>!usb3kd.ucx_device</b></a> extension displays information about a USB device  in the <a href="usb_3_extensions.htm#usb_3_tree">USB 3.0 tree</a>. The display is based on data structures maintained by the USB host controller  extension driver (Ucx<i>Version</i>.sys).</p>
+<pre class="syntax"><b>!usb3kd.ucx_device </b><i>UcxUsbDevicePrivContext</i></pre>
+<h2><a id="ddk__devobj_dbg"></a><a id="DDK__DEVOBJ_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______UcxUsbDevicePrivContext______"></a><a id="_______ucxusbdeviceprivcontext______"></a><a id="_______UCXUSBDEVICEPRIVCONTEXT______"></a>       <i>UcxUsbDevicePrivContext</i>      </dt>
+<dd>
+<p>Address of the _UCXUSBDEVICE_PRIVCONTEXT structure that represents the device.</p>
+</dd>
+</dl>
+<h2><a id="DLL"></a><a id="dll"></a>DLL</h2>
+<p>Usb3kd.dll
+     </p>
+<h2>Remarks</h2>
+<p>The USB  host controller extension driver (Ucx<i>Version</i>.sys) provides a layer of abstraction between the USB 3.0 hub driver and the USB 3.0 host controller driver. The extension driver has its own representation of host controllers, devices, and endpoints. The output the <a href="_usb3kd_device_info.htm"><b>!ucx_device</b></a> command is based on the data structures maintained by the extension driver. For more information about the USB host controller extension driver and the USB 3.0 host controller driver, see USB Driver Stack Architecture.</p>
+<p><b>!ucx_device</b> and <a href="_usb3kd_device_info.htm"><b>!device_info</b></a> both display information about a device, but the information displayed is different. The output of <b>!ucx_device</b> is from the point of view of the USB host controller extension driver, and the output of <b>!device_info</b> is from the point of view of the USB 3.0 hub driver. For example, the <b>!ucx_device</b> output includes information about endpoints, and the <b>!device_info</b> output includes information about configuration and interface descriptors.</p>
+<h2>Examples</h2>
+<p>To obtain the address of the UCX USB device private context, look at the output of the <a href="_usb3kd_ucx_controller_list.htm"><b>!ucx_controller_list</b></a> command. In the following example, the address of the private context for the second device is 0xfffffa8005bd9680.</p>
+<div class="code"><span codelanguage="cmd"><table>
+<tr>
+<th>cmd</th>
+</tr>
+<tr>
+<td>
+<pre>3: 3: kd&gt; !ucx_controller_list
+
+Dumping List of UCX controller objects
+--------------------------------------
+[1] !ucx_controller 0xfffffa80052da050 (dt ucx01000!_UCXCONTROLLER_PRIVCONTEXT fffffa80052da050)
+    !ucx_device 0xfffffa8005a41840
+        .!ucx_endpoint 0xfffffa800533f3d0 [Blk In ], UcxEndpointStateEnabled
+        ...
+    !ucx_device 0xfffffa8005bd9680
+        .!ucx_endpoint 0xfffffa8003694860 [Blk Out], UcxEndpointStateEnabled
+        ...</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Now you can pass the address of the UCX USB private context to the <b>!ucx_device</b> command.</p>
+<div class="code"><span codelanguage="cmd"><table>
+<tr>
+<th>cmd</th>
+</tr>
+<tr>
+<td>
+<pre>3: kd&gt; !ucx_device 0xfffffa8005bd9680
+
+Dumping Ucx USB Device Information fffffa8005bd9680
+---------------------------------------------------
+dt ucx01000!_UCXUSBDEVICE_PRIVCONTEXT 0xfffffa8005bd9680
+!ucx_controller 0xfffffa80052da050
+ParentHub: !wdfhandle 0x57ffacbce78
+DefaultEndpoint: !ucx_endpoint 0xfffffa8005be0550
+ListOfEndpionts:
+    .!ucx_endpoint 0xfffffa8003694860 [Blk Out], UcxEndpointStateEnabled
+    .!ucx_endpoint 0xfffffa8003686820 [Blk In ], UcxEndpointStateEnabled
+    .!ucx_endpoint 0xfffffa8005be0550 [Control], UcxEndpointStateEnabled
+    .!ucx_endpoint 0xfffffa8003695580 [Blk In ], UcxEndpointStateStale
+    .!ucx_endpoint 0xfffffa80036a20c0 [Blk Out], UcxEndpointStateStale
+
+EventCallbacks:
+    EvtUsbDeviceEndpointsConfigure: (0xfffff880044d1164) USBXHCI!UsbDevice_UcxEvtEndpointsConfigure
+    EvtUsbDeviceEnable: (0xfffff880044cffac) USBXHCI!UsbDevice_UcxEvtEnable
+    EvtUsbDeviceDisable: (0xfffff880044d1cbc) USBXHCI!UsbDevice_UcxEvtDisable
+    EvtUsbDeviceReset: (0xfffff880044d2178) USBXHCI!UsbDevice_UcxEvtReset
+    EvtUsbDeviceAddress: (0xfffff880044d0934) USBXHCI!UsbDevice_UcxEvtAddress
+    EvtUsbDeviceUpdate: (0xfffff880044d0c80) USBXHCI!UsbDevice_UcxEvtUpdate
+    EvtUsbDeviceDefaultEndpointAdd: (0xfffff880044ede1c) USBXHCI!Endpoint_UcxEvtUsbDeviceDefaultEndpointAdd
+    EvtUsbDeviceEndpointAdd: (0xfffff880044edfc8) USBXHCI!Endpoint_UcxEvtUsbDeviceEndpointAdd
+</pre>
+</td>
+</tr>
+</table></span></div>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="usb_3_extensions.htm">USB 3.0 Extensions</a></dt>
+<dt><a href="_usb3kd_ucx_controller_list.htm"><b>!usb3kd.ucx_controller_list</b></a></dt>
+<dt><a href="http://go.microsoft.com/fwlink/p?LinkID=227351">Universal Serial Bus (USB) Drivers</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!usb3kd.ucx_device%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

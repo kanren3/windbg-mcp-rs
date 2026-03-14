@@ -1,0 +1,148 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !irpfind extension displays information about all I/O request packets (IRP) currently allocated in the target system, or about those IRPs matching the specified search criteria."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!irpfind</title>
+
+<meta name="MS-HAID" content="r27_exts_kernel_E_f937a896-8b86-463a-8bfc-24af6b7181cc.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._irpfind"></a>!irpfind</h1>
+</div>
+<p>The <b>!irpfind</b> extension displays information about all I/O request packets (IRP) currently allocated in the target system, or about those IRPs matching the specified search criteria.</p>
+<p>Syntax</p>
+<pre class="syntax"><b>!irpfind </b>[<b>-v</b>][<i>PoolType</i>[<i>RestartAddress</i>[<i>Criteria</i><i>Data</i>]]]</pre>
+<h2><a id="ddk__irpfind_dbg"></a><a id="DDK__IRPFIND_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______-v______"></a><a id="_______-V______"></a>       <b>-v</b>      </dt>
+<dd>
+<p>Displays verbose information. </p>
+</dd>
+<dt><a id="_______PoolType______"></a><a id="_______pooltype______"></a><a id="_______POOLTYPE______"></a>       <i>PoolType</i>      </dt>
+<dd>
+<p>Specifies the type of pool to be searched. The following values are permitted:</p>
+<p></p>
+<dl>
+<dt><a id="0"></a>0</dt>
+<dd>
+<p>Specifies nonpaged memory pool. This is the default.</p>
+</dd>
+<dt><a id="1"></a>1</dt>
+<dd>
+<p>Specifies paged memory pool.</p>
+</dd>
+<dt><a id="2"></a>2</dt>
+<dd>
+<p>Specifies the special pool.  </p>
+</dd>
+<dt><a id="4"></a>4</dt>
+<dd>
+<p>  Specifies the session pool.</p>
+</dd>
+</dl>
+</dd>
+<dt><a id="_______RestartAddress______"></a><a id="_______restartaddress______"></a><a id="_______RESTARTADDRESS______"></a>       <i>RestartAddress</i>      </dt>
+<dd>
+<p>Specifies the hexadecimal address at which to begin the search. This is useful if the previous search was terminated prematurely. The default is zero.</p>
+</dd>
+<dt><a id="_______Criteria______"></a><a id="_______criteria______"></a><a id="_______CRITERIA______"></a>       <i>Criteria</i>      </dt>
+<dd>
+<p>Specifies the criteria for the search. Only those IRPs that satisfy the given match will be displayed.</p>
+<table>
+<tr>
+<th>Criteria</th>
+<th>Match</th>
+</tr>
+<tr>
+<td>
+<p><b>arg</b></p>
+</td>
+<td>
+<p>Finds all IRPs with a stack location where one of the arguments equals <i>Data</i>.  </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>device</b></p>
+</td>
+<td>
+<p>Finds all IRPs with a stack location where <b>DeviceObject</b> equals <i>Data</i>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>fileobject</b></p>
+</td>
+<td>
+<p>Finds all IRPs whose <b>Irp.Tail.Overlay.OriginalFileObject</b> equals <i>Data</i>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>mdlprocess</b></p>
+</td>
+<td>
+<p>Finds all IRPs whose <b>Irp.MdlAddress.Process</b> equals <i>Data</i>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>thread</b></p>
+</td>
+<td>
+<p>Finds all IRPs whose <b>Irp.Tail.Overlay.Thread</b> equals <i>Data</i>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>userevent</b></p>
+</td>
+<td>
+<p>Finds all IRPs whose <b>Irp.UserEvent</b> equals <i>Data</i>.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+</dd>
+<dt><a id="_______Data______"></a><a id="_______data______"></a><a id="_______DATA______"></a>       <i>Data</i>      </dt>
+<dd>
+<p>Specifies the data to be matched in the search.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<p>
+          Kdexts.dll</p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>See <a href="plug_and_play_debugging.htm">Plug and Play Debugging</a> for applications of this extension command. For information about IRPs, see the Windows Driver Kit (WDK) documentation and <i>Microsoft Windows Internals</i> by Mark Russinovich and David Solomon. </p>
+<h2>Remarks</h2>
+<p>This example finds the IRP in the nonpaged pool that is going to set user event FF9E4F48 upon completion:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !irpfind 0 0 userevent ff9e4f48</code></pre>
+<p>The following example produces a full listing of all IRPs in the nonpaged pool:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !irpfind
+Searching NonPaged pool (8090c000 : 8131e000) for Tag: Irp
+8097c008 Thread 8094d900 current stack belongs to  \Driver\symc810
+8097dec8 Thread 8094dda0 current stack belongs to  \FileSystem\Ntfs
+809861a8 Thread 8094dda0 current stack belongs to  \Driver\symc810
+809864e8 Thread 80951ba0 current stack belongs to  \Driver\Mouclass
+80986608 Thread 80951ba0 current stack belongs to  \Driver\Kbdclass
+80986728 Thread 8094dda0 current stack belongs to  \Driver\symc810</code></pre>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!irpfind%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

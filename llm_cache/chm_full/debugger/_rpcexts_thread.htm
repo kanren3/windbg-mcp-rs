@@ -1,0 +1,97 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !rpcexts.thread extension displays the per-thread RPC information.This extension command should not be confused with the .thread (Set Register Context) command or the !thread (!kdextx86.thread and !kdexts.thread) extension."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!rpcexts.thread</title>
+
+<meta name="MS-HAID" content="r32_exts_Lg_ND_RPC_0e7321c8-4bf5-4f59-ad0c-e102e6f71b63.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._rpcexts_thread"></a>!rpcexts.thread</h1>
+</div>
+<p>The <b>!rpcexts.thread</b> extension displays the per-thread RPC information.</p>
+<p>This extension command should not be confused with the <a href="_thread__set_register_context_.htm"><b>.thread (Set Register Context)</b></a> command or the <a href="_thread.htm"><b>!thread</b></a> (!kdextx86.thread and !kdexts.thread) extension.</p>
+<pre class="syntax"><b>!rpcexts.thread </b><i>TEB</i>
+</pre>
+<h2><a id="ddk__rpcexts_thread_dbg"></a><a id="DDK__RPCEXTS_THREAD_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______TEB______"></a><a id="_______teb______"></a>       <i>TEB</i>      </dt>
+<dd>
+<p>Specifies the address of the thread environment block (TEB).</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000</b></p>
+</td>
+<td>
+<p>
+          Rpcexts.dll
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Rpcexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about debugging Microsoft Remote Procedure Call (RPC), see <a href="rpc_debugging.htm">RPC Debugging</a>.</p>
+<h2>Remarks</h2>
+<p>This extension displays the per-thread RPC information. A field in the per-thread RPC information is the extended error information for this thread.</p>
+<p>Here is an example:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:001&gt; !rpcexts.thread 7ffdd000
+RPC TLS at 692e70
+
+HandleToThread - 0x6c
+SavedProcedure - 0x0
+SavedParameter - 0x0
+ActiveCall - 0x0
+Context - 0x0
+CancelTimeout - 0xffffffff
+SecurityContext - 0x0
+ExtendedStatus - 0x0
+ThreadEEInfo - 0xb015f0
+ThreadEvent at - 0x00692E78
+fCallCancelled - 0x0
+buffer cache array at - 0x00692E84
+fAsync - 0x0</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!rpcexts.thread%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

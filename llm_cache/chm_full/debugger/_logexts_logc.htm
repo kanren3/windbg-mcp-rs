@@ -1,0 +1,137 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !logexts.logc extension displays all API categories, displays all APIs in a specific category, or enables and disables the logging of APIs in one or more categories."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!logexts.logc</title>
+
+<meta name="MS-HAID" content="r32_exts_Lg_ND_RPC_5023f845-2c4a-4bce-9b40-a71828cb1016.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._logexts_logc"></a>!logexts.logc</h1>
+</div>
+<p>The <b>!logexts.logc</b> extension displays all API categories, displays all APIs in a specific category, or enables and disables the logging of APIs in one or more categories.</p>
+<pre class="syntax">
+    <b>!logexts.logc e </b><i>Categories</i> 
+<b>!logexts.logc d </b><i>Categories</i> 
+<b>!logexts.logc p </b><i>Category</i> 
+<b>!logexts.logc</b> 
+</pre>
+<h2><a id="ddk__logexts_logc_dbg"></a><a id="DDK__LOGEXTS_LOGC_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______e______"></a><a id="_______E______"></a>       <b>e</b>      </dt>
+<dd>
+<p>Enables logging of the specified categories.</p>
+</dd>
+<dt><a id="_______d______"></a><a id="_______D______"></a>       <b>d</b>      </dt>
+<dd>
+<p>Disables logging of the specified categories.</p>
+</dd>
+<dt><a id="_______Categories______"></a><a id="_______categories______"></a><a id="_______CATEGORIES______"></a>       <i>Categories</i>      </dt>
+<dd>
+<p>Specifies the categories to be enabled or disabled. If multiple categories are listed, separate them with spaces. An asterisk (*) can be used to indicate all categories.</p>
+</dd>
+<dt><a id="_______p______"></a><a id="_______P______"></a>       <b>p</b>      </dt>
+<dd>
+<p>Displays all APIs that belong to the specified category.</p>
+</dd>
+<dt><a id="_______Category______"></a><a id="_______category______"></a><a id="_______CATEGORY______"></a>       <i>Category</i>      </dt>
+<dd>
+<p>Specifies the category whose APIs will be displayed. Only one category can be specified with the <b>p</b> option.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Windows 2000</b></p>
+</td>
+<td>
+<p>
+          Logexts.dll
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Logexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information, see <a href="logger_and_logviewer.htm">Logger and LogViewer</a>.</p>
+<h2>Remarks</h2>
+<p>Without any options, <b>!logexts.logc</b> will display the current list of available categories and will indicate which ones are enabled and disabled.</p>
+<p>If a category is disabled, the hooks for all APIs in that category will be removed so there is no longer any performance overhead. COM hooks are not removed, because they cannot be re-enabled at will.</p>
+<p>Enabling only certain categories can be useful when you are only interested in a particular type of interaction that the program is having with Windows (for example, file operations). This reduces the log file size and also reduces the effect that Logger has on the execution speed of the process.</p>
+<p>The following command will enable the logging of all categories:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; !logexts.logc e *</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The following command will disable the logging of category 7:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; !logexts.logc d 7</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The following command will enable the logging of categories 13 and 15:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; !logexts.logc e 13 15</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The following command will display all APIs belonging to category 3:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; !logexts.logc p 3</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!logexts.logc%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

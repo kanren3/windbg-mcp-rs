@@ -1,0 +1,254 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The WHEA_INTERNAL_ERROR bug check has a value of 0x00000122."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0x122:  WHEA_INTERNAL_ERROR</title>
+
+<meta name="MS-HAID" content="t07_bugs_E0_80e89003-1a08-42c2-8fbe-a72d8c9a2bfe.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0x122___whea_internal_error"></a>Bug Check 0x122:  WHEA_INTERNAL_ERROR</h1>
+</div>
+<p>The WHEA_INTERNAL_ERROR bug check has a value of 0x00000122. This bug check indicates that an internal error in the Windows Hardware Error Architecture (WHEA) has occurred. Errors can result from a bug in the implementation of a platform-specific hardware error driver (PSHED) plug-in supplied by a vendor, the firmware implementation of error records, or the firmware implementation of error injection.</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2>  WHEA_INTERNAL_ERROR Parameters</h2>
+<table>
+<tr>
+<th>Parameter 1</th>
+<th>Parameter 2</th>
+<th>Parameter 3</th>
+<th>Parameter 4</th>
+<th>Cause of error</th>
+</tr>
+<tr>
+<td>
+<p>0x1</p>
+</td>
+<td>
+<p>Size of memory</p>
+</td>
+<td>
+<p>Error source count</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>Failed to allocate enough memory for all the error sources in the hardware error source table.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x2</p>
+</td>
+<td>
+<p>Number of processors</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>Failed to allocate enough memory for a WHEA information block for each processor.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x5</p>
+</td>
+<td>
+<p>Status</p>
+</td>
+<td>
+<p>Phase (The initialization phase for the bug check)</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>WHEA failed to allocate enough memory for the error sources, or the error source enumeration failed.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x6</p>
+</td>
+<td>
+<p>Status</p>
+</td>
+<td>
+<p>Phase</p>
+</td>
+<td>
+<p>Error source type</p>
+</td>
+<td>
+<p>Failed to initialize the error source (Parameter 4) during the phase specified by Parameter 3.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x7</p>
+</td>
+<td>
+<p>Status</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>Failed to allocate enough memory.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x8</p>
+</td>
+<td>
+<p>Number of error sources</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>Failed to allocate enough memory for all the error source descriptors.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x9</p>
+</td>
+<td>
+<p>Error source type</p>
+</td>
+<td>
+<p>Source ID</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>WHEA received an uncorrected error source from an invalid error source.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0xA</p>
+</td>
+<td>
+<p>Error source type</p>
+</td>
+<td>
+<p>Source ID</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>Failed to allocate an error record for an uncorrected error.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0xB</p>
+</td>
+<td>
+<p>Error source type</p>
+</td>
+<td>
+<p>Source ID</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>Failed to populate the error record for an uncorrected  error.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>If Parameter 1 is equal to 0x6, 0x9, 0xA, or 0xB, one of the other parameters contains the error source type. The following table gives possible values for the error source type.</p>
+<table>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>0x00</td>
+<td>Machine check exception</td>
+</tr>
+<tr>
+<td>0x01</td>
+<td>Corrected machine check</td>
+</tr>
+<tr>
+<td>0x02</td>
+<td>Corrected platform error</td>
+</tr>
+<tr>
+<td>0x03</td>
+<td>Non-maskable interrupt</td>
+</tr>
+<tr>
+<td>0x04</td>
+<td>PCI express error</td>
+</tr>
+<tr>
+<td>0x05</td>
+<td> Other types of error sources/Generic</td>
+</tr>
+<tr>
+<td>0x06</td>
+<td>IA64 INIT error source</td>
+</tr>
+<tr>
+<td>0x07</td>
+<td>BOOT error source</td>
+</tr>
+<tr>
+<td>0x08</td>
+<td>SCI-based generic error source</td>
+</tr>
+<tr>
+<td>0x09</td>
+<td>Itanium machine check abort</td>
+</tr>
+<tr>
+<td>0x0A</td>
+<td>Itanium machine check</td>
+</tr>
+<tr>
+<td>0x0B</td>
+<td>Itanium corrected platform error</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,38 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Setting Breakpoints"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Setting Breakpoints</title>
+
+<meta name="MS-HAID" content="Engine_DG_127dfdf0-b01d-405e-a25c-511830d82cc0.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.setting_breakpoints"></a>Setting Breakpoints</h1>
+</div>
+<h2><a id="ddk_using_breakpoints_dbx"></a><a id="DDK_USING_BREAKPOINTS_DBX"></a></h2>
+<p>Breakpoints are created with the <a href="addbreakpoint.htm"><b>AddBreakpoint</b></a> method.  This method creates an <a href="idebugbreakpoint.htm">IDebugBreakpoint</a> object that represents the breakpoint.  It also set the <i>breakpoint type</i> (software breakpoint or processor breakpoint).  Once a breakpoint has been created, its type cannot be changed.</p>
+<p>Breakpoints are deleted with the <a href="removebreakpoint.htm"><b>RemoveBreakpoint</b></a> method.  This also deletes the <b>IDebugBreakpoint</b> object; this object may not be used again.</p>
+<div class="alert"><b>Note</b>    Although <b>IDebugBreakpoint</b> implements the <b>IUnknown</b> interface, the methods <b>IUnknown::AddRef</b> and <b>IUnknown::Release</b> are not used to control the lifetime of the breakpoint.  These methods have no effect on the lifetime of the breakpoint.  Instead, an <b>IDebugBreakpoint</b> object is deleted after the method <a href="removebreakpoint.htm"><b>RemoveBreakpoint</b></a> is called.</div>
+<div> </div>
+<p>When the breakpoint is created, it is given a unique <i>breakpoint ID</i>.  This identifier will not change.  However, after the breakpoint has been deleted, its ID may be used for another breakpoint.  For details on how to receive notification of the removal of a breakpoint, see <a href="monitoring_events.htm">Monitoring Events</a>.</p>
+<p>When a breakpoint is created, it is initially disabled; this means that it will not cause the target to stop executing.  This breakpoint may be enabled by using the method <a href="addflags.htm"><b>AddFlags</b></a> to add the DEBUG_BREAKPOINT_ENABLED flag.</p>
+<p>When a breakpoint is first created, it has the memory location 0x00000000 associated with it.  The location can be changed by using <a href="setoffset.htm"><b>SetOffset</b></a> with an address, or by using <a href="setoffsetexpression.htm"><b>SetOffsetExpression</b></a> with a symbolic expression.  The breakpoint's location should be changed from its initial value before it is used.  </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Setting Breakpoints%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

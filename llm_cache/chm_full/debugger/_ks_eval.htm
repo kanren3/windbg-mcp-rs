@@ -1,0 +1,112 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !ks.eval extension evaluates an expression using an extension-specific expression evaluator."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!ks.eval</title>
+
+<meta name="MS-HAID" content="r33~b_exts_KS_1ba83a6d-154f-4031-8120-899accc24b95.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._ks_eval"></a>!ks.eval</h1>
+</div>
+<p>The <b>!ks.eval</b> extension evaluates an expression using an extension-specific expression evaluator.</p>
+<pre class="syntax">
+    <b>!ks.eval </b><i>Expression</i> 
+</pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Expression______"></a><a id="_______expression______"></a><a id="_______EXPRESSION______"></a>       <i>Expression</i>      </dt>
+<dd>
+<p>Specifies the expression to evaluate. <i>Expression</i> can include any MASM operators, symbols, or numerical syntax, as well as the extension-specific operators described below. For more information about MASM expressions, see <a href="masm_numbers_and_operators.htm">MASM Numbers and Operators</a>. </p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Windows 2000</b></p>
+</td>
+<td>
+<p>
+          winxp\Ks.dll 
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Ks.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information, see <a href="kernel_streaming_debugging.htm">Kernel Streaming Debugging</a>.</p>
+<h2>Remarks</h2>
+<p>The extension module includes two extension-specific operators which can be used in address parameters to extension commands:</p>
+<p></p>
+<dl>
+<dt><a id="________fdo_________x_________"></a><a id="________FDO_________X_________"></a><b>
+       fdo(
+       </b><i>x</i><b>
+       )</b></dt>
+<dd>
+<p>Returns the functional device object associated with the object at address <b>x</b>. </p>
+</dd>
+<dt><a id="________driver_________x_________"></a><a id="________DRIVER_________X_________"></a><b>
+       driver(
+       </b><i>x</i><b>
+       )</b></dt>
+<dd>
+<p>Returns the driver object associated with <b>fdo(</b><i>x</i><b>)</b>.</p>
+</dd>
+</dl>
+<p>You can use the <b>!ks.eval</b> command to parse expressions that contain these extension-specific operators as well as <a href="masm_numbers_and_operators.htm">MASM Numbers and Operators</a>.</p>
+<p>Note that all operators supported by <b>!ks.eval</b> are also supported by all other extension commands in the Ks.dll extension module.</p>
+<p>Here is an example of the <b>!ks.eval</b> extension being used with the address of a filter. Note the presence of the 0x8241C020 address in the <a href="_ks_allstreams.htm"><b>!ks.allstreams</b></a> output:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; !eval fdo(829493c4)
+Resulting Evaluation: 8241c020
+
+kd&gt; !allstreams
+6 Kernel Streaming FDOs found:
+    Functional Device 82a17690 [\Driver\smwdm]
+    Functional Device 8296eb08 [\Driver\wdmaud]
+    Functional Device 82490388 [\Driver\sysaudio]
+    Functional Device 82970cb8 [\Driver\MSPQM]
+    Functional Device 824661b8 [\Driver\MSPCLOCK]
+    Functional Device 8241c020 [\Driver\avssamp]</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!ks.eval%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Event Information"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Event Information</title>
+
+<meta name="MS-HAID" content="Engine_DG_67200dc4-4754-4ae9-91de-8e6974452989.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.event_information"></a>Event Information</h1>
+</div>
+<p>Whenever a debugging session is accessible, there is a <i>last event</i>.  This is the event that caused the session to become accessible.  The <i>event target</i> is the target which generated the last event.  When the session becomes accessible, the current target is set to the event target.  The details of the last event are returned by <a href="getlasteventinformation.htm"><b>GetLastEventInformation</b></a>.  The instruction pointer for the last event and the memory at the instruction pointer when the event occurred are returned by the <a href="request.htm"><b>Request</b></a> operations <a href="debug_request_get_captured_event_code_offset.htm"><b>DEBUG_REQUEST_GET_CAPTURED_EVENT_CODE_OFFSET</b></a> and <a href="debug_request_read_captured_event_code_stream.htm"><b>DEBUG_REQUEST_READ_CAPTURED_EVENT_CODE_STREAM</b></a>.</p>
+<p>If the target is a crash dump file, the <i>last event</i> is the last event that occurred before the dump file was created.  This event is stored in the dump file and the engine generates it for the event callbacks when the dump file is acquired as a debugging target.</p>
+<p>If the target is a kernel-mode target and a <i>bug check</i> occurred, the bug check code and related parameters can be found using <a href="readbugcheckdata.htm"><b>ReadBugCheckData</b></a>.</p>
+<p>If the target is a user-mode Minidump, the dump file generator may store an additional event.  Typically, this is the event that provoked the generator to save the dump file.  Details of this event are returned by <a href="getstoredeventinformation.htm"><b>GetStoredEventInformation</b></a> and the <a href="request.htm"><b>Request</b></a> operations <a href="debug_request_target_exception_context.htm"><b>DEBUG_REQUEST_TARGET_EXCEPTION_CONTEXT</b></a>, <a href="debug_request_target_exception_thread.htm"><b>DEBUG_REQUEST_TARGET_EXCEPTION_THREAD</b></a>, and <a href="debug_request_target_exception_record.htm"><b>DEBUG_REQUEST_TARGET_EXCEPTION_RECORD</b></a>.  </p>
+<p>Dump files may contain a static list of events.  Each event represents a snapshot of the target at a particular point in time.  The number of events in this list is returned by <a href="getnumberevents.htm"><b>GetNumberEvents</b></a>.  For a description of each event in the list, use <a href="geteventindexdescription.htm"><b>GetEventIndexDescription</b></a>.  To set an event from this list as the current event, use the method <a href="setnexteventindex.htm"><b>SetNextEventIndex</b></a>; after calling <a href="waitforevent.htm"><b>WaitForEvent</b></a>, the event becomes the current event.  To determine which event in the list is the current event, use <a href="getcurrenteventindex.htm"><b>GetCurrentEventIndex</b></a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Event Information%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

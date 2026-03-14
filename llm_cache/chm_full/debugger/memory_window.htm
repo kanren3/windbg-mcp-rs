@@ -1,0 +1,158 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="In WinDbg, you can view and edit memory by entering commands or by using a Memory window."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Viewing and Editing Memory in WinDbg</title>
+
+<meta name="MS-HAID" content="r36_gui_1_20cff311-cb78-4ad3-a455-7009744a3686.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.memory_window"></a>Viewing and Editing Memory in WinDbg</h1>
+</div>
+<p>In WinDbg, you can view and edit memory by entering commands or by using a Memory window.</p>
+<h2><a id="Debugger_Command_Window"></a><a id="debugger_command_window"></a><a id="DEBUGGER_COMMAND_WINDOW"></a>Debugger Command Window</h2>
+<p>You can view memory by entering one of the <a href="d__da__db__dc__dd__dd__df__dp__dq__du__dw__dw__dyb__dyd__display_memor.htm"><b>Display Memory</b></a> commands in the Debugger Command window. You can edit memory by entering one of the <a href="e__ea__eb__ed__ed__ef__ep__eq__eu__ew__eza__ezu__enter_values_.htm"><b>Enter Values</b></a> commands in the Debugger Command window. For more information, see <a href="accessing_memory_by_virtual_address.htm">Accessing Memory by Virtual Address</a> and <a href="accessing_memory_by_physical_address.htm">Accessing Memory by Physical Address</a>.</p>
+<h2><a id="ddk_memory_window_dbg"></a><a id="DDK_MEMORY_WINDOW_DBG"></a>Opening a Memory Window</h2>
+<p>To open a Memory window, choose <b>Memory</b> from the <b>View</b> menu. (You can also press ALT+5 or click the <b>Memory</b> button (<img src="images/tbmem.png" alt="Screen shot of the Memory button"/>) on the toolbar.  ALT+SHIFT+5 closes the active Memory window.)</p>
+<p>The following screen shot shows an example of a Memory window.</p><img src="images/window-memory.png" alt="Screen shot of the Memory window"/><h2><a id="Using_a_Memory_Window"></a><a id="using_a_memory_window"></a><a id="USING_A_MEMORY_WINDOW"></a>Using a Memory Window</h2>
+<p>The Memory window displays data in several columns. The column on the left side of the window shows the beginning address of each line. The remaining columns display the requested information, from left to right. If you select <b>Bytes</b> in the <b>Display format</b> menu, the ASCII characters that correspond to these bytes are displayed in the right side of the window.</p>
+<div class="alert"><b>Note</b>    By default, the Memory window displays virtual memory. This type of memory is the only type of memory that is available in user mode. In kernel mode, you can use the <b>Memory Options</b> dialog box to display physical memory and other data spaces. The <b>Memory Options</b> dialog box is  described later in this topic.</div>
+<div> </div>
+<p>In the Memory window, you can do the following:</p>
+<ul>
+<li>
+<p>To write to memory, click inside the Memory window and type new data. You can edit only hexadecimal data&#8212;you cannot directly edit ASCII and Unicode characters. Changes take effect as soon as you type new information.</p>
+</li>
+<li>
+<p>To see other sections of memory, use the <b>Previous</b> and <b>Next</b> buttons on the Memory window toolbar, or press the PAGE UP or PAGE DOWN keys. These buttons and keys display the immediately preceding or following sections of memory. If you request an invalid page, an error message appears.</p>
+</li>
+<li>
+<p>To navigate within the window, use the RIGHT ARROW, LEFT ARROW, UP ARROW, and DOWN ARROW keys. If you use these keys to move off of the page, a new page is displayed. Before you use these keys, you should resize the Memory window so that it does not have scroll bars. This sizing enables you to distinguish between the actual page edge and the window cutoff.</p>
+</li>
+<li>To change the memory location that is being viewed, enter a new address into the address box at the top of the Memory window. Note that the Memory window refreshes its display while you enter an address, so you could get error messages before you have completed typing the address.<div class="alert"><b>Note</b>    The address that you enter into the box is interpreted in the current radix. If the current radix is not 16, you should prefix a hexadecimal address with <b>0x</b>. To change the default radix, use the <a href="n__set_number_base_.htm"><b>n (Set Number Base)</b></a> command in the Debugger Command window. The display within the Memory window itself is not affected by the current radix.</div>
+<div> </div>
+</li>
+<li>
+<p>To change the data type that the window uses to display memory, use the <b>Display format</b> menu in the Memory window toolbar. Supported data types include short words, double words, and quad-words; short, long, and quad integers and unsigned integers; 10-byte, 16-byte, 32-byte, and 64-byte real numbers; ASCII characters; Unicode characters; and hexadecimal bytes. The display of hexadecimal bytes includes ASCII characters as well. </p>
+</li>
+</ul>
+<p>The Memory window has a toolbar that contains two buttons, a menu, and a box and has a shortcut menu with additional commands. To access the menu, right-click the title bar or click the icon near the upper-right corner of the window (<img src="images/tbmem.png" alt="Screen shot of the button that displays the Memory window toolbar shortcut menu"/>). The toolbar and shortcut menu contain the following choices:</p>
+<ul>
+<li>
+<p>
+       (Toolbar only)  The address box enables you to specify a new address or offset. The exact meaning of this box depends on the memory type you are viewing. For example, if you are viewing virtual memory, the box enables you to specify a new virtual address or offset.</p>
+</li>
+<li>
+<p>
+       (Toolbar only)
+       <b>Display format</b> enables you to select a new display format.</p>
+</li>
+<li>
+<p>
+       (Toolbar and menu)
+       <b>Previous</b> (on the toolbar) and <b>Previous page</b> (on the shortcut menu) cause the previous section of memory to be displayed.</p>
+</li>
+<li>
+<p>
+       (Toolbar and menu)
+       <b>Next</b> (on the toolbar) and <b>Next page</b> (on the shortcut menu) cause the next section of memory to be displayed.</p>
+</li>
+<li>
+<p>
+       (Menu only)
+       <b>Toolbar</b> turns the toolbar on and off.</p>
+</li>
+<li>
+<p>
+       (Menu only)
+       <b>Auto-fit columns</b> ensures that the number of columns displayed in the Memory window fits the width of the Memory window.</p>
+</li>
+<li>
+<p>
+       (Menu only)
+       <b>Dock</b> or <b>Undock</b> causes the window to enter or leave the docked state.</p>
+</li>
+<li>
+<p>
+       (Menu only)
+       <b>Move to new dock</b> closes the Memory window and opens it in a new dock.</p>
+</li>
+<li>
+<p>
+       (Menu only)
+       <b>Set as tab-dock target for window type</b> sets the selected Memory window as the tab-dock target for other Memory windows.  All Memory windows that are opened after one is chosen as the tab-dock target are automatically grouped with that window in a tabbed collection.</p>
+</li>
+<li>
+<p>
+       (Menu only)
+       <b>Always floating</b> causes the window to remain undocked even if it is dragged to a docking location.</p>
+</li>
+<li>
+<p>
+       (Menu only)
+       <b>Move with frame</b> causes the window to move when the WinDbg frame is moved, even if the window is undocked. For more information about docked, tabbed, and floating windows, see <a href="positioning_the_windows.htm">Positioning the Windows</a>.</p>
+</li>
+<li>
+<p>
+       (Menu only)
+       <b>Properties</b> opens the <b>Memory Options</b> dialog box, which is described in the following section within this topic.</p>
+</li>
+<li>
+<p>
+       (Menu only)
+       <b>Help</b> opens this topic in the Debugging Tools for Windows documentation.</p>
+</li>
+<li>
+<p>
+       (Menu only)
+       <b>Close</b> closes this window.</p>
+</li>
+</ul>
+<h3><a id="memory_options_dialog_box"></a><a id="MEMORY_OPTIONS_DIALOG_BOX"></a>Memory Options Dialog Box</h3>
+<p>When you click <b>Properties</b> on the shortcut menu, the <b>Memory Options</b> dialog box appears.</p>
+<p>In kernel mode, there are six memory types available as tabs in this dialog box: <b>Virtual Memory</b>, <b>Physical Memory</b>, <b>Bus Data</b>, <b>Control Data</b>, <b>I/O</b> (I/O port information), and <b>MSR</b> (model-specific register information). Click the tab that corresponds to the information that you want to access.</p>
+<p>In user mode, only the <b>Virtual Memory</b> tab is available.</p>
+<p>Each tab enables you to specify the memory that you want to display:</p>
+<ul>
+<li>
+<p>In the <b>Virtual Memory</b> tab, in the <b>Offset</b> box, specify the address or offset of the beginning of the memory range that you want to view.</p>
+</li>
+<li>
+<p>In the <b>Physical Memory</b> tab, in the <b>Offset</b> box, specify the physical address of the beginning of the memory range that you want to view.  The Memory window can display only described, cacheable physical memory. If you want to display physical memory that has other attributes, use the <a href="d__da__db__dc__dd__dd__df__dp__dq__du__dw__dw__dyb__dyd__display_memor.htm"><b>d* (Display Memory)</b></a> command or the <a href="_db___dc___dd___dp___dq___du___dw.htm"><b>!d*</b></a> extension.</p>
+</li>
+<li>
+<p>In the <b>Bus Data</b> tab, in the <b>Bus Data Type</b> menu, specify the bus data type. Then, use the <b>Bus number</b>, <b>Slot number</b>, and <b>Offset</b> boxes to specify the bus data that you want to view.</p>
+</li>
+<li>
+<p>In the <b>Control Data</b> tab, use the <b>Processor</b> and <b>Offset</b> text boxes to specify the control data that you want to view.</p>
+</li>
+<li>
+<p>In the <b>I/O</b> tab, in the <b>Interface Type</b> menu, specify the I/O interface type. Use the <b>Bus number</b>, <b>Address space</b>, and <b>Offset</b> boxes to specify the data that you want to view.</p>
+</li>
+<li>
+<p>In the <b>MSR</b> tab, in the <b>MSR</b> box, specify the model-specific register that you want to view.</p>
+</li>
+</ul>
+<p>Each tab also includes a <b>Display format</b> menu. This menu has the same effect as the <b>Display format</b> menu in the Memory window.</p>
+<p>Click <b>OK</b> in the <b>Memory Options</b> dialog box to cause your changes to take effect.</p>
+<h2><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h2>
+<p>For more information about memory manipulation and a description of other memory-related commands, see <a href="reading_and_writing_memory.htm">Reading and Writing Memory</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Viewing and Editing Memory in WinDbg%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,75 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Small Memory Dump"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Small Memory Dump</title>
+
+<meta name="MS-HAID" content="r10_dump_files_1c793f2b-a711-4e06-9c87-99be8f297556.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.small_memory_dump"></a>Small Memory Dump</h1>
+</div>
+<h2><a id="ddk_small_memory_dump_dbg"></a><a id="DDK_SMALL_MEMORY_DUMP_DBG"></a></h2>
+<p>A <i>Small Memory Dump</i> is much smaller than the other two kinds of kernel-mode crash dump files. It is exactly 64 KB in size, and requires only 64 KB of pagefile space on the boot drive.</p>
+<p>This dump file includes the following:</p>
+<ul>
+<li>
+<p>The bug check message and parameters, as well as other blue-screen data.</p>
+</li>
+<li>
+<p>The processor context (PRCB) for the processor that crashed.</p>
+</li>
+<li>
+<p>The process information and kernel context (EPROCESS) for the process that crashed.</p>
+</li>
+<li>
+<p>The thread information and kernel context (ETHREAD) for the thread that crashed.</p>
+</li>
+<li>
+<p>The kernel-mode call stack for the thread that crashed. If this is longer than 16 KB, only the topmost 16 KB will be included.</p>
+</li>
+<li>
+<p>A list of loaded drivers.</p>
+</li>
+</ul>
+<p>In Windows XP and later versions of Windows, the following items are also included:</p>
+<ul>
+<li>
+<p>A list of loaded modules and unloaded modules.</p>
+</li>
+<li>
+<p>The debugger data block. This contains basic debugging information about the system.</p>
+</li>
+<li>
+<p>Any additional memory pages that Windows identifies as being useful in debugging failures. This includes the data pages that the registers were pointing to when the crash occurred, and other pages specifically requested by the faulting component.</p>
+</li>
+<li>
+<p>(Windows Server 2003 and later)  The Windows SKU  -- for example, "Professional" or "Server".</p>
+</li>
+</ul>
+<p>This kind of dump file can be useful when space is greatly limited. However, due to the limited amount of information included, errors that were not directly caused by the thread executing at time of crash may not be discovered by an analysis of this file.</p>
+<p>Since this kind of dump file does not contain images of any executables residing in memory at the time of the crash, you may also need to set the executable image path if these executables turn out to be important.</p>
+<p>If a second bug check occurs and a second Small Memory Dump file is created, the previous file will be preserved. Each additional file will be given a distinct name, which contains the date of the crash encoded in the filename. For example, mini022900-01.dmp is the first memory dump file generated on February 29, 2000. A list of all Small Memory Dump files is kept in the directory %SystemRoot%\Minidump.</p>
+<h2><a id="related_topics"></a>Related topics</h2>
+<dl>
+<dt><a href="varieties_of_kernel_mode_dump_files.htm">Varieties of Kernel-Mode Dump Files</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Small Memory Dump%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

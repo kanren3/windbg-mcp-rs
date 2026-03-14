@@ -1,0 +1,33 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Handling File Pointers"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Handling File Pointers</title>
+
+<meta name="MS-HAID" content="r09_symbols_6b0b1e32-da2d-4f64-9e1d-937fd00ee0f0.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.handling_file_pointers"></a>Handling File Pointers</h1>
+</div>
+<p>A UNC symbol store supports placing the actual files to be served in a separate location, with the client code finding the location of the files through file pointers.  These pointers are generated in the symbol store using SymStore with the <b>/p</b> option.  This handling is supported with other HTTP-based symbol stores only if the file pointers point to a UNC location that is directly accessible by the client.  When SymProxy is loaded into the Web server, file-pointer handling is automatically enhanced.  
+	 The client no longer needs to be able to directly access the target files because SymProxy serves them through the HTTP interface.</p>
+<p>Because this feature is automatically applied, an option exists to turn it off in case you must use the proxy for serving some files and regular file pointer implementation for others.  To do this, create a REG_DWORD called "NoFilePointerHandler" in <b>HKLM\Software\Microsoft\Symbol Server</b>.  Set this value to 1 (or anything other than 0) to turn off the internal file pointer handler in SymProxy.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Handling File Pointers%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

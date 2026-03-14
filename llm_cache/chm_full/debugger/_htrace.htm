@@ -1,0 +1,174 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !htrace extension displays stack trace information for one or more handles."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!htrace</title>
+
+<meta name="MS-HAID" content="r25_exts_general_He_668c4c11-7a0b-4449-aa03-97b903634e73.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._htrace"></a>!htrace</h1>
+</div>
+<p></p>
+<p>The <b>!htrace</b> extension displays stack trace information for one or more handles.</p>
+<p>User-Mode Syntax</p>
+<pre class="syntax"><b>!htrace </b>[<i>Handle </i>[<i>Max_Traces</i>]] 
+<b>!htrace -enable </b>[<i>Max_Traces</i>]
+<b>!htrace -snapshot</b>
+<b>!htrace -diff</b>
+<b>!htrace -disable</b>
+<b>!htrace -?</b> </pre>
+<p>Kernel-Mode Syntax</p>
+<pre class="syntax">
+    <b>!htrace </b>[<i>Handle</i> [<i>Process </i>[<i>Max_Traces</i>]]] 
+<b>!htrace -?</b> 
+</pre>
+<h2><a id="ddk__htrace_dbg"></a><a id="DDK__HTRACE_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Handle______"></a><a id="_______handle______"></a><a id="_______HANDLE______"></a>       <i>Handle</i>      </dt>
+<dd>
+<p>Specifies the handle whose stack trace will be displayed. If <i>Handle</i> is 0 or omitted, stack traces for all handles in the process will be displayed.</p>
+</dd>
+<dt><a id="_______Process______"></a><a id="_______process______"></a><a id="_______PROCESS______"></a>       <i>Process</i>      </dt>
+<dd>
+<p>
+       (Kernel mode only)  Specifies the process whose handles will be displayed.  If <i>Process</i> is 0 or omitted, then the current process is used.  In user mode, the current process is always used.  </p>
+</dd>
+<dt><a id="_______Max_Traces______"></a><a id="_______max_traces______"></a><a id="_______MAX_TRACES______"></a>       <i>Max_Traces</i>      </dt>
+<dd>
+<p>Specifies the maximum number of stack traces to display.  In user mode, if this parameter is omitted, then all the stack traces for the target process will be displayed.  </p>
+</dd>
+<dt><a id="_______-enable______"></a><a id="_______-ENABLE______"></a>       <b>-enable</b>      </dt>
+<dd>
+<p>(User mode only)  Enables handle tracing and takes the first snapshot of the handle information to use as the initial state by the <b>-diff</b> option.</p>
+</dd>
+<dt><a id="_______-snapshot______"></a><a id="_______-SNAPSHOT______"></a>       <b>-snapshot</b>      </dt>
+<dd>
+<p>(User mode only)  Takes a snapshot of the current handle information to use as the initial state by the <b>-diff</b> option.</p>
+</dd>
+<dt><a id="_______-diff______"></a><a id="_______-DIFF______"></a>       <b>-diff</b>      </dt>
+<dd>
+<p>(User mode only)  Compares current handle information with the last snapshot of handle information that was taken.  Displays all handles that are still open.</p>
+</dd>
+<dt><a id="_______-disable______"></a><a id="_______-DISABLE______"></a>       <b>-disable</b>      </dt>
+<dd>
+<p>(User mode only; Windows Server 2003 and later only)  Disables handle tracing.  In Windows XP, handle tracing can be disabled only by terminating the target process.</p>
+</dd>
+<dt><a id="_______-_______"></a>       <b>-?</b>      </dt>
+<dd>
+<p>Displays some brief Help text for this extension in the Debugger Command window.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Windows 2000
+         </b></p>
+</td>
+<td>
+<p>Unavailable </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+<dl>
+<dt>
+          Kdexts.dll
+          </dt>
+<dt>Ntsdexts.dll
+         </dt>
+</dl>
+</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For information about handles, see the Microsoft Windows SDK documentation and <i>Microsoft Windows Internals</i> by Mark Russinovich and David Solomon. (These resources may not be available in some languages 
+
+and countries.)
+To display further information about a specific handle, use the <a href="_handle.htm"><b>!handle</b></a> extension.</p>
+<h2>Remarks</h2>
+<p>Before <b>!htrace</b> can be used, handle tracing must be enabled. One way to enable handle tracing is to enter the <b>!htrace -enable</b> command. When handle tracing is enabled, stack trace information is saved each time the process opens a handle, closes a handle, or references an invalid handle.  It is this stack trace information that <b>!htrace</b> displays.</p>
+<div class="alert"><b>Note</b>    You can also enable handle tracing by activating Application Verifier for the target process and selecting the <b>Handles</b> option.</div>
+<div> </div>
+<p>Some of the traces reported by <b>!htrace</b> may be from a different process context.  In this case, the return addresses may not resolve properly in the current process context, or may resolve to the wrong symbols.</p>
+<p>The following example displays information about all handles in process 0x81400300:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !htrace 0 81400300
+Process 0x81400300
+ObjectTable 0xE10CCF60
+
+--------------------------------------
+Handle 0x7CC - CLOSE:
+0x8018FCB9: ntoskrnl!ExDestroyHandle+0x103
+0x801E1D12: ntoskrnl!ObpCloseHandleTableEntry+0xE4
+0x801E1DD9: ntoskrnl!ObpCloseHandle+0x85
+0x801E1EDD: ntoskrnl!NtClose+0x19
+0x010012C1: badhandle!mainCRTStartup+0xE3
+0x77DE0B2F: KERNEL32!BaseProcessStart+0x3D
+--------------------------------------
+Handle 0x7CC - OPEN:
+0x8018F44A: ntoskrnl!ExCreateHandle+0x94
+0x801E3390: ntoskrnl!ObpCreateUnnamedHandle+0x10C
+0x801E7317: ntoskrnl!ObInsertObject+0xC3
+0x77DE23B2: KERNEL32!CreateSemaphoreA+0x66
+0x010011C5: badhandle!main+0x45
+0x010012C1: badhandle!mainCRTStartup+0xE3
+0x77DE0B2F: KERNEL32!BaseProcessStart+0x3D
+--------------------------------------
+Handle 0x7DC - BAD REFERENCE:
+0x8018F709: ntoskrnl!ExMapHandleToPointerEx+0xEA
+0x801E10F2: ntoskrnl!ObReferenceObjectByHandle+0x12C
+0x801902BE: ntoskrnl!NtSetEvent+0x6C
+0x80154965: ntoskrnl!_KiSystemService+0xC4
+0x010012C1: badhandle!mainCRTStartup+0xE3
+0x77DE0B2F: KERNEL32!BaseProcessStart+0x3D
+--------------------------------------
+Handle 0x7DC - CLOSE:
+0x8018FCB9: ntoskrnl!ExDestroyHandle+0x103
+0x801E1D12: ntoskrnl!ObpCloseHandleTableEntry+0xE4
+0x801E1DD9: ntoskrnl!ObpCloseHandle+0x85
+0x801E1EDD: ntoskrnl!NtClose+0x19
+0x010012C1: badhandle!mainCRTStartup+0xE3
+0x77DE0B2F: KERNEL32!BaseProcessStart+0x3D
+--------------------------------------
+Handle 0x7DC - OPEN:
+0x8018F44A: ntoskrnl!ExCreateHandle+0x94
+0x801E3390: ntoskrnl!ObpCreateUnnamedHandle+0x10C
+0x801E7317: ntoskrnl!ObInsertObject+0xC3
+0x77DE265C: KERNEL32!CreateEventA+0x66
+0x010011A0: badhandle!main+0x20
+0x010012C1: badhandle!mainCRTStartup+0xE3
+0x77DE0B2F: KERNEL32!BaseProcessStart+0x3D
+
+--------------------------------------
+Parsed 0x6 stack traces.
+Dumped 0x5 stack traces.</code></pre>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!htrace%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

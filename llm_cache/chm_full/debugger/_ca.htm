@@ -1,0 +1,215 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !ca extension displays information about a control area."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!ca</title>
+
+<meta name="MS-HAID" content="r26_exts_kernel_A_427bcd04-6114-4787-9666-afced580462c.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._ca"></a>!ca</h1>
+</div>
+<p>The <b>!ca</b> extension displays information about a control area.</p>
+<pre class="syntax"><b>!ca [</b><i>Address</i><b> | 0 | -1] [</b><i>Flags</i><b>]</b></pre>
+<h2><a id="ddk__ca_dbg"></a><a id="DDK__CA_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Address______"></a><a id="_______address______"></a><a id="_______ADDRESS______"></a>       <i>Address</i>      </dt>
+<dd>
+<p>Address of the control area. If you specify 0 for this parameter, information is displayed about all control areas. If you specify -1 for this parameter, information is displayed about the unused segment list.</p>
+</dd>
+<dt><a id="_______Flags______"></a><a id="_______flags______"></a><a id="_______FLAGS______"></a>       <i>Flags</i>      </dt>
+<dd>
+<p>Flags that specify which information is displayed. This parameter is a bitwise OR of one or more of the following flags.</p>
+<p></p>
+<table>
+<tr>
+<th>Flag</th>
+<th>Description</th>
+</tr>
+<tr>
+<td width="40%">
+<p><a id="0x1"></a><a id="0X1"></a>0x1</p>
+</td>
+<td width="60%">
+<p>Display segment information.</p>
+</td>
+</tr>
+<tr>
+<td width="40%">
+<p><a id="0x2"></a><a id="0X2"></a>0x2</p>
+</td>
+<td width="60%">
+<p>Display subsection information.</p>
+</td>
+</tr>
+<tr>
+<td width="40%">
+<p><a id="0x4"></a><a id="0X4"></a>0x4</p>
+</td>
+<td width="60%">
+<p>Display the list of mapped views. (Windows 7 and later)</p>
+</td>
+</tr>
+<tr>
+<td width="40%">
+<p><a id="0x8"></a><a id="0X8"></a>0x8</p>
+</td>
+<td width="60%">
+<p>Display compact (single line) output.</p>
+</td>
+</tr>
+<tr>
+<td width="40%">
+<p><a id="0x10"></a><a id="0X10"></a>0x10</p>
+</td>
+<td width="60%">
+<p>Display file-backed control areas.</p>
+</td>
+</tr>
+<tr>
+<td width="40%">
+<p><a id="0x20"></a><a id="0X20"></a>0x20</p>
+</td>
+<td width="60%">
+<p>Display control areas backed by the page file.</p>
+</td>
+</tr>
+<tr>
+<td width="40%">
+<p><a id="0x40"></a><a id="0X40"></a>0x40</p>
+</td>
+<td width="60%">
+<p>Display image control areas.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>If none of the last three flags are specified, all three types of control area are displayed.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000</b></p>
+</td>
+<td>
+<p>
+          Kdextx86.dll
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Kdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For information about control areas, see <i>Microsoft Windows Internals</i> by Mark Russinovich and David Solomon. (This book may not be available in some languages and 
+
+countries.)</p>
+<h2>Remarks</h2>
+<p>To get a list of the control areas of all mapped files, use the <a href="_memusage.htm"><b>!memusage</b></a> extension.</p>
+<p>Here is an example:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !memusage
+ loading PFN database
+loading (99% complete)
+             Zeroed:     16 (    64 kb)
+               Free:      0 (     0 kb)
+            Standby:   2642 ( 10568 kb)
+           Modified:    720 (  2880 kb)
+    ModifiedNoWrite:      0 (     0 kb)
+       Active/Valid:  13005 ( 52020 kb)
+         Transition:      0 (     0 kb)
+            Unknown:      0 (     0 kb)
+              TOTAL:  16383 ( 65532 kb)
+  Building kernel map
+  Finished building kernel map
+
+  Usage Summary (in Kb):
+Control Valid Standby Dirty Shared Locked PageTables  name
+ff8636e8    56    376     0     0     0     0  mapped_file( browseui.dll )
+ff8cf388    24      0     0     0     0     0  mapped_file( AVH32DLL.DLL )
+ff8d62c8    12      0     0     0     0     0  mapped_file( PSAPI.DLL )
+ff8dd468   156     28     0     0     0     0  mapped_file( INOJOBSV.EXE )
+fe424808   136     88     0    52     0     0  mapped_file( oleaut32.dll )
+fe4228a8   152     44     0   116     0     0  mapped_file( MSVCRT.DLL )
+ff8ec848     4      0     0     0     0     0    No Name for File
+ff859de8     0     32     0     0     0     0  mapped_file( timedate.cpl )
+. . . . .
+
+kd&gt; !ca ff8636e8
+
+ControlArea @ff8636e8
+  Segment:    e1b74548    Flink              0   Blink:               0
+ Section Ref        0    Pfn Ref           6c   Mapped Views:        1
+  User Ref           1    Subsections        5   Flush Count:         0
+  File Object ff86df88    ModWriteCount      0   System Views:        0
+  WaitForDel         0    Paged Usage      380   NonPaged Usage       e0
+  Flags (10000a0) Image File HadUserReference 
+
+   File: \WINNT\System32\browseui.dll
+
+Segment @ e1b74548:
+   Base address        0  Total Ptes        c8  NonExtendPtes:       c8
+   Image commit        1  ControlArea ff8636e8  SizeOfSegment: c8000
+   Image Base          0  Committed          0  PTE Template:   31b8438
+ Based Addr   76e10000  ProtoPtes   e1b74580  Image Info:    e1b748a4
+
+Subsection 1. @ ff863720
+   ControlArea: ff8636e8  Starting Sector 0 Number Of Sectors 2
+   Base Pte     e1b74580  Ptes In subsect        1 Unused Ptes          0
+   Flags              15  Sector Offset          0 Protection           1
+    ReadOnly CopyOnWrite 
+
+Subsection 2. @ ff863740
+   ControlArea: ff8636e8  Starting Sector 2 Number Of Sectors 3d0
+   Base Pte     e1b74584  Ptes In subsect       7a Unused Ptes          0
+   Flags              35  Sector Offset          0 Protection           3
+    ReadOnly CopyOnWrite 
+
+Subsection 3. @ ff863760
+   ControlArea: ff8636e8  Starting Sector 3D2 Number Of Sectors 7
+   Base Pte     e1b7476c  Ptes In subsect        1 Unused Ptes          0
+   Flags              55  Sector Offset          0 Protection           5
+    ReadOnly CopyOnWrite 
+
+Subsection 4. @ ff863780
+   ControlArea: ff8636e8  Starting Sector 3D9 Number Of Sectors 21f
+   Base Pte     e1b74770  Ptes In subsect       44 Unused Ptes          0
+   Flags              15  Sector Offset          0 Protection           1
+    ReadOnly CopyOnWrite 
+
+Subsection 5. @ ff8637a0
+   ControlArea: ff8636e8  Starting Sector 5F8 Number Of Sectors 3a
+   Base Pte     e1b74880  Ptes In subsect        8 Unused Ptes          0
+   Flags              15  Sector Offset          0 Protection           1
+    ReadOnly CopyOnWrite </code></pre>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!ca%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

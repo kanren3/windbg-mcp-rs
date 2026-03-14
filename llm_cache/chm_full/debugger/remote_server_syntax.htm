@@ -1,0 +1,103 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="To start the server side of the Remote tool, use the following syntax at the command line."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Remote Server Syntax</title>
+
+<meta name="MS-HAID" content="Remote_35021c40-6256-4db8-9da2-b053a147dbb8.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.remote_server_syntax"></a>Remote Server Syntax</h1>
+</div>
+<p>To start the server side of the Remote tool, use the following syntax at the command line. </p>
+<pre class="syntax">
+    <b>remote /s </b><i>Command</i><b> </b><i>SessionName </i><b>[/f </b><i>Color</i><b>] [/b] [/u </b><i>User</i><b> [/u </b><i>User</i><b>...]] [/ud </b><i>User</i><b> [/ud </b><i>User</i><b>...]] [/v | /-v]
+</b>
+   </pre>
+<h2><a id="ddk_remote_server_syntax_dtools"></a><a id="DDK_REMOTE_SERVER_SYNTAX_DTOOLS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="________s______"></a><a id="________S______"></a>       <b>/s</b>      </dt>
+<dd>
+<p>Starts a server session.</p>
+</dd>
+<dt><a id="_______Command______"></a><a id="_______command______"></a><a id="_______COMMAND______"></a>       <i>Command</i>      </dt>
+<dd>
+<p>Specifies the command that starts the console-based program. The command can include parameters. If the command includes spaces, enclose it in quotation marks.</p>
+</dd>
+<dt><a id="_______SessionName______"></a><a id="_______sessionname______"></a><a id="_______SESSIONNAME______"></a>       <i>SessionName</i>      </dt>
+<dd>
+<p>Assigns a name to the remote session. If the name includes spaces, enclose it in quotation marks. This parameter is not case-sensitive.</p>
+</dd>
+<dt><a id="________f______"></a><a id="________F______"></a>       <b>/f</b>      </dt>
+<dd>
+<p>Specifies the color of the text in the server command window.</p>
+</dd>
+<dt><a id="________b______"></a><a id="________B______"></a>       <b>/b</b>      </dt>
+<dd>
+<p>Specifies the background color of the server command window.</p>
+</dd>
+<dt><a id="_______Color______"></a><a id="_______color______"></a><a id="_______COLOR______"></a>       <i>Color</i>      </dt>
+<dd>
+<p>Specifies a color. Valid values are black, blue, green, cyan, red, purple, yellow, white, lblack, lblue, lgreen, lred, lpurple, lyellow, and lwhite.</p>
+</dd>
+<dt><a id="________u______"></a><a id="________U______"></a>       <b>/u</b>      </dt>
+<dd>
+<p>Specifies users or groups that are permitted to connect to the remote session; by default, everyone is permitted. When you use this parameter, everyone is denied permission, except for the users and groups specified by the <i>User</i> subparameter.</p>
+</dd>
+<dt><a id="________ud______"></a><a id="________UD______"></a>       <b>/ud</b>      </dt>
+<dd>
+<p>Specifies users or groups that are denied permission to connect to the remote session; by default, no one is denied permission.</p>
+</dd>
+<dt><a id="_______User______"></a><a id="_______user______"></a><a id="_______USER______"></a>       <i>User</i>      </dt>
+<dd>
+<p>Specifies the name of a user or group in [<i>domain</i> | <i>computer</i>]\{<i>user</i> | <i>group</i>} format. When specifying users or groups on the local computer, omit the computer name.</p>
+</dd>
+<dt><a id="________v______"></a><a id="________V______"></a>       <b>/v</b>      </dt>
+<dd>
+<p>Makes a session visible. For more information, see <a href="remote_tool_concepts.htm#visible_session">Visible Session</a>.</p>
+<p>By default, only debugger sessions are visible, that is, sessions in which the value of the <i>Command</i> parameter include the words <b>kd</b>, <b>dbg</b>, <b>remoteds</b>, <b>ntsd</b>, or <b>cdb</b>; otherwise, the session is not visible.</p>
+</dd>
+<dt><a id="_______-v______"></a><a id="_______-V______"></a>       <b>-v</b>      </dt>
+<dd>
+<p>Makes a remote debugger session invisible. For more information, see <a href="remote_tool_concepts.htm#visible_session">Visible Session</a>. </p>
+</dd>
+</dl>
+<h3><a id="comments"></a><a id="COMMENTS"></a>Comments</h3>
+<p>The <i>Command</i> and <i>SessionName</i> parameters must appear in the order shown on the syntax line.</p>
+<p>To end a remote session, type <b>@k</b>. For more information, see <a href="remote_session_commands.htm">Remote Session Commands</a>.</p>
+<p>The Remote tool will not create a session that the current user does not have permission to join.</p>
+<p>When starting more than one remote session on a single computer, open a new command window for each session. Also, use a different session name for each session. Because the session names are used to label the named pipes, they must be unique on the computer.</p>
+<h3><a id="sample_usage"></a><a id="SAMPLE_USAGE"></a>Sample Usage</h3>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>remote /s "i386kd -v" TestSession
+remote /s "cmd" "My Remote Session" /f white /b black /u Server01\Administrators
+remote /s "ntsd -d -g -x" DebugIt /-v
+remote /q Server01</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Remote Server Syntax%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

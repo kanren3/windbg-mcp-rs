@@ -1,0 +1,60 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Using a Symbol Server"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Using a Symbol Server</title>
+
+<meta name="MS-HAID" content="r06_use_gui_e1aaa539-33f7-49f7-b5a4-9aa8321b3e05.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.using_a_symbol_server"></a>Using a Symbol Server</h1>
+</div>
+<p>A symbol server enables the debugger to automatically retrieve the correct symbol files from a symbol store - an indexed collection of symbol files - without the user needing to know product names, releases, or build numbers.  The Debugging Tools for Windows package includes the symbol server <a href="symsrv.htm">SymSrv</a> (symsrv.exe).</p>
+<h3><a id="using_symsrv_with_a_debugger"></a><a id="USING_SYMSRV_WITH_A_DEBUGGER"></a>Using SymSrv with a Debugger</h3>
+<p>SymSrv can be used with WinDbg, KD, NTSD, or CDB.</p>
+<p>To use this symbol server with the debugger, simply include the text <b>srv*</b> in the symbol path.  For example:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>set _NT_SYMBOL_PATH = srv*DownstreamStore*SymbolStoreLocation</pre>
+</td>
+</tr>
+</table></span></div>
+<p>where <i>DownstreamStore</i> specifies the local directory or network share that will be used to cache individual symbol files, and <i>SymbolStoreLocation</i> is the location of the symbol store either in the form <i>\\server\share</i> or as an internet address.  For more syntax options, see <a href="advanced_symsrv_use.htm">Advanced SymSrv Use</a>.</p>
+<p>Microsoft has a Web site that makes Windows symbols publicly available. You can refer directly to this site in your symbol path in the following manner:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>set _NT_SYMBOL_PATH=srv*DownstreamStore*https://msdl.microsoft.com/download/symbols</pre>
+</td>
+</tr>
+</table></span></div>
+<p>where, again, <i>DownstreamStore</i> specifies the local directory or network share that will be used to cache individual symbol files.  For more information, see <a href="microsoft_public_symbols.htm">Microsoft Public Symbols</a>.</p>
+<p>If you plan to create a symbol store, configure a symbol store for web (HTTP) access, or write your own symbol server or symbol store, see <a href="symbol_stores_and_symbol_servers.htm">Symbol Stores and Symbol Servers</a>.</p>
+<h3><a id="using_agestore_to_reduce_the_cache_size"></a><a id="USING_AGESTORE_TO_REDUCE_THE_CACHE_SIZE"></a>Using AgeStore to Reduce the Cache Size</h3>
+<p>Any symbol files downloaded by SymSrv will remain on your hard drive after the debugging session is over.  To control the size of the symbol cache, the AgeStore tool can be used to delete cached files that are older than a specified date, or to reduce the contents of the cache below a specified size.  For details, see <a href="agestore.htm">AgeStore</a>. </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Using a Symbol Server%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

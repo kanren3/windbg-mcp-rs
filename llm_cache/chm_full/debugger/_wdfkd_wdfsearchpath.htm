@@ -1,0 +1,75 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !wdfkd.wdfsearchpath extension sets the search path to formatting files for Kernel-Mode Driver Framework (KMDF) error log records."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!wdfkd.wdfsearchpath</title>
+
+<meta name="MS-HAID" content="r33~c_exts_WDF_e6a7d2aa-48fd-4311-964e-b90435872d80.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._wdfkd_wdfsearchpath"></a>!wdfkd.wdfsearchpath</h1>
+</div>
+<p>The <b>!wdfkd.wdfsearchpath</b> extension sets the search path to formatting files for Kernel-Mode Driver Framework (KMDF) error log records. </p>
+<pre class="syntax"><b>!wdfkd.wdfsearchpath </b><i>Path</i></pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Path______"></a><a id="_______path______"></a><a id="_______PATH______"></a>       <i>Path</i>      </dt>
+<dd>
+<p>The path of a directory that contains KMDF formatting files.</p>
+</dd>
+</dl>
+<h2><a id="DLL"></a><a id="dll"></a>DLL</h2>
+<p>
+       Wdfkd.dll
+      </p>
+<h2><a id="Frameworks"></a><a id="frameworks"></a><a id="FRAMEWORKS"></a>Frameworks</h2>
+<p>
+       KMDF 1, UMDF 2</p>
+<h2><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h2>
+<p>For more information, see <a href="kernel_mode_driver_framework_debugging.htm">Kernel-Mode Driver Framework Debugging</a>.</p>
+<h2>Remarks</h2>
+<p>The KMDF formatting files are included in the Windows Driver Kit (WDK). The path to the formatting files depends on the installation directory of your WDK and on the version of the WDK that you have installed. The KMDF formatting files have extension tmf (trace message formatting). To determine the search path, browse or search your WDK installation for file names of the form Wdf<i>VersionNumber</i>.tmf.  The following example shows how to use the  <b>!wdfkd.wdfsearchpath</b> extension.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; !wdfsearchpath C:\WinDDK\7600\tools\tracing\amd64</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The TRACE_FORMAT_SEARCH_PATH environment variable also controls the search path, but the <b>!wdfkd.wdfsearchpath</b> extension takes precedence over the search path that TRACE_FORMAT_SEARCH_PATH specifies.  </p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>DLL</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Wdfkd.dll</dt>
+</dl>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!wdfkd.wdfsearchpath%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

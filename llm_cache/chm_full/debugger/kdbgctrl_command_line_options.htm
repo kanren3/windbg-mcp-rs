@@ -1,0 +1,146 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The KDbgCtrl command line uses the following syntax:"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>KDbgCtrl Command-Line Options</title>
+
+<meta name="MS-HAID" content="r12_cmdline_a9393ea1-02b9-4fd2-9e74-ee7db7287a66.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.kdbgctrl_command_line_options"></a>KDbgCtrl Command-Line Options</h1>
+</div>
+<p>The KDbgCtrl command line uses the following syntax:</p>
+<pre class="syntax">
+    <b>kdbgctrl [-e|-d|-c] [-ea|-da|-ca] [-eu|-du|-cu] [-eb|-db|-cb] [-sdb </b><i>Size</i><b> | -cdb] 
+
+kdbgctrl -cx 
+
+kdbgctrl -td </b><i>ProcessID</i><i> File</i><b> 
+
+kdbgctrl -? 
+</b>
+   </pre>
+<h2><a id="ddk_kdbgctrl_command_line_options_dbg"></a><a id="DDK_KDBGCTRL_COMMAND_LINE_OPTIONS_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______-e______"></a><a id="_______-E______"></a>       <b>-e</b>      </dt>
+<dd>
+<p>Enables Full Kernel Debugging.</p>
+</dd>
+<dt><a id="_______-d______"></a><a id="_______-D______"></a>       <b>-d</b>      </dt>
+<dd>
+<p>Disables Full Kernel Debugging.</p>
+</dd>
+<dt><a id="_______-c______"></a><a id="_______-C______"></a>       <b>-c</b>      </dt>
+<dd>
+<p>Checks whether Full Kernel Debugging is enabled. Displays true if Full Kernel Deubugging is enabled, and displays false if Full Kernel Debugging is disabled.</p>
+</dd>
+<dt><a id="_______-ea______"></a><a id="_______-EA______"></a>       <b>-ea</b>      </dt>
+<dd>
+<p>Enables Automatic Kernel Debugging.</p>
+</dd>
+<dt><a id="_______-da______"></a><a id="_______-DA______"></a>       <b>-da</b>      </dt>
+<dd>
+<p>Disables Automatic Kernel Debugging.</p>
+</dd>
+<dt><a id="_______-ca______"></a><a id="_______-CA______"></a>       <b>-ca</b>      </dt>
+<dd>
+<p>Checks whether Automatic Kernel Debugging is enabled. Displays true if Automatic Kernel Deubugging is enabled, and displays false if Automatic Kernel Debugging is disabled.</p>
+</dd>
+<dt><a id="_______-eu______"></a><a id="_______-EU______"></a>       <b>-eu</b>      </dt>
+<dd>
+<p>Enables User-Mode Error Handling.</p>
+</dd>
+<dt><a id="_______-du______"></a><a id="_______-DU______"></a>       <b>-du</b>      </dt>
+<dd>
+<p>Disables User-Mode Error Handling.</p>
+</dd>
+<dt><a id="_______-cu______"></a><a id="_______-CU______"></a>       <b>-cu</b>      </dt>
+<dd>
+<p>Checks whether User-Mode Error Handling is enabled. Displays true if User-Mode Error Handling is enabled, and displays false if User-Mode Error Handling is disabled.</p>
+</dd>
+<dt><a id="-eb"></a><a id="-EB"></a><b>-eb</b></dt>
+<dd>
+<p>Enables blocking of kernel debugging.</p>
+</dd>
+<dt><a id="-db"></a><a id="-DB"></a><b>-db</b></dt>
+<dd>
+<p>Disables blocking of kernel debugging</p>
+</dd>
+<dt><a id="-cb"></a><a id="-CB"></a><b>-cb</b></dt>
+<dd>
+<p>Checks whether kernel debugging is blocked. Displays true if kernel debugging is blocked, and displays false if kernel debugging is not blocked.</p>
+</dd>
+<dt><a id="_______-sdb_______Size______"></a><a id="_______-sdb_______size______"></a><a id="_______-SDB_______SIZE______"></a>       <b>-sdb</b>       <i>Size</i>      </dt>
+<dd>
+<p>Sets the size of the DbgPrint buffer. If <i>Size</i> is prefixed with <b>0x</b> it will be interpreted as a hexadecimal number. If it is prefixed with <b>0</b> (zero), it will be interpreted as octal. Otherwise, it will be interpreted as decimal.</p>
+</dd>
+<dt><a id="_______-cdb______"></a><a id="_______-CDB______"></a>       <b>-cdb</b>      </dt>
+<dd>
+<p>Displays the current size, in bytes, of the DbgPrint buffer.</p>
+</dd>
+<dt><a id="_______-cx______"></a><a id="_______-CX______"></a>       <b>-cx</b>      </dt>
+<dd>
+<p>Determines the current Full Kernel Debugging setting and returns an appropriate value. This option cannot be combined with other options, and it does not display any output. It is designed for use in a batch file where the return value of the KDbgCtrl program can be tested. Possible return values are as follows:</p>
+<table>
+<tr>
+<th>Value</th>
+<th>Meaning</th>
+</tr>
+<tr>
+<td>
+<p><b>0x10001</b></p>
+</td>
+<td>
+<p>Full Kernel Debugging is enabled.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>0x10002</b></p>
+</td>
+<td>
+<p>Full Kernel Debugging is disabled.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Any other value</p>
+</td>
+<td>
+<p>An error occurred. KDbgCtrl was unable to determine the current status of Full Kernel Debugging.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+</dd>
+<dt><a id="-td_ProcessID_File"></a><a id="-td_processid_file"></a><a id="-TD_PROCESSID_FILE"></a><b>-td </b><i>ProcessID</i><i> File</i></dt>
+<dd>
+<p>Obtains a kernel triage dump file. Enter the process ID and a name for the dump file.</p>
+</dd>
+<dt><a id="_______-_______"></a>       <b>-?</b>      </dt>
+<dd>
+<p>Displays command-line help for KDbgCtrl.</p>
+</dd>
+</dl>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For a description of all the KDbgCtrl settings, see <a href="using_kdbgctrl.htm">Using KDbgCtrl</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20KDbgCtrl Command-Line Options%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

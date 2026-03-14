@@ -1,0 +1,55 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Detecting Overruns and Underruns"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Detecting Overruns and Underruns</title>
+
+<meta name="MS-HAID" content="GFlags_7ea6eb91-6f7d-4b8e-8cfc-13c0fd02b549.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.detecting_overruns_and_underruns"></a>Detecting Overruns and Underruns</h1>
+</div>
+<h2><a id="ddk_detecting_overruns_and_underruns_dtools"></a><a id="DDK_DETECTING_OVERRUNS_AND_UNDERRUNS_DTOOLS"></a></h2>
+<p>You can use the <b>Verify Start</b> or <b>Verify End</b> option in GFlags to align allocations from the special pool so that they are best suited to detect overruns (accessing memory past the end of the allocation) or underruns (accessing memory that precedes the beginning of the allocation). </p>
+<ul>
+<li>
+<p><b>Verify Start</b> enables underrun detection on allocations from the special pool. This causes a bug check when a program tries to access memory preceding its special pool memory allocation. </p>
+</li>
+<li>
+<p><b>Verify End</b> enables overrun detection on allocations from the special pool. This causes a bug check when a program tries to access memory beyond its special pool memory allocation. Because overruns are much more common, <b>Verify End</b> is the default.</p>
+</li>
+</ul>
+<p>In Windows Vista and later versions of Windows, this option is available on the <b>System Registry</b> and <b>Kernel Flags</b> tabs. In earlier versions of Windows, it is available only on the <b>System Registry</b> tab.</p>
+<p class="proch"><img src="../common/wedge.gif" alt=""/><b>To specify special pool alignment</b></p>
+<ol>
+<li>
+<p>Click the <b>System Registry</b> tab. </p>
+</li>
+<li>
+<p>Click <b>Verify Start</b> or <b>Verify End</b>. </p>
+</li>
+<li>
+<p>Click <b>Apply</b>. </p>
+<p>The following screen shot shows the Verify Start and Verify End settings on the System <b>Registry</b> tab.</p><img src="images/gflags-overruns.PNG" alt="Screen shot illustrating the Verify Start and Verify End options on the System Registry tab"/></li>
+</ol>
+<h3><a id="comments"></a><a id="COMMENTS"></a>Comments</h3>
+<p>The <b>Verify Start</b> and <b>Verify End</b> alignment settings apply to all allocations from the special pool, including special pool allocation requests set in Driver Verifier. If you set the alignment without specifying a pool tag or allocation size, then the settings apply only to requests set in Driver Verifier.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Detecting Overruns and Underruns%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

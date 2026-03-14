@@ -1,0 +1,77 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="This section describes the USB 3.0 debugger extension commands."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>USB 3.0 Extensions</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.usb_3_extensions"></a>USB 3.0 Extensions</h1>
+</div>
+<p>This section describes the USB 3.0 debugger extension commands. These commands display information from data structures maintained by three drivers in the USB 3.0 stack: the USB 3.0 hub driver, the USB host controller extension driver, and the USB 3.0 host controller driver. For more information about these three drivers, see <a href="http://go.microsoft.com/fwlink/p?LinkId=251983">USB Driver Stack Architecture</a>. For an explanation of the data structures used by the drivers in the USB 3.0 stack, see <a href="usb_3_0_data_structures.htm">USB 3.0 Data Structures</a> and Part 2 of the <a href="http://go.microsoft.com/fwlink/p/?LinkID=249153">USB Debugging Innovations in Windows 8</a> video.</p>
+<p>The USB 3.0 debugger extension commands are implemented in Usb3kd.dll. To load the Usb3kd commands, enter <b>.load usb3kd.dll</b> in the debugger.</p>
+<h2><a id="usb_3_tree"></a><a id="USB_3_TREE"></a>USB 3.0 Tree</h2>
+<p>The USB 3.0 tree contains all USB 3.0 host controllers and all hubs and devices that are connected to USB 3.0 host controllers. The following diagram shows an example of a USB 3.0 tree.</p><img src="images/usb3tree01.png" alt="USB 3.0 tree showing a mix of USB 3.0 and USB 2.0 devices roots and controllers"/><p>The tree shown in the diagram has two USB 3.0 host controllers. Notice that not every device shown in the diagram is a USB 3.0 device. But all of the devices shown (including the hubs) are part of the USB 3.0 tree, because each device is on a branch that originates at a USB 3.0 host controller.</p>
+<p>You can think of the diagram as two trees, one for each host controller. However, when we use the term <i>USB 3.0 tree</i>, we are referring to the set of all USB 3.0 host controllers along with their connected hubs and devices.</p>
+<h2><a id="Getting_started_with_USB_3.0_debugging"></a><a id="getting_started_with_usb_3.0_debugging"></a><a id="GETTING_STARTED_WITH_USB_3.0_DEBUGGING"></a>Getting started with USB 3.0 debugging</h2>
+<p>To start debugging a  USB 3.0 issue, enter the <a href="_usb3kd_usb_tree.htm"><b>!usb_tree</b></a> command. The <b>!usb_tree</b> command displays a list of commands and addresses that you can use to investigate host controllers, hubs, ports, devices, endpoints, and other elements of the USB 3.0 tree.</p>
+<h2><a id="Hub_commands"></a><a id="hub_commands"></a><a id="HUB_COMMANDS"></a>Hub commands</h2>
+<p>The following extension commands display information about USB 3.0 hubs, devices, and ports. The displayed information is based on data structures maintained by the USB 3.0 hub driver.</p>
+<ul>
+<li><a href="_usb3kd_usb_tree.htm"><b>!usb3kd.usb_tree</b></a></li>
+<li><a href="_usb3kd_hub_info.htm"><b>!usb3kd.hub_info</b></a></li>
+<li><a href="_usb3kd_hub_info_from_fdo.htm"><b>!usb3kd.hub_info_from_fdo</b></a></li>
+<li><a href="_usb3kd_device_info.htm"><b>!usb3kd.device_info</b></a></li>
+<li><a href="_usb3kd_device_info_from_pdo.htm"><b>!usb3kd.device_info_from_pdo</b></a></li>
+<li><a href="_usb3kd_port_info.htm"><b>!usb3kd.port_info</b></a></li>
+</ul>
+<h2><a id="UCX_commands"></a><a id="ucx_commands"></a><a id="UCX_COMMANDS"></a>UCX commands</h2>
+<p>The following extension commands display information about USB 3.0 host controllers, devices, and ports. The displayed information is based on data structures maintained by the USB  host controller extension driver.</p>
+<ul>
+<li><a href="_usb3kd_ucx_controller_list.htm"><b>!usb3kd.ucx_controller_list</b></a></li>
+<li><a href="_usb3kd_ucx_controller.htm"><b>!usb3kd.ucx_controller</b></a></li>
+<li><a href="_usb3kd_ucx_device.htm"><b>!usb3kd.ucx_device</b></a></li>
+<li><a href="_usb3kd_ucx_endpoint.htm"><b>!usb3kd.ucx_endpoint</b></a></li>
+</ul>
+<h2><a id="Host_controller_commands"></a><a id="host_controller_commands"></a><a id="HOST_CONTROLLER_COMMANDS"></a>Host controller commands</h2>
+<p>The following extension commands display information from data structures maintained by the USB 3.0 host controller driver.</p>
+<ul>
+<li><a href="_usb3kd_xhci_dumpall.htm"><b>!usb3kd.xhci_dumpall</b></a></li>
+<li><a href="_usb3kd_xhci_capability.htm"><b>!usb3kd.xhci_capability</b></a></li>
+<li><a href="_usb3kd_xhci_commandring.htm"><b>!usb3kd.xhci_commandring</b></a></li>
+<li><a href="_usb3kd_xhci_deviceslots.htm"><b>!usb3kd.xhci_deviceslots</b></a></li>
+<li><a href="_usb3kd_xhci_eventring.htm"><b>!usb3kd.xhci_eventring</b></a></li>
+<li><a href="_usb3kd_xhci_registers.htm"><b>!usb3kd.xhci_registers</b></a></li>
+<li><a href="_usb3kd_xhci_resourceusage.htm"><b>!usb3kd.xhci_resourceusage</b></a></li>
+<li><a href="_usb3kd_xhci_trb.htm"><b>!usb3kd.xhci_trb</b></a></li>
+<li><a href="_usb3kd_xhci_transferring.htm"><b>!usb3kd.xhci_transferring</b></a></li>
+<li><a href="_xhci_findowner.htm"><b>!usb3kd.xhci_findowner</b></a></li>
+</ul>
+<h2><a id="Miscellaneous_commands"></a><a id="miscellaneous_commands"></a><a id="MISCELLANEOUS_COMMANDS"></a>Miscellaneous commands</h2>
+<ul>
+<li><a href="_usb3kd_usbdstatus.htm"><b>!usb3kd.usbdstatus</b></a></li>
+<li><a href="_usb3kd_urb.htm"><b>!usb3kd.urb</b></a></li>
+</ul>
+<h2><a id="related_topics"></a>Related topics</h2>
+<dl>
+<dt><a href="rcdrkd_extensions.htm">RCDRKD Extensions</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20USB 3.0 Extensions%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

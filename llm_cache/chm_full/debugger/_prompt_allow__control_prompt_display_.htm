@@ -1,0 +1,132 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .prompt_allow command controls what information is displayed during stepping and tracing and whenever the target's execution stops."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.prompt_allow (Control Prompt Display)</title>
+
+<meta name="MS-HAID" content="r21_metacmds_L_55475ec8-bd36-4a0c-b380-0ff50ea3488d.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._prompt_allow__control_prompt_display_"></a>.prompt_allow (Control Prompt Display)</h1>
+</div>
+<p>The <b>.prompt_allow</b> command controls what information is displayed during stepping and tracing and whenever the target's execution stops.</p>
+<pre class="syntax">
+    <b>.prompt_allow {+|-}</b><i>Item </i><b>[...]</b> 
+<b>.prompt_allow</b> 
+</pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="______________"></a>       <b>+</b>      </dt>
+<dd>
+<p>Displays the specified item at the stepping, tracing, and execution prompt. You must add a space before the plus sign (+), but you cannot add a space after it.</p>
+</dd>
+<dt><a id="_______-______"></a>       <b>-</b>      </dt>
+<dd>
+<p>Prevents the specified item from being displayed at the stepping, tracing, and execution prompt. You must add a space before the minus sign (-), but you cannot add a space after it.</p>
+</dd>
+<dt><a id="_______Item______"></a><a id="_______item______"></a><a id="_______ITEM______"></a>       <i>Item</i>      </dt>
+<dd>
+<p>Specifies an item to display or not display. You can specify any number of items. Separate multiple items by spaces. You must add a plus sign (+) or minus sign (-) before each item.  You can use the following items:</p>
+<p></p>
+<dl>
+<dt><a id="dis"></a><a id="DIS"></a><b>dis</b></dt>
+<dd>
+<p>The disassembled instructions at the current location.</p>
+</dd>
+<dt><a id="ea"></a><a id="EA"></a><b>ea</b></dt>
+<dd>
+<p>The effective address for the current instruction.</p>
+</dd>
+<dt><a id="reg"></a><a id="REG"></a><b>reg</b></dt>
+<dd>
+<p>The current state of the most important registers.  You can disable register display by using the <a href="p__step_.htm"><b>pr</b></a>, <a href="t__trace_.htm"><b>tr</b></a>, or .prompt_allow -reg command. All three of these commands control the same setting, and you can use any of them to override any previous use of these commands.  </p>
+<p>You can also disable register display by using the l-os command. This setting is separate from the other three commands, as described in the following Remarks section.  To control which registers and flags are displayed, use the <a href="rm__register_mask_.htm"><b>rm (Register Mask)</b></a> command.</p>
+</dd>
+<dt><a id="src"></a><a id="SRC"></a><b>src</b></dt>
+<dd>
+<p>The source line that corresponds to the current instruction.  You can disable source line display by using the l-ls or .prompt_allow -src; commands. You must enable source line display through both mechanisms to be visible.</p>
+</dd>
+<dt><a id="sym"></a><a id="SYM"></a><b>sym</b></dt>
+<dd>
+<p>The symbol for the current instruction. This symbol includes the current module, function name, and offset.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes
+         </b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets</b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Platforms
+         </b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about commands that affect execution, see <a href="controlling_the_target.htm">Controlling the Target</a>. </p>
+<h2>Remarks</h2>
+<p>You can use the <b>.prompt_allow</b> command without parameters to show which items are displayed and are not displayed. Every time that you run <b>.prompt_allow</b>, the debugger changes the status of only the specified items.</p>
+<p>By default, all items are displayed.</p>
+<p>If you have used the l+os option, this option overrides any of the <b>.prompt_allow</b> options other than <b>src</b>.</p>
+<p>You can also use a complex command such as the following example.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; .prompt_allow -reg -dis +ea 
+Allow the following information to be displayed at the prompt:
+(Other settings can affect whether the information is actually displayed)
+   sym - Symbol for current instruction
+    ea - Effective address for current instruction
+   src - Source info for current instruction
+Do not allow the following information to be displayed at the prompt:
+   dis - Disassembly of current instruction
+   reg - Register state</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.prompt_allow (Control Prompt Display)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Debug | Break"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Debug | Break</title>
+
+<meta name="MS-HAID" content="r37_gui_2_94482ad8-41d6-46e7-9a18-40dce2459d10.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.debug___break"></a>Debug | Break</h1>
+</div>
+<h2><a id="ddk_debug_break_dbg"></a><a id="DDK_DEBUG_BREAK_DBG"></a></h2>
+<p>Click <b>Break</b> on the <b>Debug</b> menu to stop the target's execution and return control to the debugger.</p>
+<p>In user mode, this command stops the process and its threads, enabling you to regain control of the debugger. In kernel mode, this command breaks into the target computer.</p>
+<p>You can also use this command while the debugger is active. In this situation, the command will truncate long <a href="debugger_command_window.htm">Debugger Command window</a> displays.</p>
+<p>The <b>Break</b> command is equivalent to pressing CTRL+BREAK  or clicking the <b>Break (Ctrl+Break) </b>button (<img src="images/tbbreak.png" alt="Screen shot of the Break button"/>) on the toolbar.</p>
+<h3><a id="ALT_DEL"></a><a id="alt_del"></a>ALT+DEL</h3>
+<p>You can use <b>ALT+DEL</b> to send a  <b>Break</b>. <b>ALT+DEL</b> works the same as <b>Break (Ctrl+Break). </b></p>
+<h3><a id="user_mode_effects"></a><a id="USER_MODE_EFFECTS"></a>User-Mode Effects</h3>
+<p>In user mode, the <b>Break</b> command causes the target application to break into the debugger. The target application stops, the debugger becomes active, and you can enter debugger commands.</p>
+<p>If the debugger is already active, <b>Break</b> does not affect the target application. However, you can use this command to terminate a debugger command. For example, if you have requested a long display and do not want to see any more of it, <b>Break</b> will end the display and return you to the debugger command prompt.</p>
+<p>When you are performing remote debugging with WinDbg, you can press the Break key on the host computer's keyboard. If you want to issue a break from the target computer's keyboard, use CTRL+C on an x86-based computer.</p>
+<p>You can press the F12 key to open a command prompt when the application that is being debugged is busy. Click one of the target application's windows and press F12 on the target computer.</p>
+<h3><a id="kernel_mode_effects"></a><a id="KERNEL_MODE_EFFECTS"></a>Kernel-Mode Effects</h3>
+<p>In kernel mode, the <b>Break</b> command causes the target computer to break into the debugger. This command locks the target computer and wakes up the debugger.</p>
+<p>When you are debugging a system that is still running, you must press the Break key on the host keyboard to open an initial command prompt.</p>
+<p>If the debugger is already active, <b>Break</b> does not affect the target computer. However, you can use this command to terminate a debugger command. For example, if you have requested a long display and do not want to see any more of it, <b>Break</b> will end the display and return you to the debugger command prompt.</p>
+<p></p>
+<p>You can also use <b>Break</b> to open a command prompt when a debugger command is generating a long display or when the target computer is busy. When you are debugging an x86-based computer, you can also press CTRL+C on the target keyboard to have the same effect.</p>
+<p>The SYSRQ key (or pressing ALT+SYSRQ on an enhanced keyboard) is similar. This key works from the host or target keyboard on any processor. However, this key works only if you have opened the prompt by pressing CTRL+C at least one time before.</p>
+<p>You can disable the SYSRQ key by editing the registry. In the HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\i8042prt\Parameters registry key, create a value named <b>BreakOnSysRq</b> and set it equal to DWORD 0x0. Then, restart the computer. After you have restarted the computer, you can press the SYSRQ key on the target computer's keyboard and it will not break into the kernel debugger.</p>
+<h3><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>The corresponding key in KD and CDB is <a href="ctrl_c__break_.htm"><b>CTRL+C</b></a>. For more information about other ways to control program execution, see <a href="controlling_the_target.htm">Controlling the Target</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Debug | Break%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

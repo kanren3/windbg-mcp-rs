@@ -1,0 +1,79 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .scroll_prefs command controls the positioning of the source in a Source window when scrolling to a line."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.scroll_prefs (Control Source Scrolling Preferences)</title>
+
+<meta name="MS-HAID" content="r22_metacmds_S_9d27749d-f0a9-4a97-aa69-70411559316b.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._scroll_prefs__control_source_scrolling_preferences_"></a>.scroll_prefs (Control Source Scrolling Preferences)</h1>
+</div>
+<p>The <b>.scroll_prefs</b> command controls the positioning of the source in a Source window when scrolling to a line.</p>
+<pre class="syntax">
+<b>.scroll_prefs </b><i>Before</i><b> </b><i>After</i> 
+<b>.scroll_prefs</b> 
+</pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Before______"></a><a id="_______before______"></a><a id="_______BEFORE______"></a>       <i>Before</i>      </dt>
+<dd>
+<p>Specifies how many source lines before the line you are scrolling to should be visible in the Source window.</p>
+</dd>
+<dt><a id="_______After______"></a><a id="_______after______"></a><a id="_______AFTER______"></a>       <i>After</i>      </dt>
+<dd>
+<p>Specifies how many source lines after the line you are scrolling to should be visible in the Source window.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<p>This command is available only in WinDbg and cannot be used in script files.</p>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>user mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets</b></p>
+</td>
+<td>
+<p>live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>all </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>When this command is used with no parameters, the current source scrolling preferences are displayed.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.scroll_prefs (Control Source Scrolling Preferences)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

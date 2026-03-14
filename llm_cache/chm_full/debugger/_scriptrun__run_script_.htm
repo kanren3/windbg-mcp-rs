@@ -1,0 +1,168 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .scriptrun command will load and run a JavaScript."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.scriptrun (Run Script)</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._scriptrun__run_script_"></a>.scriptrun (Run Script)</h1>
+</div>
+<p>The .scriptrun command will load and run  a JavaScript.</p>
+<pre class="syntax">
+    <b>.scriptrun </b><b>ScriptFile</b><b> </b> 
+   </pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______ScriptFile______"></a><a id="_______scriptfile______"></a><a id="_______SCRIPTFILE______"></a>       <i>ScriptFile</i>      </dt>
+<dd>
+<p>Specifies the name of the script file to load and execute.  <i>ScriptFile</i> should include the .js file name extension. Absolute or relative paths can be used. Relative paths are relative to the directory that you started the debugger in. File paths containing spaces are not supported. </p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>user mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets</b></p>
+</td>
+<td>
+<p>live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>all </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>The .scriptrun command will load a script and, execute the following code.</p>
+<ul>
+<li>root</li>
+<li>intializeScript</li>
+<li>invokeScript</li>
+</ul>
+<p>A confirmation message is displayed when the code is loaded and executed.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; .scriptrun C:\WinDbg\Scripts\helloWorld.js
+JavaScript script successfully loaded from 'C:\WinDbg\Scripts\helloWorld.js'
+Hello World!  We are in JavaScript!</pre>
+</td>
+</tr>
+</table></span></div>
+<p> Any object model manipulations made by the script will stay in place until the script is subsequently unloaded or is run again with different content. </p>
+<p>This table summarizes which functions are executed by .scriptload and .scriptrun.</p>
+<table>
+<tr>
+<td></td>
+<td><a href="_scriptload__load_script_.htm"><b>.scriptload</b></a></td>
+<td><b>.scriptrun</b></td>
+</tr>
+<tr>
+<td>root</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>initializeScript</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>invokeScript</td>
+<td></td>
+<td>yes</td>
+</tr>
+<tr>
+<td>uninitializeScript</td>
+<td></td>
+<td></td>
+</tr>
+</table>
+<p> </p>
+<p>You can use this code to see which functions are called with the .script run command.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>// Root of Script
+host.diagnostics.debugLog("***&gt;; Code at the very top (root) of the script is always run \n");
+
+
+function initializeScript()
+{
+    // Add code here that you want to run everytime the script is loaded. 
+    // We will just send a message to indicate that function was called.
+    host.diagnostics.debugLog("***&gt;; initializeScript was called \n");
+}
+
+function invokeScript()
+{
+    // Add code here that you want to run everytime the script is executed. 
+    // We will just send a message to indicate that function was called.
+    host.diagnostics.debugLog("***&gt;; invokeScript was called \n");
+}
+
+ 
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p> For more information about working with JavaScript, see <a href="javascript_debugger_scripting.htm">JavaScript Debugger Scripting</a>. For more information about the debugger objects, see <a href="native_objects_in_javascript_extensions.htm">Native Objects in JavaScript Extensions</a>.</p>
+<p><b>Requirements</b></p>
+<p>Before using any of the .script commands, a scripting provider needs to be loaded. Use the <a href="_load___loadby__load_extension_dll_.htm"><b>.load (Load Extension DLL)</b></a> command to load the JavaScript provider dll. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; .load C:\ScriptProviders\jsprovider.dll</pre>
+</td>
+</tr>
+</table></span></div>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="_scriptload__load_script_.htm"><b>.scriptload (Load Script)</b></a></dt>
+<dt><a href="javascript_debugger_scripting.htm">JavaScript Debugger Scripting</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.scriptrun (Run Script)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

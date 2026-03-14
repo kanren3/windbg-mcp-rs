@@ -1,0 +1,82 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Dealing with Unavailable Symbol Stores"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Dealing with Unavailable Symbol Stores</title>
+
+<meta name="MS-HAID" content="r09_symbols_3acbad07-7206-42c7-ab82-adb6b7318341.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.dealing_with_unavailable_symbol_stores"></a>Dealing with Unavailable Symbol Stores</h1>
+</div>
+<p>If one of the symbol stores that SymSrv is configured to obtain files from is down or otherwise unavailable, the result can be long waits from the client for every file request.  When SymSrv is called from SymProxy, you can avoid most of these waits by setting up SymSrv to stop trying to access the store in question.  When this feature is engaged, SymSrv stops trying to use the store for a set period of time after it experiences a specified number of timeouts from the same store during a set interval.  The values of these variables can be controlled either by an .ini file or from the registry.</p>
+<p class="proch"><img src="../common/wedge.gif" alt=""/><b>To control symbol store access using a 
+       .ini 
+       
+       file
+      
+     </b></p>
+<ol>
+<li>
+<p>In %WINDIR%\system32\inetsrv\Symsrv.ini, create a section called <b>timeouts</b>.</p>
+</li>
+<li>
+<p>Add the values <b>trigger</b>, <b>count</b>, and <b>blackout</b> to this section.</p>
+</li>
+</ol>
+<p><b>Trigger</b> indicates the amount of time in minutes to watch for timeouts.  <b>Count</b> indicates the number of timeouts to look for during the <b>trigger</b> period.  <b>Blackout</b> indicates the length of time in minutes to disable the store after the threshhold is reached.</p>
+<p>For example, we recommend the following settings:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>[timeouts]
+trigger=10
+count=5
+blackout=15</pre>
+</td>
+</tr>
+</table></span></div>
+<p>In this example, the store access is turned off if five timeouts are experienced in a 10-minute period.  At the completion of a 15-minute blackout, the store is reactivated. </p>
+<p class="proch"><img src="../common/wedge.gif" alt=""/><b>To control symbol store access using the registry
+      
+     </b></p>
+<ol>
+<li>Create a key named <div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>HKLM\ Software\Microsoft\Symbol Server\Timeouts</pre>
+</td>
+</tr>
+</table></span></div>
+</li>
+<li>
+<p>Add three REG_DWORD values <b>trigger</b>, <b>count</b>, and <b>blackout</b> to this key.  Set these values as you would in the .ini file.</p>
+</li>
+</ol>
+<p>Whether using the registry or an .ini file, if any of the trigger, count, or blackout values are set to 0 or if any of the keys or values do not exist, this functionality is disabled. </p>
+<p>This feature of SymSrv is currently available only when running as a service.  This means that the only practical application of this feature is when it is called from SymProxy.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Dealing with Unavailable Symbol Stores%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

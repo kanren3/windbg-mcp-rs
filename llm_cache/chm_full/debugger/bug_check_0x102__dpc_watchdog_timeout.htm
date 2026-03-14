@@ -1,0 +1,67 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The DPC_WATCHDOG_TIMEOUT bug check has a value of 0x00000102. This indicates that The DPC watchdog routine was not executed within the allocated time interval."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0x102: DPC_WATCHDOG_TIMEOUT</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0x102__dpc_watchdog_timeout"></a>Bug Check 0x102: DPC_WATCHDOG_TIMEOUT</h1>
+</div>
+<p>The DPC_WATCHDOG_TIMEOUT bug check has a value of 0x00000102. This indicates that The DPC watchdog routine was not executed within the allocated time interval. </p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2>DPC_WATCHDOG_TIMEOUT Parameters</h2>
+<p>The following parameters are displayed on the blue screen.</p>
+<table>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>1</td>
+<td>DPC watchdog time out interval in nominal clock ticks.
+</td>
+</tr>
+<tr>
+<td>2</td>
+<td>The PRCB address of the hung processor.
+</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Reserved</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Reserved</td>
+</tr>
+</table>
+<p> </p>
+<h2>Cause</h2>
+<p>This bug check typically means that either an ISR is hung at an IRQL that is below clock level and
+above dispatch level, or a DPC routine is hung on the specified processor.
+</p>
+<p>For example for StorPort Miniport drivers, StorPort.sys handles I/O completions in a routine that runs at DISPATCH_LEVEL and that serially calls the I/O completion routines of all IRPs that have just completed. If I/O completion routines singly or together take too much time, the keyboard and/or mouse may stop responding. It is also possible that the Windows DPC Watchdog timer routine will decide that the StorPort routine has taken excessive time to finish.</p>
+<h2>Resolution</h2>
+<p>A kernel driver in the storage stack can reduce the problem's likelihood by efficient coding of the driver's I/O completion routine. If it is still not possible to do all necessary processing in the completion routine in enough time, the routine can create a work element for the I/O work, queue up the element to a work queue and return STATUS_MORE_PROCESSING_REQUIRED; a worker thread of the driver should then find the work element, do the work and do IoCallerDriver for the IRP to ensure the IRP's further I/O processing. </p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,134 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !fxdevice extension displays summary information about all Power Management Framework (PoFx) registered devices. This command can be used only during kernel-mode debugging."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!fxdevice</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._fxdevice"></a>!fxdevice</h1>
+</div>
+<p>The !fxdevice extension displays summary information about all Power Management Framework (PoFx) registered devices. This command can be used only during kernel-mode debugging.</p>
+<p> For more information about PoFX, see Overview of the Power Management Framework.
+</p>
+<p>Syntax</p>
+<pre class="syntax"><b>!fxdevice</b>[<b>&lt;FxDevice Address&gt;</b>]</pre>
+<h2><a id="ddk__thread_dbg"></a><a id="DDK__THREAD_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="___________FxDevice__Address_______"></a><a id="___________fxdevice__address_______"></a><a id="___________FXDEVICE__ADDRESS_______"></a>       <b>&lt;   FxDevice  Address&gt;</b>      </dt>
+<dd>
+<p> Provides the address of the FxDevice to display.
+
+    </p>
+</dd>
+</dl>
+<h2><a id="DLL"></a><a id="dll"></a>DLL</h2>
+<table>
+<tr>
+<td>
+<p><b>Windows 10 and later
+         </b></p>
+</td>
+<td>
+<p>
+          Kdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>The !fxdevice extension displays the following information when it is present on the target system.</p>
+<ul>
+<li>Non-idle PoFx devices</li>
+<li>Idle D0 PoFx devices</li>
+<li>Idle non-D0 PoFx devices</li>
+</ul>
+<p>The following is example out from the !fxdevice extension with a supplied device address.</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !fxdevice ffffe0012ccbda60
+!fxdevice 0xffffe0012ccbda60
+	DevNode: 0xffffe0012bbb09f0
+	UniqueId: "HDAUDIO\FUNC_01&amp;VEN_10EC&amp;DEV_0662&amp;SUBSYS_103C304A&amp;REV_1001\4&amp;25ff998c&amp;0&amp;0001"
+	InstancePath: "HDAUDIO\FUNC_01&amp;VEN_10EC&amp;DEV_0662&amp;SUBSYS_103C304A&amp;REV_1001\4&amp;25ff998c&amp;0&amp;0001"
+	Device Power State: PowerDeviceD0
+	PEP Owner: Default PEP
+	Acpi Plugin: 0
+	Acpi Handle: 0
+	Device Status Flags: IdleTimerOn DevicePowerNotRequired_ReceivedFromPEP 
+	Device Idle Timeout: 0x1869ffffe7960
+	Device Power On: No Activity
+	Device Power Off: No Activity
+	Device Unregister: No Activity
+	Component Count: 1
+		Component 0: F0/F0 - IDLE   (RefCount = 0)
+		Pep Component: 0xffffe0012cfe1800
+			Active: 0	Latency: 0	Residency: 0	Wake: 0	Dx IRP: 0	WW IRP: 0
+			Component Idle State Change: No Activity
+			Component Activation: No Activity
+			Component Active: No Activity
+</code></pre>
+<p>The following is the default  output from the !fxdevice extension.</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !fxdevice 
+********************************************************************************
+Dumping non-idle PoFx devices
+********************************************************************************
+!fxdevice 0xffffe0012bbd08d0
+	DevNode: 0xffffe0012b3f87b0
+	UniqueId: "\_SB.PCI0"
+	InstancePath: "ACPI\PNP0A08\2&amp;daba3ff&amp;1"
+	Device Power State: PowerDeviceD0
+	Component Count: 1
+		Component 0: F0/F1 - ACTIVE (RefCount = 28)
+
+!fxdevice 0xffffe0012c587940
+	DevNode: 0xffffe0012b3f9d30
+	UniqueId: "\_SB.PCI0.PEGL"
+	InstancePath: "PCI\VEN_8086&amp;DEV_D138&amp;SUBSYS_304A103C&amp;REV_11\3&amp;33fd14ca&amp;0&amp;18"
+	Device Power State: PowerDeviceD0
+	Component Count: 1
+		Component 0: F0/F1 - ACTIVE (RefCount = 1)
+
+...
+
+********************************************************************************
+Dumping idle D0 PoFx devices
+********************************************************************************
+!fxdevice 0xffffe0012c5838c0
+	DevNode: 0xffffe0012bbdfd30
+	UniqueId: "\_SB.PCI0.PCX1"
+	InstancePath: "PCI\VEN_8086&amp;DEV_3B42&amp;SUBSYS_304A103C&amp;REV_05\3&amp;33fd14ca&amp;0&amp;E0"
+	Device Power State: PowerDeviceD0
+	Component Count: 1
+		Component 0: F1/F1 - IDLE   (RefCount = 0)
+
+!fxdevice 0xffffe0012c581ac0
+	DevNode: 0xffffe0012bbdfa50
+	UniqueId: "\_SB.PCI0.PCX5"
+	InstancePath: "PCI\VEN_8086&amp;DEV_3B4A&amp;SUBSYS_304A103C&amp;REV_05\3&amp;33fd14ca&amp;0&amp;E4"
+	Device Power State: PowerDeviceD0
+	Component Count: 1
+		Component 0: F1/F1 - IDLE   (RefCount = 0)
+
+...
+
+</code></pre>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!fxdevice%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

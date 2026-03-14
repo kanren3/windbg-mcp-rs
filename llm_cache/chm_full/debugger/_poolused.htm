@@ -1,0 +1,145 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !poolused extension displays memory use summaries, based on the tag used for each pool allocation."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!poolused</title>
+
+<meta name="MS-HAID" content="r28_exts_kernel_N_47a5b9f5-03d6-4479-827c-ad88f67d08b2.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._poolused"></a>!poolused</h1>
+</div>
+<p>The <b>!poolused</b> extension displays memory use summaries, based on the tag used for each pool allocation.</p>
+<pre class="syntax"><b>!poolused </b>[<i>Flags</i> [<i>TagString</i>]] </pre>
+<h2><a id="ddk__poolused_dbg"></a><a id="DDK__POOLUSED_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Flags______"></a><a id="_______flags______"></a><a id="_______FLAGS______"></a>       <i>Flags</i>      </dt>
+<dd>
+<p>Specifies the amount of output to be displayed and the method of sorting the output. This can be any combination of the following bit values, except that bits 1 (0x2) and 2 (0x4) cannot be used together. The default is 0x0, which produces summary information, sorted by pool tag.</p>
+<p></p>
+<dl>
+<dt><a id="Bit_0__0x1_"></a><a id="bit_0__0x1_"></a><a id="BIT_0__0X1_"></a>Bit 0 (0x1)</dt>
+<dd>
+<p>Displays more detailed (verbose) information.</p>
+</dd>
+<dt><a id="Bit_1__0x2_"></a><a id="bit_1__0x2_"></a><a id="BIT_1__0X2_"></a>Bit 1 (0x2)</dt>
+<dd>
+<p>Sorts the display by the amount of nonpaged memory use.</p>
+</dd>
+<dt><a id="Bit_2__0x4_"></a><a id="bit_2__0x4_"></a><a id="BIT_2__0X4_"></a>Bit 2 (0x4)</dt>
+<dd>
+<p>Sorts the display by the amount of paged memory use.</p>
+</dd>
+<dt><a id="Bit_3__0x8_"></a><a id="bit_3__0x8_"></a><a id="BIT_3__0X8_"></a>Bit 3 (0x8)</dt>
+<dd>
+<p>(Windows Server 2003 and later)  Displays the session pool instead of the standard pool.   </p>
+<div class="alert"><b>Note</b>  You can use the <a href="_session.htm"><b>!session</b></a> command to switch between sessions.</div>
+<div> </div>
+</dd>
+</dl>
+</dd>
+<dt><a id="_______TagString______"></a><a id="_______tagstring______"></a><a id="_______TAGSTRING______"></a>       <i>TagString</i>      </dt>
+<dd>
+<p>Specifies the pool tag. <i>TagString</i> is a case-sensitive ASCII string. The asterisk (*) can be used to represent any number of characters; the question mark (?) can be used to represent exactly one character. Unless an asterisk is used, <i>TagString</i> must be exactly four characters in length.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Windows 2000</b></p>
+</td>
+<td>
+<p>
+          Kdextx86.dll
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Kdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For information about memory pools and pool tags, see the Windows Driver Kit (WDK) documentation and <i>Microsoft Windows Internals</i>, by Mark Russinovich and David Solomon. (These resources may not be available in some languages 
+
+and countries.)</p>
+<h2>Remarks</h2>
+<p>The <b>!poolused</b> extension gathers data from the pool tagging feature of Windows. Pool tagging is permanently enabled on Windows Server 2003 and later versions of Windows. On Windows XP and earlier versions of Windows, you must enable pool tagging by using <a href="gflags.htm">Gflags</a>. </p>
+<p>If you stop executing the extension before it completes, the debugger displays partial results.</p>
+<p>The display for this command shows the memory use for each tag in paged pool and nonpaged pool. In both cases, the display includes the number of currently outstanding allocations for the given tag and the number of bytes being consumed by those allocations.</p>
+<p>Here is a partial example of the output from this extension:</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !poolused
+   Sorting by  Tag
+
+  Pool Used:
+            NonPaged            Paged
+ Tag    Allocs     Used    Allocs     Used
+ 1394        1      520         0        0UNKNOWN pooltag '1394', please update pooltag.txt
+ 1MEM        1     3368         0        0UNKNOWN pooltag '1MEM', please update pooltag.txt
+ 2MEM        1     3944         0        0UNKNOWN pooltag '2MEM', please update pooltag.txt
+ 3MEM        3      248         0        0UNKNOWN pooltag '3MEM', please update pooltag.txt
+ 8042        4     3944         0        0PS/2 kb and mouse , Binary: i8042prt.sys
+ AGP         1      344         2      384UNKNOWN pooltag 'AGP ', please update pooltag.txt
+ AcdN        2     1072         0        0TDI AcdObjectInfoG 
+ AcpA        3      192         1      504ACPI Pooltags , Binary: acpi.sys
+ AcpB        0        0         4      576ACPI Pooltags , Binary: acpi.sys
+ AcpD       40    13280         0        0ACPI Pooltags , Binary: acpi.sys
+ AcpF        6      240         0        0ACPI Pooltags , Binary: acpi.sys
+ AcpM        0        0         1      128ACPI Pooltags , Binary: acpi.sys
+ AcpO        4      208         0        0ACPI Pooltags , Binary: acpi.sys
+
+...
+
+ WmiG       30     6960         0        0Allocation of WMIGUID 
+ WmiR       63     4032         0        0Wmi Registration info blocks 
+ Wmip      146     3504       182    18600Wmi General purpose allocation 
+ Wmit        1     4096         7    49480Wmi Trace 
+ Wrpa        2      720         0        0WAN_ADAPTER_TAG 
+ Wrpc        1       72         0        0WAN_CONN_TAG 
+ Wrpi        1      120         0        0WAN_INTERFACE_TAG 
+ Wrps        2      128         0        0WAN_STRING_TAG 
+ aEoP        1      672         0        0UNKNOWN pooltag 'aEoP', please update pooltag.txt
+ fEoP        1       16         0        0UNKNOWN pooltag 'fEoP', please update pooltag.txt
+ hSVD        0        0         1       40Shared Heap Tag , Binary: mrxdav.sys
+ hibr        0        0         1    24576UNKNOWN pooltag 'hibr', please update pooltag.txt
+ iEoP        1       24         0        0UNKNOWN pooltag 'iEoP', please update pooltag.txt
+ idle        2      208         0        0Power Manager idle handler 
+ jEoP        1       24         0        0UNKNOWN pooltag 'jEoP', please update pooltag.txt
+ mEoP        1       88         0        0UNKNOWN pooltag 'mEoP', please update pooltag.txt
+ ohci        1      136         0        01394 OHCI host controller driver 
+ rx..       3     1248         0        0UNKNOWN pooltag '  rx', please update pooltag.txt
+ sidg        2       48         0        0GDI spooler events 
+ thdd        0        0         1    20480DirectDraw/3D handle manager table 
+ usbp       18    77056         2       96UNKNOWN pooltag 'usbp', please update pooltag.txt
+ vPrt        0        0        18    68160UNKNOWN pooltag 'vPrt', please update pooltag.txt
+ TOTAL     3570214 209120008     38769 13066104</code></pre>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!poolused%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

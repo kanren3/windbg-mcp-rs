@@ -1,0 +1,184 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="IDebugDataSpaces interface"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IDebugDataSpaces interface</title>
+
+<meta name="MS-HAID" content="IDebugDataSpaces_83f3a88c-f7e6-4b5c-a2b2-4e8bccef4281.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.idebugdataspaces"></a>IDebugDataSpaces interface</h1>
+</div>
+<h2>Members</h2>
+<p>The <b xmlns:loc="http://microsoft.com/wdcml/l10n">IDebugDataSpaces</b> interface inherits from the <b>IUnknown</b> interface. <b>IDebugDataSpaces</b> also has these types of members:</p>
+<ul>
+<li><a href="#methods">Methods</a></li>
+</ul>
+<h3><a id="methods"></a>Methods</h3>
+<p>The <b>IDebugDataSpaces</b> interface has these methods.</p>
+<table id="memberListMethods" class="members">
+<tr>
+<th align="left" width="37%">Method</th>
+<th align="left" width="63%">Description</th>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="checklowmemory.htm"><b>CheckLowMemory</b></a></td>
+<td align="left" width="63%">
+<p>Checks for memory corruption in the low 4 GB of memory.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="readbusdata.htm"><b>ReadBusData</b></a></td>
+<td align="left" width="63%">
+<p>Reads data from a system bus.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="readcontrol.htm"><b>ReadControl</b></a></td>
+<td align="left" width="63%">
+<p>Reads implementation-specific system data.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="readdebuggerdata.htm"><b>ReadDebuggerData</b></a></td>
+<td align="left" width="63%">
+<p>Returns information about the target that the debugger engine has queried or determined during the current session.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="readio.htm"><b>ReadIo</b></a></td>
+<td align="left" width="63%">
+<p>Reads from the system and bus I/O memory.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="readmsr.htm"><b>ReadMsr</b></a></td>
+<td align="left" width="63%">
+<p>Reads a specified Model-Specific Register (MSR).</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="readphysical.htm"><b>ReadPhysical</b></a></td>
+<td align="left" width="63%">
+<p>Reads the target's memory from the specified physical address.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="readpointersvirtual.htm"><b>ReadPointersVirtual</b></a></td>
+<td align="left" width="63%">
+<p> Reads pointers from the target's virtual address space.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="readprocessorsystemdata.htm"><b>ReadProcessorSystemData</b></a></td>
+<td align="left" width="63%">
+<p>Returns data about the specified processor.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="readvirtual.htm"><b>ReadVirtual</b></a></td>
+<td align="left" width="63%">
+<p>Reads memory from the target's virtual address space.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="readvirtualuncached.htm"><b>ReadVirtualUncached</b></a></td>
+<td align="left" width="63%">
+<p>Reads memory from the target's virtual address space.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="searchvirtual.htm"><b>SearchVirtual</b></a></td>
+<td align="left" width="63%">
+<p>Searches the target's virtual memory for a specified pattern of bytes.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="writebusdata.htm"><b>WriteBusData</b></a></td>
+<td align="left" width="63%">
+<p>Writes data to a system bus.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="writecontrol.htm"><b>WriteControl</b></a></td>
+<td align="left" width="63%">
+<p>Writes implementation-specific system data.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="writeio.htm"><b>WriteIo</b></a></td>
+<td align="left" width="63%">
+<p>Writes to the system and bus I/O memory.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="writemsr.htm"><b>WriteMsr</b></a></td>
+<td align="left" width="63%">
+<p>Writes a value to the specified Model-Specific Register (MSR).</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="writephysical.htm"><b>WritePhysical</b></a></td>
+<td align="left" width="63%">
+<p>Writes data to the specified physical address in the target's memory.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="writepointersvirtual.htm"><b>WritePointersVirtual</b></a></td>
+<td align="left" width="63%">
+<p>Writes pointers to the target's virtual address space.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="writevirtual.htm"><b>WriteVirtual</b></a></td>
+<td align="left" width="63%">
+<p>Writes data to the target's virtual address space.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="writevirtualuncached.htm"><b>WriteVirtualUncached</b></a></td>
+<td align="left" width="63%">
+<p>Writes data to the target's virtual address space.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Dbgeng.h (include Dbgeng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="idebugdataspaces2.htm"><b>IDebugDataSpaces2</b></a></dt>
+<dt><a href="idebugdataspaces3.htm"><b>IDebugDataSpaces3</b></a></dt>
+<dt><a href="idebugdataspaces4.htm"><b>IDebugDataSpaces4</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IDebugDataSpaces interface%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

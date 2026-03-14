@@ -1,0 +1,57 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Troubleshooting Hyper-V Debugging"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Troubleshooting Hyper-V Debugging</title>
+
+<meta name="MS-HAID" content="r05_use_start_217414b4-2715-44b8-8522-56f9a76d1419.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.troubleshooting_hyper_v_debugging"></a>Troubleshooting Hyper-V Debugging</h1>
+</div>
+<h2><a id="ddk_opening_a_crash_dump_dbg"></a><a id="DDK_OPENING_A_CRASH_DUMP_DBG"></a></h2>
+<p>This section discusses some problems that can arise during Hyper-V debugging.</p>
+<h3><a id="cabling_and_configuration_problems"></a><a id="CABLING_AND_CONFIGURATION_PROBLEMS"></a>Cabling and Configuration Problems</h3>
+<p>If there is no connection string when the root partition starts up, this is usually caused by a cabling or configutation issue.  For example, output such as the following might be displayed:  </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>Waiting to reconnect...
+Connected to Windows 6001 x64 target, ptr64 TRUE
+Kernel Debugger connection established.
+Symbol search path is: c:\mysymbols\
+Executable search path is:
+Loading symbols for fffff800`01602000     ntkrnlmp.exe -&gt;   ntkrnlmp.exe
+ModLoad: fffff800`01602000 fffff800`01b17000   ntkrnlmp.exe
+Windows Kernel Version 6001 MP (1 procs) Free x64</pre>
+</td>
+</tr>
+</table></span></div>
+<p>To address this problem, check the configuration of the root partition by typing <b>bcdedit</b> at a command prompt, and verify that the values are correct.</p>
+<h3><a id="vmdemux_problems"></a><a id="VMDEMUX_PROBLEMS"></a>Vmdemux Problems</h3>
+<p>If you restart vmdemux (virtual machine demultiplexer) after you have begun debugging Windows hypervisor, you must add -channel 0 to its command-line options in order to have the hypervisor channel re-created. This is typically done automatically by Windows hypervisor, but in this case it is not possible, because Windows hypervisor is already being debugged.  </p>
+<p>For a full list of the VMDemux command-line options, type vmdemux -? at the command prompt.  </p>
+<h3><a id="problems_with_unmodified_partitions"></a><a id="PROBLEMS_WITH_UNMODIFIED_PARTITIONS"></a>Problems with Unmodified Partitions</h3>
+<p>If you have already set up Hyper-V debugging across a null-modem cable, and have copied the Kdhvcom.dll file to the root partition, and then you later restart the target computer in another partition that does not have this file installed, the debugger may freeze.  In this case, restart vmdemux. This problem arises because unmodified partitions cannot handle multiplexed traffic. Typically, vmdemux closes down all the pipes on a clean shutdown. However, a non-clean shutdown, such as doing a hard restart, is not detectable. </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Troubleshooting Hyper-V Debugging%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,85 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The MEMORY_IMAGE_CORRUPT bug check has a value of 0x000000A2. This bug check indicates that corruption has been detected in the image of an executable file in memory."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0xA2: MEMORY_IMAGE_CORRUPT</title>
+
+<meta name="MS-HAID" content="t05_bugs_60_96cf91d9-db9c-46d7-8adb-81e10d00dae4.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0xa2__memory_image_corrupt"></a>Bug Check 0xA2: MEMORY_IMAGE_CORRUPT</h1>
+</div>
+<p>The MEMORY_IMAGE_CORRUPT bug check has a value of 0x000000A2. This bug check indicates that corruption has been detected in the image of an executable file in memory.<p></p>
+</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2> MEMORY_IMAGE_CORRUPT Parameters</h2>
+<p>The following parameters appear on the blue screen. Parameter 1 indicates the type of violation. The meaning of the other parameters depends on the value of Parameter 1.</p>
+<table>
+<tr>
+<th>Parameter 1</th>
+<th>Parameter 2</th>
+<th>Parameter 3</th>
+<th>Parameter 4</th>
+<th>Cause</th>
+</tr>
+<tr>
+<td>
+<p>0x02</p>
+</td>
+<td>
+<p><b>If Parameter 3 is zero:</b> The page number in the table page that failed </p>
+<p><b>If Parameter 3 is nonzero:</b> The page number with the failing page run index </p>
+</td>
+<td>
+<p>Zero, or the index that failed to match the run </p>
+</td>
+<td>
+<p>0 </p>
+</td>
+<td>
+<p>A table page check failure occurred. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x03</p>
+</td>
+<td>
+<p>The starting physical page number of the range </p>
+</td>
+<td>
+<p>The length (in pages) of the range </p>
+</td>
+<td>
+<p>The page number of the table page that contains this run </p>
+</td>
+<td>
+<p>The checksum for the range of memory listed is incorrect. </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Cause</h2>
+<p>A cyclic redundancy check (CRC) check on the memory range has failed.</p>
+<p>On a system wake operation, various regions of memory might be checked to guard against memory failures. </p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

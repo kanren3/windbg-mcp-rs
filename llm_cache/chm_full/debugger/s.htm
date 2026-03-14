@@ -1,0 +1,124 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Robots" content="noindex, nofollow"/>
+<meta name="Description" content="Glossary page"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>S</title>
+
+<meta name="MS-HAID" content="dbg_glossary_5048ec26-b9ce-44eb-afe2-ebb3e1c9e47d.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.s"></a>S</h1>
+</div>
+<dl>
+<dt><a id="scope"></a><a id="SCOPE"></a><b>scope</b></dt>
+<dd>
+<p>The context that defines the local variables.  The scope has three components: a stack frame, a current instruction, and a register context.</p>
+<p>Sometimes referred to as  <i>local context</i> or <i>lexical scope</i>.</p>
+</dd>
+<dt><a id="second_chance_exception"></a><a id="SECOND_CHANCE_EXCEPTION"></a><b>second-chance exception</b></dt>
+<dd>
+<p>The second opportunity to handle an exception.  This opportunity is only provided if the exception was not handled on the first chance.</p>
+</dd>
+<dt><a id="smart_client"></a><a id="SMART_CLIENT"></a><b>smart client</b></dt>
+<dd>
+<p>An instance of the debugger engine acting as a host.  The smart client is connected to a process server. or a KD connection server. </p>
+</dd>
+<dt><a id="specific_exception_filter"></a><a id="SPECIFIC_EXCEPTION_FILTER"></a><b>specific exception filter</b></dt>
+<dd>
+<p>An event filter for an exception for which the engine has a built-in filter.  Most specific exception filters refer to specific types of exceptions (identified by exception code), but the default exception filter also qualifies as a specific exception filter.</p>
+</dd>
+<dt><a id="specific_event_filter"></a><a id="SPECIFIC_EVENT_FILTER"></a><b>specific event filter</b></dt>
+<dd>
+<p>An event filter for an event which is not an exception.  The specific event filters are listed in <a href="debug_filter_xxx.htm"><b>DEBUG_FILTER_XXX</b></a>.</p>
+</dd>
+<dt><a id="specific_filter"></a><a id="SPECIFIC_FILTER"></a><b>specific filter</b></dt>
+<dd>
+<p>An event filter for an event for which the engine has a built-in filter.</p>
+</dd>
+<dt><a id="software_breakpoint"></a><a id="SOFTWARE_BREAKPOINT"></a><b>software breakpoint</b></dt>
+<dd>
+<p>A breakpoint that is implemented by the debugger engine temporarily modifying the target's executable code.  The breakpoint is triggered when the code is executed.  The code modification is invisible to users of the debugger or the debugger engine API.</p>
+</dd>
+<dt><a id="stack"></a><a id="STACK"></a><b>stack</b></dt>
+<dd>
+<p>See
+     call stack.</p>
+</dd>
+<dt><a id="stack_frame"></a><a id="STACK_FRAME"></a><b>stack frame</b></dt>
+<dd>
+<p>The memory in the call stack containing the data for a single function call.  This includes the return address, parameters passed to the function, and local variables.</p>
+</dd>
+<dt><a id="stop_code"></a><a id="STOP_CODE"></a><b>stop code</b></dt>
+<dd>
+<p>See
+     bug check code.</p>
+</dd>
+<dt><a id="stop_error"></a><a id="STOP_ERROR"></a><b>stop error</b></dt>
+<dd>
+<p>See
+     bug check.</p>
+</dd>
+<dt><a id="stop_screen"></a><a id="STOP_SCREEN"></a><b>stop screen</b></dt>
+<dd>
+<p>See
+     blue screen.</p>
+</dd>
+<dt><a id="subregister"></a><a id="SUBREGISTER"></a><b>subregister</b></dt>
+<dd>
+<p>A register that is contained within another register.  When the subregister changes, the portion of the register that contains the subregister also changes.</p>
+</dd>
+<dt><a id="suspended"></a><a id="SUSPENDED"></a><b>suspended</b></dt>
+<dd>
+<p>A target, process, or thread is suspended if it has been blocked it from executing. </p>
+</dd>
+<dt><a id="symbol"></a><a id="SYMBOL"></a><b>symbol</b></dt>
+<dd>
+<p>A unit of debugging information which provides interpretive information about the target in a debugging session.  Examples of symbols include variables (local and global), functions, types and function entries.  Information about symbols can include the name,  type (if applicable), and the address or  regisgter where it is stored, as well as any  parent or child symbols.  This information is stored in  symbol files and is typically not available in the module itself.</p>
+<p>The debugger engine can synthesize certain symbols when symbol files are not available (for example, exported symbols), but these symbols generally provide only minimal information. </p>
+</dd>
+<dt><a id="symbol_file"></a><a id="SYMBOL_FILE"></a><b>symbol file</b></dt>
+<dd>
+<p>A supplemental file created when an application, library, driver, or operating system is built.  A symbol file contains data which is not actually needed when running the binaries, but which is very useful in the debugging process.</p>
+</dd>
+<dt><a id="symbol_group"></a><a id="SYMBOL_GROUP"></a><b>symbol group</b></dt>
+<dd>
+<p>A group of symbols, typically representing all the local variables in a scope.</p>
+</dd>
+<dt><a id="symbol_type"></a><a id="SYMBOL_TYPE"></a><b>symbol type</b></dt>
+<dd>
+<p>Descriptive information about a symbol's representation, such as its layout in memory.  This is part of the information a compiler uses to generate code to manipulate the symbol.  It is also used by the  debugger engine to manipulate symbols.  The symbol type is distributed in symbol files.</p>
+</dd>
+<dt><a id="synthetic_module"></a><a id="SYNTHETIC_MODULE"></a><b>synthetic module</b></dt>
+<dd>
+<p>A region of memory that the engine treats like a module.  A synthetic module may contain synthetic symbols.</p>
+</dd>
+<dt><a id="synthetic_symbol"></a><a id="SYNTHETIC_SYMBOL"></a><b>synthetic symbol</b></dt>
+<dd>
+<p>A memory address that the engine treats like a symbol.</p>
+</dd>
+<dt><a id="system_crash"></a><a id="SYSTEM_CRASH"></a><b>system crash</b></dt>
+<dd>
+<p>See
+     bug check.</p>
+</dd>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20S%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Ending a Debugging Session in KD"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Ending a Debugging Session in KD</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.ending_a_debugging_session_in_kd"></a>Ending a Debugging Session in KD</h1>
+</div>
+<p>There are two different ways to exit KD.</p>
+<ul>
+<li>
+<p>Issue a <a href="q__qq__quit_.htm"><b>q (Quit)</b></a> command in KD to save the log file, end the debugging session, and exit the debugger. The target computer remains locked.</p>
+</li>
+<li>Press <a href="ctrl_b__quit_local_debugger_.htm"><b>CTRL+B</b></a> and then press ENTER to end the debugger abruptly. If you want the target computer to continue to run after the debugger is ended, you must use this method. Because CTRL+B does not remove breakpoints, you should use the following commands first.<pre class="syntax" xml:space="preserve"><code>kd&gt;  bc *
+kd&gt;  g</code></pre>
+</li>
+</ul>
+<p>Exiting the debugger by using CTRL+B does not clear kernel-mode breakpoints, but attaching a new kernel debugger does clear these breakpoints.</p>
+<p>When you are performing remote debugging, <a href="q__qq__quit_.htm"><b>q</b></a> ends the debugging session. CTRL+B exits the debugger but leaves the session active. This situation enables another debugger to connect to the session.</p>
+<p>If the <a href="q__qq__quit_.htm"><b>q (Quit)</b></a> command does not work, press <a href="ctrl_r__re_synchronize_.htm"><b>CTRL+R</b></a> and then press ENTER on the host computer's keyboard, and then retry the <b>q</b> command. If this procedure does not work, you must use CTRL+B to exit the debugger.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Ending a Debugging Session in KD%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

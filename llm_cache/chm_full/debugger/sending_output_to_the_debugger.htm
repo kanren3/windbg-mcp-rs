@@ -1,0 +1,42 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Sending Output to the Debugger"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Sending Output to the Debugger</title>
+
+<meta name="MS-HAID" content="t02_debugfns_b8f888cc-bbbb-4f27-aeed-ac63da0ddcd9.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.sending_output_to_the_debugger"></a>Sending Output to the Debugger</h1>
+</div>
+<h2><a id="ddk_sending_output_to_the_debugger_dbg"></a><a id="DDK_SENDING_OUTPUT_TO_THE_DEBUGGER_DBG"></a></h2>
+<p>User-mode and kernel-mode code use different routines to send output to the debugger.</p>
+<h3><a id="user_mode_output_routines"></a><a id="USER_MODE_OUTPUT_ROUTINES"></a>User-Mode Output Routines</h3>
+<p><b>OutputDebugString</b> sends a null-terminated string to the debugger of the calling process. In a user-mode driver, <b>OutputDebugString</b> displays the string in the Debugger Command window. If a debugger is not running, this routine has no effect. <b>OutputDebugString</b> does not support the variable arguments of a <b>printf</b> formatted string.</p>
+<p>For complete documentation of this routine, see the Microsoft Windows SDK.</p>
+<h3><a id="kernel_mode_output_routines"></a><a id="KERNEL_MODE_OUTPUT_ROUTINES"></a>Kernel-Mode Output Routines</h3>
+<p><b>DbgPrint</b> displays output in the debugger window. This routine supports the basic <b>printf</b> format parameters. Only kernel-mode code can call <b>DbgPrint</b>.</p>
+<p><b>DbgPrintEx</b> is similar to <b>DbgPrint</b>, but it allows you to "tag" your messages. When running the debugger, you can permit only those messages with certain tags to be sent. This allows you to view only those messages that you are interested in. For details, see <a href="reading_and_filtering_debugging_messages.htm">Reading and Filtering Debugging Messages</a>.</p>
+<div class="alert"><b>Note</b>    In Windows Vista and later versions of Windows, <b>DbgPrint</b> produces tagged messages as well. This is a change from previous versions of Windows.</div>
+<div> </div>
+<p><b>KdPrint</b> and <b>KdPrintEx</b> are identical to <b>DbgPrint</b> and <b>DbgPrintEx</b>, respectively, when compiled in the checked build environment. When compiled in the free build environment, they have no effect.</p>
+<p>For complete documentation of these routines, as well as the build environment, see the Windows Driver Kit.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Sending Output to the Debugger%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

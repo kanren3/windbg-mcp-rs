@@ -1,0 +1,126 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .cache command sets the size of the cache used to hold data obtained from the target. Also sets a number of cache and memory options."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.cache (Set Cache Size)</title>
+
+<meta name="MS-HAID" content="r19_metacmds_A_f283d0a1-e577-4429-9ab3-001663afd9f3.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._cache__set_cache_size_"></a>.cache (Set Cache Size)</h1>
+</div>
+<p>The <b>.cache</b> command sets the size of the cache used to hold data obtained from the target. Also sets a number of cache and memory options.</p>
+<pre class="syntax">
+    <b>.cache </b><i>Size</i> 
+<b>.cache </b><i>Option</i> 
+<b>.cache</b> 
+</pre>
+<h2><a id="ddk_meta_set_cache_size_dbg"></a><a id="DDK_META_SET_CACHE_SIZE_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Size______"></a><a id="_______size______"></a><a id="_______SIZE______"></a>       <i>Size</i>      </dt>
+<dd>
+<p>The size of the kernel debugging cache, in kilobytes. If <i>Size</i> is zero, the cache is disabled. The command output displays the cache size in bytes. (The default size is 1000 KB.)</p>
+</dd>
+<dt><a id="_______Option______"></a><a id="_______option______"></a><a id="_______OPTION______"></a>       <i>Option</i>      </dt>
+<dd>
+<p>Can be any one of the following options:</p>
+<p></p>
+<dl>
+<dt><a id="hold"></a><a id="HOLD"></a><b>hold</b></dt>
+<dd>
+<p>Automatic cache flushing is disabled.</p>
+</dd>
+<dt><a id="unhold"></a><a id="UNHOLD"></a><b>unhold</b></dt>
+<dd>
+<p>Turns off the <b>hold</b> option. (This is the default setting.)</p>
+</dd>
+<dt><a id="decodeptes"></a><a id="DECODEPTES"></a><b>decodeptes</b></dt>
+<dd>
+<p>All transition page table entries (PTEs) will be implicitly decoded. (This is the default setting.)</p>
+</dd>
+<dt><a id="nodecodeptes"></a><a id="NODECODEPTES"></a><b>nodecodeptes</b></dt>
+<dd>
+<p>Turns off the <b>decodeptes</b> option.</p>
+</dd>
+<dt><a id="forcedecodeptes"></a><a id="FORCEDECODEPTES"></a><b>forcedecodeptes</b></dt>
+<dd>
+<p>All virtual addresses will be translated into physical addresses before access. This option also causes the cache to be disabled. Unless you are concerned with kernel-mode memory, it is more efficient to use <b>forcedecodeuser</b> instead.</p>
+</dd>
+<dt><a id="forcedecodeuser"></a><a id="FORCEDECODEUSER"></a><b>forcedecodeuser</b></dt>
+<dd>
+<p>All user-mode virtual addresses will be translated into physical addresses before access. This option also causes the cache to be disabled.</p>
+<div class="alert"><b>Note</b>    You must activate <b>forcedecodeuser</b> (or <b>forcedecodeptes</b>) before using <a href="_thread__set_register_context_.htm"><b>.thread (Set Register Context)</b></a>, <a href="_context__set_user_mode_address_context_.htm"><b>.context (Set User-Mode Address Context)</b></a>, <a href="_process__set_process_context_.htm"><b>.process (Set Process Context)</b></a>, or <a href="_session.htm"><b>!session</b></a> during live debugging. If you use the <b>/p</b> option with <b>.thread</b> and <b>.process</b>, the <b>forcedecodeuser</b> option is automatically set. In any other case, you will need to use the <b>.cache forcedecodeuser</b> command explicitly.</div>
+<div> </div>
+</dd>
+<dt><a id="noforcedecodeptes"></a><a id="NOFORCEDECODEPTES"></a><b>noforcedecodeptes</b></dt>
+<dd>
+<p>Turns off the <b>forcedecodeptes</b> and <b>forcedecodeuser</b> options. (This is the default setting.)</p>
+</dd>
+<dt><a id="flushall"></a><a id="FLUSHALL"></a><b>flushall</b></dt>
+<dd>
+<p>Deletes the entire virtual memory cache.</p>
+</dd>
+<dt><a id="flushu"></a><a id="FLUSHU"></a><b>flushu</b></dt>
+<dd>
+<p>Deletes all entries of ranges with errors from the cache, as well as all user-mode entries.</p>
+</dd>
+<dt><a id="flush_Address"></a><a id="flush_address"></a><a id="FLUSH_ADDRESS"></a><b>flush </b><i>Address</i></dt>
+<dd>
+<p>Deletes a 4096-byte block of the cache, beginning at <i>Address</i>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>kernel mode only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets</b></p>
+</td>
+<td>
+<p>live debugging only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Platforms</b></p>
+</td>
+<td>
+<p>all </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>If <b>.cache</b> is used with no arguments, the current cache size, status, and options are displayed.</p>
+<p>The <b>.cache forcedecodeuser</b> or <b>.cache forcedecodeptes</b> option will only last as long as the debugger remains broken into the target computer. If any stepping or execution of the target takes place, the <b>noforcedecodeptes</b> state will again take effect. This prevents the debugger from interfering with execution or a reboot in an unproductive manner.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.cache (Set Cache Size)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

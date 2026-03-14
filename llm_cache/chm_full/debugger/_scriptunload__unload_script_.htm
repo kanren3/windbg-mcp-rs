@@ -1,0 +1,103 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .scriptunload command unloads the specified script."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.scriptunload (Unload Script)</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._scriptunload__unload_script_"></a>.scriptunload (Unload Script)</h1>
+</div>
+<p>The <b>.scriptunload</b> command unloads the specified script.</p>
+<pre class="syntax">
+    <b>.scriptunload </b><b>ScriptFile</b><b>
+    </b> 
+   </pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______ScriptFile______"></a><a id="_______scriptfile______"></a><a id="_______SCRIPTFILE______"></a>       <i>ScriptFile</i>      </dt>
+<dd>
+<p>Specifies the name of the script file to unload.  <i>ScriptFile</i> should include the .js file name extension. Absolute or relative paths can be used. Relative paths are relative to the directory that you started the debugger in. File paths containing spaces are not supported.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>user mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets</b></p>
+</td>
+<td>
+<p>live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>all </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>The .scriptunload command unloads a loaded script.  Use the following command syntax to unload a script</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000:x86&gt; .scriptunload C:\WinDbg\Scripts\TestScript.js
+JavaScript script unloaded from 'C:\WinDbg\Scripts\TestScript.js'</pre>
+</td>
+</tr>
+</table></span></div>
+<p>If there are outstanding references to objects in a script, the contents of the script will be unlinked but the script may remain in memory until all such references are released.</p>
+<p> For more information about working with JavaScript, see <a href="javascript_debugger_scripting.htm">JavaScript Debugger Scripting</a>. For more information about the debugger objects, see <a href="native_objects_in_javascript_extensions.htm">Native Objects in JavaScript Extensions</a>.</p>
+<p><b>Requirements</b></p>
+<p>Before using any of the .script commands, a scripting provider needs to be loaded. Use the <a href="_load___loadby__load_extension_dll_.htm"><b>.load (Load Extension DLL)</b></a> command to load the JavaScript provider dll. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; .load C:\ScriptProviders\jsprovider.dll</pre>
+</td>
+</tr>
+</table></span></div>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="_scriptload__load_script_.htm"><b>.scriptload (Load Script)</b></a></dt>
+<dt><a href="javascript_debugger_scripting.htm">JavaScript Debugger Scripting</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.scriptunload (Unload Script)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

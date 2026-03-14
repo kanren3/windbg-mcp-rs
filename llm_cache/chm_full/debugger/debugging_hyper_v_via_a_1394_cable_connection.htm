@@ -1,0 +1,93 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Debugging Hyper-V via a 1394 Cable Connection"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Debugging Hyper-V via a 1394 Cable Connection</title>
+
+<meta name="MS-HAID" content="r05_use_start_0aa4bb58-3160-41af-b789-70ba0cd0463c.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.debugging_hyper_v_via_a_1394_cable_connection"></a>Debugging Hyper-V via a 1394 Cable Connection</h1>
+</div>
+<h2><a id="ddk_opening_a_crash_dump_dbg"></a><a id="DDK_OPENING_A_CRASH_DUMP_DBG"></a></h2>
+<p>To debug the root partition or Windows hypervisor across a 1394 cable connection, use the following procedure.   </p>
+<ol>
+<li>
+<p>Verify that you have the proper version of Debugging Tools for Windows installed on the host computer. If you are unsure of which version to use, see <a href="choosing_a_32_bit_or_64_bit_debugger_package.htm">Choosing a 32-Bit or 64-Bit Debugger Package</a>. </p>
+</li>
+<li>On the target computer, use the BCDEdit tool to set the boot configuration settings to allow the debugging that you want. If you intend to debug the root partition, use the following commands: <div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>bcdedit /set dbgtransport kd1394.dll 
+bcdedit /dbgsettings 1394 CHANNEL:ChannelNumber
+bcdedit /debug on </pre>
+</td>
+</tr>
+</table></span></div>
+<p>If you intend to debug Windows hypervisor, use the following commands:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>bcdedit /hypervisorsettings 1394 CHANNEL:ChannelNumber
+bcdedit /set hypervisordebug on 
+bcdedit /set hypervisorlaunchtype auto </pre>
+</td>
+</tr>
+</table></span></div>
+<p>In these commands, <i>ChannelNumber</i> represents the number of the 1394 channel that you are using.  For details on the use of BCDEdit,  see Editing Boot Options.  </p>
+<p>If you want to enable debugging of both the root partition and Window hypervisor, use both sets of BCDEdit commands described in this step, with two different 1394 channel numbers.</p>
+<p>After issuing these BCDEdit commands, restart the target computer. </p>
+</li>
+<li>
+<p>Connect the host computer and the target computer by connecting a null-modem cable between their COM ports. This is done exactly as in standard kernel debugging; for details, see <a href="setting_up_a_1394_cable_connection.htm">Setting Up a 1394 Cable Connection</a>.</p>
+</li>
+<li>The actual debugging session is started by using the Remote tool (Remote.exe) to launch KD. To begin debugging, use the following command:<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>remote.exe /s "DbgPath\kd -k 1394:channel=ChannelNumber -y SymPath" RemoteID </pre>
+</td>
+</tr>
+</table></span></div>
+<p>In this command, <i>ChannelNumber</i> represents the 1394 channel number you used in the BCDEdit command. To debug the root partition, use the channel number you specified for it; to debug Windows hypervisor, use the channel number you specified for it. <i>RemoteID</i> represents an identifying string that is used by the Remote tool (for example, <b>HyperV_ROOT</b> or <b>HyperV_HV</b>). <i>DbgPath</i> represents the root directory of the Debugging Tools for Windows installation, and <i>SymPath</i> represents the symbol path. You may include other KD options as well. If you want to connect remotely to KD from another computer, (using WinDbg or a second instance of KD), include the <b>-server</b> parameter followed by any permissible transport options. If you include the <b>-server</b> parameter, it must be the first parameter used.  </p>
+<p>For example, the command to debug the root partition is similar to this:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>remote.exe /s "\debuggers\kd -k 1394:channel=50 -y srv*c:\localstore*https://msdl.microsoft.com/download/symbols" HyperV_ROOT </pre>
+</td>
+</tr>
+</table></span></div>
+</li>
+</ol>
+<p>At this point, you can debug the target normally.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Debugging Hyper-V via a 1394 Cable Connection%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

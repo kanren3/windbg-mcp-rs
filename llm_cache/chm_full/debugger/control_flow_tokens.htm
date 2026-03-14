@@ -1,0 +1,103 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Control Flow Tokens"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Control Flow Tokens</title>
+
+<meta name="MS-HAID" content="r05_use_start_1131a34b-0ce3-4629-8c88-0ec60c5f64c6.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.control_flow_tokens"></a>Control Flow Tokens</h1>
+</div>
+<h2><a id="ddk_control_flow_tokens_dbg"></a><a id="DDK_CONTROL_FLOW_TOKENS_DBG"></a></h2>
+<p>You can use <i>control flow tokens</i> to create conditional execution and execution loops within debugger command programs.</p>
+<p>Control flow tokens behave like their counterparts in C and C++, with the following general exceptions:</p>
+<ul>
+<li>You must enclose each block of commands that is executed conditionally or repeatedly in braces, even if there is only one such command. For example, you cannot omit the braces in the following command.<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; .if (ebx&gt;0) { r ebx }</pre>
+</td>
+</tr>
+</table></span></div>
+</li>
+<li>Each condition must be a expression. Commands are not permitted.  For example, the following example produces a syntax error.<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; .while (r ebx) { .... }</pre>
+</td>
+</tr>
+</table></span></div>
+</li>
+<li>
+<p>The final command before a closing brace does not have to be followed by a semicolon.</p>
+</li>
+</ul>
+<p>The following control flow tokens are supported within a debugger command program. For more information about the syntax of each token, see the individual reference topics.</p>
+<ul>
+<li>
+<p>The <a href="_if.htm"><b>.if</b></a> token behaves like the <b>if</b> keyword in C.</p>
+</li>
+<li>
+<p>The <a href="_else.htm"><b>.else</b></a> token behaves like the <b>else</b> keyword in C.</p>
+</li>
+<li>
+<p>The <a href="_elsif.htm"><b>.elsif</b></a> token behaves like the <b>else if</b> keyword combination in C.</p>
+</li>
+<li>
+<p>The <a href="_foreach.htm"><b>.foreach</b></a> token parses the output of debugger commands, a string, or a text file. This token then takes each item that it finds and uses them as the input to a specified list of debugger commands.</p>
+</li>
+<li>
+<p>The <a href="_for.htm"><b>.for</b></a> token behaves like the <b>for</b> keyword in C, except that you must separate multiple increment commands by semicolons, not by commas.</p>
+</li>
+<li>
+<p>The <a href="_while.htm"><b>.while</b></a> token behaves like the <b>while</b> keyword in C.</p>
+</li>
+<li>
+<p>The <a href="_do.htm"><b>.do</b></a> token behaves like the <b>do</b> keyword in C, except that you cannot use the word "while" before the condition.</p>
+</li>
+<li>
+<p>The <b>.break</b> token behaves like the <b>break</b> keyword in C. You can use this token within any <b>.for</b>, <b>.while</b>, or <b>.do</b> loop.</p>
+</li>
+<li>
+<p>The <a href="_continue.htm"><b>.continue</b></a> token behaves like the <b>continue</b> keyword in C. You can use this token within any <b>.for</b>, <b>.while</b>, or <b>.do</b> loop.</p>
+</li>
+<li>
+<p>The <a href="_catch.htm"><b>.catch</b></a> token prevents a program from ending if an error occurs. The <b>.catch</b> token is followed by braces that enclose one or more commands. If one of these commands generates an error, the error message is displayed, all remaining commands within the braces are ignored, and execution resumes with the first command after the closing brace.</p>
+</li>
+<li>
+<p>The <a href="_leave.htm"><b>.leave</b></a> token is used to exit from a <b>.catch</b> block.</p>
+</li>
+<li>
+<p>The <a href="_printf.htm"><b>.printf</b></a> token behaves like the <b>printf</b> statement in C.</p>
+</li>
+<li>
+<p>The <a href="_block.htm"><b>.block</b></a> token performs no action. You should use this token only to introduce a block, because you cannot create a block by only using a pair of braces. You must add a control flow token before the opening brace.</p>
+</li>
+</ul>
+<p>The <a href="_for_each_module.htm"><b>!for_each_module</b></a>, <a href="_for_each_frame.htm"><b>!for_each_frame</b></a>, and <a href="_for_each_local.htm"><b>!for_each_local</b></a> extensions are also useful with a debugger command program.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Control Flow Tokens%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

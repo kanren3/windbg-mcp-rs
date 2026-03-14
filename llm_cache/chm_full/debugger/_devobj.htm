@@ -1,0 +1,109 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !devobj extension displays detailed information about a DEVICE_OBJECT structure."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!devobj</title>
+
+<meta name="MS-HAID" content="r26_exts_kernel_A_d7c58f52-7920-4308-92c8-362514c0c278.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._devobj"></a>!devobj</h1>
+</div>
+<p>The <b>!devobj</b> extension displays detailed information about a DEVICE_OBJECT structure.</p>
+<pre class="syntax">
+    <b>!devobj </b><i>DeviceObject</i> 
+</pre>
+<h2><a id="ddk__devobj_dbg"></a><a id="DDK__DEVOBJ_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______DeviceObject______"></a><a id="_______deviceobject______"></a><a id="_______DEVICEOBJECT______"></a>       <i>DeviceObject</i>      </dt>
+<dd>
+<p>Specifies the device object. This can be the hexadecimal address of this structure or the name of the device.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Windows 2000</b></p>
+</td>
+<td>
+<p>
+          Kdextx86.dll
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later</b></p>
+</td>
+<td>
+<p>
+          Kdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>See <a href="plug_and_play_debugging.htm">Plug and Play Debugging</a> for examples and applications of this extension command. For information about device objects, see the Windows Driver Kit (WDK) documentation and <i>Microsoft Windows Internals</i> by Mark Russinovich and David Solomon.</p>
+<h2>Remarks</h2>
+<p>If <i>DeviceObject</i> specifies the name of the device but supplies no prefix, the prefix "\Device\" is assumed. Note that this command will check to see if <i>DeviceObject</i> is a valid address or device name before using the expression evaluator.</p>
+<p>The information displayed includes the device name of the object, information about the device's current IRP, and a list of addresses of any pending IRPs in the device's queue. It also includes information about device objects layered on top of this object (listed as "AttachedDevice") and those layered under this object (listed as "AttachedTo").</p>
+<p>The address of a device object can be obtained using the <a href="_drvobj.htm"><b>!drvobj</b></a> or <a href="_devnode.htm"><b>!devnode</b></a> extensions.</p>
+<p>Here is one example:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; !devnode
+Dumping IopRootDeviceNode (= 0x80e203b8)
+DevNode 0x80e203b8 for PDO 0x80e204f8
+ Parent 0000000000   Sibling 0000000000   Child 0x80e56dc8
+  InstancePath is "HTREE\ROOT\0"
+  State = DeviceNodeStarted (0x308)
+  Previous State = DeviceNodeEnumerateCompletion (0x30d)
+  StateHistory[04] = DeviceNodeEnumerateCompletion (0x30d)
+  StateHistory[03] = DeviceNodeStarted (0x308)
+  StateHistory[02] = DeviceNodeEnumerateCompletion (0x30d)
+  StateHistory[01] = DeviceNodeStarted (0x308)
+  StateHistory[00] = DeviceNodeUninitialized (0x301)
+  StateHistory[19] = Unknown State (0x0)
+  .....
+  StateHistory[05] = Unknown State (0x0)
+  Flags (0x00000131)  DNF_MADEUP, DNF_ENUMERATED, 
+                      DNF_IDS_QUERIED, DNF_NO_RESOURCE_REQUIRED
+  DisableableDepends = 11 (from children)
+
+kd&gt; !devobj 80e204f8
+Device object (80e204f8) is for:
+  \Driver\PnpManager DriverObject 80e20610
+Current Irp 00000000 RefCount 0 Type 00000004 Flags 00001000
+DevExt 80e205b0 DevObjExt 80e205b8 DevNode 80e203b8 
+ExtensionFlags (0000000000)  
+Device queue is not busy.</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!devobj%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

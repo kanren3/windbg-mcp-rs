@@ -1,0 +1,214 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Enabling Postmortem Debugging"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Enabling Postmortem Debugging</title>
+
+<meta name="MS-HAID" content="r04_setup_3_40cc08bd-c0da-4d75-90cd-f677b4f63d68.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.enabling_postmortem_debugging"></a>Enabling Postmortem Debugging</h1>
+</div>
+<h2><a id="ddk_enabling_postmortem_debugging_dbg"></a><a id="DDK_ENABLING_POSTMORTEM_DEBUGGING_DBG"></a>User Mode Exception Handling</h2>
+<p><b>Exceptions and Breakpoints</b></p>
+<p>The most common application errors are called exceptions. These include access violations, division-by-zero errors, numerical overflows, CLR exceptions, and many other kinds of errors. Applications can also cause breakpoint interrupts. These occur when Windows is unable to run the application (for example, when a necessary module cannot be loaded) or when a breakpoint is encountered. Breakpoints can be inserted into the code by a debugger, or invoked through a function such as <b>DebugBreak</b>.</p>
+<p><b>Exception Handlers Precedence</b></p>
+<p>Based on configuration values and which debuggers are active, Windows handles user-mode errors in a variety of ways. The following sequence shows the precedence used for user mode error handling:</p>
+<ol>
+<li>
+<p>If a user-mode debugger is currently attached to the faulting process, all errors will cause the target to break into this debugger.</p>
+<p>As long as the user-mode debugger is attached, no other error-handling methods will be used -- even if the <a href="gn__gn__go_with_exception_not_handled_.htm"><b>gn (Go With Exception Not Handled)</b></a> command is used.</p>
+</li>
+<li>
+<p>If no user-mode debugger is attached and the executing code has its own exception handling routines (for example, <b>try - except</b>), this exception handling routine will attempt to deal with the error.</p>
+</li>
+<li>
+<p>If no user-mode debugger is attached, <u>and</u> Windows has an open kernel-debugging connection, <u>and</u> the error is a breakpoint interrupt, Windows will attempt to contact the kernel debugger.</p>
+<p>Kernel debugging connections must be opened during Windows' boot process. If you wish to prevent a user-mode interrupt from breaking into the kernel debugger, you can use the KDbgCtrl utility with the <b>-du</b> parameter. For details on how to configure kernel-debugging connections and how to use KDbgCtrl, see <a href="getting_set_up_for_debugging.htm">Getting Set Up for Debugging</a>.</p>
+<p>In the kernel debugger, you can use <a href="gh__go_with_exception_handled_.htm"><b>gh (Go With Exception Handled)</b></a> to disregard the error and continue running the target. You can use <a href="gn__gn__go_with_exception_not_handled_.htm"><b>gn (Go With Exception Not Handled)</b></a> to bypass the kernel debugger and go on to step 4. </p>
+</li>
+<li>
+<p>If the conditions in steps 1, 2, and 3 do not apply, Windows will activate a debugging tool configured in the AeDebug registry values. Any program can be selected in advance as the tool to use in this situation. The chosen program is referred to as the <i>postmortem debugger</i>. </p>
+</li>
+<li>If the conditions in steps 1, 2, and 3 do not apply, and there is no postmortem debugger registered, Windows Error Reporting (WER) displays a message and provides solutions if any are available. WER also writes a memory dump file if the appropriate values are set in the Registry. For more information, see <a href="http://go.microsoft.com/fwlink/p?LinkID=257799">Using WER</a> and <a href="http://go.microsoft.com/fwlink/p?LinkID=257798">Collecting User-Mode Dumps</a>.</li>
+</ol>
+<p></p>
+<p><b>DebugBreak Function</b></p>
+<p>If a postmortem debugger has been installed, you can deliberately break into the debugger from a user-mode application by calling the <b>DebugBreak</b> function.</p>
+<p></p>
+<h2><a id="Specifying_a_Postmortem_Debugger"></a><a id="specifying_a_postmortem_debugger"></a><a id="SPECIFYING_A_POSTMORTEM_DEBUGGER"></a>Specifying a Postmortem Debugger</h2>
+<p>This section describes how to configure tools such as WinDbg as the postmortem debugger. Once configured, the postmortem debugger will be automatically started whenever an application crashes.</p>
+<p></p>
+<p><b>Post Mortem Debugger Registry Keys</b></p>
+<p>Windows Error Reporting (WER) creates the postmortem debugger process using the values set in the AeDebug registry key.</p>
+<p>
+<p><b>HKLM</b>\<b>Software</b>\<b>Microsoft</b>\<b>Windows NT</b>\<b>CurrentVersion</b>\<b>AeDebug</b></p>
+</p>
+<p>There are two primary registry values of interest, <i>Debugger</i> and <i>Auto</i>. The <i>Debugger</i> registry value specifies the command line for the postmortem debugger. The  <i>Auto</i> registry value specifies if the postmortem debugger is automatically started, or if a confirmation message box is presented first. </p>
+<p></p>
+<dl>
+<dt><a id="Debugger__REG_SZ_"></a><a id="debugger__reg_sz_"></a><a id="DEBUGGER__REG_SZ_"></a><b>Debugger (REG_SZ)</b></dt>
+<dd>
+<p>This REG_SZ value specifies the debugger that will handle postmortem debugging.</p>
+<p>The full path to the debugger must be listed unless the debugger is located in a directory that is in the default path.</p>
+<p>The command line is generated from the Debugger string via a printf style call that includes 3 parameters. Although the order is fixed, there is no requirement to use any or all of the available parameters.</p>
+<dl>
+<dd>DWORD (%ld) - Process ID of the target process.</dd>
+<dd>DWORD (%ld) - Event Handle duplicated into the postmortem debugger process. If the postmortem debugger signals the event, WER will continue the target process without waiting for the postmortem debugger to terminate. The event should only be signaled if the issue has been resolved. If the postmortem debugger terminates without signaling the event, WER continues the collection of information about the target processes.</dd>
+<dd>void* (%p) - Address of a JIT_DEBUG_INFO structure allocated in the target process’s address space. The structure contains additional exception information and context. </dd>
+</dl>
+</dd>
+<dt><a id="Auto__REG_SZ_"></a><a id="auto__reg_sz_"></a><a id="AUTO__REG_SZ_"></a><b>Auto (REG_SZ)</b></dt>
+<dd>
+<p>This REG_SZ value is always either <b>0</b> or <b>1</b>.</p>
+<p>If <b>Auto</b> is set to <b>0</b>, a confirmation message box is displayed prior to postmortem debugging process being started.</p>
+<p>If <b>Auto</b> is set to <b>1</b>, the postmortem debugger is immediately created.</p>
+</dd>
+</dl>
+<p>When you manually edit the registry, do so very carefully, because improper changes to the registry may not allow Windows to boot.</p>
+<p></p>
+<p><b>Example Command Line Usage</b></p>
+<p>Many postmortem debuggers use a command line that includes -p and -e switches to indicate the parameters are a PID and Event (respectively). For example, installing WinDbg via windbg.exe -I creates the following values:</p>
+<pre class="syntax" xml:space="preserve"><code>Debugger = "&lt;Path&gt;\WinDbg -p %ld -e %ld -g"
+Auto = 1</code></pre>
+<p>There is flexibility in how the  WER %ld %ld %p parameters can be used. For example. there is no requirement to specify any switches around or between the WER parameters.
+For example, installing <a href="https://technet.microsoft.com/en-us/sysinternals/dd996900.aspx">Windows Sysinternals ProcDump</a> using procdump.exe -i  creates the following values with no switches between the WER %ld %ld %p parameters:
+</p>
+<pre class="syntax" xml:space="preserve"><code>Debugger = "&lt;Path&gt;\procdump.exe" -accepteula -j "c:\Dumps" %ld %ld %p
+Auto = 1
+</code></pre>
+<p></p>
+<p><b>32 and 64 bit Debuggers</b></p>
+<p>On a 64-bit platform, the Debugger (REG_SZ) and Auto (REG_SZ) registry values are defined individually for 64-bit and 32-bit applications. An additional Windows on Windows (WOW) key is used to store the 32 bit application post mortem debugging values.</p>
+<p>
+<p><b>HKLM</b>\<b>Software</b>\<b>Wow6432Node</b>\<b>Microsoft</b>\<b>Windows NT</b>\<b>CurrentVersion</b>\<b>AeDebug</b></p>
+</p>
+<p>On a 64-bit platform, use a 32-bit post-mortem debugger for 32-bit processes and a 64-bit debugger for 64-bit processes. This avoids a 64-bit debugger focusing on the WOW64 threads, instead of the 32-bit threads, in a 32-bit process.</p>
+<p>For many postmortem debuggers, including the Debugging Tools for Windows postmortem debuggers, this involves running the installation command twice; once with the x86 version and once with the x64 version. For example, to use WinDbg as the interactive postmortem debugger, the windbg.exe -I command would be run twice, once for each version.</p>
+<p>64-bit Installation:</p>
+<p> C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\windbg.exe –I</p>
+<p>This updates the registry key with these values.</p>
+<pre class="syntax" xml:space="preserve"><code>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AeDebug
+Debugger = "C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\windbg.exe" -p %ld -e %ld –g
+</code></pre>
+<p>32-bit Installation: </p>
+<p> C:\Program Files (x86)\Windows Kits\10\Debuggers\x86\windbg.exe –I</p>
+<p>This updates the registry key with these values.</p>
+<pre class="syntax" xml:space="preserve"><code>HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Windows NT\CurrentVersion\AeDebug
+Debugger = "C:\Program Files (x86)\Windows Kits\10\Debuggers\x86\windbg.exe" -p %ld -e %ld –g
+</code></pre>
+<h2><a id="Configuring"></a><a id="configuring"></a><a id="CONFIGURING"></a>Configuring Post Mortem Debuggers</h2>
+<h3><a id="Debugging_Tools_for_Windows"></a><a id="debugging_tools_for_windows"></a><a id="DEBUGGING_TOOLS_FOR_WINDOWS"></a>Debugging Tools for Windows</h3>
+<p>The Debugging Tools for Windows debuggers all support being set as the postmortem debugger. The install command intends for the process to be debugged interactively.</p>
+<p><b>WinDbg</b></p>
+<p>To set the postmortem debugger to WinDbg, run <b>windbg -I</b>. (The <b>I</b> must be capitalized.) This command will display a success or failure message after it is used. To work with both 32 and 64 bit applications, run the command for the both the 64 and 32 debuggers.</p>
+<pre class="syntax" xml:space="preserve"><code>C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\windbg.exe –I
+C:\Program Files (x86)\Windows Kits\10\Debuggers\x86\windbg.exe –I</code></pre>
+<p> This how the how the AeDebug registry entry will be configured when <b>windbg -I</b> is run.</p>
+<pre class="syntax" xml:space="preserve"><code>Debugger = "&lt;Path&gt;\WinDbg -p %ld -e %ld -g"
+Auto = 1</code></pre>
+<p>In the examples, <i>&lt;Path&gt;</i> is the directory where the debugger is located.</p>
+<p>The -p and -e parameters pass the Process ID and Event, as discussed previously.</p>
+<p> The <b>-g</b> passes the g (Go) command to WinDbg and continues execution from the current instruction. </p>
+<div class="alert"><b>Note</b>  <p class="note">There is a significant issue passing the g (Go) command. The issue with this approach, is that  exceptions do not always repeat, typically, because of a transient condition that no longer exists when the code is restarted. For more information about this issue, see <a href="_jdinfo__use_jit_debug_info_.htm"><b>.jdinfo (Use JIT_DEBUG_INFO)</b></a>.</p>
+<p class="note">To avoid this issue, use .jdinfo or .dump /j. This approach allows the debugger to be in the context of the code failure of interest. For more information, see <a href="#JIT"> Just In Time (JIT) Debugging</a> later in this topic.</p>
+</div>
+<div> </div>
+<p></p>
+<p><b>CDB</b></p>
+<p>To set the postmortem debugger to CDB, run <b>cdb -iae</b> (Install AeDebug) or <b>cdb -iaec </b><i>KeyString</i> (Install AeDebug with Command). </p>
+<pre class="syntax" xml:space="preserve"><code>C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\cdb.exe -iae
+C:\Program Files (x86)\Windows Kits\10\Debuggers\x86\cdb.exe -iae
+</code></pre>
+<p>When the <b>-iaec</b> parameter is used, <i>KeyString</i> specifies a string to be appended to the end of command line used to launch the postmortem debugger. If <i>KeyString</i> contains spaces, it must be enclosed in quotation marks. </p>
+<pre class="syntax" xml:space="preserve"><code>C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\cdb.exe -iaec [KeyString]
+C:\Program Files (x86)\Windows Kits\10\Debuggers\x86\cdb.exe -iaec [KeyString]
+</code></pre>
+<p>This command display nothing  if it succeeds, and an error message if it fails. </p>
+<p></p>
+<p><b>NTSD</b></p>
+<p>To set the postmortem debugger to NTSD, run <b>ntsd -iae</b> (Install AeDebug) or <b>ntsd -iaec </b><i>KeyString</i> (Install AeDebug with Command).</p>
+<pre class="syntax" xml:space="preserve"><code>C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\ntsd.exe -iae
+C:\Program Files (x86)\Windows Kits\10\Debuggers\x86\ntsd.exe -iae
+</code></pre>
+<p>When the <b>-iaec</b> parameter is used, <i>KeyString</i> specifies a string to be appended to the end of command line used to launch the postmortem debugger. If <i>KeyString</i> contains spaces, it must be enclosed in quotation marks. </p>
+<pre class="syntax" xml:space="preserve"><code>C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\ntsd.exe -iaec [KeyString]
+C:\Program Files (x86)\Windows Kits\10\Debuggers\x86\ntsd.exe -iaec [KeyString]
+</code></pre>
+<p>This command display nothing  if it succeeds, and an error to a new console window on failure. </p>
+<div class="alert"><b>Note</b>  Because the -p &#37;ld -e &#37;ld -g parameters always appear first on the command line of the postmortem debugger, you should not use the -iaec switch to specify the -server parameter because -server will not work unless it appears first on the command line.  To install a postmortem debugger that includes this parameter, you must edit the registry manually. </div>
+<div> </div>
+<h3><a id="Visual_Studio_JIT_Debugger"></a><a id="visual_studio_jit_debugger"></a><a id="VISUAL_STUDIO_JIT_DEBUGGER"></a>Visual Studio JIT Debugger</h3>
+<p>If Visual Studio has been installed, vsjitdebugger.exe will be registered as the post mortem debugger. The Visual Studio JIT Debugger intends for the process to be debugged interactively.</p>
+<pre class="syntax" xml:space="preserve"><code>
+Debugger = "C:\WINDOWS\system32\vsjitdebugger.exe" -p %ld -e %ld</code></pre>
+<p>If Visual Studio is updated or re-installed, this entry will be re-written, overwriting any alternate values set.</p>
+<h3><a id="Window_Sysinternals_ProcDump"></a><a id="window_sysinternals_procdump"></a><a id="WINDOW_SYSINTERNALS_PROCDUMP"></a>Window Sysinternals ProcDump</h3>
+<p>The Windows Sysinternals 
+  ProcDump utility can also be used for  postmortem dump capture. For more information about using and downloading ProcDump, see <a href="https://technet.microsoft.com/en-us/sysinternals/dd996900.aspx">ProcDump</a> on TechNet.</p>
+<p>Like the <a href="_dump__create_dump_file_.htm"><b>.dump</b></a> WinDbg command, ProcDump is able to be capture a dump of the crash non-interactively. The capture may occur in any Windows system session.</p>
+<p>ProcDump exits when the dump file capture completes, WER then reports the failure and the faulting process is terminated.</p>
+<p>Use procdump -i to install procdump and -u to uninstall ProcDump for both the 32 and 64 bit post mortem debugging.</p>
+<pre class="syntax" xml:space="preserve"><code>&lt;Path&gt;\procdump.exe -i</code></pre>
+<p>The install and uninstall commands output the registry values modified on success, and the errors on failure.</p>
+<p>The ProcDump command line options in the registry are set to: 
+</p>
+<pre class="syntax" xml:space="preserve"><code>Debugger = &lt;Path&gt;\ProcDump.exe -accepteula -j "&lt;DumpFolder&gt;" %ld %ld %p
+</code></pre>
+<p>ProcDump uses all 3 parameters - PID, Event and JIT_DEBUG_INFO. For more information on the JIT_DEBUG_INFO parameter, see <a href="#JIT">Just In Time (JIT) Debugging</a> below. </p>
+<p>The size of dump captured defaults to Mini (process/threads/handles/modules/address space) without a size option set, MiniPlus (Mini plus MEM_PRIVATE pages) with -mp set, or Full (all memory - equivalent to ".dump /mA")  with -ma set. </p>
+<p>For systems with sufficient drive space, a Full (-ma) capture is recommended. </p>
+<p>Use -ma with the -i option to specify an all memory capture. Optionally, provide a path for the dump files.</p>
+<pre class="syntax" xml:space="preserve"><code>&lt;Path&gt;\procdump.exe -ma -i c:\Dumps</code></pre>
+<p>For systems with limited drive space, a MiniPlus (-mp) capture is recommended.</p>
+<pre class="syntax" xml:space="preserve"><code>&lt;Path&gt;\procdump.exe -mp -i c:\Dumps</code></pre>
+<p>The folder to save the dump file to is optional. The default is the current folder. The folder should secured with an ACL that is equal or better than what is used for C:\Windows\Temp. For more information on managing security related to folders, see <a href="security_during_postmortem_debugging.htm">Security During Postmortem Debugging</a>. </p>
+<p>To uninstall ProcDump as the postmortem debugger, and restore the previous settings, use the -u (Uninstall) option.</p>
+<pre class="syntax" xml:space="preserve"><code>&lt;Path&gt;\procdump.exe -u</code></pre>
+<p>The install and uninstall commands set both the 64-bit and 32-bit values on 64-bit platforms.</p>
+<p> ProcDump is a "packed" executable containing both the 32-bit and 64-bit version of application - as such, the same executable is used for both 32-bit and 64-bit. When ProcDump runs, it automatically switches the version, if the version running doesn't match the target process.</p>
+<h2><a id="JIT"></a><a id="jit"></a> Just In Time (JIT) Debugging</h2>
+<p><b>Setting Context to the Faulting Application</b></p>
+<p>As discussed previously, it is very desirable to  set the context to the exception that caused the crash using the JIT_DEBUG_INFO parameter. For more information about this, see <a href="_jdinfo__use_jit_debug_info_.htm"><b>.jdinfo (Use JIT_DEBUG_INFO)</b></a>.</p>
+<p><b>Debugging Tools for Windows</b></p>
+<p>This example shows how to edit the registry to run an initial command (-c) that uses the .jdinfo &lt;address&gt; command to display the additional exception information, and change the context to the location of the exception (similar to how .ecxr is used set the context to the exception record).</p>
+<pre class="syntax" xml:space="preserve"><code>
+Debugger = "&lt;Path&gt;\windbg.exe -p %ld -e %ld -c ".jdinfo 0x%p"
+Auto = 1</code></pre>
+<p>The %p parameter is the address of a JIT_DEBUG_INFO structure in the target process’s address space. The %p parameter is pre-appended with 0x so that it is interpreted as a hex value.  For more information, see <a href="_jdinfo__use_jit_debug_info_.htm"><b>.jdinfo (Use JIT_DEBUG_INFO)</b></a>.  </p>
+<p>To debug a mix of 32 and 64 bit apps, configure both the 32 and 64 bit registry keys (described above), setting the proper path to the location of the 64-bit and 32-bit WinDbg.exe.</p>
+<p><b>Creating a dump file using .dump</b></p>
+<p>To capture a dump file whenever a failure occurs that includes the JIT_DEBUG_INFO data, use .dump /j &lt;address&gt;. </p>
+<pre class="syntax" xml:space="preserve"><code>&lt;Path&gt;\windbg.exe -p %ld -e %ld -c ".dump /j %p /u &lt;DumpPath&gt;\AeDebug.dmp; qd"</code></pre>
+<p>Use the /u option to generate a unique filename to allow multiple dump files to be automatically created. For more information about the options see, <a href="_dump__create_dump_file_.htm"><b>.dump (Create Dump File)</b></a>.  </p>
+<p>The created dump will have the JITDEBUG_INFO data stored as the default exception context. Instead of using .jdinfo to view the exception information and set the context, use .exr -1 to display the exception record  and .ecxr  to set the context. For more information see <a href="_exr__display_exception_record_.htm"><b>.exr (Display Exception Record)</b></a> and <a href="_ecxr__display_exception_context_record_.htm"><b>.ecxr (Display Exception Context Record)</b></a>.</p>
+<p><b>Windows Error Reporting - q / qd</b></p>
+<p>The way the debug session ends determines if Windows Error Reporting reports the failure. </p>
+<p>If the debug session is detached using qd prior to the closing of the debugger, WER will report the failure.</p>
+<p>If the debug session is quit using q (or if the debugger is closed without detaching), WER will not report the failure.</p>
+<p>Append <i>;q</i> or <i>;qd</i> to the end of the command string to invoke the desired behavior.</p>
+<p>For example, to allow WER to report the failure after CDB captures a dump, configure this command string.</p>
+<pre class="syntax" xml:space="preserve"><code>&lt;Path&gt;\cdb.exe -p %ld -e %ld -c ".dump /j 0x%p /u c:\Dumps\AeDebug.dmp; qd"</code></pre>
+<p>This example would allow WER to report the failure after WinDbg captures a dump.</p>
+<pre class="syntax" xml:space="preserve"><code>&lt;Path&gt;\windbg.exe -p %ld -e %ld -c ".dump /j %p /u &lt;DumpPath&gt;\AeDebug.dmp; qd""</code></pre>
+<h2><a id="security_vulnerabilities"></a><a id="SECURITY_VULNERABILITIES"></a>Security Vulnerabilities</h2>
+<p>If you are considering enabling postmortem debugging on a computer that you share with other people, see <a href="security_during_postmortem_debugging.htm">Security During Postmortem Debugging</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Enabling Postmortem Debugging%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

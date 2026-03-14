@@ -1,0 +1,93 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The tct command executes the program until it reaches a call instruction or return instruction."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>tct (Trace to Next Call or Return)</title>
+
+<meta name="MS-HAID" content="r18_cmds_S_198f2fd2-8454-4bc7-88e8-407c8a29f1ec.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.tct__trace_to_next_call_or_return_"></a>tct (Trace to Next Call or Return)</h1>
+</div>
+<p>The <b>tct</b> command executes the program until it reaches a call instruction or return instruction.</p>
+<p>User-Mode</p>
+<pre class="syntax">[<b>~</b>Thread] <b>tct</b> [<b>r</b>] [= StartAddress] [Count] 
+</pre>
+<p>Kernel-Mode</p>
+<pre class="syntax">
+    <b>tct</b> [<b>r</b>] [= StartAddress] [Count] 
+</pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Thread______"></a><a id="_______thread______"></a><a id="_______THREAD______"></a>       <i>Thread</i>      </dt>
+<dd>
+<p>Specifies threads to continue executing. All other threads are frozen. For more information about the syntax, see <a href="thread_syntax.htm">Thread Syntax</a>. You can specify threads only in user mode.</p>
+</dd>
+<dt><a id="_______r______"></a><a id="_______R______"></a>       <b>r</b>      </dt>
+<dd>
+<p>Turns on and off the display of registers and flags. By default, the registers and flags are displayed. You can disable register display by using the <b>tctr</b>, <a href="p__step_.htm"><b>pr</b></a>, <a href="t__trace_.htm"><b>tr</b></a>, or .prompt_allow -reg commands. All of these commands control the same setting and you can use any of them to override any previous use of these commands.  </p>
+<p>You can also disable register display by using the l-os command. This setting is separate from the other four commands. To control <u>which</u> registers and flags are displayed, use the <a href="rm__register_mask_.htm"><b>rm (Register Mask)</b></a> command.</p>
+</dd>
+<dt><a id="_______StartAddress______"></a><a id="_______startaddress______"></a><a id="_______STARTADDRESS______"></a>       <i>StartAddress</i>      </dt>
+<dd>
+<p>Specifies the address where the debugger begins execution. If you do not use <i>StartAddress</i>, execution begins at the instruction that the instruction pointer points to. For more information about the syntax, see <a href="address_and_address_range_syntax.htm">Address and Address Range Syntax</a>.</p>
+</dd>
+<dt><a id="_______Count______"></a><a id="_______count______"></a><a id="_______COUNT______"></a>       <i>Count</i>      </dt>
+<dd>
+<p>Specifies the number of <b>call</b> or <b>return</b> instructions that the debugger must encounter for the <b>tct</b> command to end. The default value is one.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>Live debugging only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>All</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about related commands, see <a href="controlling_the_target.htm">Controlling the Target</a>. </p>
+<h2>Remarks</h2>
+<p>The <b>tct</b> command causes the target to begin executing. This execution continues until the debugger reaches a <b>call</b> or <b>return</b> instruction or encounters a breakpoint.</p>
+<p>If the program counter is already on a <b>call</b> or <b>return</b> instruction, the debugger traces into the call or return and continues executing until it encounters another <b>call</b> or <b>return</b>. This tracing, rather than execution, of the call is the only difference between <b>tct</b> and <a href="pct__step_to_next_call_or_return_.htm"><b>pct (Step to Next Call or Return)</b></a>.</p>
+<p>In source mode, you can associate one source line with multiple assembly instructions. This command does not stop at a <b>call</b> or <b>return</b> instruction that is associated with the current source line.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20tct (Trace to Next Call or Return)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

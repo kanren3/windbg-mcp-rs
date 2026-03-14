@@ -1,0 +1,129 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The double vertical bar (||) command prints status for the specified system or for all systems that you are currently debugging.Do not confuse this command with the | (Process Status) command."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>|| (System Status)</title>
+
+<meta name="MS-HAID" content="r15_cmds_A_dd2901f8-95ac-43ec-b382-3d8c189f1f2a.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.____system_status_"></a>|| (System Status)</h1>
+</div>
+<p>The double vertical bar (<b>||</b>) command prints status for the specified system or for all systems that you are currently debugging.</p>
+<p>Do not confuse this command with the <a href="___process_status_.htm"><b>| (Process Status)</b></a> command.</p>
+<pre class="syntax"><b>|| </b><i>System</i> </pre>
+<h2><a id="ddk_cmd_system_status_dbg"></a><a id="DDK_CMD_SYSTEM_STATUS_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______System______"></a><a id="_______system______"></a><a id="_______SYSTEM______"></a>       <i>System</i>      </dt>
+<dd>
+<p>Specifies the system to display. If you omit this parameter, all systems that you are debugging are displayed. For more information about the syntax, see <a href="system_syntax.htm">System Syntax</a>.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>Multiple target debugging</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets</b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Platforms</b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>The <b>||</b> command is useful only when you are debugging multiple targets. Many, but not all, multiple-target debugging sessions involve multiple systems. For more information about these sessions, see <a href="debugging_multiple_targets.htm">Debugging Multiple Targets</a>.</p>
+<p>Each system listing includes the server name and the protocol details. The system that the debugger is running on is identified as <b>&lt;Local&gt;</b>.</p>
+<p>The following examples show you how to use this command. The following command displays all systems.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>3:2:005&gt; ||</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The following command also displays all systems.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>3:2:005&gt; ||*</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The following command displays the currently active system.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>3:2:005&gt; ||.</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The following command displays the system that had the most recent exception or break.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>3:2:005&gt; ||#</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The following command displays system number 2.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>3:2:005&gt; ||2</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20|| (System Status)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,111 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The ListType function calls a specified callback function for every element in a linked list."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>ListType function</title>
+
+<meta name="MS-HAID" content="WdbgExts_Ref_aa50fe48-2a66-4d5e-aec7-d225966cfab2.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.listtype"></a>ListType function</h1>
+</div>
+<p>The <b>ListType</b> function calls a specified callback function for every element in a linked list.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>__inline ULONG ListType(
+  _In_ LPCSTR                   Type,
+  _In_ ULONG64                  Address,
+  _In_ USHORT                   ListByFieldAddress,
+  _In_ LPCSTR                   NextPointer,
+  _In_ PVOID                    Context,
+  _In_ PSYM_DUMP_FIELD_CALLBACK CallbackRoutine
+);</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Parameters</h2>
+<dl>
+<dt><i>Type</i> [in]</dt>
+<dd>
+<p>Specifies the name of the type of each entry in the linked list.</p>
+</dd>
+<dt><i>Address</i> [in]</dt>
+<dd>
+<p></p>
+<dl>
+<dt><a id="If_ListByFieldAddress_is_zero_"></a><a id="if_listbyfieldaddress_is_zero_"></a><a id="IF_LISTBYFIELDADDRESS_IS_ZERO_"></a>If <i>ListByFieldAddress</i> is zero:</dt>
+<dd>
+<p>Specifies the address in the target's memory of the first entry in the linked list.</p>
+</dd>
+<dt><a id="If_ListByFieldAddress_is_1_"></a><a id="if_listbyfieldaddress_is_1_"></a><a id="IF_LISTBYFIELDADDRESS_IS_1_"></a>If <i>ListByFieldAddress</i> is 1:</dt>
+<dd>
+<p>Specifies the address in the target's memory of the member of the first entry that points to the next entry.</p>
+</dd>
+</dl>
+</dd>
+<dt><i>ListByFieldAddress</i> [in]</dt>
+<dd>
+<p>Specifies whether <i>Address</i> contains the base address of the first entry, or if it contains the address of the member of the first entry that points to the next entry.</p>
+</dd>
+<dt><i>NextPointer</i> [in]</dt>
+<dd>
+<p>Specifies the name of the member in the structure of type <i>Type</i> that contains a pointer to the next entry in the linked list.  <i>NextPointer</i> can be a period-separated path, for example, if <i>Type</i> is "nt!_ETHREAD", <i>NextPointer</i> could be "Tcb.ThreadListEntry.Flink".</p>
+</dd>
+<dt><i>Context</i> [in]</dt>
+<dd>
+<p>Specifies a pointer that is passed to the callback function specified by <i>CallbackRoutine</i> each time the callback function is called.</p>
+</dd>
+<dt><i>CallbackRoutine</i> [in]</dt>
+<dd>
+<p>Specifies a function that is called for each entry in the linked list.  The parameters passed to the function are the <i>Context</i> pointer and a <a href="field_info.htm"><b>FIELD_INFO</b></a> structure; the address of the entry is found in the <b>address</b> member of this structure.</p>
+</dd>
+</dl>
+<h2>Return value</h2>
+<p>This function returns <b>TRUE</b> on success and <b>FALSE</b> on failure.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Target platform</p>
+</th>
+<td width="70%">
+<dl>
+<dt></dt>
+</dl>
+</td>
+</tr>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Wdbgexts.h (include Wdbgexts.h, Wdbgexts.h, or Dbgeng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20ListType function%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

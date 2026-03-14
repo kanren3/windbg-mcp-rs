@@ -1,0 +1,49 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="HTTP Sites and UNC Shares"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>HTTP Sites and UNC Shares</title>
+
+<meta name="MS-HAID" content="SymChk_b02f257d-6553-4401-bbef-f217d55c5c8e.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.http_sites_and_unc_shares"></a>HTTP Sites and UNC Shares</h1>
+</div>
+<p>It is possible to set up a Web site that provides version-specific source to WinDbg using SrcSrv.  Such a mechanism does not provide dynamic extraction of the source files from version control, but it is a valuable feature because it allows you to set the source path of WinDbg to a single unified path that provides source from many versions of many modules, instead of having to set separate paths for each debugging scenario.  This is not of interest to debugging clients that have direct access to the actual version control systems but can be of assistance to those wanting to provide secure HTTP-based access to source from remote locations.  The Web sites in question can be secured through HTTPS and smart cards, if desired.  This same technique can be used to provide source files through a simple UNC share.  </p>
+<p>This section includes:</p>
+<dl>
+<dd>
+<p><a href="setting_up_the_web_site.htm">Setting Up the Web Site</a></p>
+</dd>
+<dd>
+<p><a href="extracting_source_files.htm">Extracting Source Files</a></p>
+</dd>
+<dd>
+<p><a href="modifying_the_source_indexing_streams_in_a__pdb_file.htm">Modifying the Source Indexing Streams in a .pdb File</a></p>
+</dd>
+<dd>
+<p><a href="using_unc_shares.htm">Using UNC Shares</a></p>
+</dd>
+<dd>
+<p><a href="using_http_sites_and_unc_shares_in_conjuction_with_regular_version_con.htm">Using HTTP Sites and UNC Shares in Conjuction with Regular Version Control</a></p>
+</dd>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20HTTP Sites and UNC Shares%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,85 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !rcdrkd.rcdrsettraceprefix extension sets the trace message prefix."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!rcdrkd.rcdrsettraceprefix</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._rcdrkd_rcdrsettraceprefix"></a>!rcdrkd.rcdrsettraceprefix</h1>
+</div>
+<p>The  <b>!rcdrkd.rcdrsettraceprefix</b> extension sets the trace message prefix.</p>
+<pre class="syntax"><b>!rcdrkd.rcdrsettraceprefix </b><i>TracePrefixString</i><b> </b>
+</pre>
+<h2><a id="ddk__devobj_dbg"></a><a id="DDK__DEVOBJ_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______TracePrefixString______"></a><a id="_______traceprefixstring______"></a><a id="_______TRACEPREFIXSTRING______"></a>       <i>TracePrefixString</i>      </dt>
+<dd>
+<p>The trace message prefix string.</p>
+</dd>
+</dl>
+<h2><a id="DLL"></a><a id="dll"></a>DLL</h2>
+<p>Rcdrkd.dll
+     </p>
+<h2>Remarks</h2>
+<p>Each message in a recorder log has a prefix that you can control by specifying a trace message prefix string. For more information, see Trace Message Prefix.</p>
+<h2>Examples</h2>
+<p>In the following example, the trace message prefix is originally <b>%7!u!: %!FUNC! - </b>. The parameter <b>%7!u!</b> specifies that the prefix includes the message sequence number. The parameter <b>%!FUNC!</b> specifies that the prefix includes the name of the function that generated the message. The example calls <b>!rcdrsettraceprefix</b> to change the prefix string to <b>%7!u!</b>. After that, the log display includes message sequence numbers, but does not include function names.</p>
+<div class="code"><span codelanguage="cmd"><table>
+<tr>
+<th>cmd</th>
+</tr>
+<tr>
+<td>
+<pre>
+0: kd&gt; !rcdrlogdump USBXHCI -a 0xfffffa8010737b60
+Trace searchpath is: 
+
+Trace format prefix is: %7!u!: %!FUNC! - 
+Trying to extract TMF information from - C:\ProgramData\dbg\sym\usbxhci.pdb\D4C85D5D3E2843879EDE226A334D69552\usbxhci.pdb
+--- start of log ---
+405: TransferRing_DispatchEventsAndReleaseLock - 1.8.1: Mapping Begin : Path 1 TransferRingState_Mapping Events 0x00000000
+406: TransferRing_StageRetrieveFromRequest - 1.8.1: WdfRequest 0x0000057FEE117A88 TransferData 0xFFFFFA8011EE8700 Function 0x9 Length 500 TransferSize 500 BytesProcessed 0
+...
+---- end of log ----
+
+0: kd&gt; !rcdrsettraceprefix %7!u!: 
+SetTracePrefix: "%7!u!: "
+0: kd&gt; !rcdrlogdump USBXHCI -a 0xfffffa8010737b60
+Trace searchpath is: 
+
+Trace format prefix is: %7!u!: 
+Trying to extract TMF information from - C:\ProgramData\dbg\sym\usbxhci.pdb\D4C85D5D3E2843879EDE226A334D69552\usbxhci.pdb
+--- start of log ---
+405: 1.8.1: Mapping Begin : Path 1 TransferRingState_Mapping Events 0x00000000
+406: 1.8.1: WdfRequest 0x0000057FEE117A88 TransferData 0xFFFFFA8011EE8700 Function 0x9 Length 500 TransferSize 500 BytesProcessed 0
+...
+---- end of log ----
+</pre>
+</td>
+</tr>
+</table></span></div>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="rcdrkd_extensions.htm">RCDRKD Extensions</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!rcdrkd.rcdrsettraceprefix%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,72 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Debugger Engine Overview"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Debugger Engine Overview</title>
+
+<meta name="MS-HAID" content="Engine_Overview_a9228fb3-172b-458a-9781-00ab1470afe8.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.debugger_engine_overview"></a>Debugger Engine Overview</h1>
+</div>
+<p>The <i>debugger engine</i> (DbgEng.dll), typically referred to as the <i>engine</i>, provides an interface for examining and manipulating debugging targets in <i>user mode</i> and <i>kernel mode</i> on Microsoft Windows.</p>
+<p>The debugger engine can acquire targets, set <a href="multiprocessor_syntax.htm#breakpoints">breakpoints</a>, monitor <a href="events.htm#events">events</a>, query <a href="symbols.htm#symbols">symbols</a>, read and write to memory, and control <a href="controlling_threads_and_processes.htm#threads">threads</a> and <a href="controlling_threads_and_processes.htm#processes">processes</a> in a target.</p>
+<p>You can use the debugger engine to write both debugger extension libraries and stand-alone applications.  Such applications are referred to as <i>debugger engine applications</i>.  A debugger engine application that uses the full functionality of the debugger engine is called a <i>debugger</i>. For example, WinDbg, CDB, NTSD, and KD are debuggers; the debugger engine provides the core of their functionality.</p>
+<p><b>Engine Concepts:</b></p>
+<dl>
+<dd>
+<p><a href="debugging_session_and_execution_model.htm">Debugging Session and Execution Model</a></p>
+</dd>
+<dd>
+<p><a href="client_objects.htm">Client Objects</a></p>
+</dd>
+<dd>
+<p><a href="input_and_output.htm">Input and Output</a></p>
+</dd>
+</dl>
+<p><b>Examining and Manipulating Targets:
+      
+     </b></p>
+<dl>
+<dd>
+<p><a href="targets.htm">Targets</a></p>
+</dd>
+<dd>
+<p><a href="events.htm">Events</a></p>
+</dd>
+<dd>
+<p><a href="breakpoints3.htm">Breakpoints</a></p>
+</dd>
+<dd>
+<p><a href="symbols.htm">Symbols</a></p>
+</dd>
+<dd>
+<p><a href="memory.htm">Memory</a></p>
+</dd>
+<dd>
+<p><a href="threads_and_processes.htm">Threads and Processes</a></p>
+</dd>
+</dl>
+<h3><a id="incomplete_documentation"></a><a id="INCOMPLETE_DOCUMENTATION"></a>Incomplete Documentation</h3>
+<p>This is a preliminary document and is currently incomplete.</p>
+<p>For many concepts relating to the debuggers and the debugger engine that are not yet documented here, look in the <a href="debugging_techniques.htm">Debugging Techniques</a> section of this documentation.</p>
+<p>To obtain some of the currently undocumented functionality of the debugger engine API, use the <a href="execute.htm"><b>Execute</b></a> method to execute individual debugger commands.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Debugger Engine Overview%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

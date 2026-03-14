@@ -1,0 +1,122 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !rcdrkd.rcdrlogdump extension displays the trace messages from all recorder buffers of a driver or set of drivers."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!rcdrkd.rcdrlogdump</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._rcdrkd_rcdrlogdump"></a>!rcdrkd.rcdrlogdump</h1>
+</div>
+<p>The  <b>!rcdrkd.rcdrlogdump</b> extension displays the trace messages from all recorder buffers of a driver or set of drivers.</p>
+<pre class="syntax"><b>!rcdrkd.rcdrlogdump </b><i>DriverName</i><b> </b>[<i>DriverName</i> <b>...</b>]
+<b>!rcdrkd.rcdrlogdump </b><i>DriverName</i><b> -a </b><i>Address</i>
+</pre>
+<h2><a id="ddk__devobj_dbg"></a><a id="DDK__DEVOBJ_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______DriverName______"></a><a id="_______drivername______"></a><a id="_______DRIVERNAME______"></a>       <i>DriverName</i>      </dt>
+<dd>
+<p>The name of a driver, not including the .sys extension.</p>
+</dd>
+<dt><a id="_______Address______"></a><a id="_______address______"></a><a id="_______ADDRESS______"></a>       <i>Address</i>      </dt>
+<dd>
+<p>If Address is specified, this command displays the trace messages from the log buffer at the specified address.</p>
+</dd>
+</dl>
+<h2><a id="DLL"></a><a id="dll"></a>DLL</h2>
+<p>Rcdrkd.dll
+     </p>
+<h2>Examples</h2>
+<p>The following example shows a portion of the output of the <b>!rcdrlogdump</b>command.</p>
+<div class="code"><span codelanguage="cmd"><table>
+<tr>
+<th>cmd</th>
+</tr>
+<tr>
+<td>
+<pre>3: kd&gt; !rcdrlogdump usbxhci.sys
+Trace searchpath is: 
+
+Trace format prefix is: %7!u!: %!FUNC! - 
+Log dump command                           Log ID                   Size
+================                           ======                   ====
+!rcdrlogdump  usbxhci -a fffffa8005ff2b60  03 SLT02 DCI04           1024
+!rcdrlogdump  usbxhci -a fffffa8005ff2010  03 SLT02 DCI03           1024
+!rcdrlogdump  usbxhci -a fffffa8005b36010  03 SLT01 DCI03           1024
+!rcdrlogdump  usbxhci -a fffffa8005b379e0  03 SLT01 DCI04           1024
+!rcdrlogdump  usbxhci -a fffffa8005b33350  03 SLT02 DCI01           1024
+!rcdrlogdump  usbxhci -a fffffa8005b2bb60  03 SLT01 DCI01           1024
+!rcdrlogdump  usbxhci -a fffffa8005a2bb60  03 CMD                   1024
+!rcdrlogdump  usbxhci -a fffffa8005a1ab60  03 INT00                 1024
+!rcdrlogdump  usbxhci -a fffffa8005085330  03 RUNDOWN               512
+!rcdrlogdump  usbxhci -a fffffa8005311780  03 1033 0194             1024
+Trying to extract TMF information from - C:\ProgramData\dbg\sym\usbxhci.pdb\D4C85D5D3E2843879EDE226A334D69552\usbxhci.pdb
+--- start of log ---
+03 RUNDOWN     6: Controller_RetrievePciData - PCI Bus.Device.Function: 48.0.0
+03 RUNDOWN     7: Controller_RetrievePciData - PCI: VendorId 0x1033 DeviceId 0x0194 RevisionId 0x03
+03 RUNDOWN     8: Controller_QueryDeviceFlagsFromKse - Found DeviceFlags 0x101800 for USBXHCI:PCI\VEN_1033&amp;DEV_0194
+03 RUNDOWN     9: Controller_RetrieveDeviceFlags - DeviceFlags 0x101804
+...
+03 SLT01 DCI03 89911: TransferRing_DispatchEventsAndReleaseLock - 1.3.0: Mapping Complete : Path 1 TransferRingState_Idle Events 0x00000000
+03 SLT01 DCI04 89912: TransferRing_DispatchEventsAndReleaseLock - 1.4.0: Mapping Begin : Path 3 TransferRingState_Mapping Events 0x00000000
+03 SLT01 DCI04 89913: TransferRing_DispatchEventsAndReleaseLock - 1.4.0: Mapping Complete : Path 3 TransferRingState_Idle Events 0x00000000
+---- end of log ----
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The preceding output contains messages from several log buffers. To see mesages from a single log buffer, use the <b>-a</b> parameter, and specify the address of the log buffer. The following example shows how to display the messages from the log buffer at address fffffa8005ff2b60.</p>
+<div class="code"><span codelanguage="cmd"><table>
+<tr>
+<th>cmd</th>
+</tr>
+<tr>
+<td>
+<pre>3: kd&gt; !rcdrlogdump  usbxhci -a fffffa8005ff2b60
+Trace searchpath is: 
+
+Trace format prefix is: %7!u!: %!FUNC! - 
+Trying to extract TMF information from - C:\ProgramData\dbg\sym\usbxhci.pdb\D4C85D5D3E2843879EDE226A334D69552\usbxhci.pdb
+--- start of log ---
+70914: TransferRing_DispatchEventsAndReleaseLock - 2.4.0: Mapping Complete : Path 1 TransferRingState_Idle Events 0x00000000
+70916: TransferRing_TransferEventHandler - 2.4.0: TransferEventTrb 0xFFFFFA8005A3FBF0 CC_SUCCESS Length 31 EventData 1 Pointer 0xfffffa8005b96210
+70917: TransferRing_TransferEventHandler - 2.4.0: WdfRequest 0x0000057FFA469FD8 transferData 0xFFFFFA8005B961B0
+70918: TransferRing_TransferComplete - 2.4.0: WdfRequest 0x0000057FFA469FD8 completed with STATUS_SUCCESS BytesProcessed 31
+70922: TransferRing_DispatchEventsAndReleaseLock - 2.4.0: Mapping Begin : Path 3 TransferRingState_Mapping Events 0x00000000
+70923: TransferRing_DispatchEventsAndReleaseLock - 2.4.0: Mapping Complete : Path 3 TransferRingState_Idle Events 0x00000000
+81064: TransferRing_DispatchEventsAndReleaseLock - 2.4.0: Mapping Begin : Path 1 TransferRingState_Mapping Events 0x00000000
+81065: TransferRing_StageRetrieveFromRequest - 2.4.0: WdfRequest 0x0000057FFA469FD8 TransferData 0xFFFFFA8005B961B0 Function 0x9 Length 31 TransferSize 31 BytesProcessed 0
+81066: TransferRing_DispatchEventsAndReleaseLock - 2.4.0: Mapping Complete : Path 1 TransferRingState_Idle Events 0x00000000
+81068: TransferRing_TransferEventHandler - 2.4.0: TransferEventTrb 0xFFFFFA8005A40270 CC_SUCCESS Length 31 EventData 1 Pointer 0xfffffa8005b96210
+81069: TransferRing_TransferEventHandler - 2.4.0: WdfRequest 0x0000057FFA469FD8 transferData 0xFFFFFA8005B961B0
+81070: TransferRing_TransferComplete - 2.4.0: WdfRequest 0x0000057FFA469FD8 completed with STATUS_SUCCESS BytesProcessed 31
+81074: TransferRing_DispatchEventsAndReleaseLock - 2.4.0: Mapping Begin : Path 3 TransferRingState_Mapping Events 0x00000000
+81075: TransferRing_DispatchEventsAndReleaseLock - 2.4.0: Mapping Complete : Path 3 TransferRingState_Idle Events 0x00000000
+---- end of log ----</pre>
+</td>
+</tr>
+</table></span></div>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="rcdrkd_extensions.htm">RCDRKD Extensions</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!rcdrkd.rcdrlogdump%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

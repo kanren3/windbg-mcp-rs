@@ -1,0 +1,385 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="IDebugControl4 interface"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IDebugControl4 interface</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.idebugcontrol4"></a>IDebugControl4 interface</h1>
+</div>
+<h2>Members</h2>
+<p>The <b xmlns:loc="http://microsoft.com/wdcml/l10n">IDebugControl4</b> interface inherits from <a href="idebugcontrol3.htm"><b>IDebugControl3</b></a>. <b>IDebugControl4</b> also has these types of members:</p>
+<ul>
+<li><a href="#methods">Methods</a></li>
+</ul>
+<h3><a id="methods"></a>Methods</h3>
+<p>The <b>IDebugControl4</b> interface has these methods.</p>
+<table id="memberListMethods" class="members">
+<tr>
+<th align="left" width="37%">Method</th>
+<th align="left" width="63%">Description</th>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="addbreakpoint2.htm"><b>AddBreakpoint2</b></a></td>
+<td align="left" width="63%">
+<p>Creates a new breakpoint for the current target.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="addextensionwide.htm"><b>AddExtensionWide</b></a></td>
+<td align="left" width="63%">
+<p>Loads an extension library into the debugger engine.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="assemblewide.htm"><b>AssembleWide</b></a></td>
+<td align="left" width="63%">
+<p>Assembles a single processor instruction.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="callextensionwide.htm"><b>CallExtensionWide</b></a></td>
+<td align="left" width="63%">
+<p>Calls a debugger extension.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="controlledoutputvalistwide.htm"><b>ControlledOutputVaListWide</b></a></td>
+<td align="left" width="63%">
+<p>Formats a string and sends the result to output callbacks that were registered with some of the engine's clients.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="controlledoutputwide.htm"><b>ControlledOutputWide</b></a></td>
+<td align="left" width="63%">
+<p>Formats a string and sends the result to output callbacks that were registered with some of the engine's clients.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="disassemblewide.htm"><b>DisassembleWide</b></a></td>
+<td align="left" width="63%">
+<p>Disassembles a processor instruction in the target's memory.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="evaluatewide.htm"><b>EvaluateWide</b></a></td>
+<td align="left" width="63%">
+<p>Evaluates an expression, returning the result.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="executecommandfilewide.htm"><b>ExecuteCommandFileWide</b></a></td>
+<td align="left" width="63%">
+<p>Opens the specified file and executes the debugger commands that are contained within.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="executewide.htm"><b>ExecuteWide</b></a></td>
+<td align="left" width="63%">
+<p>Executes the specified debugger commands.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getbreakpointbyid2.htm"><b>GetBreakpointById2</b></a></td>
+<td align="left" width="63%">
+<p>Returns the breakpoint with the specified breakpoint ID.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getbreakpointbyindex2.htm"><b>GetBreakpointByIndex2</b></a></td>
+<td align="left" width="63%">
+<p>Returns the breakpoint located at the specified index.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getcontextstacktrace.htm"><b>GetContextStackTrace</b></a></td>
+<td align="left" width="63%">
+<p>Returns the frames at the top of the call stack, starting with an arbitrary register context and returning the reconstructed register context for each stack frame.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="geteventfiltercommandwide.htm"><b>GetEventFilterCommandWide</b></a></td>
+<td align="left" width="63%">
+<p>Returns the debugger command that the engine will execute when a specified event occurs.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="geteventfiltertextwide.htm"><b>GetEventFilterTextWide</b></a></td>
+<td align="left" width="63%">
+<p>Returns a short description of an event for a specific filter.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="geteventindexdescriptionwide.htm"><b>GetEventIndexDescriptionWide</b></a></td>
+<td align="left" width="63%">
+<p>Describes the specified event in a static list of events for the current target.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getexceptionfiltersecondcommandwide.htm"><b>GetExceptionFilterSecondCommandWide</b></a></td>
+<td align="left" width="63%">
+<p>Returns the command that will be executed by the debugger engine upon the second chance of a specified exception.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getexpressionsyntaxnameswide.htm"><b>GetExpressionSyntaxNamesWide</b></a></td>
+<td align="left" width="63%">
+<p>Returns the full and abbreviated names of an expression syntax.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getextensionbypathwide.htm"><b>GetExtensionByPathWide</b></a></td>
+<td align="left" width="63%">
+<p>Returns the handle for an already loaded extension library.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getextensionfunctionwide.htm"><b>GetExtensionFunctionWide</b></a></td>
+<td align="left" width="63%">
+<p>Returns a pointer to an extension function from an extension library.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getlasteventinformationwide.htm"><b>GetLastEventInformationWide</b></a></td>
+<td align="left" width="63%">
+<p>Returns information about the last event that occurred in a target.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getlogfile2.htm"><b>GetLogFile2</b></a></td>
+<td align="left" width="63%">
+<p>Returns the name of the currently open log file.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getlogfile2wide.htm"><b>GetLogFile2Wide</b></a></td>
+<td align="left" width="63%">
+<p>Returns the name of the currently open log file.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getlogfilewide.htm"><b>GetLogFileWide</b></a></td>
+<td align="left" width="63%">
+<p>Returns the name of the currently open log file.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><b>GetManagedStatus</b></td>
+<td align="left" width="63%">
+<p></p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><b>GetManagedStatusWide</b></td>
+<td align="left" width="63%">
+<p></p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getprocessortypenameswide.htm"><b>GetProcessorTypeNamesWide</b></a></td>
+<td align="left" width="63%">
+<p>Returns the full name and abbreviated name of the specified processor type.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getprompttextwide.htm"><b>GetPromptTextWide</b></a></td>
+<td align="left" width="63%">
+<p> Returns the standard prompt text that will be prepended to the formatted output specified in the <a href="outputprompt.htm"><i>OutputPrompt</i></a> and <a href="outputpromptvalist.htm"><i>OutputPromptVaList</i></a> methods.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getspecificfilterargumentwide.htm"><b>GetSpecificFilterArgumentWide</b></a></td>
+<td align="left" width="63%">
+<p>Returns the value of filter argument for the specific filters that have an argument.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getstoredeventinformation.htm"><b>GetStoredEventInformation</b></a></td>
+<td align="left" width="63%">
+<p> Retrieves information about an event of interest available in the current target.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getsystemversionstring.htm"><b>GetSystemVersionString</b></a></td>
+<td align="left" width="63%">
+<p>Returns a string that describes the target's operating system version.
+(ANSI version)</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getsystemversionstringwide.htm"><b>GetSystemVersionStringWide</b></a></td>
+<td align="left" width="63%">
+<p>Returns a string that describes the target's operating system version.
+(Unicode version)</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getsystemversionvalues.htm"><b>GetSystemVersionValues</b></a></td>
+<td align="left" width="63%">
+<p>Returns version number information for the current target.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="gettextmacrowide.htm"><b>GetTextMacroWide</b></a></td>
+<td align="left" width="63%">
+<p>Returns the value of a fixed-name alias.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="gettextreplacementwide.htm"><b>GetTextReplacementWide</b></a></td>
+<td align="left" width="63%">
+<p>Returns the value of a user-named alias or an automatic alias.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="inputwide.htm"><b>InputWide</b></a></td>
+<td align="left" width="63%">
+<p>Requests an input string from the debugger engine.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="openlogfile2.htm"><b>OpenLogFile2</b></a></td>
+<td align="left" width="63%">
+<p>Opens a log file that will receive output from the <a href="client_objects.htm#client_objects">client objects</a>.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="openlogfile2wide.htm"><b>OpenLogFile2Wide</b></a></td>
+<td align="left" width="63%">
+<p>Opens a log file that will receive output from the <a href="client_objects.htm#client_objects">client objects</a>.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="openlogfilewide.htm"><b>OpenLogFileWide</b></a></td>
+<td align="left" width="63%">
+<p>Opens a log file that will receive output from the client objects.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="outputcontextstacktrace.htm"><b>OutputContextStackTrace</b></a></td>
+<td align="left" width="63%">
+<p>Prints the call stack specified by an array of stack frames and corresponding register contexts.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="outputpromptvalistwide.htm"><b>OutputPromptVaListWide</b></a></td>
+<td align="left" width="63%">
+<p>Formats and sends a user prompt to the output callback objects.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="outputpromptwide.htm"><b>OutputPromptWide</b></a></td>
+<td align="left" width="63%">
+<p> Formats and sends a user prompt to the output callback objects.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="outputvalistwide.htm"><b>OutputVaListWide</b></a></td>
+<td align="left" width="63%">
+<p>Formats a string and sends the result to the output callbacks that are registered with the engine's clients.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="outputwide.htm"><b>OutputWide</b></a></td>
+<td align="left" width="63%">
+<p> Formats a string and send the result to output callbacks that have been registered with the engine's clients.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="removebreakpoint2.htm"><b>RemoveBreakpoint2</b></a></td>
+<td align="left" width="63%">
+<p>Removes a breakpoint.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><b>ResetManagedStatus</b></td>
+<td align="left" width="63%">
+<p></p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="returninputwide.htm"><b>ReturnInputWide</b></a></td>
+<td align="left" width="63%">
+<p>This method is used by <a href="idebuginputcallbacks.htm"><b>IDebugInputCallbacks</b></a> objects to send an input string to the engine following a request for input.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="seteventfiltercommandwide.htm"><b>SetEventFilterCommandWide</b></a></td>
+<td align="left" width="63%">
+<p>Sets a debugger command for the engine to execute when a specified event occurs.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="setexceptionfiltersecondcommandwide.htm"><b>SetExceptionFilterSecondCommandWide</b></a></td>
+<td align="left" width="63%">
+<p>Sets the command that will be executed by the debugger engine on the second chance of a specified exception.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="setexpressionsyntaxbynamewide.htm"><b>SetExpressionSyntaxByNameWide</b></a></td>
+<td align="left" width="63%">
+<p>Sets the syntax that the engine will use to evaluate expressions.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="setspecificfilterargumentwide.htm"><b>SetSpecificFilterArgumentWide</b></a></td>
+<td align="left" width="63%">
+<p>Sets the value of filter argument for the specific filters that can have an argument.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="settextmacrowide.htm"><b>SetTextMacroWide</b></a></td>
+<td align="left" width="63%">
+<p>Sets the value of a fixed-name alias.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="settextreplacementwide.htm"><b>SetTextReplacementWide</b></a></td>
+<td align="left" width="63%">
+<p>Sets the value of a user-named alias.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Dbgeng.h (include Dbgeng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="idebugcontrol.htm"><b>IDebugControl</b></a></dt>
+<dt><a href="idebugcontrol2.htm"><b>IDebugControl2</b></a></dt>
+<dt><a href="idebugcontrol3.htm"><b>IDebugControl3</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IDebugControl4 interface%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

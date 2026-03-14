@@ -1,0 +1,82 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .dvfree command frees a memory allocation owned by the target process."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.dvfree (Free Memory)</title>
+
+<meta name="MS-HAID" content="r19_metacmds_A_4eee1e0c-6e94-4912-a1aa-bc9c95c03aa7.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._dvfree__free_memory_"></a>.dvfree (Free Memory)</h1>
+</div>
+<p>The <b>.dvfree</b> command frees a memory allocation owned by the target process.</p>
+<pre class="syntax">
+    <b>.dvfree </b>[<b>/d</b>]<b> </b><i>BaseAddress Size</i> 
+</pre>
+<h2><a id="ddk_meta_free_memory_dbg"></a><a id="DDK_META_FREE_MEMORY_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="________d______"></a><a id="________D______"></a>       <b>/d</b>      </dt>
+<dd>
+<p>Decommits the allocation, but does not actually release the pages containing the allocation.  If this option is used, the debugger calls <b>VirtualFreeEx</b> with the <i>dwFreeType</i> parameter equal to MEM_DECOMMIT. If this option is not used, the value MEM_RELEASE is used. See the Microsoft Windows SDK for details.</p>
+</dd>
+<dt><a id="_______BaseAddress______"></a><a id="_______baseaddress______"></a><a id="_______BASEADDRESS______"></a>       <i>BaseAddress</i>      </dt>
+<dd>
+<p>Specifies the virtual address of the beginning of the allocation.</p>
+</dd>
+<dt><a id="_______Size______"></a><a id="_______size______"></a><a id="_______SIZE______"></a>       <i>Size</i>      </dt>
+<dd>
+<p>Specifies the amount of memory to be freed, in bytes. The actual memory freed will always be a whole number of memory pages.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>user mode only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>live debugging only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Platforms</b></p>
+</td>
+<td>
+<p>all </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>The <b>.dvfree</b> command calls <b>VirtualFreeEx</b> to free an existing memory allocation. Unless the <b>/d</b> option is specified, the pages containing this memory are released.</p>
+<p>This command can be used to free an allocation made by <a href="_dvalloc__allocate_memory_.htm"><b>.dvalloc (Allocate Memory)</b></a>. It can also be used to free any block of memory owned by the target process, but freeing memory that was not acquired through <b>.dvalloc</b> will naturally pose risks to the stability of the target process.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.dvfree (Free Memory)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

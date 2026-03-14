@@ -1,0 +1,123 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Graph Analysis with Unloadable Modules"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Graph Analysis with Unloadable Modules</title>
+
+<meta name="MS-HAID" content="t11~b_ks_e05a7448-d801-41eb-ae68-b54ad9162028.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.graph_analysis_with_unloadable_modules"></a>Graph Analysis with Unloadable Modules</h1>
+</div>
+<p>This section describes a scenario that may affect you if you are working with unloadable modules such as KMixer.</p>
+<p>After loading, the extension module initializes at the first command usage. At initialization, the extension module checks whether every module is loaded and has correct symbols.  If any individual module is unloaded or has incorrect symbols loaded, the extension disables the library extension which handles identification, dumping, etc. for that module. In this case, you need to manually re-enable the disabled module.</p>
+<p>The above situation may occur if you load the extension at boot time. Specifically, you may encounter this scenario if you load Ks.dll and then issue a <a href="_reboot__reboot_target_computer_.htm"><b>.reboot</b></a> command. Or, it could happen if you break into the debugger during boot and load Ks.dll at that point.</p>
+<p>In the following example, we are capturing two streams (sndrec32) from a Telex USB microphone. Breaking on <b>splitter!FilterProcess</b> and running <a href="_ks_graph.htm"><b>!ks.graph</b></a> on splitter's filter yields:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; !graph ffa0c6d4 7
+Attempting a graph build on ffa0c6d4...  Please be patient...
+Graph With Starting Point ffa0c6d4:
+"usbaudio" Filter ffaaa768, Child Factories 2
+    Output Factory 0:
+        Pin ffb1caf0 (File 811deeb8, -&gt; "splitter" ffa8b008) Irps(q/p) = 7, 1
+"splitter" Filter ffa0c660, Child Factories 2
+    Output Factory 0:
+        Pin 81250008 (File ffb10028) Irps(q/p) = 3, 0
+        Pin 811df9c0 (File ffaaf2f0) Irps(q/p) = 3, 0
+    Input Factory 1:
+        Pin ffa8b008 (File ffb26d68, &lt;- "usbaudio" ffb1caf0) Irps(q/p) = 1, 7</pre>
+</td>
+</tr>
+</table></span></div>
+<p>In this example, KMixer has been loaded and connected to splitter, but Kmixer does not appear in the graph. There are IRPs queued to splitter's output pin, yet the <b>!ks.graph</b> command is unable to backtrace and discover KMixer. Issue a <a href="_ks_libexts.htm"><b>!ks.libexts details</b></a> command to investigate further:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; !libexts details
+LibExt Details:
+--------------------------------------------------
+LibExt "portcls!" :
+    Status :  ACTIVE
+    This is the port class library extension to the KS DLL.  It supports
+    dumping wave cyclic, wave pci, irp streams, and several other upper
+    level structures.
+    Commands Exported: pciaudio
+    Help : pchelp
+    Hooks : dump dumpqueue dumpcircuit conv(file) conv(device) graph
+LibExt "STREAM!" :
+    Status :  ACTIVE
+    This is the stream class library extension to the KS DLL.  It supports
+    dumping device extensions, filters, streams, and SRBs.
+    Hooks : dump enumdevobj graph
+LibExt "kmixer!" :
+    Status :  INACTIVE
+    This is the KMIXER extension to the KS DLL.  It supports
+    virtually nothing at this point!
+    Hooks : dump graph</pre>
+</td>
+</tr>
+</table></span></div>
+<p>According to the above output, the KMixer section of the extension is currently disabled (Status : INACTIVE). Since the extension module was first used in a context in which KMixer was not loaded, Ks.dll has disabled the KMixer section of the extension to prevent time-consuming references to an unloaded module.</p>
+<p>To enable KMixer explicitly, you can use <a href="_ks_libexts.htm"><b>!ks.libexts</b></a> with the <b>enable</b> parameter, as follows:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; !libexts enable kmixer
+LibExt "kmixer" has been enabled.
+
+kd&gt; !graph ffa0c6d4 7
+Attempting a graph build on ffa0c6d4...  Please be patient...
+Graph With Starting Point ffa0c6d4:
+"usbaudio" Filter ffaaa768, Child Factories 2
+    Output Factory 0:
+        Pin ffb1caf0 (File 811deeb8, -&gt; "splitter" ffa8b008) Irps(q/p) = 7, 1
+"splitter" Filter ffa0c660, Child Factories 2
+    Output Factory 0:
+        Pin 81250008 (File ffb10028, -&gt; "kmixer" 8123c000) Irps(q/p) = 3, 0
+        Pin 811df9c0 (File ffaaf2f0, -&gt; "kmixer" 81236000) Irps(q/p) = 3, 0
+    Input Factory 1:
+        Pin ffa8b008 (File ffb26d68, &lt;- "usbaudio" ffb1caf0) Irps(q/p) = 1, 7
+"kmixer" Filter ffa65b70, Child Factories 4
+    Input Factory 2:
+        Pin 81236000 (File ffaaf7d0, &lt;- "splitter" 811df9c0) Irps(q/p) = 0, 0
+    Output Factory 3:
+        Pin 81252d00 (File 811df1d8) Irps(q/p) = 10, 0
+"kmixer" Filter ffb03808, Child Factories 4
+    Input Factory 2:
+        Pin 8123c000 (File ffb10130, &lt;- "splitter" 81250008) Irps(q/p) = 0, 0
+    Output Factory 3:
+        Pin ffa1e9c0 (File 81253468) Irps(q/p) = 10, 0</pre>
+</td>
+</tr>
+</table></span></div>
+<p>KMixer now appears as expected in the capture graph.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Graph Analysis with Unloadable Modules%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

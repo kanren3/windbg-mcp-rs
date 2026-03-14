@@ -1,0 +1,160 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The SOC_SUBSYSTEM_FAILURE bug check has a value of 0x0000014B. This indicates that an unrecoverable error was encountered in a System on a Chip (SoC) subsystem."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0x14B: SOC_SUBSYSTEM_FAILURE</title>
+
+<meta name="MS-HAID" content="debugger.bug_check___bug_check_0x14d_soc_subsystem_failure"/>
+<meta name="MS-HAID" content="debugger.bug_check_0x14d__soc_subsystem_failure"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0x14b__soc_subsystem_failure"></a>Bug Check 0x14B: SOC_SUBSYSTEM_FAILURE</h1>
+</div>
+<p>The SOC_SUBSYSTEM_FAILURE bug check has a value of 0x0000014B. This indicates that an unrecoverable error was encountered in a System on a Chip (SoC) subsystem.
+</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2>Bug Check 0x14B SOC_SUBSYSTEM_FAILURE Parameters</h2>
+<p>The following parameters are displayed on the blue screen.</p>
+<table>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>1</p>
+</td>
+<td>
+<p>Address of an <b>SOC_SUBSYSTEM_FAILURE_DETAILS</b> structure.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>2</p>
+</td>
+<td>
+<p>Reserved.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>3</p>
+</td>
+<td>
+<p>Reserved.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>4</p>
+</td>
+<td>
+<p>Optional. Address of a vendor-supplied data block.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Resolution</h2>
+<p>The <a href="_analyze.htm"><b>!analyze</b></a> debug extension displays information about  the bug check and can be very helpful in determining the root cause.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>2: kd&gt; !analyze -v
+*******************************************************************************
+*                                                                             *
+*                        Bugcheck Analysis                                    *
+*                                                                             *
+*******************************************************************************
+
+SOC_SUBSYSTEM_FAILURE (14b)
+A SOC subsystem has experienced an unrecoverable critical fault.
+Arguments:
+Arg1: 9aa8d630, nt!SOC_SUBSYSTEM_FAILURE_DETAILS
+Arg2: 00000000, Reserved
+Arg3: 00000000, Reserved
+Arg4: a126c000, (Optional) address to vendor supplied general purpose data block.
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Use the provided nt!SOC_SUBSYSTEM_FAILURE_DETAILS structure to dump the failure data using the dt command and the address provided by Arg1.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>2: kd&gt; dt nt!SOC_SUBSYSTEM_FAILURE_DETAILS 9aa8d630
+   +0x000 SubsysType       : 1 ( SOC_SUBSYS_AUDIO_DSP )
+   +0x008 FirmwareVersion  : 0
+   +0x010 HardwareVersion  : 0
+   +0x018 UnifiedFailureRegionSize : 0x24
+   +0x01c UnifiedFailureRegion : [1]  "F"
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Work with SoC vendor to further parse the data, including the optional vendor supplied general purpose data block.</p>
+<p>You may want to examine the stack trace using the <a href="k__kb__kc__kd__kp__kp__kv__display_stack_backtrace_.htm"><b>k, kb, kc, kd, kp, kP, kv (Display Stack Backtrace)</b></a> command. You can specify the processor number to examine the stacks on all processors.</p>
+<p>You can also set a breakpoint in the code leading up to this stop code and attempt to single step forward into the faulting code.</p>
+<p>For more information see the following topics:</p>
+<p><a href="crash_dump_files.htm">Crash dump analysis using the Windows debuggers (WinDbg)</a></p>
+<p></p>
+<p>If you are not equipped to use the Windows debugger to work on   this problem, you can use some basic troubleshooting techniques. </p>
+<ul>
+<li>
+<p>Check the System Log in Event Viewer for additional error messages that might help identify the device or driver that is causing this bug check. </p>
+</li>
+<li>
+<p>If a driver is identified in the bug check message, disable the driver or check with the manufacturer for driver updates. </p>
+</li>
+<li>
+<p>You can try running the hardware diagnostics supplied by the system manufacturer. </p>
+</li>
+<li>
+<p>For additional general troubleshooting information, see <a href="blue_screen_data.htm"><b>Blue Screen Data</b></a>. </p>
+</li>
+</ul>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Minimum supported client</p>
+</th>
+<td width="70%">
+<p>Windows 8</p>
+</td>
+</tr>
+<tr>
+<th width="30%">
+<p>Minimum supported server</p>
+</th>
+<td width="70%">
+<p>Windows Server 2012</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,83 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !teb extension displays a formatted view of the information in the thread environment block (TEB)."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!teb</title>
+
+<meta name="MS-HAID" content="r25_exts_general_He_8f21ff4e-e437-4947-8075-37872377efac.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._teb"></a>!teb</h1>
+</div>
+<p>The <b>!teb</b> extension displays a formatted view of the information in the thread environment block (TEB).</p>
+<pre class="syntax"><b>!teb [</b><i>TEB-Address</i><b>]</b> 
+</pre>
+<h2><a id="ddk__teb_dbg"></a><a id="DDK__TEB_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______TEB-Address______"></a><a id="_______teb-address______"></a><a id="_______TEB-ADDRESS______"></a>       <i>TEB-Address</i>      </dt>
+<dd>
+<p>The hexadecimal address of the thread whose TEB you want to examine. (This is not the address of the TEB as derived from the kernel thread block for the thread.) If <i>TEB-Address</i> is omitted in user mode, the TEB for the current thread is used. If it is omitted in kernel mode, the TEB corresponding to the current <a href="changing_contexts.htm#register_context">register context</a> is displayed.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<p>
+          Exts.dll</p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For information about thread environment blocks, see <i>Microsoft Windows Internals</i> by Mark Russinovich and David Solomon.</p>
+<h2>Remarks</h2>
+<p>The TEB is the user-mode portion of Microsoft Windows thread control structures.</p>
+<p>If the <b>!teb</b> extension with no argument gives you an error in kernel mode, you should use the <a href="_process.htm"><b>!process</b></a> extension to determine the TEB address for the desired thread. Make sure your <a href="changing_contexts.htm#register_context">register context</a> is set to the desired thread, and then use the TEB address as the argument for <b>!teb</b>.</p>
+<p>Here is an example of this command's output in user mode:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:001&gt; ~
+   0  id: 324.458   Suspend: 1 Teb 7ffde000 Unfrozen
+.  1  id: 324.48c   Suspend: 1 Teb 7ffdd000 Unfrozen
+
+0:001&gt; !teb 
+TEB at 7FFDD000
+    ExceptionList:    76ffdc
+    Stack Base:       770000
+    Stack Limit:      76f000
+    SubSystemTib:     0
+ FiberData:        1e00
+    ArbitraryUser:    0
+    Self:             7ffdd000
+    EnvironmentPtr:   0
+ ClientId:         324.48c
+    Real ClientId:    324.48c
+    RpcHandle:        0
+    Tls Storage:      0
+    PEB Address:      7ffdf000
+    LastErrorValue:   0
+    LastStatusValue:  0
+    Count Owned Locks:0
+    HardErrorsMode:   0</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The similar <a href="_peb.htm"><b>!peb</b></a> extension displays the process environment block.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!teb%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

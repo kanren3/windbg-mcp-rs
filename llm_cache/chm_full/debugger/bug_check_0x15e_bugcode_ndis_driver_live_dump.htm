@@ -1,0 +1,75 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The BUGCODE_NDIS_DRIVER_LIVE_DUMP bug code has a value of 0x0000015E. This bug code indicates that NDIS has captured a live kernel dump. NDIS does not generate a bug check in this situation."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0x15E: BUGCODE_NDIS_DRIVER_LIVE_DUMP</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0x15e_bugcode_ndis_driver_live_dump"></a>Bug Check 0x15E: BUGCODE_NDIS_DRIVER_LIVE_DUMP</h1>
+</div>
+<p>The BUGCODE_NDIS_DRIVER_LIVE_DUMP bug code has a value of 0x0000015E. This bug code indicates that NDIS has captured a live kernel dump. NDIS does not generate a bug check in this situation.</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2> BUGCODE_NDIS_DRIVER Parameters</h2>
+<p>Parameter 1 is always equal to 0x01. This table gives the meanings of the other parameters. </p>
+<table>
+<tr>
+<th>Parameter 1</th>
+<th>Parameter 2</th>
+<th>Parameter 3</th>
+<th>Parameter 4</th>
+<th>Cause of Error</th>
+</tr>
+<tr>
+<td>
+<p>0x01</p>
+</td>
+<td>
+<p>Handle to the miniport adapter or filter module. Use <a href="_ndiskd_miniport.htm"><b>!ndiskd.miniport</b></a> or <a href="_ndiskd_filter.htm"><b>!ndiskd.filter</b></a>.</p>
+</td>
+<td>
+<p>Address of the physical device object (PDO) of the miniport</p>
+</td>
+<td>
+<p> A code that indicates the reason for the error. See Cause for possible values.</p>
+</td>
+<td>
+<p>The miniport has experienced a fatal error and must be removed.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Cause</h2>
+<p>When Parameter 1 is 0x01, Parameter 4 indicates the cause of the error. Here are the possible values:</p>
+<ul>
+<li>70:  Caused by user mode</li>
+<li>71:  Caused by <b>NdisMRemoveMiniport</b></li>
+<li>72:  Caused by <b>NdisIMInitializeDeviceInstanceEx</b> failing</li>
+<li>73:  Caused by <i>MiniportRestart</i> failing
+	</li>
+<li>74:  Caused by failing a OID_PNP_SET_POWER (D0) request</li>
+<li>75:  Caused by failing a OID_PNP_SET_POWER (Dx) request</li>
+</ul>
+<h2>Remarks</h2>
+<p>This bug  code occurs only in Windows 8.1 and later versions of Windows.</p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

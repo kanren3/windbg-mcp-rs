@@ -1,0 +1,103 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .formats command evaluates an expression or symbol in the context of the current thread and process and displays it in multiple numeric formats."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.formats (Show Number Formats)</title>
+
+<meta name="MS-HAID" content="r20_metacmds_E_231f22c0-4744-4c01-ac46-372b490bab6e.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._formats__show_number_formats_"></a>.formats (Show Number Formats)</h1>
+</div>
+<p>The <b>.formats</b> command evaluates an expression or symbol in the context of the current thread and process and displays it in multiple numeric formats.</p>
+<pre class="syntax">
+<b>.formats </b><i>expression</i> 
+</pre>
+<h2><a id="ddk_meta_show_number_formats_dbg"></a><a id="DDK_META_SHOW_NUMBER_FORMATS_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______expression______"></a><a id="_______EXPRESSION______"></a>       <i>expression</i>      </dt>
+<dd>
+<p>Specifies the expression to evaluate. For more information about the syntax, see <a href="numerical_expression_syntax.htm">Numerical Expression Syntax</a>.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets
+         </b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Platforms
+         </b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>The evaluated expression is displayed in hexadecimal, decimal, octal, and binary formats, as well as single-precision and double-precision floating-point format. ASCII character formats are also displayed when the bytes correspond to standard ASCII characters. The expression is also interpreted as a time stamp if it is in the allowed range.</p>
+<p>The following example shows a <b>.formats</b> command.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; .formats 1c407e62
+Evaluate expression:
+  Hex:     1c407e62
+  Decimal: 473988706
+  Octal:   03420077142
+  Binary:  00011100 01000000 01111110 01100010
+  Chars:   .@~b
+  Time:    Mon Jan 07 15:31:46 1985
+  Float:   low 6.36908e-022 high 0
+  Double:  2.34182e-315</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The <b>Time</b> field displays a 32-bit value in CRT time stamp format and displays a 64-bit value in FILETIME format. You can distinguish these formats because the FILETIME format includes milliseconds and the CRT format does not.</p>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="___evaluate_expression_.htm"><b>? (Evaluate Expression)</b></a></dt>
+<dt><a href="____evaluate_c___expression_.htm"><b>?? (Evaluate C++ Expression)</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.formats (Show Number Formats)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

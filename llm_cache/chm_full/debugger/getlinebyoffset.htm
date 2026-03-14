@@ -1,0 +1,137 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The GetLineByOffset method returns the source filename and the line number within the source file of an instruction in the target."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IDebugSymbols::GetLineByOffset method</title>
+
+<meta name="MS-HAID" content="IDebugSymbols_2ed557af-4f84-46d7-be40-fd37a87cd960.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.getlinebyoffset"></a>IDebugSymbols::GetLineByOffset method</h1>
+</div>
+<p>The <b>GetLineByOffset</b>  method returns the source filename and the line number within the source file of an instruction in the target.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>HRESULT GetLineByOffset(
+  [in]            ULONG64  Offset,
+  [out, optional] PULONG   Line,
+  [out, optional] PSTR     FileBuffer,
+  [in]            ULONG    FileBufferSize,
+  [out, optional] PULONG   FileSize,
+  [out, optional] PULONG64 Displacement
+);</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Parameters</h2>
+<dl>
+<dt><i>Offset</i> [in]</dt>
+<dd>
+<p>Specifies the location in the target's virtual address space of the instruction for which to return the source file and line number.</p>
+</dd>
+<dt><i>Line</i> [out, optional]</dt>
+<dd>
+<p>Receives the line number within the source file of the instruction specified by <i>Offset</i>.  If <i>Line</i> is <b>NULL</b>, this information is not returned.</p>
+</dd>
+<dt><i>FileBuffer</i> [out, optional]</dt>
+<dd>
+<p>Receives the file name of the file that contains the instruction specified by <i>Offset</i>.  If <i>FileBuffer</i> is <b>NULL</b>, this information is not returned.</p>
+</dd>
+<dt><i>FileBufferSize</i> [in]</dt>
+<dd>
+<p>Specifies the size, in characters, of the <i>FileBuffer</i> buffer.</p>
+</dd>
+<dt><i>FileSize</i> [out, optional]</dt>
+<dd>
+<p>Specifies the size, in characters, of the source filename.  If <i>FileSize</i> is <b>NULL</b>, this information is not returned.</p>
+</dd>
+<dt><i>Displacement</i> [out, optional]</dt>
+<dd>
+<p>Receives the difference between the location specified in <i>Offset</i> and the location of the first instruction of the returned line.  If <i>Displacement</i> is <b>NULL</b>, this information is not returned.</p>
+</dd>
+</dl>
+<h2>Return value</h2>
+<p>This method may also return other error values.  See <a href="hresult_values.htm"><b>Return Values</b></a> for more details.</p>
+<table>
+<tr>
+<th>Return code</th>
+<th>Description</th>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>S_OK</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>The method was successful.</p>
+</td>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>S_FALSE</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>The method was successful. However, the buffer was not large enough to hold the name of the source file and the name was truncated.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>For more information about source files, see <a href="using_source_files.htm">Using Source Files</a>.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Target platform</p>
+</th>
+<td width="70%">
+<dl>
+<dt></dt>
+</dl>
+</td>
+</tr>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Dbgeng.h (include Dbgeng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="idebugsymbols.htm"><b>IDebugSymbols</b></a></dt>
+<dt><a href="idebugsymbols2.htm"><b>IDebugSymbols2</b></a></dt>
+<dt><a href="idebugsymbols3.htm"><b>IDebugSymbols3</b></a></dt>
+<dt><a href="getoffsetbyline.htm"><b>GetOffsetByLine</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IDebugSymbols::GetLineByOffset method%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

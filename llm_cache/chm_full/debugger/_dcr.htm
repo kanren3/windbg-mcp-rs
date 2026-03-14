@@ -1,0 +1,108 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !dcr extension displays the default control register (DCR) at the specified address."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!dcr</title>
+
+<meta name="MS-HAID" content="r26_exts_kernel_A_e39e4018-5938-4111-8bfd-5ea79ed9b863.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._dcr"></a>!dcr</h1>
+</div>
+<p>The <b>!dcr</b> extension displays the default control register (DCR) at the specified address.</p>
+<pre class="syntax"><b>!dcr </b><i>Expression</i><b> </b>[<i>DisplayLevel</i>]
+</pre>
+<div class="alert"><b>Important</b>  This command has been deprecated  in the Windows Debugger Version 10.0.14257 and later, and is no longer available.</div>
+<div> </div>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Expression______"></a><a id="_______expression______"></a><a id="_______EXPRESSION______"></a>       <i>Expression</i>      </dt>
+<dd>
+<p>Specifies the hexadecimal address of the DCR to display. The expression <b>@dcr</b> can also be used for this parameter. In that case, information about the current processor DCR is displayed.</p>
+</dd>
+<dt><a id="_______DisplayLevel______"></a><a id="_______displaylevel______"></a><a id="_______DISPLAYLEVEL______"></a>       <i>DisplayLevel</i>      </dt>
+<dd>
+<p>Can be any one of the following options:</p>
+<p></p>
+<dl>
+<dt><a id="0"></a><b>0</b></dt>
+<dd>
+<p>Causes only the values of each DCR field to be displayed. This is the default value.</p>
+</dd>
+<dt><a id="1"></a><b>1</b></dt>
+<dd>
+<p>Causes the display to include more in-depth information about each of the DCR fields that is not reserved or ignored.</p>
+</dd>
+<dt><a id="2"></a><b>2</b></dt>
+<dd>
+<p>Causes the display to include more in-depth information about all of the DCR fields, including those that are ignored or reserved.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Windows 2000</b></p>
+</td>
+<td>
+<p>Unavailable</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Windows XP and later</b></p>
+</td>
+<td>
+<p>
+          Kdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>This extension command can only be used with an Itanium-based target computer.</p>
+<h2>Remarks</h2>
+<p>The DCR specifies default parameters for the processor status register values on interruption. The DCR also specifies some additional global controls, as well as whether or not speculative load faults can be deferred.</p>
+<p>Here are a couple of examples:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !dcr @dcr
+dcr:pp be lc dm dp dk dx dr da dd
+1 0 1 1 1 1 1 1 1 1
+
+kd&gt; !dcr @dcr 2
+
+  pp : 1 : Privileged Performance Monitor Default
+  be : 0 : Big-Endian Default
+  lc : 1 : IA-32 Lock check Enable
+  rv : 0 : reserved1
+  dm : 1 : Defer TLB Miss faults only
+  dp : 1 : Defer Page Not Present faults only
+  dk : 1 : Defer Key Miss faults only
+  dx : 1 : Defer Key Permission faults only
+  dr : 1 : Defer Access Rights faults only
+  da : 1 : Defer Access Bit faults only
+  dd : 0 : Defer Debug faults only
+  rv : 0 : reserved2</code></pre>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!dcr%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Example 2: Setting a Flag by Using a Flag Abbreviation"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Example 2:  Setting a Flag by Using a Flag Abbreviation</title>
+
+<meta name="MS-HAID" content="GFlags_74080aa0-1277-4ef9-ba95-43e10b8e1259.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.example_2___setting_a_flag_by_using_a_flag_abbreviation"></a>Example 2:  Setting a Flag by Using a Flag Abbreviation</h1>
+</div>
+<h2><a id="ddk_example_2___setting_a_flag_by_using_a_flag_abbreviation_dtools"></a><a id="DDK_EXAMPLE_2___SETTING_A_FLAG_BY_USING_A_FLAG_ABBREVIATION_DTOOLS"></a></h2>
+<p>The following command sets the <a href="show_loader_snaps.htm">Show loader snaps</a> flag for the notepad.exe image file. <b>Show Loader Snaps</b> takes snapshots of the load process, capturing in detail the loading and unloading of executable images and their supporting library modules.</p>
+<p>The command uses the <b>/i</b> parameter to indicate image file mode and specifies the name of the image file notepad.exe. To identify the flag, the command uses <b>sls</b>, the abbreviation for <b>Show Loader Snaps</b>, and it precedes the abbreviation with a plus sign (+) to indicate that the flag is set. Without the plus sign, the command has no effect.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>gflags /i notepad.exe +sls </pre>
+</td>
+</tr>
+</table></span></div>
+<p>In response, GFlags displays the flags set for notepad.exe. The display indicates that the command is successful. The <b>Show Loader Snaps</b> feature is enabled for all new sessions of the Notepad program.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>Current Registry Settings for notepad.exe executable are: 00000002
+    sls - Show Loader Snaps</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Example 2:  Setting a Flag by Using a Flag Abbreviation%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

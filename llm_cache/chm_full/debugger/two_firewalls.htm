@@ -1,0 +1,63 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Two Firewalls"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Two Firewalls</title>
+
+<meta name="MS-HAID" content="r08_use_remote_eb9a84a1-fc7c-4497-96f6-9f2c1cef3108.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.two_firewalls"></a>Two Firewalls</h1>
+</div>
+<h2><a id="ddk_two_firewalls_dbg"></a><a id="DDK_TWO_FIREWALLS_DBG"></a></h2>
+<p></p>
+<p>In this scenario, you need to perform kernel debugging on a computer in Building A. Your technician is located in Building C, and he or she has access to symbols there. However, both buildings have firewalls that will not allow incoming connections.</p>
+<p>You need to set up a repeater at a neutral site -- say, Building B. Then you can connect A outward to B, and connect C outward to B.</p>
+<p>There will be four computers involved in this scenario:</p>
+<ul>
+<li>
+<p>The target computer, located in Building A.</p>
+</li>
+<li>
+<p>The local host computer, located in Building A. This computer will run a KD connection server. It will be connected to the target computer by a debug cable or 1394 cable, and will connect outward to the repeater. Let this computer's IP address be 127.0.10.10.</p>
+</li>
+<li>
+<p>The computer in Building B. This will run the repeater. Let its IP address be 127.0.20.20.</p>
+</li>
+<li>
+<p>The computer in Building C where the technician is located. This computer will run WinDbg as a smart client. Let its IP address be 127.0.30.30.</p>
+</li>
+</ul>
+<p>First, make sure the target computer is configured for debugging and is attached to the local host computer. In this example, a 1394 cable is used.</p>
+<p>Second, start the repeater on 127.0.20.20:</p>
+<pre class="syntax" xml:space="preserve"><code>dbengprx -p -s tcp:port=9001 -c tcp:port=9000,clicon=127.0.10.10 </code></pre>
+<p>Third, start the KD connection server on 127.0.10.10 in Building A as follows:</p>
+<pre class="syntax" xml:space="preserve"><code>kdsrv -t tcp:port=9000,clicon=127.0.20.20,password=longjump </code></pre>
+<p>Finally, start the smart client on 127.0.30.30 in Building C. (This can actually be done before or after starting the server in Building A.)</p>
+<pre class="syntax" xml:space="preserve"><code>windbg -k kdsrv:server=@{tcp:server=127.0.20.20,port=9001,password=longjump},trans=@{1394:channel=9} -y SymbolPath</code></pre>
+<h3><a id="five_computer_scenario"></a><a id="FIVE_COMPUTER_SCENARIO"></a>Five-Computer Scenario</h3>
+<p>This scenario can be made even more complicated if you suppose that the symbols are on one computer in Building C, but the technician is at a different computer.</p>
+<p>Suppose that 127.0.30.30 has the symbols, as before, and that its local name is \\BOXC. The smart client can be started with the same command as above but with an additional <b>-server</b> parameter. Since no one will be using this machine, it will take less processing time if you use KD instead of WinDbg:</p>
+<pre class="syntax" xml:space="preserve"><code>kd -server npipe:pipe=randomname -k kdsrv:server=@{tcp:server=127.0.20.20,port=9001,password=longjump},trans=@{1394:channel=9} -y SymbolPath</code></pre>
+<p>Then the technician, elsewhere in the building, can start a debugging client as follows:</p>
+<pre class="syntax" xml:space="preserve"><code>windbg -remote npipe:server=\\BOXC,pipe=randomname </code></pre>
+<p>Notice that the password must be supplied by the first non-repeater in the chain (the smart client on \\BOXC), not by the final debugger in the chain.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Two Firewalls%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

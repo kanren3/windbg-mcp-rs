@@ -1,0 +1,62 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Remote debugging involves two debuggers running at two different locations."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Remote Debugging Using WinDbg</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.remode_debugging_using_windbg"></a>Remote Debugging Using WinDbg</h1>
+</div>
+<p>Remote debugging involves two debuggers running at two different locations. The debugger that performs the debugging is called the <i>debugging server</i>. The second debugger, called the <i>debugging client</i>, controls the debugging session from a remote location. To establish a remote session, you must set up the debugging server first and then activate the debugging client.</p>
+<p>The code that is being debugged could be running on the same computer that is running the debugging server, or it could be running on a separate computer. If the debugging server is performing user-mode debugging, then the process that is being debugged can run on the same computer as the debugging server. If the debugging server is performing kernel-mode debugging, then the code being debugged would typically run on a separate target computer.</p>
+<p>The following diagram illustrates a remote session where the debugging server, running on a host computer, is performing kernel-mode debugging of code that is running on a separate target computer.</p><img src="images/ClientServerTarget.png" alt="Diagram that shows remote, host, and target computers"/><p>There are several transport protocols you can use for a remote debugging connection: TCP, NPIPE, SPIPE, SSL, and COM Port. Suppose you have chosen to use TCP as the protocol and you have chosen to use WinDbg as both the debugging client and the debugging server. You can use the following procedure to establish a remote kernel-mode debugging session:</p>
+<ol>
+<li> On  the host computer, open WinDbg and establish a kernel-mode debugging session with a target computer. (See <a href="performing_kernel-mode_debugging_using_windbg.htm">Live Kernel-Mode Debugging Using WinDbg</a>.)</li>
+<li>Break in by choosing <b>Break</b> from the <b>Debug</b> menu or by pressing CRTL-Break.</li>
+<li>
+<p>In the <a href="debugger_command_window.htm">Debugger Command Window</a>, enter the following command.</p><b>.server tcp:port=5005</b><div class="alert"><b>Note</b>  The port number 5005 is arbitrary. The port number is your choice.</div>
+<div> </div>
+</li>
+<li>
+<p>WinDbg will respond with output similar to the following.</p>
+<pre class="syntax" xml:space="preserve"><code>Server started.  Client can connect with any of these command lines
+0: &lt;debugger&gt; -remote tcp:Port=5005,Server=YourHostComputer
+</code></pre>
+</li>
+<li>On the remote computer, open WinDbg, and choose <b>Connect to Remote Session</b> from the <b>File</b> menu.</li>
+<li>
+<p>Under <b>Connection String</b>, enter the following string.</p><b>tcp:Port=5005,Server=</b><i>YourHostComputer</i><p>where <i>YourHostComputer</i> is the name of your host computer, which is running the debugging server.</p>
+<p>Click <b>OK</b>.</p>
+</li>
+</ol>
+<h2><a id="Using_the_Command_Line"></a><a id="using_the_command_line"></a><a id="USING_THE_COMMAND_LINE"></a>Using the Command Line</h2>
+<p>As an alternative to the procedure given in the preceding  section, you can set up a remote debugging session at the command line. Suppose you are set up to establish a kernel-mode debugging session, between a host computer and a target computer, over a 1394 cable on channel 32. You can use the following procedure to establish a remote debugging session:</p>
+<ol>
+<li>
+<p>On the host computer, enter the following command in a Command Prompt window.</p><b>windbg -server tcp:port=5005 -k 1394:channel=32</b></li>
+<li>
+<p>On the remote computer, enter the following command in a Command Prompt window.</p><b>windbg -remote tcp:Port=5005,Server=</b><i>YourHostComputer</i><p>where <i>YourHostComputer</i> is the name of your host computer, which is running the debugging server.</p>
+</li>
+</ol>
+<h2><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h2>
+<p>There are many ways to establish remote debugging  other than the ones shown in this topic. For complete information about setting up a debugging server in the WinDbg <a href="debugger_command_window.htm">Debugger Command Window</a>, see <a href="_server__create_debugging_server_.htm"><b>.server (Create Debugging Server)</b></a>. For complete information about launching WinDbg (and establishing remote debugging) at the command line, see <a href="windbg_command_line_options.htm"><b>WinDbg Command-Line Options</b></a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Remote Debugging Using WinDbg%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

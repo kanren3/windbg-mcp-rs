@@ -1,0 +1,162 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="There are two ways to activate the debugging server."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Activating a Debugging Server</title>
+
+<meta name="MS-HAID" content="r08_use_remote_2cf49506-2562-4684-b843-be4726f59691.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.activating_a_debugging_server"></a>Activating a Debugging Server</h1>
+</div>
+<p>There are two ways to activate the debugging server. It can be activated when the debugger is started by using the <b>-server</b> command-line option in a elevated Command Prompt window (Run as Administrator). It can also be activated after the debugger is running. Start the debugger with elevated privileges (Run as Administrator), and enter the <a href="_server__create_debugging_server_.htm"><b>.server</b></a> command.</p>
+<div class="alert"><b>Note</b>  You can activate a debugging server without having elevated privileges, and debugging clients will be able to connect to the server. However, clients will not be able to discover a debugging server unless it was activated with elevated privileges. For information about how to discover debugging servers, see <a href="searching_for_debugging_servers.htm">Searching for Debugging Servers</a>.</div>
+<div> </div>
+<p>The debuggers support several transport protocols: named pipe (NPIPE), TCP, COM port, secure pipe (SPIPE), and secure sockets layer (SSL).  </p>
+<p>The general syntax for activating a debugging server depends on the protocol used.</p>
+<pre class="syntax">
+<i>Debugger</i><b> -server npipe:pipe=</b><i>PipeName</i><b>[,hidden][,password=</b><i>Password</i><b>][,IcfEnable] [-noio] [</b><i>Options</i><b>]
+
+</b><i>Debugger</i><b> -server tcp:port=</b><i>Socket</i><b>[,hidden][,password=</b><i>Password</i><b>][,ipversion=6][,IcfEnable] [-noio] [</b><i>Options</i><b>]
+
+</b><i>Debugger</i><b> -server tcp:port=</b><i>Socket</i><b>,clicon=</b><i>Client</i><b>[,password=</b><i>Password</i><b>][,ipversion=6] [-noio] [</b><i>Options</i><b>]
+
+</b><i>Debugger</i><b> -server com:port=</b><i>COMPort</i><b>,baud=</b><i>BaudRate</i><b>,channel=</b><i>COMChannel</i><b>[,hidden][,password=</b><i>Password</i><b>] [-noio] [</b><i>Options</i><b>]
+
+</b><i>Debugger</i><b> -server spipe:proto=</b><i>Protocol</i><b>,{certuser=</b><i>Cert</i><b>|machuser=</b><i>Cert</i><b>},pipe=</b><i>PipeName</i><b>[,hidden][,password=</b><i>Password</i><b>] [-noio] [</b><i>Options</i><b>]
+
+</b><i>Debugger</i><b> -server ssl:proto=</b><i>Protocol</i><b>,{certuser=</b><i>Cert</i><b>|machuser=</b><i>Cert</i><b>},port=</b><i>Socket</i><b>[,hidden][,password=</b><i>Password</i><b>] [-noio] [</b><i>Options</i><b>]
+
+</b><i>Debugger</i><b> -server ssl:proto=</b><i>Protocol</i><b>,{certuser=</b><i>Cert</i><b>|machuser=</b><i>Cert</i><b>},port=</b><i>Socket</i><b>,clicon=</b><i>Client</i><b>[,password=</b><i>Password</i><b>] [-noio] [</b><i>Options</i><b>]
+</b></pre>
+<p>Another method of activating a debugging server is to use the <a href="_server__create_debugging_server_.htm"><b>.server (Create Debugging Server)</b></a> command after the debugger has already been started.</p>
+<pre class="syntax">
+<b>.server npipe:pipe=</b><i>PipeName</i><b>[,hidden][,password=</b><i>Password</i><b>][,IcfEnable] 
+
+.server tcp:port=</b><i>Socket</i><b>[,hidden][,password=</b><i>Password</i><b>][,ipversion=6][,IcfEnable] 
+
+.server tcp:port=</b><i>Socket</i><b>,clicon=</b><i>Client</i><b>[,password=</b><i>Password</i><b>][,ipversion=6] 
+
+.server com:port=</b><i>COMPort</i><b>,baud=</b><i>BaudRate</i><b>,channel=</b><i>COMChannel</i><b>[,hidden][,password=</b><i>Password</i><b>] 
+
+.server spipe:proto=</b><i>Protocol</i><b>,{certuser=</b><i>Cert</i><b>|machuser=</b><i>Cert</i><b>},pipe=</b><i>PipeName</i><b>[,hidden][,password=</b><i>Password</i><b>] 
+
+.server ssl:proto=</b><i>Protocol</i><b>,{certuser=</b><i>Cert</i><b>|machuser=</b><i>Cert</i><b>},port=</b><i>Socket</i><b>[,hidden][,password=</b><i>Password</i><b>] 
+
+.server ssl:proto=</b><i>Protocol</i><b>,{certuser=</b><i>Cert</i><b>|machuser=</b><i>Cert</i><b>},port=</b><i>Socket</i><b>,clicon=</b><i>Client</i><b>[,password=</b><i>Password</i><b>] 
+</b></pre>
+<h2><a id="ddk_activating_a_debugging_server_dbg"></a><a id="DDK_ACTIVATING_A_DEBUGGING_SERVER_DBG"></a></h2>
+<p>The parameters in the previous commands have the following possible values:</p>
+<p></p>
+<dl>
+<dt><a id="________Debugger"></a><a id="________debugger"></a><a id="________DEBUGGER"></a><i>
+       Debugger</i></dt>
+<dd>
+<p>Can be KD, CDB, NTSD, or WinDbg.</p>
+</dd>
+<dt><a id="________pipe_________PipeName"></a><a id="________pipe_________pipename"></a><a id="________PIPE_________PIPENAME"></a><b>
+       pipe=
+       </b><i>PipeName</i></dt>
+<dd>
+<p>When NPIPE or SPIPE protocol is used, <i>PipeName</i> is a string that will serve as the name of the pipe. Each pipe name should identify a unique debugging server. If you attempt to reuse a pipe name, you will receive an error message. <i>PipeName</i> must not contain spaces or quotation marks. <i>PipeName</i> can include a numerical <b>printf</b>-style format code, such as <b>%x</b> or <b>%d</b>. The debugger will replace this with the process ID of the debugger. A second such code will be replaced with the thread ID of the debugger.</p>
+<div class="alert"><b>Note</b>  You might need to enable file and printer sharing on the computer that is running the debugging server. In Control Panel, navigate to <b>Network and Internet &gt; Network and Sharing Center&gt; Advanced sharing settings</b>. Select <b>Turn on file and printer sharing</b>.</div>
+<div> </div>
+</dd>
+<dt><a id="________port_________Socket"></a><a id="________port_________socket"></a><a id="________PORT_________SOCKET"></a><b>
+       port=
+       </b><i>Socket</i></dt>
+<dd>
+<p>When TCP or SSL protocol is used, <i>Socket</i> is the socket port number.</p>
+<p>It is also possible to specify a range of ports separated by a colon. The debugger will check each port in this range to see if it is free. If it finds a free port and no error occurs, the debugging server will be created. The debugging client will have to specify the actual port being used to connect to the server. To determine the actual port, use any of the methods described in <a href="searching_for_debugging_servers.htm"><b>Searching for Debugging Servers</b></a>; when this debugging server is displayed, the port will be followed by two numbers separated by a colon. The first number will be the actual port used; the second can be ignored. For example, if the port was specified as <b>port=51:60</b>, and port 53 was actually used, the search results will show "port=53:60". (If you are using the <b>clicon</b> parameter to establish a reverse connection, the debugging client can specify a range of ports in this manner, while the server must specify the actual port used.)</p>
+</dd>
+<dt><a id="________clicon_________Client"></a><a id="________clicon_________client"></a><a id="________CLICON_________CLIENT"></a><b>
+       clicon=
+       </b><i>Client</i></dt>
+<dd>
+<p>When TCP or SSL protocol is used and the <b>clicon</b> parameter is specified, a <i>reverse connection</i> will be opened. This means that the debugging server will try to connect to the debugging client, instead of letting the client initiate the contact. This can be useful if you have a firewall that is preventing a connection in the usual direction. <i>Client</i> specifies the network name or IP address of the computer on which the debugging client exists or will be created. The two initial backslashes (\\) are optional.</p>
+<p>Since the server is looking for one specific client, you cannot connect multiple clients to the server if you use this method. If the connection is refused or is broken you will have to restart the server connection. A reverse-connection server will not appear when another debugger displays all active servers.</p>
+<div class="alert"><b>Note</b>    When <b>clicon</b> is used, it is best to start the debugging client before the debugging server is created, although the usual order (server before client) is also permitted. </div>
+<div> </div>
+</dd>
+<dt><a id="port_________COMPort"></a><a id="port_________comport"></a><a id="PORT_________COMPORT"></a><b>port=
+       </b><i>COMPort</i></dt>
+<dd>
+<p>When COM protocol is used, <i>COMPort</i> specifies the COM port to be used. The prefix "COM" is optional -- for example, both "com2" and "2" are acceptable.</p>
+</dd>
+<dt><a id="baud_________BaudRate"></a><a id="baud_________baudrate"></a><a id="BAUD_________BAUDRATE"></a><b>baud=
+       </b><i>BaudRate</i></dt>
+<dd>
+<p>When COM protocol is used, <i>BaudRate</i> specifies the baud rate at which the connection will run. Any baud rate that is supported by the hardware is permitted.</p>
+</dd>
+<dt><a id="channel_________COMChannel"></a><a id="channel_________comchannel"></a><a id="CHANNEL_________COMCHANNEL"></a><b>channel=
+       </b><i>COMChannel</i></dt>
+<dd>
+<p>If COM protocol is used, <i>COMChannel</i> specifies the COM channel to be used in communicating with the debugging client. This can be any value between 0 and 254, inclusive. You can use a single COM port for multiple connections using different channel numbers. (This is different from the use of a COM ports for a debug cable -- in that situation you cannot use channels within a COM port.)</p>
+</dd>
+<dt><a id="________proto_________Protocol"></a><a id="________proto_________protocol"></a><a id="________PROTO_________PROTOCOL"></a><b>
+       proto=
+       </b><i>Protocol</i></dt>
+<dd>
+<p>If SSL or SPIPE protocol is used, <i>Protocol</i> specifies the Secure Channel (S-Channel) protocol. This can be any one of the strings tls1, pct1, ssl2,  or ssl3.</p>
+</dd>
+<dt><a id="Cert"></a><a id="cert"></a><a id="CERT"></a><i>Cert</i></dt>
+<dd>
+<p>If SSL or SPIPE protocol is used, <i>Cert</i> specifies the certificate. This can either be the certificate name or the certificate's thumbprint (the string of hexadecimal digits given by the certificate's snapin). If the syntax <b>certuser=</b><i>Cert</i> is used, the debugger will look up the certificate in the system store (the default store). If the syntax <b>machuser=</b><i>Cert</i> is used, the debugger will look up the certificate in the machine store. The specified certificate must support server authentication.</p>
+</dd>
+<dt><a id="________hidden"></a><a id="________HIDDEN"></a><b>
+       hidden</b></dt>
+<dd>
+<p>Prevents the server from appearing when another debugger displays all active servers.</p>
+</dd>
+<dt><a id="________password_________Password"></a><a id="________password_________password"></a><a id="________PASSWORD_________PASSWORD"></a><b>
+       password=
+       </b><i>Password</i></dt>
+<dd>
+<p>Requires a client to supply the specified password in order to connect to the debugging session. <i>Password</i> can be any alphanumeric string, up to twelve characters in length.</p>
+<div class="alert"><b>Warning</b>    Using a password with TCP, NPIPE, or COM protocol only offers a small amount of protection, because the password is not encrypted.  When a password is used with SSL or SPIPE protocol, it is encrypted. If you want to establish a secure remote session, you must use SSL or SPIPE protocol.</div>
+<div> </div>
+</dd>
+<dt><a id="________ipversion_6"></a><a id="________IPVERSION_6"></a><b>
+       ipversion=6</b></dt>
+<dd>
+<p>
+       (Debugging Tools for Windows 6.6.07 and earlier only) Forces the debugger to use IP version 6 rather than version 4 when using TCP to connect to the Internet.  In Windows Vista and later versions, the debugger attempts to auto-default to IP version 6, making this option unnecessary.  </p>
+</dd>
+<dt><a id="-noio"></a><a id="-NOIO"></a><b>-noio</b></dt>
+<dd>
+<p>If the debugging server is created with the <b>-noio</b> option, no input or output can be done through the server itself. The debugger will only accept input from the debugging client (plus any initial command or command script specified by the <b>-c</b> command-line option). All output will be directed to the debugging client. The <b>-noio</b> option is only available with KD, CDB, and NTSD. If NTSD is used for the server, no console window will be created at all.</p>
+</dd>
+<dt><a id="________IcfEnable"></a><a id="________icfenable"></a><a id="________ICFENABLE"></a><b>
+       IcfEnable</b></dt>
+<dd>
+<p>
+       (Windows XP and later versions only)  Causes the debugger to enable the necessary port connections for TCP or named pipe communication when the Internet Connection Firewall is active. By default, the Internet Connection Firewall disables the ports used by these protocols. When <b>
+       IcfEnable</b> is used with a TCP connection, the debugger causes Windows to open the port specified by the <i>Socket</i> parameter. When <b>
+       IcfEnable</b> is used with a named pipe connection, the debugger causes Windows to open the ports used for named pipes (ports 139 and 445). The debugger does not close these ports after the connection terminates. </p>
+</dd>
+<dt><a id="Options_______"></a><a id="options_______"></a><a id="OPTIONS_______"></a><i>Options
+      </i></dt>
+<dd>
+<p>Any additional command-line parameters can be placed here. See <a href="command_line_options.htm">Command-Line Options</a> for a full list.</p>
+</dd>
+</dl>
+<p>You can use the <a href="_server__create_debugging_server_.htm"><b>.server</b></a> command to start multiple servers using different protocol options. This allows different kinds of debugging clients to join the session.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Activating a Debugging Server%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

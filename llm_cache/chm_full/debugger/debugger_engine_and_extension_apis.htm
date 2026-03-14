@@ -1,0 +1,89 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Debugger Engine and Extension APIs"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Debugger Engine and Extension APIs</title>
+
+<meta name="MS-HAID" content="TOC_Extensions_4e6ad387-7632-4d15-951e-512c3cc87b7e.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.debugger_engine_and_extension_apis"></a>Debugger Engine and Extension APIs</h1>
+</div>
+<p>This section includes:</p>
+<dl>
+<dd>
+<p><a href="debugger_engine_overview.htm">Debugger Engine Overview</a></p>
+</dd>
+<dd>
+<p><a href="using_the_debugger_engine_api.htm">Using the Debugger Engine API</a></p>
+</dd>
+<dd>
+<p><a href="writing_dbgeng_extensions.htm">Writing DbgEng Extensions</a></p>
+</dd>
+<dd>
+<p><a href="engextcpp_extensions.htm">EngExtCpp Extensions</a></p>
+</dd>
+<dd>
+<p><a href="writing_wdbgexts_extensions.htm">Writing WdbgExts Extensions</a></p>
+</dd>
+<dd>
+<p><a href="#DML">Customizing Debugger Output Using DML</a></p>
+</dd>
+<dd>
+<p><a href="#JavaScript">Using JavaScript to Extend the Capabilities of the Debugger</a></p>
+</dd>
+</dl>
+<h2><a id="ddk_introduction_dbx"></a><a id="DDK_INTRODUCTION_DBX"></a></h2>
+<p>This documentation describes how to use the debugger engine and how to write extensions that will run in WinDbg, KD, CDB, and NTSD. These debugger extensions can be used when performing user-mode or kernel-mode debugging on Microsoft Windows.</p>
+<h3><a id="debugger_engine"></a><a id="DEBUGGER_ENGINE"></a>Debugger Engine</h3>
+<p>The debugger engine provides an interface for examining and manipulating debugging targets in user-mode and kernel-mode on Microsoft Windows.</p>
+<p>The debugger engine can acquire targets, set breakpoints, monitor events, query symbols, read and write memory, and control threads and processes in a target.</p>
+<p>You can use the debugger engine to write both debugger extension libraries and stand-alone applications.  Such applications are <i>debugger engine applications</i>.  A debugger engine application that uses the full functionality of the debugger engine is a <i>debugger</i>. For example, WinDbg, CDB, NTSD, and KD are debuggers; the debugger engine provides the core of their functionality.</p>
+<p>The debugger engine API is specified by the prototypes in the header file dbgeng.h.</p>
+<p>For more information, see <a href="debugger_engine_overview.htm">Debugger Engine Overview</a> and 
+       <a href="using_the_debugger_engine_api.htm">Using the Debugger Engine API</a>.</p>
+<p>.</p>
+<h3><a id="extensions"></a><a id="EXTENSIONS"></a>Extensions</h3>
+<p>You can create your own debugging commands by writing and building an extension DLL. For example, you might want to write an extension command to display a complex data structure. </p>
+<p>There are three different types of debugger extension DLLs:</p>
+<ul>
+<li>
+<p><i>DbgEng extension DLLs</i>.  These are based on the prototypes in the dbgeng.h header file.  Each DLL of this type may export DbgEng extension commands.  These extension commands use the Debugger Engine API and may also use the WdbgExts API.</p>
+<p>For more information, see <a href="writing_dbgeng_extensions.htm">Writing DbgEng Extensions</a>.</p>
+</li>
+<li>
+<p><i>EngExtCpp extension DLLs</i>.  These are based on the prototypes in the engextcpp.h and dbgeng.h header files.  Each DLL of this type may export DbgEng extension commands.  These extension commands use both the Debugger Engine API and the EngExtCpp extension framework, and may also use the WdbgExts API.</p>
+</li>
+<li>
+<p><i>WdbgExts extension DLLs</i>. These are based on the prototypes in the wdbgexts.h header file.  Each DLL of this type exports one or more WdbgExts extension commands.  These extension commands use the WdbgExts API exclusively. For more information see <a href="writing_wdbgexts_extensions.htm">Writing WdbgExts Extensions</a>.</p>
+</li>
+</ul>
+<p>The DbgEng API can be used to create extensions or stand-alone applications.  The WdbgExts API contains a subset of the functionality of the debugger engine API and can be used only by extensions.  </p>
+<p>All debugger extensions should be compiled and built by using the Build utility. The Build utility is included in the Windows Driver Kit (WDK).</p>
+<p>Extension code samples are installed as part of the Debugging Tools for Windows package if you perform a custom installation and select the <b>SDK</b> component and all its subcomponents.  They can be found in the sdk\samples subdirectory of the Debugging Tools for Windows installation directory.</p>
+<p>The easiest way to write new debugger extensions is to study the sample extensions. Each sample extension includes makefile and sources files for use with the Build utility. Both types of extensions are represented in the samples.</p>
+<h2><a id="Analysis"></a><a id="analysis"></a><a id="ANALYSIS"></a>Writing Custom Analysis Debugger Extensions</h2>
+<p>You can extend the capabilities of the <a href="_analyze.htm"><b>!analyze</b></a> debugger command by writing an analysis extension plugin. By providing  an analysis extension plugin, you can participate in the analysis of a bug check or an exception in a way that is specific to your own component or application. When you write an analysis extension plugin, you also write a metadata file that describes the situations for which you want your plugin to be called. When <b>!analyze</b> runs, it locates, loads, and runs the appropriate analysis extension plugins. For more information,  see <a href="writing_custom_analysis_debugger_extensions.htm">Writing Custom Analysis Debugger Extensions</a></p>
+<h2><a id="DML"></a><a id="dml"></a>Customizing Debugger Output Using DML</h2>
+<p>You can customize debugger output using DML. For more information see <a href="customizing_debugger_output_using_dml.htm">Customizing Debugger Output Using DML</a>.</p>
+<h2><a id="JavaScript"></a><a id="javascript"></a><a id="JAVASCRIPT"></a>Using JavaScript to Extend the Capabilities of the Debugger</h2>
+<p>Use JavaScript to create scripts that understand debugger objects and extend and customize the capabilities of the debugger. JavaScript providers bridge a scripting language to the debugger's internal object model. The JavaScript debugger scripting provider, allows the for use of JavaScript with the debugger. For more information, see <a href="javascript_debugger_scripting.htm">JavaScript Debugger Scripting</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Debugger Engine and Extension APIs%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

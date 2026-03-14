@@ -1,0 +1,134 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .settings command sets, modifies, displays, loads and saves settings in the Debugger.Settings namespace."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.settings (Set Debug Settings)</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._settings__set_debug_settings_"></a>.settings (Set Debug Settings)</h1>
+</div>
+<p>The <b>.settings</b> command sets, modifies, displays, loads and saves settings in the  Debugger.Settings namespace.</p>
+<pre class="syntax"><b>.settings set  </b><b>namespace.setting=value</b>
+<b>.settings set </b><b>namespace.setting+=value</b><b> </b>
+<b>.settings save </b>[<b>file path</b>] 
+<b>.settings load </b><b>file path</b><b></b>
+<b>.settings list </b>[<b>namespace</b>][<b>-v</b>]
+<b>.settings help </b>  </pre>
+<h2><a id="ddk_meta_set_symbol_path_dbg"></a><a id="DDK_META_SET_SYMBOL_PATH_DBG"></a>Parameters</h2>
+<p><b>.settings set parameters</b></p>
+<p></p>
+<dl>
+<dt><a id="_______namespace.setting_value______"></a><a id="_______NAMESPACE.SETTING_VALUE______"></a>       <b>namespace.setting=value</b>      </dt>
+<dd>Sets or modifies a setting. When specifying file paths use slash escaping, for example C:\\Symbols\\.<p>Examples:</p><code>.settings set Display.PreferDMLOutput=false
+</code><p></p><code>.settings set Sources.DisplaySourceLines=true</code><p></p><code>.settings set Symbols.Sympath="C:\\Symbols\\"</code></dd>
+<dt><a id="_______namespace.setting__value______"></a><a id="_______NAMESPACE.SETTING__VALUE______"></a>       <b>namespace.setting+=value</b>      </dt>
+<dd>Specifies that the new value will be appended  to (rather than replace) the previous value. <p>Example:</p><code>.settings set Extensions.ExtensionSearchPath+=";C:\\MyExtension\\"
+</code></dd>
+</dl>
+<p><b>.setting save parameters</b></p>
+<p></p>
+<dl>
+<dt><a id="_______file_path______"></a><a id="_______FILE_PATH______"></a>       <b>file path</b>      </dt>
+<dd>
+<p>Saves all of the values in the Debugger.Settings namespace to the specified XML file.</p>
+</dd>
+<dt><a id="_______none______"></a><a id="_______NONE______"></a>       <b>none</b>      </dt>
+<dd>
+<p>If a file path is not provided, the settings will be saved to the last file that was loaded or saved to. If a previous file does not exist, a file named config.xml will be created in the directory that the debugger executable was loaded from.</p>
+</dd>
+</dl>
+<p></p>
+<p><b>.setting load parameters</b></p>
+<p></p>
+<dl>
+<dt><a id="_______file_path______"></a><a id="_______FILE_PATH______"></a>       <b>file path</b>      </dt>
+<dd>
+<p>Loads all the settings from an XML settings file. Loading settings will change only the settings that are defined in that file. Any previously loaded or changed settings that do not appear in that file will not be modified. This file will be treated as your default save path until the next save or load operation.</p>
+</dd>
+</dl>
+<p></p>
+<p><b>.setting list parameters</b></p>
+<p></p>
+<dl>
+<dt><a id="_______namespace______"></a><a id="_______NAMESPACE______"></a>       <b>namespace</b>      </dt>
+<dd>
+<p>List all settings in the given namespace and their values.</p>
+</dd>
+<dt><a id="_______-v______"></a><a id="_______-V______"></a>       <b>-v</b>      </dt>
+<dd>
+<p>The –v flag causes a description of the setting to be displayed.</p>
+</dd>
+</dl>
+<p><b>.setting help parameters</b></p>
+<p></p>
+<dl>
+<dt><a id="_______None______"></a><a id="_______none______"></a><a id="_______NONE______"></a>       <b>None</b>      </dt>
+<dd>
+<p>Lists all of the settings in the Debugger namespace and their description.</p>
+</dd>
+</dl>
+<p></p>
+<dl>
+<dt><a id="_______Namespace______"></a><a id="_______namespace______"></a><a id="_______NAMESPACE______"></a>       <b>Namespace</b>      </dt>
+<dd>
+<p>Lists all settings in the given namespace and their description.</p>
+</dd>
+</dl>
+<p></p>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes
+         </b></p>
+</td>
+<td>
+<p>user mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets</b></p>
+</td>
+<td>
+<p>live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>all </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>On launch, the debugger will load all the settings from config.xml in the directory the debugger executable is in. Throughout your debugging session you can modify settings using the previous settings command (like .sympath or .prefer_dml) or the new .settings commands. You can use ‘.settings save’ to save your settings to your settings configuration file. You can use the following command to enable AutoSave. </p>
+<p><code>.settings set AutoSaveSettings=true</code></p>
+<p>When auto save is enabled, the settings in the Debugger.Settings namespace will be  automatically saved when exiting the debugger.</p>
+<h2>Remarks</h2>
+<p> You can exchange debug xml settings files with others  to duplicate their debug settings. 
+</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.settings (Set Debug Settings)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

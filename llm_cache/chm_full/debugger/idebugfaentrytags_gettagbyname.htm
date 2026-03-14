@@ -1,0 +1,102 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The GetTagByName method searches for a tag that has a specified name."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IDebugFAEntryTags::GetTagByName method</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.idebugfaentrytags_gettagbyname"></a>IDebugFAEntryTags::GetTagByName method</h1>
+</div>
+<p>The <b>GetTagByName</b> method searches for a tag that has a specified name.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>HRESULT GetTagByName(
+  [in]  PCSTR   PluginId,
+  [in]  PCSTR   TagName,
+  [out] FA_TAG* Tag
+);</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Parameters</h2>
+<dl>
+<dt><i>PluginId</i> [in]</dt>
+<dd>
+<p>A pointer to a null-terminated string that specifies the identifier of an analysis extension plug-in. This parameter can be <b>NULL</b>.</p>
+</dd>
+<dt><i>TagName</i> [in]</dt>
+<dd>
+<p>A pointer to a null-terminated string that specifies the name to search for.</p>
+</dd>
+<dt><i>Tag</i> [out]</dt>
+<dd>
+<p>A pointer to a variable that receives either a value in the <a href="fa_tag.htm"><b>FA_TAG</b></a> enumeration or the value of a custom tag. If this method does not find a tag that has the specified name, nothing is written to this parameter.</p>
+</dd>
+</dl>
+<h2>Return value</h2>
+<p>If this method finds a tag that has the specified name, it returns <b>S_OK</b>. Otherwise it returns a failure code.</p>
+<h2>Remarks</h2>
+<p>A <a href="idebugfailureanalysis2.htm"><b>DebugFailureAnalysis</b></a> object has a collection of <a href="failure_analysis_entries.htm">FA entries</a>, each of which has a tag. A <b>DebugFailureAnalysis</b> object is associated with a <a href="idebugfaentrytags.htm"><b>DebugFailureAnalysisTags</b></a>, which contains a collection of tag properties. Also, the analysis engine has a global tag table. For more information, see <a href="writing_an_analysis_extension_to_extend__analyze.htm#failure_analysis_entries_tags_and_data_types">Failure Analysis Entries, Tags, and Data Types</a>.</p>
+<p>If you specify a <i>PluginId</i>, this method does the following:</p>
+<ul>
+<li>In the  <a href="idebugfaentrytags.htm"><b>DebugFailureAnalysisTags</b></a> object, search the collection of tag properties for a tag whose name matches <i>TagName</i> and whose plug-in id matches the <i>PluginId</i>. Note that this limits the search to custom tags created by the analysis extension plug-in identified by <i>PluginId</i>. If a match is found, return the tag in the <i>Tag</i> output parameter.</li>
+<li>If a match is not found in the <a href="idebugfaentrytags.htm"><b>DebugFailureAnalysisTags</b></a> object, search the global tag table for a tag whose name matches <i>TagName</i>. If a matching name is found, add the found tag to the <b>DebugFailureAnalysisTags</b> collection of tag properties, and return the tag in the <i>Tag</i> output parameter.</li>
+<li>If a match is not found in the global tag table, write nothing to the <i>Tag</i> output parameter, and return a failure code.</li>
+</ul>
+<p>If you call this method from an analysis extension plug-in, and you set <i>PluginId</i> to <b>NULL</b>, this method uses the plug-in identifier of the current plug-in. Then it behaves the same way that it does when a non-NULL <i>PluginId</i> is specified.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Target platform</p>
+</th>
+<td width="70%">
+<dl>
+<dt></dt>
+</dl>
+</td>
+</tr>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Extsfns.h</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="idebugfaentrytags.htm"><b>IDebugFAEntryTags</b></a></dt>
+<dt><a href="idebugfailureanalysis2.htm"><b>IDebugFailureAnalysis2</b></a></dt>
+<dt><a href="writing_an_analysis_extension_to_extend__analyze.htm">Writing an Analysis Extension Plug-in to Extend !analyze</a></dt>
+<dt><a href="metadata_files_for_analysis_extensions.htm">Metadata Files for Analysis Extension Plug-ins</a></dt>
+<dt><a href="_efn_analyze.htm"><b>_EFN_Analyze</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IDebugFAEntryTags::GetTagByName method%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

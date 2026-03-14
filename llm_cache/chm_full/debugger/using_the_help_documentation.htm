@@ -1,0 +1,82 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Using the Help Documentation"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Using the Help Documentation</title>
+
+<meta name="MS-HAID" content="r06_use_gui_1e145ad4-8967-462e-9f6b-2ec4c45337a1.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.using_the_help_documentation"></a>Using the Help Documentation</h1>
+</div>
+<h2><a id="ddk_using_the_help_file_dbg"></a><a id="DDK_USING_THE_HELP_FILE_DBG"></a></h2>
+<p>The WinDbg Help documentation that you are reading is the documentation for the Debugging Tools for Windows package.</p>
+<p>This documentation uses the viewer that is supplied with Microsoft HTML Help (hh.exe). This viewer provides a table of contents and index and enables you to search through the documentation, mark your favorite or frequently used topics, and print one or more topics.</p>
+<p>The following sections in this topic describe the features of and how to use the Help documentation.</p>
+<h3><a id="contents_tab"></a><a id="CONTENTS_TAB"></a>Contents Tab</h3>
+<p>The <b>Contents</b> tab provides an expandable view of the documentation's table of contents.</p>
+<p>Click the plus sign (<b>+</b>) next to a node or double-click the node's title to expand or contract the table of contents under that node.</p>
+<h3><a id="index_tab"></a><a id="INDEX_TAB"></a>Index Tab</h3>
+<p>The <b>Index</b> tab displays the complete index of terms that are used in this documentation. You can enter the beginning of a term or use the scrollbar to look through this index.</p>
+<h3><a id="search_tab"></a><a id="SEARCH_TAB"></a>Search Tab</h3>
+<p>In the <b>Search</b> tab, you can search for any word or phrase that is contained in the documentation. You can search all text or limit your search to topic titles.</p>
+<p>To search for phrases that contain more than one word, enclose the phrase in quotation marks. You can connect multiple words and phrases with the AND, OR, and NOT operators. The default operator is AND. </p>
+<p>Note that "AND NOT" is invalid. To search for topics that contain <i>x</i> and not <i>y</i>, use "<i>x</i> NOT <i>y</i>". You can also use NEAR in searches.</p>
+<p>Wildcard characters are also permitted. Use a question mark (<b>?</b>) to represent any single character and an asterisk (<b>*</b>) to represent zero or more characters. However, you cannot use wildcard characters within quoted strings.</p>
+<p>All letters and numbers are treated literally, but some symbols are not permitted in searches. </p>
+<p>A search returns a list of all topics that match the specified criteria. If you select the <b>Search previous results</b> box, you can then search these results for more terms.</p>
+<h3><a id="favorites_tab"></a><a id="FAVORITES_TAB"></a>Favorites Tab</h3>
+<p>In the <b>Favorites</b> tab, you can save the titles of commonly-visited topics. While you are viewing a topic, click the <b>Favorites</b> tab and then click the <b>Add</b> button.</p>
+<p>To rename a page on your favorites list, click its name two times slowly, and retype the name. To view a topic on the Favorites list, double-click its name or click it one time and then click <b>Display</b>. To remove a topic from the favorites list, click it one time and then click <b>Remove</b>.</p>
+<h3><a id="printing_topics"></a><a id="PRINTING_TOPICS"></a>Printing Topics</h3>
+<p>To print one or more topics, click a topic in the <b>Contents</b> tab, and then click the <b>Print</b> button on the toolbar. You will be asked whether you want to print only the selected topic or that topic and all of its subtopics.</p>
+<p>You can also print the topic that you are viewing by right-clicking within the view window, and clicking <b>Print</b> on the shortcut menu. However, this method does not enable you to print subtopics.</p>
+<h3><a id="searching_within_a_topic"></a><a id="SEARCHING_WITHIN_A_TOPIC"></a>Searching Within a Topic</h3>
+<p>To search for a text string within the topic that you are viewing, press CTRL+F, or click <b>Find in this Topic</b> on the <b>Edit</b> menu.</p>
+<h3><a id="accessing_the_help_documentation"></a><a id="ACCESSING_THE_HELP_DOCUMENTATION"></a>Accessing the Help Documentation</h3>
+<p>To open this Help documentation, do one of the following:</p>
+<ul>
+<li>
+<p>Click <b>Start</b>, point to<b> All Programs</b>, point to<b> Debugging Tools for Windows</b>, and then click<b> Debugging Help</b>.</p>
+</li>
+<li>
+<p>Open Windows Explorer, locate the Debugger.chm file, and then double-click it.</p>
+</li>
+<li>
+<p>At a command prompt, browse to the folder that contains Debugger.chm and run <b>hh debugger.chm</b>.</p>
+</li>
+<li>
+<p>In any Windows debugger, use the <a href="_hh__open_html_help_file_.htm"><b>.hh (Open HTML Help File)</b></a> command.</p>
+</li>
+<li>
+<p>In WinDbg, click <b>Contents</b> on the <b>Help </b>menu. This command open the Help documentation and opens the <b>Contents</b> tab.</p>
+</li>
+<li>
+<p>In WinDbg, click <b>Index</b> on the <b>Help </b>menu. This command open the Help documentation and opens the <b>Index </b>tab.</p>
+</li>
+<li>
+<p>In WinDbg, click <b>Search</b> on the <b>Help </b>menu. This command opens the Help documentation and opens the <b>Search </b>tab.</p>
+</li>
+<li>
+<p>Many dialog boxes in WinDbg have <b>Help</b> buttons. Click <b>Help</b> to open this documentation and open the relevant page.</p>
+</li>
+</ul>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Using the Help Documentation%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

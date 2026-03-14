@@ -1,0 +1,76 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Combining This Method with Remote Debugging"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Combining This Method with Remote Debugging</title>
+
+<meta name="MS-HAID" content="r05_use_start_d9ff842e-7b5a-4989-9931-f7318ac828b2.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.combining_this_method_with_remote_debugging"></a>Combining This Method with Remote Debugging</h1>
+</div>
+<h2><a id="ddk_opening_a_crash_dump_dbg"></a><a id="DDK_OPENING_A_CRASH_DUMP_DBG"></a></h2>
+<p>It is sometimes useful to <a href="controlling_the_user_mode_debugger_from_the_kernel_debugger.htm">control the user-mode debugger from the kernel debugger</a><u>and</u> use the user-mode debugger as a <a href="remote_debugging_through_the_debugger.htm">debugging server</a> at the same time.</p>
+<p>For example, this configuration is useful when your user-mode symbols are located on a symbol server. In the standard configuration for controlling the user-mode debugger from a kernel debugger, the interaction of the two debuggers can lead to tiny lapses in synchronization, and these lapses can prevent symbol server authentication. The more complex configuration described here can avoid this problem.</p>
+<div class="alert"><b>Note</b>    In describing this scenario, <i>target application</i> refers to the user-mode application that is being debugged, <i>target computer</i> refers to the computer that contains the target application and the CDB or NTSD process, and <i>host computer</i> refers to the computer that contains the kernel debugger.</div>
+<div> </div>
+<p>To use this technique, you must do the following:</p>
+<ol>
+<li>Start NTSD or CDB on the target computer, with the -ddefer and -server command-line options, specifying the desired transport options. The -server option must be the first parameter on the command line. <p>For example, you can attach to a running process by using the following syntax.</p>
+<pre class="syntax" xml:space="preserve"><code>ntsd -server ServerTransport -ddefer [-y UserSymbolPath] -p PID </code></pre>
+<p>Or, you can start a new process as the target by using the following syntax.</p>
+<pre class="syntax" xml:space="preserve"><code>ntsd -server ServerTransport -ddefer [-y UserSymbolPath] ApplicationName </code></pre>
+<p>If you are installing this as a postmortem debugger, you would use the following syntax. Note that you must manually edit the registry to install a postmortem debugger that includes the -server parameter; for details, see <a href="enabling_postmortem_debugging.htm">Enabling Postmortem Debugging</a>.</p>
+<pre class="syntax" xml:space="preserve"><code>ntsd -server ServerTransport -ddefer [-y UserSymbolPath] </code></pre>
+<p>For information about the available transport options, see <a href="activating_a_debugging_server.htm"><b>Activating a Debugging Server</b></a>. </p>
+</li>
+<li>Start WinDbg or KD on the host computer, as if you were going to debug the target computer, but do not actually break in to the target computer.  To use WinDbg, use the following syntax.<pre class="syntax" xml:space="preserve"><code>windbg [-y KernelSymbolPath] [-k ConnectionOptions] </code></pre>
+<p>For more information about this step, see <a href="performing_kernel-mode_debugging_using_windbg.htm">Live Kernel-Mode Debugging Using WinDbg</a></p>
+<p>.</p>
+</li>
+<li>Start WinDbg or CDB as a debugging client, with the same transport options used to start the server. This debugging client can be run on either the host computer or on a third computer. <pre class="syntax" xml:space="preserve"><code>cdb -remote ClientTransport </code></pre>
+<p>For more information about this step, see <a href="activating_a_debugging_client.htm"><b>Activating a Debugging Client</b></a>. </p>
+</li>
+<li>
+<p>Once the debuggers are running and the <code>Input&gt;</code> prompt appears in the kernel debugger, use the <a href="_sleep__pause_debugger_.htm"><b>.sleep (Pause Debugger)</b></a> command to pause the debuggers and let the target computer run for a few seconds. This gives the target computer time to process the remote transport protocol, establishing the connection between the user-mode remote server and the remote client. </p>
+</li>
+</ol>
+<p>If you use CDB as the user-mode debugger, the Command Prompt window that is associated with CDB remains locked and unavailable while debugging continues. If you use NTSD, no additional window is created, even though NTSD has a process ID associated with it on the target computer.</p>
+<p>The four modes and the methods of switching between them described in the topic <a href="switching_modes.htm">Switching Modes</a> apply in this combination scenario, with the following differences:</p>
+<ul>
+<li>
+<p>There are two different user-mode debugging modes. When the target computer is running, the debugging server is controlled by the debugging client as in any other remote debugging session; this is called <i>remote-controlled user-mode debugging</i>. When the kernel-mode debugger is broken in to the target computer and the <code>Input&gt;</code> prompt is showing, the user-mode debugger is controlled by the kernel debugger; this is called <i>kernel-controlled user-mode debugging</i>. </p>
+</li>
+<li>
+<p>These two modes are never available at the same time. When the kernel debugger is broken in to the target computer, even though the user-mode debugger may be active, the target computer is unable to process the remote transport protocol, and therefore the user-mode debugger will not be able to receive remote input across this connection. </p>
+</li>
+<li>
+<p>If your user-mode symbols are located on a symbol server, any debugger commands that require symbol access should be issued while in remote-controlled user-mode debugging mode. </p>
+</li>
+<li>
+<p>To switch from kernel-controlled user-mode debugging to remote-controlled user-mode debugging, use the <a href="_sleep__pause_debugger_.htm"><b>.sleep (Pause Debugger)</b></a> command. When the user-mode debugger wakes from the sleep command, it will be in remote-controlled user-mode debugging mode. </p>
+</li>
+<li>
+<p>To switch from remote-controlled user-mode debugging to kernel-mode debugging, enter any command from the <code>Input&gt;</code> prompt. If this prompt is not visible, switch to kernel-mode debugging, and then use the <a href="g__go_.htm"><b>g (Go)</b></a> command at the <code>kd&gt;</code> prompt. </p>
+</li>
+</ul>
+<p>Internally, a user-mode debugger started with -ddefer gives first priority to input from the debugging client, and second priority to input from the kernel debugger. However, there can never be a conflict between simultaneous inputs, because when the kernel debugger has broken in to the target computer, the remote connection is unavailable. </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Combining This Method with Remote Debugging%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

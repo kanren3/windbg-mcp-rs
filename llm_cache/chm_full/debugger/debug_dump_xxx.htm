@@ -1,0 +1,129 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The DEBUG_DUMP_XXX constants are used by the methods WriteDumpFile, WriteDumpFile2, and WriteDumpFileWide to specify the type of crash dump file to create."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>DEBUG_DUMP_XXX</title>
+
+<meta name="MS-HAID" content="Structures_7eef95d3-3b13-46ff-ac5a-0e292a972eb9.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.debug_dump_xxx"></a>DEBUG_DUMP_XXX</h1>
+</div>
+<p>The DEBUG_DUMP_<i>XXX</i> constants are used by the methods <a href="writedumpfile.htm"><b>WriteDumpFile</b></a>, <a href="writedumpfile2.htm"><b>WriteDumpFile2</b></a>, and <a href="writedumpfilewide.htm"><b>WriteDumpFileWide</b></a> to specify the type of crash dump file to create.</p>
+<p>
+<p>The possible values include the following.</p>
+</p>
+<table>
+<tr>
+<th>Constant</th>
+<th>Description</th>
+</tr>
+<tr VALIGN="top">
+<td align="left" width="40%"><a id="DEBUG_DUMP_SMALL"></a><a id="debug_dump_small"></a><dl>
+<dt><b>DEBUG_DUMP_SMALL</b></dt>
+</dl>
+</td>
+<td align="left" width="60%">
+<p>Creates a Small Memory Dump (kernel-mode) or Minidump (user-mode).</p>
+</td>
+</tr>
+<tr VALIGN="top">
+<td align="left" width="40%"><a id="DEBUG_DUMP_DEFAULT"></a><a id="debug_dump_default"></a><dl>
+<dt><b>DEBUG_DUMP_DEFAULT</b></dt>
+</dl>
+</td>
+<td align="left" width="60%">
+<p>Creates a Full User-Mode Dump (user-mode) or Kernel Summary Dump (kernel-mode).</p>
+</td>
+</tr>
+<tr VALIGN="top">
+<td align="left" width="40%"><a id="DEBUG_DUMP_FULL"></a><a id="debug_dump_full"></a><dl>
+<dt><b>DEBUG_DUMP_FULL</b></dt>
+</dl>
+</td>
+<td align="left" width="60%">
+<p>
+         Creates a Complete Memory Dump (kernel-mode only)</p>
+</td>
+</tr>
+</table>
+<p>Moreover, the following aliases are available for kernel-mode debugging.</p>
+<table>
+<tr>
+<th>Alias</th>
+<th>Value</th>
+</tr>
+<tr>
+<td>DEBUG_KERNEL_SMALL_DUMP</td>
+<td>
+<p>DEBUG_DUMP_SMALL</p>
+</td>
+</tr>
+<tr>
+<td>DEBUG_KERNEL_DUMP</td>
+<td>
+<p>DEBUG_DUMP_DEFAULT</p>
+</td>
+</tr>
+<tr>
+<td>DEBUG_KERNEL_FULL_DUMP</td>
+<td>
+<p>DEBUG_DUMP_FULL</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>Additionally, the following aliases are available for user-mode debugging.</p>
+<table>
+<tr>
+<th>Alias</th>
+<th>Value</th>
+</tr>
+<tr>
+<td>DEBUG_USER_WINDOWS_SMALL_DUMP</td>
+<td>
+<p>DEBUG_DUMP_SMALL</p>
+</td>
+</tr>
+<tr>
+<td>DEBUG_USER_WINDOWS_DUMP</td>
+<td>
+<p>DEBUG_DUMP_DEFAULT</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>For a description of kernel-mode dump files, see <a href="varieties_of_kernel_mode_dump_files.htm">Varieties of Kernel-Mode Dump Files</a>.  For a description of user-mode dump files, see <a href="varieties_of_user_mode_dump_files.htm">Varieties of User-Mode Dump Files</a>.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>DbgEng.h (include DbgEng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20DEBUG_DUMP_XXX%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

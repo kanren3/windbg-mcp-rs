@@ -1,0 +1,64 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Registers"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Registers</title>
+
+<meta name="MS-HAID" content="Engine_DG_eaa71da7-23ac-4464-9142-23c89a31e14e.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.registers"></a>Registers</h1>
+</div>
+<h2><a id="ddk_registers_dbx"></a><a id="DDK_REGISTERS_DBX"></a></h2>
+<p>The <a href="introduction.htm#debugger_engine">debugger engine</a> can be used to examine and alter the target's registers.</p>
+<p>The registers available on the target depend on its processor architecture.  For a description of the registers for the x86 and Itanium processors, see <a href="processor_architecture.htm">Processor Architecture</a>.  For a complete description of the registers available for a processor, see that processor's documentation.</p>
+<h3><a id="the_register_set"></a><a id="THE_REGISTER_SET"></a>The Register Set</h3>
+<p>The <a href="getnumberregisters.htm"><b>GetNumberRegisters</b></a> method can be used to find the number of registers on the target.</p>
+<p>Each register is referred to by its index.  The index of the first register is zero, and the index of the last register is the number of registers minus one.  To find the index of a register whose name is known, use <a href="getindexbyname.htm"><b>GetIndexByName</b></a>.</p>
+<p>The method <a href="getdescription.htm"><b>GetDescription</b></a> returns information about a register.  This includes the register's name, the type of values it can hold, and whether it is a subregister.</p>
+<p>A <i>subregister</i> is a register that is contained within another register.  When the subregister changes, the register that contains it also changes.  For example, on an x86 processor, the <b>ax</b> subregister is the same as the low 16 bits of the 32-bit <b>eax</b> register.</p>
+<p>There are three special registers whose values may be found by using the following methods.  The interpretation of the values of these registers is platform dependent.</p>
+<ul>
+<li>
+<p>The location of the current instruction may be found with <a href="getinstructionoffset.htm"><b>GetInstructionOffset</b></a> and <a href="getinstructionoffset2.htm"><b>GetInstructionOffset2</b></a>.</p>
+</li>
+<li>
+<p>The location of the current processor stack slot may be found with <a href="getstackoffset.htm"><b>GetStackOffset</b></a> and <a href="getstackoffset2.htm"><b>GetStackOffset2</b></a>.</p>
+</li>
+<li>
+<p>The location of the stack frame for the current function may be found with  <a href="getframeoffset.htm"><b>GetFrameOffset</b></a> and <a href="getframeoffset2.htm"><b>GetFrameOffset2</b></a>.</p>
+</li>
+</ul>
+<h3><a id="manipulating_registers"></a><a id="MANIPULATING_REGISTERS"></a>Manipulating Registers</h3>
+<p>The value of a register can be read by using the method <a href="getvalue.htm"><b>GetValue</b></a>.  Multiple registers can be read by using <a href="getvalues.htm"><b>GetValues</b></a> and <a href="getvalues2.htm"><b>GetValues2</b></a>.</p>
+<p>A value can be written to a register by using the method <a href="setvalue.htm"><b>SetValue</b></a>.  Multiple registers can be written by using <a href="setvalues.htm"><b>SetValues</b></a> and <a href="setvalues2.htm"><b>SetValues2</b></a>.</p>
+<p>When writing a value to a register, if the value supplied has a different type to the type of the register then the value is converted into the register's type.  This conversion is the same as that performed by the method <a href="coercevalue.htm"><b>CoerceValue</b></a>.  This conversion may result in data loss if the register's type is not capable of holding the value supplied.</p>
+<h3><a id="pseudo_registers"></a><a id="PSEUDO_REGISTERS"></a>
+      Pseudo-Registers</h3>
+<p><i>Pseudo-registers</i> are variables maintained by the debugger engine that hold certain values, for example, <b>$teb</b> is the name of the pseudo-register whose value is the address of the current thread's Thread Environment Block (TEB).  For more information, and a list of the pseudo-registers, see <a href="pseudo_register_syntax.htm">Pseudo-Register Syntax</a>.</p>
+<p>Each pseudo-register has an index.  The index is a number between zero and the number of pseudo-registers - (returned by <a href="getnumberpseudoregisters.htm"><b>GetNumberPseudoRegisters</b></a>) minus one.  To find the index of a pseudo-register by its name, use <a href="getpseudoindexbyname.htm"><b>GetPseudoIndexByName</b></a>.  The values of pseudo-registers can be read using <a href="getpseudovalues.htm"><b>GetPseudoValues</b></a>, and values can be written to pseudo-registers using <a href="setpseudovalues.htm"><b>SetPseudoValues</b></a>.  For a description of a pseudo-register, including its type, use <a href="getpseudodescription.htm"><b>GetPseudoDescription</b></a>.</p>
+<div class="alert"><b>Note</b>    Not all of the pseudo-registers are available in all debugging sessions or at all times in a particular session.</div>
+<div> </div>
+<h3><a id="displaying_registers"></a><a id="DISPLAYING_REGISTERS"></a>Displaying Registers</h3>
+<p>The methods <a href="outputregisters.htm"><b>OutputRegisters</b></a> and <a href="outputregisters2.htm"><b>OutputRegisters2</b></a> format the target's registers and sends them to the clients as output.</p>
+<h3><a id="events"></a><a id="EVENTS"></a>Events</h3>
+<p>Whenever the values of the target's registers change, the engine will call the <a href="idebugeventcallbacks_changedebuggeestate.htm"><b>IDebugEventCallbacks::ChangeDebuggeeState</b></a> callback method with the parameter <i>Flags</i> set to DEBUG_CDS_REGISTERS.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Registers%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Live User-Mode Targets"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Live User-Mode Targets</title>
+
+<meta name="MS-HAID" content="Engine_DG_5e74ebf4-af57-41c3-ad2a-bd87417cd8d9.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.live_user_mode_targets"></a>Live User-Mode Targets</h1>
+</div>
+<h2><a id="ddk_live_user_mode_targets_dbx"></a><a id="DDK_LIVE_USER_MODE_TARGETS_DBX"></a></h2>
+<p>The methods for creating and attaching to processes that are listed in this topic can be used for the local computer and for a remote computer running a process server.</p>
+<p>A user-mode process can be created using <a href="createprocess.htm"><b>Create Process</b></a> or <a href="createprocess2.htm"><b>CreateProcess2</b></a>, which execute a given command to create a process.  The method <a href="attachprocess.htm"><b>AttachProcess</b></a> can be used to attach the <a href="introduction.htm#debugger_engine">debugger engine</a> to an existing user-mode process.  <a href="createprocessandattach.htm"><b>CreateProcessAndAttach</b></a> and <a href="createprocessandattach2.htm"><b>CreateProcessAndAttach2</b></a> create a new user-mode process and attach to it or another user-mode process on the same computer.  The <a href="request.htm"><b>Request</b></a> operations <a href="debug_request_get_additional_create_options.htm"><b>DEBUG_REQUEST_GET_ADDITIONAL_CREATE_OPTIONS</b></a>, <a href="debug_request_set_additional_create_options.htm"><b>DEBUG_REQUEST_SET_ADDITIONAL_CREATE_OPTIONS</b></a>, and <a href="debug_request_set_local_implicit_command_line.htm"><b>DEBUG_REQUEST_SET_LOCAL_IMPLICIT_COMMAND_LINE</b></a> can be used to set some of the default options for creating processes.</p>
+<div class="alert"><b>Note</b>    The engine doesn't completely attach to the process until the <a href="waitforevent.htm"><b>WaitForEvent</b></a> method has been called.  Only after the process has generated an event -- for example, the process creation event -- does it become available in the debugger session.  See <a href="debugging_session_and_execution_model.htm">Debugging Session and Execution Model</a> for more details.</div>
+<div> </div>
+<p>The method <a href="getrunningprocesssystemids.htm"><b>GetRunningProcessSystemIds</b></a> will return the process IDs of all the running processes on the computer.  The process ID of a particular program can be found using <a href="getrunningprocesssystemidbyexecutablename.htm"><b>GetRunningProcessSystemIdByExecutableName</b></a>.  Given a process ID, a description of the process is returned by <a href="getrunningprocessdescription.htm"><b>GetRunningProcessDescription</b></a>.</p>
+<h3><a id="Process_Options"></a><a id="process_options"></a><a id="PROCESS_OPTIONS"></a>Process Options</h3>
+<p>The process options determine part of the engine's behavior when attached to a user-mode process, including whether or not the debugger engine will automatically attach to child processes created by the target process and what the engine does with the target processes when it exits.  See <a href="debug_process_xxx.htm"><b>DEBUG_PROCESS_XXX</b></a> for a description of the process options.</p>
+<p>The process options can be queried using <a href="getprocessoptions.htm"><b>GetProcessOptions</b></a>.  They can be changed using <a href="addprocessoptions.htm"><b>AddProcessOptions</b></a>, <a href="removeprocessoptions.htm"><b>RemoveProcessOptions</b></a>, and <a href="setprocessoptions.htm"><b>SetProcessOptions</b></a>.</p>
+<h3><a id="Disconnecting_from_Processes"></a><a id="disconnecting_from_processes"></a><a id="DISCONNECTING_FROM_PROCESSES"></a>Disconnecting from Processes</h3>
+<p>There are three different ways for the engine to disconnect from a process.</p>
+<ol>
+<li>
+<p><i>Detach</i>.  Resume all the threads in the process so that it will continue running, no longer being debugged.  <a href="detachcurrentprocess.htm"><b>DetachCurrentProcess</b></a> will detach the engine from the current process and <a href="detachprocesses.htm"><b>DetachProcesses</b></a> will detach the engine from all processes.  Not all targets support detaching. The <a href="request.htm"><b>Request</b></a> operation <a href="debug_request_target_can_detach.htm"><b>DEBUG_REQUEST_TARGET_CAN_DETACH</b></a> can be used to check if the target supports detaching.</p>
+</li>
+<li>
+<p><i>Terminate</i>.  Attempt to kill the process.  <a href="terminatecurrentprocess.htm"><b>TerminateCurrentProcess</b></a> will terminate the current process and <a href="terminateprocesses.htm"><b>TerminateProcesses</b></a> will terminate all processes in the debugger session.</p>
+</li>
+<li>
+<p><i>Abandon</i>.  Remove the process from the list of processes being debugged.  The operating system will still consider the process as being debugged and it will remain suspended until another debugger attaches to it or it is killed.  <a href="abandoncurrentprocess.htm"><b>AbandonCurrentProcess</b></a> will abandon the current process.</p>
+</li>
+</ol>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Live User-Mode Targets%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

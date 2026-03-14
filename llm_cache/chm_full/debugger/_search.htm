@@ -1,0 +1,113 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !search extension searches pages in physical memory for pointer-sized data that matches the specified criteria."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!search</title>
+
+<meta name="MS-HAID" content="r29_exts_kernel_Q_03368e4e-514b-495c-a575-39570394bb36.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._search"></a>!search</h1>
+</div>
+<p>The <b>!search</b> extension searches pages in physical memory for pointer-sized data that matches the specified criteria.</p>
+<p>Syntax</p>
+<pre class="syntax"><b>!search [-s] [-p] </b><i>Data</i><b> [</b><i> Delta</i><b> [ </b><i>StartPFN </i><b>[ </b><i>EndPFN</i><b> ]]]</b> 
+<b>!search -?</b></pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______-s______"></a><a id="_______-S______"></a>       <b>-s</b>      </dt>
+<dd>
+<p>Causes symbol check errors to be ignored during the search. This is useful if you are getting too many "incorrect symbols for kernel" errors. </p>
+</dd>
+<dt><a id="_______-p______"></a><a id="_______-P______"></a>       <b>-p</b>      </dt>
+<dd>
+<p>  Causes the value of <i>Data</i> to be interpreted as a 32-bit value, preventing any sign extension. </p>
+</dd>
+<dt><a id="_______Data______"></a><a id="_______data______"></a><a id="_______DATA______"></a>       <i>Data</i>      </dt>
+<dd>
+<p>Specifies the data to search for. <i>Data</i> must be the size of a pointer on the target system (32 bits or 64 bits). An exact match for the value of <i>Data</i> is always displayed. Other matches are displayed as well, depending on the value of <i>Delta</i>; see the Remarks section below for details. </p>
+</dd>
+<dt><a id="_______Delta______"></a><a id="_______delta______"></a><a id="_______DELTA______"></a>       <i>Delta</i>      </dt>
+<dd>
+<p>Specifies the allowable difference between a value in memory and the value of <i>Data</i>. See the Remarks section below for details.</p>
+</dd>
+<dt><a id="_______StartPFN______"></a><a id="_______startpfn______"></a><a id="_______STARTPFN______"></a>       <i>StartPFN</i>      </dt>
+<dd>
+<p>Specifies the page frame number (PFN) of the beginning of the range to be searched. If this is omitted, the search begins at the lowest physical page. </p>
+</dd>
+<dt><a id="_______EndPFN______"></a><a id="_______endpfn______"></a><a id="_______ENDPFN______"></a>       <i>EndPFN</i>      </dt>
+<dd>
+<p>Specifies the page frame number (PFN) of the end of the range to be searched. If this is omitted, the search ends at the highest physical page. </p>
+</dd>
+<dt><a id="_______-_______"></a>       <b>-?</b>      </dt>
+<dd>
+<p>Displays help for this extension in the Debugger Command window.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<p>
+          Kdexts.dll
+         </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more ways to display and search physical memory, see <a href="reading_and_writing_memory.htm">Reading and Writing Memory</a>.</p>
+<h2>Remarks</h2>
+<p>If <i>StartPFN</i> and <i>EndPFN</i> are specified, these are taken as the page frame numbers of the beginning and end of the range in physical memory to be searched. For an explanation of page frame numbers, see <a href="converting_virtual_addresses_to_physical_addresses.htm">Converting Virtual Addresses to Physical Addresses</a>. If <i>StartPFN</i> and <i>EndPFN</i> are omitted, all physical memory is searched.</p>
+<p>All hits are displayed.</p>
+<p>The <b>!search</b> extension will search through all memory for in the specified page range and examine each ULONG_PTR-aligned value. Values that satisfy at least one of the following criteria are displayed:</p>
+<ul>
+<li>
+<p>The value matches <i>Data</i> exactly.</p>
+</li>
+<li>
+<p>
+       If Delta is 0 or omitted:  The value differs from <i>Data</i> by a single bit. </p>
+</li>
+<li>
+<p>
+       If Delta is nonzero:  The value differs from <i>Data</i> by at most <i>Delta</i>. In other words, the value lies in the range [Data - Delta, Data + Delta].</p>
+</li>
+<li>
+<p>
+       If Delta is nonzero:  The value differs from the lowest number in the range (Data - Delta) by a single bit. </p>
+</li>
+</ul>
+<p>In most cases, <i>Data</i> will specify an address you are interested in, but any ULONG_PTR sized data can be specified. </p>
+<p>Because the debugger's search engine structures reside in memory on the target computer, if you search all of memory (or any range containing these structures) you will see matches in the area where the structures themselves are located. If you need to eliminate these matches, do a search for a random value; this will indicate where the debugger's search structures are located.</p>
+<p>Here are some examples. The following will search the memory page with PFN 0x237D for values between 0x80001230 and 0x80001238, inclusive:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !search 80001234 4 237d 237d </code></pre>
+<p>The following will search the memory pages ranging from PFN 0x2370 to 0x237F for values that are within one bit of 0x0F100F0F. The exact matches are indicated in bold; the others are off by one bit:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !search 0f100f0f 0 2370 237f
+Searching PFNs in range 00002370 - 0000237F for [0F100F0F - 0F100F0F]
+
+Pfn      Offset   Hit      Va       Pte      
+- - - - - - - - - - - - - - - - - - -
+0000237B 00000368 0F000F0F 01003368 C0004014 
+0000237C 00000100 0F100F0F 01004100 C0004014 
+0000237D 000003A8 0F100F0F 010053A8 C0004014 
+0000237D 000003C8 0F100F8F 010053C8 C0004014 
+0000237D 000003E8 0F100F0F 010053E8 C0004014 
+0000237D 00000408 0F100F0F 01005408 C0004014 
+0000237D 00000428 0F100F8F 01005428 C0004014 
+Search done.</code></pre>
+<p>The columns in the display are as follows: <b>Pfn</b> is the page frame number (PFN) of the page; <b>Offset</b> is the offset on that page; <b>Hit</b> is the value at that address; <b>Va</b> is the virtual address mapped to this physical address (if this exists and can be determined); <b>Pte</b> is the page table entry (PTE). </p>
+<p>To calculate the physical address, shift the PFN left three hexadecimal digits (12 bits) and add the offset. For example, the last line in the table is virtual address 0x0237D000 + 0x428 = 0x02347D428.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!search%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

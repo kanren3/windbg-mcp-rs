@@ -1,0 +1,141 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="DBG_DUMP_FIELD_XXX"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>DBG_DUMP_FIELD_XXX</title>
+
+<meta name="MS-HAID" content="WdbgExts_Ref_9dc7c9ae-db39-47b0-9af8-7f70b831e9e8.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.dbg_dump_field_xxx"></a>DBG_DUMP_FIELD_XXX</h1>
+</div>
+<h2><a id="ddk_dbg_dump_xxx_dbx"></a><a id="DDK_DBG_DUMP_XXX_DBX"></a></h2>
+<p>The DBG_DUMP_FIELD_<i>XXX</i> bit flags are used by the <b>fOptions</b> member of the <a href="field_info.htm"><b>FIELD_INFO</b></a> structure to control the behavior of the <a href="ig_dump_symbol_info.htm"><b>IG_DUMP_SYMBOL_INFO</b></a><a href="ioctl.htm"><b>Ioctl</b></a> operation.</p>
+<p>The following flags can be present.</p>
+<table>
+<tr>
+<th>Flag</th>
+<th>Effect</th>
+</tr>
+<tr>
+<td>
+<p>DBG_DUMP_FIELD_CALL_BEFORE_PRINT</p>
+</td>
+<td>
+<p>The callback function is called before printing the member.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DBG_DUMP_FIELD_NO_CALLBACK_REQ</p>
+</td>
+<td>
+<p>No callback function is called.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DBG_DUMP_FIELD_RECUR_ON_THIS</p>
+</td>
+<td>
+<p>Submembers of the member are processed.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DBG_DUMP_FIELD_FULL_NAME</p>
+</td>
+<td>
+<p><b>fName</b> must match completely, as opposed to just having a matching prefix, for the member to be processed.  </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DBG_DUMP_FIELD_ARRAY</p>
+</td>
+<td>
+<p>Print array elements of an array member.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DBG_DUMP_FIELD_COPY_FIELD_DATA</p>
+</td>
+<td>
+<p>The value of the member is copied into <b>pBuffer</b>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DBG_DUMP_FIELD_RETURN_ADDRESS</p>
+</td>
+<td>
+<p>During a callback or when <b>Ioctl</b> returns, the FIELD_INFO.<b>address</b> member contains the address of the symbol's member.</p>
+<p>If no address is supplied for the type, FIELD_INFO.<b>address</b> contains total offset of the member from the beginning of the type.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DBG_DUMP_FIELD_SIZE_IN_BITS</p>
+</td>
+<td>
+<p>For a bit field, return the offset and size in bits instead of bytes.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DBG_DUMP_FIELD_NO_PRINT</p>
+</td>
+<td>
+<p>Do not print this member (only callback function are called and data copies are performed).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DBG_DUMP_FIELD_DEFAULT_STRING DBG_DUMP_FIELD_WCHAR_STRING DBG_DUMP_FIELD_MULTI_STRING DBG_DUMP_FIELD_GUID_STRING </p>
+</td>
+<td>
+<p>If the member is a pointer, it is printed as a string, ANSI string , WCHAR string, MULTI string, or GUID.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>In addition, the result of the macro DBG_DUMP_RECUR_LEVEL(<i>Level</i>) can be added to the bit-set to specify how deep into structures to recurse.  <i>Level</i> can be a number between 0 and 15.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Wdbgexts.h (include Wdbgexts.h, Wdbgexts.h, or Dbgeng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="ig_dump_symbol_info.htm"><b>IG_DUMP_SYMBOL_INFO</b></a></dt>
+<dt><a href="ioctl.htm"><b>Ioctl</b></a></dt>
+<dt><a href="field_info.htm"><b>FIELD_INFO</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20DBG_DUMP_FIELD_XXX%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

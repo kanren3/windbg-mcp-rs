@@ -1,0 +1,68 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Configuring Object Reference Tracing"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Configuring Object Reference Tracing</title>
+
+<meta name="MS-HAID" content="GFlags_4cb53592-1ff3-4f52-b231-e73a72a190ab.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.configuring_object_reference_tracing"></a>Configuring Object Reference Tracing</h1>
+</div>
+<p>You can use Gflags to enable, disable, and configure the Object Reference Tracing feature of Windows. Object Reference Tracing records sequential stack traces whenever an object reference counter is incremented or decremented. The traces can help you to detect object reference errors, including double-dereferencing, failure to reference, and failure to dereference objects. This feature is supported only in Windows Vista and later versions of Windows. For detailed information about this feature, see <a href="object_reference_tracing.htm">Object Reference Tracing</a>.</p>
+<p class="proch"><img src="../common/wedge.gif" alt=""/><b>To enable Object Reference Tracing
+     </b></p>
+<ol>
+<li>
+<p>In the Gflags dialog box, select the <b>System Registry</b> tab or the <b>Kernel Flags</b> tab.</p>
+</li>
+<li>
+<p>In the Object Reference Tracing section, select <b>Enable</b>.</p>
+<p>You must limit the trace to objects with specified pool tags, to objects created by a specified process, or both.</p>
+</li>
+<li>
+<p>To limit the trace to objects with a particular pool tag, type the pool tag name. To list multiple pool tags, use semicolons (;) to separate the pool tags. When you list multiple pool tags, the trace includes objects with any of the specified pool tags. Pool tags are case sensitive.</p>
+<p>For example, Fred;Tag1.</p>
+</li>
+<li>
+<p>To limit the trace to objects that are created by a particular process, type the image name of the process. You can specify only one image file name.</p>
+<p>When you specify both pool tags and a process, the trace includes objects that are created by the process that have any of the specified pool tags.</p>
+</li>
+<li>
+<p>To retain the trace after the trace object is destroyed, select <b>Permanent</b>. </p>
+<p>When you select <b>Permanent</b>, the trace is retained until you disable object reference tracing, or shut down or restart Windows.</p>
+</li>
+<li>
+<p>Click <b>Apply</b> or <b>OK</b>.</p>
+</li>
+</ol>
+<p>The following screen shot shows Object Reference Tracing enabled on the <b>Kernel Flags</b> tab. </p><img src="images/gflags-obj.PNG" alt="Screen shot that shows Object Reference Tracing enabled on the Kernel Flags tab"/><p>This trace will include only objects that were created by the notepad.exe process that have the pool tag <b>Fred</b> or <b>Tag1</b>. Because this is a run time (kernel flags) setting, the trace starts immediately. If it were a registry setting, you would have to restart Windows to start the trace.</p>
+<p class="proch"><img src="../common/wedge.gif" alt=""/><b>To disable Object Reference Tracing
+     </b></p>
+<ol>
+<li>
+<p>In the Gflags dialog box, select the <b>System Registry</b> tab or the <b>Kernel Flags</b> tab.  Object Reference Tracing will appear on the latter tab only in Windows Vista and later versions of Windows.</p>
+</li>
+<li>
+<p>In the Object Reference Tracing section, clear the <b>Enable</b> check box.</p>
+</li>
+</ol>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Configuring Object Reference Tracing%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

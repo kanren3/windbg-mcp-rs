@@ -1,0 +1,175 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Displaying a Critical Section"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Displaying a Critical Section</title>
+
+<meta name="MS-HAID" content="t01_basic_0696c252-05c6-4f6f-b4c9-ad087b22de2b.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.displaying_a_critical_section"></a>Displaying a Critical Section</h1>
+</div>
+<h2><a id="ddk_displaying_a_critical_section_dbg"></a><a id="DDK_DISPLAYING_A_CRITICAL_SECTION_DBG"></a></h2>
+<p>Critical sections can be displayed in user mode by a variety of different methods. The exact meaning of each field depends on the version of Microsoft Windows version you are using.</p>
+<h3><a id="displaying_critical_sections"></a><a id="DISPLAYING_CRITICAL_SECTIONS"></a>Displaying Critical Sections</h3>
+<p>Critical sections can be displayed by the <b>!ntsdexts.locks</b> extension, the <b>!critsec</b> extension, the <b>!cs</b> extension, and the <b>dt (Display Type)</b> command.</p>
+<p>The <a href="_locks___ntsdexts_locks_.htm"><b>!ntsdexts.locks</b></a> extension displays a list of critical sections associated with the current process. If the <b>-v</b> option is used, all critical sections are displayed. Here is an example:</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; !locks
+
+CritSec ntdll!FastPebLock+0 at 77FC49E0
+LockCount          0
+RecursionCount     1
+OwningThread       c78
+EntryCount         0
+ContentionCount    0
+*** Locked
+
+....
+Scanned 37 critical sections</code></pre>
+<p>If you know the address of the critical section you wish to display, you can use the <a href="_critsec.htm"><b>!critsec</b></a> extension. This displays the same collection of information as <b>!ntsdexts.locks</b>. For example:</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; !critsec 77fc49e0
+
+CritSec ntdll!FastPebLock+0 at 77FC49E0
+LockCount          0
+RecursionCount     1
+OwningThread       c78
+EntryCount         0
+ContentionCount    0
+*** Locked</code></pre>
+<p>The <a href="_cs.htm"><b>!cs</b></a> extension is only available in Microsoft Windows XP and later versions of Windows. It can display a critical section based on its address, search an address range for critical sections, and even display the stack trace associated with each critical section. Some of these features require full Windows symbols to work properly. If Application Verifier is active, <b>!cs -t</b> can be used to display the critical section tree. See the <b>!cs</b> reference page for details and examples.</p>
+<p>The information displayed by <b>!cs</b> is slightly different than that shown by <b>!ntsdexts.locks</b> and <b>!critsec</b>. For example:</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; !cs 77fc49e0
+-----------------------------------------
+Critical section   = 0x77fc49e0 (ntdll!FastPebLock+0x0)
+DebugInfo          = 0x77fc3e00
+LOCKED
+LockCount          = 0x0
+OwningThread       = 0x00000c78
+RecursionCount     = 0x1
+LockSemaphore      = 0x0
+SpinCount          = 0x00000000</code></pre>
+<p>The <a href="dt__display_type_.htm"><b>dt (Display Type)</b></a> command can be used to display the literal contents of the RTL_CRITICAL_SECTION structure. For example:</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; dt RTL_CRITICAL_SECTION 77fc49e0
+   +0x000 DebugInfo        : 0x77fc3e00 
+   +0x004 LockCount        : 0
+   +0x008 RecursionCount   : 1
+   +0x00c OwningThread     : 0x00000c78 
+   +0x010 LockSemaphore    : (null) 
+   +0x014 SpinCount        : 0</code></pre>
+<h3><a id="interpreting_critical_section_fields_in_windows_xp_and_windows_2000"></a><a id="INTERPRETING_CRITICAL_SECTION_FIELDS_IN_WINDOWS_XP_AND_WINDOWS_2000"></a>Interpreting Critical Section Fields in Windows XP and Windows 2000</h3>
+<p></p>
+<p>The most important fields of the critical section structure are as follows:</p>
+<ul>
+<li>
+<p>In Microsoft Windows 2000, and Windows XP, the <b>LockCount</b> field indicates the number of times that any thread has called the <b>EnterCriticalSection</b> routine for this critical section, minus one. This field starts at -1 for an unlocked critical section. Each call of <b>EnterCriticalSection</b> increments this value; each call of <b>LeaveCriticalSection</b> decrements it. For example, if <b>LockCount</b> is 5, this critical section is locked, one thread has acquired it, and five additional threads are waiting for this lock.</p>
+</li>
+<li>
+<p>The <b>RecursionCount</b> field indicates the number of times that the owning thread has called <b>EnterCriticalSection</b> for this critical section.</p>
+</li>
+<li>
+<p>The <b>EntryCount</b> field indicates the number of times that a thread other than the owning thread has called <b>EnterCriticalSection</b> for this critical section.  </p>
+</li>
+</ul>
+<p>A newly initialized critical section looks like this:</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; !critsec 433e60
+CritSec mymodule!cs+0 at 00433E60
+LockCount          NOT LOCKED 
+RecursionCount     0
+OwningThread       0
+EntryCount         0
+ContentionCount    0</code></pre>
+<p>The debugger displays "NOT LOCKED" as the value for <b>LockCount</b>. The actual value of this field for an unlocked critical section is -1. You can verify this with the <b>dt (Display Type)</b> command:</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; dt RTL_CRITICAL_SECTION 433e60
+   +0x000 DebugInfo        : 0x77fcec80
+   +0x004 LockCount        : -1
+   +0x008 RecursionCount   : 0
+   +0x00c OwningThread     : (null) 
+   +0x010 LockSemaphore    : (null) 
+   +0x014 SpinCount        : 0</code></pre>
+<p>When the first thread calls the <b>EnterCriticalSection</b> routine, the critical section's <b>LockCount</b>, <b>RecursionCount</b>, <b>EntryCount</b> and <b>ContentionCount</b> fields are all incremented by one, and <b>OwningThread</b> becomes the thread ID of the caller. <b>EntryCount</b> and <b>ContentionCount</b> are never decremented. For example:</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; !critsec 433e60
+CritSec mymodule!cs+0 at 00433E60
+LockCount          0
+RecursionCount     1
+OwningThread       4d0
+EntryCount         0
+ContentionCount    0</code></pre>
+<p>At this point, four different things can happen. </p>
+<ol>
+<li>The owning thread calls <b>EnterCriticalSection</b> again. This will increment <b>LockCount</b> and <b>RecursionCount</b>. <b>EntryCount</b> is not incremented.<pre class="syntax" xml:space="preserve"><code>0:000&gt; !critsec 433e60
+CritSec mymodule!cs+0 at 00433E60
+LockCount          1
+RecursionCount     2
+OwningThread       4d0
+EntryCount         0
+ContentionCount    0</code></pre>
+</li>
+<li>A different thread calls <b>EnterCriticalSection</b>. This will increment <b>LockCount</b> and <b>EntryCount</b>. <b>RecursionCount</b> is not incremented.<pre class="syntax" xml:space="preserve"><code>0:000&gt; !critsec 433e60
+CritSec mymodule!cs+0 at 00433E60
+LockCount          1
+RecursionCount     1
+OwningThread       4d0
+EntryCount         1
+ContentionCount    1</code></pre>
+</li>
+<li>The owning thread calls <b>LeaveCriticalSection</b>. This will decrement <b>LockCount</b> (to -1) and <b>RecursionCount</b> (to 0), and will reset <b>OwningThread</b> to 0. <pre class="syntax" xml:space="preserve"><code>0:000&gt; !critsec 433e60
+CritSec mymodule!cs+0 at 00433E60
+LockCount          NOT LOCKED 
+RecursionCount     0
+OwningThread       0
+EntryCount         0
+ContentionCount    0</code></pre>
+</li>
+<li>
+<p>Another thread calls <b>LeaveCriticalSection</b>. This produces the same results as the owning thread calling <b>LeaveCriticalSection</b> -- it will decrement <b>LockCount</b> (to -1) and <b>RecursionCount</b> (to 0), and will reset <b>OwningThread</b> to 0.</p>
+</li>
+</ol>
+<p>When <u>any</u> thread calls <b>LeaveCriticalSection</b>, Windows decrements <b>LockCount</b> and <b>RecursionCount</b>. This feature has both good and bad aspects. It allows a device driver to enter a critical section on one thread and leave the critical section on another thread. However, it also makes it possible to accidentally call <b>LeaveCriticalSection</b> on the wrong thread, or to call <b>LeaveCriticalSection</b> too many times and cause <b>LockCount</b> to reach values lower than -1. This corrupts the critical section and causes all threads to wait indefinitely on the critical section. </p>
+<h3><a id="interpreting_critical_section_fields_in_windows_server_2003_sp1_and_la"></a><a id="INTERPRETING_CRITICAL_SECTION_FIELDS_IN_WINDOWS_SERVER_2003_SP1_AND_LA"></a>Interpreting Critical Section Fields in Windows Server 2003 SP1 and Later</h3>
+<p></p>
+<p>In Microsoft Windows Server 2003 Service Pack 1 and later versions of Windows, the <b>LockCount</b> field is parsed as follows:</p>
+<ul>
+<li>
+<p>The lowest bit shows the lock status. If this bit is 0, the critical section is locked; if it is 1, the critical section is not locked.</p>
+</li>
+<li>
+<p>The next bit shows whether a thread has been woken for this lock. If this bit is 0, then a thread has been woken for this lock; if it is 1, no thread has been woken.</p>
+</li>
+<li>
+<p>The remaining bits are the ones-complement of the number of threads waiting for the lock.</p>
+</li>
+</ul>
+<p>As an example, suppose the <b>LockCount</b> is -22. The lowest bit can be determined in this way:</p>
+<pre class="syntax" xml:space="preserve"><code>0:009&gt; ? 0x1 &amp; (-0n22)
+Evaluate expression: 0 = 00000000</code></pre>
+<p>The next-lowest bit can be determined in this way:</p>
+<pre class="syntax" xml:space="preserve"><code>0:009&gt; ? (0x2 &amp; (-0n22)) &gt;&gt; 1
+Evaluate expression: 1 = 00000001</code></pre>
+<p>The ones-complement of the remaining bits can be determined in this way:</p>
+<pre class="syntax" xml:space="preserve"><code>0:009&gt; ? ((-1) - (-0n22)) &gt;&gt; 2
+Evaluate expression: 5 = 00000005</code></pre>
+<p>In this example, the first bit is 0 and therefore the critical section is locked. The second bit is 1, and so no thread has been woken for this lock. The complement of the remaining bits is 5, and so there are five threads waiting for this lock.</p>
+<h3><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For information about how to debug critical section time outs, see <a href="critical_section_time_outs.htm">Critical Section Time Outs</a>. For general information about critical sections, see the Microsoft Windows SDK, the Windows Driver Kit (WDK), or <i>Microsoft Windows Internals</i> by Mark Russinovich and David Solomon. (These resources may not be available in some languages and 
+
+countries.)
+</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Displaying a Critical Section%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

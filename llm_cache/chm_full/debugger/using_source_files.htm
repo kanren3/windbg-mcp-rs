@@ -1,0 +1,41 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Using Source Files"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Using Source Files</title>
+
+<meta name="MS-HAID" content="Engine_DG_af98271b-d06b-44e7-b0f6-928ea6579533.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.using_source_files"></a>Using Source Files</h1>
+</div>
+<p>The <a href="introduction.htm#debugger_engine">debugger engine</a> maintains a <i>source path</i>, which is a list of directories and source servers that contain source code files associated with the current targets.  The debugger engine can search these directories and source servers for the source files.  With the help of symbol files, the debugger engine can match lines in the source files with locations in the target's memory.</p>
+<p>For an overview of using source files with debuggers, see <a href="debugging_in_source_mode.htm">Debugging in Source Mode</a>.  For an overview of source paths, see <a href="source_path.htm">Source Path</a>.  For an overview of using source servers from the debugger engine, see <a href="using_a_source_server.htm">Using a Source Server</a>.</p>
+<h3><a id="source_path"></a><a id="SOURCE_PATH"></a>Source Path</h3>
+<p>To add a directory or source server to the source path, use the method <a href="appendsourcepath.htm"><b>AppendSourcePath</b></a>.  The whole source path is returned by <a href="getsourcepath.htm"><b>GetSourcePath</b></a> and can be changed using <a href="setsourcepath.htm"><b>SetSourcePath</b></a>.  A single directory or source server can be retrieved from the source path using <a href="getsourcepathelement.htm"><b>GetSourcePathElement</b></a>.</p>
+<p>To find a source file relative to the source path, use <a href="findsourcefile.htm"><b>FindSourceFile</b></a> or, for more advanced options when using source servers, use <a href="findsourcefileandtoken.htm"><b>FindSourceFileAndToken</b></a>. <b>FindSourceFileAndToken</b> can also be used along with <a href="getsourcefileinformation.htm"><b>GetSourceFileInformation</b></a> to retrieve variables related to a file on a source server.</p>
+<h3><a id="matching_source_files_to_code_in_memory"></a><a id="MATCHING_SOURCE_FILES_TO_CODE_IN_MEMORY"></a>Matching Source Files to Code in Memory</h3>
+<p>The debugger engine provides three methods for locating the memory locations that correspond to lines in a source file.  To map a single line of source code to a memory location, use <a href="getoffsetbyline.htm"><b>GetOffsetByLine</b></a>.  To search for memory locations for more than one source line or for nearby source lines, use <a href="getsourceentriesbyline.htm"><b>GetSourceEntriesByLine</b></a>.  The <a href="getsourcefilelineoffsets.htm"><b>GetSourceFileLineOffsets</b></a> method will return the memory location of every line in a source file.</p>
+<p>To perform the opposite operation and find the line of a source file that matches a location in the target's memory, use <a href="getlinebyoffset.htm"><b>GetLineByOffset</b></a>.
+     <div class="alert"><b>Note</b>  The relationship between memory locations and lines in a source file is not necessarily one-to-one.  It is possible for a single line of source code to correspond to multiple memory locations and for a single memory location to correspond to multiple lines of source code.</div>
+<div> </div>
+</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Using Source Files%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

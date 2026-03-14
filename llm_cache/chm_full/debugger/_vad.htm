@@ -1,0 +1,121 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !vad extension displays details of a virtual address descriptor (VAD) or a tree of VADs."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!vad</title>
+
+<meta name="MS-HAID" content="r30_exts_kernel_U_59525e64-a9ab-4421-867f-c0002fdb792a.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._vad"></a>!vad</h1>
+</div>
+<p>The <b>!vad</b> extension displays details of a virtual address descriptor (VAD) or a tree of VADs.</p>
+<ul>
+<li>Displays details of one virtual addres descriptor (VAD)</li>
+<li>Displays details of a tree of VADs.</li>
+<li>Displays information about the VADs for a particular user-mode module and provides a string that you can use to load the symbols for that module. </li>
+</ul>
+<pre class="syntax"><b>!vad </b><i>VAD-Root</i><b> [</b><i>Flag</i><b>]</b>
+<b>!vad </b><i>Address</i><b> 1</b></pre>
+<h2><a id="ddk__vad_dbg"></a><a id="DDK__VAD_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______VAD-Root______"></a><a id="_______vad-root______"></a><a id="_______VAD-ROOT______"></a>       <i>VAD-Root</i>      </dt>
+<dd>
+<p>Address of the root of the VAD tree to be displayed.</p>
+</dd>
+<dt><a id="_______Flag______"></a><a id="_______flag______"></a><a id="_______FLAG______"></a>       <i>Flag</i>      </dt>
+<dd>
+<p>Specifies the form the display will take. Possible values include:</p>
+<p></p>
+<dl>
+<dt><a id="0"></a>0</dt>
+<dd>
+<p>The entire VAD tree based at <i>VAD-Root</i> is displayed. (This is the default.)</p>
+</dd>
+<dt><a id="1"></a>1</dt>
+<dd>
+<p>Only the VAD specified by <i>VAD-Root</i> is displayed. The display will include a more detailed analysis.</p>
+</dd>
+</dl>
+</dd>
+<dt><a id="_______Address______"></a><a id="_______address______"></a><a id="_______ADDRESS______"></a>       <i>Address</i>      </dt>
+<dd>
+<p>Address in the virtual address range of a  user-mode module.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p>
+          Windows 2000
+         </p>
+</td>
+<td>
+<p>
+          Kdextx86.dll
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+          Windows XP and later
+         </p>
+</td>
+<td>
+<p>
+          Kdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For information about virtual address descriptors, see <i>Microsoft Windows Internals</i>, by Mark Russinovich and David Solomon. (This book may not be available in some languages and 
+
+countries.)
+</p>
+<h2>Remarks</h2>
+<p>The address of the root of the VAD for any process can be found by using the <a href="_process.htm"><b>!process</b></a> command.</p>
+<p>The <b>!vad</b> command can be helpful when you need to load symbols for a user-mode module that has been paged out of memory. For details, see <a href="mapping_symbols_when_the_peb_is_paged_out.htm">Mapping Symbols When the PEB is Paged Out</a>. </p>
+<p>Here is an example of the <b>!vad</b> extension:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !vad 824bc2f8
+VAD     level      start      end    commit
+82741bf8 ( 1)      78000    78045         8 Mapped  Exe  EXECUTE_WRITECOPY
+824ef368 ( 2)      7f6f0    7f7ef         0 Mapped       EXECUTE_READ
+824bc2f8 ( 0)      7ffb0    7ffd3         0 Mapped       READONLY
+8273e508 ( 2)      7ffde    7ffde         1 Private      EXECUTE_READWRITE
+82643fc8 ( 1)      7ffdf    7ffdf         1 Private      EXECUTE_READWRITE
+
+Total VADs:     5  average level:    2  maximum depth: 2
+
+kd&gt; !vad 824bc2f8 1
+
+VAD @ 824bc2f8
+  Start VPN:         7ffb0  End VPN:    7ffd3  Control Area:  827f1208
+  First ProtoPte: e1008500  Last PTE e100858c  Commit Charge         0 (0.)
+  Secured.Flink          0  Blink           0  Banked/Extend:        0 Offset 0
+   ViewShare NoChange READONLY
+
+SecNoChange </code></pre>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!vad%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

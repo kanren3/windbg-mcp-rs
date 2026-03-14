@@ -1,0 +1,104 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The SYSTEM_SERVICE_EXCEPTION bug check has a value of 0x0000003B. This indicates that an exception happened while executing a routine that transitions from non-privileged code to privileged code."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0x3B: SYSTEM_SERVICE_EXCEPTION</title>
+
+<meta name="MS-HAID" content="t04_bugs_00_076cf3a1-0833-43dd-a878-6d0cf29d2462.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0x3b__system_service_exception"></a>Bug Check 0x3B: SYSTEM_SERVICE_EXCEPTION</h1>
+</div>
+<p>The SYSTEM_SERVICE_EXCEPTION bug check has a value of 0x0000003B. This indicates that an exception happened while executing a routine that transitions from non-privileged code to privileged code. </p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2> SYSTEM_SERVICE_EXCEPTION Parameters</h2>
+<p>The following parameters are displayed on the blue screen.</p>
+<table>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>1</p>
+</td>
+<td>
+<p>The exception that caused the bug check</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>2</p>
+</td>
+<td>
+<p>The address of the instruction that caused the bug check</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>3</p>
+</td>
+<td>
+<p>The address of the context record for the exception that caused the bug check</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>4</p>
+</td>
+<td>
+<p>0 </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Cause</h2>
+<p>The stop code indicates that executing  code had an 
+exception and the thread that was below it, is a system thread.</p>
+<p>The <a href="_analyze.htm"><b>!analyze</b></a> debug extension displays information about  the bug check and can be very helpful in determining the root cause.</p>
+<p>For more information see the following topics:</p>
+<p><a href="crash_dump_files.htm">Crash dump analysis using the Windows debuggers (WinDbg)</a></p>
+<p><a href="analyzing_a_kernel_mode_dump_file_with_windbg.htm">Analyzing a Kernel-Mode Dump File with WinDbg</a></p>
+<p><a href="using_the__analyze_extension.htm">Using the !analyze Extension</a> and <a href="_analyze.htm">!analyze</a></p>
+<p>In the past, this error has been linked to excessive paged pool usage and may occur due to user-mode graphics drivers crossing over and passing bad data to the kernel code. If you suspect this is the case, use the pool options in driver verifier to gather additional information. </p>
+<h2>Resolution</h2>
+<p><b>To debug this problem:</b>  Use the <a href="_cxr__display_context_record_.htm"><b>.cxr (Display Context Record)</b></a> command with Parameter 3, and then use <a href="k__kb__kc__kd__kp__kp__kv__display_stack_backtrace_.htm"><b>kb (Display Stack Backtrace)</b></a>.   You can also set a breakpoint in the code leading up to this stop code and attempt to single step forward into the faulting code.</p>
+<p>For general troubleshooting of Windows bug check codes, follow these suggestions:</p>
+<ul>
+<li>
+<p>If you recently added hardware to the system, try removing or replacing it. Or check with the manufacturer to see if any patches are available.</p>
+</li>
+<li>
+<p>If new device drivers or system services have been added recently, try removing or updating them. Try to determine what changed in the system that caused the new bug check code to appear.</p>
+</li>
+<li>
+<p>Look in <b>Device Manager</b> to see if any devices are marked with the exclamation point (!). Review the events log displayed in driver properties for any faulting driver.  Try updating the related driver.  </p>
+</li>
+<li>
+<p>Check the System Log in Event Viewer for additional error messages that might help pinpoint the device or driver that is causing the error. For more information, see <a href="http://windows.microsoft.com/en-us/windows/what-information-event-logs-event-viewer#1TC=windows-7">Open Event Viewer</a>. Look for critical errors in the system log that occurred in the same time window as the blue screen.</p>
+</li>
+<li>
+<p>For additional general troubleshooting information, see <a href="blue_screen_data.htm"><b>Blue Screen Data</b></a>. </p>
+</li>
+</ul>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

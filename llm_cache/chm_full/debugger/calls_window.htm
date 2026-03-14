@@ -1,0 +1,74 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="In WinDbg, you can view the call stack by entering commands or by using the Calls window."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Viewing the Call Stack in WinDbg</title>
+
+<meta name="MS-HAID" content="r36_gui_1_b6fb163f-531c-4403-aa9d-100772f42189.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.calls_window"></a>Viewing the Call Stack in WinDbg</h1>
+</div>
+<p>The call stack is the chain of function calls that have led to the current location of the program counter. The top function on the call stack is the current function, the next function is the function that called the current function, and so on. The call stack that is displayed is based on the current program counter, unless you change the register context. For more information about how to change the register context, see <a href="changing_contexts.htm">Changing Contexts</a>.</p>
+<p>In WinDbg, you can view the call stack by entering commands or by using the Calls window.</p>
+<h2><a id="Debugger_Command_Window"></a><a id="debugger_command_window"></a><a id="DEBUGGER_COMMAND_WINDOW"></a>Debugger Command Window</h2>
+<p>You can view the call stack by entering one of the <a href="k__kb__kc__kd__kp__kp__kv__display_stack_backtrace_.htm"><b>k (Display Stack Backtrace)</b></a> commands in the Debugger Command window.</p>
+<h2><a id="Calls_Window"></a><a id="calls_window"></a><a id="CALLS_WINDOW"></a>Calls Window</h2>
+<p>As an alternative to the <a href="k__kb__kc__kd__kp__kp__kv__display_stack_backtrace_.htm"><b>k</b></a> command, you can view the call stack in the Calls window. To open the Calls window, choose <b>Call Stack</b> from the <b>View</b> menu. </p>
+<p>The following screen shot shows an example of a Calls window.</p><img src="images/window-calls.png" alt="Screen shot of the Calls window"/><h2><a id="ddk_calls_window_dbg"></a><a id="DDK_CALLS_WINDOW_DBG"></a></h2>
+<p>Buttons in the Calls window enable you to customize the view of the call stack. To move to the corresponding call location in the <a href="source_window.htm">Source window</a> or <a href="disassembly_window.htm">Disassembly window</a>, double-click a line of the call stack, or select a line and press ENTER. This action also changes the <a href="changing_contexts.htm#local_context">local context</a> to the selected stack frame. For more information about running to or from this point, see <a href="controlling_the_target.htm">Controlling the Target</a>.</p>
+<p>In user mode, the stack trace is based on the stack of the current thread. For more information about the stack of the current thread, see <a href="controlling_processes_and_threads.htm">Controlling Processes and Threads</a>.</p>
+<p>In kernel mode, the stack trace is based on the current register context. You can set the register context to match a specific thread, context record, or trap frame. For more information about setting the register context, see <a href="changing_contexts.htm#register_context">Register Context</a>.</p>
+<p>The Calls window has a toolbar that contains several buttons and has a shortcut menu with additional commands. To access this menu, right-click the title bar or click the icon near the upper-right corner of the window (<img src="images/tbcall.png" alt="Screen shot of the button that displays the Calls window toolbar shortcut menu"/>). The toolbar and menu contain the following buttons and commands:</p>
+<ul>
+<li>
+<p><b>Raw args </b>displays the first three parameters that are passed to the function. On an x86-based processor, this display includes the first three parameters that are passed to the function ("Args to Child").</p>
+</li>
+<li>
+<p><b>Func info</b> displays Frame Pointer Omission (FPO) data and other internal information about the function. This command is available only on an x86-based processor.</p>
+</li>
+<li>
+<p><b>Source</b> displays source module names and line numbers after the function names (if the debugger has this information).</p>
+</li>
+<li>
+<p><b>
+       Addrs</b> displays various frame-related addresses. On an x86-based processor, this display includes the base pointer for the stack frame ("ChildEBP") and the return address ("RetAddr").</p>
+</li>
+<li>
+<p><b>Nonvolatile regs</b> displays the nonvolatile portion of the register context. This command is available only on an Itanium-based processor.</p>
+</li>
+<li>
+<p><b>
+       Frame nums</b> displays frame numbers. Frames are always numbered consecutively, beginning with zero.</p>
+</li>
+<li>
+<p><b>Arg types</b> displays detailed information about the arguments that are expected and received by the functions in the stack.</p>
+</li>
+<li>
+<p><b>Always floating</b> causes the window to remain undocked even if it is dragged to a docking location.</p>
+</li>
+<li>
+<p><b>Move with frame</b> causes the window to move when the WinDbg frame is moved, even if the window is undocked. For more information about docked, tabbed, and floating windows, see <a href="positioning_the_windows.htm">Positioning the Windows</a>.</p>
+</li>
+</ul>
+<h3><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about the register context and the local context, see <a href="changing_contexts.htm">Changing Contexts</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Viewing the Call Stack in WinDbg%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

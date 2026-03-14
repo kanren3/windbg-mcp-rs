@@ -1,0 +1,72 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .endpsrv command causes the current process server or KD connection server to close."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.endpsrv (End Process Server)</title>
+
+<meta name="MS-HAID" content="r20_metacmds_E_8d3fa8c7-e811-4040-bb10-c73bbcdc980a.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._endpsrv__end_process_server_"></a>.endpsrv (End Process Server)</h1>
+</div>
+<p>The <b>.endpsrv</b> command causes the current process server or KD connection server to close.</p>
+<pre class="syntax">
+    <b>.endpsrv</b> 
+</pre>
+<h2><a id="ddk_meta_end_process_server_dbg"></a><a id="DDK_META_END_PROCESS_SERVER_DBG"></a></h2>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<p>You can use this command only when you are performing remote debugging through a process server or KD connection server.</p>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets</b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Platforms</b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about these servers, see <a href="process_servers__user_mode_.htm">Process Servers (User Mode)</a> or <a href="kd_connection_servers__kernel_mode_.htm">KD Connection Servers (Kernel Mode)</a></p>
+<h2>Remarks</h2>
+<p>The <b>.endpsrv</b> command terminates the process server or KD connection server currently connected to your smart client.</p>
+<p>If you wish to terminate a process server or KD connection server from the computer on which it is running, use Task Manager to end the process (dbgsrv.exe or kdsrv.exe).</p>
+<p>The <b>.endpsrv</b> command can terminate a process server or KD connection server, but it cannot terminate a debugging server.  For information on how to do that, see <a href="controlling_a_remote_debugging_session.htm">Controlling a Remote Debugging Session</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.endpsrv (End Process Server)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

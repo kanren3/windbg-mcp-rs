@@ -1,0 +1,39 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Events"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Events</title>
+
+<meta name="MS-HAID" content="Engine_Overview_1679f61a-ff93-4666-9860-b26005170632.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.events"></a>Events</h1>
+</div>
+<h2><a id="events"></a><a id="EVENTS"></a></h2>
+<p>The debugger engine provides facilities for monitoring and responding to events in the target.  When an event occurs, the engine suspends the target (often only briefly), it then notifies all of the clients of the event, who in turn instruct the engine on how execution should proceed in the target.</p>
+<p>To notify a client of an event, the engine calls the event callback object that is registered with the client.  The engine provides each event callback with details of the event, and the event callback instructs the engine on how execution should proceed in the target.  When different event callbacks provide conflicting instructions, the engine acts on the instruction with the highest precedence (see <a href="debug_status_xxx.htm"><b>DEBUG_STATUS_XXX</b></a>), which typically means choosing the instruction that involves the least execution of the target.</p>
+<div class="alert"><b>Note</b>    While the event callback is handling the event, the target is suspended and the debugging session is accessible; however, because the engine was waiting for an event--either explicitly during a <a href="waitforevent.htm"><b>WaitForEvent</b></a> call or implicitly by executing a command such as <a href="g__go_.htm"><b>g (Go)</b></a> or <a href="p__step_.htm"><b>p (Step)</b></a>--the event callback cannot call <b>WaitForEvent</b>, and if it attempts to execute any commands that would cause the debugger to execute, for example <b>g (Go)</b> or <b>p (Step)</b>, the engine will interpret these commands as an instruction on how to proceed.</div>
+<div> </div>
+<h3><a id="event_filters"></a><a id="EVENT_FILTERS"></a>Event Filters</h3>
+<p>The debugger engine also provides <i>event filters</i>, which are a simpler alternative for basic event monitoring.  The event filters provide a few simple rules that specify whether an event should be printed to the debugger's output stream or break into the debugger.  They can also be used to execute debugger commands when an event occurs.</p>
+<h3><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For details about monitoring events, see <a href="monitoring_events.htm">Monitoring Events</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Events%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

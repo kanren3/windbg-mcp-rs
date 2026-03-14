@@ -1,0 +1,96 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="This section describes the Human Interface Device (HID) debugger extension commands."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>HID Extensions</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.hid_extensions"></a>HID Extensions</h1>
+</div>
+<p>This section describes the Human Interface Device (HID) debugger extension commands.</p>
+<p>The HID debugger extension commands are implemented in Hidkd.dll. To load the HID commands, enter <b>.load hidkd.dll</b> in the debugger.</p>
+<h2><a id="Getting_started_with_the_HID_extensions_"></a><a id="getting_started_with_the_hid_extensions_"></a><a id="GETTING_STARTED_WITH_THE_HID_EXTENSIONS_"></a>Getting started with the HID extensions </h2>
+<p>To start debugging a  HID issue, enter the <a href="_hidkd_hidtree.htm"><b>!hidtree</b></a> command. The <b>!hidtree</b> command displays a list of commands and addresses that you can use to investigate device objects, preparsed HID data, and HID report descriptors.</p>
+<p>
+<h2><a id="in_this_section"></a>In this section</h2>
+<table>
+<tr>
+<th>Topic</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p><a href="_hidkd_help.htm"><b>!hidkd.help</b></a></p>
+</td>
+<td>
+<p>The <a href="_hidkd_help.htm"><b>!hidkd.help</b></a> command displays help for the HID debugger extension commands.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="_hidkd_hidfdo.htm"><b>!hidkd.hidfdo</b></a></p>
+</td>
+<td>
+<p>The  <a href="_hidkd_hidfdo.htm"><b>!hidkd.hidfdo</b></a> command displays HID information associated with a functional device object (FDO).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="_hidkd_hidpdo.htm"><b>!hidkd.hidpdo</b></a></p>
+</td>
+<td>
+<p>The  <a href="_hidkd_hidpdo.htm"><b>!hidkd.hidpdo</b></a> command displays HID information associated with a physical device object (PDO).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="_hidkd_hidtree.htm"><b>!hidkd.hidtree</b></a></p>
+</td>
+<td>
+<p>The  <a href="_hidkd_hidtree.htm"><b>!hidkd.hidtree</b></a> command displays a list of all device nodes that have a HID function driver along with their child nodes. The child nodes have a physical device object (PDO) that was created by the parent node's HID function driver.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="_hidkd_hidppd.htm"><b>!hidkd.hidppd</b></a></p>
+</td>
+<td>
+<p>The  <a href="_hidkd_hidppd.htm"><b>!hidkd.hidppd</b></a> command displays HID preparsed data.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="_hidkd_hidrd.htm"><b>!hidkd.hidrd</b></a></p>
+</td>
+<td>
+<p>The  <a href="_hidkd_hidrd.htm"><b>!hidkd.hidrd</b></a> command displays a HID report descriptor in both raw and parsed format.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+</p>
+<h2><a id="related_topics"></a>Related topics</h2>
+<dl>
+<dt><a href="rcdrkd_extensions.htm">RCDRKD Extensions</a></dt>
+<dt><a href="specialized_extensions.htm">Specialized Extension Commands</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20HID Extensions%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

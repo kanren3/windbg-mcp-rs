@@ -1,0 +1,80 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .pop command restores the state of the debugger to a state that has previously been saved by using the .push (Save Debugger State) command."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.pop (Restore Debugger State)</title>
+
+<meta name="MS-HAID" content="r21_metacmds_L_c6387076-b093-4c94-b79a-f529d3c76553.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._pop__restore_debugger_state_"></a>.pop (Restore Debugger State)</h1>
+</div>
+<p>The <b>.pop</b> command restores the state of the debugger to a state that has previously been saved by using the <a href="_push__save_debugger_state_.htm"><b>.push (Save Debugger State)</b></a> command. </p>
+<pre class="syntax"><b>.pop</b>
+<b>.pop /r</b>
+<b>.pop /r /q</b></pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="________r______"></a><a id="________R______"></a>       <b>/r</b>      </dt>
+<dd>
+<p>
+       Specifies that the saved values of the pseudo-registers $t0 to $t19 should be restored.  If <b>/r</b> is not included, these values are not affected by the <b>.pop</b> command.
+      </p>
+</dd>
+<dt><a id="________q______"></a><a id="________Q______"></a>       <b>/q</b>      </dt>
+<dd>
+<p>Specifies that the command executes quietly. That is, the command executes without displaying any output.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets
+         </b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>This command is most useful when used with <a href="using_script_files.htm">scripts</a> and <a href="using_debugger_command_programs.htm">debugger command programs</a> so that they can work with one fixed state.  If the command is successful, no output is displayed.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.pop (Restore Debugger State)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

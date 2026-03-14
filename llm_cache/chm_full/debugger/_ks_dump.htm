@@ -1,0 +1,277 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !ks.dump extension displays the specified object."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!ks.dump</title>
+
+<meta name="MS-HAID" content="r33~b_exts_KS_9116ca53-f889-4849-b200-270e37aef1d3.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._ks_dump"></a>!ks.dump</h1>
+</div>
+<p>The <b>!ks.dump</b> extension displays the specified object.</p>
+<pre class="syntax"><b>!ks.dump </b><i>Object </i>[<i>Level</i>]<b> </b>[<i>Flags</i>]  
+</pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Object______"></a><a id="_______object______"></a><a id="_______OBJECT______"></a>       <i>Object</i>      </dt>
+<dd>
+<p>Specifies a pointer to an AVStream structure, an AVStream class object, or a PortCls object. Can also specify a pointer to an an IRP or a file object. </p>
+</dd>
+<dt><a id="_______Level______"></a><a id="_______level______"></a><a id="_______LEVEL______"></a>       <i>Level</i>      </dt>
+<dd>
+<p>Optional. Specifies the level of detail to display on a 0-7 scale with progressively more information displayed for higher values.  To display all available details, supply a value of 7. You can see more information about levels by issuing a <b>!ks.dump</b> command with no arguments.</p>
+</dd>
+<dt><a id="_______Flags______"></a><a id="_______flags______"></a><a id="_______FLAGS______"></a>       <i>Flags</i>      </dt>
+<dd>
+<p>Optional. Specifies the kind of information to be displayed. <i>Flags</i> can be any combination of the following bits.</p>
+<p></p>
+<dl>
+<dt><a id="Bit_0__0x1_"></a><a id="bit_0__0x1_"></a><a id="BIT_0__0X1_"></a>Bit 0 (0x1)</dt>
+<dd>
+<p>Display all queued IRPs.</p>
+</dd>
+<dt><a id="Bit_1__0x2_"></a><a id="bit_1__0x2_"></a><a id="BIT_1__0X2_"></a>Bit 1 (0x2)</dt>
+<dd>
+<p>Display all pending IRPs.</p>
+</dd>
+<dt><a id="Bit_2__0x4_"></a><a id="bit_2__0x4_"></a><a id="BIT_2__0X4_"></a>Bit 2 (0x4)</dt>
+<dd>
+<p>Analyze a stalled graph for suspects.</p>
+</dd>
+<dt><a id="Bit_3__0x8_"></a><a id="bit_3__0x8_"></a><a id="BIT_3__0X8_"></a>Bit 3 (0x8)</dt>
+<dd>
+<p>Show all pin states.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Windows 2000</b></p>
+</td>
+<td>
+<p>
+          winxp\Ks.dll 
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Ks.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information, see <a href="kernel_streaming_debugging.htm">Kernel Streaming Debugging</a>.</p>
+<h2>Remarks</h2>
+<p>The <b>!ks.dump</b> command recognizes most AVStream objects, including pins, filters, factories, devices, pipes, and stream pointers. This command also recognizes some stream class structures, including stream objects, filter instances, device extensions, and SRBs.</p>
+<p>Following is an example of the <b>!ks.dump</b> display for a filter:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; !dump 829493c4
+Filter object 829493c4 [CKsFilter = 82949350]
+    Descriptor     f7a233c8:
+    Context        829dce28</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Following is an example of the <b>!ks.dump</b> display for a pin:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; !dump 8160DDE0 7
+Pin object 8160DDE0 [CKsPin = 8160DD50]
+    DeviceState    KSSTATE_RUN
+    ClientState    KSSTATE_RUN
+    ResetState     KSRESET_END
+    CKsPin object 8160DD50 [KSPIN = 8160DDE0]
+        State                    KSSTATE_RUN
+        Processing Mutex         8160DFD0 is not held
+        And Gate &amp;               8160DF88
+        And Gate Count           1</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Some important parts of this display are included in the following table.</p>
+<table>
+<tr>
+<td>
+<p><b>
+        Parameter</b></p>
+</td>
+<td>
+<p><b>Meaning</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+        DeviceState
+       </p>
+</td>
+<td>
+<p>The state that the pin was requested to enter. If different from ClientState, this is the state that the minidriver will transition to next.  </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+        ClientState
+       </p>
+</td>
+<td>
+<p>The state that the minidriver is actually in. This reflects the state of the pipe. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+        ResetState
+       </p>
+</td>
+<td>
+<p>Indicates whether or not the object is in the middle of a flush.</p>
+<p>
+        KSRESET_BEGIN indicates a flush.</p>
+<p>
+        KSRESET_END indicates no flush.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+        State
+       </p>
+</td>
+<td>
+<p>The internal state of the pin's transport to non-AVStream filters.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>Following is an example of the <b>!ks.dump</b> display for a stream class driver:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; !dump 81a0a170 7
+Device Extension 81a0a228:
+    Device Object          81a0a170 [\Driver\TESTCAP]
+    Next Device Object     81bd56d8 [\Driver\PnpManager]
+    Physical Device Object 81bd56d8 [\Driver\PnpManager]
+    REGISTRY FLAGS:
+        Page out driver when closed
+        No suspend if running
+    MINIDRIVER Data:
+        Device Extension       81a0a44c
+        Interrupt Routine      00000000
+        Synchronize Routine    STREAM!StreamClassSynchronizeExecution
+        Receive Device SRB     testcap!AdapterReceivePacket
+        Cancel Packet          testcap!AdapterCancelPacket
+        Timeout Packet         testcap!AdapterTimeoutPacket
+        Size (d / r / s / f)   1a0(416), 14(20), 978(2424), 0(0)
+        Sync Mode              Driver Synchronizes
+    Filter Type 0:
+        Symbolic Links:
+            Information Paged Out
+        Instances:
+            816b7bd8</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Note that the sizes are listed both in hexadecimal numbers, and then, parenthetically in the decimal equivalent. The Size abbreviations in this display are listed in the following table.</p>
+<table>
+<tr>
+<td>
+<p><b>
+        Size
+       </b></p>
+</td>
+<td>
+<p><b>
+        Explanation
+       </b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+        d
+       </p>
+</td>
+<td>
+<p>Device</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+        r
+       </p>
+</td>
+<td>
+<p>Request</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+        s
+       </p>
+</td>
+<td>
+<p>Stream</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+        f
+       </p>
+</td>
+<td>
+<p>Filter.  If the filter size is 0, the filter is single instance.  If it is greater than 0, it is multi-instance.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!ks.dump%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,211 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Configuring tools.ini"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Configuring tools.ini</title>
+
+<meta name="MS-HAID" content="r04_setup_3_0b710f80-3d76-456f-8081-6db088c4422e.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.configuring_tools_ini"></a>Configuring tools.ini</h1>
+</div>
+<h2><a id="ddk_configuring_tools_ini_dbg"></a><a id="DDK_CONFIGURING_TOOLS_INI_DBG"></a></h2>
+<p>The file tools.ini contains information to initialize the command-line debuggers. On startup, the debugger searches for the appropriate section header in the tools.ini file and extracts initialization information from the entries under the header. Each command-line debugger has its own section header - [CDB], [NTSD], and [KD]. The environment variable INIT must point to the directory containing the tools.ini file.</p>
+<p>WinDbg does not use the tools.ini file. Instead, WinDbg saves initialization settings in <a href="using_workspaces.htm">workspaces</a>.</p>
+<p>The tools.ini entries are shown in the following table.</p>
+<p>Keywords must be separated from the values by white space or a colon. Keywords are not case-sensitive.</p>
+<p>For <b>TRUE</b> or <b>FALSE</b> values, "FALSE" is the only false value. Anything else is <b>TRUE</b>.</p>
+<table>
+<tr>
+<th>Entry</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p><b>$u0: </b><i>value</i>
+        
+         ...
+        
+        <b>$u9: </b><i>value</i></p>
+</td>
+<td>
+<p>Assign values to fixed-name aliases. You can specify numeric values <i>n</i> or <i>0xn</i> or any other string. See <a href="using_aliases.htm">Using Aliases</a> for details. No command-line equivalent.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>DebugChildren: </b><i>flag</i></p>
+</td>
+<td>
+<p><b>TRUE</b> or <b>FALSE</b>. If <b>TRUE</b>, CDB debugs the specified application as well as any child processes that it might spawn. Command-line equivalent is <b>-o</b>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>DebugOutput: </b><i>flag</i></p>
+</td>
+<td>
+<p><b>TRUE</b> or <b>FALSE</b>. If <b>TRUE</b>, CDB sends output and receives input through a terminal. If <b>FALSE</b>, output goes to the user screen. The command-line option <b>-d</b> is similar but not identical.  </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>IniFile: </b><i>file</i></p>
+</td>
+<td>
+<p>Specifies the name of the script file that CDB or KD takes commands from at startup. The default is the ntsd.ini file in the current directory. Command-line equivalent is <b>-cf</b>. For details, see <a href="using_script_files.htm">Using Script Files</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>LazyLoad: </b><i>flag</i></p>
+</td>
+<td>
+<p><b>TRUE</b> or <b>FALSE</b>. If <b>TRUE</b>, CDB performs lazy symbol loading; that is, symbols are not loaded until required. Command-line equivalent is <b>-s</b>.</p>
+<p>For details, and other methods of setting this option, see <a href="deferred_symbol_loading.htm">Deferred Symbol Loading</a>. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>SetDll: </b><i>filename</i></p>
+</td>
+<td>
+<p>Set extension DLL. The .dll filename extension should be omitted. Default is userexts.dll. Command-line equivalent is <b>-a</b>.</p>
+<p>For details, and other methods of setting this default, see <a href="loading_debugger_extension_dlls.htm">Loading Debugger Extension DLLs</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>StopFirst: </b><i>flag</i></p>
+</td>
+<td>
+<p><b>TRUE</b> or <b>FALSE</b>. If <b>true</b>, CDB stops on the breakpoint at the end of the image-loading process. Command-line equivalent is <b>-g</b>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>StopOnProcessExit: </b><i>flag</i></p>
+</td>
+<td>
+<p><b>TRUE</b> or <b>FALSE</b>. If <b>TRUE</b>, CDB stops when it receives a process termination notification. Command-line equivalent is <b>-G</b>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+<dl>
+<dt><b>sxd: </b><i>event</i></dt>
+<dt><b>sxe: </b><i>event</i></dt>
+</dl>
+</p>
+</td>
+<td>
+<p>Sets the debugger response and the handling status for the specified exception or event.</p>
+<p>Exceptions and events may be specified in the following ways:</p>
+<p>
+<dl>
+<dt><b>*</b>: Default exception</dt>
+<dt><i>n</i>: Exception <i>n</i> (decimal)</dt>
+<dt><i>0xn</i>: Exception <i>0xn</i> (hexadecimal)</dt>
+<dt>(other): Event code</dt>
+</dl>
+</p>
+<p>See <a href="controlling_exceptions_and_events.htm">Controlling Exceptions and Events</a> for details of this process and for other methods of controlling these settings. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>VerboseOutput: </b><i>flag</i></p>
+</td>
+<td>
+<p><b>TRUE</b> or <b>FALSE</b>. If <b>TRUE</b>, CDB will display detailed information about symbol handling, event notification, and other run-time occurrences. Command-line equivalent is <b>-v</b>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>lines: </b><i>flag</i></p>
+</td>
+<td>
+<p><b>TRUE</b> or <b>FALSE</b>. The lines flag enables or disables support for source-line information.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>srcopt: </b><i>options</i></p>
+</td>
+<td>
+<p>Sets the source line options that control source display and program stepping options. For more information see <a href="l___l___set_source_options_.htm"><b>l+, l- (Set Source Options)</b></a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>srcpath: </b><i>directory</i></p>
+</td>
+<td>
+<p>Sets the source file search path. For more information see <a href="_srcpath___lsrcpath__set_source_path_.htm"><b>.srcpath, .lsrcpath (Set Source Path)</b></a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>enable_unicode: </b><i>flag</i></p>
+</td>
+<td>
+<p><b>TRUE</b> or <b>FALSE</b>. The enable_unicode flag specifies whether the debugger displays USHORT pointers and arrays as Unicode strings.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+    
+    force_radix_output: </b><i>flag</i></p>
+</td>
+<td>
+<p><b>TRUE</b> or <b>FALSE</b>. The force_radix_output flag specifies whether integers are displayed in decimal format or in the default radix.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>col_mode: </b><i>flag</i></p>
+</td>
+<td>
+<p><b>TRUE</b> or <b>FALSE</b>. The col_mode flag controls the color mode setting. When color mode is enabled the debugger can produce colored output. By default, most colors are not set and instead default to the current console colors. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+    col: </b><i>name </i><i>colspec</i></p>
+</td>
+<td>
+<p>The <i>name</i> indicates the element that you are coloring. The <i>colspec</i> is a three-letter RGB indicator of the form [rR-][gG-][bB-].  A lower-case letter indicates darker, an upper-case letter indicates brighter and a dash indicates no color component contribution.  Due to console color limitations, bright is not actually per-component, but applies to all components if any request bright.  In other words, rgB is the same as RGB.  For this reason, it is recommended that all caps be used if any caps are going to be used. </p>
+<p>Example usage:</p>
+<p>col: emphfg R--</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>A sample [NTSD] section in the tools.ini file follows:</p>
+<pre class="syntax" xml:space="preserve"><code>[NTSD]
+sxe: 3c
+sxe: cc
+$u0: VeryLongName
+VerboseOutput:true</code></pre>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Configuring tools.ini%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

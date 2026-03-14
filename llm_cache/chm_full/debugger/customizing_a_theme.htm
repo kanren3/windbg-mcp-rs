@@ -1,0 +1,73 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Customizing a Theme"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Customizing a Theme</title>
+
+<meta name="MS-HAID" content="r06_use_gui_ffc98083-31d5-4782-98e4-4b053f000609.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.customizing_a_theme"></a>Customizing a Theme</h1>
+</div>
+<h2><a id="ddk_creating_and_opening_a_workspace_dbg"></a><a id="DDK_CREATING_AND_OPENING_A_WORKSPACE_DBG"></a></h2>
+<p>Before customizing a theme, it must first be loaded.  See <a href="loading_a_theme.htm">Loading a Theme</a> for details.</p>
+<p>After the theme is loaded, start WinDbg with no command-line parameters.  This opens the base workspace.  There are two common areas of focus for customizing a theme:  setting paths and adjusting window position.</p>
+<p>After you have completed any wanted adjustments, exit WinDbg and save your workspace by selecting <b>Save Workspace</b> from the <b>File</b> menu.  If you want to save your new settings to a .reg file, open Regedit and export the registry key under <b>HKCU\Software\Microsoft\Windbg\Workspaces</b> to a .reg file.</p>
+<h3><a id="setting_paths"></a><a id="SETTING_PATHS"></a>Setting Paths</h3>
+<p>By setting the appropriate paths, you can ensure that WinDbg can locate all of the files that it needs to debug effectively.  There are three main paths to set:  the symbol path, the source path, and the executable image path.</p>
+<p>Here are examples of how to set the symbol and source path.  The executable image path is typically the same as your symbol path.</p>
+<p>To set your symbol path:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>SRV*c:\MySymCache*\\CompanySymbolServer\Symbols;SRV*c:\WinSymCache*https://msdl.microsoft.com/download/symbols</pre>
+</td>
+</tr>
+</table></span></div>
+<p>To set your source path:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>SRV*;d:\MySourceRoot</pre>
+</td>
+</tr>
+</table></span></div>
+<h3><a id="adjusting_window_position"></a><a id="ADJUSTING_WINDOW_POSITION"></a>Adjusting Window Position</h3>
+<p>Before using your theme, you should adjust the window positioning so that WinDbg handles your source files correctly.  This ensures that Source windows knows where to dock.</p>
+<p>Begin by opening a Source window in WinDbg.  Tab-dock this window with the placeholder set aside for your Source windows.  In order for the proper relationship to be made, the placeholder window must be the uppermost window in the dock before you perform this tab-docking operation.  Now close the source window but not the placeholder window.</p>
+<p>Because debugging information windows "remember" their last docking operation, each source window's last docking operation is associated with one of the placeholder windows after you have performed this procedure.  Because of this memory attribute, you should not close any of your placeholder windows.  Further, if you choose to change the theme's configuration, any window you reposition in a dock should always be tab-docked with a placeholder file.</p>
+<p>The sample themes included with the Debugging Tools for Windows were created using the following actions:</p>
+<dl>
+<dd>
+<p>Place and position the placeholder*.c files into the dock.</p>
+</dd>
+<dd>
+<p>Tab-dock every window type above the wanted placeholder window.</p>
+</dd>
+</dl>
+<p>For further information about adjusting window position in WinDbg, see <a href="positioning_the_windows.htm">Positioning the Windows</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Customizing a Theme%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

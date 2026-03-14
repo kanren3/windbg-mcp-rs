@@ -1,0 +1,271 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The VIDEO_MEMORY_MANAGEMENT_INTERNAL bug check has a value of 0x0000010E. This indicates that the video memory manager has encountered a condition that it is unable to recover from."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0x10E:  VIDEO_MEMORY_MANAGEMENT_INTERNAL</title>
+
+<meta name="MS-HAID" content="t07_bugs_E0_1755f77d-3ef6-455b-aae3-c9af15653fdf.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0x10e___video_memory_management_internal"></a>Bug Check 0x10E:  VIDEO_MEMORY_MANAGEMENT_INTERNAL</h1>
+</div>
+<p>The VIDEO_MEMORY_MANAGEMENT_INTERNAL bug check has a value of 0x0000010E. This indicates that the video memory manager has encountered a condition that it is unable to recover from.  </p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2>  VIDEO_MEMORY_MANAGEMENT_INTERNAL Parameters</h2>
+<p>The following parameters are displayed on the blue screen. Parameter 1 is the only parameter of interest; this identifies the exact violation.  Values for Parameter 1 that do not appear in this table must be individually examined.</p>
+<table>
+<tr>
+<th>Parameter 1</th>
+<th>Cause of Error</th>
+</tr>
+<tr>
+<td>
+<p>0x1</p>
+</td>
+<td>
+<p>An attempt was made to rotate a non-rotate range. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x2</p>
+</td>
+<td>
+<p>An attempt was made to destroy a non-empty process heap. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x3</p>
+</td>
+<td>
+<p>An attempt to unmap from an aperture segment failed. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x4</p>
+</td>
+<td>
+<p>A rotation in a must-succeed path failed. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x5</p>
+</td>
+<td>
+<p>A deferred command failed. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x6</p>
+</td>
+<td>
+<p>An attempt was made to reallocate resources for an allocation that was having its eviction canceled. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x7</p>
+</td>
+<td>
+<p>An invalid attempt was made to defer free usage. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x8</p>
+</td>
+<td>
+<p>The split direct memory access (DMA) buffer contains an invalid reference. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x9</p>
+</td>
+<td>
+<p>An attempt to evict an allocation failed. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0xA</p>
+</td>
+<td>
+<p>An invalid attempt to use a pinned allocation was made. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0xB</p>
+</td>
+<td>
+<p>A driver returned an invalid error code from <i>BuildPagingBuffer</i>. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0xC</p>
+</td>
+<td>
+<p>A resource leak was detected in a segment. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0xD</p>
+</td>
+<td>
+<p>A segment is being used improperly.  </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0xE</p>
+</td>
+<td>
+<p>An attempt to map an allocation into an aperture segment failed. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0xF</p>
+</td>
+<td>
+<p>A driver returned an invalid error code from <i>AcquireSwizzlingRange</i>. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x10</p>
+</td>
+<td>
+<p>A driver returned an invalid error code from <i>ReleaseSwizzlingRange</i>. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x11</p>
+</td>
+<td>
+<p>An invalid attempt to use an aperture segment was made. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x12</p>
+</td>
+<td>
+<p>A driver overflowed the provided DMA buffer.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x13</p>
+</td>
+<td>
+<p>A driver overflowed the provided private data buffer. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x14</p>
+</td>
+<td>
+<p>An attempt to purge all segments failed. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x15</p>
+</td>
+<td>
+<p>An attempt was made to free a virtual address descriptor (VAD) that was still in the rotated state </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x16</p>
+</td>
+<td>
+<p>A driver broke the guaranteed DMA buffer model contract. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x17</p>
+</td>
+<td>
+<p>An unexpected system command failure occurred.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x18</p>
+</td>
+<td>
+<p>An attempt to release a pinned allocation's resource failed. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x19</p>
+</td>
+<td>
+<p>A driver failed to patch a DMA buffer. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x1A</p>
+</td>
+<td>
+<p>The owner of a shared allocation was freed. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x1B</p>
+</td>
+<td>
+<p>An attempt was made to release an aperture range that is still in use. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x25</p>
+</td>
+<td>
+<p>The GPU attempted to write over an undefined area of the aperture.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Cause</h2>
+<p>This bug check is usually caused by a video driver behaving improperly.</p>
+<h2>Resolution</h2>
+<p>If the problem persists, check Windows Update for an updated video driver.</p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

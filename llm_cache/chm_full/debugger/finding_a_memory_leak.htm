@@ -1,0 +1,44 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Finding a Memory Leak"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Finding a Memory Leak</title>
+
+<meta name="MS-HAID" content="t13_advanced_b077f2e2-5dc1-43bb-a087-d32bf40bcfdc.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.finding_a_memory_leak"></a>Finding a Memory Leak</h1>
+</div>
+<h2><a id="ddk_finding_a_memory_leak_dbg"></a><a id="DDK_FINDING_A_MEMORY_LEAK_DBG"></a></h2>
+<p>A memory leak occurs when a process allocates memory from the paged or nonpaged pools, but does not free the memory. As a result, these limited pools of memory are depleted over time, causing Windows to slow down. If memory is completely depleted, failures may result.</p>
+<p>This section includes the following:</p>
+<ul>
+<li>
+<p><a href="determining_whether_a_leak_exists.htm">Determining Whether a Leak Exists</a> describes a technique you can use if you are not sure whether there is a memory leak on your system. </p>
+</li>
+<li>
+<p><a href="finding_a_kernel_mode_memory_leak.htm">Finding a Kernel-Mode Memory Leak</a> describes how to find a leak that is caused by a kernel-mode driver or component. </p>
+</li>
+<li>
+<p><a href="finding_a_user_mode_memory_leak.htm">Finding a User-Mode Memory Leak</a> describes how to find a leak that is caused by a user-mode driver or application. </p>
+</li>
+</ul>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Finding a Memory Leak%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

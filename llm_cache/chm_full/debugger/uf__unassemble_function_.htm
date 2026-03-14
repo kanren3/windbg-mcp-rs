@@ -1,0 +1,103 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The uf command displays an assembly translation of the specified function in memory."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>uf (Unassemble Function)</title>
+
+<meta name="MS-HAID" content="r18_cmds_S_dd73f885-05aa-4c99-b9e4-b151806d2366.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.uf__unassemble_function_"></a>uf (Unassemble Function)</h1>
+</div>
+<p>The <b>uf</b> command displays an assembly translation of the specified function in memory.</p>
+<pre class="syntax"><b>uf</b> [Options] Address</pre>
+<h2><a id="ddk_cmd_unassemble_function_dbg"></a><a id="DDK_CMD_UNASSEMBLE_FUNCTION_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Options______"></a><a id="_______options______"></a><a id="_______OPTIONS______"></a>       <i>Options</i>      </dt>
+<dd>
+<p>One or more of the following options:</p>
+<p></p>
+<dl>
+<dt><a id="_c"></a><a id="_C"></a><b>/c</b></dt>
+<dd>
+<p>Displays only the call instructions in a routine instead of the full disassembly. Call instructions can be useful for determination of caller and callee relationships from disassembled code.</p>
+</dd>
+<dt><a id="_D"></a><a id="_d"></a><b>/D</b></dt>
+<dd>
+<p>Creates linked callee names for navigation of the call graph.</p>
+</dd>
+<dt><a id="_m"></a><a id="_M"></a><b>/m</b></dt>
+<dd>
+<p>Relaxes the blocking requirements to permit multiple exits.</p>
+</dd>
+<dt><a id="_o"></a><a id="_O"></a><b>/o</b></dt>
+<dd>
+<p>Sorts the display by address instead of by function offset. This option presents a memory-layout view of a full function.</p>
+</dd>
+<dt><a id="_O"></a><a id="_o"></a><b>/O</b></dt>
+<dd>
+<p>Creates linked call lines for accessing call information and creating breakpoints.</p>
+</dd>
+<dt><a id="_i"></a><a id="_I"></a><b>/i</b></dt>
+<dd>
+<p>Displays the number of instructions in a routine.</p>
+</dd>
+</dl>
+</dd>
+<dt><a id="_______Address______"></a><a id="_______address______"></a><a id="_______ADDRESS______"></a>       <i>Address</i>      </dt>
+<dd>
+<p>Specifies the address of the function to disassemble. For more information about the syntax, see <a href="address_and_address_range_syntax.htm">Address and Address Range Syntax</a>.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about assembly debugging and related commands, see <a href="debugging_in_assembly_mode.htm">Debugging in Assembly Mode</a>.</p>
+<h2>Remarks</h2>
+<p>The display shows the whole function, according to the function order.  </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20uf (Unassemble Function)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

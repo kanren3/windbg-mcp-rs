@@ -1,0 +1,173 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Converting Virtual Addresses to Physical Addresses"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Converting Virtual Addresses to Physical Addresses</title>
+
+<meta name="MS-HAID" content="t01_basic_d3a32249-4872-4355-acf2-45e4743c4d66.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.converting_virtual_addresses_to_physical_addresses"></a>Converting Virtual Addresses to Physical Addresses</h1>
+</div>
+<h2><a id="ddk_converting_virtual_addresses_to_physical_addresses_dbg"></a><a id="DDK_CONVERTING_VIRTUAL_ADDRESSES_TO_PHYSICAL_ADDRESSES_DBG"></a></h2>
+<p>Most debugger commands use virtual addresses, not physical addresses, as their input and output. However, there are times that having the physical address can be useful.</p>
+<p>There are two ways to convert a virtual address to a physical address: by using the <b>!vtop</b> extension, and by using the <b>!pte</b> extension. </p>
+<h3><a id="address_conversion_using__vtop"></a><a id="ADDRESS_CONVERSION_USING__VTOP"></a>Address Conversion Using !vtop</h3>
+<p>Suppose you are debugging a target computer on which the MyApp.exe process is running and you want to investigate the virtual address 0x0012F980. Here is the procedure you would use with the <b>!vtop</b> extension to determine the corresponding physical address.</p>
+<p class="proch"><img src="../common/wedge.gif" alt=""/><b>Converting a virtual address to a physical address using !vtop
+     </b></p>
+<ol>
+<li>
+<p>Make sure that you are working in hexadecimal. If necessary, set the current base with the <a href="n__set_number_base_.htm"><b>N 16</b></a> command.</p>
+</li>
+<li>
+<p>Determine the <i>byte index</i> of the address. This number is equal to the lowest 12 bits of the virtual address. Thus, the virtual address 0x0012F980 has a byte index of 0x980.</p>
+</li>
+<li>Determine the <i>directory base</i> of the address by using the <a href="_process.htm"><b>!process</b></a> extension:<pre class="syntax" xml:space="preserve"><code>kd&gt; !process 0 0
+**** NT ACTIVE PROCESS DUMP ****
+....
+PROCESS ff779190  SessionId: 0  Cid: 04fc    Peb: 7ffdf000  ParentCid: 0394
+ DirBase: 098fd000  ObjectTable: e1646b30  TableSize:   8.
+    Image: MyApp.exe</code></pre>
+</li>
+<li>
+<p>Determine the <i>page frame number</i> of the directory base. This is simply the directory base without the three trailing hexadecimal zeros. In this example, the directory base is 0x098FD000, so the page frame number is 0x098FD.</p>
+</li>
+<li>Use the <a href="_vtop.htm"><b>!vtop</b></a> extension. The first parameter of this extension should be the page frame number. The second parameter of <b>!vtop</b> should be the virtual address in question:<pre class="syntax" xml:space="preserve"><code>kd&gt; !vtop 98fd 12f980
+Pdi 0 Pti 12f
+0012f980 09de9000 pfn(09de9)</code></pre>
+<p>The second number shown on the final line is the physical address of the beginning of the physical page.</p>
+</li>
+<li>
+<p>Add the byte index to the address of the beginning of the page: 0x09DE9000 + 0x980 = 0x09DE9980. This is the desired physical address.</p>
+</li>
+</ol>
+<p>You can verify that this computation was done correctly by displaying the memory at each address. The <a href="_db___dc___dd___dp___dq___du___dw.htm"><b>!d*</b></a> extension displays memory at a specified physical address:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !dc 9de9980
+# 9de9980 6d206e49 726f6d65 00120079 0012f9f4 In memory.......
+# 9de9990 0012f9f8 77e57119 77e8e618 ffffffff .....q.w...w....
+# 9de99a0 77e727e0 77f6f13e 77f747e0 ffffffff .'.w&gt;..w.G.w....
+# 9de99b0 .....</code></pre>
+<p>The <a href="d__da__db__dc__dd__dd__df__dp__dq__du__dw__dw__dyb__dyd__display_memor.htm"><b>d* (Display Memory)</b></a> command uses a virtual address as its argument:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; dc 12f980
+0012f980  6d206e49 726f6d65 00120079 0012f9f4  In memory.......
+0012f990  0012f9f8 77e57119 77e8e618 ffffffff  .....q.w...w....
+0012f9a0  77e727e0 77f6f13e 77f747e0 ffffffff  .'.w&gt;..w.G.w....
+0012f9b0  .....</code></pre>
+<p>Because the results are the same, this indicates that the physical address 0x09DE9980 does indeed correspond to the virtual address 0x0012F980. </p>
+<h3><a id="address_conversion_using__pte"></a><a id="ADDRESS_CONVERSION_USING__PTE"></a>Address Conversion Using !pte</h3>
+<p>Again, assume you are investigating the virtual address 0x0012F980 belonging to the MyApp.exe process. Here is the procedure you would use with the <b>!pte</b> extension to determine the corresponding physical address:</p>
+<p class="proch"><img src="../common/wedge.gif" alt=""/><b>Converting a virtual address to a physical address using !pte
+     </b></p>
+<ol>
+<li>
+<p>Make sure that you are working in hexadecimal. If necessary, set the current base with the <a href="n__set_number_base_.htm"><b>N 16</b></a> command.</p>
+</li>
+<li>
+<p>Determine the <i>byte index</i> of the address. This number is equal to the lowest 12 bits of the virtual address. Thus, the virtual address 0x0012F980 has a byte index of 0x980.</p>
+</li>
+<li>Set the <a href="changing_contexts.htm#process_context">process context</a> to the desired process:<pre class="syntax" xml:space="preserve"><code>kd&gt; !process 0 0
+**** NT ACTIVE PROCESS DUMP ****
+....
+PROCESS ff779190  SessionId: 0  Cid: 04fc    Peb: 7ffdf000  ParentCid: 0394
+    DirBase: 098fd000  ObjectTable: e1646b30  TableSize:   8.
+    Image: MyApp.exe
+
+kd&gt; .process /p ff779190
+Implicit process is now ff779190
+.cache forcedecodeuser done</code></pre>
+</li>
+<li>Use the <a href="_pte.htm"><b>!pte</b></a> extension with the virtual address as its argument. This displays information in two columns. The left column describes the page directory entry (PDE) for this address; the right column describes its page table entry (PTE):<pre class="syntax" xml:space="preserve"><code>kd&gt; !pte 12f980
+               VA 0012f980
+PDE at   C0300000        PTE at C00004BC
+contains 0BA58067      contains 09DE9067
+pfn ba58 ---DA--UWV    pfn 9de9 ---DA--UWV</code></pre>
+</li>
+<li>
+<p>Look in the last row of the right column. The notation "pfn 9de9" appears. The number 0x9DE9 is the <i>page frame number</i> (PFN) of this PTE. Multiply the page frame number by 0x1000 (for example, shift it left 12 bits). The result, 0x09DE9000, is the physical address of the beginning of the page.</p>
+</li>
+<li>
+<p>Add the byte index to the address of the beginning of the page: 0x09DE9000 + 0x980 = 0x09DE9980. This is the desired physical address.</p>
+</li>
+</ol>
+<p>This is the same result obtained by the earlier method.</p>
+<h3><a id="converting_addresses_by_hand"></a><a id="CONVERTING_ADDRESSES_BY_HAND"></a>Converting Addresses By Hand</h3>
+<p>Although the <b>!ptov</b> and <b>pte</b> extensions supply the fastest way to convert virtual addresses to physical addresses, this conversion can be done manually as well. A description of this process will shed light on some of the details of the virtual memory architecture.</p>
+<p>Memory structures vary in size, depending on the processor and the hardware configuration. This example is taken from an x86 system that does not have Physical Address Extension (PAE) enabled.</p>
+<p>Using  0x0012F980 again as the virtual address, you first need to convert it to binary, either by hand or by using the <a href="_formats__show_number_formats_.htm"><b>.formats (Show Number Formats)</b></a> command:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; .formats 12f980
+Evaluate expression:
+  Hex:     0012f980
+  Decimal: 1243520
+  Octal:   00004574600
+  Binary:  00000000 00010010 11111001 10000000
+  Chars:   ....
+  Time:    Thu Jan 15 01:25:20 1970
+  Float:   low 1.74254e-039 high 0
+  Double:  6.14381e-318</code></pre>
+<p>This virtual address is a combination of three fields. Bits 0 to 11 are the byte index. Bits 12 to 21 are the page table index. Bits 22 to 31 are the page directory index. Separating the fields, you have:</p>
+<pre class="syntax" xml:space="preserve"><code>0x0012F980  =  0y  00000000 00   010010 1111   1001 10000000</code></pre>
+<p>This exposes the three parts of the virtual address:</p>
+<ul>
+<li>
+<p>Page directory index = 0y0000000000 = 0x0</p>
+</li>
+<li>
+<p>Page table index = 0y0100101111 = 0x12F</p>
+</li>
+<li>
+<p>Byte index = 0y100110000000 = 0x980</p>
+</li>
+</ul>
+<p>You then need three additional pieces of information for your system.</p>
+<ul>
+<li>
+<p>The size of each PTE. This is 4 bytes on non-PAE x86 systems.</p>
+</li>
+<li>
+<p>The size of a page. This is 0x1000 bytes.</p>
+</li>
+<li>
+<p>The PTE_BASE virtual address. On a non-PAE system, this is 0xC0000000.</p>
+</li>
+</ul>
+<p>Using this data, you can compute the address of the PTE itself:</p>
+<pre class="syntax" xml:space="preserve"><code>PTE address   =   PTE_BASE  
+                + (page directory index) * PAGE_SIZE
+                + (page table index) * sizeof(MMPTE)
+              =   0xc0000000
+                + 0x0   * 0x1000
+                + 0x12F * 4
+              =   0xC00004BC</code></pre>
+<p>This is the address of the PTE. The PTE is a 32-bit DWORD. Examine its contents:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; dd 0xc00004bc L1
+c00004bc  09de9067</code></pre>
+<p>This PTE has value 0x09DE9067. It is made of two fields:</p>
+<ul>
+<li>
+<p>The low 12 bits of the PTE are the <i>status flags</i>. In this case, these flags equal 0x067 -- or in binary, 0y000001100111. For an explanation of the status flags, see the <a href="_pte.htm"><b>!pte</b></a> reference page.</p>
+</li>
+<li>
+<p>The high 20 bits of the PTE are equal to the <i>page frame number</i> (PFN) of the PTE. In this case, the PFN is 0x09DE9. </p>
+</li>
+</ul>
+<p>The first physical address on the physical page is the PFN multiplied by 0x1000 (shifted left 12 bits). The byte index is the offset on this page. Thus,the physical address you are looking for is 0x09DE9000 + 0x980 = 0x09DE9980. This is the same result obtained by the earlier methods.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Converting Virtual Addresses to Physical Addresses%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

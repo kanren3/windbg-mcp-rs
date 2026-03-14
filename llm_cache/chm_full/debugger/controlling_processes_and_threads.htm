@@ -1,0 +1,94 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Controlling Processes and Threads"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Controlling Processes and Threads</title>
+
+<meta name="MS-HAID" content="r07_use_operation_88ea27e9-b77a-4cd2-b161-2d10d098448a.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.controlling_processes_and_threads"></a>Controlling Processes and Threads</h1>
+</div>
+<h2><a id="ddk_controlling_processes_and_threads_dbg"></a><a id="DDK_CONTROLLING_PROCESSES_AND_THREADS_DBG"></a></h2>
+<p>When you are performing user-mode debugging, you activate, display, freeze, unfreeze, suspend, and unsuspend processes and threads.</p>
+<p>The <i>current</i> or <i>active</i> process is the process that is currently being debugged. Similarly, the <i>current</i> or <i>active</i> thread is the thread that the debugger is currently controlling. The actions of many debugger commands are determined by the identity of the current process and thread. The current process also determines the virtual address mappings that the debugger uses.</p>
+<p>When debugging begins, the current process is the one that the debugger is attached to or that caused the exception that broke into the debugger. Similarly, the current thread is the one that was active when the debugger attached to the process or that caused the exception. However, you can use the debugger to change the current process and thread and to freeze or unfreeze individual threads.</p>
+<p>In kernel-mode debugging, processes and threads are not controlled by the methods that are described in this section. For more information about how processes and threads are manipulated in kernel mode, see <a href="changing_contexts.htm">Changing Contexts</a>.</p>
+<h3><a id="displaying_processes_and_threads"></a><a id="DISPLAYING_PROCESSES_AND_THREADS"></a>Displaying Processes and Threads</h3>
+<p>To display process and thread information, you can use the following methods:</p>
+<ul>
+<li>
+<p>The <a href="___process_status_.htm"><b>| (Process Status)</b></a> command</p>
+</li>
+<li>
+<p>The <a href="___thread_status_.htm"><b>~ (Thread Status)</b></a> command</p>
+</li>
+<li>
+<p>(WinDbg only)  The <a href="processes_and_threads_window.htm">Processes and Threads window</a></p>
+</li>
+</ul>
+<h3><a id="setting_the_current_process_and_thread"></a><a id="SETTING_THE_CURRENT_PROCESS_AND_THREAD"></a>Setting the Current Process and Thread</h3>
+<p>To change the current process or thread, you can use the following methods:</p>
+<ul>
+<li>
+<p>The <a href="_s__set_current_process_.htm"><b>|s (Set Current Process)</b></a> command</p>
+</li>
+<li>
+<p>The <a href="_s__set_current_thread_.htm"><b>~s (Set Current Thread)</b></a> command</p>
+</li>
+<li>
+<p>(WinDbg only)  The <a href="processes_and_threads_window.htm">Processes and Threads window</a></p>
+</li>
+</ul>
+<h3><a id="freezing_and_suspending_threads"></a><a id="FREEZING_AND_SUSPENDING_THREADS"></a>Freezing and Suspending Threads</h3>
+<p>The debugger can change the execution of a thread by <i>suspending</i> the thread or by <i>freezing</i> the thread. These two actions have somewhat different effects.</p>
+<p>Each thread has a <i>suspend count</i> that is associated with it. If this count is one or larger, the system does not run the thread. If the count is zero or lower, the system runs the thread when appropriate.</p>
+<p>Typically, each thread has a suspend count of zero. When the debugger attaches to a process, it increments the suspend counts of all threads in that process by one. If the debugger detaches from the process, it decrements all suspend counts by one. When the debugger executes the process, it temporarily decrements all suspend counts by one.</p>
+<p>You can control the suspend count of any thread from the debugger by using the following methods:</p>
+<ul>
+<li>
+<p>The <a href="_n__suspend_thread_.htm"><b>~n (Suspend Thread)</b></a> command increments the specified thread's suspend count by one.</p>
+</li>
+<li>
+<p>The <a href="_m__resume_thread_.htm"><b>~m (Resume Thread)</b></a> command decrements the specified thread's suspend count by one.</p>
+</li>
+</ul>
+<p>The most common use for these commands is to raise a specific thread's suspend count from one to two. When the debugger executes or detaches from the process, the thread then has a suspend count of one and remains suspended, even if other threads in the process are executing.</p>
+<p>You can suspend threads even when you are performing <a href="noninvasive_debugging__user_mode_.htm">noninvasive debugging</a>.  </p>
+<p>The debugger can also <i>freeze </i>a thread. This action is similar to suspending the thread in some ways. However, "frozen" is only a debugger setting. Nothing in the Windows operating system recognizes that anything is different about this thread.</p>
+<p>By default, all threads are unfrozen. When the debugger causes a process to execute, threads that are frozen do not execute. However, if the debugger detaches from the process, all threads unfreeze.</p>
+<p>To freeze and unfreeze individual threads, you can use the following methods:</p>
+<ul>
+<li>
+<p>The <a href="_f__freeze_thread_.htm"><b>~f (Freeze Thread)</b></a> command freezes the specified thread.</p>
+</li>
+<li>
+<p>The <a href="_u__unfreeze_thread_.htm"><b>~u (Unfreeze Thread)</b></a> command unfreezes the specified thread.</p>
+</li>
+</ul>
+<p>In any event, threads that belong to the target process never execute when the debugger has broken into the target. The suspend count of a thread affects the thread's behavior only when the debugger executes the process or detaches. The frozen status affects the thread's behavior only when the debugger executes the process.</p>
+<h3><a id="threads_and_processes_in_other_commands"></a><a id="THREADS_AND_PROCESSES_IN_OTHER_COMMANDS"></a>Threads and Processes in Other Commands</h3>
+<p>You can add thread specifiers or process specifiers before many other commands. For more information, see the individual command topics.</p>
+<p>You can add the <a href="_e__thread_specific_command_.htm"><b>~e (Thread-Specific Command)</b></a> qualifier before many commands and extension commands. This qualifier causes the command to be executed with respect to the specified thread. This qualifier is especially useful if you want to apply a command to more than one thread. For example, the following command repeats the <a href="_gle.htm"><b>!gle</b></a> extension command for every thread that is being debugged.</p>
+<pre class="syntax" xml:space="preserve"><code>~*e !gle </code></pre>
+<h3><a id="multiple_systems"></a><a id="MULTIPLE_SYSTEMS"></a>Multiple Systems</h3>
+<p>The debugger can attach to multiple targets at the same time. When these processes include dump files or include live targets on more than one computer, the debugger references a system, process, and thread for each action. For more information about this kind of debugging, see <a href="debugging_multiple_targets.htm">Debugging Multiple Targets</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Controlling Processes and Threads%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

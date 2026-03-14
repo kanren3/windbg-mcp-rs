@@ -1,0 +1,135 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Debugger Command Program Examples"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Debugger Command Program Examples</title>
+
+<meta name="MS-HAID" content="r05_use_start_3ec65a26-7891-478c-aec7-85a67cdbb3a4.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.debugger_command_program_examples"></a>Debugger Command Program Examples</h1>
+</div>
+<h2><a id="ddk_debugger_command_program_examples_dbg"></a><a id="DDK_DEBUGGER_COMMAND_PROGRAM_EXAMPLES_DBG"></a></h2>
+<p>The following sections describe debugger command programs.</p>
+<h3><a id="using_the__foreach_token"></a><a id="USING_THE__FOREACH_TOKEN"></a>Using the .foreach Token</h3>
+<p>The following example uses the <a href="_foreach.htm"><b>.foreach</b></a> token to search for  WORD values of 5a4d. For each 5a4d value that is found, the debugger displays 8 DWORD values, starting at the address of where the 5a4d DWORD was found.</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; .foreach (place { s-[1]w 77000000 L?4000000 5a4d }) { dc place L8 } 
+</code></pre>
+<p>The following example uses the <a href="_foreach.htm"><b>.foreach</b></a> token to search for  WORD values of 5a4d. For each 5a4d value that is found, the debugger displays 8 DWORD values, starting 4 bytes prior to the address where the 5a4d DWORD was found.</p>
+<div class="code"><span codelanguage="VisualBasic"><table>
+<tr>
+<th>VB</th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; .foreach (place { s-[1]w 77000000 L?4000000 5a4d }) { dc place -0x4 L8 } 
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The following example displays the same values.</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; .foreach (place { s-[1]w 77000000 L?4000000 5a4d }) { dc ( place -0x4 ) L8 } 
+</code></pre>
+<div class="alert"><b>Note</b>  If you want to operate on the variable name in the <i>OutCommands</i> portion of the command, you must add a space after the variable name. For example, in the preceeding example, there is a space between the variable <i>place</i> and the subtraction operator.</div>
+<div> </div>
+<p>The <b>-[1]</b> option together with the <a href="s__search_memory_.htm"><b>s (Search Memory)</b></a> command causes its output to include only the addresses it finds, not the values that are found at those addresses.</p>
+<p>The following command displays verbose module information for all modules that are located in the memory range from 0x77000000 through 0x7F000000.</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; .foreach (place { lm1m }) { .if ((${place} &gt;= 0x77000000) &amp; (${place} &lt;= 0x7f000000)) { lmva place } } </code></pre>
+<p>The <b>1m</b> option together with the <a href="lm__list_loaded_modules_.htm"><b>lm (List Loaded Modules)</b></a> command causes its output to include only the addresses of the modules, not the full description of the modules.</p>
+<p>The preceding example uses the <a href="_______alias_interpreter_.htm"><b>${ }  (Alias Interpreter)</b></a> token to make sure aliases are replaced even if they are next to other text. If the command did not include this token, the opening parenthesis that is next to <b>place</b> prevents alias replacement. Note that the <b>${}</b> token works on the variables that are used in <b>.foreach</b> and on true aliases.</p>
+<h3><a id="walking_the_process_list"></a><a id="WALKING_THE_PROCESS_LIST"></a>Walking the Process List</h3>
+<p>The following example walks through the kernel-mode process list and displays the executable name for each entry in the list.</p>
+<p>This example should be stored as a text file and executed with the <a href="_______________________a___run_script_file_.htm"><b>$$&gt;&lt; (Run Script File)</b></a> command. This command loads the whole file, replaces all carriage returns with semicolons, and executes the resulting block. This command enables you to write readable programs by using multiple lines and indentation, instead of having to squeeze the whole program onto a single line.</p>
+<p>This example illustrates the following features:</p>
+<ul>
+<li>
+<p>The <b>$t0</b>, <b>$t1</b>, and <b>$t2</b> pseudo-registers are used as variables in this program. The program also uses aliases named <b>Procc</b> and <b>$ImageName</b>.</p>
+</li>
+<li>
+<p>This program uses the MASM expression evaluator. However, the <b>@@c++( )</b> token appears one time. This token causes the program to use the C++ expression evaluator to parse the expression within the parentheses. This usage enables the program to use the C++ structure tokens directly.</p>
+</li>
+<li>
+<p>The <b>?</b> flag is used with the <a href="r__registers_.htm"><b>r (Registers)</b></a> command. This flag assigns typed values to the pseudo-register <b>$t2</b>.   </p>
+</li>
+</ul>
+<pre class="syntax" xml:space="preserve"><code>$$  Get process list LIST_ENTRY in $t0.
+r $t0 = nt!PsActiveProcessHead
+
+$$  Iterate over all processes in list.
+.for (r $t1 = poi(@$t0);
+      (@$t1 != 0) &amp; (@$t1 != @$t0);
+      r $t1 = poi(@$t1))
+{
+    r? $t2 = #CONTAINING_RECORD(@$t1, nt!_EPROCESS, ActiveProcessLinks);
+    as /x Procc @$t2
+
+ $$  Get image name into $ImageName.
+ as /ma $ImageName @@c++(&amp;@$t2-&gt;ImageFileName[0])
+
+ .block
+    {
+        .echo ${$ImageName} at ${Procc}
+    }
+
+    ad $ImageName
+    ad Procc
+}</code></pre>
+<h3><a id="walking_the_ldr_data_table_entry_list"></a><a id="WALKING_THE_LDR_DATA_TABLE_ENTRY_LIST"></a>Walking the LDR_DATA_TABLE_ENTRY List</h3>
+<p>The following example walks through the user-mode LDR_DATA_TABLE_ENTRY list and displays the base address and full path of each list entry.</p>
+<p>Like the preceding example, this program should be saved in a file and executed with the <a href="_______________________a___run_script_file_.htm"><b>$$&gt;&lt; (Run Script File)</b></a> command.</p>
+<p>This example illustrates the following features:</p>
+<ul>
+<li>
+<p>This program uses the MASM expression evaluator. However, in two places, the <b>@@c++( )</b> token appears. This token causes the program to use the C++ expression evaluator to parse the expression within the parentheses. This usage enables the program to use C++ structure tokens directly.</p>
+</li>
+<li>
+<p>The <b>?</b> flag is used with the <a href="r__registers_.htm"><b>r (Registers)</b></a> command. This flag assigns typed values to the pseudo-registers <b>$t0</b> and <b>$t1</b>. In the body of the loop, <b>$t1</b> has the type <b>ntdll!_LDR_DATA_TABLE_ENTRY*</b>, so the program can make direct member references.</p>
+</li>
+<li>
+<p>The user-named aliases <b>$Base</b> and <b>$Mod</b> are used in this program. The dollar signs reduce the possibility that these aliases have been used previously in the current debugger session. The dollar signs are not necessary. The <a href="_______alias_interpreter_.htm"><b>${/v: }</b></a> token interprets the alias literally, preventing it from being replaced if it was defined before the script is run. You can also use this token together with any block to prevent alias definitions before the block from being used.</p>
+</li>
+<li>
+<p>The <a href="_block.htm"><b>.block</b></a> token is used to add an extra alias replacement step. Alias replacement occurs one time for the whole script when it is loaded and one time when each block is entered. Without the <b>.block</b> token and its braces, the <b>.echo</b> command does not receive the values of the <b>$Mod</b> and <b>$Base</b> aliases that are assigned in the previous lines.</p>
+</li>
+</ul>
+<pre class="syntax" xml:space="preserve"><code>$$ Get module list LIST_ENTRY in $t0.
+r? $t0 = &amp;@$peb-&gt;Ldr-&gt;InLoadOrderModuleList
+ 
+$$ Iterate over all modules in list.
+.for (r? $t1 = *(ntdll!_LDR_DATA_TABLE_ENTRY**)@$t0;
+ (@$t1 != 0) &amp; (@$t1 != @$t0);
+      r? $t1 = (ntdll!_LDR_DATA_TABLE_ENTRY*)@$t1-&gt;InLoadOrderLinks.Flink)
+{
+    $$ Get base address in $Base.
+ as /x ${/v:$Base} @@c++(@$t1-&gt;DllBase)
+ 
+ $$ Get full name into $Mod.
+ as /msu ${/v:$Mod} @@c++(&amp;@$t1-&gt;FullDllName)
+ 
+ .block
+    {
+        .echo ${$Mod} at ${$Base}
+    }
+ 
+    ad ${/v:$Base}
+    ad ${/v:$Mod}
+}</code></pre>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Debugger Command Program Examples%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

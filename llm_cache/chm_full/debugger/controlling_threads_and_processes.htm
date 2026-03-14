@@ -1,0 +1,97 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Controlling Threads and Processes"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Controlling Threads and Processes</title>
+
+<meta name="MS-HAID" content="Engine_DG_1442c778-acca-4b77-a596-6863ab5c8279.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.controlling_threads_and_processes"></a>Controlling Threads and Processes</h1>
+</div>
+<h2><a id="ddk_threads_and_processes_dbx"></a><a id="DDK_THREADS_AND_PROCESSES_DBX"></a></h2>
+<p>For an overview of threads and processes in the debugger engine, see <a href="threads_and_processes.htm">Threads and Processes</a>.</p>
+<p>When an event occurs, the event thread and event process are set to the thread and process (operating system or virtual) in which the event occurred.  They can be found using <a href="geteventthread.htm"><b>GetEventThread</b></a> and <a href="geteventprocess.htm"><b>GetEventProcess</b></a>, respectively.</p>
+<h3><a id="implicit_threads_and_processes"></a><a id="IMPLICIT_THREADS_AND_PROCESSES"></a>Implicit Threads and Processes</h3>
+<p>In kernel-mode debugging the debugger engine will use the <i>implicit process</i> to determine which virtual address space to use when performing virtual to physical address translation -- for example, in the methods <a href="virtualtophysical.htm"><b>VirtualToPhysical</b></a> and <a href="readvirtual.htm"><b>ReadVirtual</b></a>.  When an event occurs, the implicit process is set to the current process.</p>
+<p>The implicit process may be changed by using <a href="setimplicitprocessdataoffset.htm"><b>SetImplicitProcessDataOffset</b></a>.  To determine the implicit process use <a href="getimplicitprocessdataoffset.htm"><b>GetImplicitProcessDataOffset</b></a>.</p>
+<div class="alert"><b>Note</b>    When setting <a href="multiprocessor_syntax.htm#breakpoints">breakpoints</a> during a live kernel debugging session, the debugger engine will pass the virtual address of the breakpoint to the target, and the target will set the breakpoint.  In this case, only the process context of the target is used when handling the breakpoint; the value of the implicit process is irrelevant.</div>
+<div> </div>
+<p>In kernel-mode debugging, the debugger engine will use the <i>implicit thread</i> to determine some of the target's <a href="x86_architecture.htm#registers">registers</a>.  This includes the processor stack (see <a href="getstackoffset.htm"><b>GetStackOffset</b></a>), the frame offset (see <a href="getframeoffset.htm"><b>GetFrameOffset</b></a>), and the instruction offset (see <a href="getinstructionoffset.htm"><b>GetInstructionOffset</b></a>).  When an event occurs, the implicit thread is set to the current thread.</p>
+<p>The implicit thread may be changed by using <a href="setimplicitthreaddataoffset.htm"><b>SetImplicitThreadDataOffset</b></a>.  To determine the implicit thread, use <a href="getimplicitthreaddataoffset.htm"><b>GetImplicitThreadDataOffset</b></a>.</p>
+<p>Not all registers are determined by the implicit thread.  Some registers will remain the same when the implicit thread is changed.</p>
+<div class="alert"><b>Warning</b>    The implicit process and implicit thread are independent.  If the implicit thread does not belong to the implicit process, then user and session state for the implicit thread will be in the wrong virtual address space and attempts to access this information will cause errors or provide incorrect results.  This problem does not occur when accessing kernel memory, since kernel memory addresses are constant across all virtual address spaces.  Thus information for the implicit thread located in kernel memory may be accessed independent of the implicit process.</div>
+<div> </div>
+<h3><a id="threads"></a><a id="THREADS"></a>Threads</h3>
+<p>The <i>engine thread ID</i> is used by the debugger engine to identify each operating system thread and each virtual thread for a target.</p>
+<p>While a target is stopped, each thread also has an index relative to the process to which it belongs.  For any process, the index of the first thread in the process is zero, and the index of the last thread is the number of threads in the process minus one.  The number of threads in the current process can be found by using <a href="getnumberthreads.htm"><b>GetNumberThreads</b></a>.  The total number of threads in all processes in the current target can be found by using <a href="gettotalnumberthreads.htm"><b>GetTotalNumberThreads</b></a>. </p>
+<p>The engine thread ID and system thread ID for one or more threads in the current process can be found from their index by using <a href="getthreadidsbyindex.htm"><b>GetThreadIdsByIndex</b></a>.</p>
+<p>The engine maintains several pieces of information about each thread.  This information may be queried for the current thread, and may be used to find the engine thread ID for a thread.</p>
+<p></p>
+<dl>
+<dt><a id="system_thread_ID__user-mode_debugging_only_"></a><a id="system_thread_id__user-mode_debugging_only_"></a><a id="SYSTEM_THREAD_ID__USER-MODE_DEBUGGING_ONLY_"></a>system thread ID (user-mode debugging only)</dt>
+<dd>
+<p>The system thread ID of the current thread can be found by using <a href="getcurrentthreadsystemid.htm"><b>GetCurrentThreadSystemId</b></a>.  For a given system thread ID, the corresponding engine thread ID may be found by using <a href="getthreadidbysystemid.htm"><b>GetThreadIdBySystemId</b></a>.</p>
+</dd>
+<dt><a id="thread_environment_block__TEB_"></a><a id="thread_environment_block__teb_"></a><a id="THREAD_ENVIRONMENT_BLOCK__TEB_"></a>thread environment block (TEB)</dt>
+<dd>
+<p>The address of the TEB for the current thread can be found by using <a href="getcurrentthreadteb.htm"><b>GetCurrentThreadTeb</b></a>.  For a given TEB address, the corresponding engine thread ID may be found by using <a href="getthreadidbyteb.htm"><b>GetThreadIdByTeb</b></a>.  In kernel-mode debugging, the TEB of a (virtual) thread is the TEB of the system thread that was running on the corresponding processor when the last event occurred.</p>
+</dd>
+<dt><a id="data_offset"></a><a id="DATA_OFFSET"></a>data offset</dt>
+<dd>
+<p>In user-mode debugging, the data offset of a (system) thread is the location of the TEB for that thread.  In kernel-mode debugging the data offset of a (virtual) thread is the KTHREAD structure for the system thread that was running on the corresponding processor when the last event occurred.  The data offset of the current thread can be found by using <a href="getcurrentthreaddataoffset.htm"><b>GetCurrentThreadDataOffset</b></a>.  For a given data offset, the corresponding engine thread ID may be found by using <a href="getthreadidbydataoffset.htm"><b>GetThreadIdByDataOffset</b></a>.</p>
+</dd>
+<dt><a id="system_handle"></a><a id="SYSTEM_HANDLE"></a>system handle</dt>
+<dd>
+<p>The system handle of the current thread can be found by using <a href="getcurrentthreadhandle.htm"><b>GetCurrentThreadHandle</b></a>.  For a given system handle, the corresponding engine thread ID may be found by using <a href="getthreadidbyhandle.htm"><b>GetThreadIdByHandle</b></a>.  In kernel-mode debugging, an artificial handle is created for each (virtual) process.  This handle can only be used with debugger engine API queries.</p>
+</dd>
+</dl>
+<h3><a id="processes"></a><a id="PROCESSES"></a>Processes</h3>
+<p>The <i>engine process ID</i> is used by the debugger engine to identify each operating system process and each virtual process for a target.</p>
+<p>While a target is stopped, each process has an index relative to the target.  The index of the first process in the target is zero, and the index of the last process is the number of processes in the target minus one.  The number of processes in the current target can be found by using <a href="getnumberprocesses.htm"><b>GetNumberProcesses</b></a>.</p>
+<p>The engine process ID and system process ID for one or more threads in the current target can be found from their index by using <a href="getprocessidsbyindex.htm"><b>GetProcessIdsByIndex</b></a>.</p>
+<p>The engine maintains several pieces of information about each process.  This information may be queried for the current process, and may be used to find the engine process ID for a process.</p>
+<p></p>
+<dl>
+<dt><a id="system_process_ID__user-mode_debugging_only_"></a><a id="system_process_id__user-mode_debugging_only_"></a><a id="SYSTEM_PROCESS_ID__USER-MODE_DEBUGGING_ONLY_"></a>system process ID (user-mode debugging only)</dt>
+<dd>
+<p>The system process ID of the current process can be found by using <a href="getcurrentprocesssystemid.htm"><b>GetCurrentProcessSystemId</b></a>.  For a given system process ID, the corresponding engine process ID may be found by using <a href="getprocessidbysystemid.htm"><b>GetProcessIdBySystemId</b></a>.</p>
+</dd>
+<dt><a id="process_environment_block__PEB_"></a><a id="process_environment_block__peb_"></a><a id="PROCESS_ENVIRONMENT_BLOCK__PEB_"></a>process environment block (PEB)</dt>
+<dd>
+<p>The address of the PEB for the current process can be found by using <a href="getcurrentprocesspeb.htm"><b>GetCurrentProcessPeb</b></a>.  For a given PEB address, the corresponding engine process ID may be found by using <a href="getprocessidbypeb.htm"><b>GetProcessIdByPeb</b></a>.  In kernel-mode debugging, the PEB of the (virtual) process is the PEB of the system process that was running when the last event occurred.</p>
+</dd>
+<dt><a id="data_offset"></a><a id="DATA_OFFSET"></a>data offset</dt>
+<dd>
+<p>In user-mode debugging, the data offset of a (system) process is the location of the PEB of that process.  In kernel-mode debugging, the data offset of the (virtual) process is the KPROCESS structure for the system process that was running when the last event occurred.  The data offset of the current process can be found by using <a href="getcurrentprocessdataoffset.htm"><b>GetCurrentProcessDataOffset</b></a>.  For a given data offset, the corresponding engine process ID may be found by using <a href="getprocessidbydataoffset.htm"><b>GetProcessIdByDataOffset</b></a>.</p>
+</dd>
+<dt><a id="system_handle"></a><a id="SYSTEM_HANDLE"></a>system handle</dt>
+<dd>
+<p>The system handle of the current process can be found by using <a href="getcurrentprocesshandle2.htm"><b>GetCurrentProcessHandle</b></a>.  For a given system handle, the corresponding engine process ID may be found by using <a href="getprocessidbyhandle.htm"><b>GetProcessIdByHandle</b></a>.  In kernel-mode debugging, an artificial handle is created for the (virtual) process.  This handle can only be used with debugger engine queries.</p>
+</dd>
+</dl>
+<h3><a id="events"></a><a id="EVENTS"></a>Events</h3>
+<p>In live user-mode debugging, whenever a thread is created or exits in a target, the create-thread and exit-thread debugging events are generated.  These events result in calls to the <a href="idebugeventcallbacks_createthread.htm"><b>IDebugEventCallbacks::CreateThread</b></a> and <a href="idebugeventcallbacks_exitthread.htm"><b>IDebugEventCallbacks::ExitThread</b></a> callback methods.</p>
+<p>In live user-mode debugging, whenever a process is created or exits in a target, the create-process and exit-process debugging events are generated.  These events result in calls to the <a href="idebugeventcallbacks_createprocess.htm"><b>IDebugEventCallbacks::CreateProcess</b></a> and <a href="idebugeventcallbacks_exitprocess.htm"><b>IDebugEventCallbacks::ExitProcess</b></a> callback methods.</p>
+<p>For more information about events, see <a href="monitoring_events.htm">Monitoring Events</a>.</p>
+<h3><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about threads and processes, including the TEB, KTHREAD, PEB, and KPROCESS structures, see <i>Microsoft Windows Internals</i> by David Solomon and Mark Russinovich.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Controlling Threads and Processes%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

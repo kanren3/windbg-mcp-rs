@@ -1,0 +1,78 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Using PDBCopy"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Using PDBCopy</title>
+
+<meta name="MS-HAID" content="SymChk_eab26d8a-a0d8-4af5-b8c3-7f4f94c7e46e.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.using_pdbcopy"></a>Using PDBCopy</h1>
+</div>
+<p>PDBCopy is a command-line tool that creates a stripped symbol file from a full symbol file.  In other words, it takes a symbol file that contains both private symbol data and a public symbol table, and creates a copy of that file that contains only the public symbol table.  Depending on which PDBCopy options are used, the stripped symbol file contains either the entire public symbol table or a specified subset of the public symbol table.</p>
+<p>PDBCopy works with any PDB-format symbol file (with file name extension .pdb), but not with the older format (.dbg) symbol files.</p>
+<p>For a description of public symbol tables and private symbol data, see <a href="public_and_private_symbols.htm">Public and Private Symbols</a>.</p>
+<h3><a id="removing_private_symbols"></a><a id="REMOVING_PRIVATE_SYMBOLS"></a>Removing Private Symbols</h3>
+<p>If you wish to create a stripped symbol file that contains all the public symbols and none of the private symbols, use PDBCopy with three parameters:  the path and name of the original symbol file, the path and name of the new symbol file, and the -p option.</p>
+<p>For example, the following command creates a new file, named publicsymbols.pdb, which contains the same public symbol table as mysymbols.pdb but contains none of the private symbol data:</p>
+<p><b>pdbcopy mysymbols.pdb publicsymbols.pdb -p</b></p>
+<p>If mysymbols.pdb happens to already be a stripped symbol file, the symbolic content of the new file and the old file will be identical.</p>
+<p>After issuing this command, you should move the new file to a new location and rename it to the original name of the symbol file (in this example, mysymbols.pdb), because most debugging programs and symbol extraction programs look for symbols based on a specific file name.  Alternatively, you could use the same file name for the input file and the output file on the PDBCopy command line, as long as different directories are specified:</p>
+<p><b>pdbcopy c:\dir1\mysymbols.pdb c:\dir2\mysymbols.pdb -p</b></p>
+<div class="alert"><b>Note</b>  The destination file should not exist before PDBCopy is run.  If a file with this name exists, various errors may occur. </div>
+<div> </div>
+<p></p>
+<h3><a id="removing_private_symbols_and_selected_public_symbols"></a><a id="REMOVING_PRIVATE_SYMBOLS_AND_SELECTED_PUBLIC_SYMBOLS"></a>Removing Private Symbols and Selected Public Symbols</h3>
+<p>If you wish to not only remove the private symbol data, but also reduce the amount of information in the public symbol table, you can use the -f option to specify a list of public symbols that are to be removed.</p>
+<p>The following example illustrates this procedure: </p>
+<ol>
+<li>
+<p>Determine the full names, including decorations, of the symbols you wish to remove.  If you are not sure of the decorated symbol names, you can use the <a href="dbh.htm">DBH</a> tool to determine them.  See Determining the Decorations of a Specific Symbol for details.  In this example, let us suppose that the decorated names of the symbols you wish to remove are <b>_myGlobal1</b> and <b>_myGlobal2</b>.</p>
+</li>
+<li>Create a text file containing a list of the symbols to be removed.  Each line in this file should include the name of one symbol, including decorations, but not including module names.  In this example, the file would contain the following two lines:<pre class="syntax" xml:space="preserve"><code>_myGlobal1
+_myGlobal2 </code></pre>
+<p>The file can be given any name you choose.  Let us suppose that you name this file listfile.txt and place it in the directory C:\Temp.</p>
+</li>
+<li>Use the following PDBCopy command line:<pre class="syntax" xml:space="preserve"><code>pdbcopy OldPDB NewPDB-p -f:@TextFile </code></pre>
+<p>where <i>OldPDB</i> and <i>NewPDB</i> are the original symbol file and the new symbol file, and <i>TextFile</i> is the file created in step two.  The -f option indicates that certain public symbols are to be removed, and the ampersand ( @ ) indicates that these symbols are listed in the specified text file.</p>
+<p>In the current example, the command would look like this:</p>
+<pre class="syntax" xml:space="preserve"><code>pdbcopy c:\dir1\mysymbols.pdb c:\dir3\mysymbols.pdb -p -f:@c:\temp\listfile.txt </code></pre>
+<p>This creates a new symbol file, C:\dir2\mysymbols.pdb, which does not contain any private symbols and does not contain the two global variables you listed in listfile.txt. </p>
+</li>
+</ol>
+<p>As shown in this example, PDBCopy's -f option removes a specific list of public symbols.  The ampersand ( @ ) indicates that these symbols are listed in a text file.  An alternate method is to list all the symbols on the command line, using the -f option without an ampersand.  Thus the following command line is equivalent to the example in the procedure above:</p>
+<p><b>pdbcopy c:\dir1\mysymbols.pdb c:\dir3\mysymbols.pdb -p -f:_myGlobal1 -f:_myGlobal2 </b></p>
+<p>Unless you wish to remove only one or two symbols, it is simpler to use a text file than to list them on the command line.</p>
+<p>If you wish to remove the majority of public symbols from your .pdb file, the -F option is the easiest method.  While the -f option requires you to list those public symbols you wish to remove, the -F option requires you to list those public symbols you do not wish to remove.  All other public symbols (as well as all private symbols) will be removed.  The -F option supports the same two syntax options as the -f option:  either -F: followed by the name of a symbol to be retained, or -F:@ followed by the name of a text file that contains a list of the symbols to be retained. In either case, decorated symbol names must be used.</p>
+<p>For example, the following command removes all private symbols and almost all public symbols, leaving only the symbols <b>_myFunction5</b> and <b>_myGlobal7</b>:</p>
+<p><b>pdbcopy c:\dir1\mysymbols.pdb c:\dir3\mysymbols.pdb -p -F:_myFunction5 -F:_myGlobal7</b></p>
+<p>If you combine multiple instances of the -f option on one line, all the specified symbols are removed.  If you combine multiple instances of the -F option on one line, all the specified symbols are retained, and all other symbols are removed.  You cannot combine -f with -F.</p>
+<p>The -f and -F options cannot be used without the -p option, which removes all private symbol data.  Even if your original file contains no private symbols, you must still include the -p option (although it has no effect in this case).</p>
+<p>The -F option cannot be used to prevent the private symbol data from being removed. If you use this option with a symbol that is not included in the public symbol table, PDBCopy ignores it.</p>
+<h3><a id="the_mspdb__dll_file"></a><a id="THE_MSPDB__DLL_FILE"></a>The mspdb*.dll File</h3>
+<p>PDBCopy must access either the Mspdb80.dll file or the Mspdb60.dll file in order to run.    By default, PDBCopy uses Mspdb80.dll, which is the version used by Visual Studio .NET 2002 and later versions of Visual Studio.  If your symbols were built using Visual Studio 6.0 or an earlier version, you can specify the -vc6 command-line option so that PDBCopy uses Mspdb60.dll instead, although this is not required. PDBCopy looks for the appropriate file even if the -vc6 option is not used.  You can find these files within your installation of Visual Studio, the Platform SDK, or the Windows Driver Kit (WDK).</p>
+<p>Before running PDBCopy, make sure that the correct version of mspdb*.dll file is accessible to your computer, and make sure that its location is part of the command path.  If it is not, you should use the <b>path</b> command to add this location to the command path.</p>
+<h3><a id="the_file_signature_and_the_symsrv_index"></a><a id="THE_FILE_SIGNATURE_AND_THE_SYMSRV_INDEX"></a>The File Signature and the SymSrv Index</h3>
+<p>Each symbol file has a fixed signature that uniquely identifies it.  SymSrv uses the signature to generate a unique "index value" for the file. If two files have different contents or different creation times, they will also have distinct signatures and distinct SymSrv index values.</p>
+<p>Files created with PDBCopy are an exception to the rule of unique index values.  When PDBCopy creates a new symbol file, it has the same signature and SymSrv index value as the old file. This feature allows one file to be replaced with the other without altering the behavior of symbol-related tools.</p>
+<p>If you wish the new file to have a distinct signature and SymSrv index, use the -s option.  In most cases you will not wish to use this option, since the most common use of PDBCopy is to create an altered symbol file that can replace the old file without causing a mismatch. A new signature may cause SymSrv to assign a different index value to the new file than to the old file, preventing new file from properly replacing the old one.</p>
+<p>For the complete command line syntax, see <a href="pdbcopy_command_line_options.htm"><b>PDBCopy Command-Line Options</b></a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Using PDBCopy%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

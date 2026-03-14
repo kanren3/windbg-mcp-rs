@@ -1,0 +1,98 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The z command executes a command while a given condition is true."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>z (Execute While)</title>
+
+<meta name="MS-HAID" content="r18_cmds_S_db1fba63-62d1-4e3c-a76c-a8cd4e158ed8.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.z__execute_while_"></a>z (Execute While)</h1>
+</div>
+<p>The <b>z</b> command executes a command while a given condition is true.</p>
+<p>User-Mode</p>
+<pre class="syntax">Command <b>;</b> <b>z(</b> Expression <b>)</b> </pre>
+<p>Kernel-Mode</p>
+<pre class="syntax">Command <b>;</b> [Processor] <b>z(</b> Expression <b>)</b></pre>
+<h2><a id="ddk_cmd_execute_while_dbg"></a><a id="DDK_CMD_EXECUTE_WHILE_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Command______"></a><a id="_______command______"></a><a id="_______COMMAND______"></a>       <i>Command</i>      </dt>
+<dd>
+<p>Specifies the command to execute while the <i>Expression</i> condition evaluates to a nonzero value. This command is always executed at least once.</p>
+</dd>
+<dt><a id="_______Processor______"></a><a id="_______processor______"></a><a id="_______PROCESSOR______"></a>       <i>Processor</i>      </dt>
+<dd>
+<p>Specifies the processor that applies to the test. For more information about the syntax, see <a href="multiprocessor_syntax.htm">Multiprocessor Syntax</a>. You can specify processors only in kernel mode.</p>
+</dd>
+<dt><a id="_______Expression______"></a><a id="_______expression______"></a><a id="_______EXPRESSION______"></a>       <i>Expression</i>      </dt>
+<dd>
+<p>Specifies the condition to test. If this condition evaluates to a nonzero value, the <i>Command</i> command is executed again and then <i>Expression</i> is tested again. For more information about the syntax, see <a href="numerical_expression_syntax.htm">Numerical Expression Syntax</a>.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>In many debugger commands, the semicolon is used to separate unrelated commands. However, in the <b>z</b> command, a semicolon separates the "z" from the <i>Command</i> parameter.</p>
+<p>The <i>Command </i>command is always executed at least once, and then <i>Expression</i> is tested. If the condition is a nonzero value, the command is again executed, and then <i>Expression</i> is tested again. (This behavior is similar to a C-language <b>do - while</b> loop, not a simple <b>while</b> loop.)</p>
+<p>If there are several semicolons to the left of the "z", all commands to the left of the "z" repeat as long as the <i>Expression</i> condition is true. Such commands can be any debugger commands that permit a terminal semicolon.</p>
+<p>If you add another semicolon and additional commands after the <b>z</b> command, these additional commands are executed after the loop is complete. We do not typically recommend a line that begins with "z" because it generates uninteresting output forever unless the condition becomes false because of some other action. Note that you can nest <b>z</b> commands.</p>
+<p>To break a loop that is continuing for too long, use <a href="ctrl_c__break_.htm"><b>CTRL+C</b></a> in CDB or KD, or use <a href="debug___break.htm">Debug | Break</a> or CTRL+BREAK in WinDbg.</p>
+<p>The following code example shows an unnecessarily complex way to zero the <b>eax</b> register.</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; reax = eax - 1 ; z(eax)</code></pre>
+<p>The following example increments the <b>eax</b> and <b>ebx</b> registers until one of them is at least 8 and then it increments the <b>ecx</b> register once.</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; reax=eax+1; rebx=ebx+1; z((eax&lt;8)|(ebx&lt;8)); recx=ecx+1</code></pre>
+<p>The following example uses C++ expression syntax and uses the pseudo-register <b>$t0</b> as a loop variable.</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; .expr /s c++
+Current expression evaluator: C++ - C++ source expressions
+
+0:000&gt; db pindexcreate[@$t0].szKey; r$t0=@t0+1; z( @$t0 &lt; cIndexCreate )</code></pre>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="j__execute_if___else_.htm"><b>j (Execute If-Else)</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20z (Execute While)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

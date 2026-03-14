@@ -1,0 +1,84 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !wmitrace.start extension starts the Event Tracing for Windows (ETW) logger on the target computer."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!wmitrace.start</title>
+
+<meta name="MS-HAID" content="r34_exts_WMI_0866c5c0-45af-47e1-9582-e55c3b37503c.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._wmitrace_start"></a>!wmitrace.start</h1>
+</div>
+<p>The <b>!wmitrace.start</b> extension starts the Event Tracing for Windows (ETW) logger on the target computer. </p>
+<pre class="syntax"><b>!wmitrace.start </b><i>LoggerName</i><b> [-cir </b><i>Size</i><b> | -seq </b><i>Size</i><b>] [-f </b><i>File</i><b>] [-b </b><i>Size</i><b>] [-max </b><i>Num</i><b>] [-min </b><i>Num</i><b>] [-kd] [-ft </b><i>Time</i><b>]</b> 
+</pre>
+<h2><a id="ddk__wmitrace_strdump_dbg"></a><a id="DDK__WMITRACE_STRDUMP_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______LoggerName______"></a><a id="_______loggername______"></a><a id="_______LOGGERNAME______"></a>       <i>LoggerName</i>      </dt>
+<dd>
+<p>Supplies a name to be used for the trace session. <i>LoggerName</i> cannot contain spaces or quotation marks.  </p>
+</dd>
+<dt><a id="_______-cir_______Size______"></a><a id="_______-cir_______size______"></a><a id="_______-CIR_______SIZE______"></a>       <b>-cir       </b><i>Size</i>      </dt>
+<dd>
+<p>Causes the log file to be written in a circular manner.  <i>Size</i> specifies the maximum file size, in bytes.  When the file reaches this length, new data will be written to the file in a circular manner, overwriting the file from beginning to end.  This cannot be combined with the <b>-seq</b> parameter.  If neither <b>-cir</b> nor <b>-seq</b> is specified, the file is written in buffered mode. </p>
+</dd>
+<dt><a id="_______-seq_______Num______"></a><a id="_______-seq_______num______"></a><a id="_______-SEQ_______NUM______"></a>       <b>-seq       </b><i>Num</i>      </dt>
+<dd>
+<p>Causes the log file to be written in a sequential manner.  <i>Size</i> specifies the maximum file size, in bytes.  When the file reaches this length, the oldest data will be deleted from the beginning of the file whenever new data is appended to the end.  This cannot be combined with the <b>-cir</b> parameter.  If neither <b>-cir</b> nor <b>-seq</b> is specified, the file is written in buffered mode. </p>
+</dd>
+<dt><a id="_______-f_______File______"></a><a id="_______-f_______file______"></a><a id="_______-F_______FILE______"></a>       <b>-f       </b><i>File</i>      </dt>
+<dd>
+<p>Specifies the name of the log file to be created on the target computer. <i>File</i> must include an absolute directory path, and cannot contain spaces or quotation marks. </p>
+</dd>
+<dt><a id="_______-b_______Size______"></a><a id="_______-b_______size______"></a><a id="_______-B_______SIZE______"></a>       <b>-b       </b><i>Size</i>      </dt>
+<dd>
+<p>Specifies the size of each buffer, in kilobytes. The permissible range of <i>Size</i> is between 1 and 2048, inclusive. </p>
+</dd>
+<dt><a id="_______-max_______Num______"></a><a id="_______-max_______num______"></a><a id="_______-MAX_______NUM______"></a><b>       -max       </b><i>Num</i>      </dt>
+<dd>
+<p>Specifies the maximum number of buffers to use.  <i>Num</i> can be any positive integer. </p>
+</dd>
+<dt><a id="_______-min_______Num______"></a><a id="_______-min_______num______"></a><a id="_______-MIN_______NUM______"></a>       <b>-min       </b><i>Num</i>      </dt>
+<dd>
+<p>Specifies the minimum number of buffers to use.  <i>Num</i> can be any positive integer. </p>
+</dd>
+<dt><a id="_______-kd______"></a><a id="_______-KD______"></a>       <b>-kd</b>      </dt>
+<dd>
+<p>Enables KD filter mode. Messages will be sent to the kernel debugger and displayed on the screen. </p>
+</dd>
+<dt><a id="_______-ft_______Time______"></a><a id="_______-ft_______time______"></a><a id="_______-FT_______TIME______"></a>       <b>-ft       </b><i>Time</i>      </dt>
+<dd>
+<p>Specifies the duration of the flush timer, in seconds. Starting in Windows 8, you can specify the flush timer duration in milliseconds by appending <b>ms</b> to the <i>Time</i> value. For example, <b>-ft 100ms</b>.</p>
+<div class="alert"><b>Note</b>  If you start a tracing session in KD filter mode (<b>-kd</b>), trace buffers on the target computer are sent to the debugger on the host computer for display. This parameter specifies how often the buffers on the target computer are flushed and sent to the host computer.</div>
+<div> </div>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<p>This extension is exported by Wmitrace.dll. </p>
+<p>This extension is available in Windows 7 and later versions of Windows. </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more details on the parameters of this extension, see <a href="http://go.microsoft.com/fwlink/p/?linkid=139652">StartTrace Function</a> and <a href="http://go.microsoft.com/fwlink/p/?linkid=139653">EVENT_TRACE_PROPERTIES</a> on MSDN. For a conceptual overview of event tracing, see the Microsoft Windows SDK. For information about tracing tools, see the Windows Driver Kit (WDK).</p>
+<h2>Remarks</h2>
+<p>After using this extension, you must resume program execution (for example, by using the <a href="g__go_.htm"><b>g (Go)</b></a> command) in order for it to take effect.  After a brief time, the target computer automatically breaks into the debugger again. </p>
+<p>When the trace session is started, the system assigns it an ordinal number (the <i>logger ID</i>). The session can then be referred to either by the logger name or the logger ID. </p>
+<p>To stop the ETW logger, use <a href="_wmitrace_stop.htm"><b>!wmitrace.stop</b></a>. </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!wmitrace.start%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

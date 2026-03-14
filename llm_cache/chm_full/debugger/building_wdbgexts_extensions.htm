@@ -1,0 +1,128 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Building WdbgExts Extensions"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Building WdbgExts Extensions</title>
+
+<meta name="MS-HAID" content="WdbgExts_DG_89c8d580-9503-47e4-bc25-631069d8a7d4.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.building_wdbgexts_extensions"></a>Building WdbgExts Extensions</h1>
+</div>
+<h2><a id="ddk_building_wdbgexts_extensions_dbwx"></a><a id="DDK_BUILDING_WDBGEXTS_EXTENSIONS_DBWX"></a></h2>
+<p>All debugger extensions should be compiled and built with the Build utility.  The Build utility is included in the Windows Driver Kit (WDK) and in earlier versions of the Windows DDK.</p>
+<p>For more information on the Build utility, see the WDK documentation.</p>
+<p>Note the following points:</p>
+<ul>
+<li>
+<p>The WDK has several different build environment windows.  Each of these has a corresponding shortcut placed in the <b>Start</b> menu when the WDK is installed. To build a debugger extension, you must use the latest Windows build environment, regardless of what platform you will be running the extension on.</p>
+</li>
+<li>
+<p>The Build utility is usually not able to compile code that is located in a directory path that contains spaces. Your extension code should be located in a directory whose full path contains no spaces.  (In particular, this means that if you install Debugging Tools for Windows to the default location -- Program Files\Debugging Tools for Windows -- you will not be able to build the sample extensions.)</p>
+</li>
+</ul>
+<p class="proch"><img src="../common/wedge.gif" alt=""/><b>To build a debugger extension
+     </b></p>
+<ol>
+<li>
+<p>Open the window for the latest Windows build environment.  (You can choose either the "free" version or the "checked" version -- they will give identical results unless you have put <b>#ifdef DBG</b> statements in your code.)</p>
+</li>
+<li>Set the variable _NT_TARGET_VERSION to indicate the oldest version of Windows on which you want to run the extension.  _NT_TARGET_VERSION can be set to the following values.<table>
+<tr>
+<th>Value</th>
+<th>Versions of Windows</th>
+</tr>
+<tr>
+<td>
+<p>_NT_TARGET_VERSION_WIN2K</p>
+</td>
+<td>
+<p>Windows 2000 and later.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>_NT_TARGET_VERSION_WINXP</p>
+</td>
+<td>
+<p>Windows XP and later.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>_NT_TARGET_VERSION_WS03</p>
+</td>
+<td>
+<p>Windows Server 2003 and later.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>_NT_TARGET_VERSION_LONGHORN</p>
+</td>
+<td>
+<p>Windows Vista and later.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>If _NT_TARGET_VERSION is not set, the extension will only run on the version of Windows for which the build window was opened (and later versions).  For example, putting the following line in your Sources file will build an extension that will run on Windows XP and later versions of Windows:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>_NT_TARGET_VERSION = $(_NT_TARGET_VERSION_WINXP) </pre>
+</td>
+</tr>
+</table></span></div>
+</li>
+<li>3.Set the DBGSDK_INC_PATH and DBGSDK_LIB_PATH environment variables to specify the paths to the debugger SDK headers and the debugger SDK libraries, respectively.  If <i>%debuggers%</i> represents the root of your Debugging Tools for Windows installation, these variables should be set as follows:<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>set DBGSDK_INC_PATH=%debuggers%\sdk\inc
+set DBGSDK_LIB_PATH=%debuggers%\sdk\lib</pre>
+</td>
+</tr>
+</table></span></div>
+<p>If you have moved these headers and libraries to a different location, specify that location instead.</p>
+</li>
+<li>
+<p>4.Change the current directory to the directory that contains your extension's Dirs file or Sources file.</p>
+</li>
+<li>5.Run the Build utility:<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>build -cZMg</pre>
+</td>
+</tr>
+</table></span></div>
+</li>
+</ol>
+<p>For a full explanation of these steps, and for a description of how to create a Dirs file and a Sources file, see the Build utility documentation in the WDK. </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Building WdbgExts Extensions%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

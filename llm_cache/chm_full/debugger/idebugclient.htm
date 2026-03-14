@@ -1,0 +1,356 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="IDebugClient interface"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IDebugClient interface</title>
+
+<meta name="MS-HAID" content="IDebugClient_3f5f6372-0e7d-4050-b09a-b7776ff8bf7c.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.idebugclient"></a>IDebugClient interface</h1>
+</div>
+<h2>Members</h2>
+<p>The <b xmlns:loc="http://microsoft.com/wdcml/l10n">IDebugClient</b> interface inherits from the <b>IUnknown</b> interface. <b>IDebugClient</b> also has these types of members:</p>
+<ul>
+<li><a href="#methods">Methods</a></li>
+</ul>
+<h3><a id="methods"></a>Methods</h3>
+<p>The <b>IDebugClient</b> interface has these methods.</p>
+<table id="memberListMethods" class="members">
+<tr>
+<th align="left" width="37%">Method</th>
+<th align="left" width="63%">Description</th>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="addprocessoptions.htm"><b>AddProcessOptions</b></a></td>
+<td align="left" width="63%">
+<p>Adds the process options to those options that affect the current process.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="attachkernel.htm"><b>AttachKernel</b></a></td>
+<td align="left" width="63%">
+<p>Connects the debugger engine to a kernel target.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="attachprocess.htm"><b>AttachProcess</b></a></td>
+<td align="left" width="63%">
+<p>Connects the debugger engine to a user-mode process.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="connectprocessserver.htm"><b>ConnectProcessServer</b></a></td>
+<td align="left" width="63%">
+<p>Connects to a process server.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="connectsession.htm"><b>ConnectSession</b></a></td>
+<td align="left" width="63%">
+<p>Joins the client to an existing debugger session.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="createclient.htm"><b>CreateClient</b></a></td>
+<td align="left" width="63%">
+<p>Creates a new client object for the current thread.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="createprocess.htm"><b>CreateProcess</b></a></td>
+<td align="left" width="63%">
+<p>Creates a process from the specified command line.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="createprocessandattach.htm"><b>CreateProcessAndAttach</b></a></td>
+<td align="left" width="63%">
+<p> Create a process from a specified command line, then attaches to another user-mode process.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="detachprocesses.htm"><b>DetachProcesses</b></a></td>
+<td align="left" width="63%">
+<p>Detaches the debugger engine from all processes in all targets, resuming all their threads.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="disconnectprocessserver.htm"><b>DisconnectProcessServer</b></a></td>
+<td align="left" width="63%">
+<p>Disconnects the debugger engine from a process server.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="dispatchcallbacks.htm"><b>DispatchCallbacks</b></a></td>
+<td align="left" width="63%">
+<p>Enables the debugger engine to use the current thread for callbacks.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="endsession.htm"><b>EndSession</b></a></td>
+<td align="left" width="63%">
+<p>Ends the current debugger session.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="exitdispatch.htm"><b>ExitDispatch</b></a></td>
+<td align="left" width="63%">
+<p>Causes the <a href="dispatchcallbacks.htm"><b>DispatchCallbacks</b></a> method to return.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="flushcallbacks.htm"><b>FlushCallbacks</b></a></td>
+<td align="left" width="63%">
+<p> Forces any remaining buffered output to be delivered to the <a href="idebugoutputcallbacks.htm"><b>IDebugOutputCallbacks</b></a> object registered with this client.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="geteventcallbacks.htm"><b>GetEventCallbacks</b></a></td>
+<td align="left" width="63%">
+<p>Returns the event callbacks object registered with this client.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getexitcode.htm"><b>GetExitCode</b></a></td>
+<td align="left" width="63%">
+<p>Returns the exit code of the current process if that process has already run through to completion.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getidentity.htm"><b>GetIdentity</b></a></td>
+<td align="left" width="63%">
+<p>Returns a string describing the computer and user this client represents.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getinputcallbacks.htm"><b>GetInputCallbacks</b></a></td>
+<td align="left" width="63%">
+<p>Returns the input callbacks object registered with this client.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getkernelconnectionoptions.htm"><b>GetKernelConnectionOptions</b></a></td>
+<td align="left" width="63%">
+<p>Returns the connection options for the current kernel target.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getotheroutputmask.htm"><b>GetOtherOutputMask</b></a></td>
+<td align="left" width="63%">
+<p>Returns the output mask for another client.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getoutputcallbacks.htm"><b>GetOutputCallbacks</b></a></td>
+<td align="left" width="63%">
+<p>Returns the output callbacks object registered with the client.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><b>GetOutputLinePrefix</b></td>
+<td align="left" width="63%">
+<p></p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getoutputmask.htm"><b>GetOutputMask</b></a></td>
+<td align="left" width="63%">
+<p>Returns the output mask currently set for the client.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><b>GetOutputWidth</b></td>
+<td align="left" width="63%">
+<p></p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getprocessoptions.htm"><b>GetProcessOptions</b></a></td>
+<td align="left" width="63%">
+<p>Retrieves the process options affecting the current process.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getrunningprocessdescription.htm"><b>GetRunningProcessDescription</b></a></td>
+<td align="left" width="63%">
+<p>Returns a description of the process that includes the executable image name, the service names, the MTS package names, and the command line.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getrunningprocesssystemidbyexecutablename.htm"><b>GetRunningProcessSystemIdByExecutableName</b></a></td>
+<td align="left" width="63%">
+<p> Searches for a process with a given executable file name and return its process ID.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getrunningprocesssystemids.htm"><b>GetRunningProcessSystemIds</b></a></td>
+<td align="left" width="63%">
+<p> Returns the process IDs for each running process.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="opendumpfile.htm"><b>OpenDumpFile</b></a></td>
+<td align="left" width="63%">
+<p>Opens a dump file as a debugger target.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="outputidentity.htm"><b>OutputIdentity</b></a></td>
+<td align="left" width="63%">
+<p> Formats and outputs a string describing the computer and user this client represents.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="outputservers.htm"><b>OutputServers</b></a></td>
+<td align="left" width="63%">
+<p>Lists the servers running on a given computer.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="removeprocessoptions.htm"><b>RemoveProcessOptions</b></a></td>
+<td align="left" width="63%">
+<p>Removes process options from those options that affect the current process.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="seteventcallbacks.htm"><b>SetEventCallbacks</b></a></td>
+<td align="left" width="63%">
+<p>Registers an event callbacks object with this client.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="setinputcallbacks.htm"><b>SetInputCallbacks</b></a></td>
+<td align="left" width="63%">
+<p>Registers an input callbacks object with the client.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="setkernelconnectionoptions.htm"><b>SetKernelConnectionOptions</b></a></td>
+<td align="left" width="63%">
+<p>Updates some of the connection options for a live kernel target.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="setotheroutputmask.htm"><b>SetOtherOutputMask</b></a></td>
+<td align="left" width="63%">
+<p>Sets the output mask for another client.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="setoutputcallbacks.htm"><b>SetOutputCallbacks</b></a></td>
+<td align="left" width="63%">
+<p>Registers an output callbacks object with this client.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><b>SetOutputLinePrefix</b></td>
+<td align="left" width="63%">
+<p></p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="setoutputmask.htm"><b>SetOutputMask</b></a></td>
+<td align="left" width="63%">
+<p>Sets the output mask for the client.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><b>SetOutputWidth</b></td>
+<td align="left" width="63%">
+<p></p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="setprocessoptions.htm"><b>SetProcessOptions</b></a></td>
+<td align="left" width="63%">
+<p>Sets the process options affecting the current process.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="startprocessserver.htm"><b>StartProcessServer</b></a></td>
+<td align="left" width="63%">
+<p>Starts a process server.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="startserver.htm"><b>StartServer</b></a></td>
+<td align="left" width="63%">
+<p> Starts a debugging server.
+</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="terminateprocesses.htm"><b>TerminateProcesses</b></a></td>
+<td align="left" width="63%">
+<p>Attempts to terminate all processes in all targets.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="writedumpfile.htm"><b>WriteDumpFile</b></a></td>
+<td align="left" width="63%">
+<p>Creates a user-mode or kernel-mode crash dump file.
+</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Dbgeng.h (include Dbgeng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="idebugclient2.htm"><b>IDebugClient2</b></a></dt>
+<dt><a href="idebugclient3.htm"><b>IDebugClient3</b></a></dt>
+<dt><a href="idebugclient4.htm"><b>IDebugClient4</b></a></dt>
+<dt><a href="idebugclient5.htm"><b>IDebugClient5</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IDebugClient interface%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

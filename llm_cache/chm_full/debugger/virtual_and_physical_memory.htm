@@ -1,0 +1,48 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Virtual and Physical Memory"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Virtual and Physical Memory</title>
+
+<meta name="MS-HAID" content="Engine_DG_7ac20f3c-b460-47b3-8c33-d14d899cd5e7.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.virtual_and_physical_memory"></a>Virtual and Physical Memory</h1>
+</div>
+<h2><a id="ddk_virtual_and_physical_memory_dbx"></a><a id="DDK_VIRTUAL_AND_PHYSICAL_MEMORY_DBX"></a></h2>
+<p>The engine provides a number of methods for reading and writing the virtual and physical memory of a target.</p>
+<h3><a id="virtual_memory"></a><a id="VIRTUAL_MEMORY"></a>Virtual Memory</h3>
+<p>When specifying a location in the virtual memory of a target, the target's virtual address space is used.  In user-mode debugging, this is the virtual address space of the current process.  In kernel-mode debugging, this is the virtual address space of the implicit process.  See <a href="controlling_threads_and_processes.htm">Threads and Processes</a> for more information about the current and implicit process.</p>
+<p>The virtual memory (of the target) can be read by using <a href="readvirtual.htm"><b>ReadVirtual</b></a> and written using <a href="writevirtual.htm"><b>WriteVirtual</b></a>.</p>
+<p>Pointers in the target's memory can be read and written by using the convenience methods <a href="readpointersvirtual.htm"><b>ReadPointersVirtual</b></a> and <a href="writepointersvirtual.htm"><b>WritePointersVirtual</b></a>.  These methods will automatically convert between the 64-bit pointers used by the engine and the native pointers used by the target.  These methods are useful when requesting memory that contains pointers that will be used for subsequent requests -- for example, a pointer to a string.</p>
+<p>The <a href="searchvirtual.htm"><b>SearchVirtual</b></a> and <a href="searchvirtual2.htm"><b>SearchVirtual2</b></a> methods can be used to search the target's virtual memory for a pattern of bytes.</p>
+<p>The <a href="fillvirtual.htm"><b>FillVirtual</b></a> method can be used to copy a pattern of bytes, multiple times, to the target's virtual memory.</p>
+<p>The target's virtual memory can also be read and written in a way that bypasses the debugger engine's virtual memory cache using the methods <a href="readvirtualuncached.htm"><b>ReadVirtualUncached</b></a> and <a href="writevirtualuncached.htm"><b>WriteVirtualUncached</b></a>.  These uncached versions are useful for reading virtual memory that is inherently volatile, such as memory-mapped device areas, without contaminating or invalidating the cache.  Uncached memory access should only be used in situations when it is required, as the performance of uncached access can be significantly lower than cached access.</p>
+<p>The engine provides some convenience methods to read strings from the target's virtual memory.  To read a multibyte string from the target, use <a href="readmultibytestringvirtual.htm"><b>ReadMultiByteStringVirtual</b></a> and <a href="readmultibytestringvirtualwide.htm"><b>ReadMultiByteStringVirtualWide</b></a>.  To read a Unicode string from the target, use <a href="readunicodestringvirtual.htm"><b>ReadUnicodeStringVirtual</b></a> and <a href="readunicodestringvirtualwide.htm"><b>ReadUnicodeStringVirtualWide</b></a>.</p>
+<p>To find information about a memory location, use <a href="getoffsetinformation.htm"><b>GetOffsetInformation</b></a>. Not all of the virtual address space in the target contains valid memory.  To find valid memory within a region, use <a href="getvalidregionvirtual.htm"><b>GetValidRegionVirtual</b></a>.  When manually searching for valid memory in a target, the method <a href="getnextdifferentlyvalidoffsetvirtual.htm"><b>GetNextDifferentlyValidOffsetVirtual</b></a> will find the next location where the validity may change.</p>
+<h3><a id="physical_memory"></a><a id="PHYSICAL_MEMORY"></a>Physical Memory</h3>
+<p>The physical memory can only be directly accessed in kernel-mode debugging. </p>
+<p>Physical memory on the target can be read by using <a href="readphysical3.htm"><b>ReadPhysical</b></a> and <a href="readphysical2.htm"><b>ReadPhysical2</b></a>, and written by using <a href="writephysical.htm"><b>WritePhysical</b></a> and <a href="writephysical2.htm"><b>WritePhysical2</b></a>.</p>
+<p>The <a href="fillphysical.htm"><b>FillPhysical</b></a> method can be used to copy a pattern of bytes, multiple times, to the target's physical memory.</p>
+<p>An address in the target's virtual address space can be translated to a physical address on the target by using the <a href="virtualtophysical.htm"><b>VirtualToPhysical</b></a> method.  The system's paging structures used to translate a virtual address to a physical address can be found by using <a href="getvirtualtranslationphysicaloffsets.htm"><b>GetVirtualTranslationPhysicalOffsets</b></a>.</p>
+<h3><a id="events"></a><a id="EVENTS"></a>Events</h3>
+<p>When the virtual or physical memory of the target is changed, the <a href="idebugeventcallbacks_changedebuggeestate.htm"><b>IDebugEventCallbacks::ChangeDebuggeeState</b></a> callback method is called.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Virtual and Physical Memory%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

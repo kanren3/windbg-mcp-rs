@@ -1,0 +1,317 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !verifier extension displays the status of Driver Verifier and its actions."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!verifier</title>
+
+<meta name="MS-HAID" content="r30_exts_kernel_U_8ff8c17d-a570-426d-800e-ad90c9adf899.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._verifier"></a>!verifier</h1>
+</div>
+<p>The <b>!verifier</b> extension displays the status of Driver Verifier and its actions.</p>
+<p>Driver Verifier is included in Windows. It works on both checked and free builds. For information about Driver Verifier, see the <a href="http://go.microsoft.com/fwlink/p/?linkid=120480">Driver Verifier </a> topic in the Windows Driver Kit (WDK) documentation.</p>
+<p>Syntax</p>
+<pre class="syntax"><b>!verifier </b>[<i>Flags</i> [<i>Image</i>]] 
+<b>!verifier 4 </b>[<i>Quantity</i>] 
+<b>!verifier 8 </b>[<i>Quantity</i>]  
+<b>!verifier 0x40 </b>[<i>Quantity</i>] 
+<b>!verifier 0x80 </b>[<i>Quantity</i>]
+<b>!verifier 0x80 </b><i>Address</i>
+<b>!verifier 0x100 </b>[<i>Quantity</i>]
+<b>!verifier 0x100 </b><i>Address</i>
+<b>!verifier 0x200 </b>[<i>Address</i>]
+<b>!verifier 0x400 </b>[<i>Address</i>]
+<b>!verifier -disable</b>
+<b>!verifier ?</b></pre>
+<h2><a id="ddk__verifier_dbg"></a><a id="DDK__VERIFIER_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Flags______"></a><a id="_______flags______"></a><a id="_______FLAGS______"></a>       <i>Flags</i>      </dt>
+<dd>
+<p>Specifies what information is displayed in the output from this command. If <i>Flags</i> is equal to the value 4, 8, 0x20, 0x40, 0x80, or 0x100, then the remaining arguments to <b>!verifier</b> are interpreted based on the specific arguments associated with those values. If <i>Flags</i> is equal to any other value, even if one or more of these bits are set, only the <i>Flags</i> and <i>Image</i> arguments are permitted. <i>Flags</i> can be any sum of the following bits; the default is 0: </p>
+<p></p>
+<dl>
+<dt><a id="Bit_0__0x1_"></a><a id="bit_0__0x1_"></a><a id="BIT_0__0X1_"></a>Bit 0 (0x1)</dt>
+<dd>
+<p>Displays the names of all drivers being verified. The number of bytes currently allocated to each driver from the nonpaged pool and the paged pool is also displayed.</p>
+</dd>
+<dt><a id="Bit_1__0x2_"></a><a id="bit_1__0x2_"></a><a id="BIT_1__0X2_"></a>Bit 1 (0x2)</dt>
+<dd>
+<p>Displays information about pools (pool size, headers, and pool tags) and outstanding memory allocations left by unloaded drivers. This flag has no effect unless bit 0 (0x1) is also set.</p>
+</dd>
+<dt><a id="Bit_2__0x4_"></a><a id="bit_2__0x4_"></a><a id="BIT_2__0X4_"></a>Bit 2 (0x4)</dt>
+<dd>
+<p>(Windows XP and later)  Displays fault injection information. The return address, symbol name, and displacement of the code requesting each allocation are displayed. If <i>Flags</i> is exactly 0x4 and the <i>Quantity</i> parameter is included, the number of these records displayed can be chosen. Otherwise, four records are displayed.</p>
+</dd>
+<dt><a id="Bit_3__0x8_"></a><a id="bit_3__0x8_"></a><a id="BIT_3__0X8_"></a>Bit 3 (0x8)</dt>
+<dd>
+<p>(Windows XP and later)  Displays the most recent IRQL changes made by the drivers being verified. The old IRQL, new IRQL, processor, and time stamp are displayed. If <i>Flags</i> is exactly 0x8 and the <i>Quantity</i> parameter is included, the number of these records displayed can be chosen. Otherwise, four records are displayed.</p>
+<div class="alert"><b>Warning</b>  In 64-bit versions of Windows, some of the kernel functions that raise or lower the IRQL are implemented as inline code rather than as exported functions. Driver Verifier does not report IRQL changes made by inline code, so it is possible for the IRQL transition log produced by Driver Verifier to be incomplete. See Remarks for an example of a missing IRQL transition entry.</div>
+<div> </div>
+</dd>
+<dt><a id="Bit_6__0x40_"></a><a id="bit_6__0x40_"></a><a id="BIT_6__0X40_"></a>Bit 6 (0x40)</dt>
+<dd>
+<p>(Windows Vista and later)  Displays information from the <b>Force Pending I/O Requests</b> option of Driver Verifier, including traces from the log of forced pending IRPs.  </p>
+<p>The <i>Quantity</i> parameter specifies the number of traces to be displayed. By default, the entire log is displayed. </p>
+</dd>
+<dt><a id="Bit_7__0x80_"></a><a id="bit_7__0x80_"></a><a id="BIT_7__0X80_"></a>Bit 7 (0x80)</dt>
+<dd>
+<p>(Windows Vista and later)  Displays information from the kernel pool Allocate/Free log.</p>
+<p>The <i>Quantity</i> parameter specifies the number of traces to be displayed.  By default, the entire log is displayed.</p>
+<p>If <i>Address</i> is specified, only traces associated with the specified address within the kernel pool Allocate/Free log are displayed.</p>
+</dd>
+<dt><a id="Bit_8__0x100_"></a><a id="bit_8__0x100_"></a><a id="BIT_8__0X100_"></a>Bit 8 (0x100)</dt>
+<dd>
+<p>(Windows Vista and later)  Displays information from the log of IoAllocateIrp, IoCompleteRequest and IoCancelIrp calls. </p>
+<p>The Quantity parameter specifies the number of traces to be displayed. By default, the entire log is displayed.</p>
+<p>If <i>Address</i> is specified, only traces associated with the specified IRP address are displayed.</p>
+</dd>
+<dt><a id="Bit_9__0x200_"></a><a id="bit_9__0x200_"></a><a id="BIT_9__0X200_"></a>Bit 9 (0x200)</dt>
+<dd>
+<p>(Windows Vista and later)  Displays entries in the Critical Region log.</p>
+<p>If <i>Address</i> is specified, only entries associated with the specified thread address are displayed.</p>
+</dd>
+<dt><a id="Bit_10__0x400_"></a><a id="bit_10__0x400_"></a><a id="BIT_10__0X400_"></a>Bit 10 (0x400)</dt>
+<dd>
+<p>(Windows Vista and later)  Displays cancelled IRPs that are currently being watched by Driver Verifier.</p>
+<p>If <i>Address</i> is specified, only the IRP with the specified address is displayed.</p>
+</dd>
+<dt><a id="Bit_11__0x800_"></a><a id="bit_11__0x800_"></a><a id="BIT_11__0X800_"></a>Bit 11 (0x800)</dt>
+<dd>
+<p>(Windows 8.1 and later)  Display entries from the fault injection log that is created when you select the Systematic low resource simulation option.</p>
+</dd>
+</dl>
+</dd>
+<dt><a id="_______Image______"></a><a id="_______image______"></a><a id="_______IMAGE______"></a>       <i>Image</i>      </dt>
+<dd>
+<p>If <i>Flags</i> is used and is not equal to 4, 8, or 0x10, <i>Image</i> specifies the name of a driver. <i>Image</i> is used to filter the information displayed by <i>Flags</i> values of 0x1 and 0x2: only the specified driver is considered. This driver must be currently verified.</p>
+</dd>
+<dt><a id="_______Quantity______"></a><a id="_______quantity______"></a><a id="_______QUANTITY______"></a>       <i>Quantity</i>      </dt>
+<dd>
+<p>
+       (Windows XP and later)  If <i>Flags</i> is exactly equal to 0x4, <i>Quantity</i> specifies the number of fault injection records to display. If <i>Flags</i> is exactly equal to 0x8, <i>Quantity</i> specifies the number of IRQL log entries to display. If <i>Flags</i> is exactly equal to 0x40, <i>Quantity</i> specifies the number of traces displayed from the log of forced pending IRPs. If Flags is exactly equal to 0x80, Quantity specifies the number of traces displayed from the kernel pool Allocate/Free log. If Flags is exactly equal to 0x100, Quantity specifies the number of traces displayed from the log of IoAllocateIrp, IoCompleteRequest and IoCancelIrp calls. </p>
+</dd>
+<dt><a id="_______-disable______"></a><a id="_______-DISABLE______"></a>       <b>-disable</b>      </dt>
+<dd>
+<p>
+       (Windows XP and later) Clears the current Driver Verifier settings on the debug target.  The clearing of these settings does not persist through a reboot.  If you need to disable the Driver Verifier settings to successfully boot, set a breakpoint at nt!VerifierInitSystem and use the <b>!verifier -disable</b> command at that point.</p>
+</dd>
+<dt><a id="______________"></a>       <b>?</b>      </dt>
+<dd>
+<p>
+       (Windows XP and later)  Displays some brief Help text for this extension in the Debugger Command window.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<p>
+          Kdexts.dll
+         </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For information about  <a href="http://go.microsoft.com/fwlink/p/?linkid=120480">Driver Verifier </a>, see the Windows Driver Kit (WDK) documentation.</p>
+<p>For more information and downloads, see the <a href="http://go.microsoft.com/fwlink/p/?linkid=8753">Driver Verifier</a> on the Windows Hardware Developer Central (WHDC).</p>
+<h2>Remarks</h2>
+<p>The following example illustrates that on 64-bit versions of Windows, the IRQL transition log is not always complete. The two entries shown are consecutive entries in the log for Processor 2. The first entry shows the IRQL going from 2 to 0. The second  entry shows the IRQL going from 2 to 2. Information about how the IRQL got raised from 0 to 2 is missing.</p>
+<pre class="syntax" xml:space="preserve"><code>Thread:             fffffa80068c9400
+Old irql:           0000000000000002
+New irql:           0000000000000000
+Processor:          0000000000000002
+Time stamp:         0000000000000857
+
+    fffff8800140f12a ndis!ndisNsiGetInterfaceInformation+0x20a
+    fffff88001509478 NETIO!NsiGetParameterEx+0x178
+    fffff88005f062f2 nsiproxy!NsippGetParameter+0x24a
+    fffff88005f086db nsiproxy!NsippDispatchDeviceControl+0xa3
+    fffff88005f087a0 nsiproxy!NsippDispatch+0x48
+
+Thread:             fffffa80068c9400
+Old irql:           0000000000000002
+New irql:           0000000000000002
+Processor:          0000000000000002
+Time stamp:         0000000000000857
+
+    fffff8800140d48d ndis!ndisReferenceTopMiniportByNameForNsi+0x1ce
+    fffff8800140f072 ndis!ndisNsiGetInterfaceInformation+0x152
+    fffff88001509478 NETIO!NsiGetParameterEx+0x178
+    fffff88005f062f2 nsiproxy!NsippGetParameter+0x24a
+    fffff88005f086db nsiproxy!NsippDispatchDeviceControl+0xa3</code></pre>
+<p>When using Driver Verifier to test graphics drivers, use the <a href="_gdikdx_verifier.htm"><b>!gdikdx.verifier</b></a> extension instead of <b>!verifier</b>.</p>
+<p>The values of 4, 8, and 0x20, 0x40, 0x80, and 0x100 are special values for <i>Flags</i>. If these values are used, the special arguments listed in the <b>Parameters</b> section can be used, and the display will include only the information associated with that flag value.</p>
+<p>If any other value for <i>Flags</i> is used, even if one or more of these bits are set, only the <i>Flags</i> and <i>Image</i> arguments are permitted. In this situation, in addition to all the other information displayed, <b>!verifier</b> will display the Driver Verifier options that are active, along with statistics on pool allocations, IRQL raises, spin locks, and trims.</p>
+<p>If <i>Flags</i> equals 0x20, the values specified for <i>CompletionTime</i>, <i>CancelTime</i>, and <i>ForceCancellation</i> are used by the Driver Hang Verification option of Driver Verifier. These new values take effect immediately and last until the next boot. When you reboot, they revert to their default values.</p>
+<p>Also, if <i>Flags</i> equals 0x20 (with or without additional parameters), the Driver Hang Verification log is printed. For information on interpreting the log, see the Driver Hang Verification section of the Driver Verifier documentation in the Windows Driver Kit (WDK) documentation.</p>
+<p>Here is an example of the <b>!verifier</b> extension on a Windows 7 computer.</p>
+<pre class="syntax" xml:space="preserve"><code>2: kd&gt; !verifier 0xf
+
+Verify Level 9bb ... enabled options are:
+	Special pool
+	Special irql
+	All pool allocations checked on unload
+	Io subsystem checking enabled
+	Deadlock detection enabled
+	DMA checking enabled
+	Security checks enabled
+	Miscellaneous checks enabled
+
+Summary of All Verifier Statistics
+
+RaiseIrqls                             0x0
+AcquireSpinLocks                       0x362
+Synch Executions                       0x0
+Trims                                  0xa34a
+
+Pool Allocations Attempted             0x7b058
+Pool Allocations Succeeded             0x7b058
+Pool Allocations Succeeded SpecialPool 0x7b058
+Pool Allocations With NO TAG           0x0
+Pool Allocations Failed                0x0
+Resource Allocations Failed Deliberately   0x0
+
+Current paged pool allocations         0x1a for 00000950 bytes
+Peak paged pool allocations            0x1b for 00000AC4 bytes
+Current nonpaged pool allocations      0xe3 for 00046110 bytes
+Peak nonpaged pool allocations         0x10f for 00048E40 bytes
+
+Driver Verification List
+
+Entry     State           NonPagedPool   PagedPool   Module
+
+fffffa8003b6f670 Loaded           000000a0       00000854    videoprt.sys
+
+Current Pool Allocations  00000002    00000013
+Current Pool Bytes        000000a0    00000854
+Peak Pool Allocations     00000006    00000014
+Peak Pool Bytes           000008c0    000009c8
+
+PoolAddress  SizeInBytes    Tag       CallersAddress
+fffff9800157efc0     0x0000003c     Vprt      fffff88002c62963
+fffff9800146afc0     0x00000034     Vprt      fffff88002c62963
+fffff980015bafe0     0x00000018     Vprt      fffff88002c628f7
+...
+
+fffffa8003b6f620 Loaded           00046070       000000fc    usbport.sys
+
+Current Pool Allocations  000000e1    00000007
+Current Pool Bytes        00046070    000000fc
+Peak Pool Allocations     0000010d    0000000a
+Peak Pool Bytes           00048da0    00000254
+
+PoolAddress  SizeInBytes    Tag       CallersAddress
+fffff98003a38fc0     0x00000038     usbp      fffff88004215e34
+fffff98003a2cfc0     0x00000038     usbp      fffff88004215e34
+fffff9800415efc0     0x00000038     usbp      fffff88004215e34
+...
+
+----------------------------------------------- 
+Fault injection trace log                       
+----------------------------------------------- 
+
+Driver Verifier didn't inject any faults.
+
+----------------------------------------------- 
+Track irql trace log                            
+----------------------------------------------- 
+
+Displaying most recent 0x0000000000000004 entries from the IRQL transition log.
+There are up to 0x100 entries in the log.
+
+Thread:             fffff80002bf8c40
+Old irql:           0000000000000002
+New irql:           0000000000000002
+Processor:          0000000000000000
+Time stamp:         000000000000495e
+
+    fffff8800420f2ca USBPORT!USBPORT_DM_IoTimerDpc+0x9a
+    fffff80002a5b5bf nt!IopTimerDispatch+0x132
+    fffff80002a7c29e nt!KiProcessTimerDpcTable+0x66
+    fffff80002a7bdd6 nt!KiProcessExpiredTimerList+0xc6
+    fffff80002a7c4be nt!KiTimerExpiration+0x1be
+
+Thread:             fffff80002bf8c40
+Old irql:           0000000000000002
+New irql:           0000000000000002
+Processor:          0000000000000000
+Time stamp:         000000000000495e
+
+    fffff88004205f3a USBPORT!USBPORT_AcquireEpListLock+0x2e
+    fffff880042172df USBPORT!USBPORT_Core_TimeoutAllTransfers+0x1f
+    fffff8800420f2ca USBPORT!USBPORT_DM_IoTimerDpc+0x9a
+    fffff80002a5b5bf nt!IopTimerDispatch+0x132
+    fffff80002a7c29e nt!KiProcessTimerDpcTable+0x66
+
+Thread:             fffff80002bf8c40
+Old irql:           0000000000000002
+New irql:           0000000000000002
+Processor:          0000000000000000
+Time stamp:         000000000000495e
+
+    fffff88004201694 USBPORT!MPf_CheckController+0x4c
+    fffff8800420f26a USBPORT!USBPORT_DM_IoTimerDpc+0x3a
+    fffff80002a5b5bf nt!IopTimerDispatch+0x132
+    fffff80002a7c29e nt!KiProcessTimerDpcTable+0x66
+    fffff80002a7bdd6 nt!KiProcessExpiredTimerList+0xc6
+
+Thread:             fffff80002bf8c40
+Old irql:           0000000000000002
+New irql:           0000000000000002
+Processor:          0000000000000000
+Time stamp:         000000000000495e
+
+    fffff8800420167c USBPORT!MPf_CheckController+0x34
+    fffff8800420f26a USBPORT!USBPORT_DM_IoTimerDpc+0x3a
+    fffff80002a5b5bf nt!IopTimerDispatch+0x132
+    fffff80002a7c29e nt!KiProcessTimerDpcTable+0x66
+    fffff80002a7bdd6 nt!KiProcessExpiredTimerList+0xc6
+</code></pre>
+<p>Here is an example of the <b>!verifier</b> extension on a Windows Vista computer with bit 7 turned on and <i>Address</i> specified.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !verifier 80 a2b1cf20
+Parsing 00004000 array entries, searching for address a2b1cf20.
+=======================================
+Pool block a2b1ce98, Size 00000168, Thread a2b1ce98
+808f1be6 ndis!ndisFreeToNPagedPool+0x39
+808f11c1 ndis!ndisPplFree+0x47
+808f100f ndis!NdisFreeNetBufferList+0x3b
+8088db41 NETIO!NetioFreeNetBufferAndNetBufferList+0xe
+8c588d68 tcpip!UdpEndSendMessages+0xdf
+8c588cb5 tcpip!UdpSendMessagesDatagramsComplete+0x22
+8088d622 NETIO!NetioDereferenceNetBufferListChain+0xcf
+8c5954ea tcpip!FlSendNetBufferListChainComplete+0x1c
+809b2370 ndis!ndisMSendCompleteNetBufferListsInternal+0x67
+808f1781 ndis!NdisFSendNetBufferListsComplete+0x1a
+8c04c68e pacer!PcFilterSendNetBufferListsComplete+0xb2
+809b230c ndis!NdisMSendNetBufferListsComplete+0x70
+8ac4a8ba test1!HandleCompletedTxPacket+0xea
+=======================================
+Pool block a2b1ce98, Size 00000164, Thread a2b1ce98
+822af87f nt!VerifierExAllocatePoolWithTagPriority+0x5d
+808f1c88 ndis!ndisAllocateFromNPagedPool+0x1d
+808f11f3 ndis!ndisPplAllocate+0x60
+808f1257 ndis!NdisAllocateNetBufferList+0x26
+80890933 NETIO!NetioAllocateAndReferenceNetBufferListNetBufferMdlAndData+0x14
+8c5889c2 tcpip!UdpSendMessages+0x503
+8c05c565 afd!AfdTLSendMessages+0x27
+8c07a087 afd!AfdTLFastDgramSend+0x7d
+8c079f82 afd!AfdFastDatagramSend+0x5ae
+8c06f3ea afd!AfdFastIoDeviceControl+0x3c1
+8217474f nt!IopXxxControlFile+0x268
+821797a1 nt!NtDeviceIoControlFile+0x2a
+8204d16a nt!KiFastCallEntry+0x127</code></pre>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!verifier%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

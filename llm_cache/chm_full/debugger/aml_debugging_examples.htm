@@ -1,0 +1,158 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="AML Debugging Examples"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>AML Debugging Examples</title>
+
+<meta name="MS-HAID" content="t11_rpc_acpi_6e1c6b23-391c-426f-a024-3235c5548783.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.aml_debugging_examples"></a>AML Debugging Examples</h1>
+</div>
+<h2><a id="ddk_aml_debugging_examples_dbg"></a><a id="DDK_AML_DEBUGGING_EXAMPLES_DBG"></a></h2>
+<p>Here are examples that illustrate how to get started with AML debugging.</p>
+<h3><a id="investigating_a_frozen_computer"></a><a id="INVESTIGATING_A_FROZEN_COMPUTER"></a>Investigating a Frozen Computer</h3>
+<p>If the target computer has frozen and you suspect it may be an ACPI problem, begin by using the <a href="_amli_lc.htm"><b>!amli lc</b></a> extension to display all the active contexts:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !amli lc
+*Ctxt=ffffffff8128d000, ThID=ffffffff81277880, Flgs=----R----, pbOp=ffffffff8124206c, Obj=\_SB.PCI0.ISA0.FDC0._CRS</code></pre>
+<p>If no contexts are displayed, the error is probably not ACPI-related.</p>
+<p>If there are contexts shown, look for the one marked with an asterisk. This is the <i>current context</i> (the one that is being executed by the interpreter at the present moment).</p>
+<p>In this example, the target computer is running Windows XP or Windows Server 2003 on a 32-bit processor. Therefore all addresses are cast to 64 bits, producing a gratuitous FFFFFFFF in the high 32 bits. The abbreviation <b>pbOp</b> indicates the instruction pointer ("pointer to binary op codes"). The <b>Obj</b> field gives the full path and name of the method as it appears in the ACPI tables. For a description of the flags, see <a href="_amli_lc.htm"><b>!amli lc</b></a>.</p>
+<p></p>
+<p>You can use the <a href="_amli_u.htm"><b>!amli u</b></a> command to disassemble the _CRS method as follows:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !amli u \_SB.PCI0.ISA0.FDC0._CRS
+
+ffffffff80e4a535 : CreateDWordFieldCRES, 0x76, RAMT)
+ffffffff80e4a540 : CreateDWordField(CRES, 0x82, PCIT)
+ffffffff80e4a54b : Add(MLEN(), 0x100000, RAMT)
+ffffffff80e4a559 : Subtract(0xffe00000, RAMT, PCIT)
+ffffffff80e4a567 : Return(CRES)</code></pre>
+<h3><a id="breaking_into_the_amli_debugger"></a><a id="BREAKING_INTO_THE_AMLI_DEBUGGER"></a>Breaking Into the AMLI Debugger</h3>
+<p>The <a href="_amli_debugger.htm"><b>!amli debugger</b></a> command causes the AML interpreter to break into the AMLI Debugger the next time any AML code is executed.</p>
+<p>After the AMLI Debugger prompt appears, you can use any of the AMLI Debugger commands. You can also use <b>!amli</b> extension commands without prefixing them with "!amli":</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !amli debugger
+kd&gt; g
+
+AMLI(? for help)-&gt; find _crs
+\_SB.LNKA._CRS
+\_SB.LNKB._CRS
+\_SB.LNKC._CRS
+\_SB.LNKD._CRS
+\_SB.PCI0._CRS
+\_SB.PCI0.LPC.NCP._CRS
+\_SB.PCI0.LPC.PIC._CRS
+\_SB.PCI0.LPC.TIME._CRS
+\_SB.PCI0.LPC.IDMA._CRS
+\_SB.PCI0.LPC.RTC._CRS
+\_SB.PCI0.LPC.SPKR._CRS
+\_SB.PCI0.LPC.FHUB._CRS
+\_SB.PCI0.SBD1._CRS
+\_SB.PCI0.SBD2._CRS
+\_SB.MBRD._CRS
+
+AMLI(? for help)-&gt; u \_SB.PCI0._CRS
+
+ffffffff80e4a535 : CreateDWordFieldCRES, 0x76, RAMT)
+ffffffff80e4a540 : CreateDWordField(CRES, 0x82, PCIT)
+ffffffff80e4a54b : Add(MLEN(), 0x100000, RAMT)
+ffffffff80e4a559 : Subtract(0xffe00000, RAMT, PCIT)
+ffffffff80e4a567 : Return(CRES)</code></pre>
+<h3><a id="using_breakpoints"></a><a id="USING_BREAKPOINTS"></a>Using Breakpoints</h3>
+<p>In the following example, you will break into the AMLI Debugger before the method _BST is executed.</p>
+<p>Even if you have located a _BST object, you should verify that it is indeed a method. You can use the <a href="_amli_dns.htm"><b>!amli dns</b></a> extension to do this.</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !amli dns /s \_sb.pci0.isa.bat1._bst
+
+ACPI Name Space: \_SB.PCI0.ISA.BAT1._BST (c29c2044)
+Method(_BST:Flags=0x0,CodeBuff=c29c20a5,Len=103)</code></pre>
+<p>Now you can use the <a href="_amli_bp.htm"><b>!amli bp</b></a> command to place the breakpoint:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !amli bp \_sb.pci0.isa.bat1._bst</code></pre>
+<p>You may also want to place breakpoints within the method. You could use the <a href="_amli_u.htm"><b>!amli u</b></a> command to disassemble _BST and then place a breakpoint on one of its steps:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !amli u _sb.pci0.isa.bat1._bst
+
+ffffffffc29c20a5: Acquire(\_SB_.PCI0.ISA_.EC0_.MUT1, 0xffff)
+ffffffffc29c20c0: Store("CMBatt - _BST.BAT1", Debug)
+ffffffffc29c20d7: \_SB_.PCI0.ISA_.EC0_.CPOL()
+ffffffffc29c20ee: Release(\_SB_.PCI0.ISA_.EC0_.MUT1)
+ffffffffc29c2107: Return(PBST)
+
+kd&gt; !amli bp c29c20ee</code></pre>
+<h3><a id="responding_to_a_triggered_breakpoint"></a><a id="RESPONDING_TO_A_TRIGGERED_BREAKPOINT"></a>Responding to a Triggered Breakpoint</h3>
+<p>In the following example, the method _WAK is running and then encounters a breakpoint:</p>
+<pre class="syntax" xml:space="preserve"><code>Running \_WAK method
+Hit Breakpoint 0.</code></pre>
+<p>Use the <a href="_amli_ln.htm"><b>!amli ln</b></a> extension to see the nearest method to the current program counter. The following  example is taken from a Windows 2000 system, so the addresses are shown in 32-bit form:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !amli ln
+c29accf5: \_WAK</code></pre>
+<p>The <a href="_amli_lc.htm"><b>!amli lc</b></a> extension displays all the active contexts:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !amli lc
+ Ctxt=c18b6000, ThID=00000000, Flgs=A-QC-W----, pbOp=c29bf8fe, Obj=\_SB.PCI0.ISA.EC0._Q09
+*Ctxt=c18b4000, ThID=c15a6618, Flgs=----R-----, pbOp=c29accf5, Obj=\_WAK</code></pre>
+<p>This shows that the active contexts are associated with the methods _Q09 and _WAK. The current context is _WAK. </p>
+<p>Now you can use the <a href="_amli_r.htm"><b>!amli r</b></a> command to display more details about the current context. From this you can see useful thread and stack information, as well as arguments passed to _WAK and the local data objects. </p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !amli r
+Context=c18b4000*, Queue=00000000, ResList=00000000
+ThreadID=c15a6618, Flags=00000010
+StackTop=c18b5eec, UsedStackSize=276 bytes, FreeStackSize=7636 bytes
+LocalHeap=c18b40c0, CurrentHeap=c18b40c0, UsedHeapSize=88 bytes
+Object=\_WAK, Scope=\_WAK, ObjectOwner=c18b4108, SyncLevel=0
+AsyncCallBack=ff06b5d0, CallBackData=0, CallBackContext=c99efddc
+
+MethodObject=\_WAK
+c18b40e4: Arg0=Integer(:Value=0x00000001[1])
+c18b5f3c: Local0=Unknown()
+c18b5f54: Local1=Unknown()
+c18b5f6c: Local2=Unknown()
+c18b5f84: Local3=Unknown()
+c18b5f9c: Local4=Unknown()
+c18b5fb4: Local5=Unknown()
+c18b5fcc: Local6=Unknown()
+c18b5fe4: Local7=Unknown()
+c18b4040: RetObj=Unknown()</code></pre>
+<h3><a id="tracing__stepping__and_running_aml_code"></a><a id="TRACING__STEPPING__AND_RUNNING_AML_CODE"></a>Tracing, Stepping, and Running AML Code</h3>
+<p>If you want to trace through the code, you can turn on full tracing information by using the <a href="_amli_set.htm"><b>!amli set</b></a> extension as follows:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !amli set spewon verboseon traceon</code></pre>
+<p>Now you can step through the AML code, watching the code execute line by line. The <b>p</b> command steps over any function calls. The <b>t</b> command will step into function calls.</p>
+<pre class="syntax" xml:space="preserve"><code>AMLI(? for help)-&gt; p
+
+c29bfcb7: Store(\_SB_.PCI0.ISA_.ACAD.CHAC(SEL0=0x10e1)
+c29c17b1: {
+c29c17b1: | Store(LGreater(And(Arg0=0x10e1,0xf0,)=0xe0,0x80)=0xffffffff,Local0)=0xffffffff
+
+AMLI(? for help)-&gt; p
+
+c29c17bb: | If(LNot(LEqual(Local0=0xffffffff,ACP_=0xffffffff)=0xffffffff)=0x0)
+c29c17ce: | {
+c29c17ce: | | Return(Zero)
+c29c17d0: | }
+c29c17d0: },Local1)=0x0
+
+AMLI(? for help)-&gt; t
+
+c29bfcd4: Store(\_SB_.PCI0.ISA_.BAT1.CHBP(SEL0=0x10e1)
+c29c293d: {
+c29c293d: | Store("CMBatt - CHBP.BAT1",Debug)String(:Str="CMBatt - CHBP.BAT1")="CMBatt - CHBP.BAT1"</code></pre>
+<p>You may also run methods from within the AMLI Debugger if you choose. For example, you might evaluate the status of the LNKA device by running its control method _STA:</p>
+<pre class="syntax" xml:space="preserve"><code>AMLI(? for help)-&gt; run \_sb.lnka._sta
+PCI OpRegion Access on region c29b2268 device c29b2120
+
+\_SB.LNKA._STA completed successfully with object data:
+Integer(:Value=0x0000000b[11])</code></pre>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20AML Debugging Examples%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,82 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The ReadField and ReadFieldStr macros read a field whose size is less than 8 bytes from a structure initialized with InitTypeRead or InitTypeReadPhysical."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>ReadField</title>
+
+<meta name="MS-HAID" content="WdbgExts_Ref_0343858a-65d2-4c15-a1ff-7053d62b0fb9.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.readfield"></a>ReadField</h1>
+</div>
+<p>The <b>ReadField</b> and <b>ReadFieldStr</b> macros read a field whose size is less than 8 bytes from a structure initialized with <a href="inittyperead.htm"><b>InitTypeRead</b></a> or <a href="inittypereadphysical.htm"><b>InitTypeReadPhysical</b></a>. </p>
+<pre class="syntax" xml:space="preserve"><code>#define ReadField(Field) \
+    GetShortField(0, #Field, 0)
+
+#define ReadFieldStr(FieldStr) \
+    GetShortField(0, FieldStr, 0)</code></pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<dl>
+<dd>Field<dl>
+<dd>Specifies the name of the field.  The C-preprocessor will turn <i>Field</i> into a string.</dd>
+</dl>
+</dd>
+<dd>FieldStr<dl>
+<dd>Specifies the name of the field.  <i>FieldStr</i> is expected to be an ASCII string. </dd>
+</dl>
+</dd>
+</dl>
+<h2><a id="ddk_getdebuggerdata_dbwx"></a><a id="DDK_GETDEBUGGERDATA_DBWX"></a></h2>
+<h3><a id="Return_Value"></a><a id="return_value"></a><a id="RETURN_VALUE"></a>Return Value</h3>
+<p>If this macro succeeds, it returns the value of the specified field in the previously initialized structure. The structure is the one initialized in a previous call to <a href="inittyperead.htm"><b>InitTypeRead</b></a>, <b>InitTypeStrRead</b>, <a href="inittypereadphysical.htm"><b>InitTypeReadPhysical</b></a>, <b>InitTypeStrReadPhysical</b>, or <a href="getshortfield.htm"><b>GetShortField</b></a>.  The field is the one specified by the <i>Field</i> or <i>FieldStr</i> parameter of <b>ReadField</b>.  The return value is cast to ULONG64.  If the function fails, it returns the value zero. </p>
+<h2>Remarks</h2>
+<p>The parameter <i>Field</i> is the name of the member.  For <b>ReadField</b>, the C pre-processor will turn the parameter into a string.  For <b>ReadFieldStr</b>, <i>Field</i> is expected to already be an ASCII string.  For example, the following two commands are identical and read the same member from a previously initialized structure:</p>
+<p>
+<ul>
+<li>ReadField( myField );</li>
+<li>ReadFieldStr( "myField" );</li>
+</ul>
+</p>
+<p>Submembers can be read by using a period-separated path, for example, "myField.mySubfield".</p>
+<div class="alert"><b>Note</b>    Because these macros use the <a href="getshortfield.htm"><b>GetShortField</b></a> function, they must be called from the same source code file as the macros that initialize the structure for reading.  For more details, see <b>GetShortField</b>.</div>
+<div> </div>
+<p>If you are writing a WdbgExts extension, include <b>wdbgexts.h</b>. If you are writing a DbgEng extension that calls this function, include <b>wdbgexts.h</b> before <b>dbgeng.h</b> (see <a href="writing_dbgeng_extension_code.htm">Writing DbgEng Extension Code</a> for details).
+</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Wdbgexts.h (include Wdbgexts.h, Wdbgexts.h, or Dbgeng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="inittyperead.htm"><b>InitTypeRead</b></a></dt>
+<dt><a href="inittypereadphysical.htm"><b>InitTypeReadPhysical</b></a></dt>
+<dt><a href="getshortfield.htm"><b>GetShortField</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20ReadField%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

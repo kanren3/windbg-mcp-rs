@@ -1,0 +1,270 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Creating Your Own Provider Module"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Creating Your Own Provider Module</title>
+
+<meta name="MS-HAID" content="SymChk_e3c8ede7-4e43-4f37-87bb-136cefd26814.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.creating_your_own_provider_module"></a>Creating Your Own Provider Module</h1>
+</div>
+<p>In general, to create your own provider module, you must implement the following set of interfaces. </p>
+<p></p>
+<dl>
+<dt><a id="_module__SimpleUsage__"></a><a id="_module__simpleusage__"></a><a id="_MODULE__SIMPLEUSAGE__"></a><b>$module::SimpleUsage()</b></dt>
+<dd>
+<p></p>
+<dl>
+<dt><a id="Purpose"></a><a id="purpose"></a><a id="PURPOSE"></a><b>Purpose</b></dt>
+<dd>
+<p>Displays simple module usage information to STDOUT.</p>
+</dd>
+</dl>
+<p></p>
+<dl>
+<dt><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a><b>Parameters</b></dt>
+<dd>
+<p>None</p>
+</dd>
+</dl>
+<p></p>
+<dl>
+<dt><a id="Return_Value"></a><a id="return_value"></a><a id="RETURN_VALUE"></a><b>Return Value</b></dt>
+<dd>
+<p>None</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p></p>
+<dl>
+<dt><a id="_module__VerboseUsage__"></a><a id="_module__verboseusage__"></a><a id="_MODULE__VERBOSEUSAGE__"></a><b>$module::VerboseUsage()</b></dt>
+<dd>
+<p></p>
+<dl>
+<dt><a id="Purpose"></a><a id="purpose"></a><a id="PURPOSE"></a><b>Purpose</b></dt>
+<dd>
+<p>Displays in-depth module usage information to STDOUT.</p>
+</dd>
+</dl>
+<p></p>
+<dl>
+<dt><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a><b>Parameters</b></dt>
+<dd>
+<p>None</p>
+</dd>
+</dl>
+<p></p>
+<dl>
+<dt><a id="Return_Value"></a><a id="return_value"></a><a id="RETURN_VALUE"></a><b>Return Value</b></dt>
+<dd>
+<p>None</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p></p>
+<dl>
+<dt><a id="_objref____module__new__CommandArguments_"></a><a id="_objref____module__new__commandarguments_"></a><a id="_OBJREF____MODULE__NEW__COMMANDARGUMENTS_"></a><b>$objref = $module::new(</b><i>@CommandArguments</i><b>)</b></dt>
+<dd>
+<p></p>
+<dl>
+<dt><a id="Purpose"></a><a id="purpose"></a><a id="PURPOSE"></a><b>Purpose</b></dt>
+<dd>
+<p>Initializes an instance of the provider module.</p>
+</dd>
+</dl>
+<p></p>
+<dl>
+<dt><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a><b>Parameters</b></dt>
+<dd>
+<p></p>
+<dl>
+<dt><a id="_CommandArguments"></a><a id="_commandarguments"></a><a id="_COMMANDARGUMENTS"></a><i>@CommandArguments</i></dt>
+<dd>
+<p>All @ARGV arguments that are not recognized by ssindex.cmd as being general arguments.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p></p>
+<dl>
+<dt><a id="Return_Value"></a><a id="return_value"></a><a id="RETURN_VALUE"></a><b>Return Value</b></dt>
+<dd>
+<p>A reference that can be used in later operations.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p></p>
+<dl>
+<dt><a id="_objref-_GatherFileInformation__SourcePath__ServerHashReference_"></a><a id="_objref-_gatherfileinformation__sourcepath__serverhashreference_"></a><a id="_OBJREF-_GATHERFILEINFORMATION__SOURCEPATH__SERVERHASHREFERENCE_"></a><b>$objref-&gt;GatherFileInformation(</b><i>$SourcePath</i><b>,</b><i>$ServerHashReference</i><b>)</b></dt>
+<dd>
+<p></p>
+<dl>
+<dt><a id="Purpose"></a><a id="purpose"></a><a id="PURPOSE"></a><b>Purpose</b></dt>
+<dd>
+<p>Enables the module to gather the required source-indexing information for the directory specified by the <i>$SourcePath</i> parameter.  The module should not assume that this entry is called only once for each object instancebecause SSIndex may call it multiple times for different paths.</p>
+</dd>
+</dl>
+<p></p>
+<dl>
+<dt><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a><b>Parameters</b></dt>
+<dd>
+<p></p>
+<dl>
+<dt><a id="_SourcePath"></a><a id="_sourcepath"></a><a id="_SOURCEPATH"></a><i>$SourcePath</i></dt>
+<dd>
+<p>The local directory containing the source to be indexed.</p>
+</dd>
+</dl>
+<p></p>
+<dl>
+<dt><a id="_ServerHashReference"></a><a id="_serverhashreference"></a><a id="_SERVERHASHREFERENCE"></a><i>$ServerHashReference</i></dt>
+<dd>
+<p>A reference to a hash containing all of the entries from the specified Srcsrv.ini file.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p></p>
+<dl>
+<dt><a id="Return_Value"></a><a id="return_value"></a><a id="RETURN_VALUE"></a><b>Return Value</b></dt>
+<dd>
+<p>None</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p></p>
+<dl>
+<dt><a id="__VariableHashReference__FileEntry_____objref-_GetFileInfo__LocalFile_"></a><a id="__variablehashreference__fileentry_____objref-_getfileinfo__localfile_"></a><a id="__VARIABLEHASHREFERENCE__FILEENTRY_____OBJREF-_GETFILEINFO__LOCALFILE_"></a><b>(</b><i>$VariableHashReference</i><b>,</b><i>$FileEntry</i><b>) = $objref</b>-&gt;<b>GetFileInfo(</b><i>$LocalFile</i><b>)</b></dt>
+<dd>
+<p></p>
+<dl>
+<dt><a id="Purpose"></a><a id="purpose"></a><a id="PURPOSE"></a><b>Purpose</b></dt>
+<dd>
+<p>Provides the necessary information to extract a single, specific file from the source control system.</p>
+</dd>
+</dl>
+<p></p>
+<dl>
+<dt><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a><b>Parameters</b></dt>
+<dd>
+<p></p>
+<dl>
+<dt><a id="_LocalFile"></a><a id="_localfile"></a><a id="_LOCALFILE"></a><i>$LocalFile</i></dt>
+<dd>
+<p>A fully qualified file name.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p></p>
+<dl>
+<dt><a id="Return_Values"></a><a id="return_values"></a><a id="RETURN_VALUES"></a><b>Return Values</b></dt>
+<dd>
+<p></p>
+<dl>
+<dt><a id="_VariableHashReference"></a><a id="_variablehashreference"></a><a id="_VARIABLEHASHREFERENCE"></a><i>$VariableHashReference</i></dt>
+<dd>
+<p>A hash reference of the variables necessary to interpret the returned <i>$FileEntry</i>.  Ssindex.cmd caches these variables for every source file used by a single debug file to reduce the amount of information written to the source index stream.</p>
+</dd>
+</dl>
+<p></p>
+<dl>
+<dt><a id="_FileEntry"></a><a id="_fileentry"></a><a id="_FILEENTRY"></a><i>$FileEntry</i></dt>
+<dd>
+<p>The file entry to be written to the source index stream to allow SrcSrv to extract this file from source control.  The exact format of this line is specific to the source control system.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+<p></p>
+<dl>
+<dt><a id="_TextString___objref-_LongName__"></a><a id="_textstring___objref-_longname__"></a><a id="_TEXTSTRING___OBJREF-_LONGNAME__"></a><i>$TextString</i><b>= $objref-&gt;LongName()</b></dt>
+<dd>
+<p></p>
+<dl>
+<dt><a id="Purpose"></a><a id="purpose"></a><a id="PURPOSE"></a><b>Purpose</b></dt>
+<dd>
+<p>Provides a descriptive string to identify the source control system to the end user.</p>
+</dd>
+</dl>
+<p></p>
+<dl>
+<dt><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a><b>Parameters</b></dt>
+<dd>
+<p>None</p>
+</dd>
+</dl>
+<p></p>
+<dl>
+<dt><a id="Return_Value"></a><a id="return_value"></a><a id="RETURN_VALUE"></a><b>Return Value</b></dt>
+<dd>
+<p></p>
+<dl>
+<dt><a id="_TextString"></a><a id="_textstring"></a><a id="_TEXTSTRING"></a><i>$TextString</i></dt>
+<dd>
+<p>The descriptive name of the source control system.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+<p></p>
+<dl>
+<dt><a id="_StreamVariableLines__objref-_SourceStreamVariables__"></a><a id="_streamvariablelines__objref-_sourcestreamvariables__"></a><a id="_STREAMVARIABLELINES__OBJREF-_SOURCESTREAMVARIABLES__"></a><b>@StreamVariableLines=$objref-&gt;SourceStreamVariables()</b></dt>
+<dd>
+<p></p>
+<dl>
+<dt><a id="Purpose"></a><a id="purpose"></a><a id="PURPOSE"></a><b>Purpose</b></dt>
+<dd>
+<p>Enables the source control system to add source-control-specific variables to the source stream for each debug file.  The sample modules use this method for writing the required EXTRACT_CMD and EXTRACT_TARGET variables.</p>
+</dd>
+</dl>
+<p></p>
+<dl>
+<dt><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a><b>Parameters</b></dt>
+<dd>
+<p>None</p>
+</dd>
+</dl>
+<p></p>
+<dl>
+<dt><a id="Return_Value"></a><a id="return_value"></a><a id="RETURN_VALUE"></a><b>Return Value</b></dt>
+<dd>
+<p></p>
+<dl>
+<dt><a id="_StreamVariableLines"></a><a id="_streamvariablelines"></a><a id="_STREAMVARIABLELINES"></a><i>@StreamVariableLines</i></dt>
+<dd>
+<p>The list of entries for the source stream variables.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Creating Your Own Provider Module%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

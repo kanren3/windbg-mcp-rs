@@ -1,0 +1,112 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Changing Contexts"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Changing Contexts</title>
+
+<meta name="MS-HAID" content="r07_use_operation_bdab0129-28de-4392-a221-53a08bcc468e.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.changing_contexts"></a>Changing Contexts</h1>
+</div>
+<h2><a id="ddk_changing_contexts_dbg"></a><a id="DDK_CHANGING_CONTEXTS_DBG"></a></h2>
+<p>In kernel-mode debugging, there are many processes, threads, and sometimes user sessions that are executing at the same time. Therfore, phrases such as "virtual address 0x80002000" or "the <b>eax</b> register" are ambiguous. You must specify the <i>context</i> in which such phrases can be understood.</p>
+<p>The debugger has five different contexts that you can set while you are debugging:</p>
+<ol>
+<li>
+<p>The session context indicates the default user session. (This context applies to only Microsoft Windows XP and later versions of Windows. These operating systems allow multiple logon sessions to coexist.)</p>
+</li>
+<li>
+<p>The process context determines how the debugger interprets virtual addresses.</p>
+</li>
+<li>
+<p>The <i>user-mode address context</i> is almost never set directly. This context is automatically set when you change the process context.</p>
+</li>
+<li>
+<p>The register context determines how the debugger interprets registers and also controls the results of a stack trace. This context is also known as the <i>thread context</i>, although that term is not completely accurate. An <i>explicit context</i> is also a type of register context. If you specify an explicit context, that context is used instead of the current register context.</p>
+</li>
+<li>
+<p>The local context determines how the debugger interprets local variables. This context is also known as the <i>scope</i>.</p>
+</li>
+</ol>
+<h3><a id="session_context"></a><a id="SESSION_CONTEXT"></a>Session Context</h3>
+<p>In Windows XP and later versions of Windows, multiple logon sessions can run at the same time. Each logon session has its own processes.</p>
+<p>The <a href="_session.htm"><b>!session</b></a> extension displays all logon sessions or changes the current session context.</p>
+<p>The session context is used by the <a href="_sprocess.htm"><b>!sprocess</b></a> and <b>!spoolused</b> extensions when the session number is entered as "-2". </p>
+<p>When the session context is changed, the process context is automatically changed to the active process for that session.</p>
+<h3><a id="process_context"></a><a id="PROCESS_CONTEXT"></a>Process Context</h3>
+<p>Each process has its own page directory that records how virtual addresses are mapped to physical addresses. When any thread within a process is executing, the Windows operating system uses this page directory to interpret virtual addresses.</p>
+<p>During user-mode debugging, the current process determines the process context. Virtual addresses that are used in debugger commands, extensions, and debugging information windows are interpreted by using the page directory of the current process.</p>
+<p>During kernel-mode debugging, you can set the process context by using the <a href="_process__set_process_context_.htm"><b>.process (Set Process Context)</b></a> command. Use this command to select which process's page directory is used to interpret virtual addresses. After you set the process context, you can use this context in any command that takes addresses. You can even set breakpoints at this address. By including a <b>/i</b> option in the <b>.process</b> command to specify invasive debugging, you can also use the kernel debugger to set breakpoints in user space. </p>
+<p>You can also set user-mode breakpoints from the kernel debugger by using a process-specific breakpoint on a kernel-space function. Set strategic breakpoints and wait for the appropriate context to come up.</p>
+<p>The <i>user-mode address context</i> is part of the process context. Typically, you do not have to set the user-mode address context directly. If you set the process context, the user-mode address context automatically changes to the directory base of the relevant page table for the process. However, on an Itanium-based processor, a single process might have more than one page directory. In this situation, you can use the <a href="_context__set_user_mode_address_context_.htm"><b>.context (Set User-Mode Address Context)</b></a> command to change the user-mode address context.</p>
+<p>When you set the process context during kernel-mode debugging, that process context is retained until another <b>.process</b> command changes the context. The user-mode address context is also retained until a <b>.process</b> or <b>.context</b> command changes it. These contexts are not changed when the target computer executes, and they are not affected by changes to the register context or the local context.</p>
+<h3><a id="register_context"></a><a id="REGISTER_CONTEXT"></a>Register Context</h3>
+<p>Each thread has its own register values. These values are stored in the CPU registers when the thread is executing and are stored in memory when another thread is executing.</p>
+<p>During user-mode debugging, the current thread typically determines the register context. Any reference to registers in debugger commands, extensions, and debugging information windows is interpreted according to the current thread's registers.</p>
+<p>You can change the register context to a value <u>other</u> than the current thread while you are performing user-mode debugging by using one of the following commands:</p>
+<dl>
+<dd>
+<p><a href="_cxr__display_context_record_.htm"><b>.cxr (Display Context Record)</b></a></p>
+</dd>
+<dd>
+<p><a href="_ecxr__display_exception_context_record_.htm"><b>.ecxr (Display Exception Context Record)</b></a></p>
+</dd>
+</dl>
+<p>During kernel-mode debugging, you can control the register context by using a variety of debugger commands, including the following commands:</p>
+<dl>
+<dd>
+<p><a href="_thread__set_register_context_.htm"><b>.thread (Set Register Context)</b></a></p>
+</dd>
+<dd>
+<p><a href="_cxr__display_context_record_.htm"><b>.cxr (Display Context Record)</b></a></p>
+</dd>
+<dd>
+<p><a href="_trap__display_trap_frame_.htm"><b>.trap (Display Trap Frame)</b></a></p>
+</dd>
+</dl>
+<p>These commands do not change the values of the CPU registers. Instead, the debugger retrieves the specified register context from its location in memory. Actually, the debugger can retrieve only the <i>saved</i> register values. (Other values are set dynamically and are not saved. The saved values are sufficient to re-create a stack trace. </p>
+<p>After the register context is set, the new register context is used for any commands that use register values, such as <a href="k__kb__kc__kd__kp__kp__kv__display_stack_backtrace_.htm"><b>k (Display Stack Backtrace)</b></a> and <a href="r__registers_.htm"><b>r (Registers)</b></a>. </p>
+<p>However, when you are debugging multiprocessor computers, some commands enable you to specify a processor. (For more information about such commands, see <a href="multiprocessor_syntax.htm">Multiprocessor Syntax</a>.) If you specify a processor for a command, the command uses the register context of the active thread on the specified processor instead of the current register context, even if the specified processor is the currently-active processor. </p>
+<p>Also, if the register context does not match the current processor mode setting, these commands produce incorrect or meaningless output. To avoid the output errors, commands that depend on the register state fail until you change the processor mode to match the register context. To change the processor mode, use the <a href="_effmach__effective_machine_.htm"><b>.effmach (Effective Machine)</b></a> command,  </p>
+<p>Changing the register context can also change the local context. In this manner, the register context can affect the display of local variables.</p>
+<p>If any application execution, stepping, or tracing occurs, the register context is immediately reset to match the program counter's position. In user mode, the register context is also reset if the current process or thread is changed. </p>
+<p>The register context affects stack traces, because the stack trace begins at the location that the stack pointer register (<b>esp</b> on an x86-based processor or <b>sp</b> on an Itanium-based processor) points to. If the register context is set to an invalid or inaccessible value, stack traces cannot be obtained.</p>
+<p>You can apply a processor breakpoint (data breakpoint) to a specific register context by using the <a href="_apply_dbp__apply_data_breakpoint_to_context_.htm"><b>.apply_dbp (Apply Data Breakpoint to Context)</b></a> command.</p>
+<h3><a id="local_context"></a><a id="LOCAL_CONTEXT"></a>Local Context</h3>
+<p>When a program is executing, the meaning of local variables depends on the location of the program counter, because the scope of such variables extends only to the function that they are defined in.</p>
+<p>When you are performing user-mode or kernel-mode debugging, the debugger uses the scope of the current function (the current frame on the stack) as the local context. To change this context, use the <a href="_frame__set_local_context_.htm"><b>.frame (Set Local Context)</b></a> command, or double-click the desired frame in the <a href="calls_window.htm">Calls window</a>.</p>
+<p>In user-mode debugging, the local context is always a frame within the stack trace of the current thread. In kernel-mode debugging, the local context is always a frame within the stack trace of the current register context's thread.</p>
+<p>You can use only one stack frame at a time for the local context. Local variables in other frames cannot be accessed.</p>
+<p>The local context is reset if any of the following events occur:</p>
+<ul>
+<li>
+<p>Any program execution, stepping or tracing</p>
+</li>
+<li>
+<p>Any use of the thread delimiter (~) in any command</p>
+</li>
+<li>
+<p>Any change to the register context</p>
+</li>
+</ul>
+<p>The <a href="_for_each_frame.htm"><b>!for_each_frame</b></a> extension enables you to execute a single command repeatedly, once for each frame in the stack. This command changes the local context for each frame, executes the specified command, and then returns the local context to its original value.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Changing Contexts%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,92 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Example 1: Displaying Global Flags"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Example 1:  Displaying Global Flags</title>
+
+<meta name="MS-HAID" content="GFlags_73547edc-0b92-4de3-917c-01e7e2f90184.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.example_1___displaying_global_flags"></a>Example 1:  Displaying Global Flags</h1>
+</div>
+<h2><a id="ddk_example_1___displaying_global_flags_dtools"></a><a id="DDK_EXAMPLE_1___DISPLAYING_GLOBAL_FLAGS_DTOOLS"></a></h2>
+<p>The commands demonstrated in this example display the system-wide flags set in the registry, the system flags set for the session (kernel mode), and the flags set for an image file. </p>
+<p>The following GFlags command displays the current value of the system-wide flags set in the registry. It uses the <b>/r</b> parameter to specify the system-wide registry entry.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>gflags /r </pre>
+</td>
+</tr>
+</table></span></div>
+<p>In response, GFlags displays a single hexadecimal value representing the sum of all flags set and a list of the flags set.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>Current Boot Registry Settings are: 40001400
+    ptg - Enable pool tagging
+    ust - Create user mode stack trace database
+    bhd - Enable bad handles detection</pre>
+</td>
+</tr>
+</table></span></div>
+<p>In this example, the results show that there are three tags set, with a combined value of 0x40001400.</p>
+<ul>
+<li>
+<p><a href="enable_pool_tagging.htm">Enable pool tagging</a> (ptg) = 0x400 </p>
+</li>
+<li>
+<p><a href="create_user_mode_stack_trace_database.htm">Create user mode stack trace database</a> (ust) = 0x1000 </p>
+</li>
+<li>
+<p><a href="enable_bad_handles_detection.htm">Enable bad handles detection</a> (bhd) = 0x40000000 </p>
+</li>
+</ul>
+<p>The following command displays the flags set for the current session. It uses the <b>/k</b> parameter to indicate kernel mode.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>gflags /k </pre>
+</td>
+</tr>
+</table></span></div>
+<p>The following command displays flags set in the registry for the image file notepad.exe. It uses the <b>/i</b> parameter to indicate image file mode and specifies the image file.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>gflags /i notepad.exe </pre>
+</td>
+</tr>
+</table></span></div>
+<p>Remember that the flag value displayed might not be the current, effective flag value. Changes to the system-wide flags are not effective until you restart Windows. Changes to image file flag settings are not effective until you restart the program.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Example 1:  Displaying Global Flags%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

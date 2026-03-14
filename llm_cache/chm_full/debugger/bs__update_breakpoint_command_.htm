@@ -1,0 +1,80 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The bs command changes the command executed when the specified breakpoint is encountered."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>bs (Update Breakpoint Command)</title>
+
+<meta name="MS-HAID" content="r15_cmds_A_c820ed98-ebdc-4f54-95bd-7a91f5f5d625.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bs__update_breakpoint_command_"></a>bs (Update Breakpoint Command)</h1>
+</div>
+<p>The <b>bs</b> command changes the command executed when the specified breakpoint is encountered.</p>
+<pre class="syntax"><b>bs</b> ID ["CommandString"] 
+</pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______ID______"></a><a id="_______id______"></a>       <i>ID</i>      </dt>
+<dd>
+<p>Specifies the ID number of the breakpoint.</p>
+</dd>
+<dt><a id="_______CommandString______"></a><a id="_______commandstring______"></a><a id="_______COMMANDSTRING______"></a>       <i>CommandString</i>      </dt>
+<dd>
+<p>Specifies the new list of commands to be executed every time that the breakpoint is encountered. You must enclose the <i>CommandString</i> parameter in quotation marks. Use semicolons to separate multiple commands. </p>
+<p>Debugger commands in <i>CommandString</i> can include parameters. You can use standard C-control characters (such as <b>\n</b> and <b>\"</b>). Semicolons that are contained in second-level quotation marks (<b>\"</b>) are interpreted as part of the embedded quoted string.</p>
+<p>The <i>CommandString</i> commands are executed only if the breakpoint is reached while the application is executing in response to a <b>g (Go)</b> command. The commands are not executed if you are stepping through the code or tracing past this point.</p>
+<p>Any command that resumes program execution after a breakpoint (such as <b>g</b> or <b>t</b>) ends the execution of the command list. </p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>Live debugging only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about and examples of how to use breakpoints, other breakpoint commands and methods of controlling breakpoints, and how to set breakpoints in user space from a kernel debugger, see <a href="using_breakpoints.htm">Using Breakpoints</a>. For more information about conditional breakpoints, see <a href="setting_a_conditional_breakpoint.htm">Setting a Conditional Breakpoint</a>.</p>
+<h2>Remarks</h2>
+<p>If the <i>CommandString</i> is not specified, any commands already set on the breakpoint are removed.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20bs (Update Breakpoint Command)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

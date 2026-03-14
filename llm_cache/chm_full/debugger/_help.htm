@@ -1,0 +1,56 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !help extension displays help text that describes the extension commands exported from the extension DLL."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!help</title>
+
+<meta name="MS-HAID" content="r25_exts_general_He_5024a084-aade-47c6-9416-b21557748d2e.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._help"></a>!help</h1>
+</div>
+<p>The <b>!help</b> extension displays help text that describes the extension commands exported from the extension DLL.</p>
+<p>Do not confuse this extension command with the <a href="___command_help_.htm"><b>? (Command Help)</b></a> or <a href="_help__meta_command_help_.htm"><b>.help (Meta-Command Help)</b></a> commands.</p>
+<pre class="syntax">
+    <b>![</b><i>ExtensionDLL</i><b>.]help </b>[<b>-v</b>]<b> </b>[<i>CommandName</i>] 
+</pre>
+<h2><a id="ddk__help_dbg"></a><a id="DDK__HELP_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______ExtensionDLL______"></a><a id="_______extensiondll______"></a><a id="_______EXTENSIONDLL______"></a>       <i>ExtensionDLL</i>      </dt>
+<dd>
+<p>Displays help for the specified extension DLL. Type the name of an extension DLL without the .dll file name extension. If the DLL file is not in the extension search path (as displayed by using <a href="_chain__list_debugger_extensions_.htm"><b>.chain (List Debugger Extensions)</b></a>), include the path to the DLL file. For example, to display help for uext.dll, type <b>!uext.help</b> or <b>!</b><i>Path</i><b>\winext\uext.help</b>. </p>
+<p>If you omit the <i>ExtensionDLL</i>, the debugger will display the help text for the first extension DLL in the list of loaded DLLs.</p>
+</dd>
+<dt><a id="_______-v______"></a><a id="_______-V______"></a>       <b>-v</b>      </dt>
+<dd>
+<p>Displays the most detailed help text available. This feature is not supported in all DLLs.</p>
+</dd>
+<dt><a id="_______CommandName______"></a><a id="_______commandname______"></a><a id="_______COMMANDNAME______"></a>       <i>CommandName</i>      </dt>
+<dd>
+<p>Displays only the help text for the specified command. This feature is not supported in all DLLs or for all commands.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<p>This extension is supported by most extension DLLs.</p>
+<h2>Remarks</h2>
+<p>Some individual commands will also display a help text if you use the <b>/?</b> or <b>-?</b> parameter with the command name.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!help%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

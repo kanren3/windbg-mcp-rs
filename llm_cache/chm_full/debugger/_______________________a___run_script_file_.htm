@@ -1,0 +1,211 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The $&amp;lt;, $&amp;gt;&amp;lt;, $$&amp;lt;, $$&amp;gt;&amp;lt;, and $$&amp;gt;a&amp;lt; commands read the contents of the specified script file and use its contents as debugger command input."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>$&lt;, $&gt;&lt;, $$&lt;, $$&gt;&lt;, $$&gt;a&lt; (Run Script File)</title>
+
+<meta name="MS-HAID" content="r15_cmds_A_85f99aae-f246-400c-8d44-625b758a0e10.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._______________________a___run_script_file_"></a>$&lt;, $&gt;&lt;, $$&lt;, $$&gt;&lt;, $$&gt;a&lt; (Run Script File)</h1>
+</div>
+<p>The <b>$&lt;</b>, <b>$&gt;&lt;</b>, <b>$$&lt;</b>, <b>$$&gt;&lt;</b>, and <b>$$&gt;a&lt;</b> commands read the contents of the specified script file and use its contents as debugger command input.</p>
+<pre class="syntax"><b>$&lt;</b><i>Filename</i> 
+<b>$&gt;&lt;</b><i>Filename</i> 
+<b>$$&lt;</b><i>Filename</i> 
+<b>$$&gt;&lt;</b><i>Filename</i> 
+<b>$$&gt;a&lt;</b><i>Filename </i>[<i>arg1 arg2 arg3 ...</i>] 
+</pre>
+<h2><a id="ddk_cmd_run_script_file_dbg"></a><a id="DDK_CMD_RUN_SCRIPT_FILE_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Filename______"></a><a id="_______filename______"></a><a id="_______FILENAME______"></a>       <i>Filename</i>      </dt>
+<dd>
+<p>Specifies a file that contains valid debugger command text. The file name must follow Microsoft Windows file name conventions. The file name may contain spaces.</p>
+</dd>
+<dt><a id="_______argn______"></a><a id="_______ARGN______"></a>       <i>argn</i>      </dt>
+<dd>
+<p>Specifies any number of string arguments for the debugger to pass to the script. The debugger will replace any string of the form ${$arg<i>n</i>} in the script file with the corresponding <i>argn</i>  before executing the script. Arguments may not contain quotation marks or semicolons. Multiple arguments must be separated by spaces; if an argument contains a space it must be enclosed in quotation marks. All arguments are optional.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p>
+          Modes
+         </p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+          Targets
+         </p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+          Platforms
+         </p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>The <b>$$&lt;</b> and <b>$&lt;</b> tokens execute the commands that are found in the script file literally. However, with <b>$&lt;</b> you can specify any file name, including one that contains semicolons. Because <b>$&lt;</b> allows semicolons to be used in the file name, you cannot concatenate <b>$&lt;</b> with other debugger commands, because a semicolon cannot be used both as a command separator and as  part of a file name.</p>
+<p>The <b>$$&gt;&lt;</b> and <b>$&gt;&lt;</b> tokens execute the commands that are found in the script file literally, which means they open the script file, replace all carriage returns with semicolons, and execute the resulting text as a single command block. As with <b>$&lt;</b> discussed previously, the <b>$&gt;&lt;</b> variation permits file names that contains semicolons, which means you cannot concatenate  <b>$&gt;&lt;</b> with other debugger commands.</p>
+<p>The <b>$$&gt;&lt;</b> and <b>$&gt;&lt;</b> tokens are useful if you are running scripts that contain debugger command programs. For more information about these programs, see <a href="using_debugger_command_programs.htm">Using Debugger Command Programs</a>. </p>
+<p>Unless you have file names that contain semicolons, you do not need to use either <b>$&lt;</b> or <b>$&gt;&lt;</b>.</p>
+<p>The <b>$$&gt;a&lt;</b> token allows the debugger to pass arguments to the script. If <i>Filename</i> contains spaces, it must be enclosed in quotation marks.  If too many arguments are supplied, the excess arguments are ignored.  If too few arguments are supplied, any token in the source file of the form ${$arg<i>n</i>} where <i>n</i> is larger than the number of supplied arguments will remain in its literal form and will not be replaced with anything.  You can follow this command with a semicolon and additional commands; the presence of a semicolon terminates the argument list.</p>
+<p>When the debugger executes a script file, the commands and their output are displayed in the <a href="debugger_command_window.htm">Debugger Command window</a>. When the end of the script file is reached, control returns to the debugger.</p>
+<p>The following table summarizes how you can use these tokens.</p>
+<table>
+<tr>
+<th>Token</th>
+<th>Allows file names that contain semicolons</th>
+<th>Allows concatenation of additional commands separated by semicolons</th>
+<th>Condenses to single command block</th>
+<th>Allows script arguments</th>
+</tr>
+<tr>
+<td>
+<p><b>$&lt;</b></p>
+</td>
+<td>
+<p>Yes</p>
+</td>
+<td>
+<p>No</p>
+</td>
+<td>
+<p>No</p>
+</td>
+<td>
+<p>No</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>$&gt;&lt;</b></p>
+</td>
+<td>
+<p>Yes</p>
+</td>
+<td>
+<p>No</p>
+</td>
+<td>
+<p>Yes</p>
+</td>
+<td>
+<p>No</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>$$&lt;</b></p>
+</td>
+<td>
+<p>No</p>
+</td>
+<td>
+<p>Yes</p>
+</td>
+<td>
+<p>No</p>
+</td>
+<td>
+<p>No</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>$$&gt;&lt;</b></p>
+</td>
+<td>
+<p>No</p>
+</td>
+<td>
+<p>Yes</p>
+</td>
+<td>
+<p>Yes</p>
+</td>
+<td>
+<p>No</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>$$&gt;a&lt;</b></p>
+</td>
+<td>
+<p>No</p>
+</td>
+<td>
+<p>Yes</p>
+</td>
+<td>
+<p>Yes</p>
+</td>
+<td>
+<p>Yes</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>The <b>$&lt;</b>, <b>$&gt;&lt;</b>, <b>$$&lt;</b>, and <b>$$&gt;&lt;</b> commands echo the commands contained in the script file and display the output of these commands. The <b>$$&gt;a&lt;</b> command does not echo the commands found in the script file, but merely displays their output.</p>
+<p>Script files can be nested. If the debugger encounters one of these tokens in a script file, execution moves to the new script file and returns to the previous location when the new script file has been completed. Scripts can also be called recursively.</p>
+<p>In WinDbg, you can paste the additional command text in the Debugger Command window.</p>
+<h2>Examples</h2>
+<p>The following example demonstrates how to pass arguments to a script file, Myfile.txt. Assume that the file contains the following text:</p>
+<pre class="syntax" xml:space="preserve"><code>.echo The first argument is ${$arg1}.
+.echo The second argument is ${$arg2}.</code></pre>
+<p>Then you can pass arguments to this file by using a command like this:</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; $$&gt;a&lt;myfile.txt myFirstArg mySecondArg </code></pre>
+<p>The result of this command would be:</p>
+<pre class="syntax" xml:space="preserve"><code>The first argument is myFirstArg.
+The second argument is mySecondArg.</code></pre>
+<p>Here is an example of what happens when the wrong number of argument is supplied. Assume that the file My Script.txt contains the following text:</p>
+<pre class="syntax" xml:space="preserve"><code>.echo The first argument is ${$arg1}.
+.echo The fifth argument is ${$arg5}.
+.echo The fourth argument is ${$arg4}.</code></pre>
+<p>Then the following semicolon-delimited command line produces output thus:</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; $$&gt;a&lt; "c:\binl\my script.txt" "First one" Two "Three More" Four; recx 
+The first argument is First one.
+The fifth argument is ${$arg5}.
+The fourth argument is Four.
+ecx=0021f4ac</code></pre>
+<p>In the preceding example, the file name is enclosed in quotation marks because it contains a space, and arguments that contain spaces are enclosed in quotation marks as well. Although a fifth argument seems to be expected by the script, the semicolon terminates the <b>$$&gt;a&lt;</b> command after the fourth argument.</p>
+<p></p>
+<div class="code"></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20$<, $><, $$<, $$><, $$>a< (Run Script File)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

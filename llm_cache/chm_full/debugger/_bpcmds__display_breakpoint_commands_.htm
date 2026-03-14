@@ -1,0 +1,129 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .bpcmds command displays the commands that were used to set each of the current breakpoints."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.bpcmds (Display Breakpoint Commands)</title>
+
+<meta name="MS-HAID" content="r19_metacmds_A_fbc53fa8-9480-485b-9b49-64cf24fecd26.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._bpcmds__display_breakpoint_commands_"></a>.bpcmds (Display Breakpoint Commands)</h1>
+</div>
+<p>The <b>.bpcmds</b> command displays the commands that were used to set  each of the current breakpoints.</p>
+<pre class="syntax">
+    <b>.bpcmds</b>
+</pre>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>user mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Platforms</b></p>
+</td>
+<td>
+<p>all </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about and examples of how to use breakpoints, other breakpoint commands and methods of controlling breakpoints, see <a href="using_breakpoints.htm">Using Breakpoints</a>. </p>
+<h2>Remarks</h2>
+<p>If it is unclear whether a particular breakpoint is set at an address, at a symbolic reference, or at a symbol, use the <b>.bpcmds</b> command to shows which breakpoint command was used to create it.  The command that was used to create a breakpoint determines its nature:</p>
+<ul>
+<li>
+<p>The <a href="bp__bu__bm__set_breakpoint_.htm"><b>bp (Set Breakpoint)</b></a> command sets a breakpoint at an address. </p>
+</li>
+<li>
+<p>The <a href="bp__bu__bm__set_breakpoint_.htm"><b>bu (Set Unresolved Breakpoint)</b></a> command sets a breakpoint on a symbolic reference. </p>
+</li>
+<li>
+<p>The <a href="bp__bu__bm__set_breakpoint_.htm"><b>bm (Set Symbol Breakpoint)</b></a> command sets a breakpoint on symbols that match a specified pattern. If the <b>/d</b> switch is included, it creates zero or more breakpoints on addresses (like bp), otherwise it creates zero or more breakpoints on symbolic references (like bu). </p>
+</li>
+<li>
+<p>The <a href="ba__break_on_access_.htm"><b>ba (Break on Access)</b></a> command sets a data breakpoint at an address. </p>
+</li>
+</ul>
+<p>The output of <b>.bpcmds</b> reflects the current nature of each breakpoint. Each line of the <b>.bpcmds</b> display begins with the command used to create it (<b>bp</b>, <b>bu</b>, or <b>ba</b>) followed by the breakpoint ID, and then the location of the breakpoint.</p>
+<p>If the breakpoint was created by <b>ba</b>, the access type and size are displayed as well.</p>
+<p>If the breakpoint was created by <b>bm</b> without the <b>/d</b> switch, the display indicates the breakpoint type as <b>bu</b>, followed by the evaluated symbol enclosed in the <b>@!""</b> token (which indicates it is a literal symbol and not a numeric expression or register). If the breakpoint was created by <b>bm</b> with the <b>/d</b> switch, the display indicates the breakpoint type as <b>bp</b>.</p>
+<p>Here is an example:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; bp notepad!winmain 
+
+0:000&gt; .bpcmds 
+bp0 0x00000001`00003340 ;
+
+0:000&gt; bu myprog!winmain 
+breakpoint 0 redefined
+
+0:000&gt; .bpcmds 
+bu0 notepad!winmain;
+
+0:000&gt; bu myprog!LoadFile 
+
+0:000&gt; bp myprog!LoadFile+10 
+
+0:000&gt; bm myprog!openf* 
+  3: 00421200 @!"myprog!openFile"
+  4: 00427800 @!"myprog!openFilter"
+
+0:000&gt; bm /d myprog!closef* 
+  5: 00421600 @!"myprog!closeFile"
+
+0:000&gt; ba r2 myprog!LoadFile+2E 
+
+0:000&gt; .bpcmds
+bu0 notepad!winmain;
+bu1 notepad!LoadFile;
+bp2 0x0042cc10 ;
+bu3 @!"myprog!openFile";
+bu4 @!"myprog!openFilter";
+bp5 0x00421600 ;
+ba6 r2 0x0042cc2e ;</pre>
+</td>
+</tr>
+</table></span></div>
+<p>In this example, notice that the output of <b>.bpcmds</b> begins with the relevant command ("bu", "bp", or "ba"), followed by the breakpoint number (with no intervening space).</p>
+<p>Notice that because breakpoint number 0 was originally set using <b>bp</b>, and then was redefined using <b>bu</b>, the display shows its type as "bu".</p>
+<p>Notice also that breakpoints 3, 4, and 5, which were created by the <b>bm</b> commands shown in this example, are displayed as either type "bp" or type "bu", depending on whether the <b>/d</b> switch was included when <b>bm</b> was used.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.bpcmds (Display Breakpoint Commands)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

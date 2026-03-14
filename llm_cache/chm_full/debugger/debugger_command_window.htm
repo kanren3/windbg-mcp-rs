@@ -1,0 +1,68 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Entering Debugger Commands in WinDbg"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Entering Debugger Commands in WinDbg</title>
+
+<meta name="MS-HAID" content="r36_gui_1_7e0ce62e-7ce9-4b61-9fa8-06a775d1e8ba.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.debugger_command_window"></a>Entering Debugger Commands in WinDbg</h1>
+</div>
+<h2><a id="ddk_debugger_command_window_dbg"></a><a id="DDK_DEBUGGER_COMMAND_WINDOW_DBG"></a></h2>
+<p>The Debugger Command window is the primary debugging information window in WinDbg. You can enter debugger commands and view the command output in this window.</p>
+<div class="alert"><b>Note</b>    This window displays "Command" in the title bar. However, this documentation always refers to this window as "the Debugger Command window" to avoid confusing it with the Command Prompt windows that are used to issue Microsoft MS-DOS commands.</div>
+<div> </div>
+<h3><a id="opening_the_debugger_command_window"></a><a id="OPENING_THE_DEBUGGER_COMMAND_WINDOW"></a>Opening the Debugger Command Window</h3>
+<p>To open the Debugger Command window,  choose <b>Command</b> from the <b>View</b> menu. (You can also press ALT+1 or click the <b>Command</b> button (<img src="images/tbcmd.png" alt="Screen shot of the Debugger Command window button"/>) on the toolbar.  ALT+SHIFT+1 closes the Debugger Command window.)</p>
+<p>The following screen shot shows an example of a Debugger Command window.</p><img src="images/window-command.png" alt="Screen shot of an example of a Debugger Command window"/><h3><a id="using_the_debugger_command_window"></a><a id="USING_THE_DEBUGGER_COMMAND_WINDOW"></a>Using the Debugger Command Window</h3>
+<p>The Debugger Command window is split into two panes. You type commands in the smaller pane (the command entry pane) at the bottom of the window and view the output in the larger pane at the top of the window.</p>
+<p>In the command entry pane, use the UP ARROW and DOWN ARROW keys to scroll through the command history. When a command appears, you can edit it or press ENTER to run the command.</p>
+<p>The Debugger Command window contains a shortcut menu with additional commands. To access this menu, right-click the title bar of the window or click the icon near the upper-right corner of the window (<img src="images/tbcmd.png" alt="Screen shot of the button for accessing the Debugger Command window toolbar shortcut menu "/>). The following list describes some of the menu commands:</p>
+<ul>
+<li>
+<p><b>Add to command output</b> adds a comment to the command output, similar to the <a href="edit___add_to_command_output.htm">Edit | Add to Command Output</a> command.</p>
+</li>
+<li>
+<p><b>Clear command output</b> deletes all of the text in the window.  </p>
+</li>
+<li>
+<p><b>
+       Choose text color and recolor selection...</b> opens a dialog box that enables you to choose the text color in which to display the text that is selected in the Debugger Command window.</p>
+</li>
+<li>
+<p><b>Word wrap</b> turns the word wrap status on and off. This command affects the whole window, not only commands that you use after this state is selected. Because many commands and extensions produce formatted displays, it is not recommended that you use word wrap.</p>
+</li>
+<li>
+<p><b>Mark current location</b> sets a marker at the current cursor location in the command window.  The name of the mark is the contents of the line to the right of the cursor.</p>
+</li>
+<li>
+<p><b>Go to mark</b> causes the window to scroll so that the line that contains the chosen mark is positioned at the top of the window.</p>
+</li>
+<li>
+<p><b>
+       Always floating</b> causes the window to remain undocked, even if it is dragged to a docking location.</p>
+</li>
+<li>
+<p><b>Move with frame</b> causes the window to move when the WinDbg frame is moved, even if the window is undocked. For more information about docked, tabbed, and floating windows, see <a href="positioning_the_windows.htm">Positioning the Windows</a>.</p>
+</li>
+</ul>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Entering Debugger Commands in WinDbg%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

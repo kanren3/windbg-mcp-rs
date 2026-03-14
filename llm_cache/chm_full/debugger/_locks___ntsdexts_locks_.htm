@@ -1,0 +1,111 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !locks extension in Ntsdexts.dll displays a list of critical sections associated with the current process.This extension command should not be confused with the !kdext*.locks extension command."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!locks (!ntsdexts.locks)</title>
+
+<meta name="MS-HAID" content="r31_exts_user_719ca52d-1eb4-4877-a644-4f6eff6f94dc.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._locks___ntsdexts_locks_"></a>!locks (!ntsdexts.locks)</h1>
+</div>
+<p>The <b>!locks</b> extension in Ntsdexts.dll displays a list of critical sections associated with the current process.</p>
+<p>This extension command should not be confused with the <a href="_locks___kdext__locks_.htm"><b>!kdext*.locks</b></a> extension command.</p>
+<pre class="syntax">
+    <b>!locks </b>[<i>Options</i>] 
+</pre>
+<h2><a id="ddk__ntsdexts_locks_dbg"></a><a id="DDK__NTSDEXTS_LOCKS_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Options______"></a><a id="_______options______"></a><a id="_______OPTIONS______"></a>       <i>Options</i>      </dt>
+<dd>
+<p>Specifies the amount of information to be displayed. Any combination of the following options can be used:</p>
+<p></p>
+<dl>
+<dt><a id="-v"></a><a id="-V"></a><b>-v</b></dt>
+<dd>
+<p>Causes the display to include all critical sections, even those that are not currently owned.</p>
+</dd>
+<dt><a id="-o"></a><a id="-O"></a><b>-o</b></dt>
+<dd>
+<p>(Windows XP and later)  Causes the display to only include orphaned information (pointers that do not actually point to valid critical sections).</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Windows 2000</b></p>
+</td>
+<td>
+<p>
+          Ntsdexts.dll
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Ntsdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For other commands and extensions that can display critical section information, see <a href="displaying_a_critical_section.htm">Displaying a Critical Section</a>. For information about critical sections, see the Microsoft Windows SDK documentation, the Windows Driver Kit (WDK) documentation, and <i>Microsoft Windows Internals</i> by Mark Russinovich and David Solomon. </p>
+<h2>Remarks</h2>
+<p>This extension command shows all critical sections that have been initialized by calling <b>RtlInitializeCriticalSection</b>.  If there are no critical sections, then no output will result.</p>
+<p>Here is an example:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; !locks
+
+CritSec w3svc!g_pWamDictator+a0 at 68C2C298
+LockCount          0
+RecursionCount     1
+OwningThread       d1
+EntryCount         1
+ContentionCount    0
+*** Locked
+
+CritSec SMTPSVC+66a30 at 67906A30
+LockCount          0
+RecursionCount     1
+OwningThread       d0
+EntryCount         1
+ContentionCount    0
+*** Locked</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!locks (!ntsdexts.locks)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

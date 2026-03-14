@@ -1,0 +1,119 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !wudfext.wudfdumpobjects extension displays outstanding UMDF objects."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!wudfext.wudfdumpobjects</title>
+
+<meta name="MS-HAID" content="r33~e_exts_umdf_0047d2cf-5cb8-4cea-bb15-9f95035573b4.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._wudfext_wudfdumpobjects"></a>!wudfext.wudfdumpobjects</h1>
+</div>
+<p>The <b>!wudfext.wudfdumpobjects</b> extension displays outstanding UMDF objects.</p>
+<pre class="syntax"><b>!wudfext.wudfdumpobjects </b><i>ObjTrackerAddress</i></pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______ObjTrackerAddress______"></a><a id="_______objtrackeraddress______"></a><a id="_______OBJTRACKERADDRESS______"></a>       <i>ObjTrackerAddress</i>      </dt>
+<dd>
+<p>Specifies the address to track leaked objects. This address is displayed in the driver-stop message in the debugger when a leak occurs. </p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000</b></p>
+</td>
+<td>
+<p>Unavailable </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP with UMDF version 1.7 and later</b></p>
+</td>
+<td>
+<p>
+          Wudfext.dll</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information, see <a href="user_mode_driver_framework_debugging.htm">User-Mode Driver Framework Debugging</a>.</p>
+<h2>Remarks</h2>
+<p>If the UMDF object tracking option (<b>TrackObjects</b>) has been enabled in WDF Verifier, you can use <b>!wudfext.wudfdumpobjects</b> to see any leaked objects that remain after the driver unloads. </p>
+<p>If the <b>TrackObjects</b> option has been enabled, the address of the object tracker is automatically displayed when a leak is detected.  Use this address as <i>ObjTrackerAddress</i> when executing <b>!wudfext.wudfdumpobjects</b>. </p>
+<p>This extension can be used at any time, even if UMDF has not broken in to the debugger. </p>
+<p>If UMDF is version 1.9 or above, you can use either <a href="_wudfext_umdevstack.htm"><b>!wudfext.umdevstack</b></a> or <a href="_wudfext_umdevstacks.htm"><b>!wudfext.umdevstacks</b></a> to determine the address of the object tracker. This address can then be passed to <b>!wudfext.wudfdumpobjects</b>.  Here is an example:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0: kd&gt; !umdevstacks 
+Number of device stacks: 1
+  Device Stack: 0x038c6f08    Pdo Name: \Device\USBPDO-11
+    Number of UM devices: 1
+    Device 0
+      Driver Config Registry Path: WUDFOsrUsbFx2
+      UMDriver Image Path: D:\Windows\system32\DRIVERS\UMDF\WUDFOsrUsbFx2.dll
+      Fx Driver: IWDFDriver 0x3076ff0
+      Fx Device: IWDFDevice 0x3082e70
+        IDriverEntry: WUDFOsrUsbFx2!CMyDriver 0x0306eff8
+      Open UM files (use !umfile &lt;addr&gt; for details): 
+        0x04a8ef84
+      Device XFerMode: CopyImmediately RW: Buffered CTL: Buffered
+      Object Tracker Address: 0x03074fd8
+        Object   Tracking ON
+        Refcount Tracking OFF
+    DevStack XFerMode: CopyImmediately RW: Buffered CTL: Buffered
+
+0: kd&gt; !wudfdumpobjects 0x03074fd8 
+WdfTypeDriver    Object: 0x03076fb0, Interface: 0x03076ff0
+WdfTypeDevice   Object: 0x03082e30, Interface: 0x03082e70
+WdfTypeIoTarget Object: 0x03088f50, Interface: 0x03088f90
+WdfTypeIoQueue                Object: 0x0308ce58, Interface: 0x0308ce98
+WdfTypeIoQueue                Object: 0x03090e58, Interface: 0x03090e98
+WdfTypeIoQueue                Object: 0x03092e58, Interface: 0x03092e98
+WdfTypeIoTarget Object: 0x03098f40, Interface: 0x03098f80
+WdfTypeFile         Object: 0x0309cfa0, Interface: 0x0309cfe0
+WdfTypeUsbInterface         Object: 0x030a0f98, Interface: 0x030a0fd8
+WdfTypeRequest Object: 0x030a2ef8, Interface: 0x030a2f38
+WdfTypeIoTarget Object: 0x030a6f30, Interface: 0x030a6f70
+WdfTypeIoTarget Object: 0x030aaf30, Interface: 0x030aaf70
+WdfTypeIoTarget Object: 0x030aef30, Interface: 0x030aef70
+WdfTypeRequest Object: 0x030c6ef8, Interface: 0x030c6f38
+WdfTypeRequest Object: 0x030ceef8, Interface: 0x030cef38
+WdfTypeMemoryObject    Object: 0x030d6fb0, Interface: 0x030d6ff0
+WdfTypeMemoryObject    Object: 0x030dcfb0, Interface: 0x030dcff0
+WdfTypeFile         Object: 0x030e4fa8, Interface: 0x030e4fe8
+WdfTypeFile         Object: 0x030e6fa8, Interface: 0x030e6fe8
+WdfTypeFile         Object: 0x030e8fa8, Interface: 0x030e8fe8
+WdfTypeRequest Object: 0x030eaef8, Interface: 0x030eaf38
+WdfTypeMemoryObject    Object: 0x030ecfb0, Interface: 0x030ecff0
+WdfTypeMemoryObject    Object: 0x030eefb0, Interface: 0x030eeff0</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!wudfext.wudfdumpobjects%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

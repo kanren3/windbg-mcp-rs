@@ -1,0 +1,148 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The following syntax forms are supported for SymStore transactions. The first parameter must always be add or del. The order of the other parameters is immaterial."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>SymStore Command-Line Options</title>
+
+<meta name="MS-HAID" content="r12_cmdline_aeb25bfa-36b3-4ca0-af17-448dc44d2b23.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.symstore_command_line_options"></a>SymStore Command-Line Options</h1>
+</div>
+<p>The following syntax forms are supported for SymStore transactions. The first parameter must always be <b>add</b> or <b>del</b>. The order of the other parameters is immaterial.</p>
+<pre class="syntax">
+    <b>symstore add [/r] [/p [/l] [-:MSG </b><i>Message</i><b>] [-:REL] [-:NOREFS]] /f </b><i>File</i><b> /s </b><i>Store</i><b> /t </b><i>Product</i><b> [/v </b><i>Version</i><b>] [/o] [/c </b><i>Comment</i><b>] [/d </b><i>LogFile</i><b>] [/compress]
+
+symstore add [/r] [/p [/l] [-:REL] [-:NOREFS]] /g </b><i>Share</i><b> /f </b><i>File</i><b> /x </b><i>IndexFile</i><b> [/a] [/o] [/d </b><i>LogFile</i><b>] 
+
+symstore add /y </b><i>IndexFile</i><b> /g </b><i>Share</i><b> /s </b><i>Store</i><b> [/p [-:MSG </b><i>Message</i><b>] [-:REL] [-:NOREFS]] /t </b><i>Product</i><b> [/v </b><i>Version</i><b>] [/o] [/c </b><i>Comment</i><b>] [/d </b><i>LogFile</i><b>] [/compress]
+
+symstore query [/r] /f </b><i>File </i><b>/s </b><i>Store</i><b> [/o] [/d </b><i>LogFile</i><b>]
+
+symstore del /i </b><i>ID</i><b> /s </b><i>Store</i><b> [/o] [/d </b><i>LogFile</i><b>] 
+
+symstore /? 
+</b>
+   </pre>
+<h2><a id="ddk_symstore_command_line_options_dbg"></a><a id="DDK_SYMSTORE_COMMAND_LINE_OPTIONS_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="________f_______File______"></a><a id="________f_______file______"></a><a id="________F_______FILE______"></a>       <b>/f</b>       <i>File</i>      </dt>
+<dd>
+<p>Specifies the network path of files or directories to add.</p>
+</dd>
+<dt><a id="________g_______Share______"></a><a id="________g_______share______"></a><a id="________G_______SHARE______"></a>       <b>/g</b>       <i>Share</i>      </dt>
+<dd>
+<p>Specifies the server and share where the symbol files were originally stored. When used with <b>/f</b>, <i>Share</i> should be identical to the beginning of the <i>File</i> specifier. When used with <b>/y</b>, <i>Share</i> should be the location of the original symbol files (not the index file). This allows you to later change this portion of the file path in case you move the symbol files to a different server and share.</p>
+</dd>
+<dt><a id="________s_______Store______"></a><a id="________s_______store______"></a><a id="________S_______STORE______"></a>       <b>/s</b>       <i>Store</i>      </dt>
+<dd>
+<p>Specifies the root directory for the symbol store.</p>
+</dd>
+<dt><a id="________m_______Prefix______"></a><a id="________m_______prefix______"></a><a id="________M_______PREFIX______"></a>       <b>/m</b>       <i>Prefix</i>      </dt>
+<dd>
+<p>Causes SymStore to prefer using symbols from paths beginning with <i>Prefix</i> when storing files or updating pointers. This option cannot be used with the <b>/x</b> option.  </p>
+</dd>
+<dt><a id="________h___PUB___PRI__"></a><a id="________h___pub___pri__"></a><a id="________H___PUB___PRI__"></a>       <b>/h</b> { <b>PUB | PRI </b>}</dt>
+<dd>
+<p>Causes SymStore to prefer using public symbols (if PUB is specified), or private symbols (if PRI is specified) when storing or updating symbols.  This option has no effect on binary files.  </p>
+</dd>
+<dt><a id="________i_______ID______"></a><a id="________i_______id______"></a><a id="________I_______ID______"></a>       <b>/i</b>       <i>ID</i>      </dt>
+<dd>
+<p>Specifies the transaction ID string.</p>
+</dd>
+<dt><a id="________p______"></a><a id="________P______"></a>       <b>/p</b>      </dt>
+<dd>
+<p>Causes SymStore to store a pointer to the file, rather than the file itself.</p>
+</dd>
+<dt><a id="________l______"></a><a id="________L______"></a>       <b>/l</b>      </dt>
+<dd>
+<p>Allows the file specified by <i>File</i> to be in a local directory rather than a network path. (This option can only be used when both <b>/f</b> and <b>/p</b> are used.)</p>
+</dd>
+<dt><a id="_______-_MSG________Message______"></a><a id="_______-_msg________message______"></a><a id="_______-_MSG________MESSAGE______"></a>       <b>-:MSG </b>       <i>Message</i>      </dt>
+<dd>
+<p>Adds the specified <i>Message</i> to each file. (This option can only be used when <b>/p</b> is used.)</p>
+</dd>
+<dt><a id="_______-_REL______"></a><a id="_______-_rel______"></a>       <b>-:REL</b>      </dt>
+<dd>
+<p>Allows the paths in the file pointers to be relative.  This option implies the /<b>l</b> option. (This option can only be used when <b>/p</b> is used.)</p>
+</dd>
+<dt><a id="_______-_NOREFS______"></a><a id="_______-_norefs______"></a>       <b>-:NOREFS</b>      </dt>
+<dd>
+<p>Omits the creation of reference pointer files for the files and pointers being stored.  This option is only valid during the initial creation of a symbol store if the store being changed was created with this option. </p>
+</dd>
+<dt><a id="________r______"></a><a id="________R______"></a>       <b>/r</b>      </dt>
+<dd>
+<p>Causes SymStore to add files or directories recursively.</p>
+</dd>
+<dt><a id="________t_______Product______"></a><a id="________t_______product______"></a><a id="________T_______PRODUCT______"></a>       <b>/t</b>       <i>Product</i>      </dt>
+<dd>
+<p>Specifies the name of the product.</p>
+</dd>
+<dt><a id="________v_______Version______"></a><a id="________v_______version______"></a><a id="________V_______VERSION______"></a>       <b>/v</b>       <i>Version</i>      </dt>
+<dd>
+<p>Specifies the version of the product.</p>
+</dd>
+<dt><a id="________c_______Comment______"></a><a id="________c_______comment______"></a><a id="________C_______COMMENT______"></a>       <b>/c</b>       <i>Comment</i>      </dt>
+<dd>
+<p>Specifies a comment for the transaction.</p>
+</dd>
+<dt><a id="________d_______LogFile______"></a><a id="________d_______logfile______"></a><a id="________D_______LOGFILE______"></a>       <b>/d</b>       <i>LogFile</i>      </dt>
+<dd>
+<p>Specifies a log file to be used for command output. If this is not included, transaction information and other output is sent to <b>stdout</b>.</p>
+</dd>
+<dt><a id="________o______"></a><a id="________O______"></a>       <b>/o</b>      </dt>
+<dd>
+<p>Causes SymStore to display verbose output.</p>
+</dd>
+<dt><a id="________x_______IndexFile______"></a><a id="________x_______indexfile______"></a><a id="________X_______INDEXFILE______"></a>       <b>/x</b>       <i>IndexFile</i>      </dt>
+<dd>
+<p>Causes SymStore not to store the actual symbol files. Instead, SymStore records information in the <i>IndexFile</i> that will enable SymStore to access the symbol files at a later time.</p>
+</dd>
+<dt><a id="________a______"></a><a id="________A______"></a>       <b>/a</b>      </dt>
+<dd>
+<p>Causes SymStore to append new indexing information to an existing index file. (This option is only used with the <b>/x</b> option.)</p>
+</dd>
+<dt><a id="________y_______IndexFile______"></a><a id="________y_______indexfile______"></a><a id="________Y_______INDEXFILE______"></a>       <b>/y</b>       <i>IndexFile</i>      </dt>
+<dd>
+<p>Causes SymStore to read the data from a file created with <b>/x</b>.</p>
+</dd>
+<dt><a id="________yi_______IndexFile______"></a><a id="________yi_______indexfile______"></a><a id="________YI_______INDEXFILE______"></a>       <b>/yi</b>       <i>IndexFile</i>      </dt>
+<dd>
+<p>Appends a comment with the transaction ID to the end of an index file created with the /<b>x</b> option.  </p>
+</dd>
+<dt><a id="________z___PUB___PRI__"></a><a id="________z___pub___pri__"></a><a id="________Z___PUB___PRI__"></a>       <b>/z</b> { <b>PUB | PRI </b>}</dt>
+<dd>
+<p>Causes SymStore to index only the type of symbols specified.  If <b>PUB</b> is specified, then only the symbols that have had the full source information stripped will be indexed.  If <b>PRI</b> is specified, then only the symbols that contain the full source information will be indexed.  SymStore will always index binary symbols.  </p>
+</dd>
+<dt><a id="________compress______"></a><a id="________COMPRESS______"></a>       <b>/compress</b>      </dt>
+<dd>
+<p>Causes SymStore to create a compressed version of each file copied to the symbol store instead of using an uncompressed copy of the file.  This option is only valid when storing files and not pointers, and consequently cannot be used when the <b>/p</b> option is used.  </p>
+</dd>
+<dt><a id="_______________"></a>       <b>/?</b>      </dt>
+<dd>
+<p>Displays help text for the SymStore command.</p>
+<p></p>
+</dd>
+</dl>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about SymStore, see <a href="symbol_stores_and_symbol_servers.htm">Using Symbol Servers and Symbol Stores</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20SymStore Command-Line Options%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,173 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The WORKER_INVALID bug check has a value of 0x000000E4. This indicates that memory that should not contain an executive work item does contain such an item, or that a currently active work item was queued."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0xE4: WORKER_INVALID</title>
+
+<meta name="MS-HAID" content="t07_bugs_E0_437d98b6-108d-4a56-af85-c7b04781dcba.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0xe4__worker_invalid"></a>Bug Check 0xE4: WORKER_INVALID</h1>
+</div>
+<p>The WORKER_INVALID bug check has a value of 0x000000E4. This indicates that memory that should not contain an executive work item does contain such an item, or that a currently active work item was queued.</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2> WORKER_INVALID Parameters</h2>
+<p>The following parameters are displayed on the blue screen. Parameter 1 indicates the code position.</p>
+<table>
+<tr>
+<th>Parameter 1</th>
+<th>Parameter 2</th>
+<th>Parameter 3</th>
+<th>Parameter 4</th>
+<th>Cause of Error</th>
+</tr>
+<tr>
+<td>
+<p>0x0</p>
+</td>
+<td>
+<p>Address of work item </p>
+</td>
+<td>
+<p>Start of pool block </p>
+</td>
+<td>
+<p>End of pool block </p>
+</td>
+<td>
+<p>An active worker item was freed. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x1</p>
+</td>
+<td>
+<p>Address of work item </p>
+</td>
+<td>
+<p>Queue number </p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>An active worker item was queued. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x2</p>
+</td>
+<td>
+<p>Address of work item </p>
+</td>
+<td>
+<p>Address of I/O worker routine </p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>A queued I/O worker item was freed. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x3</p>
+</td>
+<td>
+<p>Address of work item </p>
+</td>
+<td>
+<p>Address of invalid object </p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>An attempt was made to initialize an I/O worker item with an invalid object. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x5</p>
+</td>
+<td>
+<p>Address of work item </p>
+</td>
+<td>
+<p> 
+Queue number 
+ </p>
+</td>
+<td>
+<p>NUMA Node targeted or -1 if all NODES were searched for.</p>
+</td>
+<td>
+<p>An attempt was made to queue a work item before Worker Queued was initialized.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x6</p>
+</td>
+<td>
+<p>Address of work item </p>
+</td>
+<td>
+<p> 
+Queue number 
+ </p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>Invalid queue type was provided.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x7</p>
+</td>
+<td>
+<p>Address of work item </p>
+</td>
+<td>
+<p> 
+Queue number 
+ </p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>An attempt was made to queue a work item with an invalid worker routine address.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Cause</h2>
+<p>This is usually caused by a driver freeing memory which still contains an executive work item.</p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

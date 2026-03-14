@@ -1,0 +1,108 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="File | Connect to Remote Session"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>File | Connect to Remote Session</title>
+
+<meta name="MS-HAID" content="r36_gui_1_f146f153-cacc-4f29-b493-b0d52b562060.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.file___connect_to_remote_session"></a>File | Connect to Remote Session</h1>
+</div>
+<h2><a id="ddk_file_connect_to_remote_session_dbg"></a><a id="DDK_FILE_CONNECT_TO_REMOTE_SESSION_DBG"></a></h2>
+<p>Click <b>Connect to Remote Session</b> on the <b>File</b> menu to make WinDbg a debugging client and to connect to an active debugging server.</p>
+<p>This command is equivalent to pressing CTRL+R. You can use this command only when WinDbg is in dormant mode.</p>
+<p>You cannot use this command to connect to a process server or a KD connection server; for that purpose, use <a href="file___connect_to_remote_stub.htm">File | Connect to Remote Stub</a> instead.</p>
+<h3><a id="connect_to_remote_debugger_session_dialog_box"></a><a id="CONNECT_TO_REMOTE_DEBUGGER_SESSION_DIALOG_BOX"></a>Connect to Remote Debugger Session Dialog Box</h3>
+<p>When you click <b>Connect to Remote Session</b>, the <b>Connect to Remote Debugger Session </b>dialog box appears. You can use this dialog box to enter the remote connection parameters or to browse a list of debugging servers.</p>
+<p>To manually specify the remote connection parameters, enter one of the following strings in the <b>Connection string</b> box:</p>
+<pre class="syntax" xml:space="preserve"><code>npipe:server=Server,pipe=PipeName[,password=Password] 
+
+tcp:server=Server,port=Socket[,password=Password][,ipversion=6]
+
+tcp:clicon=Server,port=Socket[,password=Password][,ipversion=6]
+
+com:port=COMPort,baud=BaudRate,channel=COMChannel[,password=Password] 
+
+spipe:proto=Protocol,{certuser=Cert|machuser=Cert},server=Server,pipe=PipeName[,password=Password] 
+
+ssl:proto=Protocol,{certuser=Cert|machuser=Cert},server=Server,port=Socket[,password=Password]
+
+ssl:proto=Protocol,{certuser=Cert|machuser=Cert},clicon=Server,port=Socket[,password=Password]</code></pre>
+<p>The various parameters in the preceding options have the following possible values:</p>
+<p></p>
+<dl>
+<dt><a id="Server"></a><a id="server"></a><a id="SERVER"></a><i>Server</i></dt>
+<dd>
+<p>The network name of the computer on which the debugging server was created. Do <u>not</u> precede this name with backslashes (<b>\\</b>).</p>
+</dd>
+<dt><a id="PipeName"></a><a id="pipename"></a><a id="PIPENAME"></a><i>PipeName</i></dt>
+<dd>
+<p>If you use the NPIPE or SPIPE protocol, <i>PipeName</i> is the name that was given to the pipe when the server was created.</p>
+</dd>
+<dt><a id="Socket"></a><a id="socket"></a><a id="SOCKET"></a><i>Socket</i></dt>
+<dd>
+<p>If you use the TCP or SSL protocol, <i>Socket</i> is the same socket port number that was used when the server was created.</p>
+</dd>
+<dt><a id="COMPort"></a><a id="comport"></a><a id="COMPORT"></a><i>COMPort</i></dt>
+<dd>
+<p>If you use the COM protocol, <i>COMPort</i> specifies the COM port to use. The "COM" prefix is optional (for example, both "com2" and "2" are correct).</p>
+</dd>
+<dt><a id="BaudRate"></a><a id="baudrate"></a><a id="BAUDRATE"></a><i>BaudRate</i></dt>
+<dd>
+<p>If you use the COM protocol, <i>BaudRate</i> should match the baud rate that you chose when the server was created.</p>
+</dd>
+<dt><a id="COMChannel"></a><a id="comchannel"></a><a id="COMCHANNEL"></a><i>COMChannel</i></dt>
+<dd>
+<p>If you use the COM protocol, <i>COMChannel</i> should match the channel number that you chose when the server was created. </p>
+</dd>
+<dt><a id="Protocol"></a><a id="protocol"></a><a id="PROTOCOL"></a><i>Protocol</i></dt>
+<dd>
+<p>(Windows 2000 and later)  If you use the SSL or SPIPE protocol, <i>Protocol</i> should match the secure protocol that you used when the server was created.</p>
+</dd>
+<dt><a id="Cert"></a><a id="cert"></a><a id="CERT"></a><i>Cert</i></dt>
+<dd>
+<p>(Windows 2000 and later)  If you use the SSL or SPIPE protocol, you should use the identical <b>certuser=</b><i>Cert</i> or <b>machuser=</b><i>Cert</i> parameter that was used when the server was created.</p>
+</dd>
+<dt><a id="clicon"></a><a id="CLICON"></a><b>clicon</b></dt>
+<dd>
+<p>Specifies that the debugging server will try to connect to the client through a reverse connection. The client must use <b>clicon</b> if and only if the server is using <b>clicon</b>. In most cases, the debugging client is started before the debugging server when a reverse connection is used.</p>
+</dd>
+<dt><a id="Password"></a><a id="password"></a><a id="PASSWORD"></a><i>Password</i></dt>
+<dd>
+<p>If you used a password when the server was created, you must supply <i>Password</i> to create the debugging client. This value must match the original password. Passwords are case-sensitive. If the wrong password is supplied, the error message will specify "Error 0x80004005".</p>
+</dd>
+<dt><a id="ipversion_6"></a><a id="IPVERSION_6"></a><b>ipversion=6</b></dt>
+<dd>
+<p>(Debugging Tools for Windows 6.6.07 and earlier only) Forces the debugger to use IP version 6 rather than version 4 when you are using TCP to connect to the Internet.  In Windows Vista and later versions, the debugger attempts to auto-default to IP version 6, making this option unnecessary.  </p>
+</dd>
+</dl>
+<p>Instead of manually specifying the remote connection parameters, you can press the <b>Browse</b> button in the <b>Connect to Remote Debugger Session </b>dialog box and use the <b>Browse Remote Servers</b> dialog box.</p>
+<h3><a id="browse_remote_servers_dialog_box"></a><a id="BROWSE_REMOTE_SERVERS_DIALOG_BOX"></a>Browse Remote Servers Dialog Box</h3>
+<p>In the <b>Browse Remote Servers</b> dialog box, in the <b>Machine</b> text box, enter the name of the computer that the debugging server is running on. (The two initial backslashes are optional: "MyBox" and "\\MyBox" are both correct.) Then, press the <b>Refresh</b> button.  </p>
+<p>The <b>Servers </b>area lists all of the debugging servers that are running on that computer. Select any of the listed servers and then press ENTER or click <b>OK</b>. (You can also double-click one of the listed servers.) The proper connection string for the debugging server that you selected will now appear in the <b>Connection string</b> box in the <b>Connect to Remote Debugger Session</b> dialog box.</p>
+<p>If the server is password-protected, the connection string includes <b>Password=*</b>. You must replace the asterisk (<b>*</b>) with the actual password.</p>
+<p>After you specify the server and password, click <b>OK</b> to open the connection.</p>
+<p>This list of servers in the <b>Browse Remote Servers </b>dialog box can also include servers that no longer exist but were shut down improperly. If you connect to one of these nonexistent servers, you will receive an error message. </p>
+<p>The list of servers does not include process servers and KD connection servers; you can list those servers only by using the <a href="file___connect_to_remote_stub.htm">File | Connect to Remote Stub</a> command or by running <b>cdb -QR </b><i>Server</i> from a Command Prompt window.</p>
+<h3><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information and for other methods of joining a remote debugging session, see <a href="activating_a_debugging_client.htm"><b>Activating a Debugging Client</b></a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20File | Connect to Remote Session%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

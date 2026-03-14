@@ -1,0 +1,143 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .endsrv command causes the debugger to cancel an active debugging server."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.endsrv (End Debugging Server)</title>
+
+<meta name="MS-HAID" content="r20_metacmds_E_f733aa12-edf5-451a-9e98-da99bc21a41c.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._endsrv__end_debugging_server_"></a>.endsrv (End Debugging Server)</h1>
+</div>
+<p>The <b>.endsrv</b> command causes the debugger to cancel an active debugging server.  </p>
+<pre class="syntax">
+    <b>.endsrv </b><i>ServerID</i> 
+</pre>
+<h2><a id="ddk_meta_end_debugging_server_dbg"></a><a id="DDK_META_END_DEBUGGING_SERVER_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______ServerID______"></a><a id="_______serverid______"></a><a id="_______SERVERID______"></a>       <i>ServerID</i>      </dt>
+<dd>
+<p>Specifies the ID of the debugging server.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<p>You can use this command only when you are performing remote debugging through the debugger.</p>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Platforms</b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about remote debugging, see <a href="remote_debugging_through_the_debugger.htm">Remote Debugging Through the Debugger</a>.</p>
+<h2>Remarks</h2>
+<p>You must issue the <b>.endsrv</b> command from the debugging server or from one of the debugging clients that are connected to the debugging server.</p>
+<p>To determine the ID of a debugging server, use the <a href="_servers__list_debugging_servers_.htm"><b>.servers (List Debugging Servers)</b></a> command.</p>
+<p>The <b>.endsrv</b> command can terminate a debugging server, but it cannot terminate a process server or KD connection server. For information on how to end these servers, see <a href="controlling_a_process_server_session.htm">Controlling a Process Server Session</a> and <a href="controlling_a_kd_connection_server_session.htm">Controlling a KD Connection Server Session</a>. (There is, however, one exceptional case when <b>.endsrv</b> can end a process server that has been launched programmatically; for details, see <a href="startprocessserver.htm"><b>IDebugClient::StartProcessServer</b></a>.) </p>
+<p>If you cancel a debugging server, you prevent any future debugging clients from attaching to the server. However, if you cancel a debugging server, you do not detach any clients that are currently attached through the server.  </p>
+<p>Consider the following situation. Suppose that you start some debugging servers, as the following example shows.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; .server npipe:pipe=rabbit
+Server started with 'npipe:pipe=rabbit'
+0:000&gt; .server tcp:port=7
+Server started with 'tcp:port=7'</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Then, you decide to use a password, as the following example shows.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; .server npipe:pipe=tiger,password=hardtoguess
+Server started with 'npipe:pipe=tiger,password=hardtoguess'</pre>
+</td>
+</tr>
+</table></span></div>
+<p>But the earlier servers are still running, so you should cancel them, as the following example shows.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; .servers
+0 - Debugger Server - npipe:Pipe=rabbit
+1 - Debugger Server - tcp:Port=7
+2 - Debugger Server - npipe:Pipe=tiger,Password=*
+0:000&gt; .endsrv 0
+Server told to exit.  Actual exit may be delayed until
+the next connection attempt.
+0:000&gt; .endsrv 1
+Server told to exit.  Actual exit may be delayed until
+the next connection attempt.
+0:000&gt; .servers
+0 - &lt;Disabled, exit pending&gt;
+1 - &lt;Disabled, exit pending&gt;
+2 - Debugger Server - npipe:Pipe=tiger,Password=*</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Finally, to make sure that nothing attached to your computer while the earlier servers were active, use the <a href="_clients__list_debugging_clients_.htm"><b>.clients (List Debugging Clients)</b></a> command.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; .clients
+HotMachine\HostUser, last active Mon Mar 04 16:05:21 2002</pre>
+</td>
+</tr>
+</table></span></div>
+<div class="alert"><b>Caution</b>    Using a password with TCP, NPIPE, or COM protocol offers only a small amount of protection, because the password is not encrypted.  When you use a password together with a SSL or SPIPE protocol, the password is encrypted. If you want to establish a secure remote session, you must use the SSL or SPIPE protocol.</div>
+<div> </div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.endsrv (End Debugging Server)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

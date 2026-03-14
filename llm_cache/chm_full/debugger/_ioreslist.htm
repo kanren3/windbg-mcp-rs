@@ -1,0 +1,139 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !ioreslist extension displays an IO_RESOURCE_REQUIREMENTS_LIST structure."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!ioreslist</title>
+
+<meta name="MS-HAID" content="r27_exts_kernel_E_e3aca792-e930-4c16-972e-5ecfb2d5ee1b.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._ioreslist"></a>!ioreslist</h1>
+</div>
+<p>The <b>!ioreslist</b> extension displays an IO_RESOURCE_REQUIREMENTS_LIST structure.</p>
+<pre class="syntax">
+    <b>!ioreslist </b><i>Address</i> 
+</pre>
+<h2><a id="ddk__ioreslist_dbg"></a><a id="DDK__IORESLIST_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Address______"></a><a id="_______address______"></a><a id="_______ADDRESS______"></a>       <i>Address</i>      </dt>
+<dd>
+<p>Specifies the hexadecimal address of the IO_RESOURCE_REQUIREMENTS_LIST structure.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Windows 2000
+         </b></p>
+</td>
+<td>
+<p>
+          Kdextx86.dll
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Kdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>See <a href="plug_and_play_debugging.htm">Plug and Play Debugging</a> for applications of this extension command. For information about the IO_RESOURCE_REQUIREMENTS_LIST structure, see the Windows Driver Kit (WDK) documentation.</p>
+<h2>Remarks</h2>
+<p>Here is an example of the output from this extension:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; !ioreslist 0xe122b768
+
+IoResList at 0xe122b768 : Interface 0x5  Bus 0  Slot 0xe
+  Alternative 0 (Version 1.1)
+    Preferred Descriptor 0 - Port (0x1) Device Exclusive (0x1)
+      Flags (0x01) - PORT_IO
+      0x000100 byte range with alignment 0x000100
+      1000 - 0x10ff
+    Alternative Descriptor 1 - Port (0x1) Device Exclusive (0x1)
+      Flags (0x01) - PORT_IO
+      0x000100 byte range with alignment 0x000100
+      0 - 0xffffffff
+    Descriptor 2 - DevicePrivate (0x81) Device Exclusive (0x1)
+      Flags (0000) -
+      Data:              : 0x1 0x0 0x0
+    Preferred Descriptor 3 - Memory (0x3) Device Exclusive (0x1)
+      Flags (0000) - READ_WRITE
+      0x001000 byte range with alignment 0x001000
+      40080000 - 0x40080fff
+    Alternative Descriptor 4 - Memory (0x3) Device Exclusive (0x1)
+      Flags (0000) - READ_WRITE
+      0x001000 byte range with alignment 0x001000
+      0 - 0xffffffff
+    Descriptor 5 - DevicePrivate (0x81) Device Exclusive (0x1)
+      Flags (0000) -
+      Data:              : 0x1 0x1 0x0
+    Descriptor 6 - Interrupt (0x2) Shared (0x3)
+      Flags (0000) - LEVEL_SENSITIVE
+      0xb - 0xb</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The IO_RESOURCE_REQUIREMENTS_LIST contains information about:</p>
+<ul>
+<li>
+<p>Resource types</p>
+<p>There are four types of resources: I/O, Memory, IRQ, DMA.</p>
+</li>
+<li>
+<p>Descriptors</p>
+<p>Each preferred setting has a "Preferred" descriptor and a number of "Alternative" descriptors.</p>
+</li>
+</ul>
+<p>This resource list contains the following requests:</p>
+<ul>
+<li>
+<p>I/O Ranges</p>
+<p>Prefers a range of 0x1000 to 0x10FF inclusive, but can use any 0x100 range between 0 and 0xFFFFFFFF, provided it is 0x100-aligned. (For example, 0x1100 to 0x11FF is acceptable.)</p>
+</li>
+<li>
+<p>Memory</p>
+<p>Prefers a range of 0x40080000 to 0x40080FFF, but can use any range that is of size 0x1000, is 0x1000-aligned, and is located between 0 and 0xFFFFFFFF.</p>
+</li>
+<li>
+<p>IRQ</p>
+<p>Must use IRQ 0xB.</p>
+</li>
+</ul>
+<p>Interrupts and DMA channels are represented as ranges with the same beginning and end.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!ioreslist%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

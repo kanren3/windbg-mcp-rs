@@ -1,0 +1,176 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The GPIO_CONTROLLER_DRIVER_ERROR bug check has a value of 0x00000138. This bug check indicates that the GPIO class extension driver encountered a fatal error."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0x138: GPIO_CONTROLLER_DRIVER_ERROR</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0x138_gpio_controller_driver_error"></a>Bug Check 0x138: GPIO_CONTROLLER_DRIVER_ERROR</h1>
+</div>
+<p>The GPIO_CONTROLLER_DRIVER_ERROR  bug check has a value of 0x00000138. This bug check indicates that the GPIO class extension driver encountered a fatal error.
+</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2>GPIO_CONTROLLER_DRIVER_ERROR Parameters</h2>
+<p>The following parameters are displayed on the blue screen. <i>Parameter 1</i> indicates the type of violation. The meaning of the other parameters depends on the value of <i>Parameter 1</i>.</p>
+<table>
+<tr>
+<th>Parameter 1</th>
+<th>Parameter 2</th>
+<th>Parameter 3</th>
+<th>Parameter 4</th>
+<th>Cause of Error</th>
+</tr>
+<tr>
+<td>
+<p>1</p>
+</td>
+<td>
+<p>GSIV</p>
+</td>
+<td>
+<p>Reserved
+</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>  The GPIO controller managing the specific GSIV is not registered.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>2</p>
+</td>
+<td>
+<p>Context value</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>A client driver specified an invalid context to a lock or unlock request.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>3</p>
+</td>
+<td>
+<p> Indicates whether a critical transition is being requested.</p>
+</td>
+<td>
+<p> Indicates whether the bank is already in F1 due to a
+                    non-critical transition.
+</p>
+</td>
+<td>
+<p> Indicates whether the bank is already in F1 due to a critical
+                    transition.</p>
+</td>
+<td>
+<p>PoFx requested that the GPIO controller send a bank through an
+                inappropriate F1 power state and/or a critical transition.
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>4</p>
+</td>
+<td>
+<p> Indicates whether a critical transition is being requested.
+</p>
+</td>
+<td>
+<p>Indicates whether the bank is  in F1 due to a non-critical
+transition.</p>
+</td>
+<td>
+<p>Indicates whether the bank is in F1 due to a critical
+                    transition.
+</p>
+</td>
+<td>
+<p>PoFx requested that the GPIO controller send a bank through an
+inappropriate F0 power state and/or a critical transition.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>5</p>
+</td>
+<td>
+<p>NTSTATUS</p>
+</td>
+<td>
+<p>GPIO device extension</p>
+</td>
+<td>
+<p> GPIO interrupt parameters</p>
+</td>
+<td>
+<p> An on-Soc GPIO interrupt operation failed.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>6</p>
+</td>
+<td>
+<p>NTSTATUS</p>
+</td>
+<td>
+<p>GPIO device extension</p>
+</td>
+<td>
+<p>GPIO IO parameters</p>
+</td>
+<td>
+<p>An on-Soc GPIO IO operation failed.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>7</p>
+</td>
+<td>
+<p>Revision ID</p>
+</td>
+<td>
+<p> Function Index</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p> A _DSM method returned malformed data.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

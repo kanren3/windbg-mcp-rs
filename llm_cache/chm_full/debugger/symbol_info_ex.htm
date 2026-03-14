@@ -1,0 +1,90 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The SYMBOL_INFO_EX structure describes the extended line symbol information."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>SYMBOL_INFO_EX structure</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.symbol_info_ex"></a>SYMBOL_INFO_EX structure</h1>
+</div>
+<p>The SYMBOL_INFO_EX structure describes the extended line symbol information.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>typedef struct _SYMBOL_INFO_EX {
+  ULONG   SizeOfStruct;
+  ULONG   TypeOfInfo;
+  ULONG64 Offset;
+  ULONG   Line;
+  ULONG   Displacement;
+  ULONG   Reserved[4];
+} SYMBOL_INFO_EX, *PSYMBOL_INFO_EX;</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Members</h2>
+<dl>
+<dt><b>SizeOfStruct</b></dt>
+<dd>
+<p>Set to sizeof(SYMBOL_INFO_EX).</p>
+</dd>
+<dt><b>TypeOfInfo</b></dt>
+<dd>
+<p>Type of the symbol information stored.  DEBUG_SYMINFO_BREAKPOINT_SOURCE_LINE is the only supported type.</p>
+</dd>
+<dt><b>Offset</b></dt>
+<dd>
+<p>Address of the first line that does not correspond to compiler added glue line.</p>
+</dd>
+<dt><b>Line</b></dt>
+<dd>
+<p>First line number that does not correspond to a compiler added glue line.</p>
+</dd>
+<dt><b>Displacement</b></dt>
+<dd>
+<p>Line displacement: Offset between given address and the first instruction of the line.</p>
+</dd>
+<dt><b>Reserved[4]</b></dt>
+<dd>
+<p>Reserved for future use. This parameter can be set to any value.</p>
+</dd>
+</dl>
+<h2>Remarks</h2>
+<p>Glue lines are code lines added to the binary by the compiler/linker. Glue lines do not have corresponding lines in the original source code. They are added to bind together functionality inside of the PE generated binary, for example calling NET framework functions inside of a native binary.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>DbgEng.h (include DbgEng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20SYMBOL_INFO_EX structure%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

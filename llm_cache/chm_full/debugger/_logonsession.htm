@@ -1,0 +1,127 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !logonsession extension displays information about a specified logon session."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!logonsession</title>
+
+<meta name="MS-HAID" content="r27_exts_kernel_E_cb545b2e-c9cd-45be-9cba-3b81128c3837.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._logonsession"></a>!logonsession</h1>
+</div>
+<p>The <b>!logonsession</b> extension displays information about a specified logon session.</p>
+<p>Free Build Syntax</p>
+<pre class="syntax"><b>!logonsession </b><i>LUID</i></pre>
+<p>Checked Build Syntax</p>
+<pre class="syntax"><b>!logonsession </b><i>LUID</i><b> </b>[<i>InfoLevel</i>]</pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______LUID______"></a><a id="_______luid______"></a>       <i>LUID</i>      </dt>
+<dd>
+<p>Specifies the locally unique identifier (LUID) of a logon session to display. If <i>LUID</i>is 0, information about all logon sessions is displayed. </p>
+<p>To display information about the system session and all system tokens in a checked build, enter <b>!logonsession 3e7 1</b>.</p>
+</dd>
+<dt><a id="_______InfoLevel______"></a><a id="_______infolevel______"></a><a id="_______INFOLEVEL______"></a>       <i>InfoLevel</i>      </dt>
+<dd>
+<p>(Checked Build Only) Specifies how much token information is displayed. The <i>InfoLevel</i> parameter can take values from 0 to 4, with 0 representing the least information and 4 representing the most information.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Windows 2000</b></p>
+</td>
+<td>
+<p>Unavailable</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Kdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For information about logon sessions, see the Microsoft Windows SDK documentation and <i>Microsoft Windows Internals</i> by Mark Russinovich and David Solomon. (These resources may not be available in some languages 
+
+and countries.)
+</p>
+<h2>Remarks</h2>
+<p>Here is an example of the output from this extension on a free build:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !logonsession 0
+
+Dumping all logon sessions.
+
+** Session   0 = 0x0
+   LogonId     = {0x0 0x0}
+   References  = 0
+** Session   1 = 0x8ebb50
+ LogonId     = {0xe9f1 0x0}
+   References  = 21
+** Session   2 = 0x6e31e0
+   LogonId     = {0x94d1 0x0}
+   References  = 1
+** Session   3 = 0x8ecd60
+   LogonId     = {0x6b31 0x0}
+   References  = 0
+** Session   4 = 0xe0000106
+   LogonId     = {0x0 0x0}
+   References  = 0
+** Session   5 = 0x0
+   LogonId     = {0x0 0x0}
+   References  = 0
+** Session   6 = 0x8e9720
+   LogonId     = {0x3e4 0x0}
+   References  = 6
+** Session   7 = 0xe0000106
+   LogonId     = {0x0 0x0}
+   References  = 0
+** Session   8 = 0xa2e160
+   LogonId     = {0x3e5 0x0}
+   References  = 3
+** Session   9 = 0xe0000106
+   LogonId     = {0x0 0x0}
+   References  = 0
+** Session  10 = 0x3ca0
+   LogonId     = {0x3e6 0x0}
+   References  = 2
+** Session  11 = 0xe0000106
+   LogonId     = {0x0 0x0}
+   References  = 0
+** Session  12 = 0x1cd0
+   LogonId     = {0x3e7 0x0}
+   References  = 33
+** Session  13 = 0xe0000106
+ LogonId     = {0x0 0x0}
+ References  = 0
+14 sessions in the system.</code></pre>
+<p>You can stop execution at any point by pressing CTRL+BREAK (in WinDbg) or CTRL+C (in KD).</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!logonsession%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

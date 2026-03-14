@@ -1,0 +1,52 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The symbol store backing SMB and HTTP requests is a folder tree residing on a local disk."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Symbol Store Folder Tree</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.symbol_store_folder_tree"></a>Symbol Store Folder Tree</h1>
+</div>
+<p>The symbol store backing SMB and HTTP requests is a folder tree residing on a local disk.</p>
+<p>To keep administration simple, the sub-folder name (e.g. Symbols) can also be used as the File Share name and also the Virtual Directory name. If a new symbol store was to be added, a new sub-folder would be made under D:\SymStore, and a new File Share and Virtual Directory of that name would be made to expose the store to clients.</p>
+<p>The folder tree’s location should be chosen carefully as well as the disk’s file system. The symbol store can get extremely big (terabytes) when caching files from (internal) build servers and the Internet. The folder tree should reside on a disk that is capable of a high number of reads and low number of writes. The file system can affect performance - ReFS may perform better than NTFS and should be investigated for large deployments. Equally, the networking to the server should be of sufficient speed to handle the load from the clients and also the load to the upstream symbol stores to retrieve the symbols for cache population.</p>
+<h2><a id="Symbol_Store_Single-Tier_or_Two-Tier_Structure"></a><a id="symbol_store_single-tier_or_two-tier_structure"></a><a id="SYMBOL_STORE_SINGLE-TIER_OR_TWO-TIER_STRUCTURE"></a>Symbol Store Single-Tier or Two-Tier Structure</h2>
+<p>Normally files are placed in a single tier directory structure in which a single subdirectory exists for each filename cached. Under each filename folder, additional folders are made to store each version of the file.  The tree will have this structure:</p>
+<pre class="syntax" xml:space="preserve"><code>D:\SymStore\Symbols\ntdll.dll\...\
+D:\SymStore\Symbols\ntdll.pdb\...\
+D:\SymStore\Symbols\kernel32.dll\...\
+D:\SymStore\Symbols\kernel32.pdb\...\
+</code></pre>
+<p>If a large number of files are to be stored, a two-tier structure can be used at the root of the symbol store. The first 2 letters of the filename are used as an intermediate folder name.</p>
+<p>To use a two-tier structure, place a file called index2.txt in the root of D:\SymStore\Symbols.  The content of the file is of no importance. When this file exists, symsrv.dll will create and consume files from the two-tier tree using this structure:</p>
+<pre class="syntax" xml:space="preserve"><code>D:\SymStore\Symbols\nt\ntdll.dll\...\
+D:\SymStore\Symbols\nt\ntdll.pdb\...\
+D:\SymStore\Symbols\ke\kernel32.dll\...\
+D:\SymStore\Symbols\ke\kernel32.pdb\...\
+</code></pre>
+<p>If you want to convert the structure after the symbol store is populated, use the convertstore.exe application in the debugger folder. To allow the tool to work, create a folder called 000Admin in the root folder. This folder is required by convertstore.exe so that it can control the locking of the symbol store.</p>
+<h2><a id="related_topics"></a>Related topics</h2>
+<dl>
+<dt><a href="http_symbol_stores.htm">HTTP Symbol Stores</a></dt>
+<dt><a href="file_share__smb__symbol_server.htm">File Share (SMB) Symbol Server</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Symbol Store Folder Tree%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

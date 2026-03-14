@@ -1,0 +1,56 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Target Information"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Target Information</title>
+
+<meta name="MS-HAID" content="Engine_DG_e6d71f34-178f-47ae-ab7c-7e7dc07927d9.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.target_information"></a>Target Information</h1>
+</div>
+<p>The method <a href="getdebuggeetype.htm"><b>GetDebuggeeType</b></a> returns the nature of the current target (for example, whether it is a kernel-mode or user-mode target), and how the <a href="introduction.htm#debugger_engine">debugger engine</a> is connected to it.</p>
+<p>If the target is a crash dump file file, the method <a href="getdumpformatflags.htm"><b>GetDumpFormatFlags</b></a> will indicate what information is contained in the dump.</p>
+<h3><a id="target_s_computer"></a><a id="TARGET_S_COMPUTER"></a>Target's Computer</h3>
+<p>The page size of the target's computer is returned by <a href="getpagesize.htm"><b>GetPageSize</b></a>.  <a href="ispointer64bit.htm"><b>IsPointer64Bit</b></a> will indicate if the computer uses 32-bit or 64-bit addresses.</p>
+<div class="alert"><b>Note</b>  Internally, the debugger engine always uses 64-bit addresses for the target.  If the target only uses 32-bit addresses, the engine automatically converts them when communicating with the target.</div>
+<div> </div>
+<p>The number of processors in the target's computer is returned by <a href="getnumberprocessors.htm"><b>GetNumberProcessors</b></a>.</p>
+<p>There are three different processor types associated with the target's computer:</p>
+<ul>
+<li>
+<p>The <i>actual processor type</i> is the type of the physical processor in the target's computer. This is returned by <a href="getactualprocessortype.htm"><b>GetActualProcessorType</b></a>.</p>
+</li>
+<li>
+<p>The <i>executing processor type</i> is the type of the processor used in the currently executing processor context. This is returned by <a href="getexecutingprocessortype.htm"><b>GetExecutingProcessorType</b></a>.</p>
+</li>
+<li>
+<p>The <i>effective processor type</i> is the processor type the debugger uses when interpreting information from the target -- for example, setting breakpoints, accessing registers, and getting stack traces.  The effective processor type is returned by <a href="geteffectiveprocessortype.htm"><b>GetEffectiveProcessorType</b></a> and can be changed using <a href="seteffectiveprocessortype.htm"><b>SetEffectiveProcessorType</b></a>.</p>
+</li>
+</ul>
+<p>The effective processor type and executing processor type may differ from the actual processor type -- for example, when the physical processor is an x64 processor and it is running in x86 mode.</p>
+<p>The different executing processor types that are supported by the physical processor on the target's computer are returned by <a href="getpossibleexecutingprocessortypes.htm"><b>GetPossibleExecutingProcessorTypes</b></a>.  The number of these is returned by <a href="getnumberpossibleexecutingprocessortypes.htm"><b>GetNumberPossibleExecutingProcessorTypes</b></a>.</p>
+<p>The list of processor types that is supported by the debugger engine is returned by <a href="getsupportedprocessortypes.htm"><b>GetSupportedProcessorTypes</b></a>.  The number of supported processor types is returned by <a href="getnumbersupportedprocessortypes.htm"><b>GetNumberSupportedProcessorTypes</b></a>.</p>
+<p>The names (full and abbreviated) of a processor type are returned by <a href="getprocessortypenames.htm"><b>GetProcessorTypeNames</b></a>.</p>
+<p>The current time on the target's computer is returned by <a href="getcurrenttimedate.htm"><b>GetCurrentTimeDate</b></a>.  The length of time the target's computer has been running since the last boot is returned by <a href="getcurrentsystemuptime.htm"><b>GetCurrentSystemUpTime</b></a>.  Time information may not be available for all targets.</p>
+<h3><a id="target_versions"></a><a id="TARGET_VERSIONS"></a>Target Versions</h3>
+<p>The Windows version running on the target's computer is returned by <a href="getsystemversionvalues.htm"><b>GetSystemVersionValues</b></a> and the <a href="request.htm"><b>Request</b></a> operation <a href="debug_request_get_win32_major_minor_versions.htm"><b>DEBUG_REQUEST_GET_WIN32_MAJOR_MINOR_VERSIONS</b></a>, and a description of the Windows version is returned by <a href="getsystemversionstring.htm"><b>GetSystemVersionString</b></a>.  Some of this information is also returned by <a href="getsystemversion.htm"><b>GetSystemVersion</b></a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Target Information%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

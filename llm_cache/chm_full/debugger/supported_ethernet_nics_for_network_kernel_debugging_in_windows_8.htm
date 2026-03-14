@@ -1,0 +1,286 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="You can do kernel debugging over an Ethernet network cable when the target computer is running Windows 8. The target computer must have a supported network interface card (NIC) or network adapter."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Supported Ethernet NICs for Network Kernel Debugging in Windows 8</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.supported_ethernet_nics_for_network_kernel_debugging_in_windows_8"></a>Supported Ethernet NICs for Network Kernel Debugging in Windows 8</h1>
+</div>
+<p>You can do kernel debugging over an Ethernet network cable when the target computer is running Windows 8. The target computer must have a supported network interface card (NIC) or network adapter.</p>
+<p>During kernel debugging, the computer that runs the debugger is called the <i>host computer</i>, and the computer being debugged is called the <i>target computer</i>. To do <a href="setting_up_a_network_debugging_connection.htm">kernel debugging over a network cable</a>, the target computer must have a supported network adapter. When the target computer is running Windows 8, the network adapters listed here are supported for kernel debugging.</p>
+<div class="alert"><b>Note</b>  For a list of network adapters supported by Windows 8.1 for kernel debugging, see <a href="supported_ethernet_nics_for_network_kernel_debugging_in_windows_8_1.htm">Supported Ethernet NICs for Network Kernel Debugging in Windows 8.1</a>.</div>
+<div> </div>
+<h2><a id="System_Requirements"></a><a id="system_requirements"></a><a id="SYSTEM_REQUIREMENTS"></a>System Requirements</h2>
+<p>Kernel debugging through Ethernet NICs requires certain low-level platform support. Windows requires that these NICs be attached via PCI/PCIe for this debugging solution.
+
+In most cases, simply plugging in one of these supported NICs will allow a robust kernel debugging experience. However, there may be cases where BIOS configuration details hinder the Windows debug path. The following set of platform requirements should be considered:</p>
+<ul>
+<li>System firmware should discover and configure the NIC device such that its resources do not conflict with any other devices that have been BIOS-configured.</li>
+<li>System firmware should place the NIC’s resources under address windows that are not marked prefetchable.</li>
+</ul>
+<h2><a id="Finding_the_vendor_ID_and_device_ID"></a><a id="finding_the_vendor_id_and_device_id"></a><a id="FINDING_THE_VENDOR_ID_AND_DEVICE_ID"></a>Finding the vendor ID and device ID</h2>
+<p>First find the vendor ID and device ID of the  network adapter on your target computer.</p>
+<ul>
+<li>On the target computer, open Device Manager (enter <b>devmgmt</b> in a Command Prompt window).</li>
+<li>In Device Manager, locate the network adapter that you want to use for debugging.</li>
+<li>Right click the network adapter node, and choose <b>Properties</b>.</li>
+<li>In the <b>Details</b> tab, under <b>Property</b>, select <b>Hardware Ids</b>.</li>
+</ul>
+<p>The vendor and device IDs are shown as VEN_<i>VendorID</i> and DEV_<i>DeviceID</i>. For example, if you see PCI\VEN_8086&amp;DEV_104B, the vendor ID is 8086, and the device ID is 104B.</p>
+<h2><a id="Vendor_ID_8086__Intel_Corporation"></a><a id="vendor_id_8086__intel_corporation"></a><a id="VENDOR_ID_8086__INTEL_CORPORATION"></a>Vendor ID 8086, Intel Corporation</h2>
+<p>For vendor ID 8086, these device IDs are supported:</p>
+<dl>
+<dd>1000</dd>
+<dd>1001</dd>
+<dd>1004</dd>
+<dd>1008</dd>
+<dd>1009</dd>
+<dd>100C</dd>
+<dd>100D</dd>
+<dd>100E</dd>
+<dd>100F</dd>
+<dd>1010</dd>
+<dd>1011</dd>
+<dd>1012</dd>
+<dd>1013</dd>
+<dd>1014</dd>
+<dd>1015</dd>
+<dd>1016</dd>
+<dd>1017</dd>
+<dd>1018</dd>
+<dd>1019</dd>
+<dd>101A</dd>
+<dd>101D</dd>
+<dd>101E</dd>
+<dd>1026</dd>
+<dd>1027</dd>
+<dd>1028</dd>
+<dd>1049</dd>
+<dd>104A</dd>
+<dd>104B</dd>
+<dd>104C</dd>
+<dd>104D</dd>
+<dd>105E</dd>
+<dd>105F</dd>
+<dd>1060</dd>
+<dd>1075</dd>
+<dd>1076</dd>
+<dd>1077</dd>
+<dd>1078</dd>
+<dd>1079</dd>
+<dd>107A</dd>
+<dd>107B</dd>
+<dd>107C</dd>
+<dd>107D</dd>
+<dd>107E</dd>
+<dd>107F</dd>
+<dd>108A</dd>
+<dd>108B</dd>
+<dd>108C</dd>
+<dd>1096</dd>
+<dd>1098</dd>
+<dd>1099</dd>
+<dd>109A</dd>
+<dd>10A4</dd>
+<dd>10A5</dd>
+<dd>10A7</dd>
+<dd>10A9</dd>
+<dd>10B5</dd>
+<dd>10B9</dd>
+<dd>10BA</dd>
+<dd>10BB</dd>
+<dd>10BC</dd>
+<dd>10BD</dd>
+<dd>10BF</dd>
+<dd>10C9</dd>
+<dd>10CB</dd>
+<dd>10CC</dd>
+<dd>10CD</dd>
+<dd>10CE</dd>
+<dd>10D3</dd>
+<dd>10D5</dd>
+<dd>10D6</dd>
+<dd>10D9</dd>
+<dd>10DA</dd>
+<dd>10E5</dd>
+<dd>10E6</dd>
+<dd>10E7</dd>
+<dd>10E8</dd>
+<dd>10EA</dd>
+<dd>10EB</dd>
+<dd>10EF</dd>
+<dd>10F0</dd>
+<dd>10F5</dd>
+<dd>10F6</dd>
+<dd>1501</dd>
+<dd>1502</dd>
+<dd>1503</dd>
+<dd>150A</dd>
+<dd>150C</dd>
+<dd>150D</dd>
+<dd>150E</dd>
+<dd>150F</dd>
+<dd>1510</dd>
+<dd>1511</dd>
+<dd>1516</dd>
+<dd>1518</dd>
+<dd>1521</dd>
+<dd>1522</dd>
+<dd>1523</dd>
+<dd>1524</dd>
+<dd>1526</dd>
+<dd>294C</dd>
+</dl>
+<h2><a id="Vendor_ID_10EC__Realtek_Semiconductor_Corp."></a><a id="vendor_id_10ec__realtek_semiconductor_corp."></a><a id="VENDOR_ID_10EC__REALTEK_SEMICONDUCTOR_CORP."></a>Vendor ID 10EC, Realtek Semiconductor Corp.</h2>
+<p>For vendor ID 10EC, these device IDs are supported:</p>
+<dl>
+<dd>8136</dd>
+<dd>8137</dd>
+<dd>8167</dd>
+<dd>8168</dd>
+<dd>8169</dd>
+</dl>
+<h2><a id="Vendor_ID_14E4__Broadcom"></a><a id="vendor_id_14e4__broadcom"></a><a id="VENDOR_ID_14E4__BROADCOM"></a>Vendor ID 14E4, Broadcom</h2>
+<p>For vendor ID 14E4, these device IDs are supported:</p>
+<dl>
+<dd>1600</dd>
+<dd>1601</dd>
+<dd>1639</dd>
+<dd>163A</dd>
+<dd>163B</dd>
+<dd>163C</dd>
+<dd>1644</dd>
+<dd>1645</dd>
+<dd>1646</dd>
+<dd>1647</dd>
+<dd>1648</dd>
+<dd>164A</dd>
+<dd>164C</dd>
+<dd>164D</dd>
+<dd>1653</dd>
+<dd>1654</dd>
+<dd>1655</dd>
+<dd>1656</dd>
+<dd>1657</dd>
+<dd>1658</dd>
+<dd>1659</dd>
+<dd>165A</dd>
+<dd>165B</dd>
+<dd>165C</dd>
+<dd>165D</dd>
+<dd>165E</dd>
+<dd>165F</dd>
+<dd>1668</dd>
+<dd>1669</dd>
+<dd>166A</dd>
+<dd>166B</dd>
+<dd>166D</dd>
+<dd>166E</dd>
+<dd>1672</dd>
+<dd>1673</dd>
+<dd>1674</dd>
+<dd>1676</dd>
+<dd>1677</dd>
+<dd>1678</dd>
+<dd>1679</dd>
+<dd>167A</dd>
+<dd>167B</dd>
+<dd>167C</dd>
+<dd>167D</dd>
+<dd>167F</dd>
+<dd>1680</dd>
+<dd>1681</dd>
+<dd>1684</dd>
+<dd>1688</dd>
+<dd>1690</dd>
+<dd>1691</dd>
+<dd>1692</dd>
+<dd>1693</dd>
+<dd>1694</dd>
+<dd>1696</dd>
+<dd>1698</dd>
+<dd>1699</dd>
+<dd>169A</dd>
+<dd>169B</dd>
+<dd>169D</dd>
+<dd>16A0</dd>
+<dd>16A6</dd>
+<dd>16A7</dd>
+<dd>16A8</dd>
+<dd>16AA</dd>
+<dd>16AC</dd>
+<dd>16B0</dd>
+<dd>16B1</dd>
+<dd>16B2</dd>
+<dd>16B4</dd>
+<dd>16B5</dd>
+<dd>16B6</dd>
+<dd>16C6</dd>
+<dd>16C7</dd>
+<dd>16DD</dd>
+<dd>16F7</dd>
+<dd>16FD</dd>
+<dd>16FE</dd>
+<dd>16FF</dd>
+<dd>170D</dd>
+<dd>170E</dd>
+<dd>170F</dd>
+</dl>
+<h2><a id="Vendor_ID_1969__Atheros_Communications"></a><a id="vendor_id_1969__atheros_communications"></a><a id="VENDOR_ID_1969__ATHEROS_COMMUNICATIONS"></a>Vendor ID 1969, Atheros Communications</h2>
+<p>Support for Atheros network adapters is provided by a separate module that is available from Qualcomm. These device IDs are supported.</p>
+<dl>
+<dd>1062</dd>
+<dd>1063</dd>
+<dd>1073</dd>
+<dd>1083</dd>
+<dd>1090</dd>
+<dd>1091</dd>
+<dd>10A0</dd>
+<dd>10A1</dd>
+<dd>10B0</dd>
+<dd>10B1</dd>
+<dd>10C0</dd>
+<dd>10C1</dd>
+<dd>10D0</dd>
+<dd>10D1</dd>
+<dd>10E0</dd>
+<dd>10E1</dd>
+<dd>10F0</dd>
+<dd>10F1</dd>
+<dd>2060</dd>
+<dd>2062</dd>
+<dd>E091</dd>
+<dd>E0A1</dd>
+<dd>E0B1</dd>
+<dd>E0C1</dd>
+<dd>E0D1</dd>
+<dd>E0E1</dd>
+<dd>E0F1</dd>
+</dl>
+<h2><a id="related_topics"></a>Related topics</h2>
+<dl>
+<dt><a href="setting_up_a_network_debugging_connection_in_visual_studio.htm">Setting Up Kernel-Mode Debugging over a Network Cable in Visual Studio</a></dt>
+<dt><a href="setting_up_a_network_debugging_connection.htm">Setting Up Kernel-Mode Debugging over a Network Cable Manually</a></dt>
+<dt><a href="supported_ethernet_nics_for_network_kernel_debugging_in_windows_8_1.htm">Supported Ethernet NICs for Network Kernel Debugging in Windows 8.1</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Supported Ethernet NICs for Network Kernel Debugging in Windows 8%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

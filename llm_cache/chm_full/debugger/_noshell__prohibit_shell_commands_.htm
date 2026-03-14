@@ -1,0 +1,70 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .noshell command prevents you from using .shell commands."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.noshell (Prohibit Shell Commands)</title>
+
+<meta name="MS-HAID" content="r21_metacmds_L_1d3d0816-860f-4a78-95b6-ac2d40bebd3f.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._noshell__prohibit_shell_commands_"></a>.noshell (Prohibit Shell Commands)</h1>
+</div>
+<p>The <b>.noshell</b> command prevents you from using <a href="_shell__command_shell_.htm"><b>.shell</b></a> commands.</p>
+<pre class="syntax">
+    .noshell 
+</pre>
+<h2><a id="ddk_meta_prohibit_shell_commands_dbg"></a><a id="DDK_META_PROHIBIT_SHELL_COMMANDS_DBG"></a></h2>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Platforms
+         </b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about the command shell and for other ways to disable shell commands, see <a href="using_shell_commands.htm">Using Shell Commands</a>.</p>
+<h2>Remarks</h2>
+<p>If you use the <b>.noshell</b> command, you cannot use <a href="_shell__command_shell_.htm"><b>.shell (Command Shell)</b></a> commands as long as the debugger is running, even if you start a new debugging session.</p>
+<p>If you are performing remote debugging, this command is useful for security purposes.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.noshell (Prohibit Shell Commands)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

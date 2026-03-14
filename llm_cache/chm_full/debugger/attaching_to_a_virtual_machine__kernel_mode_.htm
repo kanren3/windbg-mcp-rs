@@ -1,0 +1,117 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Debugging Tools for Windows supports kernel debugging of a virtual machine."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Setting Up Kernel-Mode Debugging of a Virtual Machine Manually</title>
+
+<meta name="MS-HAID" content="r05_use_start_fe29f2ea-16f9-44b8-aa54-f74a058b825e.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.attaching_to_a_virtual_machine__kernel_mode_"></a>Setting Up Kernel-Mode Debugging of a Virtual Machine Manually</h1>
+</div>
+<p>Debugging Tools for Windows supports kernel debugging of a virtual machine. The virtual machine can be located on the same physical computer as the debugger or on a different computer that is connected to the same network. This topic describes how to set up debugging of a virtual machine manually.</p>
+<p>As an alternative to setting up debugging of a virtual machine manually, you can do the setup using Microsoft Visual Studio. For more information, see <a href="setting_up_a_connection_to_a_virtual_machine_in_visual_studio.htm">Setting Up Kernel-Mode Debugging of a Virtual Machine in Visual Studio</a>.
+
+</p>
+<p>The computer that runs the debugger is called the <i>host computer</i>, and the virtual machine being debugged is called the <i>target virtual machine</i>.</p>
+<h2><a id="Setting_Up_the_Target_Virtual_Machine"></a><a id="setting_up_the_target_virtual_machine"></a><a id="SETTING_UP_THE_TARGET_VIRTUAL_MACHINE"></a>Setting Up the Target Virtual Machine</h2>
+<ol>
+<li>
+<p>In the virtual machine, in an elevated Command Prompt window, enter the following commands.</p>
+<dl>
+<dd><b>bcdedit /debug on</b></dd>
+<dd><b>bcdedit /dbgsettings serial debugport:</b><i>n</i><b> baudrate:115200 
+</b><p>where <i>n</i> is the number of a COM port on the virtual machine.</p>
+</dd>
+</dl>
+<div class="alert"><b>Note</b>  By default, COM ports are not presented in generation 2 virtual machines. For information about how to create a COM port, see <a href="#generation_2_virtual_machines">Generation 2 Virtual Machines</a>.</div>
+<div> </div>
+</li>
+<li>Reboot the virtual machine.</li>
+<li>In the virtual machine, configure the COM port to map to a named pipe. 
+
+The debugger will connect through this pipe. For more information about how to create this pipe, see your virtual machine's documentation.</li>
+</ol>
+<h2><a id="starting_the_debugger"></a><a id="STARTING_THE_DEBUGGER"></a>Starting the Debugging Session Using WinDbg</h2>
+<p>On the host computer, open WinDbg. On the <b>File</b> menu, choose <b>Kernel Debug</b>. In the Kernel Debugging dialog box, open the <b>COM</b> tab. Check the <b>Pipe</b> box, and check the <b>Reconnect</b> box. For <b>Baud Rate</b>, enter 115200. For <b>Resets</b>, enter 0. </p>
+<p>If the debugger is running on the same computer as the virtual machine, enter the following for <b>Port</b>.</p>
+<p><b>\\.\pipe\</b><i>PipeName</i>. </p>
+<p>If the debugger is running on a different computer from the virtual machine, enter the following for <b>Port</b>.</p>
+<p><b>\\</b><i>VMHost</i><b>\pipe\</b><i>PipeName</i></p>
+<p>Click <b>OK</b>.</p>
+<p>You can also start WinDbg at the command line. If the debugger is running on the same physical computer as the virtual machine, enter the following command in a Command Prompt window.</p>
+<p><b>windbg -k com:pipe,port=\\.\pipe\</b><i>PipeName</i><b>,resets=0,reconnect</b></p>
+<p>If the debugger is running on a different physical computer from the virtual machine, enter the following command in a Command Prompt window.</p>
+<p><b>windbg -k com:pipe,port=\\</b><i>VMHost</i><b>\pipe\</b><i>PipeName</i><b>,resets=0,reconnect</b></p>
+<h2><a id="Starting_the_Debugging_Session_Using_KD"></a><a id="starting_the_debugging_session_using_kd"></a><a id="STARTING_THE_DEBUGGING_SESSION_USING_KD"></a>Starting the Debugging Session Using KD</h2>
+<p>To debug a virtual machine that is running on the same physical computer as the debugger, enter the following command in a Command Prompt window.</p>
+<p><b>kd -k com:pipe,port=\\.\pipe\</b><i>PipeName</i><b>,resets=0,reconnect</b></p>
+<p>To debug a virtual machine that is running on a different physical computer from the debugger, enter the following command in a Command Prompt window.</p>
+<p><b>kd -k com:pipe,port=\\</b><i>VMHost</i><b>\pipe\</b><i>PipeName</i><b>,resets=0,reconnect </b></p>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="________VMHost"></a><a id="________vmhost"></a><a id="________VMHOST"></a><i>
+       VMHost</i></dt>
+<dd>
+<p>Specifies the name of the computer that the virtual machine is running on.</p>
+</dd>
+<dt><a id="PipeName_______"></a><a id="pipename_______"></a><a id="PIPENAME_______"></a><i>PipeName
+      </i></dt>
+<dd>
+<p>Specifies the name of the pipe that you created on the virtual machine.</p>
+</dd>
+<dt><a id="resets_0"></a><a id="RESETS_0"></a><b>resets=0</b></dt>
+<dd>
+<p>Specifies that an unlimited number of reset packets can be sent to the target when the host and target are synchronizing. Use the <b>resets=0</b> parameter for Microsoft Virtual PC and other virtual machines whose pipes drop excess bytes. Do not use this parameter for VMware or other virtual machines whose pipes do not drop all excess bytes. </p>
+</dd>
+<dt><a id="________reconnect"></a><a id="________RECONNECT"></a><i>
+       reconnect</i></dt>
+<dd>
+<p>Causes the debugger to automatically disconnect and reconnect the pipe if a read/write failure occurs. Additionally, if the debugger does not find the named pipe when the debugger is started, the <i>reconnect</i> parameter causes the debugger to wait for a pipe that is named <i>PipeName </i>to appear. Use <i>reconnect</i> for Virtual PC and other virtual machines that destroy and re-create their pipes during a computer restart. Do not use this parameter for VMware or other virtual machines that preserve their pipes during a computer restart.</p>
+</dd>
+</dl>
+<p>For more information about additional command-line options, see <a href="kd_command_line_options.htm"><b>KD Command-Line Options</b></a> or <a href="windbg_command_line_options.htm"><b>WinDbg Command-Line Options</b></a>.</p>
+<h2><a id="generation_2_virtual_machines"></a><a id="GENERATION_2_VIRTUAL_MACHINES"></a>Generation 2 Virtual Machines</h2>
+<p>By default, COM ports are not presented in generation 2 virtual machines. You can add COM ports through PowerShell or WMI. For the COM ports to be displayed in the Hyper-V Manager console, they must be created with a path.</p>
+<p>To enable kernel debugging using a COM port on a generation 2 virtual machine, follow these steps:
+</p>
+<ol>
+<li>
+<p>Disable Secure Boot by entering this PowerShell command:</p><b>Set-VMFirmware –Vmname </b><i>VmName</i><b> –EnableSecureBoot Off
+</b><p>where <i>VmName</i> is the name of your virtual machine.</p>
+</li>
+<li>
+<p>Add a COM port to the virtual machine by entering this PowerShell command:</p><b>Set-VMComPort –VMName </b><i>VmName</i><b> 1 \\.\pipe\</b><i>PipeName</i><p>For example, the following command configures the first COM port on virtual machine TestVM to connect to named pipe TestPipe on the local computer.</p><b>Set-VMComPort –VMName TestVM 1 \\.\pipe\TestPipe
+</b></li>
+</ol>
+<p>For more information, see <a href="http://go.microsoft.com/fwlink/p/?Linkid=331326">Generation 2 Virtual Machine Overview</a>.</p>
+<h2><a id="Remarks"></a><a id="remarks"></a><a id="REMARKS"></a>Remarks</h2>
+<p>If the target computer has stopped responding, the target computer is still stopped because of an earlier kernel debugging action, or you used the <b>-b</b> <a href="command_line_options.htm">command-line option</a>, the debugger breaks into the target computer immediately.</p>
+<p>Otherwise, the target computer continues running until the debugger orders it to break.</p>
+<div class="alert"><b>Note</b>  If you restart the virtual machine by using the VMWare facilities (for example, the reset button), exit WinDbg, and then restart WinDbg to continue debugging.<p class="note">During virtual machine debugging, VMWare often consumes 100% of the CPU.</p>
+</div>
+<div> </div>
+<h2><a id="related_topics"></a>Related topics</h2>
+<dl>
+<dt><a href="setting_up_kernel-mode_debugging_in_windbg__cdb__or_ntsd.htm">Setting Up Kernel-Mode Debugging Manually</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Setting Up Kernel-Mode Debugging of a Virtual Machine Manually%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

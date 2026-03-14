@@ -1,0 +1,113 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !processirps extension displays information about I/O request packets (IRPs) associated with processes."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!processirps</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._processirps"></a>!processirps</h1>
+</div>
+<p>The <b>!processirps</b> extension displays information about I/O request packets (IRPs) associated with processes.</p>
+<pre class="syntax"><b>!processirps</b>
+<b>!processirps </b><i>ProcessAddress</i><b> [</b><i>Flags</i><b>]</b></pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_ProcessAddress"></a><a id="_processaddress"></a><a id="_PROCESSADDRESS"></a><b> </b><i>ProcessAddress</i></dt>
+<dd>
+<p>The address of a process. If you specify <i>ProcessAddress</i>, only IRPs associated with that process are displayed. If you do not specify <i>ProcessAddress</i>, IRPs for all processes are displayed.</p>
+</dd>
+<dt><a id="_Flags"></a><a id="_flags"></a><a id="_FLAGS"></a><b> </b><i>Flags</i></dt>
+<dd>
+<p>A bitwise OR of one or more of the following flags.</p>
+<p></p>
+<dl>
+<dt><a id="Bit_0__0x1_"></a><a id="bit_0__0x1_"></a><a id="BIT_0__0X1_"></a>Bit 0 (0x1)</dt>
+<dd>
+<p> Display IRPs queued to threads.</p>
+</dd>
+<dt><a id="Bit_1__0x2_"></a><a id="bit_1__0x2_"></a><a id="BIT_1__0X2_"></a>Bit 1 (0x2)</dt>
+<dd>
+<p>Display  IRPs queued to file objects.</p>
+</dd>
+</dl>
+<p>If you specify <i>Flags</i>, you must also specify <i>ProcessAddress</i>. If you do not specify <i>Flags</i>, IRPs queued to both threads and file objects are displayed.</p>
+</dd>
+</dl>
+<h2><a id="ddk__processfields_dbg"></a><a id="DDK__PROCESSFIELDS_DBG"></a></h2>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<p>kdexts.dll</p>
+<h2>Remarks</h2>
+<p>This command enables you to quickly identify any queued IRPs for a process, both those that are queued to threads and those that are queued to file objects. IRPs are queued to a file object when the file object has a completion port associated with it.</p>
+<h2>Examples</h2>
+<p>You can use <a href="_process.htm"><b>!process</b></a> command to get process addresses. For example, you could get the process address for explorer.exe.</p>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>2: kd&gt; !process 0 0
+**** NT ACTIVE PROCESS DUMP ****
+...
+PROCESS fffffa800688c940
+    SessionId: 1  Cid: 0bbc    Peb: 7f70da5e000  ParentCid: 0b84
+    DirBase: 2db10000  ObjectTable: fffff8a0025bd440  HandleCount: 1056.
+    Image: explorer.exe</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Now you can pass the process address for explorer.exe to the <b>!processirps</b> command. The following output shows that explorer.exe has IRPs queued to threads and IRPs queued to file objects.</p>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>
+2: kd&gt; !processirps fffffa800688c940
+**** PROCESS fffffa800688c940 (Image: explorer.exe) ****
+
+Checking threads for IRPs.
+
+  Thread fffffa800689f080:
+
+    IRP fffffa80045ccc10 - Owned by \FileSystem\Ntfs for device fffffa8004f5c030
+    IRP fffffa800454f650 - Owned by \FileSystem\Ntfs for device fffffa8004f5c030
+    ...
+    IRP fffffa80068e9c10 - Owned by \FileSystem\Ntfs for device fffffa8004f5c030
+
+Checking file objects for IRPs.
+
+  FileObject fffffa80068795e0 (handle 8bc):
+
+    IRP fffffa8006590cf0 - Owned by \Driver\DeviceApi for device DeviceApi (fffffa800363ae40)
+
+  ...
+
+  FileObject fffffa8005bf59c0 (handle 900):
+
+    IRP fffffa8006659010 - Owned by \Driver\DeviceApi for device DeviceApi (fffffa800363ae40)</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!processirps%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

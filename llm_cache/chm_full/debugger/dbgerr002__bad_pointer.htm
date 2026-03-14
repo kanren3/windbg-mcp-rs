@@ -1,0 +1,43 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="dbgerr002: Bad Pointer"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>dbgerr002: Bad Pointer</title>
+
+<meta name="MS-HAID" content="r35_errors_4fd653ce-8ceb-419e-99b6-a02fb16a27c1.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.dbgerr002__bad_pointer"></a>dbgerr002: Bad Pointer</h1>
+</div>
+<h2><a id="ddk_dbgerr002_dbg"></a><a id="DDK_DBGERR002_DBG"></a></h2>
+<p>Debugger error <b>dbgerr002</b> displays the message "Bad pointer." This error indicates a problem retrieving a symbol file.</p>
+<p>The symbol server has the file indexed, but is being redirected to another location to find the file. No file is accessible at this other location.</p>
+<p>Two common causes of this problem are:</p>
+<ul>
+<li>
+<p>The path is a UNC path, and the computer containing this server is not available.</p>
+</li>
+<li>
+<p>The path indicates a directory or file that has been deleted.</p>
+</li>
+</ul>
+<p>If your symbol store was created by using SymStore, you can find the full path to this file by examining file.ptr. For details, see <a href="symstore.htm">Using SymStore</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20dbgerr002: Bad Pointer%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

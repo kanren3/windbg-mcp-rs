@@ -1,0 +1,42 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Edit | Go to Address"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Edit | Go to Address</title>
+
+<meta name="MS-HAID" content="r37_gui_2_e8524fc4-1524-4afd-aa36-1fd26a494ff5.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.edit___go_to_address"></a>Edit | Go to Address</h1>
+</div>
+<h2><a id="ddk_edit_go_to_address_dbg"></a><a id="DDK_EDIT_GO_TO_ADDRESS_DBG"></a></h2>
+<p>Click <b>Go to Address</b> on the <b>Edit</b> menu to go to an address in the target's virtual address space.</p>
+<p>This command is equivalent to pressing CTRL+G.</p>
+<h3><a id="dialog_box"></a><a id="DIALOG_BOX"></a>Dialog Box</h3>
+<p>When you click <b>Go to Address</b>, the <b>View Code Offset</b> dialog box appears. In this dialog box, enter the address that you want to move to. This address can be an expression (such as a function, symbol, or integer memory address) or any valid address expression. If the address is ambiguous, the dialog box displays a list that contains all of the ambiguous items.</p>
+<div class="alert"><b>Note</b>    If you put the cursor on a line within the <a href="disassembly_window.htm">Disassembly window</a> or a <a href="source_window.htm">Source window</a> and then use the<b>Go to Address </b>command, the address of the line that you have selected will appear in the <b>View Code Offset </b>dialog box. You can use this address or replace it with any address of your choice.</div>
+<div> </div>
+<p>After you click <b>OK</b>, the debugger moves the caret (^) to the beginning of the function or address in the Disassembly window or a Source window.</p>
+<p>You can use the <b>Go to Address</b> command in any window that is currently active. If the debugger is in disassembly mode, WinDbg finds the address in the Disassembly window. If the debugger is in source mode, WinDbg finds the address in a Source window. If the address cannot be found in a Source window, WinDbg finds it in the Disassembly window. If the appropriate window is not open, WinDbg opens it.</p>
+<p>The <b>Go to Address</b> command only changes the WinDbg display. This command does not affect the execution of the target or any other debugger operations.</p>
+<h3><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about other ways of finding text in debugging information windows, see <a href="moving_through_a_window.htm">Moving Through a Window</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Edit | Go to Address%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

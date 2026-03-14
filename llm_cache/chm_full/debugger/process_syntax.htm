@@ -1,0 +1,94 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Process Syntax"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Process Syntax</title>
+
+<meta name="MS-HAID" content="r13_syntax_a48cd749-4fec-4281-b271-53b04a1b04ab.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.process_syntax"></a>Process Syntax</h1>
+</div>
+<h2><a id="ddk_process_syntax_dbg"></a><a id="DDK_PROCESS_SYNTAX_DBG"></a></h2>
+<p>Many debugger commands have process identifiers as their parameters. A vertical bar ( | ) appears before the process identifier.</p>
+<p>The process identifier can be one of the following values.</p>
+<table>
+<tr>
+<th>Process identifier</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p><b>|.</b></p>
+</td>
+<td>
+<p>The current process.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>|#</b></p>
+</td>
+<td>
+<p>The process that caused the current exception or debug event.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>|*</b></p>
+</td>
+<td>
+<p>All processes.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>|</b><i>Number</i></p>
+</td>
+<td>
+<p>The process whose ordinal is <i>Number</i>. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>|~[</b><i>PID</i><b>]</b></p>
+</td>
+<td>
+<p>The process whose process ID is <i>PID</i>. (The brackets are required and you cannot add a space between the tilde (~) and the opening bracket.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>|[</b><i>Expression</i><b>]</b></p>
+</td>
+<td>
+<p>The process whose process ID is the integer to which the numerical <i>Expression</i> resolves.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>Processes are assigned ordinals as they are created. Note that this number differs from the process ID (PID) that the Microsoft Windows operating system uses.</p>
+<p>The current process defines the memory space and the set of threads that are used. When debugging begins, the current process is the one that caused the present exception or debug event (or the process that the debugger attached to). That process remains the current process until you specify a new one by using a <a href="_s__set_current_process_.htm"><b>|s (Set Current Process)</b></a> command or by using the <a href="processes_and_threads_window.htm">Processes and Threads window</a> in WinDbg.</p>
+<p>Process identifiers are used as parameters in several commands, frequently as the command prefix. Note that WinDbg and CDB can debug child processes that the original process created. WinDbg and CDB can also attach to multiple unrelated processes.</p>
+<p>An example of the |[<i>Expression</i>] syntax would be [|@$t0].  In this example, the process changes depending on the value of a user-defined pseudo-register.  This syntax allows debugger scripts to programmatically select a process.</p>
+<h3><a id="controlling_processes_in_kernel_mode"></a><a id="CONTROLLING_PROCESSES_IN_KERNEL_MODE"></a>Controlling Processes in Kernel Mode</h3>
+<p>In kernel mode, you cannot control processes by using process identifiers. For more information about how to access process-specific information in kernel mode, see <a href="changing_contexts.htm">Changing Contexts</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Process Syntax%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

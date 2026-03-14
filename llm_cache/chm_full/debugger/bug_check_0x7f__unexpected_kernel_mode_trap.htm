@@ -1,0 +1,113 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The UNEXPECTED_KERNEL_MODE_TRAP bug check has a value of 0x0000007F."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0x7F: UNEXPECTED_KERNEL_MODE_TRAP</title>
+
+<meta name="MS-HAID" content="t05_bugs_60_6e8bf56a-1b93-454b-9cf8-ab912bbd2157.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0x7f__unexpected_kernel_mode_trap"></a>Bug Check 0x7F: UNEXPECTED_KERNEL_MODE_TRAP</h1>
+</div>
+<p>The UNEXPECTED_KERNEL_MODE_TRAP bug check has a value of 0x0000007F. This bug check indicates that the Intel CPU generated a trap and the kernel failed to catch this trap.<p>This trap could be a <i>bound trap</i> (a trap the kernel is not permitted to catch) or a <i>double fault</i> (a fault that occurred while processing an earlier fault, which always results in a system failure).</p>
+</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2> UNEXPECTED_KERNEL_MODE_TRAP Parameters</h2>
+<p>The first parameter that appears on the blue screen specifies the trap number.</p>
+<p>The most common trap codes include the following: </p>
+<ul>
+<li>
+<p>0x00000000, or Divide by Zero Error, indicates that a DIV instruction is executed and the divisor is zero. Memory corruption, other hardware problems, or software failures can cause this error. </p>
+</li>
+<li>
+<p>0x00000004, or Overflow, occurs when the processor executes a call to an interrupt handler when the overflow (OF) flag is set. </p>
+</li>
+<li>
+<p>0x00000005, or Bounds Check Fault, indicates that the processor, while executing a BOUND instruction, finds that the operand exceeds the specified limits. A BOUND instruction ensures that a signed array index is within a certain range. </p>
+</li>
+<li>
+<p>0x00000006, or Invalid Opcode, indicates that the processor tries to execute an invalid instruction. This error typically occurs when the instruction pointer has become corrupted and is pointing to the wrong location. The most common cause of this error is hardware memory corruption. </p>
+</li>
+<li>0x00000008, or Double Fault, indicates that an exception occurs during a call to the handler for a prior exception. Typically, the two exceptions are handled serially. However, there are several exceptions that cannot be handled serially, and in this situation the processor signals a double fault. There are two common causes of a double fault:<ul>
+<li>A kernel stack overflow. This overflow occurs when a guard page is hit, and the kernel tries to push a trap frame. Because there is no stack left, a stack overflow results, causing the double fault. If you think this overview has occurred, use <a href="_thread.htm"><b>!thread</b></a> to determine the stack limits, and then use <a href="k__kb__kc__kd__kp__kp__kv__display_stack_backtrace_.htm"><b>kb (Display Stack Backtrace)</b></a> with a large parameter (for example, <b>kb 100</b>) to display the full stack.</li>
+<li>A hardware problem.</li>
+</ul>
+</li>
+</ul>
+<p>The less-common trap codes include the following:</p>
+<ul>
+<li>
+<p>0x00000001 -- A system-debugger call</p>
+</li>
+<li>
+<p>0x00000003 -- A debugger breakpoint</p>
+</li>
+<li>
+<p>0x00000007 -- A hardware coprocessor instruction with no coprocessor present</p>
+</li>
+<li>
+<p>0x0000000A -- A corrupted Task State Segment</p>
+</li>
+<li>
+<p>0x0000000B -- An access to a memory segment that was not present</p>
+</li>
+<li>
+<p>0x0000000C -- An access to memory beyond the limits of a stack</p>
+</li>
+<li>
+<p>0x0000000D -- An exception not covered by some other exception; a protection fault that pertains to access violations for applications</p>
+</li>
+</ul>
+<p>For other trap numbers, see an Intel architecture manual.</p>
+<h2>Cause</h2>
+<p>Bug check 0x7F typically occurs after you install a faulty or mismatched hardware (especially memory) or if installed hardware fails.</p>
+<p>A double fault can occur when the kernel stack overflows. This overflow occurs if multiple drivers are attached to the same stack. For example, if two file system filter drivers are attached to the same stack and then the file system recurses back in, the stack overflows.</p>
+<h2>Resolution</h2>
+<p><b>Debugging:</b>  Always begin with the <a href="_analyze.htm"><b>!analyze</b></a> extension.</p>
+<p>If this extension is not sufficient, use the <a href="k__kb__kc__kd__kp__kp__kv__display_stack_backtrace_.htm"><b>kv (Display Stack Backtrace)</b></a> debugger command.</p>
+<ul>
+<li>
+<p>If <b>kv</b> shows a <b>taskGate</b>, use the <a href="_tss__display_task_state_segment_.htm"><b>.tss (Display Task State Segment)</b></a> command on the part before the colon.</p>
+</li>
+<li>
+<p>If <b>kv</b> shows a trap frame, use the <a href="_trap__display_trap_frame_.htm"><b>.trap (Display Trap Frame)</b></a> command to format the frame.</p>
+</li>
+<li>
+<p>Otherwise, use the <a href="_trap__display_trap_frame_.htm"><b>.trap (Display Trap Frame)</b></a> command on the appropriate frame. (On x86-based platforms, this frame is associated with the procedure <b>NT!KiTrap</b>.) </p>
+</li>
+</ul>
+<p>After using one of these commands, use <b>kv</b> again to display the new stack.</p>
+<p><b>Troubleshooting:</b> If you recently added hardware to the computer, remove it to see if the error recurs. If existing hardware has failed, remove or replace the faulty component. Run hardware diagnostics that the system manufacturer supplies to determine which hardware component failed. </p>
+<p>The memory scanner is especially important. Faulty or mismatched memory can cause this bug check. For more 
+    information about these procedures, see the owner's manual for your computer. Check that all adapter cards in the 
+    computer are properly seated. Use an ink eraser or an electrical contact treatment, available at electronics 
+    supply stores, to ensure adapter card contacts are clean.</p>
+<p>If the error appears on a newly installed system, check the availability of updates for the BIOS, the SCSI controller, or network cards. These kind of updates  are typically available on the Web site or BBS of the hardware manufacturer.</p>
+<p>Confirm that all hard disk drives, hard disk controllers, and SCSI adapters are compatible with the installed version of Windows. For example, you can get information about compatibility with Windows 7 at the <a href="http://go.microsoft.com/fwlink/p/?LinkID=246806">Windows 7 Compatibility Center</a>.</p>
+<p>If the error occurred after the installation of a new or updated device driver, you should remove or replace the driver. If, under this circumstance, the error occurs during the startup sequence and the system partition is formatted with NTFS, you might be able to use Safe Mode to rename or delete the faulty driver. If the driver is used as part of the system startup process in Safe Mode, you have to start the computer by using the Recovery Console in order to access the file.  </p>
+<p>Also restart your computer, and then press F8 at the character-based menu that displays the operating system choices. At the <b>Advanced Options</b> menu, select the <b>Last Known Good Configuration</b> option. This option is most effective when you add only one driver or service at a time.</p>
+<p>Overclocking (setting the CPU to run at speeds above the rated specification) can cause this error. If you have overclocked the computer that is experiencing the error, return the CPU to the default clock speed setting.</p>
+<p>Check the System Log in Event Viewer for additional error messages that might help identify the device or driver that is causing the error. You can also disable memory caching of the BIOS to try to resolve the problem. </p>
+<p>If you encountered this error while upgrading to a new version of the Windows operating system, the error might be caused by a device driver, a system service, a virus scanner, or a backup tool that is incompatible with the new version. If possible, remove all third-party device drivers and system services and disable any virus scanners before you upgrade. Contact the software manufacturer to obtain updates of these tools. Also make sure that you have installed the latest Windows Service Pack.</p>
+<p>Finally, if all the above steps do not resolve the error, take the system motherboard to a repair facility for diagnostic testing. A crack, a scratched trace, or a defective component on the motherboard can also cause this error.</p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

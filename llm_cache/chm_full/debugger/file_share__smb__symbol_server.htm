@@ -1,0 +1,134 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Running a SMB Symbol Server is simply a matter of creating a file share and granting users access to that file share."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>File Share (SMB) Symbol Server</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.file_share__smb__symbol_server"></a>File Share (SMB) Symbol Server</h1>
+</div>
+<p>Running a SMB Symbol Server is simply a matter of creating a file share and granting users access to that file share.</p>
+<p></p>
+<h2><a id="Creating_a_SMB_File_Share_Symbol_Store_"></a><a id="creating_a_smb_file_share_symbol_store_"></a><a id="CREATING_A_SMB_FILE_SHARE_SYMBOL_STORE_"></a>Creating a SMB File Share Symbol Store </h2>
+<p>Use Windows Explorer or Computer Management to create the File Share and assign security. These steps assume that the symbols will be located in <i>D:\SymStore\Symbols</i>. Complete these steps using Windows Explorer:</p>
+<dl>
+<dd>
+<p>	1. Open <b>Windows Explorer</b>.</p>
+</dd>
+<dd>
+<p>2.	Right-click <i>D:\SymStore\Symbols</i> and choose <b>Properties</b>.</p>
+</dd>
+<dd>
+<p>3.	Click on the <b>Sharing</b> tab.</p>
+</dd>
+<dd>
+<p>4. 	Click on  <b>Advanced Sharing</b>… .</p>
+</dd>
+<dd>
+<p>5.	Check <i>Share this folder</i>.</p>
+</dd>
+<dd>
+<p>6. 	Click on  <b>Permissions</b>.</p>
+</dd>
+<dd>
+<p>7.	Remove the <i>Everyone</i> group.</p>
+</dd>
+<dd>
+<p>8.	Using <b>Add…</b>, add the Users/Security Groups requiring access.</p>
+</dd>
+<dd>
+<p>9.	For each User/Security Group added, grant Read or Read/Change access.</p>
+</dd>
+<dd>
+<p>10. Click on <b>OK</b> (Permissions dialog).</p>
+</dd>
+<dd>
+<p>11. Click on  <b>OK</b> (Advanced Sharing dialog).</p>
+</dd>
+<dd>
+<p>12.	Press <b>Close</b> (Properties dialog).</p>
+</dd>
+</dl>
+<p>Complete these steps using Computer Management:</p>
+<dl>
+<dd>
+<p>1.	Type <i>Computer</i> in Window Start (resolves as This PC in Windows 8). </p>
+</dd>
+<dd>
+<p>2.	Right-click and select <i>Manage</i>.</p>
+</dd>
+<dd>
+<p>3.	Navigate to <i>System Tools | Shared Folders | Shares</i>.</p>
+</dd>
+<dd>
+<p>4.	Right-click and select <b>New | Share…</b> .</p>
+</dd>
+<dd>
+<p>5.	Press <b>Next</b> (Create a Shared Folder Wizard dialog).</p>
+</dd>
+<dd>
+<p>6.	Enter <b>D:\SymStore\Symbols</b> as the Folder Path.</p>
+</dd>
+<dd>
+<p>7. Press <b>Next</b> twice.</p>
+</dd>
+<dd>
+<p>8.	Select <b>Customize permissions</b>.</p>
+</dd>
+<dd>
+<p>9.	Press <b>Custom…</b> .</p>
+</dd>
+<dd>
+<p>10.	Remove <i>Everyone</i>.</p>
+</dd>
+<dd>
+<p>11.	Using <b>Add…</b>, add the Users/Security Groups requiring access.</p>
+</dd>
+<dd>
+<p>12.	For each User/Security Group added, grant Read or Read/Change access.</p>
+</dd>
+<dd>
+<p>13.	Press <b>OK</b> (Customize Permissions dialog).</p>
+</dd>
+<dd>
+<p>14.	Press <b>Finish</b> twice to complete the process.</p>
+</dd>
+</dl>
+<h2><a id="Test_The_SMB_File_Share"></a><a id="test_the_smb_file_share"></a><a id="TEST_THE_SMB_FILE_SHARE"></a>Test The SMB File Share</h2>
+<p>Configure a debugger to use this symbol path:</p>
+<pre class="syntax" xml:space="preserve"><code>srv*C:\Symbols*\\MachineName\Symbols</code></pre>
+<p>To view the location of the PDBs being referenced in the debugger, use the lm (list modules) command. The path to the PDBs should all begin with C:\Symbols. By running “!sym noisy”, and “.reload /f”, you will see extensive symbol logging of the download of the symbols and images from the \\MachineName\Symbols file server to C:\Symbols.</p>
+<h2><a id="File_Share_Symbol_Path"></a><a id="file_share_symbol_path"></a><a id="FILE_SHARE_SYMBOL_PATH"></a>File Share Symbol Path</h2>
+<p>There are multiples ways to configure your debugger’s symbol path (.sympath) to use a File Share. The syntax of the symbol path determines if the symbol file will be cached locally or not, and where it is cached.</p>
+<p>Direct File Share use (no local caching):</p>
+<pre class="syntax" xml:space="preserve"><code>srv*\\MachineName\Symbols</code></pre>
+<p>Local Caching of the File Share’s files to a particular local folder (e.g. c:\Symbols):</p>
+<pre class="syntax" xml:space="preserve"><code>srv*c:\Symbols*\\MachineName\Symbols</code></pre>
+<p>Local Caching of the File Share’s files to the %DBGHELP_HOMEDIR%\Sym folder:</p>
+<pre class="syntax" xml:space="preserve"><code>srv**\\MachineName\Symbols</code></pre>
+<p>The second “*” in the example shown above, represents the default local server cache. </p>
+<p>If the DBGHELP_HOMEDIR variable is not set, DBGHELP_HOMEDIR defaults to the debugger executable folder (for example C:\Program Files\Windows Kits\10.0\Debuggers\x86) and causes caching to occur in C:\Program Files\Windows Kits\10.0\Debuggers\x86\Sym.</p>
+<h2><a id="related_topics"></a>Related topics</h2>
+<dl>
+<dt><a href="symbol_store_folder_tree.htm">Symbol Store Folder Tree</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20File Share (SMB) Symbol Server%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

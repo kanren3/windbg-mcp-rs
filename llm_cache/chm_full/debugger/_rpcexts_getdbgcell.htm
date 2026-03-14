@@ -1,0 +1,89 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !rpcexts.getdbgcell extension displays RPC state information for the specified cell."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!rpcexts.getdbgcell</title>
+
+<meta name="MS-HAID" content="r32_exts_Lg_ND_RPC_2e6c7d8d-6002-4083-a3e2-92ba9931c94b.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._rpcexts_getdbgcell"></a>!rpcexts.getdbgcell</h1>
+</div>
+<p>The <b>!rpcexts.getdbgcell</b> extension displays RPC state information for the specified cell.</p>
+<pre class="syntax"><b>!rpcexts.getdbgcell </b><i>ProcessID</i><b> </b><i>CellID1</i><b>.</b><i>CellID2</i> 
+<b>!rpcexts.getdbgcell -?</b></pre>
+<h2><a id="ddk__rpcexts_getdbgcell_dbg"></a><a id="DDK__RPCEXTS_GETDBGCELL_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______ProcessID______"></a><a id="_______processid______"></a><a id="_______PROCESSID______"></a>       <i>ProcessID</i>      </dt>
+<dd>
+<p>Specifies the process ID (PID) of the process whose server contains the desired cell.</p>
+</dd>
+<dt><a id="_______CellID1.CellID2______"></a><a id="_______cellid1.cellid2______"></a><a id="_______CELLID1.CELLID2______"></a>       <i>CellID1</i>.<i>CellID2</i>      </dt>
+<dd>
+<p>Specifies the number of the cell to be displayed.</p>
+</dd>
+<dt><a id="_______-_______"></a>       <b>-?</b>      </dt>
+<dd>
+<p>Displays some brief Help text for this extension in the Command Prompt window.  </p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000</b></p>
+</td>
+<td>
+<p>Unavailable </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Rpcexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about debugging Microsoft Remote Procedure Call (RPC), see <a href="rpc_debugging.htm">RPC Debugging</a>.</p>
+<h2>Remarks</h2>
+<p>This extension can only be used with CDB or with user-mode WinDbg.</p>
+<p>Here is an example:</p>
+<pre class="syntax" xml:space="preserve"><code>0:002&gt; !rpcexts.getdbgcell c4 0.19
+Getting cell info ...
+Call
+Status: Active
+Procedure Number: 11
+Interface UUID start (first DWORD only): 82273FDC
+Call ID: 0x0 (0)
+Servicing thread identifier: 0x0.3E
+Call Flags: cached, LRPC
+Last update time (in seconds since boot):1453.459 (0x5AD.1CB)
+Caller (PID/TID) is: d0.1ac (208.428)</code></pre>
+<p>For a similar example using the DbgRpc tool, see <a href="get_rpc_cell_information.htm">Get RPC Cell Information</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!rpcexts.getdbgcell%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

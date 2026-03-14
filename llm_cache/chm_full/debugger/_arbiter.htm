@@ -1,0 +1,207 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !arbiter extension displays the current system resource arbiters and arbitrated ranges."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!arbiter</title>
+
+<meta name="MS-HAID" content="r26_exts_kernel_A_099f9cf2-9d4f-4b09-93d8-7d2b59486d12.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._arbiter"></a>!arbiter</h1>
+</div>
+<p>The <b>!arbiter</b> extension displays the current system resource arbiters and arbitrated ranges.</p>
+<pre class="syntax"><b>!arbiter </b>[<i>Flags</i>] </pre>
+<h2><a id="ddk__arbiter_dbg"></a><a id="DDK__ARBITER_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Flags______"></a><a id="_______flags______"></a><a id="_______FLAGS______"></a>       <i>Flags</i>      </dt>
+<dd>
+<p>Specifies which classes of arbiters are displayed. If omitted, all arbiters are displayed. These bits can be combined freely.</p>
+<p></p>
+<dl>
+<dt><a id="Bit_0__0x1_"></a><a id="bit_0__0x1_"></a><a id="BIT_0__0X1_"></a>Bit 0 (0x1)</dt>
+<dd>
+<p>Display I/O arbiters.</p>
+</dd>
+<dt><a id="Bit_1__0x2_"></a><a id="bit_1__0x2_"></a><a id="BIT_1__0X2_"></a>Bit 1 (0x2)</dt>
+<dd>
+<p>Display memory arbiters.</p>
+</dd>
+<dt><a id="Bit_2__0x4_"></a><a id="bit_2__0x4_"></a><a id="BIT_2__0X4_"></a>Bit 2 (0x4)</dt>
+<dd>
+<p>Display IRQ arbiters.</p>
+</dd>
+<dt><a id="Bit_3__0x8_"></a><a id="bit_3__0x8_"></a><a id="BIT_3__0X8_"></a>Bit 3 (0x8)</dt>
+<dd>
+<p>Display DMA arbiters.</p>
+</dd>
+<dt><a id="Bit_4__0x10_"></a><a id="bit_4__0x10_"></a><a id="BIT_4__0X10_"></a>Bit 4 (0x10)</dt>
+<dd>
+<p>Display bus number arbiters.</p>
+</dd>
+<dt><a id="Bit_8__0x100_"></a><a id="bit_8__0x100_"></a><a id="BIT_8__0X100_"></a>Bit 8 (0x100)</dt>
+<dd>
+<p>Do not display aliases.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000</b></p>
+</td>
+<td>
+<p>
+          Kdextx86.dll
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later</b></p>
+</td>
+<td>
+<p>
+          Kdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>See <a href="plug_and_play_debugging.htm">Plug and Play Debugging</a> for applications of this extension command.</p>
+<h2>Remarks</h2>
+<p>For each arbiter, <b>!arbiter</b> displays each allocated range of system resources, some optional flags, the PDO attached to that range (in other words, the range's owner), and the service name of this owner (if known).</p>
+<p>The flags have the following meanings:</p>
+<table>
+<tr>
+<th>Flag</th>
+<th>Meaning</th>
+</tr>
+<tr>
+<td>
+<p>
+        S
+       </p>
+</td>
+<td>
+<p>Range is shared</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+        C
+       </p>
+</td>
+<td>
+<p>Range in conflict</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+        B
+       </p>
+</td>
+<td>
+<p>Range is boot-allocated</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+        D
+       </p>
+</td>
+<td>
+<p>Range is driver-exclusive</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+        A
+       </p>
+</td>
+<td>
+<p>Range alias</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+        P
+       </p>
+</td>
+<td>
+<p>Range positive decode</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>Here is an example:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; !arbiter 4
+
+DEVNODE 80e203b8 (HTREE\ROOT\0)
+  Interrupt Arbiter "" at 80167140
+    Allocated ranges:
+      0000000000000000 - 0000000000000000   B   80e1d3d8 
+      0000000000000001 - 0000000000000001   B   80e1d3d8 
+ .....
+      00000000000001a2 - 00000000000001a2    
+        00000000000001a2 - 00000000000001a2  CB   80e1d3d8 
+        00000000000001a2 - 00000000000001a2  CB   80e52538  (Serial)
+      00000000000001a3 - 00000000000001a3       80e52778  (i8042prt)
+      00000000000001b3 - 00000000000001b3       80e1b618  (i8042prt)
+ Possible allocation:
+      &lt; none &gt;</pre>
+</td>
+</tr>
+</table></span></div>
+<p>In this example, the next-to-last line shows the resource range (which consists of 0x1A3 alone), the PDO of 0x80E52778, and the service of i8042prt.sys. No flags are listed on this line.</p>
+<p>You can now use <a href="_devobj.htm"><b>!devobj</b></a> with this PDO address to find the device extension and device node addresses:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; !devobj 80e52778
+Device object (80e52778) is for:
+ 00000034 \Driver\PnpManager DriverObject 80e20610
+Current Irp 00000000 RefCount 1 Type 00000004 Flags 00001040
+DevExt 80e52830 DevObjExt 80e52838 DevNode 80e52628 
+ExtensionFlags (0000000000)  
+AttachedDevice (Upper) 80d78b28 \Driver\i8042prt
+Device queue is not busy.</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!arbiter%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,128 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .typeopt command sets or displays the type options."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.typeopt (Set Type Options)</title>
+
+<meta name="MS-HAID" content="r22_metacmds_S_56876036-d4a1-485a-b225-0a8dfe26834b.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._typeopt__set_type_options_"></a>.typeopt (Set Type Options)</h1>
+</div>
+<p>The <b>.typeopt</b> command sets or displays the type options.</p>
+<pre class="syntax"><b>.typeopt +</b><i>Flags</i> 
+<b>.typeopt -</b><i>Flags</i> 
+<b>.typeopt +</b><i>FlagName</i> 
+<b>.typeopt -</b><i>FlagName</i> 
+<b>.typeopt</b> 
+</pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="______________"></a>       <b>+</b>      </dt>
+<dd>
+<p>Causes the type options specified by <i>FlagName</i> to be set. </p>
+</dd>
+<dt><a id="_______-______"></a>       <b>-</b>      </dt>
+<dd>
+<p>Causes the type options specified by <i>FlagName</i> to be cleared.</p>
+</dd>
+<dt><a id="_______Flags______"></a><a id="_______flags______"></a><a id="_______FLAGS______"></a>       <i>Flags</i>      </dt>
+<dd>
+<p>Specifies the type options to be changed. <i>FlagName</i> can be a sum of any of the following values (there is no default):</p>
+<p></p>
+<dl>
+<dt><a id="0x1"></a><a id="0X1"></a><b>0x1</b></dt>
+<dd>
+<p>Displays values in all Watch windows and the Locals window as having UNICODE data type. </p>
+</dd>
+<dt><a id="0x2"></a><a id="0X2"></a><b>0x2</b></dt>
+<dd>
+<p>Displays values in all Watch windows and the Locals window as having LONG data type.  </p>
+</dd>
+<dt><a id="0x4"></a><a id="0X4"></a><b>0x4</b></dt>
+<dd>
+<p>Displays integers in all Watch windows and the Locals window in the default radix. </p>
+</dd>
+<dt><a id="0x8"></a><a id="0X8"></a><b>0x8</b></dt>
+<dd>
+<p>Causes the debugger to choose the matching symbol with the largest size when the Locals window or Watch window references a symbol by name but there is more than one symbol that matches this name. The size of a symbol is defined as follows: if the symbol is the name of a function, its size is the size of the function in memory. Otherwise, the size of the symbol is the size of the data type that it represents. </p>
+</dd>
+</dl>
+</dd>
+<dt><a id="_______FlagName______"></a><a id="_______flagname______"></a><a id="_______FLAGNAME______"></a>       <i>FlagName</i>      </dt>
+<dd>
+<p>Specifies the type options to be changed. <i>FlagName</i> can be any one of the following strings (there is no default):</p>
+<p></p>
+<dl>
+<dt><a id="uni"></a><a id="UNI"></a><b>uni</b></dt>
+<dd>
+<p>Displays values in all Watch windows and the Locals window as having UNICODE data type. (This has the same effect as <b>0x1</b>.)</p>
+</dd>
+<dt><a id="longst"></a><a id="LONGST"></a><b>longst</b></dt>
+<dd>
+<p>Displays values in all Watch windows and the Locals window as having LONG data type. (This has the same effect as <b>0x2</b>.)</p>
+</dd>
+<dt><a id="radix"></a><a id="RADIX"></a><b>radix</b></dt>
+<dd>
+<p>Displays integers in all Watch windows and the Locals window in the default radix. (This has the same effect as <b>0x4</b>.)</p>
+</dd>
+<dt><a id="size"></a><a id="SIZE"></a><b>size</b></dt>
+<dd>
+<p>Causes the debugger to choose the matching symbol with the largest size when the Locals window or Watch window references a symbol by name but there is more than one symbol that matches this name. The size of a symbol is defined as follows:  if the symbol is the name of a function, its size is the size of the function in memory.  Otherwise, the size of the symbol is the size of the data type that it represents. (This has the same effect as <b>0x8</b>.) </p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>user mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets</b></p>
+</td>
+<td>
+<p>live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Platforms
+         </b></p>
+</td>
+<td>
+<p>all </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>Without any arguments, <b>.typeopt</b> displays the current symbol options.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.typeopt (Set Type Options)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

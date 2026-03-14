@@ -1,0 +1,266 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The WHEA_UNCORRECTABLE_ERROR bug check has a value of 0x00000124. This bug check indicates that a fatal hardware error has occurred. This bug check uses the error data that is provided by the Windows Hardware Error Architecture (WHEA)."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0x124:  WHEA_UNCORRECTABLE_ERROR</title>
+
+<meta name="MS-HAID" content="t07_bugs_E0_e7494f00-a0e4-49f4-9c41-23d7bdf91ce1.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0x124___whea_uncorrectable_error"></a>Bug Check 0x124:  WHEA_UNCORRECTABLE_ERROR</h1>
+</div>
+<p>The WHEA_UNCORRECTABLE_ERROR bug check has a value of 0x00000124. This bug check indicates that a fatal hardware error has occurred. This bug check uses the error data that is provided by the Windows Hardware Error Architecture (WHEA). </p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2>  WHEA_UNCORRECTABLE_ERROR Parameters</h2>
+<table>
+<tr>
+<th>Parameter 1</th>
+<th>Parameter 2</th>
+<th>Parameter 3</th>
+<th>Parameter 4</th>
+<th>Cause of error</th>
+</tr>
+<tr>
+<td>
+<p>0x0</p>
+</td>
+<td>
+<p>Address of WHEA_ERROR_RECORD structure.</p>
+</td>
+<td>
+<p>High 32 bits of MCi_STATUS MSR for the MCA bank that had the error.</p>
+</td>
+<td>
+<p>Low  32 bits of MCi_STATUS MSR for the MCA bank that had the error.</p>
+</td>
+<td>
+<p>A machine check exception occurred.</p>
+<p>These parameter descriptions apply if the processor is based on the x64 architecture, or the x86 architecture that has the MCA feature available (for example, Intel Pentium Pro, Pentium IV, or Xeon).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x1</p>
+</td>
+<td>
+<p>Address of WHEA_ERROR_RECORD structure.</p>
+</td>
+<td>
+<p>Reserved.</p>
+</td>
+<td>
+<p>Reserved.</p>
+</td>
+<td>
+<p>A corrected machine check exception occurred.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x2</p>
+</td>
+<td>
+<p>Address of WHEA_ERROR_RECORD structure.</p>
+</td>
+<td>
+<p>Reserved.</p>
+</td>
+<td>
+<p>Reserved.</p>
+</td>
+<td>
+<p>A corrected platform error occurred.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x3</p>
+</td>
+<td>
+<p>Address of WHEA_ERROR_RECORD structure.</p>
+</td>
+<td>
+<p>Reserved.</p>
+</td>
+<td>
+<p>Reserved.</p>
+</td>
+<td>
+<p>A nonmaskable Interrupt (NMI) error occurred.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x4</p>
+</td>
+<td>
+<p>Address of WHEA_ERROR_RECORD structure.</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>Reserved.</p>
+</td>
+<td>
+<p>An uncorrectable PCI Express error occurred.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x5</p>
+</td>
+<td>
+<p>Address of WHEA_ERROR_RECORD structure.</p>
+</td>
+<td>
+<p>Reserved.</p>
+</td>
+<td>
+<p>Reserved.</p>
+</td>
+<td>
+<p>A generic hardware error occurred.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x6</p>
+</td>
+<td>
+<p>Address of WHEA_ERROR_RECORD structure</p>
+</td>
+<td>
+<p>Reserved.</p>
+</td>
+<td>
+<p>Reserved.</p>
+</td>
+<td>
+<p>An initialization error occurred.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x7</p>
+</td>
+<td>
+<p>Address of WHEA_ERROR_RECORD structure.</p>
+</td>
+<td>
+<p>Reserved.</p>
+</td>
+<td>
+<p>Reserved.</p>
+</td>
+<td>
+<p>A BOOT error occurred.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x8</p>
+</td>
+<td>
+<p>Address of WHEA_ERROR_RECORD structure</p>
+</td>
+<td>
+<p>Reserved.</p>
+</td>
+<td>
+<p>Reserved.</p>
+</td>
+<td>
+<p>A Scalable Coherent Interface (SCI) generic error occurred.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x9</p>
+</td>
+<td>
+<p>Address of WHEA_ERROR_RECORD structure.</p>
+</td>
+<td>
+<p>Length, in bytes, of the SAL log.</p>
+</td>
+<td>
+<p>Address of the SAL log.</p>
+</td>
+<td>
+<p>An uncorrectable Itanium-based machine check abort error occurred.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0xA</p>
+</td>
+<td>
+<p>Address of WHEA_ERROR_RECORD structure</p>
+</td>
+<td>
+<p>Reserved.</p>
+</td>
+<td>
+<p>Reserved.</p>
+</td>
+<td>
+<p>A corrected Itanium-based machine check error occurred.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0xB</p>
+</td>
+<td>
+<p>Address of WHEA_ERROR_RECORD structure.</p>
+</td>
+<td>
+<p>Reserved.</p>
+</td>
+<td>
+<p>Reserved.</p>
+</td>
+<td>
+<p>A corrected Itanium platform error occurred.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Cause</h2>
+<p>This bug check is typically related to physical hardware failures. It can be heat related, defective hardware, memory or even a processor that is beginning to fail or has failed. If over-clocking has been enabled, try disabling it. Confirm that any cooling systems such as fans are functional. Run system diagnostics to confirm that the system memory is not defective. It is less likely, but possible that a driver is causing the hardware to fail with this bug check.</p>
+<p>For additional general bug check troubleshooting information, see <a href="blue_screen_data.htm"><b>Blue Screen Data</b></a>. </p>
+<h2>Remarks</h2>
+<p>The <a href="_analyze.htm"><b>!analyze</b></a> debug extension displays information about  the bug check and can be very helpful in determining the root cause.</p>
+<p>Parameter 1 identifies the type of error source that reported the error. Parameter 2 holds the address of the WHEA_ERROR_RECORD  structure that describes the error condition.</p>
+<p>When a hardware error occurs, WHEA creates an error record to store the error information associated with the hardware error condition. Each error record is described by a WHEA_ERROR_RECORD structure. The Windows kernel includes the error record with the Event Tracing for Windows (ETW) hardware error event that it raises in response to the error so that the error record is saved in the system event log.
+
+The format of the error records that are used by WHEA are based on the Common Platform Error Record as described in Appendix N of version 2.2 of the Unified Extensible Firmware Interface (UEFI) Specification.
+For more information, see WHEA_ERROR_RECORD and Windows Hardware Error Architecture (WHEA).</p>
+<p>You can use  <a href="_errrec.htm"><b>!errrec</b></a> &lt;addr&gt; to display the WHEA_ERROR_RECORD structure using the address provided in Parameter 2. The <a href="_whea.htm"><b>!whea</b></a> and <a href="_errpkt.htm"><b>!errpkt</b></a> extensions can be used to display additional WHEA information.</p>
+<p>For more information see the following topics:</p>
+<p><a href="crash_dump_files.htm">Crash dump analysis using the Windows debuggers (WinDbg)</a></p>
+<p><a href="analyzing_a_kernel_mode_dump_file_with_windbg.htm">Analyzing a Kernel-Mode Dump File with WinDbg</a></p>
+<p><a href="using_the__analyze_extension.htm">Using the !analyze Extension</a> and <a href="_analyze.htm">!analyze</a></p>
+<p>This bug check is not supported in Windows versions prior to Windows Vista. Instead, machine check exceptions are reported through <a href="bug_check_0x9c__machine_check_exception.htm"><b>bug check 0x9C</b></a>.</p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

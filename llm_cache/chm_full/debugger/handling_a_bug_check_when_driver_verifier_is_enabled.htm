@@ -1,0 +1,165 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Driver Verifier detects driver errors at run time. You can use Driver Verifier along with the !analyze debugger command to detect and display information about errors in your driver."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Handling a Bug Check When Driver Verifier is Enabled</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.handling_a_bug_check_when_driver_verifier_is_enabled"></a>Handling a Bug Check When Driver Verifier is Enabled</h1>
+</div>
+<p><a href="http://go.microsoft.com/fwlink/p?LinkID=268663">Driver Verifier</a> detects driver errors at run time. You can use Driver Verifier along with the <a href="_analyze.htm"><b>!analyze</b></a> debugger command to detect and display information about errors in your driver.</p>
+<p>In Windows 8, <a href="http://go.microsoft.com/fwlink/p?LinkID=268663">Driver Verifier</a> has been enhanced with new features, including <a href="http://go.microsoft.com/fwlink/p?LinkID=268676">DDI Compliance Checking</a>. Here we give an example that demonstrates DDI Compliance Checking.</p>
+<p>Use the following procedure to get set up.</p>
+<ol>
+<li>Establish a kernel-mode debugging session between a host and target computer.</li>
+<li>Install your driver on the target computer.</li>
+<li>On the target computer, open a Command Prompt window  and enter the command <b>verifier</b>. Use <a href="http://go.microsoft.com/fwlink/p?LinkID=268659">Driver Verifier Manager</a> to enable Driver Verifier for your driver.</li>
+<li>Reboot the target computer.</li>
+</ol>
+<p>When Driver Verifier detects an error, it generates a bug check. Then Windows breaks into the debugger and displays a brief description of the error. Here is an example where Driver Verifier generates Bug Check <a href="bug_check_0xc4__driver_verifier_detected_violation.htm"><b>DRIVER_VERIFIER_DETECTED_VIOLATION (C4)</b></a>.</p>
+<pre class="syntax" xml:space="preserve"><code>Driver Verifier: Extension abort with Error Code 0x20005
+Error String ExAcquireFastMutex should only be called at IRQL &lt;= APC_LEVEL.
+
+*** Fatal System Error: 0x000000c4
+                       (0x0000000000020005,0xFFFFF88000E16F50,0x0000000000000000,0x0000000000000000)
+
+Break instruction exception - code 80000003 (first chance)
+
+A fatal system error has occurred.
+Debugger entered on first try; Bugcheck callbacks have not been invoked.
+
+A fatal system error has occurred.
+
+nt!DbgBreakPointWithStatus:
+fffff802`a40ef930 cc              int     3</code></pre>
+<p>In the debugger, enter <a href="_analyze.htm"><b>!analyze -v</b></a>  to get a detailed description of the error.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !analyze -v
+Connected to Windows 8 9200 x64 target at (Thu Oct 11 13:48:31.270 2012 (UTC - 7:00)), ptr64 TRUE
+Loading Kernel Symbols
+...............................................................
+................................................................
+...................
+Loading User Symbols
+..................................................
+Loading unloaded module list
+............
+*******************************************************************************
+*                                                                             *
+*                        Bugcheck Analysis                                    *
+*                                                                             *
+*******************************************************************************
+
+DRIVER_VERIFIER_DETECTED_VIOLATION (c4)
+A device driver attempting to corrupt the system has been caught.  This is
+because the driver was specified in the registry as being suspect (by the
+administrator) and the kernel has enabled substantial checking of this driver.
+If the driver attempts to corrupt the system, bugchecks 0xC4, 0xC1 and 0xA will
+be among the most commonly seen crashes.
+Arguments:
+Arg1: 0000000000020005, ID of the 'IrqlExApcLte1' rule that was violated.
+Arg2: fffff88000e16f50, A pointer to the string describing the violated rule condition.
+Arg3: 0000000000000000, An optional pointer to the rule state variable(s).
+Arg4: 0000000000000000, Reserved (unused)
+
+Debugging Details:
+------------------
+...
+
+DV_VIOLATED_CONDITION:  ExAcquireFastMutex should only be called at IRQL &lt;= APC_LEVEL.
+
+DV_MSDN_LINK: !url http://go.microsoft.com/fwlink/p/?linkid=216022
+
+DV_RULE_INFO: !ruleinfo 0x20005
+
+BUGCHECK_STR:  0xc4_IrqlExApcLte1_XDV
+
+DEFAULT_BUCKET_ID:  WIN8_DRIVER_FAULT
+
+PROCESS_NAME:  TiWorker.exe
+
+CURRENT_IRQL:  9</code></pre>
+<p>In the preceding output, you can see the name and description of the rule, <b>IrqlExApcLte1</b>, that was violated, and you can click a link to the reference page that describes the rule: <a href="http://go.microsoft.com/fwlink/p/?linkid=216022">http://go.microsoft.com/fwlink/p/?linkid=216022</a>. You can also click a debugger command link, <b>!ruleinfo 0x20005</b>, to get information about the rule. In this case, the rule states that you cannot call <a href="http://go.microsoft.com/fwlink/p?LinkID=268628">ExAcquireFastMutex</a> if the interrupt request level (IRQL) is greater than APC_LEVEL. The output shows that the current IRQL is 9, and in wdm.h you can see that APC_LEVEL has a value of 1. For more information about IRQLs, see <a href="http://go.microsoft.com/fwlink/p?LinkID=268625">Managing Hardware Priorities</a>.</p>
+<p>The output of <a href="_analyze.htm"><b>!analyze -v</b></a> continues with a stack trace and information about the code that caused the error. In the following output, you can see that the <b>OnInterrupt</b> routine in MyDriver.sys called <a href="http://go.microsoft.com/fwlink/p?LinkID=268628">ExAcquireFastMutex</a>. <b>OnInterrupt</b> is an interrupt service routine that runs at an IRQL greater than APC_LEVEL, so it is a violation for this routine to call <a href="http://go.microsoft.com/fwlink/p?LinkID=268628">ExAcquireFastMutex</a>.</p>
+<pre class="syntax" xml:space="preserve"><code>LAST_CONTROL_TRANSFER:  from fffff802a41f00ea to fffff802a40ef930
+
+STACK_TEXT:  
+... : nt!DbgBreakPointWithStatus ...
+... : nt!KiBugCheckDebugBreak+0x12 ...
+... : nt!KeBugCheck2+0x79f ...
+... : nt!KeBugCheckEx+0x104 ...
+... : VerifierExt!SLIC_abort+0x47 ...
+... : VerifierExt!SLIC_ExAcquireFastMutex_entry_irqlexapclte1+0x25 ...
+... : VerifierExt!ExAcquireFastMutex_wrapper+0x1a ...
+... : nt!ViExAcquireFastMutexCommon+0x1d ...
+... : nt!VerifierExAcquireFastMutex+0x1a ...
+... : MyDriver!OnInterrupt+0x69 ...
+... : nt!KiScanInterruptObjectList+0x6f ...
+... : nt!KiChainedDispatch+0x19a ...
+...
+
+STACK_COMMAND:  kb
+
+FOLLOWUP_IP: 
+MyDriver!OnInterrupt+69 ...
+fffff880`16306649 4c8d0510040000  lea     r8,[MyDriver! ?? ::FNODOBFM::`string' (fffff880`16306a60)]
+
+FAULTING_SOURCE_LINE:  c:\MyDriverwdm03\cpp\MyDriver\pnp.c
+
+FAULTING_SOURCE_FILE:  c:\MyDriverwdm03\cpp\MyDriver\pnp.c
+
+FAULTING_SOURCE_LINE_NUMBER:  26
+
+FAULTING_SOURCE_CODE:  
+    22:    if(1 == interruptStatus)
+    23:    {
+    24:       ...
+    25:       ExAcquireFastMutex( &amp;(fdoExt-&gt;fastMutex) );
+&gt;   26:       ...
+    27:       ExReleaseFastMutex( &amp;(fdoExt-&gt;fastMutex) );
+    28:       ...
+    29:       return TRUE;
+    30:    }
+    31:    else
+
+
+SYMBOL_STACK_INDEX:  9
+
+SYMBOL_NAME:  MyDriver!OnInterrupt+69
+
+FOLLOWUP_NAME:  ...
+
+MODULE_NAME: MyDriver
+
+IMAGE_NAME:  MyDriver.sys
+
+DEBUG_FLR_IMAGE_TIMESTAMP:  50772f37
+
+BUCKET_ID_FUNC_OFFSET:  69
+
+FAILURE_BUCKET_ID:  0xc4_IrqlExApcLte1_XDV_VRF_MyDriver!OnInterrupt
+
+BUCKET_ID:  0xc4_IrqlExApcLte1_XDV_VRF_MyDriver!OnInterrupt</code></pre>
+<h2><a id="related_topics"></a>Related topics</h2>
+<dl>
+<dt><a href="http://go.microsoft.com/fwlink/p?LinkID=268668">Static Driver Verifier</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Handling a Bug Check When Driver Verifier is Enabled%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,121 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The DEBUG_SYMBOL_XXX constants are used for the symbol flags bit-set. The symbol flags describe (in part) a symbol in a symbol group."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>DEBUG_SYMBOL_XXX</title>
+
+<meta name="MS-HAID" content="Structures_5e6bf1b9-fc9d-4530-9fab-67b994711dd0.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.debug_symbol_xxx"></a>DEBUG_SYMBOL_XXX</h1>
+</div>
+<p>The DEBUG_SYMBOL_<i>XXX</i> constants are used for the symbol flags bit-set.  The symbol flags describe (in part) a symbol in a symbol group.</p>
+<p>The least significant bits of the symbol flags--the bits found in DEBUG_SYMBOL_EXPANSION_LEVEL_MASK--form a number that represents the expansion depth of the symbol within the symbol group.  The depth of a child symbol is always one more than the depth of its parent symbol.  For example, to find the depth of a symbol whose flags are contained in the variable <i>flags</i>, use the following statement:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>depth = flags &amp; DEBUG_SYMBOL_EXPANSION_LEVEL_MASK;</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The rest of the symbol flags' bit-set can contain the following bit-flags.</p>
+<p></p>
+<table>
+<tr>
+<th>Constant</th>
+<th>Description</th>
+</tr>
+<tr VALIGN="top">
+<td align="left" width="40%"><a id="DEBUG_SYMBOL_EXPANDED"></a><a id="debug_symbol_expanded"></a><dl>
+<dt><b>DEBUG_SYMBOL_EXPANDED</b></dt>
+</dl>
+</td>
+<td align="left" width="60%">
+<p>The children of the symbol are part of the symbol group.</p>
+</td>
+</tr>
+<tr VALIGN="top">
+<td align="left" width="40%"><a id="DEBUG_SYMBOL_READ_ONLY"></a><a id="debug_symbol_read_only"></a><dl>
+<dt><b>DEBUG_SYMBOL_READ_ONLY</b></dt>
+</dl>
+</td>
+<td align="left" width="60%">
+<p>The symbol represents a read-only variable.</p>
+</td>
+</tr>
+<tr VALIGN="top">
+<td align="left" width="40%"><a id="DEBUG_SYMBOL_IS_ARRAY"></a><a id="debug_symbol_is_array"></a><dl>
+<dt><b>DEBUG_SYMBOL_IS_ARRAY</b></dt>
+</dl>
+</td>
+<td align="left" width="60%">
+<p>The symbol represents an array variable.</p>
+</td>
+</tr>
+<tr VALIGN="top">
+<td align="left" width="40%"><a id="DEBUG_SYMBOL_IS_FLOAT"></a><a id="debug_symbol_is_float"></a><dl>
+<dt><b>DEBUG_SYMBOL_IS_FLOAT</b></dt>
+</dl>
+</td>
+<td align="left" width="60%">
+<p>The symbol represents a floating-point variable.</p>
+</td>
+</tr>
+<tr VALIGN="top">
+<td align="left" width="40%"><a id="DEBUG_SYMBOL_IS_ARGUMENT"></a><a id="debug_symbol_is_argument"></a><dl>
+<dt><b>DEBUG_SYMBOL_IS_ARGUMENT</b></dt>
+</dl>
+</td>
+<td align="left" width="60%">
+<p>The symbol represents an argument passed to a function.</p>
+</td>
+</tr>
+<tr VALIGN="top">
+<td align="left" width="40%"><a id="DEBUG_SYMBOL_IS_LOCAL"></a><a id="debug_symbol_is_local"></a><dl>
+<dt><b>DEBUG_SYMBOL_IS_LOCAL</b></dt>
+</dl>
+</td>
+<td align="left" width="60%">
+<p>The symbol represents a local variable in a scope.</p>
+</td>
+</tr>
+</table>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>DbgEng.h (include DbgEng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="debug_symbol_parameters.htm"><b>DEBUG_SYMBOL_PARAMETERS</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20DEBUG_SYMBOL_XXX%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

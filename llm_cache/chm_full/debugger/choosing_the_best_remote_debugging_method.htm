@@ -1,0 +1,61 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Choosing the Best Remote Debugging Method"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Choosing the Best Remote Debugging Method</title>
+
+<meta name="MS-HAID" content="r08_use_remote_e541f65e-d9ea-4dd8-8304-12a947d24e15.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.choosing_the_best_remote_debugging_method"></a>Choosing the Best Remote Debugging Method</h1>
+</div>
+<h2><a id="ddk_choosing_the_best_remote_debugging_method_dbg"></a><a id="DDK_CHOOSING_THE_BEST_REMOTE_DEBUGGING_METHOD_DBG"></a></h2>
+<p>There are two primary methods of performing remote debugging, as well as several additional methods and a huge number of combination methods.</p>
+<p>Here are some tips to help you choose the best technique.</p>
+<ul>
+<li>
+<p><a href="remote_debugging_through_the_debugger.htm">Remote debugging through the debugger</a> is usually the best method. If you simply have one server and one client and they can freely connect to each other, the same debugger binaries are installed on both the client and the server, and the debugging technician who will be operating the client will be able to talk to someone in the room with the server, this is the recommended method.</p>
+<p>The client and the server can be running any version of Windows. They do not have to be running the same version as each other. </p>
+<p>If the client is unable to send a connection request to the server, but the server is able to send a request to the client, you can use remote debugging through the debugger with a <i>reverse connection</i> by using the <b>clicon</b> parameter.</p>
+</li>
+<li>
+<p><a href="remote_debugging_through_remote_exe.htm">Remote debugging through remote.exe</a> is used to remotely control a Command Prompt window. It can be used to remotely control KD, CDB, or NTSD. It cannot be used with WinDbg.</p>
+<p>If your client does not have copies of the debugger binaries, you must use the remote.exe method. </p>
+</li>
+<li>
+<p><b>A process server</b> or a <b>KD connection server</b> can be used if the debugging technician will not be able to talk to someone in the room with the server. All the actual debugging work is done by the client (called the <i>smart client</i>); this removes the need to have a second person present at the server itself.</p>
+<p>Process servers are used for user-mode debugging; KD connection servers are used for kernel-mode debugging. Other than this distinction, they behave in similar ways.</p>
+<p>This method is also useful if the computer where the server will be running cannot handle heavy process loads, or if the technician running the client has access to symbol files or source files that are confidential and cannot be accessed by the server. However, this method is not as fast or efficient as remote debugging through the debugger. This method cannot be used for dump-file debugging.</p>
+<p>See <a href="process_servers__user_mode_.htm">Process Servers (User Mode)</a> and <a href="kd_connection_servers__kernel_mode_.htm">KD Connection Servers (Kernel Mode)</a> for details.</p>
+</li>
+<li>
+<p><b>A repeater</b> is a lightweight proxy server that relays data between two computers. You can add a repeater between the client and the server if you are performing remote debugging through the debugger or if you are using a process server.</p>
+<p>Using a repeater may be necessary if your client and your server are unable to talk directly to each other, but can each access an outside computer. You can use reverse-connections with repeaters as well. It is even possible to use two repeaters in a row, but this is rarely necessary.</p>
+<p>See <a href="repeaters.htm">Repeaters</a> for details.</p>
+</li>
+<li>
+<p>It is also possible to control CDB (or NTSD) from the kernel debugger. This is yet another form of remote debugging. See <a href="controlling_the_user_mode_debugger_from_the_kernel_debugger.htm">Controlling the User-Mode Debugger from the Kernel Debugger</a> for details.</p>
+</li>
+</ul>
+<p>Variations on all of these methods are possible.</p>
+<p>It is possible to chain several computers together to take advantage of more than one transport method. You can create complicated transport sequences that take into account where the technician is, where the symbols are located, and whether there are firewalls preventing connections in certain directions. See <a href="advanced_remote_debugging_scenarios.htm">Advanced Remote Debugging Scenarios</a> for some examples.</p>
+<p>You can even perform remote debugging on a single computer. For example, it might be useful to start a low-privilege process server and then connect to it with a high-privilege smart client. And on a Windows 2000 terminal server computer you can debug one session from another.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Choosing the Best Remote Debugging Method%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,234 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="IDebugClient5 interface"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IDebugClient5 interface</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.idebugclient5"></a>IDebugClient5 interface</h1>
+</div>
+<h2>Members</h2>
+<p>The <b xmlns:loc="http://microsoft.com/wdcml/l10n">IDebugClient5</b> interface inherits from <a href="idebugclient4.htm"><b>IDebugClient4</b></a>. <b>IDebugClient5</b> also has these types of members:</p>
+<ul>
+<li><a href="#methods">Methods</a></li>
+</ul>
+<h3><a id="methods"></a>Methods</h3>
+<p>The <b>IDebugClient5</b> interface has these methods.</p>
+<table id="memberListMethods" class="members">
+<tr>
+<th align="left" width="37%">Method</th>
+<th align="left" width="63%">Description</th>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="attachkernelwide.htm"><b>AttachKernelWide</b></a></td>
+<td align="left" width="63%">
+<p>Connects the debugger engine to a kernel target.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="connectprocessserverwide.htm"><b>ConnectProcessServerWide</b></a></td>
+<td align="left" width="63%">
+<p>Connects to a process server.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="createprocess2.htm"><b>CreateProcess2</b></a></td>
+<td align="left" width="63%">
+<p>Executes the given command to create a new process. (ANSI version)</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="createprocess2wide.htm"><b>CreateProcess2Wide</b></a></td>
+<td align="left" width="63%">
+<p>Executes the given command to create a new process. (Unicode version)</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="createprocessandattach2.htm"><b>CreateProcessAndAttach2</b></a></td>
+<td align="left" width="63%">
+<p>Creates a process from a specified command line, then attach to that process or another user-mode process. (ANSI version)</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="createprocessandattach2wide.htm"><b>CreateProcessAndAttach2Wide</b></a></td>
+<td align="left" width="63%">
+<p>Creates a process from a specified command line, then attach to that process or another user-mode process. (Unicode version)</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="geteventcallbackswide.htm"><b>GetEventCallbacksWide</b></a></td>
+<td align="left" width="63%">
+<p>Returns the event callbacks object registered with this client.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getidentitywide.htm"><b>GetIdentityWide</b></a></td>
+<td align="left" width="63%">
+<p>Returns a string describing the computer and user this client represents.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getkernelconnectionoptionswide.htm"><b>GetKernelConnectionOptionsWide</b></a></td>
+<td align="left" width="63%">
+<p>Returns the connection options for the current kernel target.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getnumbereventcallbacks.htm"><b>GetNumberEventCallbacks</b></a></td>
+<td align="left" width="63%">
+<p>Returns the  number of event callbacks that are interested in the given events.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getnumberinputcallbacks.htm"><b>GetNumberInputCallbacks</b></a></td>
+<td align="left" width="63%">
+<p>Returns the number of input callbacks registered over all clients.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getnumberoutputcallbacks.htm"><b>GetNumberOutputCallbacks</b></a></td>
+<td align="left" width="63%">
+<p>Returns the number of output callbacks registered over all clients.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="getoutputcallbackswide.htm"><b>GetOutputCallbacksWide</b></a></td>
+<td align="left" width="63%">
+<p>Returns the output callbacks object registered with the client.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><b>GetOutputLinePrefixWide</b></td>
+<td align="left" width="63%">
+<p></p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><b>GetQuitLockString</b></td>
+<td align="left" width="63%">
+<p></p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><b>GetQuitLockStringWide</b></td>
+<td align="left" width="63%">
+<p></p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="outputidentitywide.htm"><b>OutputIdentityWide</b></a></td>
+<td align="left" width="63%">
+<p>Formats and outputs a string describing the computer and user this client represents.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="outputserverswide.htm"><b>OutputServersWide</b></a></td>
+<td align="left" width="63%">
+<p>Lists the servers running on a given computer.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><b>PopOutputLinePrefix</b></td>
+<td align="left" width="63%">
+<p></p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><b>PushOutputLinePrefix</b></td>
+<td align="left" width="63%">
+<p></p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><b>PushOutputLinePrefixWide</b></td>
+<td align="left" width="63%">
+<p></p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="seteventcallbackswide.htm"><b>SetEventCallbacksWide</b></a></td>
+<td align="left" width="63%">
+<p>Registers an event callbacks object with this client.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="setkernelconnectionoptionswide.htm"><b>SetKernelConnectionOptionsWide</b></a></td>
+<td align="left" width="63%">
+<p>Updates some of the connection options for a live kernel target.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="setoutputcallbackswide.htm"><b>SetOutputCallbacksWide</b></a></td>
+<td align="left" width="63%">
+<p>Registers an output callbacks object with this client.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><b>SetOutputLinePrefixWide</b></td>
+<td align="left" width="63%">
+<p></p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><b>SetQuitLockString</b></td>
+<td align="left" width="63%">
+<p></p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><b>SetQuitLockStringWide</b></td>
+<td align="left" width="63%">
+<p></p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="startprocessserverwide.htm"><b>StartProcessServerWide</b></a></td>
+<td align="left" width="63%">
+<p>Starts a process server.</p>
+</td>
+</tr>
+<tr data="declared;">
+<td align="left" width="37%"><a href="startserverwide.htm"><b>StartServerWide</b></a></td>
+<td align="left" width="63%">
+<p>Starts a debugging server.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Dbgeng.h (include Dbgeng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="idebugclient4.htm"><b>IDebugClient4</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IDebugClient5 interface%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

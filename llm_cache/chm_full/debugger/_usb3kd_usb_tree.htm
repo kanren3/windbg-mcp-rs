@@ -1,0 +1,62 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !usb3kd.usb_tree extension displays information, in tree format, about all USB 3.0 controllers, hubs, and devices on the computer."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!usb3kd.usb_tree</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._usb3kd_usb_tree"></a>!usb3kd.usb_tree</h1>
+</div>
+<p>The  <a href="_usb3kd_device_info.htm"><b>!usb3kd.usb_tree</b></a> extension displays information, in tree format, about all USB 3.0 controllers, hubs, and devices on the computer.</p>
+<pre class="syntax"><b>!usb3kd.usb_tree </b>[<b>1</b>]</pre>
+<h2><a id="ddk__devobj_dbg"></a><a id="DDK__DEVOBJ_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______1______"></a>       <b>1</b>      </dt>
+<dd>
+<p>The display includes status information for hubs and ports.</p>
+</dd>
+</dl>
+<h2><a id="Examples"></a><a id="examples"></a><a id="EXAMPLES"></a>Examples</h2>
+<p>The following screen shot shows the output of the <a href="_usb3kd_device_info.htm"><b>!usb_tree</b></a> command.</p><img src="images/usbtree01.png" alt="Output of the !usb_tree command showing topology enumerated device and hub list"/><p>The output shows that there is one USB 3.0 host controller, which is represented by the line that begins with <a href="_usb3kd_xhci_info.htm"><b>!xhci_info</b></a>. The next line represents the root hub for the host controller. The next four lines represent ports associated with the root hub. You can see that two ports have devices connected.</p>
+<p>The output uses <a href="debugger_markup_language_commands.htm">Using Debugger Markup Language (DML)</a>  to provide links. The links execute commands that give detailed information about individual objects in the tree. For example, you could get information about one of the connected devices by clicking one of the <a href="_usb3kd_device_info.htm"><b>!device_info</b></a> links. As an alternative to clicking a link, you can enter a command. For example, to see information about the first connected device, you could enter the command <b>!device_info 0xfffffa8004630690</b>.</p>
+<div class="alert"><b>Note</b>  The DML feature is available in WinDbg, but not in Visual Studio or KD.</div>
+<div> </div>
+<h2><a id="DLL"></a><a id="dll"></a>DLL</h2>
+<p>Usb3kd.dll
+     </p>
+<h2>Remarks</h2>
+<p>The <a href="_usb3kd_device_info.htm"><b>!usb_tree</b></a> command is the parent command for this set of commands.</p>
+<ul>
+<li><a href="_usb3kd_hub_info.htm"><b>!hub_info</b></a></li>
+<li><a href="_usb3kd_hub_info_from_fdo.htm"><b>!hub_info_from_fdo</b></a></li>
+<li><a href="_usb3kd_device_info.htm"><b>!device_info</b></a></li>
+<li><a href="_usb3kd_device_info_from_pdo.htm"><b>!device_info_from_pdo</b></a></li>
+<li><a href="_usb3kd_port_info.htm"><b>!port_info</b></a></li>
+</ul>
+<p>The information displayed by the <a href="_usb3kd_device_info.htm"><b>!usb_tree</b></a> family of commands is based on data structures maintained by the USB 3.0 hub driver. For information about the USB 3.0 hub driver and other drivers in the USB 3.0 stack, see <a href="http://go.microsoft.com/fwlink/p?LinkID=251983">USB Driver Stack Architecture</a>. For an explanation of the data structures used by the drivers in the USB 3.0 stack, see Part 2 of the <a href="http://go.microsoft.com/fwlink/p/?LinkID=249153">USB Debugging Innovations in Windows 8</a> video.</p>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="usb_3_extensions.htm">USB 3.0 Extensions</a></dt>
+<dt><a href="http://go.microsoft.com/fwlink/p?LinkID=227351">Universal Serial Bus (USB) Drivers</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!usb3kd.usb_tree%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

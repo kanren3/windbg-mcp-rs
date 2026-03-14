@@ -1,0 +1,116 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The DRIVER_IRQL_NOT_LESS_OR_EQUAL bug check has a value of 0x000000D1. This indicates that a kernel-mode driver attempted to access pageable memory at a process IRQL that was too high."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0xD1: DRIVER_IRQL_NOT_LESS_OR_EQUAL</title>
+
+<meta name="MS-HAID" content="t06_bugs_B0_47f8ea65-f2fc-418d-8faa-76c9e23caaf0.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0xd1__driver_irql_not_less_or_equal"></a>Bug Check 0xD1: DRIVER_IRQL_NOT_LESS_OR_EQUAL</h1>
+</div>
+<p>The DRIVER_IRQL_NOT_LESS_OR_EQUAL bug check has a value of 0x000000D1. This indicates that a kernel-mode driver attempted to access pageable memory at a process IRQL that was too high.</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2> DRIVER_IRQL_NOT_LESS_OR_EQUAL Parameters</h2>
+<p>The following parameters are displayed on the blue screen.</p>
+<table>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>1</p>
+</td>
+<td>
+<p>Memory referenced</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>2</p>
+</td>
+<td>
+<p>IRQL at time of reference</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>3</p>
+</td>
+<td>
+<p><b>0:</b> Read</p>
+<p><b>
+        1:</b> Write</p>
+<p><b>
+        8:</b> Execute</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>4</p>
+</td>
+<td>
+<p>Address that referenced memory</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Cause</h2>
+<p>A driver tried to access an address that is pageable (or that is completely invalid) while the IRQL was too high.</p>
+<p>This bug check is usually caused by drivers that have used improper addresses.</p>
+<p>If the first parameter has the same value as the fourth parameter, and the third parameter indicates an execute operation, this bug check was likely caused by a driver that was trying to execute code when the code itself was paged out. Possible causes for the page fault include the following: </p>
+<ul>
+<li>
+<p>The function was marked as pageable and was running at an elevated IRQL (which includes obtaining a lock).</p>
+</li>
+<li>
+<p>The function call was made to a function in another driver, and that driver was unloaded.</p>
+</li>
+<li>
+<p>The function was called by using a function pointer that was an invalid pointer. </p>
+</li>
+</ul>
+<h2>Resolution</h2>
+<p>The <a href="_analyze.htm"><b>!analyze</b></a> debug extension displays information about  the bug check and can be very helpful in determining the root cause.</p>
+<p>For more information, see <a href="crash_dump_files.htm">Crash dump analysis using the Windows debuggers (WinDbg)</a></p>
+<p>To start, examine the stack trace using the <a href="k__kb__kc__kd__kp__kp__kv__display_stack_backtrace_.htm"><b>k, kb, kc, kd, kp, kP, kv (Display Stack Backtrace)</b></a> command.</p>
+<p>If the problem is caused by the driver that you are developing, make sure that the function that was executing at the time of the bug check is not marked as pageable or does not call any other inline functions that could be paged out.</p>
+<p>If you are not equipped to use the Windows debugger to work on   this problem, you can use some basic troubleshooting techniques. </p>
+<ul>
+<li>
+<p>Check the System Log in Event Viewer for additional error messages that might help identify the device or driver that is causing this bug check. </p>
+</li>
+<li>
+<p>If a driver is identified in the bug check message, disable the driver or check with the manufacturer for driver updates. </p>
+</li>
+<li>
+<p>Confirm that any new hardware that is installed is compatible with the installed version of Windows. For example, you can get information about required hardware at <a href="https://www.microsoft.com/en-us/windows/windows-10-specifications">Windows 10
+
+Specifications</a>.</p>
+</li>
+<li>
+<p>For additional general troubleshooting information, see <a href="blue_screen_data.htm"><b>Blue Screen Data</b></a>. </p>
+</li>
+</ul>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,108 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The pt command executes the program until a return instruction is reached."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>pt (Step to Next Return)</title>
+
+<meta name="MS-HAID" content="r17_cmds_I_c168776c-0f6f-423f-af56-bdc91c9c3a17.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.pt__step_to_next_return_"></a>pt (Step to Next Return)</h1>
+</div>
+<p>The <b>pt</b> command executes the program until a return instruction is reached. </p>
+<p>User-Mode</p>
+<pre class="syntax">[<b>~</b>Thread] <b>pt</b> [<b>r</b>] [= StartAddress] [Count] [<b>"</b>Command<b>"</b>]
+</pre>
+<p>Kernel-Mode</p>
+<pre class="syntax">
+    <b>pt</b> [<b>r</b>] [= StartAddress] [Count] [<b>"</b>Command<b>"</b>]
+</pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Thread______"></a><a id="_______thread______"></a><a id="_______THREAD______"></a>       <i>Thread</i>      </dt>
+<dd>
+<p>Specifies threads to continue executing. All other threads are frozen. For more information about the syntax, see <a href="thread_syntax.htm">Thread Syntax</a>. You can specify threads only in user mode.</p>
+</dd>
+<dt><a id="_______r______"></a><a id="_______R______"></a>       <b>r</b>      </dt>
+<dd>
+<p>Turns on and off the display of registers and flags. By default, the registers and flags are displayed. You can disable register display by using the <b>ptr</b>, <a href="p__step_.htm"><b>pr</b></a>, <a href="t__trace_.htm"><b>tr</b></a>, or .prompt_allow -reg commands. All of these commands control the same setting and you can use any of them to override any previous use of these commands.  </p>
+<p>You can also disable register display by using the l-os command. This setting is separate from the other three commands. To control <u>which</u> registers and flags are displayed, use the <a href="rm__register_mask_.htm"><b>rm (Register Mask)</b></a> command.</p>
+</dd>
+<dt><a id="_______StartAddress______"></a><a id="_______startaddress______"></a><a id="_______STARTADDRESS______"></a>       <i>StartAddress</i>      </dt>
+<dd>
+<p>Specifies the address where the debugger begins execution. Otherwise, the debugger begins at the instruction that the instruction pointer points to. For more information about the syntax, see <a href="address_and_address_range_syntax.htm">Address and Address Range Syntax</a>.</p>
+</dd>
+<dt><a id="_______Count______"></a><a id="_______count______"></a><a id="_______COUNT______"></a>       <i>Count</i>      </dt>
+<dd>
+<p>Specifies the number of <b>return</b> instructions that must be encountered for this command to stop. The default value is one.</p>
+</dd>
+<dt><a id="_______Command______"></a><a id="_______command______"></a><a id="_______COMMAND______"></a>       <i>Command</i>      </dt>
+<dd>
+<p>Specifies a debugger command to execute after the step is performed. This command is executed before the standard <b>pt</b> results are displayed. If you also use <i>Count</i>, the specified command is executed after all stepping is complete (but before the results from the final step are displayed).</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>Live debugging only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>All</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about related commands, see <a href="controlling_the_target.htm">Controlling the Target</a>. </p>
+<h2>Remarks</h2>
+<p>The <b>pt</b> command causes the target to begin executing. This execution continues until a <b>return</b> instruction is reached or a breakpoint is encountered.</p>
+<p>If the program counter is already on a <b>return</b> instruction, the entire return is executed. After this return is returned, execution continues until another <b>return</b> is reached. This execution, rather than tracing, of the call is the only difference between <b>pt</b> and <a href="tt__trace_to_next_return_.htm"><b>tt (Trace to Next Return)</b></a>.</p>
+<p>In source mode, you can associate one source line with multiple assembly instructions. The <b>pt</b> command does not stop at a <b>return</b> instruction that is associated with the current source line.</p>
+<p>The following example demonstrates using the <b>pt</b> command along with the <b>kb </b>command to display the stack trace:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; pt "kb"</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20pt (Step to Next Return)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

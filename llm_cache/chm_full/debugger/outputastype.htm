@@ -1,0 +1,109 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The OutputAsType method changes the type of a symbol in a symbol group. The symbol's entry is updated to represent the new type."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IDebugSymbolGroup::OutputAsType method</title>
+
+<meta name="MS-HAID" content="ComOther_6805cc12-0d46-4114-a40d-54c7e32b3c7c.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.outputastype"></a>IDebugSymbolGroup::OutputAsType method</h1>
+</div>
+<p>The <b>OutputAsType</b>  method changes the type of a symbol in a symbol group.  The symbol's entry is updated to represent the new type. </p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>HRESULT OutputAsType(
+  [in] ULONG Index,
+  [in] PCSTR Type
+);</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Parameters</h2>
+<dl>
+<dt><i>Index</i> [in]</dt>
+<dd>
+<p>The index of the entry in this symbol group.  The <i>index</i> of a symbol is an identification number. The index ranges from zero through the number of symbols in the symbol group minus one.</p>
+</dd>
+<dt><i>Type</i> [in]</dt>
+<dd>
+<p>The name of the type of the symbol that you want.  If the name begins with an exclamation mark (<b>!</b>), the name is treated as an extension.  For more information about how to use an extension as a type, see the Remarks section.</p>
+</dd>
+</dl>
+<h2>Return value</h2>
+<table>
+<tr>
+<th>Return code</th>
+<th>Description</th>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>S_OK</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>The method was successful.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>This method can also return error values.  For more information, see <a href="hresult_values.htm"><b>Return Values</b></a>.</p>
+<h2>Remarks</h2>
+<p>Because the children of the new entry type might differ from the children of the old entry type, the <b>OutputAsType</b> method removes all of the children of the entry from the symbol group.  You can add the children back by using the <a href="expandsymbol.htm"><b>ExpandSymbol</b></a> method.</p>
+<p>If <i>Type</i> is an extension, the address of the symbol is passed to the extension.  Every line of output from the extension becomes a child symbol of the specified symbol.  These child symbols are text and you cannot manipulate them in any way.  For example, if the name of a variable is <b>@$teb</b>, you can change its type to <b>!teb</b>.</p>
+<p>For more information about symbol groups, see <a href="scopes_and_symbol_groups.htm">Scopes and Symbol Groups</a>.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Target platform</p>
+</th>
+<td width="70%">
+<dl>
+<dt></dt>
+</dl>
+</td>
+</tr>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Dbgeng.h (include Dbgeng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="idebugsymbolgroup.htm"><b>IDebugSymbolGroup</b></a></dt>
+<dt><a href="idebugsymbolgroup2.htm"><b>IDebugSymbolGroup2</b></a></dt>
+<dt><a href="getnumbersymbols.htm"><b>GetNumberSymbols</b></a></dt>
+<dt><a href="expandsymbol.htm"><b>ExpandSymbol</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IDebugSymbolGroup::OutputAsType method%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

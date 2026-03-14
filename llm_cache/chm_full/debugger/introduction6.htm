@@ -1,0 +1,89 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="March 2017"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Debugging Tools for Windows (WinDbg, KD, CDB, NTSD)</title>
+
+<meta name="MS-HAID" content="Splash_Debug_99a88c5e-0b97-4ed2-a6ec-30022391cba5.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.introduction6"></a>Debugging Tools for Windows (WinDbg, KD, CDB, NTSD)</h1>
+</div>
+<p>March 2017</p>
+<p>Start here for an overview of Debugging Tools for Windows. This tool set includes WinDbg and other debuggers.</p>
+<h2><a id="3_ways_to_get_Debugging_Tools_for_Windows"></a><a id="3_ways_to_get_debugging_tools_for_windows"></a><a id="3_WAYS_TO_GET_DEBUGGING_TOOLS_FOR_WINDOWS"></a>3 ways to get Debugging Tools for Windows</h2>
+<ul>
+<li><b>As part of the WDK</b><p> Install Microsoft Visual Studio and then install the  Windows Driver Kit (WDK). Debugging Tools for Windows is included in  the WDK. You can  <a href="http://go.microsoft.com/fwlink/p?LinkID=239721">get the integrated environment here</a>.</p>
+</li>
+<li><b>As part of the Windows SDK</b><p>Install the  Windows Software Development Kit (SDK). Debugging Tools for Windows is included in  the Windows SDK. You can  <a href="http://go.microsoft.com/fwlink/p?LinkID=271979">get the Windows SDK here</a>.</p>
+</li>
+<li><b>As a standalone tool set</b><p>If you want to download only Debugging Tools for Windows, <a href="http://go.microsoft.com/fwlink/p?LinkID=271979">install the Windows SDK</a>, and, during the installation, select  the <b>Debugging Tools for Windows</b> box and clear  all the other boxes.</p>
+</li>
+</ul>
+<h2><a id="Getting_Started_with_Windows_Debugging"></a><a id="getting_started_with_windows_debugging"></a><a id="GETTING_STARTED_WITH_WINDOWS_DEBUGGING"></a>Getting Started with Windows Debugging</h2>
+<p>To get started with Windows debugging, see <a href="getting_started_with_windows_debugging.htm">Getting Started with Windows Debugging</a>.</p>
+<p>To get started with debugging kernel mode drivers,  see <a href="debug_universal_drivers_-_step_by_step_lab__echo_kernel-mode_.htm">Debug Universal Drivers - Step by Step Lab (Echo Kernel-Mode)</a>. This is a step by step lab that shows how to use WinDbg to debug the sample KMDF echo driver.</p>
+<h2><a id="Debugging_environments"></a><a id="debugging_environments"></a><a id="DEBUGGING_ENVIRONMENTS"></a>Debugging environments</h2>
+<p>After you install Visual Studio and the WDK, you'll have six available <a href="debuggers_in_the_debugging_tools_for_windows_package.htm">debugging environments</a>. All of these debugging environments provide user interfaces for the same underlying debugging engine, which is implemented in dbgeng.dll. This debugging engine is called the <i>Windows debugger</i>, and the six debugging environments are collectively called the <i>Windows debuggers</i>.</p>
+<div class="alert"><b>Note</b>  Visual Studio includes its own debugging environment and debugging engine, which together are called the <i>Visual Studio debugger</i>.  For information on debugging in Visual Studio, see <a href="http://go.microsoft.com/fwlink/p/?LinkID=238333">Visual Studio debugger</a>. If you are looking to debug managed code such as C#, using the Visual Studio is often easiest way to get started. </div>
+<div> </div>
+<h2><a id="Windows_debuggers"></a><a id="windows_debuggers"></a><a id="WINDOWS_DEBUGGERS"></a>Windows debuggers</h2>
+<p>The Windows debuggers can run on x86-based, x64-based,  or ARM-based processors, and they can debug code that's running 
+     on x86-based, x64-based, or ARM-based processors. Sometimes the debugger and the code being debugged run on the same 
+     computer, but other times the debugger and the code being debugged run on separate computers. In either case, the 
+     computer that's running the debugger is called the <i>host computer</i>, and the computer that is being debugged is called the <i>target computer</i>. The Windows debuggers support the following versions of Windows for both the host and target computers.</p>
+<ul>
+<li>
+<p>Windows 10 and Windows Server 2016</p>
+</li>
+<li>
+<p>Windows 8.1 and Windows Server 2012 R2</p>
+</li>
+<li>
+<p>Windows 8 and Windows Server 2012</p>
+</li>
+<li>
+<p>Windows 7 and Windows Server 2008 R2</p>
+</li>
+</ul>
+<h2><a id="Symbols_and_Symbol_Files"></a><a id="symbols_and_symbol_files"></a><a id="SYMBOLS_AND_SYMBOL_FILES"></a>Symbols and Symbol Files</h2>
+<p>Symbol files hold a variety of data which are not actually needed when running the binaries, but are very useful when debugging code. For more information about creating and using symbol files, see  <a href="symbols.htm">Symbols for Windows debugging (WinDbg, KD, CDB, NTSD)</a>.</p>
+<h2><a id="Blue_Screens_and_crash_dump_files"></a><a id="blue_screens_and_crash_dump_files"></a><a id="BLUE_SCREENS_AND_CRASH_DUMP_FILES"></a>Blue Screens and crash dump files</h2>
+<p>If Windows  stops working and displays a blue screen, the computer has shut down abruptly to protect itself from data loss and displays a bug check code. For more information, see <a href="bug_checks__blue_screens_.htm">Bug Checks (Blue Screens)</a>. You analyze crash dump files that are created when Windows shuts down by using WinDbg and other Windows debuggers. For more information, see <a href="crash_dump_files.htm">Crash dump analysis using the Windows debuggers (WinDbg)</a>.</p>
+<h2><a id="Tools_and_utilities"></a><a id="tools_and_utilities"></a><a id="TOOLS_AND_UTILITIES"></a>Tools and utilities</h2>
+<p>In addition to the debuggers, Debugging Tools for Windows includes a set of tools that are useful for 
+     debugging. For a full list of the tools, see 
+     <a href="extra_tools.htm">Tools Included in Debugging Tools for Windows</a>.</p>
+<h2><a id="Additional_documentation"></a><a id="additional_documentation"></a><a id="ADDITIONAL_DOCUMENTATION"></a>Additional documentation</h2>
+<p>For additional information related to Debugging Tools for Windows, see 
+     <a href="debugging_resources.htm">Debugging Resources</a>. For information on what's new in Windows 10, see <a href="debugging_tools_for_windows__new_for_windows_10.htm">Debugging Tools for Windows: New for Windows 10</a>.</p>
+<h2><a id="In_this_section"></a><a id="in_this_section"></a><a id="IN_THIS_SECTION"></a>In this section</h2>
+<ul>
+<li><a href="getting_started_with_windows_debugging.htm">Getting Started with Windows Debugging</a></li>
+<li><a href="debugging_resources.htm">Debugging Resources</a></li>
+<li><a href="debugger_operation_win8.htm">Debugger Operation</a></li>
+<li><a href="debugging_techniques.htm">Debugging Techniques</a></li>
+<li><a href="symbols.htm">Symbols</a></li>
+<li><a href="crash_dump_files.htm">Crash Dump Analysis</a></li>
+<li><a href="bug_checks__blue_screens_.htm">Bug Checks (Blue Screens)</a></li>
+<li><a href="debugger_reference.htm">Debugger Reference</a></li>
+</ul>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Debugging Tools for Windows (WinDbg, KD, CDB, NTSD)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

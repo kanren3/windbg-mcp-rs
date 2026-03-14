@@ -1,0 +1,143 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !sysptes extension displays a formatted view of the system page table entries (PTEs)."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!sysptes</title>
+
+<meta name="MS-HAID" content="r29_exts_kernel_Q_d8bb5cc1-b88c-49dd-b74a-0b0acfb2a943.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._sysptes"></a>!sysptes</h1>
+</div>
+<p>The <b>!sysptes</b> extension displays a formatted view of the system page table entries (PTEs).</p>
+<pre class="syntax"><b>!sysptes </b>[<i>Flags</i>]</pre>
+<h2><a id="ddk__sysptes_dbg"></a><a id="DDK__SYSPTES_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Flags______"></a><a id="_______flags______"></a><a id="_______FLAGS______"></a>       <i>Flags</i>      </dt>
+<dd>
+<p>Specifies the level of detail to display. <i>Flags</i> can be any combination of the following bits. The default is zero:
+		</p>
+<p></p>
+<dl>
+<dt><a id="Bit_0__0x1_"></a><a id="bit_0__0x1_"></a><a id="BIT_0__0X1_"></a>Bit 0 (0x1)</dt>
+<dd>
+<p>Displays information about free PTEs.</p>
+</dd>
+<dt><a id="Bit_1__0x2_"></a><a id="bit_1__0x2_"></a><a id="BIT_1__0X2_"></a>Bit 1 (0x2)</dt>
+<dd>
+<p>(Windows 2000 only)  Displays unused pages in the page usage statistics.</p>
+<p>(Windows XP and later)  Displays information about free PTEs in the global special pool.</p>
+</dd>
+<dt><a id="Bit_2__0x4_"></a><a id="bit_2__0x4_"></a><a id="BIT_2__0X4_"></a>Bit 2 (0x4)</dt>
+<dd>
+<p>Displays detailed information about any system PTEs that are allocated to mapping locked pages.
+		</p>
+</dd>
+<dt><a id="Bit_3__0x8_"></a><a id="bit_3__0x8_"></a><a id="BIT_3__0X8_"></a>Bit 3 (0x8)</dt>
+<dd>
+<p>(Windows 2000 and Windows XP only)  Displays nonpaged pool expansion free PTE information. If this bit is set, the other lists are not displayed. If both 0x1 and 0x8 are set, all nonpaged pool expansion free PTEs are displayed. If only 0x8 is set, only the total is displayed.</p>
+</dd>
+<dt><a id="Bit_4__0x10_"></a><a id="bit_4__0x10_"></a><a id="BIT_4__0X10_"></a>Bit 4 (0x10)</dt>
+<dd>
+<p>(Windows Vista and later)  Displays special pool free PTE information for the session.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000</b></p>
+</td>
+<td>
+<p>
+          Kdextx86.dll
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Kdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For information about page tables and PTEs, see <i>Microsoft Windows Internals</i>, by Mark Russinovich and David Solomon. (This book may not be available in some languages and 
+
+countries.)</p>
+<h2>Remarks</h2>
+<p>To examine a specific PTE, use the <a href="_pte.htm"><b>!pte</b></a> extension.</p>
+<p>Here is an example from a Windows 2000 system:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !sysptes 1
+
+System PTE Information
+  Total System Ptes 50962
+     SysPtes list of size   1 has 389 free
+     SysPtes list of size   2 has  95 free
+     SysPtes list of size   4 has  55 free
+     SysPtes list of size   8 has  35 free
+     SysPtes list of size  16 has  27 free
+ 
+    starting PTE: c03c7000
+    ending PTE:   c03f8c44
+
+loading (99% complete)
+
+      free ptes: c03c8d60   number free: 45134.
+
+  free blocks: 1   total free: 45134    largest free block: 45134
+
+     Page    Count
+       a0        2.
+       a1        2.
+       a2        2.
+       a3        2.
+......</code></pre>
+<p>In Windows XP and later versions of Windows, the display is similar, except that the page count statistics at the end are not included. Here is an example from a Windows XP system:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !sysptes 1
+
+System PTE Information
+  Total System Ptes 571224
+     SysPtes list of size 1 has 361 free
+     SysPtes list of size 2 has 91 free
+     SysPtes list of size 4 has 48 free
+     SysPtes list of size 8 has 36 free
+     SysPtes list of size 9 has 29 free
+     SysPtes list of size 23 has 29 free
+ 
+    starting PTE: fffffe0059388000
+    ending PTE:   fffffe00597e3ab8
+
+      free ptes: fffffe0059388000   number free: 551557.
+      free ptes: fffffe00597be558   number free: 104.
+      free ptes: fffffe00597d2828   number free: 676.
+
+  free blocks: 3   total free: 552337    largest free block: 551557</code></pre>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!sysptes%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

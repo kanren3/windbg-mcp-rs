@@ -1,0 +1,148 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !obtrace extension displays object reference tracing data for the specified object."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!obtrace</title>
+
+<meta name="MS-HAID" content="r28_exts_kernel_N_7997a09f-935a-4f81-b729-80fb86b86f79.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._obtrace"></a>!obtrace</h1>
+</div>
+<p>The <b>!obtrace</b> extension displays object reference tracing data for the specified object.</p>
+<pre class="syntax"><b>!obtrace </b><i>Object</i></pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Object______"></a><a id="_______object______"></a><a id="_______OBJECT______"></a>       <i>Object</i>      </dt>
+<dd>
+<p>A pointer to the object or a path.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Windows 2000</b></p>
+</td>
+<td>
+<p>Unavailable</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later</b></p>
+</td>
+<td>
+<p>
+          Kdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about the Global Flags utility (GFlags), see the Windows Driver Kit (WDK) documentation and <i>Microsoft Windows Internals</i> by Mark Russinovich and David Solomon. </p>
+<h2>Remarks</h2>
+<p>The object reference tracing feature of Windows records sequential stack traces whenever an object reference counter is incremented or decremented. </p>
+<p>Before using this extension to display object reference tracing data, you must use <a href="gflags.htm">GFlags</a> to enable <a href="object_reference_tracing.htm">object reference tracing</a> for the specified object. You can enable object reference tracing as a kernel flag (run-time) setting, in which the change is effective immediately, but disappears if you shut down or restart; or as a registry setting, which requires a restart, but remains effective until you change it. </p>
+<p>Here is an example of the output from the <b>!obtrace</b> extension:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !obtrace 0xfa96f700
+Object: fa96f700        Image: cmd.exe
+Sequence  (+/-)  Stack
+--------  -----  ---------------------------------------------------
+   2421d    +1  nt!ObCreateObject+180
+                nt!NtCreateEvent+92
+                nt!KiFastCallEntry+104
+                nt!ZwCreateEvent+11
+                win32k!UserThreadCallout+6f
+                win32k!W32pThreadCallout+38
+                nt!PsConvertToGuiThread+174
+                nt!KiBBTUnexpectedRange+c
+
+   2421e    -1  nt!ObfDereferenceObject+19
+                nt!NtCreateEvent+d4
+                nt!KiFastCallEntry+104
+                nt!ZwCreateEvent+11
+                win32k!UserThreadCallout+6f
+                win32k!W32pThreadCallout+38
+                nt!PsConvertToGuiThread+174
+                nt!KiBBTUnexpectedRange+c
+
+   2421f    +1  nt!ObReferenceObjectByHandle+1c3
+                win32k!xxxCreateThreadInfo+37d
+                win32k!UserThreadCallout+6f
+                win32k!W32pThreadCallout+38
+                nt!PsConvertToGuiThread+174
+                nt!KiBBTUnexpectedRange+c
+
+   24220    +1  nt!ObReferenceObjectByHandle+1c3
+                win32k!ProtectHandle+22
+                win32k!xxxCreateThreadInfo+3a0
+                win32k!UserThreadCallout+6f
+                win32k!W32pThreadCallout+38
+                nt!PsConvertToGuiThread+174
+                nt!KiBBTUnexpectedRange+c
+
+   24221    -1  nt!ObfDereferenceObject+19
+                win32k!xxxCreateThreadInfo+3a0
+                win32k!UserThreadCallout+6f
+                win32k!W32pThreadCallout+38
+                nt!PsConvertToGuiThread+174
+                nt!KiBBTUnexpectedRange+c
+
+----  ----------------------------------------------------------
+References: 3, Dereferences 2</code></pre>
+<p>The primary indicators in the <b>!obtrace 0xfa96f700</b> display are listed in the following table.</p>
+<table>
+<tr>
+<th>Parameter</th>
+<th>Meaning</th>
+</tr>
+<tr>
+<td>
+<p><b>Sequence</b></p>
+</td>
+<td>
+<p>Represents the order of operations.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>+/-</b></p>
+</td>
+<td>
+<p>Indicates a reference or a dereference operation. </p>
+<p>
+        +1 indicates a reference operation.</p>
+<p>
+        -1 indicates a dereference operation.</p>
+<p>
+        +/-
+        n indicates multiple reference/dereference operations.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>The object reference traces on x64-based target computers might be incomplete because it is not always possible to acquire stack traces at IRQL levels higher than PASSIVE_LEVEL.</p>
+<p>You can stop execution at any time by pressing CTRL+BREAK (in WinDbg) or CTRL+C (in KD).</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!obtrace%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

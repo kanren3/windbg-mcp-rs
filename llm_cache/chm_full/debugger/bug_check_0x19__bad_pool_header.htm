@@ -1,0 +1,265 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The BAD_POOL_HEADER bug check has a value of 0x00000019. This indicates that a pool header is corrupt."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>(Developer Content) Bug Check 0x19: BAD_POOL_HEADER</title>
+
+<meta name="MS-HAID" content="t04_bugs_00_05b02e19-7f89-4715-9d17-a015b21cc8e5.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0x19__bad_pool_header"></a>(Developer Content) Bug Check 0x19: BAD_POOL_HEADER</h1>
+</div>
+<p>The BAD_POOL_HEADER bug check has a value of 0x00000019. This indicates that a pool header is corrupt.</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2> BAD_POOL_HEADER Parameters</h2>
+<p>The following parameters are displayed on the blue screen. Parameter 1 indicates the type of violation. The meaning of the other parameters depends on the value of Parameter 1.</p>
+<table>
+<tr>
+<th>Parameter 1</th>
+<th>Parameter 2</th>
+<th>Parameter 3</th>
+<th>Parameter 4</th>
+<th>Cause of Error</th>
+</tr>
+<tr>
+<td>
+<p>0x2</p>
+</td>
+<td>
+<p>The pool entry being checked</p>
+</td>
+<td>
+<p>The size of the pool block</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>The special pool pattern check failed.</p>
+<p>(The owner has likely corrupted the pool block.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x3</p>
+</td>
+<td>
+<p>The pool entry being checked</p>
+</td>
+<td>
+<p>The read-back <b>flink</b> freelist value</p>
+</td>
+<td>
+<p>The read-back <b>blink</b> freelist value</p>
+</td>
+<td>
+<p>The pool freelist is corrupt.</p>
+<p>(In a healthy list, the values of Parameters 2, 3, and 4 should be identical.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x5</p>
+</td>
+<td>
+<p>One of the pool entries</p>
+</td>
+<td>
+<p>Reserved  </p>
+</td>
+<td>
+<p>The other pool entry</p>
+</td>
+<td>
+<p>A pair of adjacent pool entries have headers that contradict each other. At least one of them is corrupt.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x6</p>
+</td>
+<td>
+<p>One incorrectly-calculated entry</p>
+</td>
+<td>
+<p>Reserved  </p>
+</td>
+<td>
+<p>The bad entry that caused the miscalculation</p>
+</td>
+<td>
+<p>The pool block header's previous size is too large.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x7</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>Reserved  </p>
+</td>
+<td>
+<p>The bad pool entry</p>
+</td>
+<td>
+<p>The pool block header size is corrupt.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x8</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>Reserved  </p>
+</td>
+<td>
+<p>The bad pool entry</p>
+</td>
+<td>
+<p>The pool block header size is zero.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x9</p>
+</td>
+<td>
+<p>One incorrectly-calculated entry</p>
+</td>
+<td>
+<p>Reserved  </p>
+</td>
+<td>
+<p>The bad entry that caused the miscalculation</p>
+</td>
+<td>
+<p>The pool block header size is corrupted (it is too large).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0xA</p>
+</td>
+<td>
+<p>The pool entry that should have been found </p>
+</td>
+<td>
+<p>Reserved  </p>
+</td>
+<td>
+<p>The virtual address of the page that should have contained the pool entry</p>
+</td>
+<td>
+<p>The pool block header size is corrupt.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0xD, 0xE, 0xF, 0x23, 0x24, 0x25</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>The pool header of a freed block has been modified after it was freed.  This is not typically the fault of the prior owner of the freed block; instead it is usually (but not always) due to the block preceding the freed block being overrun.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x20</p>
+</td>
+<td>
+<p>The pool entry that should have been found</p>
+</td>
+<td>
+<p>The next pool entry</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>The pool block header size is corrupt.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0X21</p>
+</td>
+<td>
+<p>The pool pointer being freed</p>
+</td>
+<td>
+<p>The number of bytes allocated for the pool block</p>
+</td>
+<td>
+<p>The corrupted value found following the pool block</p>
+</td>
+<td>
+<p>The data following the pool block being freed is corrupt.  Typically this means the consumer (call stack) has overrun the block.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0X22</p>
+</td>
+<td>
+<p>The address being freed</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>An address being freed does not have a tracking entry. This is usually because the call stack is trying to free a pointer that either has already been freed or was never allocated to begin with.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Cause</h2>
+<p>The pool is already corrupted at the time of the current request. </p>
+<p>This may or may not be due to the caller. </p>
+<h2>Resolution</h2>
+<p>The internal pool links must be walked using the kernel debugger to figure out a possible cause of the problem.</p>
+<p>Then you can use special pool for the suspect pool tags, or use Driver Verifier "Special Pool" option on the suspect driver.  The <a href="_analyze.htm"><b>!analyze</b></a> extension may be of help in pinpointing the suspect driver, but this is frequently not the case with pool corrupters.</p>
+<p>Use the steps described in <a href="blue_screen_data.htm"><b>Blue Screen Data</b></a> to gather the Stop Code Parameters. Use the stop code parameters to determine the  specific type of code behavior you are working to track down.</p>
+<p><b>Driver Verifier</b></p>
+<p>Driver Verifier is a tool that runs in real time to examine the behavior of drivers.  If it see errors in the execution of driver code, it proactively creates an exception to allow that part of the driver code to be further scrutinized. The driver verifier manager is built into Windows and is available on all Windows PCs. To start  the driver verifier manager, type <i>Verifer</i> at a command prompt. You can configure which drivers you would like to verify. The code that verifies drivers adds overhead as it runs, so try and verify the smallest number of drivers as possible.  For more information, see Driver Verifier.</p>
+<p><b>Windows Memory Diagnostics</b></p>
+<p>If this Bug Check appears inconsistently, it could be related to faulty physical memory.</p>
+<p>Run the Windows Memory Diagnostics tool, to test the memory. In the control panel search box, type Memory, and then click <b>Diagnose your computer's memory problems</b>.‌ After the test is run,  use Event viewer to view the results under  the System log. Look for the <i>MemoryDiagnostics-Results</i>
+entry to view the results.</p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

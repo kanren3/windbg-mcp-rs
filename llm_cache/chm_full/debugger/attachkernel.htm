@@ -1,0 +1,147 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The AttachKernel methods connect the debugger engine to a kernel target."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IDebugClient::AttachKernel method</title>
+
+<meta name="MS-HAID" content="IDebugClient_9008538b-3492-4952-a18f-b1dd346e887e.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.attachkernel"></a>IDebugClient::AttachKernel method</h1>
+</div>
+<p>The <b>AttachKernel</b>  methods connect the <a href="d.htm#debugger_engine"><i>debugger engine</i></a> to a kernel target.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>HRESULT AttachKernel(
+  [in]           ULONG Flags,
+  [in, optional] PCSTR ConnectOptions
+);</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Parameters</h2>
+<dl>
+<dt><i>Flags</i> [in]</dt>
+<dd>
+<p>Specifies the flags that control how the debugger attaches to the kernel target.  The possible values are:</p>
+<table>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>DEBUG_ATTACH_KERNEL_CONNECTION</p>
+</td>
+<td>
+<p>Attach to the kernel on the target computer.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_ATTACH_EXDI_DRIVER</p>
+</td>
+<td>
+<p>Attach to a kernel by using an eXDI driver.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+</dd>
+<dt><i>ConnectOptions</i> [in, optional]</dt>
+<dd>
+<p>Specifies the connection settings for communicating with the computer running the kernel target.  The interpretation of <i>ConnectOptions</i> depends on the value of <i>Flags</i>.</p>
+<p></p>
+<dl>
+<dt><a id="DEBUG_ATTACH_KERNEL_CONNECTION"></a><a id="debug_attach_kernel_connection"></a>DEBUG_ATTACH_KERNEL_CONNECTION</dt>
+<dd>
+<p><i>ConnectOptions</i> will be interpreted the same way as the options that follow the <b>-k</b> switch on the WinDbg and KD command lines.  Environment variables affect <i>ConnectOptions</i> in the same way they affect the <b>-k</b> switch.</p>
+</dd>
+<dt><a id="DEBUG_ATTACH_EXDI_DRIVER"></a><a id="debug_attach_exdi_driver"></a>DEBUG_ATTACH_EXDI_DRIVER</dt>
+<dd>
+<p>eXDI drivers are not described in this documentation.  If you have an eXDI interface to your hardware probe or hardware simulator, please contact Microsoft for debugging information.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h2>Return value</h2>
+<p>This method may also return error values.  See <a href="hresult_values.htm"><b>Return Values</b></a> for more details.</p>
+<table>
+<tr>
+<th>Return code</th>
+<th>Description</th>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>S_OK</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>The method was successful.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<div class="alert"><b>Note</b>    The engine doesn't completely attach to the kernel until the <a href="waitforevent.htm"><b>WaitForEvent</b></a> method has been called.  Only after the kernel has generated an event -- for example, the initial breakpoint -- does it become available in the debugger session.</div>
+<div> </div>
+<p>For more information about connecting to live kernel-mode targets, see <a href="live_kernel_mode_targets.htm">Live Kernel-Mode Targets</a>.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Target platform</p>
+</th>
+<td width="70%">
+<dl>
+<dt></dt>
+</dl>
+</td>
+</tr>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Dbgeng.h (include Dbgeng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="idebugclient.htm"><b>IDebugClient</b></a></dt>
+<dt><a href="idebugclient2.htm"><b>IDebugClient2</b></a></dt>
+<dt><a href="idebugclient3.htm"><b>IDebugClient3</b></a></dt>
+<dt><a href="idebugclient4.htm"><b>IDebugClient4</b></a></dt>
+<dt><a href="idebugclient5.htm"><b>IDebugClient5</b></a></dt>
+<dt><a href="getkernelconnectionoptions.htm"><b>GetKernelConnectionOptions</b></a></dt>
+<dt><a href="attachprocess.htm"><b>AttachProcess</b></a></dt>
+<dt><a href="iskerneldebuggerenabled.htm"><b>IsKernelDebuggerEnabled</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IDebugClient::AttachKernel method%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

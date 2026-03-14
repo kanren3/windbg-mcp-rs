@@ -1,0 +1,82 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !usbkd.usbhublog command displays the debug log for a USB hub."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!usbkd.usbhublog</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._usbkd_usbhublog"></a>!usbkd.usbhublog</h1>
+</div>
+<p>The  <b>!usbkd.usbhublog</b> command displays the debug log for a USB hub.</p>
+<pre class="syntax"><b>!usbkd.usbhublog </b><i>DeviceExtension</i><b>[, </b><i>NumberOfEntries</i><b>]</b></pre>
+<h2><a id="ddk__devobj_dbg"></a><a id="DDK__DEVOBJ_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______DeviceExtension______"></a><a id="_______deviceextension______"></a><a id="_______DEVICEEXTENSION______"></a>       <i>DeviceExtension</i>      </dt>
+<dd>
+<p>Address of the device extension for the functional device object (FDO) of a USB hub.</p>
+</dd>
+<dt><a id="_______NumberOfEntries______"></a><a id="_______numberofentries______"></a><a id="_______NUMBEROFENTRIES______"></a>       <i>NumberOfEntries</i>      </dt>
+<dd>
+<p>The number of log entries to display. To display the entire log, set this parameter to -1.</p>
+</dd>
+</dl>
+<h2><a id="DLL"></a><a id="dll"></a>DLL</h2>
+<p>Usbkd.dll
+     </p>
+<h2>Examples</h2>
+<p>Here is one way to find the address of the device extension for the FDO of a USB hub. First enter <a href="_usbkd_usb2tree.htm"><b>!usbkd.usb2tree</b></a>.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !usbkd.usb2tree
+...
+2)!ehci_info ffffe00001ca11a0 !devobj ffffe00001ca1050 PCI: VendorId 8086 DeviceId 293c RevisionId 0002 
+    RootHub !hub2_info ffffe000023201a0 !devstack ffffe00002320050
+      ...</code></pre>
+<p>In the preceding output, you can see the suggested command <b>!devstack ffffe00002320050</b>. Enter this command.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !kdexts.devstack ffffe00002320050
+
+  !DevObj           !DrvObj            !DevExt           ObjectName
+&gt; ffffe00002320050  \Driver\usbhub     ffffe000023201a0  0000002d
+  ffffe0000213c050  \Driver\usbehci    ffffe0000213c1a0  USBPDO-3
+...</code></pre>
+<p>In the preceding output, <code>ffffe000023201a0</code> is the address of the device extension for the FDO of the hub.</p>
+<p>Now pass the address of the device extension to <b>!usbhublog</b>. In this example, the second argument limits the display to 10 log entries.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !usbkd.usbhublog ffffe000023201a0, 10
+
+LOG@: ffffe000023201a0 (usbhub!_DEVICE_EXTENSION_HUB)
+&gt;LOG mask = ff idx = ffffa333 (33)
+*LOG: ffffe00002321ca0  LOGSTART: ffffe00002321640 *LOGEND: ffffe00002323620 # 20 
+[ 000] ffffe00002321ca0 HDec 0000000000000000 ffffe000002904d0 0000000000000001 
+[ 001] ffffe00002321cc0 HPCd 0000000000000000 0000000000000002 0000000000000004 
+[ 002] ffffe00002321ce0 qwk- 0000000000000000 ffffe000021c11c0 0000000000000000 
+[ 003] ffffe00002321d00 pq-- 0000000000000000 0000000000000002 0000000000000004 
+[ 004] ffffe00002321d20 _6p4 0000000000000000 0000000000000000 0000000000000004 
+[ 005] ffffe00002321d40 _6p1 0000000000000000 0000000000000003 0000000000000004 
+[ 006] ffffe00002321d60 pq++ 0000000000000000 0000000000000003 0000000000000004 
+[ 007] ffffe00002321d80 pq++ 0000000000000000 0000000000000006 0000000000000004 
+[ 008] ffffe00002321da0 _6p0 0000000000000000 ffffe000021c11c0 0000000000000004 
+[ 009] ffffe00002321dc0 pqDP 0000000000000000 ffffe000021c11d8 0000000000000006</code></pre>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="usb_2_0_extensions.htm">USB 2.0 Debugger Extensions</a></dt>
+<dt><a href="http://go.microsoft.com/fwlink/p?LinkID=227351">Universal Serial Bus (USB) Drivers</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!usbkd.usbhublog%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

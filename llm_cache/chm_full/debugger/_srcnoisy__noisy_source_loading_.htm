@@ -1,0 +1,91 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .srcnoisy command controls the verbosity level for source file loading."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.srcnoisy (Noisy Source Loading)</title>
+
+<meta name="MS-HAID" content="r22_metacmds_S_feddb9ee-9663-4273-a66b-0597fec2f4bf.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._srcnoisy__noisy_source_loading_"></a>.srcnoisy (Noisy Source Loading)</h1>
+</div>
+<p>The <b>.srcnoisy</b> command controls the verbosity level for source file loading.</p>
+<pre class="syntax"><b>.srcnoisy </b>[<i>Options</i>]</pre>
+<h2><a id="ddk_meta_noisy_source_loading_dbg"></a><a id="DDK_META_NOISY_SOURCE_LOADING_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Options______"></a><a id="_______options______"></a><a id="_______OPTIONS______"></a>       <i>Options</i>      </dt>
+<dd>
+<p>Can be any one of the following options:</p>
+<p></p>
+<dl>
+<dt><a id="0"></a>0</dt>
+<dd>
+<p>Disables the display of extra messages.</p>
+</dd>
+<dt><a id="1"></a>1</dt>
+<dd>
+<p>Displays information about the progress of source file loading and unloading.</p>
+</dd>
+<dt><a id="2"></a>2</dt>
+<dd>
+<p>Displays information about the progress of symbol file loading and unloading.</p>
+</dd>
+<dt><a id="3"></a>3</dt>
+<dd>
+<p>Displays all information displayed by options 1 and 2. </p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>user mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets</b></p>
+</td>
+<td>
+<p>live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>all </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>With no parameters, <b>.srcnoisy</b> will display the current status of noisy source loading.</p>
+<p>Noisy source loading should not be confused with noisy symbol loading -- that is controlled by the <a href="_sym.htm"><b>!sym noisy</b></a> extension and by other means of controlling the <a href="symbol_options.htm#symopt_debug">SYMOPT_DEBUG</a> setting.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.srcnoisy (Noisy Source Loading)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

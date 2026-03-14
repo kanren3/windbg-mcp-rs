@@ -1,0 +1,93 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !obja extension displays the attributes of an object in the object manager."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!obja</title>
+
+<meta name="MS-HAID" content="r25_exts_general_He_be41a10d-b7a2-4b71-ab7f-403b7ee19bc5.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._obja"></a>!obja</h1>
+</div>
+<p>The <b>!obja</b> extension displays the attributes of an object in the object manager.</p>
+<p></p>
+<pre class="syntax"><b>!obja </b><i>Address</i></pre>
+<h2><a id="ddk__obja_dbg"></a><a id="DDK__OBJA_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Address______"></a><a id="_______address______"></a><a id="_______ADDRESS______"></a>       <i>Address</i>      </dt>
+<dd>
+<p>Specifies the hexadecimal address of the object header you want to examine.  
+		</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Windows 2000</b></p>
+</td>
+<td>
+<p>
+<dl>
+<dt>
+          Ext.dll
+          </dt>
+<dt>Kdextx86.dll
+          </dt>
+</dl>
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later</b></p>
+</td>
+<td>
+<p>
+          Ext.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For information about objects and the object manager, see the Microsoft Windows SDK documentation, the Windows Driver Kit (WDK) documentation, and <i>Microsoft Windows Internals</i> by Mark Russinovich and David Solomon. (These resources may not be available in some languages 
+
+and countries.)
+</p>
+<h2>Remarks</h2>
+<p>The attributes pertaining to the specified object are listed. Valid attributes are:</p>
+<pre class="syntax" xml:space="preserve"><code>#define OBJ_INHERIT             0x00000002L
+#define OBJ_PERMANENT           0x00000010L
+#define OBJ_EXCLUSIVE           0x00000020L
+#define OBJ_CASE_INSENSITIVE    0x00000040L
+#define OBJ_OPENIF              0x00000080L
+#define OBJ_OPENLINK            0x00000100L
+#define OBJ_VALID_ATTRIBUTES    0x000001F2L</code></pre>
+<p>Here is an example:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !obja 80967768
+Obja +80967768 at 80967768:
+        OBJ_INHERIT
+        OBJ_PERMANENT
+        OBJ_EXCLUSIVE</code></pre>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!obja%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,47 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Unresolved Breakpoints (bu Breakpoints)"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Unresolved Breakpoints (bu Breakpoints)</title>
+
+<meta name="MS-HAID" content="r07_use_operation_3a87f521-a016-43a6-bc5f-820bfd4fa0c4.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.unresolved_breakpoints___bu_breakpoints_"></a>Unresolved Breakpoints (bu Breakpoints)</h1>
+</div>
+<p>If a <a href="using_breakpoints.htm">breakpoint</a> is set for a routine name that has not been loaded, the breakpoint is called a <i>deferred</i>, <i>virtual</i>, or <i>unresolved</i> breakpoint. (These terms are used interchangeably.) Unresolved breakpoints are not associated with any specific load of a module. Every time that a new application is loaded, it is checked for this routine name. If this routine appears, the debugger computes the actual coded address of the virtual breakpoint and enables the breakpoint.</p>
+<p>If you set a breakpoint by using the <b>bu</b> command, the breakpoint is automatically considered unresolved. If this breakpoint is in a loaded module, the breakpoint is still enabled and functions normally. However, if the module is later unloaded and reloaded, this breakpoint does not vanish. On the other hand, a breakpoint that you set with <b>bp</b> is immediately resolved to an address.</p>
+<p>There are three primary differences between <b>bp</b> breakpoints and <b>bu</b> breakpoints:</p>
+<ul>
+<li>
+<p>A <b>bp</b> breakpoint location is always converted to an address. If a module change moves the code at which a <b>bp</b> breakpoint was set, the breakpoint remains at the same address. On the other hand, a <b>bu</b> breakpoint remains associated with the symbolic value (typically a symbol plus an offset) that was used, and it tracks this symbolic location even if its address changes.</p>
+</li>
+<li>
+<p>If a <b>bp</b> breakpoint address is found in a loaded module, and if that module is later unloaded, the breakpoint is removed from the breakpoint list.  On the other hand, <b>bu</b> breakpoints persist after repeated unloads and loads. </p>
+</li>
+<li>
+<p>Breakpoints that you set with <b>bp</b> are not saved in WinDbg <a href="using_workspaces.htm">workspaces</a>. Breakpoints that are set with <b>bu</b> are saved in workspaces. </p>
+</li>
+</ul>
+<h3><a id="controlling_address_breakpoints_and_unresolved_breakpoints"></a><a id="CONTROLLING_ADDRESS_BREAKPOINTS_AND_UNRESOLVED_BREAKPOINTS"></a>Controlling Address Breakpoints and Unresolved Breakpoints</h3>
+<p>Address breakpoints can be created with the <a href="bp__bu__bm__set_breakpoint_.htm"><b>bp (Set Breakpoint)</b></a> command, or the <b>bm (Set Symbol Breakpoint)</b> command when the <b>/d</b> switch is included. Unresolved breakpoints can be created with the <b>bu (Set Unresolved Breakpoint)</b> command, or the <b>bm</b> command when the <b>/d</b> switch is not included.  Commands that disable, enable, and modify breakpoints apply to all kinds of breakpoints.  Commands that display a list of breakpoints include all breakpoints, and indicate the type of each. For a listing of these commands, see <a href="methods_of_controlling_breakpoints.htm">Methods of Controlling Breakpoints</a>.</p>
+<p>The WinDbg <b>Breakpoints</b> dialog box displays all breakpoints, indicating unresolved breakpoints with the notation "u". This dialog box can be used to modify any breakpoint.The <b>Command</b> text box on this dialog box can be used to create any type of breakpoint; if the type is omitted, an unresolved breakpoint is created. For details, see <a href="edit___breakpoints.htm">Edit | Breakpoints</a>. When you set a breakpoint by using the mouse in the WinDbg <a href="disassembly_window.htm">Disassembly window</a> or <a href="source_window.htm">Source window</a>, the debugger creates an unresolved breakpoint.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Unresolved Breakpoints (bu Breakpoints)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

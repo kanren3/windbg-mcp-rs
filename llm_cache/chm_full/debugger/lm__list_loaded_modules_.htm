@@ -1,0 +1,223 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The lm command displays the specified loaded modules. The output includes the status and the path of the module."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>lm (List Loaded Modules)</title>
+
+<meta name="MS-HAID" content="r17_cmds_I_2360e197-1deb-4e41-98ff-d2c7e6c7d8f3.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.lm__list_loaded_modules_"></a>lm (List Loaded Modules)</h1>
+</div>
+<p>The <b>lm</b> command displays the specified loaded modules. The output includes the status and the path of the module.</p>
+<pre class="syntax"><b>lm</b><i>Options</i><b> [a </b><i>Address</i><b>] [m </b><i>Pattern</i><b> | M </b><i>Pattern</i><b>]</b></pre>
+<h2><a id="ddk_cmd_list_loaded_modules_dbg"></a><a id="DDK_CMD_LIST_LOADED_MODULES_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Options______"></a><a id="_______options______"></a><a id="_______OPTIONS______"></a>       <i>Options</i>      </dt>
+<dd>
+<p>Any combination of the following options:</p>
+<p></p>
+<dl>
+<dt><a id="D"></a><a id="d"></a>D</dt>
+<dd>
+<p>Displays output using <a href="debugger_markup_language_commands.htm">Debugger Markup Language</a>.</p>
+</dd>
+<dt><a id="o"></a><a id="O"></a>o</dt>
+<dd>
+<p>Displays only loaded modules.</p>
+</dd>
+<dt><a id="l"></a><a id="L"></a>l</dt>
+<dd>
+<p>Displays only modules whose symbol information has been loaded.</p>
+</dd>
+<dt><a id="v"></a><a id="V"></a>v</dt>
+<dd>
+<p>Causes the display to be verbose. The display includes the symbol file name, the image file name, checksum information, version information, date stamps, time stamps, and information about whether the module is managed code (CLR).    This information is not displayed if the relevant headers are missing or paged out.</p>
+</dd>
+<dt><a id="u"></a><a id="U"></a>u</dt>
+<dd>
+<p>(Kernel mode only)  Displays only user-mode symbol information.</p>
+</dd>
+<dt><a id="k"></a><a id="K"></a>k</dt>
+<dd>
+<p>(Kernel mode only)  Displays only kernel-mode symbol information.</p>
+</dd>
+<dt><a id="e"></a><a id="E"></a>e</dt>
+<dd>
+<p>Displays only modules that have a symbol problem. These symbols include modules that have no symbols and modules whose symbol status is C, T, #, M, or Export. For more information about these notations, see <a href="symbol_status_abbreviations.htm">Symbol Status Abbreviations</a>.</p>
+</dd>
+<dt><a id="c"></a><a id="C"></a>c</dt>
+<dd>
+<p>Displays checksum data.</p>
+</dd>
+<dt><a id="1m"></a><a id="1M"></a>1m</dt>
+<dd>
+<p>Reduces the output so that nothing is included except the names of the modules. This option is useful if you are using the <a href="_foreach.htm"><b>.foreach</b></a> token to pipe the command output into another command's input.</p>
+</dd>
+<dt><a id="sm"></a><a id="SM"></a>sm</dt>
+<dd>
+<p>Sorts the display by module name instead of by the start address.</p>
+</dd>
+</dl>
+<p>In addition, you can include only one of the following options. If you do not include any of these options, the display includes the symbol file name.  </p>
+<p></p>
+<dl>
+<dt><a id="i"></a><a id="I"></a>i</dt>
+<dd>
+<p>Displays the image file name.  </p>
+</dd>
+<dt><a id="f"></a><a id="F"></a>f</dt>
+<dd>
+<p>Displays the full image path. (This path always matches the path that is displayed in the initial load notification, unless you issued a <a href="_reload__reload_module_.htm"><b>.reload -s</b></a> command.) When you use f, symbol type information is not displayed.</p>
+</dd>
+<dt><a id="n"></a><a id="N"></a>n</dt>
+<dd>
+<p>Displays the image name.   When you use n, symbol type information is not displayed.</p>
+</dd>
+<dt><a id="p"></a><a id="P"></a>p</dt>
+<dd>
+<p>Displays the mapped image name. When you use p, symbol type information is not displayed.</p>
+</dd>
+<dt><a id="t"></a><a id="T"></a>t</dt>
+<dd>
+<p>Displays the file time stamps. When you use t, symbol type information is not displayed.  </p>
+</dd>
+</dl>
+</dd>
+<dt><a id="_______a_______Address______"></a><a id="_______a_______address______"></a><a id="_______A_______ADDRESS______"></a>       a       <i>Address</i>      </dt>
+<dd>
+<p>Specifies an address that is contained in this module. Only the module that contains this address is displayed. If Address contains an expression, it must be enclosed in parentheses.</p>
+</dd>
+<dt><a id="_______m_______Pattern______"></a><a id="_______m_______pattern______"></a><a id="_______M_______PATTERN______"></a>       m       <i>Pattern</i>      </dt>
+<dd>
+<p>Specifies a pattern that the module name must match. Pattern can contain a variety of wildcard characters and specifiers. For more information about the syntax of this information, see <a href="string_wildcard_syntax.htm">String Wildcard Syntax</a>.</p>
+<div class="alert"><b>Note</b>    In most cases, the module name is the file name without the file name extension. For example, if you want to display information about the Flpydisk.sys driver, use the lm mflpydisk command, not lm mflpydisk.sys. In some cases, the module name differs significantly from the file name.</div>
+<div> </div>
+</dd>
+<dt><a id="_______M_______Pattern______"></a><a id="_______m_______pattern______"></a><a id="_______M_______PATTERN______"></a>       M       <i>Pattern</i>      </dt>
+<dd>
+<p>Specifies a pattern that the image path must match. Pattern can contain a variety of wildcard characters and specifiers. For more information about the syntax of this information, see <a href="string_wildcard_syntax.htm">String Wildcard Syntax</a>.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p>
+          Modes
+         </p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+          Targets
+         </p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>
+          Platforms
+         </p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>The <b>lm</b> command lists all of the modules and the status of symbols for each module.</p>
+<p>Microsoft Windows Server 2003 and later versions of Windows maintain an unloaded module list for user-mode processes. When you are debugging a user-mode process or dump file, the <b>lm</b> command also shows these unloaded modules.</p>
+<p>This command shows several columns or fields, each with a different title. Some of these titles have specific meanings:</p>
+<ul>
+<li>
+<p><i>module name</i> is typically the file name without the file name extension. In some cases, the module name differs significantly from the file name.</p>
+</li>
+<li>
+<p>The symbol type immediately follows the module name. This column is not labeled. For more information about the various status values, see <a href="symbol_status_abbreviations.htm">Symbol Status Abbreviations</a>. If you have loaded symbols, the symbol file name follows this column.</p>
+</li>
+<li>
+<p>The first address in the module is shown as start. The first address after the end of the module is shown as end. For example, if start is "faab4000" and end is "faab8000", the module extends from 0xFAAB4000 to 0xFAAB7FFF, inclusive.</p>
+</li>
+<li>
+<p><b>lmv</b>
+       
+       only: The image path column shows the name of the executable file, including the file name extension. Typically, the full path is included in user mode but not in kernel mode.</p>
+</li>
+<li>
+<p><b>lmv</b>
+       
+       only: The loaded symbol image file value is the same as the image name, unless Microsoft CodeView symbols are present. </p>
+</li>
+<li>
+<p><b>lmv</b>
+       
+       only: The mapped memory image file value is typically not used. If the debugger is mapping an image file (for example, during minidump debugging), this value is the name of the mapped image.</p>
+</li>
+</ul>
+<p>The following code example shows the <b>lm</b> command with a Windows Server 2003 target computer. This example includes the m and s* options, so only modules that begin with "s" are displayed.</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; lm m s*
+start    end        module name
+f9f73000 f9f7fd80   sysaudio     (deferred)                 
+fa04b000 fa09b400   srv          (deferred)                 
+faab7000 faac8500   sr           (deferred)                 
+facac000 facbae00   serial       (deferred)                 
+fb008000 fb00ba80   serenum      e:\mysymbols\SereEnum.pdb\.......
+fb24f000 fb250000   swenum       (deferred)                 
+
+Unloaded modules:
+f9f53000 f9f61000   swmidi.sys
+fb0ae000 fb0b0000   splitter.sys
+fb040000 fb043000   Sfloppy.SYS</code></pre>
+<h2>Examples</h2>
+<p>The following two examples show the <b>lm</b> command once without any options and once with the sm option. Compare the sort order in the two examples.</p>
+<p>
+     Example 1:
+    </p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; lm
+start    end        module name
+01000000 0100d000   stst       (deferred)
+77c10000 77c68000   msvcrt     (deferred)
+77dd0000 77e6b000   ADVAPI32   (deferred)
+77e70000 77f01000   RPCRT4     (deferred)
+7c800000 7c8f4000   kernel32   (deferred)
+7c900000 7c9b0000   ntdll      (private pdb symbols) c:\db20sym\ntdll.pdb</code></pre>
+<p>
+     Example 2:
+    </p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; lmsm
+start    end        module name
+77dd0000 77e6b000   ADVAPI32   (deferred)
+7c800000 7c8f4000   kernel32   (deferred)
+77c10000 77c68000   msvcrt     (deferred)
+7c900000 7c9b0000   ntdll      (private pdb symbols)  c:\db20sym\ntdll.pdb
+77e70000 77f01000   RPCRT4     (deferred)
+01000000 0100d000   stst       (deferred)</code></pre>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20lm (List Loaded Modules)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

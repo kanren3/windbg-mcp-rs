@@ -1,0 +1,134 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !ioctldecode extension displays the Device Type, Required Access, Function Code and Transfer Type as specified by the given IOCTL code. For more information about IOCTL control codes, see Defining I/O Control Codes."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!ioctldecode</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._ioctldecode"></a>!ioctldecode</h1>
+</div>
+<p>The <b>!ioctldecode</b> extension displays the <i>Device Type</i>, <i>Required Access</i>, <i>Function Code</i> and <i>Transfer Type</i> as specified by the given IOCTL code. For more information about IOCTL control codes, see  Defining I/O Control Codes.</p>
+<pre class="syntax">
+    <b>!ioctldecode </b><i>IoctlCode</i> 
+</pre>
+<h2><a id="ddk__ioresdes_dbg"></a><a id="DDK__IORESDES_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______IoctlCode______"></a><a id="_______ioctlcode______"></a><a id="_______IOCTLCODE______"></a>       <i>IoctlCode</i>      </dt>
+<dd>
+<p>Specifies the hexadecimal IOCTL Code. The <a href="_irp.htm"><b>!irp</b></a> command displays the IOCTL code in its output. </p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p>
+          Kdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>To see information on the IOCTL, we first locate an IRP of interest. You can use the <a href="_irpfind.htm"><b>!irpfind</b></a> command to locate an irp of interest.</p>
+<p>Use the <a href="_irp.htm"><b>!irp</b></a> command to display information about the irp.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0: kd&gt; !irp ffffd581a6c6cd30
+Irp is active with 6 stacks 6 is current (= 0xffffd581a6c6cf68)
+No Mdl: No System Buffer: Thread 00000000:  Irp stack trace.  
+     cmd  flg cl Device   File     Completion-Context
+[N/A(0), N/A(0)]
+            0  0 00000000 00000000 00000000-00000000    
+
+                                                Args: 00000000 00000000 00000000 00000000
+[N/A(0), N/A(0)]
+            0  0 00000000 00000000 00000000-00000000    
+
+                                                Args: 00000000 00000000 00000000 00000000
+[N/A(0), N/A(0)]
+            0  0 00000000 00000000 00000000-00000000    
+
+                                                Args: 00000000 00000000 00000000 00000000
+[N/A(0), N/A(0)]
+            0  0 00000000 00000000 00000000-00000000    
+
+                                                Args: 00000000 00000000 00000000 00000000
+[N/A(0), N/A(0)]
+            0  0 00000000 00000000 00000000-00000000    
+
+                                                Args: 00000000 00000000 00000000 00000000
+&gt;[IRP_MJ_INTERNAL_DEVICE_CONTROL(f), N/A(0)]
+            0 e1 ffffd581a5fbd050 00000000 fffff806d2412cf0-ffffd581a5cce050 Success Error Cancel pending
+                       \Driver\usbehci        (IopUnloadSafeCompletion)
+                                                Args: ffffd581a6c61a50 00000000 0x220003 00000000
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The third argument displayed, in this case <i>0x220003</i>, is the IOCTL code. Use the IOCTL code to display information about the IOCTL, in this case <b>IOCTL_INTERNAL_USB_SUBMIT_URB</b>.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0: kd&gt; !ioctldecode 0x220003
+
+IOCTL_INTERNAL_USB_SUBMIT_URB
+
+Device Type    : 0x22 (FILE_DEVICE_WINLOAD) (FILE_DEVICE_USER_MODE_BUS) (FILE_DEVICE_USB) (FILE_DEVICE_UNKNOWN)
+Method         : 0x3 METHOD_NEITHER 
+Access         : FILE_ANY_ACCESS
+Function       : 0x0</pre>
+</td>
+</tr>
+</table></span></div>
+<p>If you provide an IOCTL code that is not available, you will see this type of output. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0: kd&gt; !ioctldecode 0x1280ce
+
+Unknown IOCTL  : 0x1280ce 
+
+Device Type    : 0x12 (FILE_DEVICE_NETWORK)
+Method         : 0x2 METHOD_OUT_DIRECT 
+Access         : FILE_WRITE_ACCESS 
+Function       : 0x33</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Although the IOCTL is not identified, information about the IOCTL fields are displayed. </p>
+<p>Note that only a subset of publically defined IOCTLs are  able to be identified by the <b>!ioctldecode</b> command.</p>
+<p>For more information about IOCTLs see Introduction to I/O Control Codes.</p>
+<p>For more general  information about IRPs and IOCTLs, refer to <i>Windows Internals</i> by Mark E. Russinovich, David A. Solomon and Alex Ionescu.
+ </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!ioctldecode%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

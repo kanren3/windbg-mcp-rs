@@ -1,0 +1,105 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The l+and l- commands set the source line options that control source display and program stepping options."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>l+, l- (Set Source Options)</title>
+
+<meta name="MS-HAID" content="r17_cmds_I_11dcb4d0-b005-46df-b006-79397ff26e7e.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.l___l___set_source_options_"></a>l+, l- (Set Source Options)</h1>
+</div>
+<p>The <b>l+</b>and <b>l-</b> commands set the source line options that control source display and program stepping options.</p>
+<pre class="syntax"><b>l+</b>Option 
+<b>l-</b>Option 
+<b>l</b>{<b>+</b>|<b>-</b>} 
+</pre>
+<h2><a id="ddk_cmd_set_source_options_dbg"></a><a id="DDK_CMD_SET_SOURCE_OPTIONS_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_________or_-"></a><a id="_________OR_-"></a>       <b>+</b> or <b>-</b></dt>
+<dd>
+<p>Specifies whether a given option is to be turned on (plus sign [+])or turned off (minus sign [-]).</p>
+</dd>
+<dt><a id="_______Option______"></a><a id="_______option______"></a><a id="_______OPTION______"></a>       <i>Option</i>      </dt>
+<dd>
+<p>One of the following options. The options must be in lowercase letters.</p>
+<p></p>
+<dl>
+<dt><a id="l"></a><a id="L"></a><b>l</b></dt>
+<dd>
+<p>Displays source line numbers at the command prompt.  You can disable source line display through l-ls or .prompt_allow -src. To make the source line numbers visible, you must enable source line display through both mechanisms.</p>
+</dd>
+<dt><a id="o"></a><a id="O"></a><b>o</b></dt>
+<dd>
+<p>Hides all messages (other than the source line and line number) when you are stepping through code. (The <b>s</b> option must also be active for the <b>o</b> option to have any effect.) </p>
+</dd>
+<dt><a id="s"></a><a id="S"></a><b>s</b></dt>
+<dd>
+<p>Displays source lines and source line numbers at the command prompt.</p>
+</dd>
+<dt><a id="t"></a><a id="T"></a><b>t</b></dt>
+<dd>
+<p>Starts <a href="debugging_in_source_mode.htm">source mode</a>. If this mode is not set, the debugger is in <a href="debugging_in_assembly_mode.htm">assembly mode</a>.</p>
+</dd>
+<dt><a id="_"></a><b>*</b></dt>
+<dd>
+<p>Turns on or turns off all options.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about source debugging and related commands, see <a href="debugging_in_source_mode.htm">Debugging in Source Mode</a>. For more information about assembly debugging and related commands, see <a href="debugging_in_assembly_mode.htm">Debugging in Assembly Mode</a>.</p>
+<h2>Remarks</h2>
+<p>If you omit <i>Option</i>, the previously set options are displayed. In this case, the <b>l+</b> and <b>l-</b> commands have identical effects. However, you must include a plus sign (<b>+</b>) or minus sign (-) for the <b>l</b> command to work.</p>
+<p>You can include only one <i>Option</i> every time that you issue this command. If you list more than one option, only the first option is detected. However, by repeatedly issuing this command, you can turn on or off as many options as you want. (In other words, <b>l+lst</b> does not work, but <b>l+l; l+s; l+t</b> does achieve the effect that you want.)</p>
+<p>When you specify the <b>s</b> option, source lines and line numbers are displayed when you step through code, regardless of whether you specified the <b>l</b> option. The <b>o</b> option has no effect unless you specify the <b>s</b> option.</p>
+<p>Source line options do not take effect unless you enable line number loading by using the <a href="_lines__toggle_source_line_support_.htm"><b>.lines (Toggle Source Line Support)</b></a> command or the <a href="command_line_options.htm">-lines command-line option</a>. By default, if you have not used these commands, WinDbg turns on source line support and CDB turns it off.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20l+, l- (Set Source Options)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

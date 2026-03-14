@@ -1,0 +1,98 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !dpa extension displays pool allocation information."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!dpa</title>
+
+<meta name="MS-HAID" content="r26_exts_kernel_A_85664243-ba98-4c76-9431-1120c1096b97.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._dpa"></a>!dpa</h1>
+</div>
+<p>The <b>!dpa</b> extension displays pool allocation information.</p>
+<pre class="syntax"><b>!dpa </b><i>Options</i> 
+<b>!dpa -?</b></pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Options______"></a><a id="_______options______"></a><a id="_______OPTIONS______"></a>       <i>Options</i>      </dt>
+<dd>
+<p>Must be exactly one of the following options:</p>
+<p></p>
+<dl>
+<dt><a id="-c"></a><a id="-C"></a><b>-c</b></dt>
+<dd>
+<p>Displays current pool allocation statistics.</p>
+</dd>
+<dt><a id="-v"></a><a id="-V"></a><b>-v</b></dt>
+<dd>
+<p>Displays all current pool allocations.</p>
+</dd>
+<dt><a id="-vs"></a><a id="-VS"></a><b>-vs</b></dt>
+<dd>
+<p>Causes the display to include stack traces.</p>
+</dd>
+<dt><a id="-f"></a><a id="-F"></a><b>-f</b></dt>
+<dd>
+<p>Displays failed pool allocations.</p>
+</dd>
+<dt><a id="-r"></a><a id="-R"></a><b>-r</b></dt>
+<dd>
+<p>Displays free pool allocations.</p>
+</dd>
+<dt><a id="-p_Ptr"></a><a id="-p_ptr"></a><a id="-P_PTR"></a><b>-p</b><b> </b><i>Ptr</i></dt>
+<dd>
+<p>Displays all pool allocations that contain the pointer <i>Ptr</i>.</p>
+</dd>
+</dl>
+</dd>
+<dt><a id="_______-_______"></a>       <b>-?</b>      </dt>
+<dd>
+<p>Displays some brief Help text for this extension in the Debugger Command window.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000</b></p>
+</td>
+<td>
+<p>Unavailable</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Kdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>Pool instrumentation must be enabled in Win32k.sys in order for this extension to work. </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!dpa%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

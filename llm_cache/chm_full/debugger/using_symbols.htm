@@ -1,0 +1,53 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Using Symbols"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Using Symbols</title>
+
+<meta name="MS-HAID" content="Engine_DG_0ca00a05-8220-465b-aea6-76811384d300.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.using_symbols"></a>Using Symbols</h1>
+</div>
+<h2><a id="ddk_symbols_dbx"></a><a id="DDK_SYMBOLS_DBX"></a></h2>
+<p>For an overview of symbols, including using symbol files and symbol servers, see <a href="symbols.htm">Symbols</a>.</p>
+<h3><a id="symbol_names_and_locations"></a><a id="SYMBOL_NAMES_AND_LOCATIONS"></a>Symbol Names and Locations</h3>
+<p>To find the location of a symbol given its name, use <a href="getoffsetbyname.htm"><b>GetOffsetByName</b></a>.  For details on the syntax used to specify symbol names, see <a href="symbol_syntax_and_symbol_matching.htm">Symbol Syntax and Symbol Matching</a>.</p>
+<p>If the exact name of a symbol is not known, or multiple symbols have the same name, <a href="startsymbolmatch.htm"><b>StartSymbolMatch</b></a> will begin a search for symbols whose names match a given pattern.  For details on the syntax, see <a href="string_wildcard_syntax.htm">String Wildcard Syntax</a>.</p>
+<p>To find the name of a symbol given its location, use <a href="getnamebyoffset.htm"><b>GetNameByOffset</b></a>.  To find the names of symbols in a module near a given location, use <a href="getnearnamebyoffset.htm"><b>GetNearNamebyOffset</b></a>.</p>
+<div class="alert"><b>Note</b>    Whenever possible, qualify the symbol with the module name -- for example <b>mymodule!main</b>.  Otherwise, if the symbol does not exist (for example, because of a typographical error) the engine will have to load and search the symbols for every module; this can be a slow process, especially for kernel-mode debugging.  If the symbol name was qualified with a module name, the engine will only need to search the symbols for that module.</div>
+<div> </div>
+<p>A symbol is uniquely identified using the structure <a href="debug_module_and_id.htm"><b>DEBUG_MODULE_AND_ID</b></a>.  This structure is returned by the methods <a href="getsymbolentriesbyname.htm"><b>GetSymbolEntriesByName</b></a> and <a href="getsymbolentriesbyoffset.htm"><b>GetSymbolEntriesByOffset</b></a>, which search for symbols based on their name and location, respectively.</p>
+<p>The method <a href="getsymbolentryinformation.htm"><b>GetSymbolEntryInformation</b></a> returns a description of a symbol using the <a href="debug_symbol_entry.htm"><b>DEBUG_SYMBOL_ENTRY</b></a> structure.</p>
+<p>To find the offset of a field within a structure, use <a href="getfieldoffset.htm"><b>GetFieldOffset</b></a>.  To find the name of a field given its index within a structure, use <a href="getfieldname.htm"><b>GetFieldName</b></a>.  To find the name of an enumeration constant given its value, use <a href="getconstantname.htm"><b>GetConstantName</b></a>.</p>
+<p>The method <a href="getsymbolinformation.htm"><b>GetSymbolInformation</b></a> can perform several requests for information about symbols.</p>
+<h3><a id="symbol_options"></a><a id="SYMBOL_OPTIONS"></a>Symbol Options</h3>
+<p>A number of options control how the symbols are loaded and unloaded.  For a description of these options, see <a href="symbol_options.htm">Setting Symbol Options</a>.  </p>
+<p>Symbol options may be turned on by using <a href="addsymboloptions.htm"><b>AddSymbolOptions</b></a>, and turned off by using <a href="removesymboloptions.htm"><b>RemoveSymbolOptions</b></a>.</p>
+<p><a href="getsymboloptions.htm"><b>GetSymbolOptions</b></a> returns the current symbol options.  To set all the symbol options at once, use <a href="setsymboloptions.htm"><b>SetSymbolOptions</b></a>.</p>
+<h3><a id="reloading_symbols"></a><a id="RELOADING_SYMBOLS"></a>Reloading Symbols</h3>
+<p>After loading symbol files, the engine stores the symbol information in an internal cache.  To flush this cache, use <a href="reload.htm"><b>Reload</b></a>. These symbols will have to be loaded again now or at a later time.</p>
+<h3><a id="synthetic_symbols"></a><a id="SYNTHETIC_SYMBOLS"></a>
+      Synthetic Symbols</h3>
+<p><i>Synthetic symbols</i> are a way to label an arbitrary address for easy reference.  Synthetic symbols can be created in any existing module.  The method <a href="addsyntheticsymbol.htm"><b>AddSyntheticSymbol</b></a> creates a new synthetic symbol.  Synthetic symbols can be removed using <a href="removesyntheticsymbol.htm"><b>RemoveSyntheticSymbol</b></a>. Reloading the symbols for the module deletes all synthetic symbols associated with that module.</p>
+<h3><a id="symbol_path"></a><a id="SYMBOL_PATH"></a>Symbol Path</h3>
+<p>To add a directory or symbol server to the symbol path, use the method <a href="appendsymbolpath.htm"><b>AppendSymbolPath</b></a>.  The whole symbol path is returned by <a href="getsymbolpath.htm"><b>GetSymbolPath</b></a> and can be changed using <a href="setsymbolpath.htm"><b>SetSymbolPath</b></a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Using Symbols%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,91 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .tlist command lists all processes running on the system."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.tlist (List Process IDs)</title>
+
+<meta name="MS-HAID" content="r22_metacmds_S_7423d5a0-4d52-4388-aca4-a0550d2c2955.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._tlist__list_process_ids_"></a>.tlist (List Process IDs)</h1>
+</div>
+<p>The <b>.tlist</b> command lists all processes running on the system.</p>
+<p></p>
+<pre class="syntax"><b>.tlist </b>[<i>Options</i>][<i>FileNamePattern</i>]</pre>
+<h2><a id="ddk_meta_list_process_ids_dbg"></a><a id="DDK_META_LIST_PROCESS_IDS_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Options______"></a><a id="_______options______"></a><a id="_______OPTIONS______"></a>       <i>Options</i>      </dt>
+<dd>
+<p>Can be any number of the following options:</p>
+<p></p>
+<dl>
+<dt><a id="-v"></a><a id="-V"></a><b>-v</b></dt>
+<dd>
+<p>Causes the display to be verbose. This includes the session number, the process user name, and the command-line used to start the process.</p>
+</dd>
+<dt><a id="-c"></a><a id="-C"></a><b>-c</b></dt>
+<dd>
+<p>Limits the display to just the current process.</p>
+</dd>
+</dl>
+</dd>
+<dt><a id="_______FileNamePattern______"></a><a id="_______filenamepattern______"></a><a id="_______FILENAMEPATTERN______"></a>       <i>FileNamePattern</i>      </dt>
+<dd>
+<p>Specifies the file name to be displayed, or a pattern that the file name of the process must match. Only those processes whose file names match this pattern will be displayed. <i>FileNamePattern</i> may contain a variety of wildcards and specifiers; see <a href="string_wildcard_syntax.htm">String Wildcard Syntax</a> for details. This match is made only against the actual file name, not the path.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Modes</b></p>
+</td>
+<td>
+<p>user mode only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets
+         </b></p>
+</td>
+<td>
+<p>live debugging only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>all </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For other methods of displaying processes, see <a href="finding_the_process_id.htm">Finding the Process ID</a>.</p>
+<h2>Remarks</h2>
+<p>Each process ID is displayed with an <b>0n</b> prefix, to emphasize that the PID is a decimal number.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.tlist (List Process IDs)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

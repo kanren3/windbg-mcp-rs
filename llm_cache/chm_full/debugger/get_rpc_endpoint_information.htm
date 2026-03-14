@@ -1,0 +1,85 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Get RPC Endpoint Information"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Get RPC Endpoint Information</title>
+
+<meta name="MS-HAID" content="t11_rpc_acpi_ecadb256-27c9-45e4-8fb2-4e7752ff6ca4.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.get_rpc_endpoint_information"></a>Get RPC Endpoint Information</h1>
+</div>
+<h2><a id="ddk_get_rpc_endpoint_information_dbg"></a><a id="DDK_GET_RPC_ENDPOINT_INFORMATION_DBG"></a></h2>
+<p>Endpoint information is displayed by the <b>!rpcexts.getendpointinfo</b> extension, or by DbgRpc when the <b>-e</b> switch is used.</p>
+<p>If an endpoint number is specified, information about that endpoint is shown. If it is omitted, the endpoints for all processes on the system are displayed.</p>
+<p>The following example displays all endpoints. This is often a useful way to obtain process IDs and cell numbers that can be used as arguments for additional commands:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>D:\wmsg&gt;dbgrpc -e
+Searching for endpoint info ...
+PID  CELL ID   ST PROTSEQ        ENDPOINT
+-------------------------------------------------------
+00a8 0000.0001 01            NMP \PIPE\InitShutdown
+00a8 0000.0003 01            NMP \PIPE\SfcApi
+00a8 0000.0004 01            NMP \PIPE\ProfMapApi
+00a8 0000.0007 01            NMP \pipe\winlogonrpc
+00a8 0000.0008 01           LRPC OLE5
+00c4 0000.0001 01           LRPC ntsvcs
+00c4 0000.0003 01            NMP \PIPE\ntsvcs
+00c4 0000.0008 01            NMP \PIPE\scerpc
+00d0 0000.0001 01            NMP \PIPE\lsass
+00d0 0000.0004 01            NMP \pipe\WMIEP_d0
+00d0 0000.000b 01            NMP \PIPE\POLICYAGENT
+00d0 0000.000c 01           LRPC policyagent
+0170 0000.0001 01           LRPC epmapper
+0170 0000.0003 01            TCP 135
+0170 0000.0005 01            SPX 34280
+0170 0000.0006 01             NB 135
+0170 0000.0007 01             NB 135
+0170 0000.000b 01            NMP \pipe\epmapper
+01b8 0000.0001 01            NMP \pipe\spoolss
+01b8 0000.0003 01           LRPC spoolss
+01b8 0000.0007 01           LRPC OLE7
+00ec 0000.0001 01           LRPC OLE2
+00ec 0000.0003 01           LRPC senssvc
+00ec 0000.0007 01            NMP \pipe\tapsrv
+00ec 0000.0008 01           LRPC tapsrvlpc
+00ec 0000.000c 01            NMP \PIPE\ROUTER
+00ec 0000.0010 01            NMP \pipe\WMIEP_ec
+0214 0000.0001 01            NMP \PIPE\winreg
+022c 0000.0001 01           LRPC LRPC0000022c.00000001
+022c 0000.0003 01            TCP 1058
+022c 0000.0005 01            SPX 24576
+022c 0000.0006 01            NMP \PIPE\atsvc
+02a8 0000.0001 01           LRPC OLE3
+0370 0000.0001 01           LRPC OLE9
+0278 0000.0001 01            TCP 1120
+030c 0000.0001 01           LRPC OLE12</pre>
+</td>
+</tr>
+</table></span></div>
+<p>For details on the optional parameters, see <a href="dbgrpc_command_line_options.htm"><b>DbgRpc Command-Line Options</b></a>.</p>
+<p>For a similar example using the RPC debugger extensions, see <a href="_rpcexts_getendpointinfo.htm"><b>!rpcexts.getendpointinfo</b></a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Get RPC Endpoint Information%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

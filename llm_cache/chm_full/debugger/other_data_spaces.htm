@@ -1,0 +1,57 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Other Data Spaces"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Other Data Spaces</title>
+
+<meta name="MS-HAID" content="Engine_DG_1a847bfd-6e5a-4eff-a0f2-5b1953df95ca.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.other_data_spaces"></a>Other Data Spaces</h1>
+</div>
+<h2><a id="ddk_other_data_spaces_dbx"></a><a id="DDK_OTHER_DATA_SPACES_DBX"></a></h2>
+<p>In kernel-mode debugging, it is possible to read and write data to a variety of data spaces in addition to the main memory and registers.  The following data spaces can be accessed:</p>
+<p></p>
+<dl>
+<dt><a id="System_Bus"></a><a id="system_bus"></a><a id="SYSTEM_BUS"></a>System Bus</dt>
+<dd>
+<p>The methods <a href="readbusdata.htm"><b>ReadBusData</b></a> and <a href="writebusdata.htm"><b>WriteBusData</b></a> read and write system bus data.</p>
+</dd>
+<dt><a id="Control-Space_Memory"></a><a id="control-space_memory"></a><a id="CONTROL-SPACE_MEMORY"></a>Control-Space Memory</dt>
+<dd>
+<p>The methods <a href="readcontrol.htm"><b>ReadControl</b></a> and <a href="writecontrol.htm"><b>WriteControl</b></a> read and write control-space memory.</p>
+</dd>
+<dt><a id="I_O_Memory."></a><a id="i_o_memory."></a><a id="I_O_MEMORY."></a>I/O Memory.</dt>
+<dd>
+<p>The methods <a href="readio.htm"><b>ReadIo</b></a> and <a href="writeio.htm"><b>WriteIo</b></a> read and write system and bus I/O memory.</p>
+</dd>
+<dt><a id="Model_Specific_Register__MSR_"></a><a id="model_specific_register__msr_"></a><a id="MODEL_SPECIFIC_REGISTER__MSR_"></a>Model Specific Register (MSR)</dt>
+<dd>
+<p>The methods <a href="readmsr2.htm"><b>ReadMsr</b></a> and <a href="writemsr.htm"><b>WriteMsr</b></a> read and write MSRs, which are control registers that enable and disable features, and support debugging, for a particular model of CPU.</p>
+</dd>
+</dl>
+<h3><a id="handles"></a><a id="HANDLES"></a>
+      Handles</h3>
+<p>In user-mode debugging, information about system objects can be obtained using system handles owned by a target process.  The method <a href="readhandledata.htm"><b>ReadHandleData</b></a> can be used to read this information.</p>
+<p>System handles for thread and process system objects can be obtained by using the <a href="getcurrentthreadhandle.htm"><b>GetCurrentThreadHandle</b></a> and <a href="getcurrentprocesshandle.htm"><b>GetCurrentProcessHandle</b></a> methods.  These handles are also provided to the <a href="idebugeventcallbacks_createthread.htm"><b>IDebugEventCallbacks::CreateThread</b></a> and <a href="idebugeventcallbacks_createprocess.htm"><b>IDebugEventCallbacks::CreateProcess</b></a> callback methods when create-thread and create-process debugging event occur.  </p>
+<div class="alert"><b>Note</b>    In kernel mode, the process and thread handles are artificial handles.  They are not system handles.</div>
+<div> </div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Other Data Spaces%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

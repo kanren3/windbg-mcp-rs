@@ -1,0 +1,203 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The EXT_TYPED_DATA structure is passed to and returned from the DEBUG_REQUEST_EXT_TYPED_DATA_ANSI Request operation. It contains the input and output parameters for the operation as well as specifying which particular suboperation to perform."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>EXT_TYPED_DATA structure</title>
+
+<meta name="MS-HAID" content="Structures_e4240445-73f9-4f38-8f1b-17035ced15f7.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.ext_typed_data"></a>EXT_TYPED_DATA structure</h1>
+</div>
+<p>The EXT_TYPED_DATA structure is passed to and returned from the <a href="debug_request_ext_typed_data_ansi.htm"><b>DEBUG_REQUEST_EXT_TYPED_DATA_ANSI </b></a><a href="request.htm"><b>Request</b></a> operation. It contains the input and output parameters for the operation as well as specifying which particular suboperation to perform.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>typedef struct _EXT_TYPED_DATA {
+  EXT_TDOP         Operation;
+  ULONG            Flags;
+  DEBUG_TYPED_DATA InData;
+  DEBUG_TYPED_DATA OutData;
+  ULONG            InStrIndex;
+  ULONG            In32;
+  ULONG            Out32;
+  ULONG64          In64;
+  ULONG64          Out64;
+  ULONG            StrBufferIndex;
+  ULONG            StrBufferChars;
+  ULONG            StrCharsNeeded;
+  ULONG            DataBufferIndex;
+  ULONG            DataBufferBytes;
+  ULONG            DataBytesNeeded;
+  HRESULT          Status;
+  ULONG64          Reserved[8];
+} EXT_TYPED_DATA, *PEXT_TYPED_DATA;</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Members</h2>
+<dl>
+<dt><b>Operation</b></dt>
+<dd>
+<p>Specifies which suboperation the <a href="debug_request_ext_typed_data_ansi.htm"><b>DEBUG_REQUEST_EXT_TYPED_DATA_ANSI</b></a><a href="request.htm"><b>Request</b></a> operation should perform. The interpretation of some of the other members depends on <b>Operation</b>. For a list of possible suboperations, see <a href="ext_tdop.htm"><b>EXT_TDOP</b></a>.</p>
+</dd>
+<dt><b>Flags</b></dt>
+<dd>
+<p>Specifies the bit flags describing the target's memory in which the data resides. If no flags are present, the data is considered to be in virtual memory. One of the following flags may be present:</p>
+<table>
+<tr>
+<th>Flag</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>EXT_TDF_PHYSICAL_DEFAULT</p>
+</td>
+<td>
+<p>The typed data is in physical memory, and this physical memory uses the default memory caching.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>EXT_TDF_PHYSICAL_CACHED</p>
+</td>
+<td>
+<p>The typed data is in physical memory, and this physical memory is cached.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>EXT_TDF_PHYSICAL_UNCACHED</p>
+</td>
+<td>
+<p>The typed data is in physical memory, and this physical memory is uncached.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>EXT_TDF_PHYSICAL_WRITE_COMBINED</p>
+</td>
+<td>
+<p>The typed data is in physical memory, and this physical memory is write-combined.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+</dd>
+<dt><b>InData</b></dt>
+<dd>
+<p>Specifies typed data to be used as input to the operation. For details about this structure, see <a href="debug_typed_data.htm"><b>DEBUG_TYPED_DATA</b></a>.</p>
+<p>The interpretation of <b>InData</b> depends on the value of <b>Operation</b>.</p>
+</dd>
+<dt><b>OutData</b></dt>
+<dd>
+<p>Receives typed data as output from the operation. Any suboperation that returns typed data to <b>OutData</b> initially copies the contents of <b>InData</b> to <b>OutData</b>, then modifies <b>OutData</b> in place, so that the input parameters in <b>InData</b> are also present in <b>OutData</b>. For details about this structure, see <a href="debug_typed_data.htm"><b>DEBUG_TYPED_DATA</b></a>.</p>
+<p>The interpretation of <b>OutData</b> depends on the value of <b>Operation</b>.</p>
+</dd>
+<dt><b>InStrIndex</b></dt>
+<dd>
+<p>Specifies the position of an ANSI string to be used as input to the operation. <b>InStrIndex</b> can be zero to indicate that the input parameters do not include an ANSI string.</p>
+<p>The position of the string is relative to the base address of this EXT_TYPED_DATA structure. The string must follow this structure, so <b>InStrIndex</b> must be greater than the size of this structure. The string is part of the input to the operation and <b>InStrIndex</b> must be smaller than <i>InBufferSize</i>, the size of the input buffer passed to <a href="request.htm"><b>Request</b></a>.</p>
+<p>The interpretation of the string depends on the value of <b>Operation</b>.</p>
+</dd>
+<dt><b>In32</b></dt>
+<dd>
+<p>Specifies a 32-bit parameter to be used as input to the operation.</p>
+<p>The interpretation of <b>In32</b> depends on the value of <b>Operation</b>.</p>
+</dd>
+<dt><b>Out32</b></dt>
+<dd>
+<p>Receives a 32-bit value as output from the operation.</p>
+<p>The interpretation of <b>Out32</b> depends on the value of <b>Operation</b>.</p>
+</dd>
+<dt><b>In64</b></dt>
+<dd>
+<p>Specifies a 64-bit parameter to be used as input to the operation.</p>
+<p>The interpretation of <b>In64</b> depends on the value of <b>Operation</b>.</p>
+</dd>
+<dt><b>Out64</b></dt>
+<dd>
+<p>Receives a 64-bit value as output from the operation.</p>
+<p>The interpretation of <b>Out64</b> depends on the value of <b>Operation</b>.</p>
+</dd>
+<dt><b>StrBufferIndex</b></dt>
+<dd>
+<p>Specifies the position to return an ANSI string as output from the operation. <b>StrBufferIndex</b> can be zero if no ANSI string is to be received from the operation.</p>
+<p>The position of the string is relative to the base address of the returned EXT_TYPED_DATA structure. The string must follow the structure, so <b>StrBufferIndex</b> must be greater than the size of this structure. The string is part of the output from the suboperation, and <b>StrBufferIndex</b> plus <b>StrBufferChars</b> must be smaller than <i>OutBufferSize</i>, the size of the output buffer passed to <a href="request.htm"><b>Request</b></a>.</p>
+<p>The interpretation of the string depends on the value of <b>Operation</b>.</p>
+</dd>
+<dt><b>StrBufferChars</b></dt>
+<dd>
+<p>Specifies the size in characters of the ANSI string buffer specified by <b>StrBufferIndex</b>.</p>
+</dd>
+<dt><b>StrCharsNeeded</b></dt>
+<dd>
+<p>Receives the number of characters needed by the string buffer specified by <b>StrBufferIndex</b>.</p>
+</dd>
+<dt><b>DataBufferIndex</b></dt>
+<dd>
+<p>Set to zero.</p>
+</dd>
+<dt><b>DataBufferBytes</b></dt>
+<dd>
+<p>Set to zero.</p>
+</dd>
+<dt><b>DataBytesNeeded</b></dt>
+<dd>
+<p>Set to zero,</p>
+</dd>
+<dt><b>Status</b></dt>
+<dd>
+<p>Receives the status code returned by the operation. This is the same value returned by <a href="request.htm"><b>Request</b></a>.</p>
+</dd>
+<dt><b>Reserved</b></dt>
+<dd>
+<p>Set to zero.</p>
+</dd>
+</dl>
+<h2>Remarks</h2>
+<p>The members of this structure are used as the input and output parameters to the <a href="debug_request_ext_typed_data_ansi.htm"><b>DEBUG_REQUEST_EXT_TYPED_DATA_ANSI </b></a><a href="request.htm"><b>Request</b></a> operation. The interpretation of most of the parameters depends on the particular suboperation being performed, as specified by the <b>Operation</b> member.</p>
+<p>This structure can optionally specify additional data--using the members <b>InStrIndex</b> and <b>StrBufferIndex</b>--that is included with the structure. This additional data is specified relative to the address of the instance of this structure. When used with the DEBUG_REQUEST_EXT_TYPED_DATA_ANSI <b>Request</b> operation, the additional data is included in the <i>InBuffer</i> and <i>OutBuffer</i> (as appropriate) and should be included in the size of these two buffers.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Wdbgexts.h (include WdbgExts.h or DbgEng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="debug_request_ext_typed_data_ansi.htm"><b>DEBUG_REQUEST_EXT_TYPED_DATA_ANSI</b></a></dt>
+<dt><a href="request.htm"><b>Request</b></a></dt>
+<dt><a href="debug_typed_data.htm"><b>DEBUG_TYPED_DATA</b></a></dt>
+<dt><a href="ext_tdop.htm"><b>EXT_TDOP</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20EXT_TYPED_DATA structure%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

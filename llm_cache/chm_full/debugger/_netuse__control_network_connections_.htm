@@ -1,0 +1,101 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .netuse command adds a connection to a network share."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.netuse (Control Network Connections)</title>
+
+<meta name="MS-HAID" content="r21_metacmds_L_053f3ae2-1c0f-4493-b226-aeddbf5ac3a4.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._netuse__control_network_connections_"></a>.netuse (Control Network Connections)</h1>
+</div>
+<p>The <b>.netuse</b> command adds a connection to a network share.</p>
+<pre class="syntax"><b>.netuse /a "[</b><i>Local</i><b>]" "</b><i>Remote</i><b>" "[</b><i>User</i><b>]" "[</b><i>Password</i><b>]"</b> 
+</pre>
+<h2><a id="ddk_meta_control_network_connections_dbg"></a><a id="DDK_META_CONTROL_NETWORK_CONNECTIONS_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="________a______"></a><a id="________A______"></a>       <b>/a</b>      </dt>
+<dd>
+<p>Adds a new connection. You must always use the <b>/a</b> switch.</p>
+</dd>
+<dt><a id="_______Local______"></a><a id="_______local______"></a><a id="_______LOCAL______"></a>       <i>Local</i>      </dt>
+<dd>
+<p>Specifies the drive letter to use for the connection. You must enclose <i>Local</i> in quotation marks. If you omit this parameter, you must include an empty pair of quotation marks as the parameter.</p>
+</dd>
+<dt><a id="_______Remote______"></a><a id="_______remote______"></a><a id="_______REMOTE______"></a>       <i>Remote</i>      </dt>
+<dd>
+<p>Specifies the UNC path of the share that is being connected. You must enclose <i>Remote</i> in quotation marks.</p>
+</dd>
+<dt><a id="_______User______"></a><a id="_______user______"></a><a id="_______USER______"></a>       <i>User</i>      </dt>
+<dd>
+<p>Specifies the user name of an account that is authorized to establish the connection. You must enclose <i>User</i> in quotation marks. If you omit this parameter, you must include an empty pair of quotation marks as the parameter.</p>
+</dd>
+<dt><a id="_______Password______"></a><a id="_______password______"></a><a id="_______PASSWORD______"></a>       <i>Password</i>      </dt>
+<dd>
+<p>Specifies the password that is associated with the <i>User</i> account. You must enclose <i>Password</i> in quotation marks. If you omit this parameter, you must include an empty pair of quotation marks as the parameter.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Platforms
+         </b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>The <b>.netuse</b> command behaves like the <b>net use</b> Microsoft MS-DOS command.</p>
+<p>If you use <b>.netuse</b> during a remote debugging session, this command affects the debugging server, not the debugging client.</p>
+<p>The following example shows this command.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; .netuse "m:" "\\myserver\myshare" "" "" </pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.netuse (Control Network Connections)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

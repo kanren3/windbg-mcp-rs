@@ -1,0 +1,203 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The PNP_DETECTED_FATAL_ERROR bug check has a value of 0x000000CA. This indicates that the Plug and Play Manager encountered a severe error, probably as a result of a problematic Plug and Play driver."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0xCA: PNP_DETECTED_FATAL_ERROR</title>
+
+<meta name="MS-HAID" content="t06_bugs_B0_5b9d6ab5-63ec-4476-ab32-7d745d119b78.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0xca__pnp_detected_fatal_error"></a>Bug Check 0xCA: PNP_DETECTED_FATAL_ERROR</h1>
+</div>
+<p>The PNP_DETECTED_FATAL_ERROR bug check has a value of 0x000000CA. This indicates that the Plug and Play Manager encountered a severe error, probably as a result of a problematic Plug and Play driver.</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2> PNP_DETECTED_FATAL_ERROR Parameters</h2>
+<p>The following parameters are displayed on the blue screen. Parameter 1 identifies the type of violation.</p>
+<table>
+<tr>
+<th>Parameter 1</th>
+<th>Parameter 2</th>
+<th>Parameter 3</th>
+<th>Parameter 4</th>
+<th>Cause of Error</th>
+</tr>
+<tr>
+<td>
+<p>0x1</p>
+</td>
+<td>
+<p>Address of newly-reported PDO</p>
+</td>
+<td>
+<p>Address of older PDO which has been duplicated</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p><b>Duplicate PDO:</b> A specific instance of a driver has enumerated multiple PDOs with identical device ID and unique IDs.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x2</p>
+</td>
+<td>
+<p>Address of purported PDO</p>
+</td>
+<td>
+<p>Address of driver object</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p><b>Invalid PDO:</b> An API which requires a PDO has been called with random memory, or with an FDO, or with a PDO which hasn't been initialized.</p>
+<p>(An uninitialized PDO is one that has not been returned to Plug and Play by <b>QueryDeviceRelation</b> or <b>QueryBusRelations</b>.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x3</p>
+</td>
+<td>
+<p>Address of PDO whose IDs were queried</p>
+</td>
+<td>
+<p>Address of ID buffer</p>
+</td>
+<td>
+<p><b>1:</b> DeviceID</p>
+<p><b>2:</b> UniqueID</p>
+<p><b>3:</b> HardwareIDs</p>
+<p><b>4:</b> CompatibleIDs</p>
+</td>
+<td>
+<p><b>Invalid ID:</b> An enumerator has returned an ID which contains illegal characters or isn't properly terminated. (IDs must contain only characters in the ranges 0x20 - 0x2B and 0x2D - 0x7F.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x4</p>
+</td>
+<td>
+<p>Address of PDO with DOE_DELETE_PENDING set</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p><b>Invalid enumeration of deleted PDO:</b> An enumerator has returned a PDO which it had previously deleted using <b>IoDeleteDevice</b>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x5</p>
+</td>
+<td>
+<p>Address of PDO</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p><b>PDO freed while linked in devnode tree:</b> The object manager reference count on a PDO dropped to zero while the devnode was still linked in the tree. (This usually indicates that the driver is not adding a reference when returning the PDO in a query IRP.)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x8</p>
+</td>
+<td>
+<p>Address of PDO whose stack returned the invalid bus relation</p>
+</td>
+<td>
+<p>Total number of PDOs returned as bus relations</p>
+</td>
+<td>
+<p>The index (zero-based) at which the first <b>NULL</b> PDO was found </p>
+</td>
+<td>
+<p><b>NULL pointer returned as a bus relation:  </b>One or more of the devices present on the bus is a <b>NULL</b> PDO. </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x9</p>
+</td>
+<td>
+<p>Connection type that was passed</p>
+</td>
+<td>
+<p>Reserved </p>
+</td>
+<td>
+<p>Reserved </p>
+</td>
+<td>
+<p><b>Invalid connection type passed to IoDisconnectInterruptEx:  </b>  A driver has passed an invalid connection type to <b>IoDisconnectInterruptEx</b>.  The connection type passed to this routine must match the one returned by a corresponding successful call to <b>IoConnectInterruptEx</b>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0xA</p>
+</td>
+<td>
+<p>Driver object </p>
+</td>
+<td>
+<p>IRQL after returning from driver callback </p>
+</td>
+<td>
+<p>Combined APC disable count after returning from driver callback </p>
+</td>
+<td>
+<p><b>Incorrect notify callback behavior:  </b>A driver failed to preserve IRQL or combined APC disable count across a Plug 'n' Play notification.  </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0xB</p>
+</td>
+<td>
+<p>Related PDO</p>
+</td>
+<td>
+<p>Removal relations</p>
+</td>
+<td>
+<p>Reserved</p>
+</td>
+<td>
+<p><b>Deleted PDO reported as relation:  </b> One of the removal relations for the device being removed has already been deleted.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

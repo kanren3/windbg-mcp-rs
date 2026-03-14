@@ -1,0 +1,67 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Using the DECLARE_API Macro"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Using the DECLARE_API Macro</title>
+
+<meta name="MS-HAID" content="WdbgExts_DG_953e82e6-d3d2-4f9c-af82-605495e82c11.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.using_the_declare_api_macro"></a>Using the DECLARE_API Macro</h1>
+</div>
+<h2><a id="ddk_using_the_declare_api_macro_dbwx"></a><a id="DDK_USING_THE_DECLARE_API_MACRO_DBWX"></a></h2>
+<p>Each extension command in a WdbgExts extension DLL is declared using the DECLARE_API macro. This macro is defined in wdbgexts.h.</p>
+<p>The basic format of the code for an extension command is:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>DECLARE_API( myextension )
+{
+    code for myextension
+}</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The DECLARE_API macro sets up a standard interface for extension commands. For example, if the user passed any arguments to the extension command, the entire argument string will be stored as a string, and a pointer to this string (PCSTR) will be passed to the extension function as <b>args</b>.</p>
+<p>If you are using 64-bit pointers, the DECLARE_API macro is defined as follows:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>#define DECLARE_API(s)                             \
+    CPPMOD VOID                                    \
+    s(                                             \
+        HANDLE                 hCurrentProcess,    \
+        HANDLE                 hCurrentThread,     \
+        ULONG64                dwCurrentPc,        \
+        ULONG                  dwProcessor,        \
+        PCSTR                  args                \
+     )</pre>
+</td>
+</tr>
+</table></span></div>
+<p>If you are using 32-bit pointers, DECLARE_API remains the same, except that <b>dwCurrentPc</b> will be of the type ULONG instead of ULONG64. However, 64-bit pointers are recommended for any extension that you are writing. See <a href="32_bit_pointers_and_64_bit_pointers.htm">32-Bit Pointers and 64-Bit Pointers</a> for details.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Using the DECLARE_API Macro%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

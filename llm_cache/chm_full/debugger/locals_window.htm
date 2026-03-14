@@ -1,0 +1,149 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="In WinDbg, you can view local variables by entering commands, by using the Locals window, or by using the Watch window."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Viewing and Editing Local Variables in WinDbg</title>
+
+<meta name="MS-HAID" content="r36_gui_1_e05d85f5-f61e-41e4-b80a-f72b4fc0bdd7.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.locals_window"></a>Viewing and Editing Local Variables in WinDbg</h1>
+</div>
+<p>In WinDbg, you can view local variables by entering commands, by using the Locals window, or by using the Watch window.</p>
+<h2><a id="Debugger_Command_Window"></a><a id="debugger_command_window"></a><a id="DEBUGGER_COMMAND_WINDOW"></a>Debugger Command Window</h2>
+<p>You can view local variables and parameters by entering the <a href="dv__display_local_variables_.htm"><b>dv</b></a> command or the <a href="dt__display_type_.htm"><b>dt</b></a> command in the Debugger Command window.</p>
+<h2><a id="ddk_locals_window_dbg"></a><a id="DDK_LOCALS_WINDOW_DBG"></a>Opening the Locals Window</h2>
+<p>The Locals window displays information about all of the local variables in the current scope.</p>
+<p>To open or switch to the Locals window, in the WinDbg window, on the <b>View</b> menu, click <b>Locals</b>. (You can also press ALT+3 or click the <b>Locals</b> button (<img src="images/tblocal.png" alt="Screen shot of the Locals button"/>) on the toolbar.  ALT+SHIFT+3 closes the Locals window.)</p>
+<p>The following screen shot shows an example of a Locals window.</p><img src="images/window-locals.png" alt="Screen shot of the Locals window "/><p>The Locals window can contain four columns. The <b>Name</b> and <b>Value</b> columns are always displayed, and the <b>Type</b> and <b>Location</b> columns are optional. To display the <b>Type</b> and <b>Location</b> columns, click the <b>Typecast</b> and <b>Locations</b> buttons, respectively, on the toolbar.</p>
+<h2><a id="Using_the_Locals_Window"></a><a id="using_the_locals_window"></a><a id="USING_THE_LOCALS_WINDOW"></a>Using the Locals Window</h2>
+<p>In the Locals window, you can do the following:</p>
+<ul>
+<li>
+<p>The <b>Name</b> column displays the name of each local variable. If a variable is a data structure, a check box appears next to its name. To expand or collapse the display of structure members, select or clear the check box. </p>
+</li>
+<li>
+<p>The <b>Value</b> column displays the current value of each variable.<ul>
+<li>To enter a new value for the variable, double-click the current value and type the new value, or edit the old value. (The cut, copy, and paste commands are available to use for editing.) You can type any <a href="c___numbers_and_operators.htm">C++ expression</a>.</li>
+<li>To save the new value, press ENTER. </li>
+<li>To discard the new value, press ESC. </li>
+<li>If you type an invalid value, the old value will reappear when you press ENTER.</li>
+</ul>
+</p>
+<p> Integers of type <b>int</b> are displayed as decimal values; integers of type <b>UINT</b> are displayed in the current radix. To change the current radix, use the <a href="n__set_number_base_.htm"><b>n (Set Number Base)</b></a> command in the Debugger Command window. </p>
+</li>
+<li>
+<p>The <b>Type</b> column (if it is displayed in the Locals window) shows the current data type of each variable. Each variable is displayed in the format that is proper for its own data type. Data structures have their type names in the <b>Type</b> column. Other variable types display "Enter new type" in this column. </p>
+<p>If you double-click "Enter new type", you can cast the type by entering a new data type. This cast alters the current display of this variable only in the Locals window; it does not change anything in the debugger or on the target computer. Moreover, if you enter a new value in the <b>Value</b> column, the text you enter will be parsed based on the actual type of the symbol, rather than any new type you may have entered in the <b>Type</b> column.  If you close and reopen the Locals window, you will lose the data type changes.</p>
+<p>You can also enter an extension command in the <b>Type</b> column.  The debugger will pass the address of the symbol to this extension, and will display the resulting output in a series of collapsible rows beneath the current row.  For example, if the symbol in this row is a valid address for a thread environment block, you can enter <b>!teb</b> in the <b>Type</b> column to run the <a href="_teb.htm"><b>!teb</b></a> extension on this symbol's address.</p>
+</li>
+<li>
+<p>The <b>Location</b> column (if it is displayed in the Locals window) shows the offset of each member of a data structure.</p>
+</li>
+<li>
+<p>If a local variable is an instance of a class that contains Vtables, the <b>Name</b> column displays the Vtables, and you can expand the Vtables to show the function pointers. If a Vtable is contained in a base class that points to a derived implementation, the notation <b>_vtcast_</b><b>Class</b> is displayed to indicate the members that are being added because of the derived class. These members expand like the derived class type.</p>
+</li>
+<li>
+<p>The <a href="changing_contexts.htm#local_context">local context</a> determines which set of local variables will be displayed in the Locals window. When the local context changes for any reason, the Locals window is automatically updated. By default, the local context matches the current position of the program counter. For more information about how to change the local context, see Local Context.</p>
+</li>
+</ul>
+<p>The Locals window has a toolbar that contains two buttons (<b>Typecast</b> and <b>Locations</b>) and a shortcut menu with additional commands. To access the menu, right-click the title bar of the window or click the icon near the upper-right corner of the window (<img src="images/window-locals-menu-icon.png" alt="The two button icons in this topic are the same, but they seem to serve different functions"/>). The toolbar and menu contain the following buttons and commands:</p>
+<ul>
+<li>
+<p>
+       (Toolbar and menu) 
+       <b>Typecast</b> turns the display of the <b>Type</b> column on and off.</p>
+</li>
+<li>
+<p>
+       (Toolbar and menu) 
+       <b>Locations</b> turns the display of the <b>Location</b> column on and off.</p>
+</li>
+<li>
+<p>
+       (Menu only)
+       <b>Display 16-bit values as Unicode</b> displays Unicode strings in this window. This command turns on and off a global setting that affects the Locals window, the Watch window, and debugger command output. This command is equivalent to using the <a href="_enable_unicode__enable_unicode_display_.htm"><b>.enable_unicode (Enable Unicode Display)</b></a> command.</p>
+</li>
+<li>
+<p>(Menu only)
+      <b>Always display numbers in default radix</b> causes integers to be displayed in the default radix instead of displaying them in decimal format. This command turns on and off a global setting that affects the Locals window, the Watch window, and debugger command output. This command is equivalent to using the <a href="_force_radix_output__use_radix_for_integers_.htm"><b>.force_radix_output (Use Radix for Integers)</b></a> command.</p>
+<div class="alert"><b>Note</b>    The <b>Always display numbers in default radix</b> command does not affect long integers. Long integers are displayed in decimal format unless the <a href="_enable_long_status__enable_long_integer_display_.htm"><b>.enable_long_status (Enable Long Integer Display)</b></a> command is set. The<b> .enable_long_status</b> command affects the display in the Locals window, the Watch window, and in debugger command output; there is no equivalent for this command in the menu in the Locals window.</div>
+<div> </div>
+</li>
+<li>
+<p>
+       (Menu only)
+       <b>Open memory window for selected value</b> opens a new docked Memory window that displays memory starting at the address of the selected expression.</p>
+</li>
+<li>
+<p>
+       (Menu only)
+       <b>Invoke dt for selected memory value</b> runs the <a href="dt__display_type_.htm"><b>dt (Display Type)</b></a> command with the selected symbol as its parameter.  The result appears in the Debugger Command window.  The <b>-n</b> option is automatically used to differentiate the symbol from a hexadecimal address.  No other options are used.  Note that the content that is produced by using this menu selection is identical to the content produced when running the <b>dt</b> command from the command line, but the format is slightly different.</p>
+</li>
+<li>
+<p>
+       (Menu only)
+       <b>Toolbar</b> turns the toolbar on and off.</p>
+</li>
+<li>
+<p>
+       (Menu only)
+       <b>Dock</b> or <b>Undock</b> causes the window to enter or leave the docked state.</p>
+</li>
+<li>
+<p>
+       (Menu only)
+       <b>Move to new dock</b> closes the Locals window and opens it in a new dock.</p>
+</li>
+<li>
+<p>
+       (Menu only)
+       <b>Set as tab-dock target for window type</b> is unavailable for the Locals window.  This option is only available for Source or Memory windows.</p>
+</li>
+<li>
+<p>
+       (Menu only)
+       <b>Always floating</b> causes the window to remain undocked even if it is dragged to a docking location.</p>
+</li>
+<li>
+<p>
+       (Menu only)
+       <b>Move with frame</b> causes the window to move when the WinDbg frame is moved, even if the window is undocked. For more information about docked, tabbed, and floating windows, see <a href="positioning_the_windows.htm">Positioning the Windows</a>.</p>
+</li>
+<li>
+<p>
+       (Menu only)
+       <b>Help</b> opens this topic in the Debugging Tools for Windows documentation.</p>
+</li>
+<li>
+<p>
+       (Menu only)
+       <b>Close</b> closes this window.</p>
+</li>
+</ul>
+<h2><a id="ddk_debugging_bios_code_dbg"></a><a id="DDK_DEBUGGING_BIOS_CODE_DBG"></a>The Watch Window</h2>
+<p>In WinDbg, you can use the Watch window to display and change local variables. The Watch window can display any list of variables that you want. These variables can include global variables and local variables from any function. At any time, the Watch window displays the values of those variables that match the current function's scope. You can also change the values of these variables through the Watch window.</p>
+<p>Unlike the Locals window, the Watch window is not affected by changes to the local context. Only those variables that are defined in the scope of the current program counter can have their values displayed or modified.  </p>
+<p>To open the Watch window, choose <b>Watch</b> from the <b>View</b> menu. You can also press ALT+2 or click the <b>Watch</b> button on the toolbar: <img src="images/tbwatch.png" alt="Screen shot of the Watch button"/>. ALT+SHIFT+2 closes the Watch window.</p>
+<p>The following screen shot shows an example of a Watch window.</p><img src="images/window-watch.png" alt="Screen shot of the Watch window "/><p>The Watch window can contain four columns. The <b>Name</b> and <b>Value</b> columns are always displayed, and the <b>Type</b> and <b>Location</b> columns are optional. To display the <b>Type</b> and <b>Location</b> columns, click the <b>Typecast</b> and <b>Locations</b> buttons, respectively, on the toolbar.</p>
+<h2><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h2>
+<p>For more information about controlling local variables, an overview of using variables and changing the scope, and a description of other memory-related commands, see <a href="reading_and_writing_memory.htm">Reading and Writing Memory</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Viewing and Editing Local Variables in WinDbg%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

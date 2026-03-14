@@ -1,0 +1,111 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !peb extension displays a formatted view of the information in the process environment block (PEB)."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!peb</title>
+
+<meta name="MS-HAID" content="r25_exts_general_He_c7e783ec-cfb1-42a0-8da0-fdf0334e5bbd.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._peb"></a>!peb</h1>
+</div>
+<p>The <b>!peb</b> extension displays a formatted view of the information in the process environment block (PEB).</p>
+<pre class="syntax"><b>!peb </b>[<i>PEB-Address</i>]</pre>
+<h2><a id="ddk__peb_dbg"></a><a id="DDK__PEB_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______PEB-Address______"></a><a id="_______peb-address______"></a><a id="_______PEB-ADDRESS______"></a>       <i>PEB-Address</i>      </dt>
+<dd>
+<p>The hexadecimal address of the process whose PEB you want to examine. (This is not the address of the PEB as derived from the kernel process block for the process.) If <i>PEB-Address</i> is omitted in user mode, the PEB for the current process is used. If it is omitted in kernel mode, the PEB corresponding to the current <a href="changing_contexts.htm#process_context">process context</a> is displayed.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Windows 2000</b></p>
+</td>
+<td>
+<p>
+<dl>
+<dt>
+          Kdextx86.dll
+          </dt>
+<dt>Ntsdexts.dll
+         </dt>
+</dl>
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Exts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For information about process environment blocks, see <i>Microsoft Windows Internals</i> by Mark Russinovich and David Solomon. (This book may not be available in some languages 
+
+and countries.)</p>
+<h2>Remarks</h2>
+<p>The PEB is the user-mode portion of Microsoft Windows process control structures.</p>
+<p>If the <b>!peb</b> extension with no argument gives you an error in kernel mode, you should use the <a href="_process.htm"><b>!process</b></a> extension to determine the PEB address for the desired process. Make sure your <a href="changing_contexts.htm#process_context">process context</a> is set to the desired process, and then use the PEB address as the argument for <b>!peb</b>.</p>
+<p>The exact output displayed depends on the Windows version and on whether you are debugging in kernel mode or user mode. The following example is taken from a kernel debugger attached to a Windows Server 2003 target:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !peb
+PEB at 7ffdf000
+    InheritedAddressSpace:    No
+    ReadImageFileExecOptions: No
+    BeingDebugged:            No
+    ImageBaseAddress:         4ad00000
+    Ldr                       77fbe900
+    Ldr.Initialized:          Yes
+    Ldr.InInitializationOrderModuleList: 00241ef8 . 00242360
+    Ldr.InLoadOrderModuleList:           00241e90 . 00242350
+    Ldr.InMemoryOrderModuleList:         00241e98 . 00242358
+            Base TimeStamp                     Module
+        4ad00000 3d34633c Jul 16 11:17:32 2002 D:\WINDOWS\system32\cmd.exe
+        77f40000 3d346214 Jul 16 11:12:36 2002 D:\WINDOWS\system32\ntdll.dll
+        77e50000 3d3484ef Jul 16 13:41:19 2002 D:\WINDOWS\system32\kernel32.dll
+....
+    SubSystemData:     00000000
+    ProcessHeap:       00140000
+    ProcessParameters: 00020000
+    WindowTitle:  'D:\Documents and Settings\Administrator\Desktop\Debuggers.lnk'
+    ImageFile:    'D:\WINDOWS\system32\cmd.exe'
+    CommandLine:  '"D:\WINDOWS\system32\cmd.exe" '
+    DllPath:      'D:\WINDOWS\system32;D:\WINDOWS\system32;....
+    Environment:  00010000
+        ALLUSERSPROFILE=D:\Documents and Settings\All Users
+        APPDATA=D:\Documents and Settings\UserTwo\Application Data
+        CLIENTNAME=Console
+....
+        windir=D:\WINDOWS</code></pre>
+<p></p>
+<p>The similar <a href="_teb.htm"><b>!teb</b></a> extension displays the thread environment block.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!peb%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

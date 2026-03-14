@@ -1,0 +1,270 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !wmitrace.setprefix extension specifies the trace message prefix that is prepended to the trace messages from this session. This extension allows you to change the prefix during the debugging session."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!wmitrace.setprefix</title>
+
+<meta name="MS-HAID" content="r34_exts_WMI_ed2c8289-58f0-49b4-b7c2-6e9bf448fe71.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._wmitrace_setprefix"></a>!wmitrace.setprefix</h1>
+</div>
+<p>The <b>!wmitrace.setprefix</b> extension specifies the trace message prefix that is prepended to the trace messages from this session. This extension allows you to change the prefix during the debugging session. </p>
+<pre class="syntax"><b>!wmitrace.setprefix </b>[<b>+</b>]<b> </b><i>PrefixVariables</i> 
+<b>!wmitrace.setprefix</b> 
+</pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="______________"></a>       <b>+</b>      </dt>
+<dd>
+<p>Causes <i>PrefixVariables</i> to be apended to the trace message prefix.  If the <b>+</b> token is not used, <i>PrefixVariables</i> replaces the existing trace message prefix. </p>
+</dd>
+<dt><a id="_______PrefixVariables______"></a><a id="_______prefixvariables______"></a><a id="_______PREFIXVARIABLES______"></a>       <i>PrefixVariables</i>      </dt>
+<dd>
+<p>A set of variables that specifies the format and data in the trace message prefix.</p>
+<p>The variables have the format %n!x!, where %n represents a data field and !x! represents the data type. You can also include separation characters, such as colons (:), semicolons (;), parentheses ( ( ) ), braces ( { } ), and brackets ( [ ] ) to separate the fields.</p>
+<p>Each %n variable represents a parameter that is described in the following table. </p>
+<table>
+<tr>
+<th>Prefix variable identifier</th>
+<th>Variable type</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>%1</p>
+</td>
+<td>
+<p>string</p>
+</td>
+<td>
+<p>The friendly name of the message GUID of the trace message. By default, the friendly name of a message GUID is the name of the directory in which the trace provider was built.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>%2</p>
+</td>
+<td>
+<p>string</p>
+</td>
+<td>
+<p>Source file and line number.</p>
+<p>This variable represents the friendly name of the trace message. By default, the friendly name of a trace message is the name of the source file and the line number of the code that generated the trace message.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>%3</p>
+</td>
+<td>
+<p>ULONG</p>
+</td>
+<td>
+<p>Thread ID.</p>
+<p>Identifies the thread that generated the trace message.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>%4</p>
+</td>
+<td>
+<p>string</p>
+</td>
+<td>
+<p>Time stamp of the time that the trace message was generated.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>%5</p>
+</td>
+<td>
+<p>string</p>
+</td>
+<td>
+<p>Kernel time.</p>
+<p>Displays the elapsed execution time for kernel-mode instruction, in CPU ticks, at the time that the trace message was generated.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>%6</p>
+</td>
+<td>
+<p>string</p>
+</td>
+<td>
+<p>User time. </p>
+<p>Displays the elapsed execution time for user-mode instruction, in CPU ticks, at the time that the trace message was generated.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>%7</p>
+</td>
+<td>
+<p>LONG</p>
+</td>
+<td>
+<p>Sequence number. </p>
+<p>Displays the local or global sequence number of the trace message. Local sequence numbers, which are unique only to this trace session, are the default.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>%8</p>
+</td>
+<td>
+<p>ULONG</p>
+</td>
+<td>
+<p>Process ID.</p>
+<p>Identifies the process that generated the trace message.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>%9</p>
+</td>
+<td>
+<p>ULONG</p>
+</td>
+<td>
+<p>CPU number.</p>
+<p>Identifies the CPU on which the trace message was generated.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>%!FUNC!</p>
+</td>
+<td>
+<p>string</p>
+</td>
+<td>
+<p>Function name.</p>
+<p>Displays the name of the function that generated the trace message.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>%!FLAGS%</p>
+</td>
+<td>
+<p>string</p>
+</td>
+<td>
+<p>Displays the name of the trace flags that enable the trace message.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>%!LEVEL!</p>
+</td>
+<td>
+<p>string</p>
+</td>
+<td>
+<p>Displays the value of the trace level that enables the trace message.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>%!COMPNAME!</p>
+</td>
+<td>
+<p>string</p>
+</td>
+<td>
+<p>Component name.</p>
+<p>Displays the name of the component of the provider that generated the trace message. The component name appears only if it is specified in the tracing code.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>%!SUBCOMP!</p>
+</td>
+<td>
+<p>string</p>
+</td>
+<td>
+<p>Subcomponent name.</p>
+<p>Displays the name of the subcomponent of the provider that generated the trace message. The subcomponent name appears only if it is specified in the tracing code.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>The symbol within exclamation marks is a conversion character that specifies the format and precision of the variable. For example, %8!04X! specifies the process ID formatted as a four-digit, unsigned, hexadecimal number. </p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<p>This extension is exported by Wmitrace.dll. </p>
+<p>This extension is available in Windows 2000 and later versions of Windows. If you want to use this extension with Windows 2000, you must first copy the Wmitrace.dll file from the winxp subdirectory of the Debugging Tools for Windows installation directory to the w2kfre subdirectory. </p>
+<h3><a id="Example"></a><a id="example"></a><a id="EXAMPLE"></a>Example</h3>
+<p>The following command changes the trace message prefix in the debugger output to the following format:</p>
+<p><b>!wmitrace.setprefix %2!s!: %!FUNC!: %8!04x!.%3!04x!: %4!s!: </b></p>
+<p>This extension command sets the trace message prefix to the following format:</p>
+<p><i>SourceFile_LineNumber: FunctionName: ProcessID.ThreadID: SystemTime:</i></p>
+<p>As a result, the trace messages are prepended with the specified information in the specified format. The following code example is taken from a trace of the Tracedrv sample driver in the WDK.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>tracedrv_c258: TracedrvDispatchDeviceControl: 0af4.0c64: 07/25/2003-13:55:39.998:  IOCTL = 1</pre>
+</td>
+</tr>
+</table></span></div>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For a conceptual overview of event tracing, see the Microsoft Windows SDK documentation. For information about trace message format files, see the "Trace Message Prefix" topic in the WDK documentation.</p>
+<h2>Remarks</h2>
+<p>When used with no parameters, <b>!wmitrace.setprefix</b> displays the current value of the trace message prefix.</p>
+<p>The <i>trace message prefix</i> consists of data about the trace message that is prepended to each trace message during Windows software trace preprocessor (WPP) software tracing. This data originates in the trace log (.etl) file and the trace message format (.tmf) file. You can customize the format and data in trace message prefix.</p>
+<p>The default trace message prefix is as follows:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>[%9!d!]%8!04X!.%3!04X!::%4!s! [%1!s!]</pre>
+</td>
+</tr>
+</table></span></div>
+<p>and produces the following prefix:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>[CPUNumber]ProcessID.ThreadID::SystemTime [ProviderDirectory] </pre>
+</td>
+</tr>
+</table></span></div>
+<p>You can change the format and data in the trace message prefix outside of the debugger by setting the %TRACE_FORMAT_PREFIX% environment variable. For an example that illustrates how to set the trace message prefix outside of the debugger, see "Example 7: Customizing the Trace Message Prefix" in the Windows Driver Kit (WDK) documentation. If the trace message prefix of your messages varies from the default, this environment variable might be set on your computer.</p>
+<p>The prefix that you set by using this extension command affects only the debugger output. The trace message prefix that appears in the trace log is determined by the default value and the value of the %TRACE_FORMAT_PREFIX% environment variable.</p>
+<p>This extension is only useful during WPP software tracing, and earlier (legacy) methods of Event Tracing for Windows. Trace events that are produced by other manifested providers do not use trace message format (TMF) files, and therefore this extension does not affect them. </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!wmitrace.setprefix%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

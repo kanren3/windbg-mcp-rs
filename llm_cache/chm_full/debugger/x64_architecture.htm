@@ -1,0 +1,324 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="x64 Architecture"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>x64 Architecture</title>
+
+<meta name="MS-HAID" content="t09_arch_x86_79e4e2cd-b260-447d-b74d-2273d06db23e.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.x64_architecture"></a>x64 Architecture</h1>
+</div>
+<h2><a id="ddk_x64_architecture_dbg"></a><a id="DDK_X64_ARCHITECTURE_DBG"></a></h2>
+<p>The x64 architecture is a backwards-compatible extension of x86.  It provides a legacy 32-bit mode, which is identical to x86, and a new 64-bit mode.</p>
+<p>The term "x64" includes both AMD 64 and Intel64. The instruction sets are close to identical.</p>
+<h3><a id="Registers"></a><a id="registers"></a><a id="REGISTERS"></a>Registers</h3>
+<p>x64 extends x86's 8 general-purpose registers to be 64-bit, and adds 8 new 64-bit registers.  The 64-bit registers have names beginning with "r", so for example the 64-bit extension of <b>eax</b> is called <b>rax</b>.  The new registers are named <b>r8</b> through <b>r15</b>.</p>
+<p>The lower 32 bits, 16 bits, and 8 bits of each register are directly addressable in operands.  This includes registers, like <b>esi</b>, whose lower 8 bits were not previously addressable.  The following table specifies the assembly-language names for the lower portions of 64-bit registers.</p>
+<table>
+<tr>
+<th>64-bit register</th>
+<th>Lower 32 bits</th>
+<th>Lower 16 bits</th>
+<th>Lower 8 bits</th>
+</tr>
+<tr>
+<td>
+<p><b>rax</b></p>
+</td>
+<td>
+<p><b>eax</b></p>
+</td>
+<td>
+<p><b>ax</b></p>
+</td>
+<td>
+<p><b>al</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>rbx</b></p>
+</td>
+<td>
+<p><b>ebx</b></p>
+</td>
+<td>
+<p><b>bx</b></p>
+</td>
+<td>
+<p><b>bl</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>rcx</b></p>
+</td>
+<td>
+<p><b>ecx</b></p>
+</td>
+<td>
+<p><b>cx</b></p>
+</td>
+<td>
+<p><b>cl</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>rdx</b></p>
+</td>
+<td>
+<p><b>edx</b></p>
+</td>
+<td>
+<p><b>dx</b></p>
+</td>
+<td>
+<p><b>dl</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>rsi</b></p>
+</td>
+<td>
+<p><b>esi</b></p>
+</td>
+<td>
+<p><b>si</b></p>
+</td>
+<td>
+<p><b>sil</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>rdi</b></p>
+</td>
+<td>
+<p><b>edi</b></p>
+</td>
+<td>
+<p><b>di</b></p>
+</td>
+<td>
+<p><b>dil</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>rbp</b></p>
+</td>
+<td>
+<p><b>ebp</b></p>
+</td>
+<td>
+<p><b>bp</b></p>
+</td>
+<td>
+<p><b>bpl</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>rsp</b></p>
+</td>
+<td>
+<p><b>esp</b></p>
+</td>
+<td>
+<p><b>sp</b></p>
+</td>
+<td>
+<p><b>spl</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>r8</b></p>
+</td>
+<td>
+<p><b>r8d</b></p>
+</td>
+<td>
+<p><b>r8w</b></p>
+</td>
+<td>
+<p><b>r8b</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>r9</b></p>
+</td>
+<td>
+<p><b>r9d</b></p>
+</td>
+<td>
+<p><b>r9w</b></p>
+</td>
+<td>
+<p><b>r9b</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>r10</b></p>
+</td>
+<td>
+<p><b>r10d</b></p>
+</td>
+<td>
+<p><b>r10w</b></p>
+</td>
+<td>
+<p><b>r10b</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>r11</b></p>
+</td>
+<td>
+<p><b>r11d</b></p>
+</td>
+<td>
+<p><b>r11w</b></p>
+</td>
+<td>
+<p><b>r11b</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>r12</b></p>
+</td>
+<td>
+<p><b>r12d</b></p>
+</td>
+<td>
+<p><b>r12w</b></p>
+</td>
+<td>
+<p><b>r12b</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>r13</b></p>
+</td>
+<td>
+<p><b>r13d</b></p>
+</td>
+<td>
+<p><b>r13w</b></p>
+</td>
+<td>
+<p><b>r13b</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>r14</b></p>
+</td>
+<td>
+<p><b>r14d</b></p>
+</td>
+<td>
+<p><b>r14w</b></p>
+</td>
+<td>
+<p><b>r14b</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>r15</b></p>
+</td>
+<td>
+<p><b>r15d</b></p>
+</td>
+<td>
+<p><b>r15w</b></p>
+</td>
+<td>
+<p><b>r15b</b></p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>Operations that output to a 32-bit subregister are automatically zero-extended to the entire 64-bit register.  Operations that output to 8-bit or 16-bit subregisters are <i>not</i> zero-extended (this is compatible x86 behavior).</p>
+<p>The high 8 bits of <b>ax</b>, <b>bx</b>, <b>cx</b>, and <b>dx</b> are still addressable as <b>ah</b>, <b>bh</b>, <b>ch</b>, <b>dh</b>, but cannot be used with all types of operands.   </p>
+<p>The instruction pointer, <b>eip</b>, and <b>flags</b> register have been extended to 64 bits (<b>rip</b> and <b>rflags</b>, respectively) as well.</p>
+<p>The x64 processor also provides several sets of floating-point registers:</p>
+<ul>
+<li>
+<p>Eight 80-bit x87 registers.</p>
+</li>
+<li>
+<p>Eight 64-bit MMX registers.  (These overlap with the x87 registers.)</p>
+</li>
+<li>
+<p>The original set of eight 128-bit SSE registers is increased to sixteen.</p>
+</li>
+</ul>
+<h3><a id="Calling_Conventions"></a><a id="calling_conventions"></a><a id="CALLING_CONVENTIONS"></a>Calling Conventions</h3>
+<p>Unlike the x86, the C/C++ compiler only supports one calling convention on x64.  This calling convention takes advantage of the increased number of registers available on x64:</p>
+<ul>
+<li>
+<p>The first four integer or pointer parameters are passed in the <b>rcx</b>, <b>rdx</b>, <b>r8</b>, and <b>r9</b> registers. </p>
+</li>
+<li>
+<p>The first four floating-point parameters are passed in the first four SSE registers, <b>xmm0</b>-<b>xmm3</b>.</p>
+</li>
+<li>
+<p>The caller reserves space on the stack for arguments passed in registers.  The called function can use this space to spill the contents of registers to the stack.</p>
+</li>
+<li>
+<p>Any additional arguments are passed on the stack.</p>
+</li>
+<li>
+<p>An integer or pointer return value is returned in the <b>rax</b> register, while a floating-point return value is returned in <b>xmm0</b>.</p>
+</li>
+<li>
+<p><b>rax</b>, <b>rcx</b>, <b>rdx</b>, <b>r8</b>-<b>r11</b> are volatile.</p>
+</li>
+<li>
+<p><b>rbx</b>, <b>rbp</b>, <b>rdi</b>, <b>rsi</b>, <b>r12</b>-<b>r15</b> are nonvolatile.</p>
+</li>
+</ul>
+<p>The calling convention for C++ is very similar: the <b>this</b> pointer is passed as an implicit first parameter.  The next three parameters are passed in registers, while the rest are passed on the stack.</p>
+<h3><a id="Addressing_Modes"></a><a id="addressing_modes"></a><a id="ADDRESSING_MODES"></a>Addressing Modes</h3>
+<p>The addressing modes in 64-bit mode are similar to, but not identical to, x86.</p>
+<ul>
+<li>
+<p>Instructions that refer to 64-bit registers are automatically performed with 64-bit precision.  (For example <b>mov rax, [rbx]</b> moves 8 bytes beginning at <b>rbx</b> into <b>rax</b>.)</p>
+</li>
+<li>
+<p>A special form of the <b>mov</b> instruction has been added for 64-bit immediate constants or constant addresses.  For all other instructions, immediate constants or constant addresses are still 32 bits.  </p>
+</li>
+<li>
+<p>x64 provides a new <b>rip</b>-relative addressing mode.  Instructions that refer to a single constant address are encoded as offsets from <b>rip</b>.  For example, the <b>mov rax, [</b><i>addr</i><b>]</b> instruction moves 8 bytes beginning at <i>addr</i> + <b>rip</b> to <b>rax</b>.</p>
+</li>
+</ul>
+<p>Instructions, such as <b>jmp</b>, <b>call</b>, <b>push</b>, and <b>pop</b>, that implicitly refer to the instruction pointer and the stack pointer treat them as 64 bits registers on x64.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20x64 Architecture%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,120 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The pa command executes the program until the specified address is reached, displaying each step."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>pa (Step to Address)</title>
+
+<meta name="MS-HAID" content="r17_cmds_I_67cbbf97-d1b4-4aca-b1a0-e06913c64ae5.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.pa__step_to_address_"></a>pa (Step to Address)</h1>
+</div>
+<p>The <b>pa</b> command executes the program until the specified address is reached, displaying each step.</p>
+<p>User-Mode</p>
+<pre class="syntax">[<b>~</b>Thread] <b>pa</b> [<b>r</b>] [= StartAddress] StopAddress [<b>"</b>Command<b>"</b>]
+</pre>
+<p>Kernel-Mode</p>
+<pre class="syntax">
+    <b>pa</b> [<b>r</b>] [= StartAddress] StopAddress [<b>"</b>Command<b>"</b>]
+</pre>
+<h2><a id="ddk_cmd_step_to_address_dbg"></a><a id="DDK_CMD_STEP_TO_ADDRESS_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Thread______"></a><a id="_______thread______"></a><a id="_______THREAD______"></a>       <i>Thread</i>      </dt>
+<dd>
+<p>Specifies threads to continue executing. All other threads are frozen. For more information about the syntax, see <a href="thread_syntax.htm">Thread Syntax</a>. You can specify threads only in user mode.</p>
+</dd>
+<dt><a id="_______r______"></a><a id="_______R______"></a>       <b>r</b>      </dt>
+<dd>
+<p>Turns on and off the display of registers and flags. By default, the registers and flags are displayed. You can disable register display by using the <b>par</b>, <a href="p__step_.htm"><b>pr</b></a>, <a href="t__trace_.htm"><b>tr</b></a>, or .prompt_allow -reg commands. All of these commands control the same setting and you can use any of them to override any previous use of these commands.  </p>
+<p>You can also disable register display by using the l-os command. This setting is separate from the other three commands. To control <u>which</u> registers and flags are displayed, use the <a href="rm__register_mask_.htm"><b>rm (Register Mask)</b></a> command.</p>
+</dd>
+<dt><a id="_______StartAddress______"></a><a id="_______startaddress______"></a><a id="_______STARTADDRESS______"></a>       <i>StartAddress</i>      </dt>
+<dd>
+<p>Specifies the address where the debugger begins execution. Otherwise, the debugger begins at the instruction that the instruction pointer points to. For more information about the syntax, see <a href="address_and_address_range_syntax.htm">Address and Address Range Syntax</a>.</p>
+</dd>
+<dt><a id="_______StopAddress______"></a><a id="_______stopaddress______"></a><a id="_______STOPADDRESS______"></a>       <i>StopAddress</i>      </dt>
+<dd>
+<p>Specifies the address where execution will stop. This address must match the exact address of an instruction.</p>
+</dd>
+<dt><a id="_______Command______"></a><a id="_______command______"></a><a id="_______COMMAND______"></a>       <i>Command</i>      </dt>
+<dd>
+<p>Specifies a debugger command to execute after the step is performed. This command is executed before the standard <b>pa</b> results are displayed. If you also use <i>StopAddress</i>, the specified command is executed after <i>StopAddress</i> is reached (but before the results from the final step are displayed).</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>Live debugging only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>All</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about related commands, see <a href="controlling_the_target.htm">Controlling the Target</a>. </p>
+<h2>Remarks</h2>
+<p>The <b>pa</b> command causes the target to begin executing. This execution continues until the specified instruction is reached or a breakpoint is encountered.</p>
+<div class="alert"><b>Note</b>    If you use this command in kernel mode, execution stops when an instruction is encountered at the specified virtual address in <u>any</u> virtual address space.</div>
+<div> </div>
+<p>During this execution, all steps are displayed explicitly. Called functions are treated as a single unit. Therefore, the display of this command is similar to what you see if you execute <a href="p__step_.htm"><b>p (Step)</b></a> repeatedly until the program counter reaches the specified address.</p>
+<p>For example, the following command explicitly steps through the target code until the return address of the current function is reached.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; pa @$ra </pre>
+</td>
+</tr>
+</table></span></div>
+<p>The following example demonstrates using the <b>pa</b> command along with the <b>kb </b>command to display the stack trace:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; pa 70b5d2f1 "kb"</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20pa (Step to Address)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

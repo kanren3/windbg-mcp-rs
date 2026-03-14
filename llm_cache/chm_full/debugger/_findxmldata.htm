@@ -1,0 +1,137 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !findxmldata extension retrieves XML data from a CAB file that contains a kernel-mode Small Memory Dump file."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!findxmldata</title>
+
+<meta name="MS-HAID" content="r24_exts_general_A_7563ce41-c484-4621-b436-aa6dacbfa885.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._findxmldata"></a>!findxmldata</h1>
+</div>
+<p>The <b>!findxmldata</b> extension retrieves XML data from a CAB file that contains a kernel-mode Small Memory Dump file.</p>
+<pre class="syntax"><b>!findxmldata </b>[ <b>-d</b> <i>DeviceName</i> | <b>-h</b> <i>HwId</i> ] 
+<b>!findxmldata -r </b><i>Driver</i> 
+<b>!findxmldata -chksum </b>[ <b>-z</b> <i>CabFile </i>]
+<b>!findxmldata -v</b> </pre>
+<h2><a id="ddk__findxmldata_dbg"></a><a id="DDK__FINDXMLDATA_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______-d_______DeviceName______"></a><a id="_______-d_______devicename______"></a><a id="_______-D_______DEVICENAME______"></a>       <b>-d       </b><i>DeviceName</i>      </dt>
+<dd>
+<p>Displays all devices whose device name contains the string that <i>DeviceName</i> specifies.</p>
+</dd>
+<dt><a id="_______-h_______HwId______"></a><a id="_______-h_______hwid______"></a><a id="_______-H_______HWID______"></a>       <b>-h       </b><i>HwId</i>      </dt>
+<dd>
+<p>Displays all devices whose hardware IDs contain the string that <i>HwId</i> specifies. If you use both <b>-d</b> and <b>-h</b>, the debugger displays only those devices that satisfy both matches.</p>
+</dd>
+<dt><a id="_______-r_______Driver______"></a><a id="_______-r_______driver______"></a><a id="_______-R_______DRIVER______"></a>       <b>-r       </b><i>Driver</i>      </dt>
+<dd>
+<p>Displays information about the driver that the <i>Driver</i> parameter specifies, including all devices that use this driver.</p>
+</dd>
+<dt><a id="_______-chksum______"></a><a id="_______-CHKSUM______"></a>       <b>-chksum</b>      </dt>
+<dd>
+<p>Displays the XML file's checksum.</p>
+</dd>
+<dt><a id="_______-z_______CabFile______"></a><a id="_______-z_______cabfile______"></a><a id="_______-Z_______CABFILE______"></a>       <b>-z       </b><i>CabFile</i>      </dt>
+<dd>
+<p>Enables you to perform a checksum on the CAB file that  the CabFile parameter specifies, instead of on the default Sysdata.xml file. </p>
+</dd>
+<dt><a id="_______-v______"></a><a id="_______-V______"></a>       <b>-v</b>      </dt>
+<dd>
+<p>Displays system version information.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000</b></p>
+</td>
+<td>
+<p>
+          Ext.dll
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later</b></p>
+</td>
+<td>
+<p>
+          Ext.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>The <b>!findxmldata</b> extension works only on a kernel-mode Small Memory Dump file that is stored in a CAB file.</p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about how to put dump files into CAB files, see <a href="_dumpcab__create_dump_file_cab_.htm"><b>.dumpcab (Create Dump File CAB)</b></a>. For information more about how to debug a kernel-mode dump file, including dump files that are stored inside CAB files, see <a href="analyzing_a_kernel_mode_dump_file.htm">Analyzing a Kernel-Mode Dump File</a>.</p>
+<h2>Remarks</h2>
+<p>The <b>!findxmldata</b> extension retrieves data from the Sysdata.xml file that is stored in a CAB file that contains a kernel-mode <a href="small_memory_dump.htm">Small Memory Dump</a> file.</p>
+<p>When you do not use any options, the extension displays all devices.   </p>
+<p>The following examples show you how to use <b>!findxmldata</b>.</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !findxmldata -v
+SYSTEM Info:
+OSVER: 5.1.2600 2.0
+OSLANGUAGE: 2052
+OSNAME: Microsoft Windows XP Home Edition
+kd&gt; !findxmldata -d MIDI
+Node DEVICE
+ DESCRIPTION    : MPU-401 Compatible MIDI Device
+        HARDWAREID     : ACPI\PNPB006
+        SERVICE        : ms_mpu401
+        DRIVER         : msmpu401.sys
+
+kd&gt; !findxmldata -r msmpu
+Node DRIVER
+ FILENAME       : msmpu401.sys
+        FILESIZE       : 2944
+        CREATIONDATE   : 05-06-2005 09:18:34
+        VERSION        : 5.1.2600.0
+        MANUFACTURER   : Microsoft Corporation
+        PRODUCTNAME    : Microsoft« Windows« Operating System
+Node DEVICE
+        DESCRIPTION    : MPU-401 Compatible MIDI Device
+ HARDWAREID     : ACPI\PNPB006
+        SERVICE        : ms_mpu401
+        DRIVER         : msmpu401.sys
+
+kd&gt; !findxmldata -h PCI\VEN_8086&amp;DEV_24C3&amp;SUBSYS_24C28086
+Node DEVICE
+ DESCRIPTION    : Intel(R) 82801DB/DBM SMBus Controller - 24C3
+        HARDWAREID     : PCI\VEN_8086&amp;DEV_24C3&amp;SUBSYS_24C28086&amp;REV_01
+kd&gt; !findxmldata -h USB\ROOT_HUB&amp;VID8086&amp;PID24C4&amp;REV0001
+Node DEVICE
+        DESCRIPTION    : USB Root Hub
+ HARDWAREID     : USB\ROOT_HUB&amp;VID8086&amp;PID24C4&amp;REV0001
+        SERVICE        : usbhub
+        DRIVER         : usbhub.sys
+
+kd&gt; !findxmldata -h ACPI\PNPB006
+Node DEVICE
+        DESCRIPTION    : MPU-401 Compatible MIDI Device
+ HARDWAREID     : ACPI\PNPB006
+        SERVICE        : ms_mpu401
+        DRIVER         : msmpu401.sys</code></pre>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!findxmldata%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

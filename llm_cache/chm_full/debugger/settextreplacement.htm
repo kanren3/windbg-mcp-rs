@@ -1,0 +1,114 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The SetTextReplacement method sets the value of a user-named alias."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IDebugControl2::SetTextReplacement method</title>
+
+<meta name="MS-HAID" content="IDebugControl_b53cd6ec-4cc4-45b2-96a0-b830bc7f8ca9.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.settextreplacement"></a>IDebugControl2::SetTextReplacement method</h1>
+</div>
+<p>The <b>SetTextReplacement</b>  method sets the value of a user-named alias.  </p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>HRESULT SetTextReplacement(
+  [in]           PCSTR SrcText,
+  [in, optional] PCSTR DstText
+);</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Parameters</h2>
+<dl>
+<dt><i>SrcText</i> [in]</dt>
+<dd>
+<p>Specifies the name of the user-named alias.  The <a href="introduction.htm#debugger_engine">debugger engine</a> makes a copy of this string.  If <i>SrcText</i> is the same as the name of an automatic alias, the automatic alias is hidden by the new user-named alias.</p>
+</dd>
+<dt><i>DstText</i> [in, optional]</dt>
+<dd>
+<p>Specifies the value of the user-named alias.  The debugger engine makes a copy of this string.  If <i>DstText</i> is <b>NULL</b>, the user-named alias is removed.</p>
+</dd>
+</dl>
+<h2>Return value</h2>
+<p>This method may also return error values.  See <a href="hresult_values.htm"><b>Return Values</b></a> for more details.</p>
+<table>
+<tr>
+<th>Return code</th>
+<th>Description</th>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>S_OK</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>The method was successful.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>Before executing commands or evaluating expressions, the debugger engine will replace the alias specified by <i>SrcText</i> with the value of the alias (specified by <i>DstText</i>).</p>
+<p>If <i>SrcText</i> is an asterisk (<b>*</b>) and <i>DstText</i> is <b>NULL</b>, all user-named aliases are removed.  This is the same behavior as the <a href="removetextreplacements.htm"><b>RemoveTextReplacements</b></a> method.</p>
+<p>When an alias is changed by this method, the event callbacks are notified by passing the DEBUG_CES_TEXT_REPLACEMENTS flag to the <a href="idebugeventcallbacks_changeenginestate.htm"><b>IDebugEventCallbacks::ChangeEngineState</b></a> callback method.</p>
+<p>For an overview of aliases used by the <a href="introduction.htm#debugger_engine">debugger engine</a>, see <a href="using_aliases.htm">Using Aliases</a>.  For more information about using aliases with the debugger engine API, see <a href="interacting_with_the_engine.htm">Interacting with the Engine</a>.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Target platform</p>
+</th>
+<td width="70%">
+<dl>
+<dt></dt>
+</dl>
+</td>
+</tr>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Dbgeng.h (include Dbgeng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="idebugcontrol2.htm"><b>IDebugControl2</b></a></dt>
+<dt><a href="idebugcontrol3.htm"><b>IDebugControl3</b></a></dt>
+<dt><a href="gettextreplacement.htm"><b>GetTextReplacement</b></a></dt>
+<dt><a href="removetextreplacements.htm"><b>RemoveTextReplacements</b></a></dt>
+<dt><a href="outputtextreplacements.htm"><b>OutputTextReplacements</b></a></dt>
+<dt><a href="settextmacro.htm"><b>SetTextMacro</b></a></dt>
+<dt><a href="as__as__set_alias_.htm"><b>as, aS (Set Alias)</b></a></dt>
+<dt><a href="ad__delete_alias_.htm"><b>ad (Delete Alias)</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IDebugControl2::SetTextReplacement method%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

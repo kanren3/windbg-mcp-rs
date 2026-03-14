@@ -1,0 +1,50 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Security During Kernel-Mode Debugging"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Security During Kernel-Mode Debugging</title>
+
+<meta name="MS-HAID" content="r11_security_9d766e70-d548-464f-ba78-5694e7c5f379.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.security_during_kernel_mode_debugging"></a>Security During Kernel-Mode Debugging</h1>
+</div>
+<h2><a id="ddk_security_during_kernel_mode_debugging_dbg"></a><a id="DDK_SECURITY_DURING_KERNEL_MODE_DEBUGGING_DBG"></a></h2>
+<p>Security during kernel-mode debugging is never about protecting the <i>target</i> computer. The target is completely vulnerable to the debugger -- this is the very nature of debugging.</p>
+<p>If a debugging connection was enabled during boot, it will remain vulnerable through the debugging port until its next boot.</p>
+<p>However, you should be concerned about security on the <i>host</i> computer. In an ideal situation, the debugger runs as an application on your host computer, but does not interact with other applications on this computer. There are three possible ways in which security problems could arise:</p>
+<ul>
+<li>
+<p>If you use corrupt or destructive extension DLLs, they could cause your debugger to take unexpected actions, possibly affecting the host computer.</p>
+</li>
+<li>
+<p>It is possible that corrupt or destructive symbol files could also cause your debugger to take unexpected actions, possibly affecting the host computer. </p>
+</li>
+<li>
+<p>If you are running a remote debugging session, an unexpected client might attempt to link to your server. Or perhaps the client you <u>are</u> expecting might attempt to perform actions that you do not anticipate.</p>
+</li>
+</ul>
+<p>If you want to prevent a remote user from performing actions on your host computer, use <a href="secure_mode.htm">Secure Mode</a>.</p>
+<p>For suggestions on how to guard against unexpected remote connections, see <a href="security_during_remote_debugging.htm">Security During Remote Debugging</a>.</p>
+<p>If you are not performing remote debugging, you should still beware of bad symbol files and extension DLLs. Do not load symbols or extensions that you distrust!</p>
+<h3><a id="local_kernel_debugging"></a><a id="LOCAL_KERNEL_DEBUGGING"></a>Local Kernel Debugging</h3>
+<p>Only users who have debug privileges can start a local kernel debugging session. If you are the administrator of a machine that has multiple user accounts, you should be aware that any user with these privileges can start a local kernel debugging session, effectively giving them control of all processes on the computer -- and therefore giving them access to all peripherals as well.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Security During Kernel-Mode Debugging%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,200 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="DEBUG_FILTER_XXX"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>DEBUG_FILTER_XXX</title>
+
+<meta name="MS-HAID" content="Structures_a6679c9f-e984-42f4-b033-26ad9256c373.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.debug_filter_xxx"></a>DEBUG_FILTER_XXX</h1>
+</div>
+<p>The DEBUG_FILTER_<i>XXX</i> constants are used for three different purposes: to specify individual specific event filters, to specify the break status of an event filter, and to specify the handling status of an exception filter.</p>
+<h3><a id="specific_event_filter"></a><a id="SPECIFIC_EVENT_FILTER"></a>Specific Event Filter</h3>
+<p>The following constants are used to specify specific event filters.</p>
+<table>
+<tr>
+<th>Value</th>
+<th>Event</th>
+</tr>
+<tr>
+<td>
+<p>DEBUG_FILTER_CREATE_THREAD</p>
+</td>
+<td>
+<p>Create Thread</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_FILTER_EXIT_THREAD</p>
+</td>
+<td>
+<p>Exit Thread</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_FILTER_CREATE_PROCESS</p>
+</td>
+<td>
+<p>Create Process</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_FILTER_EXIT_PROCESS</p>
+</td>
+<td>
+<p>Exit Process</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_FILTER_LOAD_MODULE</p>
+</td>
+<td>
+<p>Load Module</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_FILTER_UNLOAD_MODULE</p>
+</td>
+<td>
+<p>Unload Module</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_FILTER_SYSTEM_ERROR</p>
+</td>
+<td>
+<p>System Error</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_FILTER_INITIAL_BREAKPOINT</p>
+</td>
+<td>
+<p>Initial Break Point</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_FILTER_INITIAL_MODULE_LOAD</p>
+</td>
+<td>
+<p>Initial Module Load</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_FILTER_DEBUGGEE_OUTPUT</p>
+</td>
+<td>
+<p>Target Output</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="break_status"></a><a id="BREAK_STATUS"></a>Break Status</h3>
+<p>The following constants are used to specify the break status of an event filter.</p>
+<table>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>DEBUG_FILTER_BREAK</p>
+</td>
+<td>
+<p>The event will break into the debugger.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_FILTER_SECOND_CHANCE_BREAK</p>
+</td>
+<td>
+<p>The event will break into the debugger if it is a second chance exception.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_FILTER_OUTPUT</p>
+</td>
+<td>
+<p>A notification of the event will be printed to the debugger console.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_FILTER_IGNORE</p>
+</td>
+<td>
+<p>The event is ignored.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>Additionally, for an arbitrary exception filter, setting the break status to DEBUG_FILTER_REMOVE, removes the event filter.</p>
+<h3><a id="handling_status"></a><a id="HANDLING_STATUS"></a>Handling Status</h3>
+<p>The following constants are used to specify the handling status of an exception filter.</p>
+<table>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>DEBUG_FILTER_GO_HANDLED</p>
+</td>
+<td>
+<p>The <i>exception</i> has been handled.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_FILTER_GO_NOT_HANDLED</p>
+</td>
+<td>
+<p>The exception has not been handled.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>DbgEng.h (include DbgEng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20DEBUG_FILTER_XXX%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

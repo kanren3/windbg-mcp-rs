@@ -1,0 +1,165 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The ChangeSymbolState callback method is called by the engine when the symbol state changes."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IDebugEventCallbacksWide::ChangeSymbolState method</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.idebugeventcallbackswide_changesymbolstate"></a>IDebugEventCallbacksWide::ChangeSymbolState method</h1>
+</div>
+<p>The <b>ChangeSymbolState</b> callback method is called by the engine when the symbol state changes. </p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>HRESULT ChangeSymbolState(
+  [in] ULONG   Flags,
+  [in] ULONG64 Argument
+);</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Parameters</h2>
+<dl>
+<dt><i>Flags</i> [in]</dt>
+<dd>
+<p>Specifies a bit-set indicating the nature of the change to the symbol state.  The following bit flags might be set.</p>
+<table>
+<tr>
+<th>Value</th>
+<th>Description </th>
+</tr>
+<tr>
+<td>
+<p>DEBUG_CSS_LOADS</p>
+</td>
+<td>
+<p>The engine has loaded some module symbols.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_CSS_UNLOADS</p>
+</td>
+<td>
+<p>The engine has unloaded some module symbols.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_CSS_SCOPE</p>
+</td>
+<td>
+<p>The current symbol scope has changed.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_CSS_PATHS</p>
+</td>
+<td>
+<p>The executable image, source , or symbol search paths have changed.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_CSS_SYMBOL_OPTIONS</p>
+</td>
+<td>
+<p>The symbol options have changed.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_CSS_TYPE_OPTIONS</p>
+</td>
+<td>
+<p>The type options have changed.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+</dd>
+<dt><i>Argument</i> [in]</dt>
+<dd>
+<p>Provides additional information about the change to the symbol state.   If more than one bit flag is set in the <i>Flags</i> parameter, the <i>Argument</i> parameter is not used.  Otherwise, the value of <i>Argument</i> depends on the value of <i>Flags</i>:</p>
+<p></p>
+<dl>
+<dt><a id="DEBUG_CSS_LOADS"></a><a id="debug_css_loads"></a>DEBUG_CSS_LOADS</dt>
+<dd>
+<p>The value of <i>Argument</i> is the base location (in the target's memory address space) of the module image that the engine loaded symbols for.</p>
+</dd>
+<dt><a id="DEBUG_CSS_UNLOADS"></a><a id="debug_css_unloads"></a>DEBUG_CSS_UNLOADS</dt>
+<dd>
+<p>The value of <i>Argument</i> is the base location (in the target's memory address space) of the module image that the engine unloaded symbols for.  If the engine unloaded symbols for more than one image, the value of <i>Argument</i> is zero.</p>
+</dd>
+<dt><a id="DEBUG_CSS_SCOPE"></a><a id="debug_css_scope"></a>DEBUG_CSS_SCOPE</dt>
+<dd>
+<p>The value of <i>Argument</i> is zero.</p>
+</dd>
+<dt><a id="DEBUG_CSS_PATHS"></a><a id="debug_css_paths"></a>DEBUG_CSS_PATHS</dt>
+<dd>
+<p>The value of <i>Argument</i> is zero.</p>
+</dd>
+<dt><a id="DEBUG_CSS_SYMBOL_OPTIONS"></a><a id="debug_css_symbol_options"></a>DEBUG_CSS_SYMBOL_OPTIONS</dt>
+<dd>
+<p>The value of <i>Argument</i> is the symbol options.</p>
+</dd>
+<dt><a id="DEBUG_CSS_TYPE_OPTIONS"></a><a id="debug_css_type_options"></a>DEBUG_CSS_TYPE_OPTIONS</dt>
+<dd>
+<p>The value of <i>Argument</i> is zero.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h2>Return value</h2>
+<p>The return value is ignored by the engine unless it indicates a remote procedure call error; in this case the client, with which this <b>IDebugEventCallbacksWide</b> object is registered, is disabled.</p>
+<h2>Remarks</h2>
+<p>This method is only called by the engine if the DEBUG_EVENT_CHANGE_SYMBOL_STATE flag is set in the mask returned by <a href="idebugeventcallbackswide_getinterestmask.htm"><b>IDebugEventCallbacksWide::GetInterestMask</b></a>.</p>
+<p>For more information about handling events, see <a href="monitoring_events.htm">Monitoring Events</a>. </p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Target platform</p>
+</th>
+<td width="70%">
+<dl>
+<dt></dt>
+</dl>
+</td>
+</tr>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Dbgeng.h (include Dbgeng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IDebugEventCallbacksWide::ChangeSymbolState method%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

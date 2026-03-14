@@ -1,0 +1,88 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The lsp command controls how many source lines are displayed while you step through or execute code or use the ls and lsa commands."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>lsp (Set Number of Source Lines)</title>
+
+<meta name="MS-HAID" content="r17_cmds_I_86deac77-5237-4e81-819d-feff36ea45e4.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.lsp__set_number_of_source_lines_"></a>lsp (Set Number of Source Lines)</h1>
+</div>
+<p>The <b>lsp</b> command controls how many source lines are displayed while you step through or execute code or use the <a href="ls__lsa__list_source_lines_.htm"><b>ls and lsa commands</b></a>.</p>
+<pre class="syntax"><b>lsp</b> [<b>-a</b>] LeadingLines TrailingLines 
+<b>lsp</b> [<b>-a</b>] TotalLines 
+<b>lsp</b> [<b>-a</b>] 
+</pre>
+<h2><a id="ddk_cmd_set_number_of_source_lines_dbg"></a><a id="DDK_CMD_SET_NUMBER_OF_SOURCE_LINES_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______-a______"></a><a id="_______-A______"></a>       <b>-a</b>      </dt>
+<dd>
+<p>Sets or displays the number of lines that <b>ls</b> and <b>lsa</b> show. If you omit <b>-a</b>, <b>lsp</b> sets or displays the number of lines that are shown while you step through and execute code.</p>
+</dd>
+<dt><a id="_______LeadingLines______"></a><a id="_______leadinglines______"></a><a id="_______LEADINGLINES______"></a>       <i>LeadingLines</i>      </dt>
+<dd>
+<p>Specifies the number of lines to show before the current line.</p>
+</dd>
+<dt><a id="_______TrailingLines______"></a><a id="_______trailinglines______"></a><a id="_______TRAILINGLINES______"></a>       <i>TrailingLines</i>      </dt>
+<dd>
+<p>Specifies the number of lines to show after the current line.</p>
+</dd>
+<dt><a id="_______TotalLines______"></a><a id="_______totallines______"></a><a id="_______TOTALLINES______"></a>       <i>TotalLines</i>      </dt>
+<dd>
+<p>Specifies the total number of lines to show. This number is divided evenly between leading and trailing lines. (If this number is odd, more trailing lines are displayed.)</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>When you use the <b>lsp</b> command together with no parameters, <b>lsp</b> displays the current leading line and trailing line values that you used while stepping. When you use this command together with only the <b>-a</b> parameter, <b>lsp</b> displays the values that you used while stepping and for the <a href="ls__lsa__list_source_lines_.htm"><b>ls and lsa commands</b></a>.</p>
+<p>When you step through a program or break in after program execution, the previous <b>lsp</b> command determines the number of leading and trailing lines that are displayed. When you use <b>lsa</b>, the previous <b>lsp -a</b> command determines the number of leading and trailing lines that are displayed. When you use <b>ls</b>, all lines appear as a single block, so the previous <b>lsp -a</b> command determines the total number of lines that are displayed.</p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about source debugging and related commands, see <a href="debugging_in_source_mode.htm">Debugging in Source Mode</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20lsp (Set Number of Source Lines)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

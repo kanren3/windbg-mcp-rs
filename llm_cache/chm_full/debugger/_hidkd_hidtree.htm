@@ -1,0 +1,45 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !hidkd.hidtree command displays a list of all device nodes that have a HID function driver along with their child nodes. The child nodes have a physical device object (PDO) that was created by the parent node's HID function driver."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!hidkd.hidtree</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._hidkd_hidtree"></a>!hidkd.hidtree</h1>
+</div>
+<p>The  <b>!hidkd.hidtree</b> command displays a list of all device nodes that have a HID function driver along with their child nodes. The child nodes have a physical device object (PDO) that was created by the parent node's HID function driver.</p>
+<pre class="syntax"><b>!hidkd.hidtree</b></pre>
+<p>This screen shot shows an example of the output of the  <b>!hidtree</b> command.</p><img src="images/hidkd01.png" alt="Output of the hidtree command"/><p>O</p>
+<p>In this example, there are two device nodes that have a HID function driver. A functional device object (FDO) represents the HID driver in those two nodes. The first FDO node has two child nodes, and the second FDO node has one child node. In the debugger output, the child nodes have the PDO heading.</p>
+<div class="alert"><b>Note</b>  This set of device nodes does not form a tree that has a single root node. The device nodes that have HID function drivers can be isolated from each other.</div>
+<div> </div>
+<p>When you are debugging a HID issue, the <b>!hidtree</b> is a good place to start, because the command displays several addresses that you can pass to other HID debugger commands. The output uses <a href="debugger_markup_language_commands.htm">Debugger Markup Language (DML)</a>  to provide links. The links execute commands that give detailed information related to an individual device node. For example, you could get information about an FDO by clicking one of the <a href="_hidkd_hidfdo.htm"><b>!hidfdo</b></a> links. As an alternative to clicking a link, you can enter a command. For example, to see detailed information about the first node in the preceding output, you could enter the command <b>!devnode 0xffffe00003b18d30</b>.</p>
+<div class="alert"><b>Note</b>  The DML feature is available in WinDbg, but not in Visual Studio or KD.</div>
+<div> </div>
+<p></p>
+<h2><a id="DLL"></a><a id="dll"></a>DLL</h2>
+<p>Hidkd.dll</p>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="hid_extensions.htm">HID Extensions</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!hidkd.hidtree%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

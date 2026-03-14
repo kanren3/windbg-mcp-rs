@@ -1,0 +1,40 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Kernel-Mode Extensions"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Kernel-Mode Extensions</title>
+
+<meta name="MS-HAID" content="r26_exts_kernel_A_06a50752-3f9b-452d-9408-d7acd36bed73.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.kernel_mode_extensions"></a>Kernel-Mode Extensions</h1>
+</div>
+<h2><a id="ddk_kernel_mode_extensions_dbg"></a><a id="DDK_KERNEL_MODE_EXTENSIONS_DBG"></a></h2>
+<p>This section of the reference describes extension commands that are primarily used during kernel-mode debugging.</p>
+<p>The debugger will automatically load the proper version of these extension commands. Unless you have manually loaded a different version, you do not have to keep track of the DLL versions being used. See <a href="using_debugger_extension_commands.htm">Using Debugger Extension Commands</a> for a description of the default module search order. See <a href="loading_debugger_extension_dlls.htm">Loading Debugger Extension DLLs</a> for an explanation of how to load extension modules.</p>
+<p>Each extension command reference page lists the DLLs that expose that command. Use the following rules to determine the proper directory from which to load this extension DLL:</p>
+<ul>
+<li>
+<p>If your target computer is running Windows XP or a later version of Windows, use winxp\Kdexts.dll. </p>
+</li>
+</ul>
+<p>In addition, kernel-mode extensions that are not specific to any single operating system can be found in winext\kext.dll.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Kernel-Mode Extensions%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

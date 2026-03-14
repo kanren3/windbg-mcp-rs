@@ -1,0 +1,113 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Analyzing a Capture Stall"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Analyzing a Capture Stall</title>
+
+<meta name="MS-HAID" content="t11~b_ks_927a7e2d-6806-414e-98c4-47bddb236169.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.analyzing_a_capture_stall"></a>Analyzing a Capture Stall</h1>
+</div>
+<p>The following is an artificially created scenario that simulates a capture stall. This is a particularly valuable scenario since similar situations frequently occur in stress testing. The scenario is as follows:</p>
+<p>The Windows recording component Sndrec32 is recording from the primary capture device, in this case a Creative SBLive wave device. For a period of time, it records normally; however, the graph stalls at 8.50 seconds because we have explicitly caused portcls not to complete capture IRPs for purposes of this test.</p>
+<p>The application shows running, but the stream position is not advancing. Position is halted at 8.50 seconds.</p>
+<p>Since the primary capture device on this machine is a PCI sound card, first use the <a href="_ks_pciaudio.htm"><b>!ks.pciaudio</b></a> command to try and determine a starting point. Use a flag value of 1 to request a display of all running streams:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; !pciaudio 1
+
+1 Audio FDOs found:
+ Functional Device 8121c030 [\Driver\emu10k]
+        Wave Cyclic Streams:
+            Pin 812567c0 RUN [emu10k1m!CMiniportWaveCyclicStreamSBLive ff9ec7f8] </pre>
+</td>
+</tr>
+</table></span></div>
+<p>In this case, there is only one PCI audio device and it is serviced by the Intel emu10k driver (\Driver\emu10k). This driver currently has a single running stream (0x812567C0). Now you can use <a href="_ks_graph.htm"><b>!ks.graph</b></a> to view the kernel graph. Set <i>Level</i> and <i>Flags</i> both to 7 to obtain maximum detail on the stall:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; !graph 812567c0 7 7
+Attempting a graph build on 812567c0...  Please be patient...
+Graph With Starting Point 812567c0:
+"emu10k" Filter ff9ebb98, Child Factories 5
+    Output Factory 0:
+        Pin 812567c0 (File 811c6630, -&gt; "splitter" 811df960) Irps(q/p) = 8, 0
+ Queued: 81255418 811df008 81252008 81255280 81250b30 ffa1fe70 81252e70 ffa01d98 </pre>
+</td>
+</tr>
+</table></span></div>
+<p>The above shows the details for factory 0. The emu10k output pin 0x812567C0 is connected to the splitter input pin 0x811DF960.  There are eight IRPs queued to emu10k's output pin. The output from <a href="_ks_graph.htm"><b>!ks.graph</b></a> continues as follows:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>"splitter" Filter ffb18890, Child Factories 2
+    Output Factory 0:
+        Pin 811df430 (File ffa55f90) Irps(q/p) = 10, 0
+ Queued: ffadd008 ffa73b00 ffa1e998 811de310 ffa54370 ffaaf008 811dee70 81250e70 811de580 811de8c0 </pre>
+</td>
+</tr>
+</table></span></div>
+<p>There are ten IRPs queued to splitter's output pin. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>    Input Factory 1:
+        Pin 811df960 (File 81187820, &lt;- "emu10k" 812567c0) Irps(q/p) = 0, 8
+            Pending: 81255418 811df008 81252008 81255280 81250b30 ffa1fe70 81252e70 ffa01d98 </pre>
+</td>
+</tr>
+</table></span></div>
+<p>Splitter's input pin has no queued IRPs; however, it is waiting for the eight from emu10k to enter the queue. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>Analyzing a Hung Graph From 812567c0:
+
+Suspect Filters (For a Hung Graph):
+ "emu10k" Filter ff9ebb98 or class "PortCls Wave Cyclic" is suspect.
+        Reasons For This Analysis:
+            - No critical pin has less than 8 queued Irps
+            - Downstream "splitter" pin 811df960 is starved
+        Irps to check:
+ 81255418 811df008 81252008 81255280 81250b30 ffa1fe70 81252e70 ffa01d98</pre>
+</td>
+</tr>
+</table></span></div>
+<p>From this information, the analyzer suggests that either emu10k or WaveCyclic may be at fault.  It also provides a list of the suspect IRPs;  these are the IRPs that are queued to emu10k's input pin.  If any of those IRPs were to complete, splitter would copy data and complete an IRP and the graph would progress. For some reason, emu10k is not completing those capture Irps.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Analyzing a Capture Stall%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

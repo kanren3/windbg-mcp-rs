@@ -1,0 +1,52 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Debug | Kernel Connection | Cycle Initial Break"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Debug | Kernel Connection | Cycle Initial Break</title>
+
+<meta name="MS-HAID" content="r37_gui_2_7cfed5e8-7783-42c7-b6e7-5bf28313bafd.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.debug___kernel_connection___cycle_initial_break"></a>Debug | Kernel Connection | Cycle Initial Break</h1>
+</div>
+<h2><a id="ddk_debug_kernel_connection_cycle_initial_break_dbg"></a><a id="DDK_DEBUG_KERNEL_CONNECTION_CYCLE_INITIAL_BREAK_DBG"></a></h2>
+<p>Point to <b>Kernel Conection</b> and then click <b>Cycle Initial Break</b> on the <b>Debug </b>menu to change the conditions on which the debugger automatically breaks into the target computer.</p>
+<p>This command is equivalent to pressing CTRL+ALT+K. (You can also press CTRL+K in KD.)</p>
+<p>This command causes the kernel debugger to cycle through the following three states:</p>
+<p></p>
+<dl>
+<dt><a id="No_break"></a><a id="no_break"></a><a id="NO_BREAK"></a><b>No break</b></dt>
+<dd>
+<p>The debugger does not break into the target computer unless you press <a href="debug___break.htm">CTRL+BREAK</a> or Debug | Break.</p>
+</dd>
+<dt><a id="Break_on_reboot"></a><a id="break_on_reboot"></a><a id="BREAK_ON_REBOOT"></a><b>Break on reboot</b></dt>
+<dd>
+<p>The debugger breaks into a restarted target computer after the kernel initializes. This command is equivalent to starting WinDbg with the -b <a href="windbg_command_line_options.htm"><b>command-line option</b></a>.</p>
+</dd>
+<dt><a id="Break_on_first_module_load"></a><a id="break_on_first_module_load"></a><a id="BREAK_ON_FIRST_MODULE_LOAD"></a><b>Break on first module load</b></dt>
+<dd>
+<p>The debugger breaks into a restarted target computer after the first kernel module is loaded. (This action causes the break to occur <u>earlier</u> than in the <b>Break on reboot</b> state.) This command is equivalent to starting WinDbg with the -d <a href="windbg_command_line_options.htm"><b>command-line option</b></a>.</p>
+</dd>
+</dl>
+<p>When you use the <b>Cycle Initial Break</b> command, the new break state is displayed.</p>
+<h3><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information about related commands and an explanation of how the restart process affects the debugger, see <a href="crashing_and_rebooting_the_target_computer.htm">Crashing and Rebooting the Target Computer</a>. </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Debug | Kernel Connection | Cycle Initial Break%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

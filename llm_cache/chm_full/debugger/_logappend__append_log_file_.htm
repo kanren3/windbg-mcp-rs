@@ -1,0 +1,78 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .logappend command appends a copy of the events and commands from the Debugger Command window to the specified log file."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.logappend (Append Log File)</title>
+
+<meta name="MS-HAID" content="r21_metacmds_L_050495d8-7b34-4e19-be5a-d1d87c6911fc.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._logappend__append_log_file_"></a>.logappend (Append Log File)</h1>
+</div>
+<p>The <b>.logappend</b> command appends a copy of the events and commands from the <a href="debugger_command_window.htm">Debugger Command window</a> to the specified log file.</p>
+<pre class="syntax"><b>.logappend </b>[<b>/u</b>]<b> </b>[<i>FileName</i>]</pre>
+<h2><a id="ddk_meta_append_log_file_dbg"></a><a id="DDK_META_APPEND_LOG_FILE_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="________u______"></a><a id="________U______"></a>       <b>/u</b>      </dt>
+<dd>
+<p>Writes the log file in Unicode format. If you omit this parameter, the debugger writes the log file in ASCII (ANSI) format.</p>
+<div class="alert"><b>Note</b>    When you are appending to an existing log file, you should use the <b>/u</b> parameter only if you created the log file by using the <b>/u</b> option. Otherwise, your log file will contain ASCII and Unicode characters, which might make it more difficult to read.</div>
+<div> </div>
+</dd>
+<dt><a id="_______FileName______"></a><a id="_______filename______"></a><a id="_______FILENAME______"></a>       <i>FileName</i>      </dt>
+<dd>
+<p>Specifies the name of the log file. You can specify a full path or only the file name. If the file name contains spaces, enclose <i>FileName</i> in quotation marks. If you do not specify the path, the debugger uses the current directory. If you omit <i>FileName</i>, the debugger names the file Dbgeng.log.  </p>
+<p></p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets</b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>If you already have a log file open when you run the <b>.logappend</b> command, the debugger closes the log file. If you specify the name of a file that already exists, the debugger appends new information to the file. If the file does not exist, the debugger creates it.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.logappend (Append Log File)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

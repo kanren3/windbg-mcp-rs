@@ -1,0 +1,80 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Accessing Memory by Virtual Address"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Accessing Memory by Virtual Address</title>
+
+<meta name="MS-HAID" content="r07_use_operation_e4064163-4306-40da-b49a-de284387007e.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.accessing_memory_by_virtual_address"></a>Accessing Memory by Virtual Address</h1>
+</div>
+<h2><a id="ddk_debugging_bios_code_dbg"></a><a id="DDK_DEBUGGING_BIOS_CODE_DBG"></a></h2>
+<p>To access  memory addresses or address ranges, you can use several commands. Visual Studio and WinDbg provide user interface elements (as well as commands) that you can use to view and edit memory. For more information, see <a href="viewing_memory__variables__and_registers_in_visual_studio.htm">Viewing and Editing Memory and Registers in Visual Studio</a> and <a href="memory_window.htm">Viewing and Editing Memory in WinDbg</a>.</p>
+<p>The following commands can read or write memory in a variety of formats. These formats include hexadecimal bytes, words (words, double words, and quad-words), integers (short, long, and quad integers and unsigned integers), floating-point numbers (10-byte, 16-byte, 32-byte, and 64-byte real numbers), and ASCII characters.</p>
+<ul>
+<li>
+<p>The <a href="d__da__db__dc__dd__dd__df__dp__dq__du__dw__dw__dyb__dyd__display_memor.htm"><b>d* (Display Memory)</b></a> command displays the contents of a specified memory address or range.</p>
+</li>
+<li>
+<p>The <a href="e__ea__eb__ed__ed__ef__ep__eq__eu__ew__eza__ezu__enter_values_.htm"><b>e* (Enter Values)</b></a> command writes a value to the specified memory address.</p>
+</li>
+</ul>
+<p>You can use the following commands to handle more specialized data types:</p>
+<ul>
+<li>
+<p>The <a href="dt__display_type_.htm"><b>dt (Display Type)</b></a> command finds a variety of data types and displays data structures that have been created by the application that is being debugged. This command is highly versatile and has many variations and options.</p>
+</li>
+<li>
+<p>The <a href="ds__ds__display_string_.htm"><b>ds, dS (Display String)</b></a> command displays a STRING, ANSI_STRING, or UNICODE_STRING data structure.</p>
+</li>
+<li>
+<p>The <a href="dl__display_linked_list_.htm"><b>dl (Display Linked List)</b></a> command traces and displays a linked list.</p>
+</li>
+<li>
+<p>The <a href="dds__dps__dqs__display_words_and_symbols_.htm"><b>d*s (Display Words and Symbols)</b></a> command finds double-words or quad-words that might contain symbol information and then displays the data and the symbol information.</p>
+</li>
+<li>
+<p>The <a href="_address.htm"><b>!address</b></a> extension command displays information about the properties of the memory that is located at a specific address.</p>
+</li>
+</ul>
+<p>You can use the following commands to manipulate memory ranges:</p>
+<ul>
+<li>
+<p>The <a href="m__move_memory_.htm"><b>m (Move Memory)</b></a> command moves the contents of one memory range to another.</p>
+</li>
+<li>
+<p>The <a href="f__fp__fill_memory_.htm"><b>f (Fill Memory)</b></a> command writes a pattern to a memory range, repeating it until the range is full.</p>
+</li>
+<li>
+<p>The <a href="c__compare_memory_.htm"><b>c (Compare Memory)</b></a> command compares the contents of two memory ranges.</p>
+</li>
+<li>
+<p>The <a href="s__search_memory_.htm"><b>s (Search Memory)</b></a> command searches for a specified pattern within a memory range or searches for any ASCII or Unicode characters that exist in a memory range.</p>
+</li>
+<li>
+<p>The <a href="_holdmem__hold_and_compare_memory_.htm"><b>.holdmem (Hold and Compare Memory)</b></a> command compares one memory range to another.</p>
+</li>
+</ul>
+<p>In most situations, these commands interpret their parameters in the current radix. Therefore, you should add <b>0x</b> before hexadecimal addresses if the current radix is not 16. However, the display output of these commands is typically in hexadecimal format, regardless of the current radix. (For more information about the output, see the individual command topics.) The <a href="memory_window.htm">Memory window</a> displays integers and real numbers in decimal format and displays other formats in hexadecimal format.</p>
+<p>To change the default radix, use the <a href="n__set_number_base_.htm"><b>n (Set Number Base)</b></a> command. To quickly convert numbers from one base to another, use the <a href="___evaluate_expression_.htm"><b>? (Evaluate Expression)</b></a> command or the <a href="_formats__show_number_formats_.htm"><b>.formats (Show Number Formats)</b></a> command.</p>
+<p>When you are performing user-mode debugging, the meaning of virtual addresses is determined by the current process. When you are performing kernel-mode debugging, the meaning of virtual addresses can be controlled by the debugger. For more information, see <a href="changing_contexts.htm#process_context">Process Context</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Accessing Memory by Virtual Address%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

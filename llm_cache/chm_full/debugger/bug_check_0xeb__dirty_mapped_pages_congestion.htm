@@ -1,0 +1,90 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The DIRTY_MAPPED_PAGES_CONGESTION bug check has a value of 0x000000EB. This indicates that no free pages are available to continue operations."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0xEB: DIRTY_MAPPED_PAGES_CONGESTION</title>
+
+<meta name="MS-HAID" content="t07_bugs_E0_ed1b5941-bda8-4449-a6f7-38cd1bf46a12.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0xeb__dirty_mapped_pages_congestion"></a>Bug Check 0xEB: DIRTY_MAPPED_PAGES_CONGESTION</h1>
+</div>
+<p>The DIRTY_MAPPED_PAGES_CONGESTION bug check has a value of 0x000000EB. This indicates that no free pages are available to continue operations. </p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2> DIRTY_MAPPED_PAGES_CONGESTION Parameters</h2>
+<p>The following parameters are displayed on the blue screen.</p>
+<table>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>1</p>
+</td>
+<td>
+<p>The total number of dirty pages </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>2</p>
+</td>
+<td>
+<p>The number of dirty pages destined for the page file </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>3</p>
+</td>
+<td>
+<p>Windows Server 2003 only:  The size of the nonpaged pool available at the time of the bug check (in pages)</p>
+<p>Windows Vista and later versions:  Reserved </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>4</p>
+</td>
+<td>
+<p>Windows Server 2003 only:  The number of transition pages that are currently stranded </p>
+<p>Windows Vista and later versions: The most recent modified write error status </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Cause</h2>
+<p>The file system driver stack has deadlocked and most of the modified pages are destined for the file system.  Because the file system is non-operational, the system has crashed because none of the modified pages can be reused without losing data.  Any file system or filter driver in the stack may be at fault. </p>
+<p>To see general memory statistics, use the <a href="_vm.htm"><b>!vm 3</b></a> extension.</p>
+<p>This bug check can occur for any of the following reasons: </p>
+<ul>
+<li>A driver has blocked, deadlocking the modified or mapped page writers. Examples of this include mutex deadlocks or accesses to paged out memory in file system drivers or filter drivers. This indicates a driver bug. <p>If Parameter 1 or Parameter 2 is large, this is a possibility. Use <a href="_vm.htm"><b>!vm 3</b></a>.</p>
+</li>
+<li>A storage driver is not processing requests. Examples of this are stranded queues and unresponsive drives. This indicates a driver bug. <p>If Parameter 1 or Parameter 2 is large, this is a possibility. Use <a href="_process.htm"><b>!process 0 7</b></a>.</p>
+</li>
+<li>
+     Windows Server 2003 only:  Not enough pool is available for the storage stack to write out modified pages. This indicates a driver bug. <p>If Parameter 3 is small, this is a possibility. Use <a href="_vm.htm"><b>!vm</b></a> and <a href="_poolused.htm"><b>!poolused 2</b></a>.</p>
+</li>
+</ul>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

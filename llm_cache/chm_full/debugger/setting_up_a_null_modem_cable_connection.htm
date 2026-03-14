@@ -1,0 +1,224 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Debugging Tools for Windows supports kernel debugging over a null-modem cable."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Setting Up Kernel-Mode Debugging over a Serial Cable Manually</title>
+
+<meta name="MS-HAID" content="r02_setup_1_91a40de4-47cc-4431-8f89-9d955eff8f2c.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.setting_up_a_null_modem_cable_connection"></a>Setting Up Kernel-Mode Debugging over a Serial Cable Manually</h1>
+</div>
+<p>Debugging Tools for Windows supports kernel debugging over a null-modem cable. Null-modem cables are serial cables that have been configured to send data between two serial ports. They are available at most computer stores. Do not confuse null-modem cables with standard serial cables. Standard serial cables do not connect serial ports to each other. For information about how null-modem cables are wired, see <a href="#null_modem_cable_wiring">Null-Modem Cable Wiring</a>.</p>
+<p>This topic describes how to set up serial debugging manually. As an alternative to setting up serial debugging manually, you can do the setup using Microsoft Visual Studio. For more information, see <a href="setting_up_a_null-modem_cable_connection_in_visual_studio.htm">Setting Up Kernel-Mode Debugging over a Serial Cable in Visual Studio</a>.</p>
+<p>The computer that runs the debugger is called the <i>host computer</i>, and the computer being debugged is called the <i>target computer</i>. </p>
+<h2><a id="Setting_Up_the_Target_Computer"></a><a id="setting_up_the_target_computer"></a><a id="SETTING_UP_THE_TARGET_COMPUTER"></a>Setting Up the Target Computer</h2>
+<ol>
+<li>
+<p>On the target computer, open a Command Prompt window as Administrator, and enter the following commands, where <i>n</i> is the number of the COM port  used for debugging on the target computer, and <i>rate</i> is the baud rate used for debugging:</p>
+<dl>
+<dd><b>bcdedit /debug on</b></dd>
+<dd><b>bcdedit /dbgsettings serial debugport:</b><i>n</i><b> baudrate:</b><i>rate</i><p></p>
+<div class="alert"><b>Note</b>  The baud rate must be the same on the host computer and target computer. The recommended rate is 115200.</div>
+<div> </div>
+</dd>
+</dl>
+</li>
+<li>Reboot the target computer.</li>
+</ol>
+<h2><a id="Starting_the_Debugging_Session"></a><a id="starting_the_debugging_session"></a><a id="STARTING_THE_DEBUGGING_SESSION"></a>Starting the Debugging Session</h2>
+<p>Connect the null-modem cable to the COM ports that you have chosen for debugging on the host and target computers.</p>
+<h3><a id="Using_WinDbg"></a><a id="using_windbg"></a><a id="USING_WINDBG"></a>Using WinDbg</h3>
+<p>On the host computer, open WinDbg. On the <b>File</b> menu, choose <b>Kernel Debug</b>. In the Kernel Debugging dialog box, open the <b>COM</b> tab. In the <b>Baud rate</b> box, enter the rate you have chosen for debugging. In the <b>Port</b> box, enter COM<i>n</i> where <i>n</i> is the COM port number you have chosen for debugging on the host computer. Click <b>OK</b>.</p>
+<p>You can also start a session with WinDbg by entering the following command in a Command Prompt window; <i>n</i> is the number of the COM port used for debugging on the host computer, and <i>rate</i> is the baud rate used for debugging:</p>
+<p><b>windbg -k com:port=COM</b><i>n</i><b>,baud=</b><i>rate</i></p>
+<p></p>
+<h3><a id="Using_KD"></a><a id="using_kd"></a><a id="USING_KD"></a>Using KD</h3>
+<p>On the host computer, open a Command Prompt window, and enter the following command, where <i>n</i> is the number of the COM port used for debugging on the host computer, and <i>rate</i> is the baud rate used for debugging:</p>
+<p><b>kd -k com:port=COM</b><i>n</i><b>,baud=</b><i>rate</i></p>
+<p></p>
+<h2><a id="Using_Environment_Variables"></a><a id="using_environment_variables"></a><a id="USING_ENVIRONMENT_VARIABLES"></a>Using Environment Variables</h2>
+<p>On the host computer, you can use environment variables to specify the COM port and the baud rate. Then you do not have to specify the port and baud rate each time you start a debugging session. To use environment variables to specify the COM port and baud rate, open a Command Prompt window and enter the following commands, where <i>n</i> is the number of the COM port used for debugging on the host computer, and <i>rate</i> is the baud rate used for debugging:</p>
+<ul>
+<li><b>set  _NT_DEBUG_PORT=COM</b><i>n
+</i></li>
+<li><b>set _NT_DEBUG_BAUD_RATE=</b><i>rate</i></li>
+</ul>
+<p>To start a debugging session, open a Command Prompt window, and enter one of the following commands:</p>
+<ul>
+<li><b>kd</b></li>
+<li><b>windbg</b></li>
+</ul>
+<h2><a id="Troubleshooting_Tips_for_Debugging_over_a_Serial_Cable"></a><a id="troubleshooting_tips_for_debugging_over_a_serial_cable"></a><a id="TROUBLESHOOTING_TIPS_FOR_DEBUGGING_OVER_A_SERIAL_CABLE"></a>Troubleshooting Tips for Debugging over a Serial Cable</h2>
+<h3><a id="Specify_correct_COM_port_on_both_host_and_target"></a><a id="specify_correct_com_port_on_both_host_and_target"></a><a id="SPECIFY_CORRECT_COM_PORT_ON_BOTH_HOST_AND_TARGET"></a>Specify correct COM port on both host and target</h3>
+<p>Determine the numbers of the COM ports you are using for debugging on the host and target computers. For example, suppose you have your null-modem cable connected to COM1 on the host computer and COM2 on the target computer.</p>
+<p>On the target computer, open a Command Prompt window as Administrator, and enter <b>bcdedit /dbgsettings</b>. If you are using COM2 on the target computer, the output of <b>bcdedit</b> should show <code>debugport 2</code>.</p>
+<p>On the host computer, specify the correct COM port when you start the debugger or when you set environment variables. If you are using COM1 on the host computer, use one of the following methods to specify the COM port.</p>
+<ul>
+<li>In WinDbg, in the Kernel Debugging dialog box, enter COM1 in the <b>Port</b> box.</li>
+<li><b>windbg -k com:port=COM1, ...</b></li>
+<li><b>kd -k com:port=COM1, ...</b></li>
+<li><b>set  _NT_DEBUG_PORT=COM1</b></li>
+</ul>
+<h3><a id="Baud_rate_must_be_the_same_on_host_and_target"></a><a id="baud_rate_must_be_the_same_on_host_and_target"></a><a id="BAUD_RATE_MUST_BE_THE_SAME_ON_HOST_AND_TARGET"></a>Baud rate must be the same on host and target</h3>
+<p>The baud rate used for debugging over a serial cable must be set to the same value on the host and target computers. For example, suppose you have chosen a baud rate of 115200.</p>
+<p> On the target computer, open a Command Prompt window as Administrator, and enter <b>bcdedit /dbgsettings</b>. The output of <b>bcdedit</b> should show <code>baudrate 115200</code>.</p>
+<p>On the host computer, specify the correct baud rate when you start the debugger or when you set environment variables. Use one of the following methods to specify a baud rate of 115200.</p>
+<ul>
+<li>In WinDbg, in the Kernel Debugging dialog box, enter 115200 in the <b>Baud rate</b> box.</li>
+<li><b>windbg -k ..., baud=115200</b></li>
+<li><b>kd -k ..., baud=115200</b></li>
+<li><b>set _NT_DEBUG_BAUD_RATE=115200</b></li>
+</ul>
+<h2><a id="null_modem_cable_wiring"></a><a id="NULL_MODEM_CABLE_WIRING"></a>Null Modem Cable Wiring</h2>
+<p>The following tables show how null-modem cables are wired.</p>
+<h3><a id="9-pin_connector"></a><a id="9-PIN_CONNECTOR"></a>9-pin connector</h3>
+<table>
+<tr>
+<th>Connector 1</th>
+<th>Connector 2</th>
+<th>Signals</th>
+</tr>
+<tr>
+<td>2</td>
+<td>3</td>
+<td>Tx - Rx</td>
+</tr>
+<tr>
+<td>3</td>
+<td>2</td>
+<td>Rx - Tx</td>
+</tr>
+<tr>
+<td>7</td>
+<td>8</td>
+<td>RTS - CTS</td>
+</tr>
+<tr>
+<td>8</td>
+<td>7</td>
+<td>CTS - RTS</td>
+</tr>
+<tr>
+<td>4</td>
+<td>1+6</td>
+<td>DTR - (CD+DSR)</td>
+</tr>
+<tr>
+<td>1+6</td>
+<td>4</td>
+<td>(CD+DSR) - DTR</td>
+</tr>
+<tr>
+<td>5</td>
+<td>5</td>
+<td>Signal ground</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="25-pin_connector"></a><a id="25-PIN_CONNECTOR"></a>25-pin connector</h3>
+<table>
+<tr>
+<th>Connector 1</th>
+<th>Connector 2</th>
+<th>Signals</th>
+</tr>
+<tr>
+<td>2</td>
+<td>3</td>
+<td>Tx - Rx</td>
+</tr>
+<tr>
+<td>3</td>
+<td>2</td>
+<td>Rx - Tx</td>
+</tr>
+<tr>
+<td>4</td>
+<td>5</td>
+<td>RTS - CTS</td>
+</tr>
+<tr>
+<td>5</td>
+<td>4</td>
+<td>CTS - RTS</td>
+</tr>
+<tr>
+<td>6</td>
+<td>20</td>
+<td>DSR - DTR</td>
+</tr>
+<tr>
+<td>20</td>
+<td>6</td>
+<td>DTR - DSR</td>
+</tr>
+<tr>
+<td>7</td>
+<td>7</td>
+<td>Signal ground</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Signal_Abbreviations"></a><a id="signal_abbreviations"></a><a id="SIGNAL_ABBREVIATIONS"></a>Signal Abbreviations</h3>
+<table>
+<tr>
+<th>Abbreviation</th>
+<th>Signal</th>
+</tr>
+<tr>
+<td>Tx</td>
+<td>Transmit data</td>
+</tr>
+<tr>
+<td>Rx</td>
+<td>Receive data</td>
+</tr>
+<tr>
+<td>RTS</td>
+<td>Request to send</td>
+</tr>
+<tr>
+<td>CTS</td>
+<td>Clear to send</td>
+</tr>
+<tr>
+<td>DTR</td>
+<td>Data terminal ready</td>
+</tr>
+<tr>
+<td>DSR</td>
+<td>Data set ready</td>
+</tr>
+<tr>
+<td>CD</td>
+<td>Carrier detect</td>
+</tr>
+</table>
+<p> </p>
+<h2><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h2>
+<p>For complete documentation of the <b>bcdedit</b> command, see Boot Options for Driver Testing and Debugging
+ in the Windows Driver Kit (WDK) documentation.</p>
+<h2><a id="related_topics"></a>Related topics</h2>
+<dl>
+<dt><a href="setting_up_kernel-mode_debugging_in_windbg__cdb__or_ntsd.htm">Setting Up Kernel-Mode Debugging Manually</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Setting Up Kernel-Mode Debugging over a Serial Cable Manually%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

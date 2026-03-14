@@ -1,0 +1,111 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !idt extension displays the interrupt service routines (ISRs) for a specified interrupt dispatch table (IDT)."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!idt</title>
+
+<meta name="MS-HAID" content="r27_exts_kernel_E_d2462212-c130-4a5b-875b-8d1006f6b8d3.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._idt"></a>!idt</h1>
+</div>
+<p>The <b>!idt</b> extension displays the interrupt service routines (ISRs) for a specified interrupt dispatch table (IDT). </p>
+<pre class="syntax"><b>!idt </b><i>IDT</i> 
+<b>!idt </b>[<b>-a</b>] 
+<b>!idt -?</b> 
+</pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______IDT______"></a><a id="_______idt______"></a>       <i>IDT</i>      </dt>
+<dd>
+<p>Specifies the IDT to display.</p>
+</dd>
+<dt><a id="_______-a______"></a><a id="_______-A______"></a>       <b>-a</b>      </dt>
+<dd>
+<p>When <i>IDT</i> is not specified, the debugger displays the IDTs of all processors on the target computer in an abbreviated format. If <b>-a</b> is specified, the ISRs for each IDT are also displayed.</p>
+</dd>
+<dt><a id="_______-_______"></a>       <b>-?</b>      </dt>
+<dd>
+<p>Displays  help for this extension in the Debugger Command window. </p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Windows 2000
+         </b></p>
+</td>
+<td>
+<p>Unavailable</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Kdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>This extension command can only be used with an x64-based or x86-based target computer.</p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For information about ISRs and IDTs, see the Windows Driver Kit (WDK) documentation and <i>Microsoft Windows Internals</i> by Mark Russinovich and David Solomon. (These resources may not be available in some languages 
+
+and countries.)
+</p>
+<p>For more information about how to display the interrupt vector tables on an Itanium target computer, see <a href="_ivt.htm"><b>!ivt</b></a>.</p>
+<h2>Remarks</h2>
+<p>Here is an example of the output from this extension:</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !idt
+
+Dumping IDT:
+
+37:806ba78c hal!PicSpuriousService37
+3d:806bbc90 hal!HalpApcInterrupt
+41:806bbb04 hal!HalpDispatchInterrupt
+50:806ba864 hal!HalpApicRebootService
+63:8641376c VIDEOPRT!pVideoPortInterrupt (KINTERRUPT 86413730)
+73:862aa044 portcls!CInterruptSyncServiceRoutine (KINTERRUPT 862aa008)
+82:86594314 atapi!IdePortInterrupt (KINTERRUPT 865942d8)
+83:86591bec SCSIPORT!ScsiPortInterrupt (KINTERRUPT 86591bb0)
+92:862b53dc serial!SerialCIsrSw (KINTERRUPT 862b53a0)
+93:86435844 i8042prt!I8042KeyboardInterruptService (KINTERRUPT 86435808)
+a3:863b366c i8042prt!I8042MouseInterruptService (KINTERRUPT 863b3630)
+a4:8636bbec USBPORT!USBPORT_InterruptService (KINTERRUPT 8636bbb0)
+b1:86585bec ACPI!ACPIInterruptServiceRoutine (KINTERRUPT 86585bb0)
+b2:863c0524 serial!SerialCIsrSw (KINTERRUPT 863c04e8)
+b4:86391a54 NDIS!ndisMIsr (KINTERRUPT 86391a18)
+         USBPORT!USBPORT_InterruptService (KINTERRUPT 863ae890)
+c1:806ba9d0 hal!HalpBroadcastCallService
+d1:806b9dd4 hal!HalpClockInterrupt
+e1:806baf30 hal!HalpIpiHandler
+e3:806baca8 hal!HalpLocalApicErrorService
+fd:806bb460 hal!HalpProfileInterrupt</code></pre>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!idt%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

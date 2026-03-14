@@ -1,0 +1,77 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !prcb extension displays the processor control block (PRCB)."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!prcb</title>
+
+<meta name="MS-HAID" content="r28_exts_kernel_N_f9f15b7e-52f0-4819-9e12-2ff93bb9a38a.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._prcb"></a>!prcb</h1>
+</div>
+<p>The <b>!prcb</b> extension displays the processor control block (PRCB).</p>
+<pre class="syntax"><b>!prcb </b>[<i>Processor</i>]</pre>
+<h2><a id="ddk__prcb_dbg"></a><a id="DDK__PRCB_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Processor______"></a><a id="_______processor______"></a><a id="_______PROCESSOR______"></a>       <i>Processor</i>      </dt>
+<dd>
+<p>Specifies the processor to retrieve the PRCB information from. If <i>Processor</i> is omitted, processor zero will be used. 
+		</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000</b></p>
+</td>
+<td>
+<p>Unavailable </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later</b></p>
+</td>
+<td>
+<p>
+          Kdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For information about the PCR and the PRCB, see <i>Microsoft Windows Internals</i>, by Mark Russinovich and David Solomon. (These resources may not be available in some languages 
+
+and countries.)</p>
+<h2>Remarks</h2>
+<p>The PRCB is an extension of the processor control region (PCR). To display the PCR, use the <a href="_pcr.htm"><b>!pcr</b></a> extension.  </p>
+<p>Here is an example:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !prcb
+PRCB for Processor 0 at e0000000818ba000:
+Threads--  Current e0000000818bbe10 Next 0000000000000000 Idle e0000000818bbe10
+Number 0 SetMember 00000001
+Interrupt Count -- 0000b81f
+Times -- Dpc    00000028 Interrupt 000003ff 
+         Kernel 00005ef4 User      00000385 </code></pre>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!prcb%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

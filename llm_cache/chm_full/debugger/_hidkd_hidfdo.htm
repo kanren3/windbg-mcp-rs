@@ -1,0 +1,68 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !hidkd.hidfdo command displays HID information associated with a functional device object (FDO)."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!hidkd.hidfdo</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._hidkd_hidfdo"></a>!hidkd.hidfdo</h1>
+</div>
+<p>The  <b>!hidkd.hidfdo</b> command displays HID information associated with a functional device object (FDO).</p>
+<pre class="syntax"><b>!hidkd.hidfdo </b><i>fdo</i></pre>
+<h2><a id="ddk__devobj_dbg"></a><a id="DDK__DEVOBJ_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______fdo______"></a><a id="_______FDO______"></a>       <i>fdo</i>      </dt>
+<dd>
+<p>Address of an FDO. To get the addresses of FDOs that are associated with HID drivers, use the <a href="_hidkd_hidtree.htm"><b>!usbhid.hidtree</b></a> command.</p>
+</dd>
+</dl>
+<h2><a id="DLL"></a><a id="dll"></a>DLL</h2>
+<p>Hidkd.dll</p>
+<h2>Examples</h2>
+<p>Here is an example of the output of the <b>!hidfdo</b> command. The example first calls <a href="_hidkd_hidtree.htm"><b>!hidtree</b></a> to get the address of an FDO.</p>
+<pre class="syntax" xml:space="preserve"><code>
+0: kd&gt; !hidkd.hidtree
+HID Device Tree
+...
+FDO  VendorID:0x045E(Microsoft Corporation) ProductID:0x0745 Version:0x0634
+!hidfdo 0xffffe00004f466e0
+...
+0: kd&gt; !hidfdo 0xffffe00004f466e0
+FDO 0xffffe00004f466e0  (!devobj/!devstack)
+==============================================
+  Name              : \Device\_HID00000002
+  Vendor ID         : 0x045E(Microsoft Corporation)
+  Product ID        : 0x0745
+  Version Number    : 0x0634
+  Is Present?       : Y
+  Report Descriptor : !hidrd 0xffffe00004281a80 0x127
+  Per-FDO IFR Log   : !rcdrlogdump HIDCLASS -a 0xFFFFE0000594D000
+
+  Position in HID tree
+
+  dt FDO_EXTENSION 0xffffe00004f46850</code></pre>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="hid_extensions.htm">HID Extensions</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!hidkd.hidfdo%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

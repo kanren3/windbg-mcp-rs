@@ -1,0 +1,46 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Using a Repeater"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Using a Repeater</title>
+
+<meta name="MS-HAID" content="r08_use_remote_3bf94625-3bb0-4a4c-9d1e-2df655c5ad70.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.using_a_repeater"></a>Using a Repeater</h1>
+</div>
+<h2><a id="ddk_using_a_repeater_dbg"></a><a id="DDK_USING_A_REPEATER_DBG"></a></h2>
+<p>A repeater connection obeys very simple rules:</p>
+<ul>
+<li>
+<p>Any communication that the server and client intend for each other passes through the repeater without alteration.</p>
+</li>
+<li>
+<p>Any action that the server performs with respect to the transport connection affects the repeater (and only indirectly affects the client).</p>
+</li>
+<li>
+<p>Any action that the client performs with respect to the transport connection affects the repeater (and only indirectly affects the server).</p>
+</li>
+</ul>
+<p>This means that any debugging commands, debugger output, control keys, and file access will take place exactly as if the client and server were directly connected. The repeater will be invisible to all these commands.</p>
+<p>Actions that terminate the connection itself will affect the repeater. For example, if you issue a <a href="q__qq__quit_.htm"><b>qq (Quit)</b></a> command from the client, the server will shut down and will send a shutdown signal to the transport. This will cause the repeater to exit (unless it was started with the <b>-p</b> option). As another example, the <a href="_clients__list_debugging_clients_.htm"><b>.clients (List Debugging Clients)</b></a> command will list the client's computer name, but it will show the connection protocol used to connect the server with the repeater.</p>
+<p>If the server is shut down, the repeater will automatically exit (unless it was started with the <b>-p</b> option). When the repeater shuts down, this will cause a debugging client to exit as well, although a smart client will not. If for some reason you need to terminate the repeater directly, you can use Task Manager or the kill.exe tool.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Using a Repeater%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

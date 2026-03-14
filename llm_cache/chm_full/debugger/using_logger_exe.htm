@@ -1,0 +1,82 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Using Logger.exe"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Using Logger.exe</title>
+
+<meta name="MS-HAID" content="Logger+LogViewer_e0279523-d005-4851-9507-ea4b7aec13b9.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.using_logger_exe"></a>Using Logger.exe</h1>
+</div>
+<h2><a id="ddk_using_logger_exe_dtoolq"></a><a id="DDK_USING_LOGGER_EXE_DTOOLQ"></a></h2>
+<p>One way to activate Logger is to run the stand-alone Logger.exe program. This is essentially a very small debugger that can only take a single target. To run it, include the name of the target application on the command line:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>logger Target </pre>
+</td>
+</tr>
+</table></span></div>
+<p>When this is activated, it will load the specified application, and insert code into the target application that will jump off to a routine that loads and initializes Logexts.dll in the target application process. This is referred to as "injecting Logger into the target application."</p>
+<p>The Logger.exe utility and the Logexts.dll module are the two components of this Logger vehicle. They communicate through a shared section of memory that includes the output file handles, current category mask, and a pointer to the log output buffer.</p>
+<p>A window entitled <b>Logger (debugger)</b> will appear. This window will display the progress of Logger.</p>
+<h3><a id="change_settings_dialog_box"></a><a id="CHANGE_SETTINGS_DIALOG_BOX"></a>Change Settings Dialog Box</h3>
+<p>After the initialization finishes and the initial display is complete, the <b>Change Settings</b> dialog box will appear. This allows you to configure the Logger settings. The various settings are described here:</p>
+<p></p>
+<dl>
+<dt><a id="API_Settings"></a><a id="api_settings"></a><a id="API_SETTINGS"></a><b>API Settings</b></dt>
+<dd>
+<p>This list displays the available API categories. The highlighted categories will be logged; the non-highlighted categories will not. The first time you run Logger, all categories will be highlighted. However, on subsequent runs, Logger will keep track of which categories are selected for a given target application.</p>
+<p>If a category is disabled, the hooks for all APIs in that category will be removed so that there is no longer any performance overhead. COM hooks are not removed because they cannot be re-enabled at will.</p>
+<p>Enabling only certain categories can be useful when you are only interested in a particular type of interaction that the program is having with Windows -- for example, file operations. This reduces the log file size and also reduces the effect that Logger has on the execution speed of the process.</p>
+</dd>
+<dt><a id="Logging"></a><a id="logging"></a><a id="LOGGING"></a><b>Logging</b></dt>
+<dd>
+<p>This section contains <b>Enable</b> and <b>Disable</b> radio buttons. Disabling logging will cause all API hooks to be removed in an effort to allow the program to run freely. COM hooks are not removed because they cannot be re-enabled at will.</p>
+</dd>
+<dt><a id="Inclusion___Exclusion_List"></a><a id="inclusion___exclusion_list"></a><a id="INCLUSION___EXCLUSION_LIST"></a><b>Inclusion / Exclusion List</b></dt>
+<dd>
+<p>This section controls the module inclusion/exclusion list. It is often desirable to log only those function calls that are made from a certain module or set of modules. To facilitate that, Logger allows you to specify a module inclusion list or, alternatively, a module exclusion list. For instance, you would use an inclusion list if you only wanted to log calls from one or two module. If you wanted to log calls made from all modules except a short list of modules, you would use an exclusion list. The modules Logexts.dll and Kernel32.dll are always excluded, since Logger is not permitted to log itself.</p>
+</dd>
+<dt><a id="Flush_the_Buffer"></a><a id="flush_the_buffer"></a><a id="FLUSH_THE_BUFFER"></a><b>Flush the Buffer</b></dt>
+<dd>
+<p>This button will flush the current output buffer. As a performance consideration, log output is flushed to disk only when the output buffer is full. By default, the buffer is 2144 bytes.</p>
+<p>Since the buffer memory is managed by the target application, the automatic writing of the buffer to the log files on the disk will not occur if there is an access violation or some other non-recoverable error in the target application. In such cases, you should try to activate the target application's window and hit F12 to get this dialog box back, and then press <b>Flush the Buffer</b>. If this is not done, the most recently-logged functions might not appear in the log files.</p>
+</dd>
+<dt><a id="Go"></a><a id="go"></a><a id="GO"></a><b>Go</b></dt>
+<dd>
+<p>This causes the target application to begin executing.</p>
+</dd>
+</dl>
+<h3><a id="running_the_target_application"></a><a id="RUNNING_THE_TARGET_APPLICATION"></a>Running the Target Application</h3>
+<p>Once you have chosen the settings, click <b>Go</b>. The dialog box will close and the target application will begin to run.</p>
+<p>If you make the target application's window active and press F12, it will break into Logger. This will cause the target application to freeze and the <b>Change Settings</b> dialog box to reappear. You can alter the settings if you wish, and then press <b>Go</b> to continue execution.</p>
+<p>You can let the target application run for as long as you wish. If it terminates normally or due to an error, the logging will stop and cannot be restarted.</p>
+<p>When you wish to exit, select <b>File | Exit</b> and click <b>Yes</b>. If the target application is still running, it will be terminated.</p>
+<h3><a id="limitations_of_logger_exe"></a><a id="LIMITATIONS_OF_LOGGER_EXE"></a>Limitations of Logger.exe</h3>
+<p>When you are running Logger through the Logger.exe tool, it will create only one output file -- an .lgv file. No text file will be written. However, a .txt file of size zero will be created; this could overwrite a text log written by the debugger previously.  </p>
+<p>The output file will always be placed in LogExts subdirectory of the desktop; this location cannot be changed.</p>
+<p>These limitations will not apply if you are running Logger through the debugger and Logexts.dll.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Using Logger.exe%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

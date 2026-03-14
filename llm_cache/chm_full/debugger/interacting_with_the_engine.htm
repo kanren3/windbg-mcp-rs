@@ -1,0 +1,48 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Interacting with the Engine"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Interacting with the Engine</title>
+
+<meta name="MS-HAID" content="Engine_DG_334264c4-55a9-4659-91de-3cfec6f6e5a3.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.interacting_with_the_engine"></a>Interacting with the Engine</h1>
+</div>
+<h3><a id="commands_and_expressions"></a><a id="COMMANDS_AND_EXPRESSIONS"></a>Commands and Expressions</h3>
+<p>The debugger engine API provides methods to execute commands and evaluate expressions, like those typed into WinDbg's <a href="the_debugger_command_window.htm">Debugger Command Window</a>.  To execute a debugger command, use <a href="execute.htm"><b>Execute</b></a>. Or, to execute all of the commands in a file, use <a href="executecommandfile.htm"><b>ExecuteCommandFile</b></a>.</p>
+<p>The method <a href="evaluate.htm"><b>Evaluate</b></a> will evaluate expressions using the C++ or MASM syntax.  The syntax used by the debugger engine to evaluate expressions--such as in the <b>Evaluate</b> method--is given by <a href="getexpressionsyntax.htm"><b>GetExpressionSyntax</b></a> and can be changed using <a href="setexpressionsyntaxbyname.htm"><b>SetExpressionSyntaxByName</b></a> and <a href="setexpressionsyntax.htm"><b>SetExpressionSyntax</b></a>.  The number of different syntaxes that are recognized by the debugger is returned by <a href="getnumberexpressionsyntaxes.htm"><b>GetNumberExpressionSyntaxes</b></a>, and their names are returned by <a href="getexpressionsyntaxnames.htm"><b>GetExpressionSyntaxNames</b></a>.</p>
+<p>The type of value that is returned by <b>Evaluate</b> is determined by the symbols and constants used in the string that was evaluated.  The value is contained in a <a href="debug_value.htm"><b>DEBUG_VALUE</b></a> structure and can be cast to different types using <a href="coercevalue.htm"><b>CoerceValue</b></a> and <a href="coercevalues.htm"><b>CoerceValues</b></a>.</p>
+<h3><a id="aliases"></a><a id="ALIASES"></a>Aliases</h3>
+<p><i>Aliases</i> are character strings that are automatically replaced with other character strings when used in debugger commands and expressions.  For an overview of aliases, see <a href="using_aliases.htm">Using Aliases</a>.  The debugger engine has several classes of aliases.</p>
+<p>The <i>fixed-name aliases</i> are indexed by number and have the names <b>$u0</b>, <b>$u1</b>, ..., <b>$u9</b>.  The values of these aliases can be set using the <a href="settextmacro.htm"><b>SetTextMacro</b></a> method and can be retrieved using <a href="gettextmacro.htm"><b>GetTextMacro</b></a> method.</p>
+<p>The <i>automatic aliases</i> and <i>user-named aliases</i> can have any name.  The automatic aliases are defined by the debugger engine and the user-named aliases are defined by the user through debugger commands or the debugger engine API.  To define or remove a user-named alias, use the <a href="settextreplacement.htm"><b>SetTextReplacement</b></a> method.  The <a href="gettextreplacement.htm"><b>GetTextReplacement</b></a> method returns the name and value of an automatic alias or a user-named alias.  All the user-named aliases can be removed using the <a href="removetextreplacements.htm"><b>RemoveTextReplacements</b></a> method.  The <a href="getnumbertextreplacements.htm"><b>GetNumberTextReplacements</b></a> method will return the number of user-name and automatic aliases; this can be used with <b>GetTextReplacement</b> to iterate over all these aliases. The <a href="outputtextreplacements.htm"><b>OutputTextReplacements</b></a> method will print a list of all the user-named aliases, including their names and values.</p>
+<div class="alert"><b>Note</b>   if a user-named alias is given the same name as an automatic alias, the user-named alias will hide the automatic alias so that when retrieving the value of the alias by name, the user-named alias will be used.</div>
+<div> </div>
+<h3><a id="engine_options"></a><a id="ENGINE_OPTIONS"></a>Engine Options</h3>
+<p>The engine has a number of options that control its behavior.  These options are listed in <a href="debug_engopt_xxx.htm"><b>DEBUG_ENGOPT_XXX</b></a>.  They are returned by <a href="getengineoptions.htm"><b>GetEngineOptions</b></a> and can be set using <a href="setengineoptions.htm"><b>SetEngineOptions</b></a>.  Individual options can be set using <a href="addengineoptions.htm"><b>AddEngineOptions</b></a> and unset using <a href="removeengineoptions.htm"><b>RemoveEngineOptions</b></a>.</p>
+<h3><a id="interrupts"></a><a id="INTERRUPTS"></a>Interrupts</h3>
+<p>An interrupt is a way to force a break into the debugger or to tell the engine to stop processing the current command, for example, by pressing Ctrl+Break in WinDbg.</p>
+<p>To request a break into the debugger, or to interrupt the debugger's current task, use <a href="setinterrupt.htm"><b>SetInterrupt</b></a>.  To check if there has been an interrupt, use <a href="getinterrupt.htm"><b>GetInterrupt</b></a>.</p>
+<div class="alert"><b>Note</b>    When undertaking a long task from a debugger extension, it is recommended that the extension check <b>GetInterrupt</b> regularly and stop processing if an interrupt has been requested.</div>
+<div> </div>
+<p>When requesting a break into the debugger, the engine might time out if it takes too long for the target to carry out the break-in.  This can occur if the target is in a non-responsive state or if the break-in request is blocked or delayed by resource contention.  The length of time the engine will wait is returned by <a href="getinterrupttimeout.htm"><b>GetInterruptTimeout</b></a> and can be set using <a href="setinterrupttimeout.htm"><b>SetInterruptTimeout</b></a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Interacting with the Engine%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,80 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !driveinfo extension displays volume information for the specified drive."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!driveinfo</title>
+
+<meta name="MS-HAID" content="r26_exts_kernel_A_384708d9-0e4c-4eda-b62c-d9850f66a744.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._driveinfo"></a>!driveinfo</h1>
+</div>
+<p>The <b>!driveinfo</b> extension displays volume information for the specified drive.</p>
+<pre class="syntax"><b>!driveinfo </b><i>Drive</i>[<b>:</b>] 
+<b>!driveinfo</b> </pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Drive______"></a><a id="_______drive______"></a><a id="_______DRIVE______"></a>       <i>Drive</i>      </dt>
+<dd>
+<p>Specifies a drive. The colon at the end of the drive name is optional.</p>
+</dd>
+<dt><a id="_______No_parameters______"></a><a id="_______no_parameters______"></a><a id="_______NO_PARAMETERS______"></a>       <i>No parameters</i>      </dt>
+<dd>
+<p>Displays some brief Help text for this extension in the Debugger Command window.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000</b></p>
+</td>
+<td>
+<p>Unavailable</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Windows XP and later</b></p>
+</td>
+<td>
+<p>
+          Kdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>The drive information displayed by this extension is obtained by querying the underlying file system; for example:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; !driveinfo c:
+Drive c:, DriveObject e136cd88
+    Directory Object: e1001408  Name: C:
+        Target String is '\Device\HarddiskVolume1'
+        Drive Letter Index is 3 (C:)
+ Volume DevObj: 82254a68
+    Vpb: 822549e0  DeviceObject: 82270718
+ FileSystem: \FileSystem\Ntfs
+    Volume has 0x229236 (free) / 0x2ee1a7 (total) clusters of size 0x1000
+    8850.21 of 12001.7 MB free</code></pre>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!driveinfo%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

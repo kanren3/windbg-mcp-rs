@@ -1,0 +1,79 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .dml_flow command displays a disassembled code block and provides links that you can use to construct a code flow graph."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.dml_flow (Unasemmble with Links)</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._dml_flow"></a>.dml_flow (Unasemmble with Links)</h1>
+</div>
+<p>The <b>.dml_flow</b> command displays a disassembled code block and provides links that you can use to construct a code flow graph.</p>
+<pre class="syntax"><b>.dml_flow </b><i>Start</i><b> </b><i>Target</i>
+</pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="Start"></a><a id="start"></a><a id="START"></a><i>Start</i></dt>
+<dd>
+<p>The address of an instruction from which the target address can be reached.</p>
+</dd>
+<dt><a id="Target"></a><a id="target"></a><a id="TARGET"></a><i>Target</i></dt>
+<dd>
+<p>An address in the code block to be disassembled.</p>
+</dd>
+</dl>
+<h2>Remarks</h2>
+<p>Consider the call stack shown in the following example.</p>
+<div class="code"><span codelanguage="cmd"><table>
+<tr>
+<th>cmd</th>
+</tr>
+<tr>
+<td>
+<pre>0: kd&gt; kL
+Child-SP          RetAddr           Call Site
+fffff880`0335c688 fffff800`01b41f1c nt!IofCallDriver
+fffff880`0335c690 fffff800`01b3b6b4 nt!IoSynchronousPageWrite+0x1cc
+fffff880`0335c700 fffff800`01b4195e nt!MiFlushSectionInternal+0x9b8
+...</pre>
+</td>
+</tr>
+</table></span></div>
+<p> Suppose you want to examine all code paths from the start of <b>nt!MiFlushSectionInternal</b> to the code block that contains the return adress, <code>fffff800`01b3b6b4</code>. The following command gets you started.</p>
+<div class="code"><span codelanguage="cmd"><table>
+<tr>
+<th>cmd</th>
+</tr>
+<tr>
+<td>
+<pre>.browse .dml_flow nt!MiFlushSectionInternal fffff800`01b3b6b4</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The output, in the <a href="command_browser_window.htm">Command Browser window</a>, is shown in the following image.</p><img src="images/DmlFlow01.png" alt="Screen shot of .dml_flow output"/><p>The preceding image shows the code block that contains the target address, <code>fffff800`01b3b6b4</code>. There is only one link (<code>fffff800`01b3b681</code>) at the top of the image. That indicates that there is only one code block from which the current code block can be reached. If you click the link, you will see that code block disassembled, and you will see links that enable you to further explore the code flow graph.</p>
+<p>The two links at the bottom of the preceding image indicate that there are two code blocks that can be reached from the current code block.</p>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="debugger_markup_language_commands.htm">Debugger Markup Language Commands</a></dt>
+<dt><a href="uf__unassemble_function_.htm"><b>uf (Unasemmble Function)</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.dml_flow (Unasemmble with Links)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

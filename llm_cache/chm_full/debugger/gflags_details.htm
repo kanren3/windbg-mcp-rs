@@ -1,0 +1,176 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="GFlags Details"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>GFlags Details</title>
+
+<meta name="MS-HAID" content="GFlags_efb81e97-b5df-48b2-b164-8d4ac68c90a5.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.gflags_details"></a>GFlags Details</h1>
+</div>
+<h2><a id="ddk_gflags_details_dtools"></a><a id="DDK_GFLAGS_DETAILS_DTOOLS"></a></h2>
+<p>GFlags enables and disables system features by editing the Windows registry and internal settings. This section explains the operation of GFlags in detail and includes tips for using GFlags most efficiently.</p>
+<h3><a id="general_information"></a><a id="GENERAL_INFORMATION"></a>General Information </h3>
+<ul>
+<li>
+<p>To display the GFlags dialog box, at the command line, type <b>gflags</b> (with no parameters).</p>
+</li>
+<li>
+<p>On Windows Server 2003 and earlier versions of Windows, to set flags in the registry or in kernel mode, you must be a member of the Administrators group on the computer. However, users with at least Guest account access can launch a program from the GFlags dialog box. </p>
+</li>
+<li>
+<p>GFlags system-level registry settings appear in the registry immediately, but do not take effect until you restart the system. </p>
+</li>
+<li>
+<p>GFlags image file registry settings appear in the registry immediately, but do not take effect until you restart the process. </p>
+</li>
+<li>
+<p>The debugger and launch features in the GFlags dialog box are program specific. You can only set them on one image file at a time. </p>
+</li>
+</ul>
+<h3><a id="flag_details"></a><a id="FLAG_DETAILS"></a>Flag Details</h3>
+<ul>
+<li>
+<p>To clear all flags, set the flag to -FFFFFFFF. Setting the flag to 0 adds 0 to the current flag value. </p>
+</li>
+<li>
+<p>When you set the flags for an image file to FFFFFFFF (0xFFFFFFFF), Windows clears all flags for the image file and deletes the <b>GlobalFlag</b> entry in the image file registry key. The image file registry key is retained. </p>
+</li>
+</ul>
+<h3><a id="dialog_box_and_command_line"></a><a id="DIALOG_BOX_AND_COMMAND_LINE"></a>Dialog Box and Command Line</h3>
+<p>You can run GFlags by using its handy dialog box or from the command line. Most features are available in both forms, with the following exceptions.</p>
+<p><b>Dialog box only</b></p>
+<ul>
+<li>
+<p>Launch. Start a program using the specified flags. </p>
+</li>
+<li>
+<p>Run the program in a debugger. </p>
+</li>
+<li>
+<p><a href="special_pool.htm">Special Pool</a> on systems prior to Windows Vista. On Windows Vista and later versions of Windows, you can configure the Special Pool feature at the command line or in the Gflags dialog box.</p>
+</li>
+</ul>
+<p><b>Command line only</b></p>
+<ul>
+<li>
+<p>Set the size of the user mode stack trace database (/tracedb). </p>
+</li>
+<li>
+<p>Set page heap verification options. </p>
+</li>
+</ul>
+<h3><a id="registry_information"></a><a id="REGISTRY_INFORMATION"></a>Registry Information</h3>
+<p>GFlags settings that are saved between sessions are stored in the registry. You can use the registry APIs, Regedit, or reg.exe to query or change these values. The following table lists the types of settings and where they are stored in the registry.</p>
+<table>
+<tr>
+<td>
+<p>Systemwide settings ("Registry")</p>
+</td>
+<td>
+<p>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\<b>GlobalFlag</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Program-specific settings ("Image file") for all users of the computer.</p>
+</td>
+<td>
+<p>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\<i>ImageFileName</i>\<b>GlobalFlag</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Silent exit settings for a specific program ("Silent Process Exit") for all users of the computer.</p>
+</td>
+<td>
+<p>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SilentProcessExit\<i>ImageFileName</i></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Page heap options for an image file for all users of the computer</p>
+</td>
+<td>
+<p>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\<i>ImageFileName</i>\<b>PageHeapFlags</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>User mode stack trace database size (<b>tracedb</b>)</p>
+</td>
+<td>
+<p>HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\<i>ImageFileName</i>\<b>StackTraceDatabaseSizeInMb</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Create user mode stack trace database (ust, 0x1000) for an image file</p>
+</td>
+<td>
+<p>Windows adds the image file name to the value of the USTEnabled registry entry (HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\<b>USTEnabled</b>).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Load image using large pages if possible</p>
+</td>
+<td>
+<p>HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\<i>ImageFileName</i>\<b>UseLargePages</b>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Special Pool</p>
+<p>(Kernel Special Pool Tag)</p>
+</td>
+<td>
+<p>HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\<b>PoolTag</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Verify Start / Verify End</p>
+</td>
+<td>
+<p>HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\PoolTagOverruns. The <b>Verify Start</b> option sets the value to 0. The <b>Verify End</b> option sets the value to 1.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Debugger for an image file</p>
+</td>
+<td>
+<p>HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\<i>ImageFileName</i>\<b>Debugger</b></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Object Reference Tracing</p>
+</td>
+<td>
+<p>HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Kernel\<b>ObTraceProcessName</b>, <b>ObTracePermanent</b> and <b>ObTracePoolTags</b></p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20GFlags Details%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

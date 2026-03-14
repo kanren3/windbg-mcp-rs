@@ -1,0 +1,37 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Debugging a User-Mode Failure with KD"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Debugging a User-Mode Failure with KD</title>
+
+<meta name="MS-HAID" content="t13_advanced_788b2f28-564c-47bc-8def-269724da84ed.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.debugging_a_user_mode_failure_with_kd"></a>Debugging a User-Mode Failure with KD</h1>
+</div>
+<h2><a id="ddk_debugging_user_mode_failures_with_kd_dbg"></a><a id="DDK_DEBUGGING_USER_MODE_FAILURES_WITH_KD_DBG"></a></h2>
+<p>To properly debug user-mode failures, you need CDB or WinDbg. However, sometimes a user-mode exception will break into KD because no user-mode debugger is present. There are also times when it is helpful to monitor what specific user-mode processes are doing while debugging a kernel-mode problem.</p>
+<p>By default, the kernel debugger attempts to load the first user-mode symbol that matches the address specified (for a <b>k</b>, <b>u</b>, or <b>ln</b> command).</p>
+<p>Unfortunately, user-mode symbols are often not specified in the symbol path or the first symbol is not the correct one. If the symbols are not there, either copy them into the symbol path or use a <a href="_sympath__set_symbol_path_.htm"><b>.sympath (Set Symbol Path)</b></a> command to point to the full symbol tree, and then use the <a href="_reload__reload_module_.htm"><b>.reload (Reload Module)</b></a> command. If the wrong symbol is loaded, you can explicitly load a symbol by doing a <b>.reload &lt;binary.ext&gt;</b>.</p>
+<p>Most of the Windows DLLs are rebased so they load at different addresses, but there are exceptions. Video adapters are the most common exceptions. There are dozens of video adapters that all load at the same base address, so KD will almost always find ati.dll (the first video symbol, alphabetically). For video, there is also a .sys file loaded that can be identified by using a <a href="_drivers.htm"><b>!drivers</b></a> extension. With that information, you can issue a <b>.reload</b> to get the correct video DLLs. There are also times when the debugger gets confused and reloading specific symbols will help give the correct stack. Unassemble the functions to see if the symbols look correct.</p>
+<p>Similar to the video DLLs, almost all executables load at the same address, so KD will report access. If you see a stack trace in access, do a <a href="_process.htm"><b>!process</b></a> and then a <b>.reload</b> of the executable name given. If the executable does not have symbols in the symbol path, copy them there and do the <b>.reload</b> again.</p>
+<p>Sometimes KD or WinDbg has trouble loading the correct user-mode symbols even when the full symbol tree is in the symbol path. In this case, ntdll.dll and kernel32.dll are two of the most common symbols that would be required. In the case of debugging CSRSS from KD, winsrv.dll and csrsrv.dll are also common DLLs to load.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Debugging a User-Mode Failure with KD%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

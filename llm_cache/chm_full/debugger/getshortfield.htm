@@ -1,0 +1,157 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The GetShortField function reads the value of a member in a structure if its size is less than or equal to 8 bytes, or initializes a structure so it can be read later."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>GetShortField function</title>
+
+<meta name="MS-HAID" content="WdbgExts_Ref_ef67af78-e72f-440c-9ef3-d84b8cca12dc.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.getshortfield"></a>GetShortField function</h1>
+</div>
+<p>The <b>GetShortField</b> function reads the value of a member in a structure if its size is less than or equal to 8 bytes, or initializes a structure so it can be read later.  This function is not intended to be used directly; <a href="inittyperead.htm"><b>InitTypeRead</b></a> or <a href="inittypereadphysical.htm"><b>InitTypeReadPhysical</b></a> and <a href="readfield.htm"><b>ReadField</b></a> should be used instead.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>__inline ULONG64 GetShortField(
+  _In_ ULONG64 TypeAddress,
+  _In_ LPCSTR  Name,
+  _In_ USHORT  StoreAddress
+);</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Parameters</h2>
+<dl>
+<dt><i>TypeAddress</i> [in]</dt>
+<dd>
+<p>The meaning of this parameter depends on the value of <i>StoreAddress</i>.</p>
+<p></p>
+<dl>
+<dt><a id="If_StoreAddress_is_non-zero_"></a><a id="if_storeaddress_is_non-zero_"></a><a id="IF_STOREADDRESS_IS_NON-ZERO_"></a>If <i>StoreAddress</i> is non-zero:</dt>
+<dd>
+<p>Specifies the address of the structure in the target's memory.  This address is used for subsequent calls when <i>StoreAddress</i> is zero. </p>
+</dd>
+<dt><a id="If_StoreAddress_is_zero_"></a><a id="if_storeaddress_is_zero_"></a><a id="IF_STOREADDRESS_IS_ZERO_"></a>If <i>StoreAddress</i> is zero:</dt>
+<dd>
+<p><i>TypeAddress</i> is ignored.  The value of <i>TypeAddress</i> from the last call when <i>StoreAddress</i> was non-zero is used to specify the address of the structure in the target's memory. </p>
+</dd>
+</dl>
+</dd>
+<dt><i>Name</i> [in]</dt>
+<dd>
+<p>The meaning of this parameter depends on the value of <i>StoreAddress</i>.</p>
+<p></p>
+<dl>
+<dt><a id="If_StoreAddress_is_non-zero_"></a><a id="if_storeaddress_is_non-zero_"></a><a id="IF_STOREADDRESS_IS_NON-ZERO_"></a>If <i>StoreAddress</i> is non-zero:</dt>
+<dd>
+<p>Specifies the name of the type of the structure at <i>TypeAddress</i>.</p>
+</dd>
+<dt><a id="If_StoreAddress_is_zero_"></a><a id="if_storeaddress_is_zero_"></a><a id="IF_STOREADDRESS_IS_ZERO_"></a>If <i>StoreAddress</i> is zero:</dt>
+<dd>
+<p>Specifies the name of the member in the structure to read.  The address and type of the structure are remembered from a previous call to this function with <i>StoreAddress</i> not equal to zero.  Submembers can be specified by using a period-separated path, for example, "myfield.mysubfield". </p>
+</dd>
+</dl>
+</dd>
+<dt><i>StoreAddress</i> [in]</dt>
+<dd>
+<p>Specifies the mode of this function.</p>
+<p></p>
+<dl>
+<dt><a id="If_StoreAddress_is_non-zero_"></a><a id="if_storeaddress_is_non-zero_"></a><a id="IF_STOREADDRESS_IS_NON-ZERO_"></a>If <i>StoreAddress</i> is non-zero:</dt>
+<dd>
+<p>Causes this function to initialize a structure for reading its members.  The address and type name for the structure is remembered.</p>
+<p>If the bit value 0x2 is set in <i>StoreAddress</i>, the address <i>TypeAddress</i> is considered a physical address; otherwise, it is considered a virtual address. </p>
+</dd>
+<dt><a id="If_StoreAddress_is_zero_"></a><a id="if_storeaddress_is_zero_"></a><a id="IF_STOREADDRESS_IS_ZERO_"></a>If <i>StoreAddress</i> is zero:</dt>
+<dd>
+<p>Causes this function to read a member from a previously initialized structure. </p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h2>Return value</h2>
+<table>
+<tr>
+<th>Return code</th>
+<th>Description</th>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>If <i>StoreAddress</i> is non-zero:</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>If the function succeeds, it returns the value zero.  If the function fails because the caller passed a zero value as <i>TypeAddress</i>, it returns the value MEMORY_READ_ERROR (defined in Wdbgexts.h).  If the function fails for any other reason, it returns an <a href="ig_dump_symbol_info_error_codes.htm"><b>IG_DUMP_SYMBOL_INFO error code</b></a>.</p>
+</td>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>If <i>StoreAddress</i> is zero:</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>If the function succeeds, it returns the value of the specified field in the previously initialized structure.  The structure is the one initialized in a previous call to <b>GetShortField</b>.  The field is the one specified by the <i>Name</i> parameter of the current call to <b>GetShortField</b>. The return value is cast to ULONG64.  If the function fails, it returns the value zero. </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>When <b>GetShortField</b> is called with a nonzero <i>StoreAddress</i> value, it initializes the structure located at the address specified by <i>TypeAddress</i>. Only one structure can be initialized at a time. If <b>GetShortField</b> is called more than once with a nonzero <i>StoreAddress</i> value, only the structure specified in the most recent call is initialized. When <b>GetShortField</b> is called with <i>StoreAddress</i> equal to zero, it accesses the most recently initialized structure, reads in that structure the field specified by <i>Name</i>, and returns the value of that field. </p>
+<p>This function does not need to be called directly.  The macros <a href="inittyperead.htm"><b>InitTypeRead</b></a> and <a href="inittypereadphysical.htm"><b>InitTypeReadPhysical</b></a> call this function with <i>StoreAddress</i> non-zero to prepare a structure for reading its members.  The macro <a href="readfield.htm"><b>ReadField</b></a> calls this function with <i>StoreAddress</i> (and <i>TypeAddress</i>) equal to zero, to read members from the structure.</p>
+<div class="alert"><b>Note</b>    because this function stores the <i>TypeAddress</i> and <i>Name</i> by using static local variables, and because this function is defined in WdbgExts.h, the C pre-processor will create a new instance of this function for each DLL, and <i>TypeAddress</i> and <i>Name</i> will only be available within a single source file.  In other words, the structure must be initialized in the same source file from which the members are read.</div>
+<div> </div>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Target platform</p>
+</th>
+<td width="70%">
+<dl>
+<dt></dt>
+</dl>
+</td>
+</tr>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Wdbgexts.h (include Wdbgexts.h, Wdbgexts.h, or Dbgeng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="inittyperead.htm"><b>InitTypeRead</b></a></dt>
+<dt><a href="inittypereadphysical.htm"><b>InitTypeReadPhysical</b></a></dt>
+<dt><a href="readfield.htm"><b>ReadField</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20GetShortField function%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

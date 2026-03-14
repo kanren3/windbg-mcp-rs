@@ -1,0 +1,85 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !zombies extension displays all dead (&amp;#0034;zombie&amp;#0034;) processes or threads."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!zombies</title>
+
+<meta name="MS-HAID" content="r30_exts_kernel_U_c9ebd654-86ce-4cff-8709-5f55f820f9f4.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._zombies"></a>!zombies</h1>
+</div>
+<p>The <b>!zombies</b> extension displays all dead ("zombie") processes or threads. </p>
+<pre class="syntax"><b>!zombies </b>[<i>Flags</i> [<i>RestartAddress</i>]]</pre>
+<h2><a id="ddk__zombies_dbg"></a><a id="DDK__ZOMBIES_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Flags______"></a><a id="_______flags______"></a><a id="_______FLAGS______"></a>       <i>Flags</i>      </dt>
+<dd>
+<p>Specifies what will be displayed. Possible values include:</p>
+<p></p>
+<dl>
+<dt><a id="1"></a>1</dt>
+<dd>
+<p>Displays all zombie processes. (This is the default.)</p>
+</dd>
+<dt><a id="2"></a>2</dt>
+<dd>
+<p>Displays all zombie threads.</p>
+</dd>
+</dl>
+</dd>
+<dt><a id="_______RestartAddress______"></a><a id="_______restartaddress______"></a><a id="_______RESTARTADDRESS______"></a>       <i>RestartAddress</i>      </dt>
+<dd>
+<p>Specifies the hexadecimal address at which to begin the search. This is useful if the previous search was terminated prematurely. The default is zero.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000</b></p>
+</td>
+<td>
+<p>
+          Kdextx86.dll</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later</b></p>
+</td>
+<td>
+<p>Unavailable </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>To see a list of all processes and threads, use the <a href="_process.htm"><b>!process</b></a> extension.</p>
+<p>For general information about processes and threads in kernel mode, see <a href="changing_contexts.htm">Changing Contexts</a>. For more information about analyzing processes and threads, see <i>Microsoft Windows Internals</i>, by Mark Russinovich and David Solomon. (This book may not be available in some languages and 
+
+countries.)
+</p>
+<h2>Remarks</h2>
+<p>Zombie processes are dead processes that have not yet been removed from the process list. Zombie threads are analogous.</p>
+<p>This extension is available only for Windows 2000. </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!zombies%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

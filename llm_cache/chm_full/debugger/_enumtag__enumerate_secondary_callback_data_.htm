@@ -1,0 +1,96 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .enumtag command displays secondary bug check callback data and all data tags."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.enumtag (Enumerate Secondary Callback Data)</title>
+
+<meta name="MS-HAID" content="r20_metacmds_E_5ae2073d-37a2-4ec1-a50c-fd914cffe35d.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._enumtag__enumerate_secondary_callback_data_"></a>.enumtag (Enumerate Secondary Callback Data)</h1>
+</div>
+<p>The <b>.enumtag</b> command displays secondary bug check callback data and all data tags.</p>
+<pre class="syntax">
+    <b>.enumtag</b> 
+</pre>
+<h2><a id="ddk_meta_enumerate_secondary_callback_data_dbg"></a><a id="DDK_META_ENUMERATE_SECONDARY_CALLBACK_DATA_DBG"></a></h2>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>Kernel mode only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets</b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Platforms</b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information and for other ways of displaying this data, see <a href="reading_bug_check_callback_data.htm">Reading Bug Check Callback Data</a>.</p>
+<h2>Remarks</h2>
+<p>You can use the <b>.enumtag</b> command only after a bug check has occurred or when you are debugging a kernel-mode crash dump file.</p>
+<p>For each block of secondary bug check callback data, the <b>.enumtag</b> command displays the tag (in GUID format) and the data (as bytes and ASCII characters). </p>
+<p>Consider the following example.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; .enumtag
+{87654321-0000-0000-0000000000000000} - 0xf9c bytes
+  4D 5A 90 00 03 00 00 00 04 00 00 00 FF FF 00 00  MZ..............
+  B8 00 00 00 00 00 00 00 40 00 00 00 00 00 00 00  ........@.......
+  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  ....
+  00 00 00 00 00 00 00 00 00 00 00 00              ............
+
+{12345678-0000-0000-0000000000000000} - 0x298 bytes
+  F4 BF 7B 80 F4 BF 7B 80 00 00 00 00 00 00 00 00  ..{...{.........
+ 4B 44 42 47 98 02 00 00 00 20 4D 80 00 00 00 00  KDBG..... M.....
+  54 A5 57 80 00 00 00 00 A0 50 5A 80 00 00 00 00  T.W......PZ.....
+ 40 01 08 00 18 00 00 00 BC 7D 50 80 00 00 00 00  @........}P.....
+  ....
+  00 00 00 00 00 00 00 00                          ........</pre>
+</td>
+</tr>
+</table></span></div>
+<p>In this example, the first batch of secondary data has a GUID ){87654321-0000-0000-0000000000000000}) as its tag, and the second batch of data has a GUID ({12345678-0000-0000-0000000000000000}) as its tag. However, the data is not in a useful format.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.enumtag (Enumerate Secondary Callback Data)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

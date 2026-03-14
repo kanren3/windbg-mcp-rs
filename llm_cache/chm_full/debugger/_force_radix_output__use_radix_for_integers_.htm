@@ -1,0 +1,86 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .force_radix_output command specifies whether integers are displayed in decimal format or in the default radix."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.force_radix_output (Use Radix for Integers)</title>
+
+<meta name="MS-HAID" content="r20_metacmds_E_6ecddf08-b9b9-4677-bc82-328776009dbd.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._force_radix_output__use_radix_for_integers_"></a>.force_radix_output (Use Radix for Integers)</h1>
+</div>
+<p>The <b>.force_radix_output</b> command specifies whether integers are displayed in decimal format or in the default radix.</p>
+<pre class="syntax">
+    <b>.force_radix_output 0</b> 
+<b>.force_radix_output 1</b> 
+</pre>
+<p></p>
+<h2><a id="ddk_meta_use_radix_for_integers_dbg"></a><a id="DDK_META_USE_RADIX_FOR_INTEGERS_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______0______"></a>       <b>0</b>      </dt>
+<dd>
+<p>Displays all integers (except for long integers) in decimal format. This is the default behavior for the Debugger.</p>
+</dd>
+<dt><a id="_______1______"></a>       <b>1</b>      </dt>
+<dd>
+<p>Displays all integers (except for long integers) in the default radix.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Modes</b></p>
+</td>
+<td>
+<p>User mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets
+         </b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Platforms
+         </b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>The <b>.force_radix_output</b> command affects the output of the <a href="dt__display_type_.htm"><b>dt (Display Type)</b></a> command.</p>
+<p>In WinDbg, <b>.force_radix_output</b> also affects the display in the <a href="locals_window.htm">Locals window</a> and the Watch window. You can select or clear <b>Always display numbers in default radix</b> on the shortcut menu of the Locals or Watch window to have the same effect as <b>.force_radix_output</b>. These windows are automatically updated after you issue this command.</p>
+<p>The <b>.force_radix_output</b> command affects only the display of standard integers. To specify whether long integers are displayed in decimal format or the default radix, use the <a href="_enable_long_status__enable_long_integer_display_.htm"><b>.enable_long_status (Enable Long Integer Display)</b></a> command.</p>
+<p>To change the default radix, use the <a href="n__set_number_base_.htm"><b>n (Set Number Base)</b></a> command.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.force_radix_output (Use Radix for Integers)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

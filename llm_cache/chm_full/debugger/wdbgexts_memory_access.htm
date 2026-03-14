@@ -1,0 +1,64 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="WdbgExts Memory Access"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>WdbgExts Memory Access</title>
+
+<meta name="MS-HAID" content="WdbgExts_DG_74a148ab-2b3c-46e5-a8c8-99c3c48fcd69.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.wdbgexts_memory_access"></a>WdbgExts Memory Access</h1>
+</div>
+<p>This topic provides a brief overview of how memory access can be performed using the WdbgExts API.  For an overview of memory access in the <a href="introduction.htm#debugger_engine">debugger engine</a>, see <a href="memory.htm">Memory</a> in the <a href="debugger_engine_overview.htm">Debugger Engine Overview</a> section of this documentation.</p>
+<h3><a id="virtual_memory"></a><a id="VIRTUAL_MEMORY"></a>Virtual Memory</h3>
+<p>The virtual memory of the target can be read by using the <a href="readmemory.htm"><b>ReadMemory</b></a> function and written using the <a href="writememory.htm"><b>WriteMemory</b></a> function.  Pointers in the target's memory can be read and written by using the <a href="readpointer.htm"><b>ReadPointer</b></a>, <a href="readptr.htm"><b>ReadPtr</b></a>, and <a href="writepointer.htm"><b>WritePointer</b></a> functions.</p>
+<p>To search the virtual memory for a pattern of bytes, use the <a href="searchmemory.htm"><b>SearchMemory</b></a> function.</p>
+<p>The <a href="translatevirtualtophysical.htm"><b>TranslateVirtualToPhysical</b></a> function can be used to convert a virtual memory address to a physical memory address.</p>
+<p>The <a href="disasm.htm"><b>Disasm</b></a> function can be used to disassemble a single assembly instruction on the target.</p>
+<p>To check the low 4 GB of memory for corruption when using physical address extension (PAE), use the <a href="ioctl.htm"><b>Ioctl</b></a> operation <a href="ig_lowmem_check.htm"><b>IG_LOWMEM_CHECK</b></a>.</p>
+<h3><a id="physical_memory"></a><a id="PHYSICAL_MEMORY"></a>Physical Memory</h3>
+<p>Physical memory can only be directly accessed in kernel-mode debugging.</p>
+<p>The physical memory on the target can be read by using the <a href="readphysical.htm"><b>ReadPhysical</b></a> and <a href="readphysicalwithflags.htm"><b>ReadPhysicalWithFlags</b></a> functions, and written by using the <a href="writephysical.htm"><b>WritePhysical</b></a> and <a href="writephysicalwithflags.htm"><b>WritePhysicalWithFlags</b></a> functions.</p>
+<p>To search the physical memory for pointers to locations within a specified range, use the <a href="ioctl.htm"><b>Ioctl</b></a> operation <a href="ig_pointer_search_physical.htm"><b>IG_POINTER_SEARCH_PHYSICAL</b></a>.</p>
+<h3><a id="other_data_spaces"></a><a id="OTHER_DATA_SPACES"></a>Other Data Spaces</h3>
+<p>In kernel-mode debugging, it is possible to read and write data to a variety of data spaces in addition to the main memory.  The following data spaces can be accessed:</p>
+<p></p>
+<dl>
+<dt><a id="Control-Space_Memory"></a><a id="control-space_memory"></a><a id="CONTROL-SPACE_MEMORY"></a>Control-Space Memory</dt>
+<dd>
+<p>The functions <a href="readcontrolspace.htm"><b>ReadControlSpace</b></a>, <a href="readcontrolspace64.htm"><b>ReadControlSpace64</b></a>, <a href="readtypedcontrolspace32.htm"><b>ReadTypedControlSpace32</b></a>, and <a href="readtypedcontrolspace64.htm"><b>ReadTypedControlSpace64</b></a> will read data from a control space. The <a href="writecontrolspace.htm"><b>WriteControlSpace</b></a> function will write data to a control space.</p>
+</dd>
+<dt><a id="I_O_Memory"></a><a id="i_o_memory"></a><a id="I_O_MEMORY"></a>I/O Memory</dt>
+<dd>
+<p>The functions <a href="readiospace.htm"><b>ReadIoSpace</b></a>, <a href="readiospace64.htm"><b>ReadIoSpace64</b></a>, <b>ReadIoSpace64</b>, <a href="readiospaceex64.htm"><b>ReadIoSpaceEx64</b></a> will read data from system I/O memory and bus I/O memory. The functions <a href="writeiospace.htm"><b>WriteIoSpace</b></a>, <a href="writeiospace64.htm"><b>WriteIoSpace64</b></a>, <a href="writeiospaceex.htm"><b>WriteIoSpaceEx</b></a>, and <a href="writeiospaceex64.htm"><b>WriteIoSpaceEx64</b></a> will write data to system I/O memory and bus I/O memory.</p>
+</dd>
+<dt><a id="Model_Specific_Register__MSR_"></a><a id="model_specific_register__msr_"></a><a id="MODEL_SPECIFIC_REGISTER__MSR_"></a>Model Specific Register (MSR)</dt>
+<dd>
+<p>The functions <a href="readmsr.htm"><b>ReadMsr</b></a> and <a href="writemsr.htm"><b>WriteMsr</b></a> read and write MSRs.</p>
+</dd>
+<dt><a id="System_Bus"></a><a id="system_bus"></a><a id="SYSTEM_BUS"></a>System Bus</dt>
+<dd>
+<p>The <a href="ioctl.htm"><b>Ioctl</b></a> operations <a href="ig_get_bus_data.htm"><b>IG_GET_BUS_DATA</b></a> and <b>IG_SET_BUS_DATA</b> read and write system bus data.</p>
+</dd>
+</dl>
+<h3><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For a more powerful memory access API, see <a href="memory_access.htm">Memory Access</a> in the <a href="using_the_debugger_engine_api.htm">Using the Debugger Engine API</a> section of this documentation.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20WdbgExts Memory Access%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

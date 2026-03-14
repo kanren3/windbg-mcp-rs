@@ -1,0 +1,178 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !ks.automation extension displays any automation items associated with the given object."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!ks.automation</title>
+
+<meta name="MS-HAID" content="r33~b_exts_KS_badc4c13-b3a3-4aae-94da-2be9c1b2e338.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._ks_automation"></a>!ks.automation</h1>
+</div>
+<p>The <b>!ks.automation</b> extension displays any automation items associated with the given object.</p>
+<pre class="syntax">
+    <b>!ks.automation </b><i>Object</i>
+</pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Object______"></a><a id="_______object______"></a><a id="_______OBJECT______"></a>       <i>Object</i>      </dt>
+<dd>
+<p>Specifies a pointer to the object for which to display automation items. (Automation items are properties, methods, and events.) <i>Object</i> must be one of the following types: PKSPIN, PKSFILTER, CKsPin*, CKsFilter*, PIRP. If <i>Object</i> is a pointer to an automation IRP, the command returns property information and handlers.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>
+          Windows 2000</b></p>
+</td>
+<td>
+<p>
+          winxp\Ks.dll 
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Ks.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information, see <a href="kernel_streaming_debugging.htm">Kernel Streaming Debugging</a>.</p>
+<h2>Remarks</h2>
+<p>You can use this command with a filter address obtained from <a href="_ks_enumdevobj.htm"><b>!ks.enumdevobj</b></a>.</p>
+<p>Here is an example of the <b>!ks.automation</b> display. The argument is the address of a filter:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>kd&gt; !automation 829493c4
+Filter 829493c4 has the following automation items:
+    Property Items:
+        Set KSPROPSETID_Pin
+            Item ID = KSPROPERTY_PIN_CINSTANCES
+                Get Handler = ks!CKsFilter::Property_Pin
+                Set Handler = NULL
+                MinProperty = 00000020
+                MinData = 00000008
+            Item ID = KSPROPERTY_PIN_CTYPES
+                Get Handler = ks!CKsFilter::Property_Pin
+                Set Handler = NULL
+                MinProperty = 00000018
+                MinData = 00000004
+            Item ID = KSPROPERTY_PIN_DATAFLOW
+                Get Handler = ks!CKsFilter::Property_Pin
+                Set Handler = NULL
+                MinProperty = 00000020
+                MinData = 00000004
+            Item ID = KSPROPERTY_PIN_DATARANGES
+                Get Handler = ks!CKsFilter::Property_Pin
+                Set Handler = NULL
+                MinProperty = 00000020
+                MinData = 00000000
+            Item ID = KSPROPERTY_PIN_DATAINTERSECTION
+                Get Handler = ks!CKsFilter::Property_Pin
+                Set Handler = NULL
+                MinProperty = 00000028
+                MinData = 00000000
+            Item ID = KSPROPERTY_PIN_INTERFACES
+                Get Handler = ks!CKsFilter::Property_Pin
+                Set Handler = NULL
+                MinProperty = 00000020
+                MinData = 00000000
+            Item ID = KSPROPERTY_PIN_MEDIUMS
+                Get Handler = ks!CKsFilter::Property_Pin
+                Set Handler = NULL
+                MinProperty = 00000020
+                MinData = 00000000
+            Item ID = KSPROPERTY_PIN_COMMUNICATION
+                Get Handler = ks!CKsFilter::Property_Pin
+                Set Handler = NULL
+                MinProperty = 00000020
+                MinData = 00000004
+            Item ID = KSPROPERTY_PIN_NECESSARYINSTANCES
+                Get Handler = ks!CKsFilter::Property_Pin
+                Set Handler = NULL
+                MinProperty = 00000020
+                MinData = 00000004
+            Item ID = KSPROPERTY_PIN_CATEGORY
+                Get Handler = ks!CKsFilter::Property_Pin
+                Set Handler = NULL
+                MinProperty = 00000020
+                MinData = 00000010
+            Item ID = KSPROPERTY_PIN_NAME
+                Get Handler = ks!CKsFilter::Property_Pin
+                Set Handler = NULL
+                MinProperty = 00000020
+                MinData = 00000000
+        Set KSPROPSETID_Topology
+            Item ID = KSPROPERTY_TOPOLOGY_CATEGORIES
+                Get Handler = ks!CKsFilter::Property_Topology
+                Set Handler = NULL
+                MinProperty = 00000018
+                MinData = 00000000
+            Item ID = KSPROPERTY_TOPOLOGY_NODES
+                Get Handler = ks!CKsFilter::Property_Topology
+                Set Handler = NULL
+                MinProperty = 00000018
+                MinData = 00000000
+            Item ID = KSPROPERTY_TOPOLOGY_CONNECTIONS
+                Get Handler = ks!CKsFilter::Property_Topology
+                Set Handler = NULL
+                MinProperty = 00000018
+                MinData = 00000000
+            Item ID = KSPROPERTY_TOPOLOGY_NAME
+                Get Handler = ks!CKsFilter::Property_Topology
+                Set Handler = NULL
+                MinProperty = 00000020
+                MinData = 00000000
+        Set KSPROPSETID_General
+            Item ID = KSPROPERTY_GENERAL_COMPONENTID
+                Get Handler = ks!CKsFilter::Property_General_ComponentId
+                Set Handler = NULL
+                MinProperty = 00000018
+                MinData = 00000048
+        Set [ks!KSPROPSETID_Frame]  a60d8368-5324-4893-b020-c431a50bcbe3
+            Item ID = 0
+                Get Handler = ks!CKsFilter::Property_Frame_Holding
+                Set Handler = ks!CKsFilter::Property_Frame_Holding
+                MinProperty = 00000018
+                MinData = 00000004
+    Method Items:
+        NO SETS FOUND!
+    Event Items:
+        NO SETS FOUND!</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!ks.automation%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

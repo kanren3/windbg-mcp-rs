@@ -1,0 +1,77 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !ubd extension temporarily disables a user-space breakpoint."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!ubd</title>
+
+<meta name="MS-HAID" content="r30_exts_kernel_U_53b140b2-d6e3-4183-88ce-4a28b6be1f70.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._ubd"></a>!ubd</h1>
+</div>
+<p>The <b>!ubd</b> extension temporarily disables a user-space breakpoint.</p>
+<pre class="syntax">
+    <b>!ubd </b><i>BreakpointNumber</i> 
+</pre>
+<h2><a id="ddk__ubd_dbg"></a><a id="DDK__UBD_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______BreakpointNumber______"></a><a id="_______breakpointnumber______"></a><a id="_______BREAKPOINTNUMBER______"></a>       <i>BreakpointNumber</i>      </dt>
+<dd>
+<p>Specifies the number of the breakpoint to be disabled. An asterisk (*) indicates all breakpoints. </p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000</b></p>
+</td>
+<td>
+<p>
+          Kdextx86.dll
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Kdexts.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>Disabled breakpoints will be ignored. Use <a href="_ube.htm"><b>!ube</b></a> to re-enable the breakpoint.</p>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="_ubc.htm"><b>!ubc</b></a></dt>
+<dt><a href="_ube.htm"><b>!ube</b></a></dt>
+<dt><a href="_ubl.htm"><b>!ubl</b></a></dt>
+<dt><a href="_ubp.htm"><b>!ubp</b></a></dt>
+<dt><a href="user_space_and_system_space.htm">User Space and System Space</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!ubd%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

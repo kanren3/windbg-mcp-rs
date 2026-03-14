@@ -1,0 +1,56 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Debugging a Failed Driver Unload"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Debugging a Failed Driver Unload</title>
+
+<meta name="MS-HAID" content="t13_advanced_e5790e3a-eff5-4532-8cb5-18f315537a05.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.debugging_a_failed_driver_unload"></a>Debugging a Failed Driver Unload</h1>
+</div>
+<h2><a id="ddk_debugging_a_failed_driver_unload_dbg"></a><a id="DDK_DEBUGGING_A_FAILED_DRIVER_UNLOAD_DBG"></a></h2>
+<p>A driver will not unload if there is a leaked reference to <b>DeviceObject</b> or <b>DriverObject</b>. This is a common cause of failed driver unloads.</p>
+<p>Apart from <b>IoCreateDevice</b>, there are several functions that take reference to <b>DriverObject</b> and <b>DeviceObject</b>. If you do not follow the guidelines for using the functions, you will end up leaking the reference.</p>
+<p>Here is an example of how to debug this problem. Although <b>DeviceObject</b> is used in this example, this technique works for all objects.</p>
+<p class="proch"><img src="../common/wedge.gif" alt=""/><b>Fixing a driver that fails to unload
+     </b></p>
+<ol>
+<li>
+<p>Put a breakpoint right after the driver calls <b>IoCreateDevice</b>. Get the <b>DeviceObject</b> address.</p>
+</li>
+<li>Find the object header by using the <a href="_object.htm"><b>!object</b></a> extension on this object address:<pre class="syntax" xml:space="preserve"><code>kd&gt; !object 81a578c0 
+Object: 81a578c0  Type: (81bd0e70) Device
+    ObjectHeader: 81a578a8
+    HandleCount: 0  PointerCount: 3
+    Directory Object: e1001208  Name: Serial0 </code></pre>
+<p>The first variable in the <b>ObjectHeader</b> is the <i>pointer count</i> or <i>reference count</i>.</p>
+</li>
+<li>Put a write breakpoint on the pointer count, using the <b>ObjectHeader</b>'s address:<pre class="syntax" xml:space="preserve"><code>kd&gt; ba w4 81a578a8 "k;g" </code></pre>
+</li>
+<li>
+<p>Use <a href="g__go_.htm"><b>g (Go)</b></a>. The debugger will produce a log.</p>
+</li>
+<li>
+<p>Look for the mismatched reference/dereference pair -- specifically, a missing dereference. (Note that <b>ObReferenceObject</b> is implemented as a macro inside the kernel.)</p>
+</li>
+</ol>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Debugging a Failed Driver Unload%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

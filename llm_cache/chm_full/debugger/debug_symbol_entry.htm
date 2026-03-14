@@ -1,0 +1,124 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The DEBUG_SYMBOL_ENTRY structure describes a symbol in a symbol group."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>DEBUG_SYMBOL_ENTRY structure</title>
+
+<meta name="MS-HAID" content="Structures_5673550e-274a-429f-9a31-88e401bca68e.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.debug_symbol_entry"></a>DEBUG_SYMBOL_ENTRY structure</h1>
+</div>
+<p>The DEBUG_SYMBOL_ENTRY structure describes a symbol in a symbol group.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>typedef struct _DEBUG_SYMBOL_ENTRY {
+  ULONG64 ModuleBase;
+  ULONG64 Offset;
+  ULONG64 Id;
+  ULONG64 Arg64;
+  ULONG   Size;
+  ULONG   Flags;
+  ULONG   TypeId;
+  ULONG   NameSize;
+  ULONG   Token;
+  ULONG   Tag;
+  ULONG   Arg32;
+  ULONG   Reserved;
+}  DEBUG_SYMBOL_ENTRY, *PDEBUG_SYMBOL_ENTRY;</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Members</h2>
+<dl>
+<dt><b>ModuleBase</b></dt>
+<dd>
+<p>The base address of the module in the target's virtual address space.</p>
+</dd>
+<dt><b>Offset</b></dt>
+<dd>
+<p>The location of the symbol in the target's virtual address space.</p>
+</dd>
+<dt><b>Id</b></dt>
+<dd>
+<p>The symbol ID of the symbol.  If the symbol ID is not known, <b>Id</b> is DEBUG_INVALID_OFFSET.</p>
+</dd>
+<dt><b>Arg64</b></dt>
+<dd>
+<p>The interpretation of <b>Arg64</b> depends on the type of the symbol.  If the value is not known, <b>Arg64</b> is zero.</p>
+</dd>
+<dt><b>Size</b></dt>
+<dd>
+<p>The size, in bytes, of the symbol's value.  This might not be known or might not completely represent all of the data for a symbol.  For example, a function's code might be split among multiple regions and the size only describes one region.</p>
+</dd>
+<dt><b>Flags</b></dt>
+<dd>
+<p>Symbol entry flags.  Currently, no flags are defined.</p>
+</dd>
+<dt><b>TypeId</b></dt>
+<dd>
+<p>The type ID of the symbol.</p>
+</dd>
+<dt><b>NameSize</b></dt>
+<dd>
+<p>The size, in characters, of the symbol's name.  If the size is not known, <b>NameSize</b> is zero.</p>
+</dd>
+<dt><b>Token</b></dt>
+<dd>
+<p>The managed token of the symbol.  If the token value is not known or the symbol does not have a token, <b>Token</b> is zero.</p>
+</dd>
+<dt><b>Tag</b></dt>
+<dd>
+<p>The symbol tag for the type of the symbol.  This is a value from the <b>SymTagEnum</b> enumeration.</p>
+</dd>
+<dt><b>Arg32</b></dt>
+<dd>
+<p>The interpretation of <b>Arg32</b> depends on the type of the symbol.  Currently, the value of <b>Arg32</b> is the register that holds the value or a pointer to the value of the symbol. If the symbol is not held in a register, or the register is not known, <b>Arg32</b> is zero.</p>
+</dd>
+<dt><b>Reserved</b></dt>
+<dd>
+<p>Set to zero.</p>
+</dd>
+</dl>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>DbgEng.h (include DbgEng.h, DbgHelp.h, or DbgHelp.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="getsymbolentryinformation2.htm"><b>IdebugSymbolGroup2::GetSymbolEntryInformation</b></a></dt>
+<dt><a href="getsymbolentryinformation.htm"><b>IdebugSymbols3::GetSymbolEntryInformation</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20DEBUG_SYMBOL_ENTRY structure%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

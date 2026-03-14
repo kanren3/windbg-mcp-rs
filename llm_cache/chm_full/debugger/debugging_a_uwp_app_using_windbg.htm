@@ -1,0 +1,682 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="You can debug Universal Windows Platform (UWP) app using WinDbg."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Debugging a UWP app using WinDbg</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.debugging_a_uwp_app_using_windbg"></a>Debugging a UWP app using WinDbg</h1>
+</div>
+<p>You can debug Universal Windows Platform (UWP) app using WinDbg. This approach would typically be used for advanced scenarios, where it is not possible to complete the debugging task using the built in Visual Studio debugger. For more information about debugging in Visual Studio,  see <a href="https://msdn.microsoft.com/library/sc65sadd.aspx">Debugging in Visual Studio</a>.</p>
+<h2><a id="Attaching_to_a_UWP_app"></a><a id="attaching_to_a_uwp_app"></a><a id="ATTACHING_TO_A_UWP_APP"></a>Attaching to a UWP app</h2>
+<p>Attaching to UWP process is the same as  attaching to a user mode process. For example, in WinDbg you can attach to a running process by choosing <b>Attach to a Process from the File</b> menu or by pressing F6.
+  For more information, see <a href="debugging_a_user-mode_process_using_windbg.htm">Debugging a User-Mode Process Using WinDbg</a>. </p>
+<p>A UWP app will not be suspended in the same ways that it does when not being debugged. To explicitly suspend/resume a UWP app, you can use the .suspendpackage and .resumepackage commands (details below).  For general information  on Process Lifecycle Management (PLM) used by UWP apps, see App lifecycle and Launching, resuming, and background tasks.</p>
+<p></p>
+<h2><a id="Launching_and_debugging__a_UWP_app"></a><a id="launching_and_debugging__a_uwp_app"></a><a id="LAUNCHING_AND_DEBUGGING__A_UWP_APP"></a>Launching and debugging  a UWP app</h2>
+<p>The -plmPackage and -plmApp command line parameters instruct the debugger to launch an app under the debugger.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>windbg.exe -plmPackage &lt;PLMPackageName&gt; -plmApp &lt;ApplicationId&gt; [&lt;parameters&gt;]</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Since multiple apps can be contained within a single package, both &lt;PLMPackage&gt; and &lt;ApplicationId&gt; parameters are required. This is a summary of the parameters.</p>
+<table>
+<tr>
+<td><b>Parameter</b></td>
+<td><b>Description</b></td>
+</tr>
+<tr>
+<td>&lt;PLMPackageName&gt;</td>
+<td>The name of the application package. Use the  .querypackages command to lists all UWP applications. Do not provide a path to the location of the package, provide just the package name.   </td>
+</tr>
+<tr>
+<td>&lt;ApplicationId&gt;</td>
+<td>
+<p>The ApplicationId is located in the application manifest file and can be viewed using the .querypackage or .querypackages command as discussed in this topic. </p>
+<p>For more information about the application manifest file, see App package manifest. </p>
+</td>
+</tr>
+<tr>
+<td> [&lt;parameters&gt;]</td>
+<td>
+<p>Optional parameters passed to the App. Not all apps use or require parameters.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p><b>HelloWorld Sample</b></p>
+<p>To demonstrate UWP debugging, this topic uses the HelloWorld example described in <a href="https://msdn.microsoft.com/en-us/windows/uwp/get-started/create-a-hello-world-app-xaml-universal">Create a "Hello, world" app (XAML)</a>.</p>
+<p>To create a workable test app, it is only necessary to complete up to step three of the lab.</p>
+<p><b>Locating the Full Package Name and AppId</b></p>
+<p>Use the .querypackages 
+command to locate the full package name and the AppId. Type .querypackages and then user CRTL+F to search up in the output for the application name, such as HelloWorld. When the entry is located using CTRL+F, it will show the  package full name, for example <i>e24caf14-8483-4743-b80c-ca46c28c75df_1.0.0.0_x86__97ghe447vaan8</i> and the AppId of  <i>App</i>.</p>
+<p>Example:</p>
+<p></p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt;  .querypackages 
+...
+Package Full Name: e24caf14-8483-4743-b80c-ca46c28c75df_1.0.0.0_x86__97ghe447vaan8
+Package Display Name: HelloWorld
+Version: 1.0.0.0
+Processor Architecture: x86
+Publisher: CN=domars
+Publisher Display Name: domars
+Install Folder: c:\users\domars\documents\visual studio 2015\Projects\HelloWorld\HelloWorld\bin\x86\Release\AppX
+Package State: Unknown
+AppId: App
+...</pre>
+</td>
+</tr>
+</table></span></div>
+<p></p>
+<p><b>Viewing the Base Package Name in the  in the Manifest</b></p>
+<p>For troubleshooting, you may want to view the base package name in Visual Studio. </p>
+<p>To locate the base package name in Visual Studio, click on the ApplicationManifest.xml file in project explorer. The base package name  will be displayed under the packaging tab as "Package name". By default, the package name will be a GUID, for example <i>e24caf14-8483-4743-b80c-ca46c28c75df</i>.</p>
+<p>To use notepad to locate the base package name, open the ApplicationManifest.xml file and locate the <b>Identity Name</b> tag.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>  &lt;Identity
+    Name="e24caf14-8483-4743-b80c-ca46c28c75df"
+    Publisher="CN= User1"
+    Version="1.0.0.0" /&gt;</pre>
+</td>
+</tr>
+</table></span></div>
+<p></p>
+<p><b>Locating the Application Id in the Manifest</b></p>
+<p>To locate the Application Id in the manifest file for an installed UWP app, look for the <i>Application Id</i> entry.</p>
+<p>For example, for the hello world app the Application ID is <i>App</i>. <div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>&lt;Application Id="App"
+      Executable="$targetnametoken$.exe"
+      EntryPoint="HelloWorld.App"&gt;</pre>
+</td>
+</tr>
+</table></span></div>
+</p>
+<p><b>Example WinDbg Command Line</b></p>
+<p>This is an example command line loading the HelloWorld app under the debugger using the full package name and AppId. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>windbg.exe -plmPackage e24caf14-8483-4743-b80c-ca46c28c75df_1.0.0.0_x86__97ghe447vaan8 -plmApp App</pre>
+</td>
+</tr>
+</table></span></div>
+<p></p>
+<h2><a id="Launching_a_background_task_under_the_debugger"></a><a id="launching_a_background_task_under_the_debugger"></a><a id="LAUNCHING_A_BACKGROUND_TASK_UNDER_THE_DEBUGGER"></a>Launching a background task under the debugger</h2>
+<p>A background task can be explicitly launched under the debugger from the command line using the TaskId. To do this, use the -plmPackage and -plmBgTaskId command line parameters: </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>windbg.exe -plmPackage &lt;PLMPackageName&gt; -plmBgTaskId &lt;BackgroundTaskId&gt;</pre>
+</td>
+</tr>
+</table></span></div>
+<table>
+<tr>
+<td><b>Parameter</b></td>
+<td><b>Description</b></td>
+</tr>
+<tr>
+<td>&lt;PLMPackageName&gt;</td>
+<td>
+<p>The name of the application package. Use the  .querypackages command to lists all UWP applications. Do not provide a path to the location of the package, provide just the package name.   </p>
+</td>
+</tr>
+<tr>
+<td>&lt;BackgroundTaskId&gt;</td>
+<td>
+<p>The BackgroundTaskId can be located using the .querypackages command as described below.</p>
+<p>For more information about the application manifest file, see App package manifest. </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>This is an example of  loading the SDKSamples.BackgroundTask code under the debugger.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>windbg.exe -plmPackage Microsoft.SDKSamples.BackgroundTask.CPP_1.0.0.0_x64__8wekyb3d8bbwe -plmBgTaskId {ee4438ee-22db-4cdd-85e4-8ad8a1063523}
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p>You can experiment with the Background task sample code to become familiar with UWP debugging. It can be downloaded at <a href="https://code.msdn.microsoft.com/windowsapps/Background-Task-Sample-9209ade9">Background task sample</a>. </p>
+<p>Use the .querypackages command to locate the BackgroundTaskId.  Use CTRL-F to locate the app and then locate the  <i>Background Task Id</i> field. The background task must be running to display the associated background task name and task Id.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; .querypackages
+...
+Package Full Name: Microsoft.SDKSamples.BackgroundTask.CPP_1.0.0.0_x86__8wekyb3d8bbwe
+Package Display Name: BackgroundTask C++ sample
+Version: 1.0.0.0
+Processor Architecture: x86
+Publisher: CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US
+Publisher Display Name: Microsoft Corporation
+Install Folder: C:\Users\DOMARS\Documents\Visual Studio 2015\Projects\Background_task_sample\C++\Debug\BackgroundTask.Windows\AppX
+Package State: Running
+AppId: BackgroundTask.App
+Background Task Name: SampleBackgroundTask
+Background Task Id: {ee4438ee-22db-4cdd-85e4-8ad8a1063523}
+...</pre>
+</td>
+</tr>
+</table></span></div>
+<p>If you know the full package name you can use .querypackage to display the <i>Background Task Id</i> field.</p>
+<p>You can also locate the BackgroundTaskId by  using the enumerateBgTasks option of the PLMDebug. For more information about the PMLDebug utiltity,  see <a href="plmdebug.htm"><b>PLMDebug</b></a>.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>C:\Program Files\Debugging Tools for Windows (x64)&gt;PLMDebug /enumerateBgTasks Microsoft.SDKSamples.BackgroundTask.CPP_1.0.0.0_x64__8wekyb3d8bbwe
+Package full name is Microsoft.SDKSamples.BackgroundTask.CPP_1.0.0.0_x64__8wekyb3d8bbwe.
+Background Tasks:
+SampleBackgroundTask : {C05806B1-9647-4765-9A0F-97182CEA5AAD}
+
+SUCCEEDED</pre>
+</td>
+</tr>
+</table></span></div>
+<h2><a id="Debugging_a_UWP_process_remotely_using_a_Process_Server__DbgSrv_"></a><a id="debugging_a_uwp_process_remotely_using_a_process_server__dbgsrv_"></a><a id="DEBUGGING_A_UWP_PROCESS_REMOTELY_USING_A_PROCESS_SERVER__DBGSRV_"></a>Debugging a UWP process remotely using a Process Server (DbgSrv)</h2>
+<p>All of the -plm* commands work correctly with dbgsrv. To debug using dbgsrv, use the -premote switch with the connection string for dbgsrv: </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>windbg.exe -premote npipe:pipe=fdsa,server=localhost -plmPackage e24caf14-8483-4743-b80c-ca46c28c75df_1.0.0.0_x86__97ghe447vaan8 -plmApp App</pre>
+</td>
+</tr>
+</table></span></div>
+<p>For more information about the -premote options, see <a href="process_servers__user_mode_.htm">Process Servers (User Mode)</a> and <a href="process_server_examples.htm">Process Server Examples</a>.</p>
+<p></p>
+<h2><a id="Summary_of_UWP_app_commands"></a><a id="summary_of_uwp_app_commands"></a><a id="SUMMARY_OF_UWP_APP_COMMANDS"></a>Summary of UWP app commands</h2>
+<p>This section provides a summary of UWP app debugger commands</p>
+<p></p>
+<p><b>Gathering Package Information</b></p>
+<p></p>
+<p><b>.querypackage </b></p>
+<p>The .querypackage displays the state of a UWP application. For example, if the app is running, it can be in the <i>Active</i> state.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>.querypackage &lt;PLMPackageName&gt;</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Example:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; .querypackage e24caf14-8483-4743-b80c-ca46c28c75df_1.0.0.0_x86__97ghe447vaan8
+Package Full Name: e24caf14-8483-4743-b80c-ca46c28c75df_1.0.0.0_x86__97ghe447vaan8
+Package Display Name: HelloWorld
+Version: 1.0.0.0
+Processor Architecture: x86
+Publisher: CN=domars
+Publisher Display Name: domars
+Install Folder: c:\users\domars\documents\visual studio 2015\Projects\HelloWorld\HelloWorld\bin\x86\Release\AppX
+Package State: Running
+AppId: App
+Executable: HelloWorld.exe</pre>
+</td>
+</tr>
+</table></span></div>
+<p><b> .querypackages </b></p>
+<p>The .querypackages 
+command lists all the installed UWP applications and their current state.</p>
+<p></p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>.querypackages</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Example:</p>
+<p></p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:000&gt; .querypackages
+...
+Package Full Name: Microsoft.MicrosoftSolitaireCollection_3.9.5250.0_x64__8wekyb3d8bbwe
+Package Display Name: Microsoft Solitaire Collection
+Version: 3.9.5250.0
+Processor Architecture: x64
+Publisher: CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US
+Publisher Display Name: Microsoft Studios
+Install Folder: C:\Program Files\WindowsApps\Microsoft.MicrosoftSolitaireCollection_3.9.5250.0_x64__8wekyb3d8bbwe
+Package State: Unknown
+AppId: App
+
+Package Full Name: e24caf14-8483-4743-b80c-ca46c28c75df_1.0.0.0_x86__97ghe447vaan8
+Package Display Name: HelloWorld
+Version: 1.0.0.0
+Processor Architecture: x86
+Publisher: CN=domars
+Publisher Display Name: domars
+Install Folder: c:\users\domars\documents\visual studio 2015\Projects\HelloWorld\HelloWorld\bin\x86\Release\AppX
+Package State: Running
+AppId: App
+Executable: HelloWorld.exe
+
+Package Full Name: Microsoft.SDKSamples.BackgroundTask.CPP_1.0.0.0_x86__8wekyb3d8bbwe
+Package Display Name: BackgroundTask C++ sample
+Version: 1.0.0.0
+Processor Architecture: x86
+Publisher: CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US
+Publisher Display Name: Microsoft Corporation
+Install Folder: C:\Users\DOMARS\Documents\Visual Studio 2015\Projects\Background_task_sample\C++\Debug\BackgroundTask.Windows\AppX
+Package State: Unknown
+AppId: BackgroundTask.App
+
+...</pre>
+</td>
+</tr>
+</table></span></div>
+<p></p>
+<p><b>Launching an app for Debugging</b></p>
+<p></p>
+<p><b>.createpackageapp</b></p>
+<p>The .createpackageapp command enables debugging and launches a UWP application.
+</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>.createpackageapp &lt;PLMPackageName&gt; &lt;ApplicationId&gt; [&lt;parameters&gt;] </pre>
+</td>
+</tr>
+</table></span></div>
+<p>This table lists the parameters for .createpackageapp.</p>
+<table>
+<tr>
+<td><b>Parameter</b></td>
+<td><b>Description</b></td>
+</tr>
+<tr>
+<td>&lt;PLMPackageName&gt;</td>
+<td>The name of the application package. Use the  .querypackages command to lists all UWP applications. Do not provide a path to the location of the package, provide just the package name.   </td>
+</tr>
+<tr>
+<td>&lt;ApplicationId&gt;</td>
+<td>
+<p>The ApplicationId can be located using .querypackage or .querypackages as discussed earlier in this topic. </p>
+<p>For more information about the application manifest file, see App package manifest. </p>
+</td>
+</tr>
+<tr>
+<td> [&lt;parameters&gt;]</td>
+<td>Optional parameters that are passed to the application. Not all applications require or use these optional parameters.</td>
+</tr>
+</table>
+<p> </p>
+<p>Example:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>.createpackageapp e24caf14-8483-4743-b80c-ca46c28c75df_1.0.0.0_x86__97ghe447vaan8 App</pre>
+</td>
+</tr>
+</table></span></div>
+<p><b>Enabling and Disabling Use of Debug Commands</b></p>
+<p><b>.enablepackagedebug</b></p>
+<p>The .enablepackagedebug command enables debugging for UWP application. You must use .enablepackagedebug before you call any of the suspend, resume, or terminate functions.
+
+</p>
+<p>Note that the .createpackageapp command also enables debugging of the app.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>.enablepackagedebug &lt;PLMPackageName&gt;</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Example:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>
+.enablepackagedebug e24caf14-8483-4743-b80c-ca46c28c75df_1.0.0.0_x86__97ghe447vaan8</pre>
+</td>
+</tr>
+</table></span></div>
+<p><b>.disablepackagedebug</b></p>
+<p>The .disablepackagedebug command disables debugging for UWP application. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>.disablepackagedebug &lt;PLMPackageName&gt;</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Example:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>.disablepackagedebug e24caf14-8483-4743-b80c-ca46c28c75df_1.0.0.0_x86__97ghe447vaan8</pre>
+</td>
+</tr>
+</table></span></div>
+<p></p>
+<p><b>Starting and Stopping apps</b></p>
+<p>Note that suspend, resume, and terminate affect all currently running apps in the package.</p>
+<p><b>.suspendpackage</b></p>
+<p>The .suspendpackage command, suspends a UWP application.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>.suspendpackage &lt;PLMPackageName&gt; </pre>
+</td>
+</tr>
+</table></span></div>
+<p>Example:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>0:024&gt; .suspendpackage e24caf14-8483-4743-b80c-ca46c28c75df_1.0.0.0_x86__97ghe447vaan8</pre>
+</td>
+</tr>
+</table></span></div>
+<p><b>.resumepackage</b></p>
+<p>The .resumepackage command resumes a UWP application.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>.resumepackage &lt;PLMPackageName&gt; 
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Example:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>.resumepackage e24caf14-8483-4743-b80c-ca46c28c75df_1.0.0.0_x86__97ghe447vaan8</pre>
+</td>
+</tr>
+</table></span></div>
+<p><b>.terminatepackageapp</b></p>
+<p>The .terminatepackageapp command terminates the  all of the UWP applications in the package.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>
+.terminatepackageapp &lt;PLMPackageName&gt; 
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Example:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>.terminatepackageapp e24caf14-8483-4743-b80c-ca46c28c75df_1.0.0.0_x86__97ghe447vaan8</pre>
+</td>
+</tr>
+</table></span></div>
+<p><b>Background Tasks</b></p>
+<p></p>
+<p><b>.activatepackagebgtask</b></p>
+<p>The .activatepackagebgtask command enables debugging and launches a UWP background task.</p>
+<p></p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre> .activatepackagebgtask &lt;PLMPackageName&gt; &lt;bgTaskId&gt;</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Example:</p>
+<p></p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>.activatepackagebgtask Microsoft.SDKSamples.BackgroundTask.CPP_1.0.0.0_x64__8wekyb3d8bbwe {C05806B1-9647-4765-9A0F-97182CEA5AAD}</pre>
+</td>
+</tr>
+</table></span></div>
+<p></p>
+<h2><a id="Usage_Examples"></a><a id="usage_examples"></a><a id="USAGE_EXAMPLES"></a>Usage Examples</h2>
+<p><b>Attach a debugger when your app is launched</b></p>
+<p>Suppose you have an app named HelloWorld that is in a package named e24caf14-8483-4743-b80c-ca46c28c75df_1.0.0.0_x86__97ghe447vaan8. Verify that your package is installed by displaying the full names and running states all installed packages. In a Command Prompt window, enter the following command.
+You can use CTRL+F to search the command output for the app name of HelloWorld.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>.querypackages 
+...
+
+Package Full Name: e24caf14-8483-4743-b80c-ca46c28c75df_1.0.0.0_x86__97ghe447vaan8
+Package Display Name: HelloWorld
+Version: 1.0.0.0
+Processor Architecture: x86
+Publisher: CN=domars
+Publisher Display Name: user1
+Install Folder: c:\users\user1\documents\visual studio 2015\Projects\HelloWorld\HelloWorld\bin\x86\Release\AppX
+Package State: Unknown
+AppId: App
+
+...</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Use .createpackageapp to launch and attach to the app. The .createpackageapp command also enables debugging of the app.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>.createpackageapp e24caf14-8483-4743-b80c-ca46c28c75df_1.0.0.0_x86__97ghe447vaan8 App</pre>
+</td>
+</tr>
+</table></span></div>
+<p>When you have finished debugging, decrement the debug reference count for the package using the .disablepackagedebug command.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>.disablepackagedebug e24caf14-8483-4743-b80c-ca46c28c75df_1.0.0.0_x86__97ghe447vaan8</pre>
+</td>
+</tr>
+</table></span></div>
+<p></p>
+<p><b>Attach a debugger to an app that is already running</b></p>
+<p>Suppose you want to attach WinDbg to MyApp, which is already running. In WinDbg, on the <b>File</b> menu, choose <b>Attach to a Process</b>. Note the process ID for MyApp. Let's say the process ID is 4816.
+
+Increment the debug reference count for the package that contains MyApp.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>.enablepackagedebug e24caf14-8483-4743-b80c-ca46c28c75df_1.0.0.0_x86__97ghe447vaan8</pre>
+</td>
+</tr>
+</table></span></div>
+<p>
+
+In WinDbg, in the <b>Attach to Process</b> dialog box, select process 4816, and click OK. WinDbg will attach to MyApp.</p>
+<p>When you have finished debugging, decrement the debug reference count for the package using the .disablepackagedebug command.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>.disablepackagedebug e24caf14-8483-4743-b80c-ca46c28c75df_1.0.0.0_x86__97ghe447vaan8</pre>
+</td>
+</tr>
+</table></span></div>
+<p></p>
+<p><b>Manually suspend and resume your app
+</b></p>
+<p>Follow these steps to manually suspend and resume your app. First, increment the debug reference count for the package that contains your app.
+</p>
+<p></p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>.enablepackagedebug  e24caf14-8483-4743-b80c-ca46c28c75df_1.0.0.0_x86__97ghe447vaan8</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Suspend the package. Your app's suspend handler is called, which can be helpful for debugging.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>.suspendpackage e24caf14-8483-4743-b80c-ca46c28c75df_1.0.0.0_x86__97ghe447vaan8</pre>
+</td>
+</tr>
+</table></span></div>
+<p>
+When you have finished debugging, resume the package.</p>
+<p></p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>.resumepackage e24caf14-8483-4743-b80c-ca46c28c75df_1.0.0.0_x86__97ghe447vaan8</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Finally, decrement the debug reference count for the package.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>.disablepackagedebug e24caf14-8483-4743-b80c-ca46c28c75df_1.0.0.0_x86__97ghe447vaan8</pre>
+</td>
+</tr>
+</table></span></div>
+<h2><a id="related_topics"></a>Related topics</h2>
+<dl>
+<dt><a href="debugging_using_windbg.htm">Debugging Using WinDbg</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Debugging a UWP app using WinDbg%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,144 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The SetNextEventIndex method sets the next event for the current target by selecting the event from the static list of events for the target, if such a list exists."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IDebugControl3::SetNextEventIndex method</title>
+
+<meta name="MS-HAID" content="IDebugControl_9a902b9c-c621-4d71-bae7-d3fd288b1cd8.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.setnexteventindex"></a>IDebugControl3::SetNextEventIndex method</h1>
+</div>
+<p>The <b>SetNextEventIndex</b> method sets the next event for the current target by selecting the event from the static list of events for the target, if such a list exists.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>HRESULT SetNextEventIndex(
+  [in]  ULONG  Relation,
+  [in]  ULONG  Value,
+  [out] PULONG NextIndex
+);</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Parameters</h2>
+<dl>
+<dt><i>Relation</i> [in]</dt>
+<dd>
+<p>Specifies how to interpret <i>Value</i> when setting the index of the next event.  Possible values are: DEBUG_EINDEX_FROM_START, DEBUG_EINDEX_FROM_END, and DEBUG_EINDEX_FROM_CURRENT.</p>
+</dd>
+<dt><i>Value</i> [in]</dt>
+<dd>
+<p>Specifies the index of the next event relative to the first, last, or current event.  The interpretation of <i>Value</i> depends on the value of <i>Relation</i>, as follows.</p>
+<table>
+<tr>
+<th>Value of <i>Relation</i></th>
+<th>Next Event Index</th>
+</tr>
+<tr>
+<td>
+<p>DEBUG_EINDEX_FROM_START</p>
+</td>
+<td>
+<p><i>Value</i>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_EINDEX_FROM_END</p>
+</td>
+<td>
+<p>Number of events minus <i>Value</i>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_EINDEX_FROM_CURRENT</p>
+</td>
+<td>
+<p>The current event index plus <i>Value</i>.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>The resulting index must be greater than zero and one less than the number of events returned by <a href="getnumberevents.htm"><b>GetNumberEvents</b></a>.</p>
+</dd>
+<dt><i>NextIndex</i> [out]</dt>
+<dd>
+<p>Receives the index of the next event.  If <i>NextIndex</i> is <b>NULL</b>, this information is not returned.</p>
+</dd>
+</dl>
+<h2>Return value</h2>
+<p>This method may also return error values.  See <a href="hresult_values.htm"><b>Return Values</b></a> for more details.</p>
+<table>
+<tr>
+<th>Return code</th>
+<th>Description</th>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>S_OK</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>The method was successful.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>If the specified event is the same as the current event, this method does nothing.  Otherwise,  this method sets the execution status of the target to DEBUG_STATUS_GO (and notifies the event callbacks).  When <a href="waitforevent.htm"><b>WaitForEvent</b></a> is called, the engine will generate the specified event for the event callbacks and set it as the current event.</p>
+<p>This method is only useful if the target offers a list of events.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Target platform</p>
+</th>
+<td width="70%">
+<dl>
+<dt></dt>
+</dl>
+</td>
+</tr>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Dbgeng.h (include Dbgeng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="idebugcontrol3.htm"><b>IDebugControl3</b></a></dt>
+<dt><a href="getnumberevents.htm"><b>GetNumberEvents</b></a></dt>
+<dt><a href="getcurrenteventindex.htm"><b>GetCurrentEventIndex</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IDebugControl3::SetNextEventIndex method%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

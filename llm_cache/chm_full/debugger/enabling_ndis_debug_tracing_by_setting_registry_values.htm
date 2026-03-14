@@ -1,0 +1,373 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Enabling NDIS Debug Tracing By Setting Registry Values"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Enabling NDIS Debug Tracing By Setting Registry Values</title>
+
+<meta name="MS-HAID" content="t11~0_ndis_ece22487-e22b-47c0-96a1-dc12e556397e.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.enabling_ndis_debug_tracing_by_setting_registry_values"></a>Enabling NDIS Debug Tracing By Setting Registry Values</h1>
+</div>
+<p>You can enable different levels of debug tracing in various NDIS components by editing the registry. Typically, you should add the following entries and values to the <b>HKLM\SYSTEM\CurrentControlSet\Services\NDIS\Parameters</b> registry key:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>"DebugLevel"=dword:00000000
+"DebugSystems"=dword:000030F3
+"DebugBreakPoint"=dword:00000001 </pre>
+</td>
+</tr>
+</table></span></div>
+<p>The following values are acceptable for <b>DebugBreakPoint</b>, <b>DebugLevel</b> and <b>DebugSystems</b>:</p>
+<p></p>
+<dl>
+<dt><a id="DebugBreakPoint"></a><a id="debugbreakpoint"></a><a id="DEBUGBREAKPOINT"></a><b>DebugBreakPoint</b></dt>
+<dd>
+<p>Controls whether an NDIS driver will automatically break into the debugger.  If this value is set to 1, NDIS will break into the debugger when a driver enters Ndis.sys's <b>DriverEntry</b> function.</p>
+</dd>
+<dt><a id="DebugLevel"></a><a id="debuglevel"></a><a id="DEBUGLEVEL"></a><b>DebugLevel</b></dt>
+<dd>
+<p>Selects the level or amount of debug tracing in the NDIS components that you select with the <b>DebugSystems</b> value.  The following values specify levels that you can select: </p>
+<table>
+<tr>
+<th>Level</th>
+<th>Description</th>
+<th>Value</th>
+</tr>
+<tr>
+<td>
+<p>DBG_LEVEL_INFO</p>
+</td>
+<td>
+<p>All available debug information. This is the highest level of trace.</p>
+</td>
+<td>
+<p>0x00000000</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DBG_LEVEL_LOG</p>
+</td>
+<td>
+<p>Log information.</p>
+</td>
+<td>
+<p>0x00000800</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DBG_LEVEL_WARN</p>
+</td>
+<td>
+<p>Warnings.</p>
+</td>
+<td>
+<p>0x00001000</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DBG_LEVEL_ERR</p>
+</td>
+<td>
+<p>Errors.</p>
+</td>
+<td>
+<p>0x00002000</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DBG_LEVEL_FATAL</p>
+</td>
+<td>
+<p>Fatal errors, which can cause the operating system to crash. This is the lowest level of trace.</p>
+</td>
+<td>
+<p>0x00003000</p>
+</td>
+</tr>
+</table>
+<p> </p>
+</dd>
+<dt><a id="DebugSystems"></a><a id="debugsystems"></a><a id="DEBUGSYSTEMS"></a><b>DebugSystems</b></dt>
+<dd>
+<p>Enables debug tracing for specified NDIS components. This corresponds to using the <a href="_ndiskd_dbgsystems.htm"><b>!ndiskd.dbgsystems</b></a> extension.  The following values specify the NDIS components that you can select: </p>
+<table>
+<tr>
+<th>Component</th>
+<th>Description</th>
+<th>Value</th>
+</tr>
+<tr>
+<td>
+<p>DBG_COMP_INIT</p>
+</td>
+<td>
+<p>Handles adapter initialization.</p>
+</td>
+<td>
+<p>0x00000001</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DBG_COMP_CONFIG</p>
+</td>
+<td>
+<p>Handles adapter configuration.</p>
+</td>
+<td>
+<p>0x00000002</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DBG_COMP_SEND</p>
+</td>
+<td>
+<p>Handles sending data over the network.</p>
+</td>
+<td>
+<p>0x00000004</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DBG_COMP_RECV</p>
+</td>
+<td>
+<p>Handles receiving data from the network.</p>
+</td>
+<td>
+<p>0x00000008</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DBG_COMP_PROTOCOL</p>
+</td>
+<td>
+<p>Handles protocol operations.</p>
+</td>
+<td>
+<p>0x00000010</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DBG_COMP_BIND</p>
+</td>
+<td>
+<p>Handles binding operations.</p>
+</td>
+<td>
+<p>0x00000020</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DBG_COMP_BUSINFO</p>
+</td>
+<td>
+<p>Handles bus queries.</p>
+</td>
+<td>
+<p>0x00000040</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DBG_COMP_REG</p>
+</td>
+<td>
+<p>Handles registry operations.</p>
+</td>
+<td>
+<p>0x00000080</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DBG_COMP_MEMORY</p>
+</td>
+<td>
+<p>Handles memory management.</p>
+</td>
+<td>
+<p>0x00000100</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DBG_COMP_FILTER</p>
+</td>
+<td>
+<p>Handles filter operations.</p>
+</td>
+<td>
+<p>0x00000200</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DBG_COMP_REQUEST</p>
+</td>
+<td>
+<p>Handles requests.  </p>
+</td>
+<td>
+<p>0x00000400</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DBG_COMP_WORK_ITEM</p>
+</td>
+<td>
+<p>Handles work-item operations.</p>
+</td>
+<td>
+<p>0x00000800</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DBG_COMP_PNP</p>
+</td>
+<td>
+<p>Handles Plug and Play operations.</p>
+</td>
+<td>
+<p>0x00001000</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DBG_COMP_PM</p>
+</td>
+<td>
+<p>Handles power management operations.</p>
+</td>
+<td>
+<p>0x00002000</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DBG_COMP_OPENREF</p>
+</td>
+<td>
+<p>Handles operations that open reference objects.</p>
+</td>
+<td>
+<p>0x00004000</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DBG_COMP_LOCKS</p>
+</td>
+<td>
+<p>Handles locking operations.</p>
+</td>
+<td>
+<p>0x00008000</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DBG_COMP_RESET</p>
+</td>
+<td>
+<p>Handles resetting operations.</p>
+</td>
+<td>
+<p>0x00010000</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DBG_COMP_WMI</p>
+</td>
+<td>
+<p>Handles Windows Management Instrumentation operations.</p>
+</td>
+<td>
+<p>0x00020000</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DBG_COMP_CO</p>
+</td>
+<td>
+<p>Handles Connection-Oriented NDIS.</p>
+</td>
+<td>
+<p>0x00040000</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DBG_COMP_REF</p>
+</td>
+<td>
+<p>Handles reference operations.</p>
+</td>
+<td>
+<p>0x00080000</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DBG_COMP_ALL</p>
+</td>
+<td>
+<p>Handles all NDIS components.</p>
+</td>
+<td>
+<p>0xFFFFFFFF</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>You can select more than one NDIS component. If more than one component is selected, combine the data values with an OR operator. For example, to select DBG_COMP_PNP, DBG_COMP_PM, DBG_COMP_INIT and DBG_COMP_CONFIG, you would combine the corresponding values (0x1000, 0x2000, 0x1, and 0x2) to obtain the value 0x3003, and then set it in the registry thus:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>"DebugSystems"=dword:00003003</pre>
+</td>
+</tr>
+</table></span></div>
+</dd>
+</dl>
+<p>Whenever you change registry values for debug tracing, you must restart your computer for the new settings to take effect.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Enabling NDIS Debug Tracing By Setting Registry Values%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,129 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Symbols and Symbol Files"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Symbols and Symbol Files</title>
+
+<meta name="MS-HAID" content="r09_symbols_2725b901-b583-4abb-83cd-cbb72f6851a3.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.symbols_and_symbol_files"></a>Symbols and Symbol Files</h1>
+</div>
+<h2><a id="ddk_symbol_files_overview_dbg"></a><a id="DDK_SYMBOL_FILES_OVERVIEW_DBG"></a></h2>
+<p>When applications, libraries, drivers, or operating systems are linked, the linker that creates the .exe and .dll files also creates a number of additional files known as <i>symbol files</i>.</p>
+<p>Symbol files hold a variety of data which are not actually needed when running the binaries, but which could be very useful in the debugging process.</p>
+<p>Typically, symbol files might contain:</p>
+<ul>
+<li>
+<p>Global variables</p>
+</li>
+<li>
+<p>Local variables</p>
+</li>
+<li>
+<p>Function names and the addresses of their entry points</p>
+</li>
+<li>
+<p>Frame pointer omission (FPO) records</p>
+</li>
+<li>
+<p>Source-line numbers</p>
+</li>
+</ul>
+<p>Each of these items is called, individually, a <i>symbol</i>.  For example, a single symbol file Myprogram.pdb might contain several hundred symbols, including  global variables and function names and hundreds of local variables.  Often, software companies release two versions of each symbol file:  a full symbol file containing both <i>public symbols</i> and <i>private symbols</i>, and a reduced (stripped) file containing only public symbols.  For details, see <a href="public_and_private_symbols.htm">Public and Private Symbols</a>.</p>
+<p>When debugging, you must make sure that the debugger can access the symbol files that are associated with the target you are debugging.  Both live debugging and debugging crash dump files require symbols. You must obtain the proper symbols for the code that you wish to debug, and load these symbols into the debugger.</p>
+<h3><a id="windows_symbols"></a><a id="WINDOWS_SYMBOLS"></a>Windows Symbols</h3>
+<p>Windows keeps its symbols in files with the extension .pdb. </p>
+<p>The compiler and the linker control the symbol format. The Visual C++ linker, places all symbols into .pdb files.</p>
+<p>The Windows operating system is built in two versions. The <i>free build</i> (or <i>retail build</i>) has relatively small binaries, and the <i>checked build</i> (or <i>debug build</i>) has larger binaries, with more debugging symbols in the code itself. Each of these builds has its own symbol files. When debugging a target on Windows, you must use the symbol files that match the build of Windows on the target.</p>
+<p>The following table lists several of the directories which exist in a standard Windows symbol tree:</p>
+<table>
+<tr>
+<th>Directory</th>
+<th>Contains Symbol Files for</th>
+</tr>
+<tr>
+<td>
+<p>ACM</p>
+</td>
+<td>
+<p>Microsoft Audio Compression Manager files</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>COM</p>
+</td>
+<td>
+<p>Executable files (.com)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>CPL</p>
+</td>
+<td>
+<p>Control Panel programs </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DLL</p>
+</td>
+<td>
+<p>Dynamic-link library files (.dll)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DRV</p>
+</td>
+<td>
+<p>Driver files (.drv) </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>EXE</p>
+</td>
+<td>
+<p>Executable files (.exe) </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>SCR</p>
+</td>
+<td>
+<p>Screen-saver files</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>SYS</p>
+</td>
+<td>
+<p>Driver files (.sys) </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Symbols and Symbol Files%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

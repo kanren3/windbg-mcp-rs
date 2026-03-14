@@ -1,0 +1,91 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !usbkd.usbtx command displays information from a usbport!_HCD_TRANSFER_CONTEXT structure."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!usbkd.usbtx</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._usbkd_usbtx"></a>!usbkd.usbtx</h1>
+</div>
+<p>The  <b>!usbkd.usbtx</b> command displays information from a <b>usbport!_HCD_TRANSFER_CONTEXT</b> structure.</p>
+<pre class="syntax"><b>!usbkd.usbtx </b><i>StructAddr</i></pre>
+<h2><a id="ddk__devobj_dbg"></a><a id="DDK__DEVOBJ_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______StructAddr______"></a><a id="_______structaddr______"></a><a id="_______STRUCTADDR______"></a>       <i>StructAddr</i>      </dt>
+<dd>
+<p>Address of a <b>usbport!_HCD_TRANSFER_CONTEXT</b> structure. To get the transfer list for a USB host controller, use the <a href="_usbkd_usbhcdext.htm"><b>!usbkd.usbhcdext</b></a> command.</p>
+</dd>
+</dl>
+<h2><a id="DLL"></a><a id="dll"></a>DLL</h2>
+<p>Usbkd.dll
+     </p>
+<h2>Examples</h2>
+<p>Here is one way to find the address of a <b>usbport!_HCD_TRANSFER_CONTEXT</b> structure. First enter <a href="_usbkd_usb2tree.htm"><b>!usbkd.usb2tree</b></a>.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !usbkd.usb2tree
+...
+4)!uhci_info ffffe00001c8f1a0 !devobj ffffe00001c8f050 PCI: VendorId 8086 DeviceId 2938 RevisionId 0002 
+...</code></pre>
+<p>In the preceding output, the address of the device extension of the FDO is displayed as the argument of the <a href="debugger_markup_language_commands.htm">DML</a> command <b>!uhci_info ffffe00001c8f1a0</b>.</p>
+<p>Either click the DML command  or pass the address of the device extension to <b>!usbhcdext</b> to get the transfer list.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !usbkd.usbhcdext ffffe00001c8f1a0
+...
+I/O TRANSFER LIST(s)
+------------------------------------------------------------------------------------------
+1.) Transfer Request Priority List: (TxQueued) Type: 0-NotSplit, 1-Parent, 2-Child
+    --------------------------------------------------------------------------------
+    [000]!usbtx ffffe0000653401c !usbep ffffe00004730c60 !irp ffffe00004221220 State: (7)TX_Mapped_inMp
+        Priority: 0, Type: 0, Flags= 0000000a, SequenceNum: 10, SplitIdx: 0
+        InLen: 4096, OutLen: 0 Status: USBD_STATUS_PENDING (0x40000000)
+    ...
+</code></pre>
+<p>In the preceding output, <code>ffffe0000653401c</code> is the address of an <b>_HCD_TRANSFER_CONTEXT</b>structure. Pass this address to <b>!usbtx</b>.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !usbkd.usbtx ffffe0000653401c
+
+dt usbport!_HCD_TRANSFER_CONTEXT ffffe0000653401c
+dt usbport!_TRANSFER_PARAMETERS ffffe0000653417c
+
+TX HISTORY
+--------------------------------------------------------------------------------
+EVENT, STATE, NEXT (latest at bottom)
+--------------------------------------------------------------------------------
+[01] 	(23)Ev_TX_Icsq, (0)TX_Undefined, (1)TX_InQueue
+[02] 	(5)Ev_TX_MapTransfer, (1)TX_InQueue, (2)TX_MapPending
+[03] 	(7)Ev_TX_MpSubmitSuccess, (2)TX_MapPending, (7)TX_Mapped_inMp
+
+**DMA**
+dt usbport!_TRANSFER_SG_LIST ffffe0000653439c
+SgCount:  1  MdlVirtualAddress: ffffe00000437000  MdlSystemAddress: ffffe00000437000
+	[0] dt usbport!_TRANSFER_SG_ENTRY ffffe000065343bc
+	: sysaddr: 0000000000000000 len 0x00001000(4096) offset 0x00000000(0) phys 00000000'ded90000
+---
+dt usbport!_SCATTER_GATHER_ENTRY ffffe000065343ec
+dt _SCATTER_GATHER_LIST ffffe00001bc231c
+NumberOfElements = 1
+	[0] dt _SCATTER_GATHER_ELEMENT ffffe00001bc232c
+	 :phys 00000000'ded90000 len 0x00001000(4096)</code></pre>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="usb_2_0_extensions.htm">USB 2.0 Debugger Extensions</a></dt>
+<dt><a href="http://go.microsoft.com/fwlink/p?LinkID=227351">Universal Serial Bus (USB) Drivers</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!usbkd.usbtx%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

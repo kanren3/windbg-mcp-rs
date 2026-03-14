@@ -1,0 +1,1224 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="This lab introduces the WinDbg kernel debugger. WinDbg is used to debug the echo kernel mode sample driver code."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Debug Universal Drivers - Step by Step Lab (Echo Kernel-Mode)</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.debug_universal_drivers_-_step_by_step_lab__echo_kernel-mode_"></a>Debug Universal Drivers - Step by Step Lab (Echo Kernel-Mode)</h1>
+</div>
+<p>This lab introduces the WinDbg kernel debugger.  WinDbg  is used to debug the echo kernel mode sample driver code.</p>
+<h2><a id="Lab_objectives"></a><a id="lab_objectives"></a><a id="LAB_OBJECTIVES"></a>Lab objectives</h2>
+<p> This lab includes exercises that introduce the debugging tools, teach common debugging commands, illustrate the use of break points, and show the use of the debugging extensions. </p>
+<p>In this lab, a live kernel debug connection is used to explore the following: </p>
+<ul>
+<li>Use the Windows debugger commands </li>
+<li>Use standard commands (Call stacks, variables, threads, IRQL) </li>
+<li>Use advanced driver debugging commands (!commands) </li>
+<li>Use symbols </li>
+<li>Set breakpoints in live debugging</li>
+<li>View call stacks</li>
+<li>Display the Plug and Play device tree</li>
+<li>Work with thread and process context</li>
+</ul>
+<div class="alert"><b>Note</b>  When working with the Windows debugger, there are two types of debugging that can be performed - user or kernel mode debugging. <p class="note"><i>User mode</i> - Applications and subsystems run on the computer in user mode. Processes that run in user mode do so within their own virtual address spaces. They are restricted from gaining direct access to many parts of the system, including system hardware, memory that was not allocated for their use, and other portions of the system that might compromise system integrity. Because processes that run in user mode are effectively isolated from the system and other user mode processes, they cannot interfere with these resources.</p>
+<p class="note"><i>Kernel mode</i> - Kernel mode is the processor access mode in which the operating system and privileged programs run. Kernel mode code has permission to access any part of the system, and is not restricted like user mode code. It can gain access to any part of any other process running in either user mode or kernel mode.  Much of the core OS functionality and many hardware device drivers run in kernel mode.</p>
+<p class="note">This lab will focus on kernel mode debugging, as that is the method used to debug many device drivers.</p>
+</div>
+<div> </div>
+<p>This exercise covers debug commands that are frequently used during both user-mode and kernel-mode debugging. The exercise also covers debug extensions (sometimes called "!commands") that are used for kernel-mode debugging.</p>
+<h2><a id="Lab_setup"></a><a id="lab_setup"></a><a id="LAB_SETUP"></a>Lab setup</h2>
+<p>You will need the following hardware to be able to complete the lab.</p>
+<ul>
+<li>A laptop or desktop computer (host) running Windows 10</li>
+<li>A  laptop or desktop computer (target) running Windows 10</li>
+<li>A network cross over cable or a network hub and network cables to connect the two PCs</li>
+<li>Access to the internet to download symbol files</li>
+</ul>
+<p>You will need the following software to be able to complete the lab.</p>
+<ul>
+<li>Visual Studio 2015 </li>
+<li>Windows 10 SDK </li>
+<li>Windows 10 WDK </li>
+<li>The sample echo driver for Windows 10</li>
+</ul>
+<p>The lab has the following seven sections.</p>
+<ul>
+<li><a href="#connectto">Section 1: Connect to a kernel mode WinDbg session</a></li>
+<li><a href="#KernelModeDebuggingCommandsAndTechniques">Section 2: Kernel mode debugging commands and techniques</a></li>
+<li><a href="#Section3_Download_Build">Section 3: Download and build the KMDF Universal Echo Driver</a></li>
+<li><a href="#Section4_Install">Section 4: Install the KMDF Echo driver sample on the target system </a></li>
+<li><a href="#UseWinDbgToDisplayInformation">Section 5: Use WinDbg to display information about the driver </a></li>
+<li><a href="#DisplayingThePlugAndPlayDeviceTree">Section 6: Display plug and play device tree information</a></li>
+<li><a href="#WorkingWithBreakpoints">Section 7: Work with breakpoints and source code</a></li>
+<li><a href="#ViewingVariables">Section 8: View variables and call stacks</a></li>
+<li><a href="#DisplayingProcessesAndThreads">Section 9: Display processes and threads</a></li>
+<li><a href="#IRQLRegistersMemory">Section 10: IRQL, Registers and Ending the WinDbg session</a></li>
+<li><a href="#WindowsDebuggingResources">Section 11: Windows debugging resources</a></li>
+</ul>
+<h2><a id="connectto"></a><a id="CONNECTTO"></a>Section 1: Connect to a kernel mode WinDbg session</h2>
+<p><i>In Section 1, you will configure network debugging on the host and target system.</i></p>
+<p>The PCs  in this lab need to be configured to use an Ethernet network connection for kernel debugging.</p>
+<p>This lab uses two PCs. Windows debugger runs on the “host” system and the KMDF Echo driver runs on the “target” system. </p>
+<p>The "&lt;-Host" on the left is connected using a cross over ethernet cable to the "-&gt;Target" on the right.  </p>
+<p>The steps in the lab  assume that you are using a cross over network cable, but the lab should also work if you can plug both the host and the target directly into a network hub. </p>
+<p></p><img src="images/DebugLab_image_TargetHostDrawing1.png" alt="Two PCs connected with a double arrow"/><p></p>
+<p>To work with kernel mode applications and using Windbg, we recommend that you use the KDNET over Ethernet transport. For information about how to use the Ethernet transport protocol, see <a href="getting_started_with_windbg__kernel-mode_.htm">Getting Started with WinDbg (Kernel-Mode)</a>. For more information about setting up the target computer, see <a href="https://msdn.microsoft.com/windows-drivers/develop/preparing_a_computer_for_manual_driver_deployment">Preparing a Computer for Manual Driver Deployment</a> and <a href="setting_up_a_network_debugging_connection.htm">Setting Up Kernel-Mode Debugging over a Network Cable Manually</a>. </p>
+<h3><a id="Configure__kernel_mode_debugging_using_a_crossover_ethernet_cable"></a><a id="configure__kernel_mode_debugging_using_a_crossover_ethernet_cable"></a><a id="CONFIGURE__KERNEL_MODE_DEBUGGING_USING_A_CROSSOVER_ETHERNET_CABLE"></a>Configure  kernel–mode debugging using a crossover ethernet cable</h3>
+<p></p>
+<p></p>
+<p>Follow the next steps to enable kernel mode debugging on the target system. </p>
+<p><b>&lt;- On the host system</b></p>
+<dl>
+<dd>1. Open a command prompt on the host system and type <b>ipconfig</b> to determine its IP address. <pre class="syntax" xml:space="preserve"><code>C:\&gt;ipconfig
+Windows IP Configuration
+Ethernet adapter Ethernet:
+   Connection-specific DNS Suffix  . :
+   Link-local IPv6 Address . . . . . : fe80::c8b6:db13:d1e8:b13b%3
+   Autoconfiguration IPv4 Address. . : 169.182.1.1
+   Subnet Mask . . . . . . . . . . . : 255.255.0.0
+   Default Gateway . . . . . . . . . :
+</code></pre>
+</dd>
+<dd>
+<p></p>
+<p>2. Record the IP address of the Host System:  ______________________________________</p>
+<p></p>
+</dd>
+<dd>
+<p><b>-&gt; On the target  system</b></p>
+<p>3. Open a command prompt on the target system and use the <b>ping</b> command to confirm network connectivity between the two systems. Use the IP address of the host system you recorded instead of the one shown in the sample output.</p>
+<pre class="syntax" xml:space="preserve"><code>C:\&gt; ping 169.182.1.1
+
+Pinging 169.182.1.1 with 32 bytes of data:
+Reply from 169.182.1.1: bytes=32 time=1ms TTL=255
+Reply from 169.182.1.1: bytes=32 time&lt;1ms TTL=255
+Reply from 169.182.1.1: bytes=32 time&lt;1ms TTL=255
+Reply from 169.182.1.1: bytes=32 time&lt;1ms TTL=255
+
+Ping statistics for 169.182.1.1:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 0ms, Maximum = 1ms, Average = 0ms
+</code></pre>
+</dd>
+</dl>
+<p></p>
+<p>Enable kernel mode debugging on the target system by completing the following steps.</p>
+<dl>
+<dd>1. On the target computer, open a Command Prompt window as Administrator. Enter this command to enable debugging.<pre class="syntax" xml:space="preserve"><code>C:\&gt; bcdedit /set {default} DEBUG YES</code></pre>
+</dd>
+<dd>2. Type this command to enable test signing.<pre class="syntax" xml:space="preserve"><code>C:\&gt; bcdedit /set TESTSIGNING ON </code></pre>
+</dd>
+<dd>3. Type this command to set the IP address of the host system. Use the IP address of the host system that you recorded earlier, not the one shown.<pre class="syntax" xml:space="preserve"><code>C:\&gt; bcdedit /dbgsettings net hostip:192.168.1.1 port:50000 key:1.2.3.4
+</code></pre>
+</dd>
+<dd>4.	Type this command to confirm that the dbgsettings they are set properly.<pre class="syntax" xml:space="preserve"><code>C:\&gt; bcdedit /dbgsettings
+key                     1.2.3.4
+debugtype               NET
+hostip                  169.168.1.1
+port                    50000
+dhcp                    Yes
+The operation completed successfully.
+</code></pre>
+</dd>
+</dl>
+<div class="alert"><b>Note</b>  <p class="note"><b>Firewalls and  debuggers</b></p>
+<p class="note">If you receive a pop up message from the firewall, if you wish to use the debugger, unblock the types of networks that you desire. 
+</p>
+<p class="note"></p><img src="images/DebugLab_image_Firewall_Dialog_Box.png" alt="Windows Security Alert - Windows Firewall has blocked some features of this app "/></div>
+<div> </div>
+<p><b>&lt;- On the host  system</b></p>
+<dl>
+<dd>1. On the host computer, open a Command Prompt window as Administrator. Change to the WinDbg.exe directory.  We will use the x64version of WinDbg.exe from the Windows WDK that was installed as part of the Windows kit installation. <pre class="syntax" xml:space="preserve"><code>C:\&gt; Cd C:\Program Files(x86)\Windows Kits\10.0\Debuggers\x64 </code></pre>
+</dd>
+<dd>2. Launch WinDbg with remote user debug using the following command. The value for the key and port match what we set earlier using BCDEdit on the target.<pre class="syntax" xml:space="preserve"><code>WinDbg –k net:port=50000,key=1.2.3.4</code></pre>
+</dd>
+</dl>
+<p><b>-&gt;On the target   system</b></p>
+<p>	Reboot the target system. </p>
+<p><b>&lt;-On the host  system</b></p>
+<p>In a minute or two, debug output should be displayed on the host system.</p>
+<p></p><img src="images/DebugLab_image_WindDbg_hh.png" alt="Windows debugger showing command window output from a live kernel connection"/><p></p>
+<p>The Debugger Command window is the primary debugging information window in WinDbg. You can enter debugger commands and view the command output in this window.</p>
+<p>The Debugger Command window is split into two panes. You type commands in the smaller pane (the command entry pane) at the bottom of the window and view the command output in the larger pane at the top of the window.</p>
+<p>In the command entry pane, use the up arrow and down arrow keys to scroll through the command history. When a command appears, you can edit it or press <b>ENTER</b> to run the command.</p>
+<h2><a id="KernelModeDebuggingCommandsAndTechniques"></a><a id="kernelmodedebuggingcommandsandtechniques"></a><a id="KERNELMODEDEBUGGINGCOMMANDSANDTECHNIQUES"></a>Section 2: Kernel mode debugging commands and techniques</h2>
+<p><i>In Section 2, you will use debug commands to display information about the target system.</i></p>
+<p><b>&lt;- On the host   system</b></p>
+<p><b>Enable Debugger Markup Language (DML) with .prefer_dml</b></p>
+<p>Some debug commands will display text using Debugger Markup Language that you can click on to quickly gather more information. </p>
+<dl>
+<dd>1.	Use Ctrl+Break (Scroll Lock) in WinDBg to break into the code running on the target system. It may take a bit of time for the target system to respond.</dd>
+<dd>2.	Type the following command to enable DML in the debugger command window.<pre class="syntax" xml:space="preserve"><code>0: kd&gt; .prefer_dml 1
+DML versions of commands on by default</code></pre>
+</dd>
+</dl>
+<p><b>Use .hh to get help</b></p>
+<p>You can access reference command help using the <b>.hh</b> command.  </p>
+<dl>
+<dd>3.	Type the following command to view the command reference help for <b>.prefer_dml</b>.<pre class="syntax" xml:space="preserve"><code>0: kd&gt; .hh .prefer_dml</code></pre>
+</dd>
+<dd>The Debugger help file will display help for the <b>.prefer_dml</b> command.</dd>
+</dl>
+<p></p><img src="images/DebugLab_image_prefer_DML_Help.png" alt="Debugger help application showing help for the .prefer_dml command"/><p></p>
+<p><b>Display the version of Windows on the target system</b></p>
+<dl>
+<dd>5.	Display detailed version information on the target system by typing the <a href="vertarget__show_target_computer_version_.htm"><b>vertarget (Show Target Computer Version)</b></a>  command in the WinDbg window. <pre class="syntax" xml:space="preserve"><code>0: kd&gt; vertarget
+Windows 10 Kernel Version 9926 MP (4 procs) Free x64
+Product: WinNt, suite: TerminalServer SingleUserTS
+Built by: 9926.0.amd64fre.fbl_awesome1501.150119-1648
+Machine Name: ""
+Kernel base = 0xfffff801`8d283000 PsLoadedModuleList = 0xfffff801`8d58aef0
+Debug session time: Fri Feb 20 10:15:17.807 2015 (UTC - 8:00)
+System Uptime: 0 days 01:31:58.931
+</code></pre>
+</dd>
+</dl>
+<p><b>List the loaded modules</b></p>
+<dl>
+<dd>6.	You can verify that you are working with the right kernel mode process by displaying the loaded modules by typing the <a href="lm__list_loaded_modules_.htm"><b>lm (List Loaded Modules)</b></a> command in the WinDbg window. <pre class="syntax" xml:space="preserve"><code>0: Kd&gt; lm
+start             end                 module name
+fffff801`09200000 fffff801`0925f000   volmgrx    (no symbols)           
+fffff801`09261000 fffff801`092de000   mcupdate_GenuineIntel   (no symbols)           
+fffff801`092de000 fffff801`092ec000   werkernel   (export symbols)       werkernel.sys
+fffff801`092ec000 fffff801`0934d000   CLFS       (export symbols)       CLFS.SYS
+fffff801`0934d000 fffff801`0936f000   tm         (export symbols)       tm.sys
+fffff801`0936f000 fffff801`09384000   PSHED      (export symbols)       PSHED.dll
+fffff801`09384000 fffff801`0938e000   BOOTVID    (export symbols)       BOOTVID.dll
+fffff801`0938e000 fffff801`093f7000   spaceport   (no symbols)           
+fffff801`09400000 fffff801`094cf000   Wdf01000   (no symbols)           
+fffff801`094d9000 fffff801`09561000   CI         (export symbols)       CI.dll
+...
+</code></pre>
+</dd>
+</dl>
+<div class="alert"><b>Note</b>  Output that has been omitted is indicated with "… " in this lab.</div>
+<div> </div>
+<dl>
+<dd>7.	To request detailed information about a specific module, use the v (verbose) option as shown.<pre class="syntax" xml:space="preserve"><code>0: Kd&gt; lm v m tcpip
+Browse full module list
+start             end                 module name
+fffff801`09eeb000 fffff801`0a157000   tcpip      (no symbols)           
+    Loaded symbol image file: tcpip.sys
+    Image path: \SystemRoot\System32\drivers\tcpip.sys
+    Image name: tcpip.sys
+    Browse all global symbols  functions  data
+    Timestamp:        Sun Nov 09 18:59:03 2014 (546029F7)
+    CheckSum:         00263DB1
+    ImageSize:        0026C000
+    Translations:     0000.04b0 0000.04e4 0409.04b0 0409.04e4
+
+Unable to enumerate user-mode unloaded modules, Win32 error 0n30
+</code></pre>
+</dd>
+<dd>8.	Because we have yet to set the symbol path and loaded symbols, limited information is available in the debugger. </dd>
+</dl>
+<h3><a id="Section3_Download_Build"></a><a id="section3_download_build"></a><a id="SECTION3_DOWNLOAD_BUILD"></a>Section 3: Download and build the KMDF universal echo driver</h3>
+<p><i>In Section 3, you will download and build the KMDF universal echo driver. </i></p>
+<p>Typically, you would be working with your own driver code when you use WinDbg. To become familiar with WinDbg operation, the KMDF Template "Echo" sample driver  will be used. With the source code available, it will also be easier to understand the information that is displayed in WinDbg. In addition, this sample will be used to illustrate how you can single step through native kernel mode code. This technique can be very valuable for debugging complex kernel mode code issues. </p>
+<p>To download and build the Echo sample audio driver, complete the following steps.</p>
+<ol>
+<li>
+<p><b> Download and extract the KMDF Echo sample from GitHub</b></p>
+<p>You can use a browser to view the echo sample in GitHub here:</p>
+<p><a href="https://github.com/Microsoft/Windows-driver-samples/blob/97cf5197cf5b882b2c689d8dc2b555f2edf8f418/general/echo/kmdf/ReadMe.md">https://github.com/Microsoft/Windows-driver-samples/tree/97cf5197cf5b882b2c689d8dc2b555f2edf8f418/general/echo/kmdf</a></p>
+<p>You can read about the sample here:</p>
+<p><a href="https://github.com/Microsoft/Windows-driver-samples/blob/97cf5197cf5b882b2c689d8dc2b555f2edf8f418/general/echo/kmdf/ReadMe.md">https://github.com/Microsoft/Windows-driver-samples/blob/97cf5197cf5b882b2c689d8dc2b555f2edf8f418/general/echo/kmdf/ReadMe.md</a></p>
+<p>You can browse all of the universal driver samples here:</p>
+<p><a href="https://github.com/Microsoft/Windows-driver-samples">https://github.com/Microsoft/Windows-driver-samples</a></p>
+<p>The KMDF Echo sample is located in the general folder.</p>
+<p></p><img src="images/DebugLab_image_GitHub.png" alt="GitHub Windows-driver-samples highlighting the general folder and the Download ZIP button"/><p></p>
+<p>a. For this lab, we will download the universal driver samples in one zip file.</p>
+<p><a href="https://github.com/Microsoft/Windows-driver-samples/archive/master.zip">https://github.com/Microsoft/Windows-driver-samples/archive/master.zip</a></p>
+<p>b.  Download the master.zip file to your local hard drive.</p>
+<p>c.  Right-click <i>Windows-driver-samples-master.zip</i>, and choose <b>Extract All</b>. Specify a new folder, or browse to an existing one that will store  the extracted files. For example, you could specify <i>C:\DriverSamples\</i> as the new folder into which the files will be extracted.</p>
+<p>d. After the files are extracted, navigate to the following subfolder. </p>
+<p><i>C:\DriverSamples\general\echo\kmdf</i></p>
+</li>
+<li>
+<p><b>Open the driver solution in Visual Studio</b></p>
+<p>In Microsoft Visual Studio, click <b>File</b> &gt; <b>Open</b> &gt; <b>Project/Solution...</b> and navigate to the folder that contains the extracted files (for example, <i>C:\DriverSamples\general\echo\kmdf</i>). Double-click the <i>kmdfecho</i> solution file to open it.</p>
+<p>In Visual Studio, locate the Solution Explorer. (If this is not already open, choose <b>Solution Explorer</b> from the <b>View</b> menu.) In Solution Explorer, you can see one solution that has  three projects.</p>
+<p></p><img src="images/DebugLab_image_Echo_Visual_Studio.png" alt="Visual Studio with the device.c file loaded from the kmdfecho project"/><p></p>
+</li>
+<li>
+<p><b> Set the sample's configuration and platform</b></p>
+<p>In Solution Explorer, right-click <b>Solution 'kmdfecho' (3 projects)</b>, and choose <b>Configuration Manager</b>. Make sure that the configuration and platform settings are the same for the three projects. By default, the configuration is set to "Win10 Debug", and the platform is set to "Win64" for all the projects. If you make any configuration and/or platform changes for one project, you must make the same changes for the remaining three projects.</p>
+</li>
+<li>
+<p><b>Set the runtime library</b></p>
+<p>	Set the runtime library - Change Runtime Library from DLL version to non DLL version. Without this setting, you have to install the MSVC runtime to the target computer separately.</p>
+<p></p>
+<p></p><img src="images/DebugLab_image_echoapp_Properties.png" alt="Echo property page highlighting the Runtime Library setting"/></li>
+<li>
+<p><b>	Check driver signing </b></p>
+<p>Open the echo driver’s property page and make sure <b>Driver Signing</b> &gt; <b>Sign Mode</b> is set to “Test Sign”. This is required because Windows requires that drivers are signed.  </p>
+<p></p><img src="images/DebugLab_image_echoapp_Driver_Signing.png" alt="Echo property page highlighting the Sign Mode setting"/><p></p>
+</li>
+<li>
+<p><b> Build the sample using Visual Studio</b></p>
+<p>In Visual Studio, click <b>Build</b> &gt; <b>Build Solution</b>.</p>
+<p>If all goes well, the build windows will display a message indicating that the build for all three projects succeeded.</p>
+</li>
+<li>
+<p><b> Locate the built driver files</b></p>
+<p>In File Explorer, navigate to the folder that contains the extracted files for the sample. For example, you would navigate to <i>C:\DriverSamples\general\echo\kmdf</i>, if that's the folder you specified earlier. Within that folder, the location of the compiled driver files varies depending on the configuration and platform settings that you selected in the <b>Configuration Manager</b>. For example, if you left the default settings unchanged, then the compiled driver files will be saved to a folder named <i>\x64\Debug</i> for a 64 bit, debug build.</p>
+<p>	Navigate to the folder that contains the built files for the Autosync driver:</p>
+<p><i>C:\DriverSamples\general\echo\kmdf\driver\AutoSync\x64\Debug</i>. The folder should contain these files:</p>
+<table>
+<tr>
+<th>File</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>Echo.sys</td>
+<td>The driver file.</td>
+</tr>
+<tr>
+<td>Echo.inf</td>
+<td>An information (INF) file that contains information needed to install the driver.</td>
+</tr>
+</table>
+<p> </p>
+<p>In addition, the echoapp.exe file was built and it should be located here: <i>  C:\DriverSamples\general\echo\kmdf\exe\x64\Debug</i></p>
+<table>
+<tr>
+<th>File</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>EchoApp.exe</td>
+<td>A command prompt executable test file that communicates with the echo.sys driver.</td>
+</tr>
+</table>
+<p> </p>
+</li>
+<li>Locate a USB thumb drive or set up a network share to copy the built driver files and the test EchoApp from the host to the target system. </li>
+</ol>
+<p>In the next section, you will copy the code to the target system, and install and test the driver.</p>
+<h3><a id="Section4_Install"></a><a id="section4_install"></a><a id="SECTION4_INSTALL"></a>Section 4: Install the KMDF cho driver sample on the target system</h3>
+<p><i>In Section 4, you will use devcon to install the echo sample driver. </i></p>
+<p></p>
+<p><b>-&gt; On the target   system</b></p>
+<p>The computer where you install the driver is called the <i>target computer</i> or the <i>test computer</i>. Typically, this is a separate computer from the computer on which you develop and build the driver package. The computer where you develop and build the driver is called the <i>host computer</i>.</p>
+<p>The process of moving the driver package to the target computer and installing the driver is called <i>deploying</i> the driver. You can deploy the sample echo driver, automatically or manually.</p>
+<p>Before you manually deploy a driver, you must prepare the target computer by turning on test signing. You also need to locate the DevCon tool in your WDK installation. After that you’re ready to run the built driver sample.</p>
+<p>Installing the driver on the target system by performing the following steps.  </p>
+<ol>
+<li>
+<p><b> Prepare the target computer</b></p>
+<p>Open a Command Prompt window as Administrator. Then enter the following command:</p>
+<dl>
+<dd><b>bcdedit /set TESTSIGNING ON</b><p>Reboot the target computer.</p>
+</dd>
+</dl>
+</li>
+<li>
+<p><b>&lt;- On the host   system</b></p>
+<p> Navigate to the Tools folder in your WDK installation and locate the DevCon tool. For example, look in the following folder:</p>
+<dl>
+<dd><i>C:\Program Files (x86)\Windows Kits\10.0\Tools\x64\devcon.exe</i></dd>
+</dl>
+<p>Create a folder on the target for the built driver package (for example, <i>C:\EchoDriver</i>). Copy all the files from the built driver described earlier  on the host computer and save them to the folder that you created on the target computer.</p>
+<p>Locate the .cer certificate on the host system, it is in the same folder on the host computer in the folder that contains the built driver files. On the target computer, right-click the certificate file, and click <b>Install</b>, then follow the prompts to install the test certificate.</p>
+<p>If you need more detailed instructions for setting up the target computer, see <a href="https://msdn.microsoft.com/windows-drivers/develop/preparing_a_computer_for_manual_driver_deployment">Preparing a Computer for Manual Driver Deployment</a>.</p>
+</li>
+<li>
+<p><b>-&gt; On the target   system</b></p>
+<p><b> Install the driver</b></p>
+<p>The following instructions show you how to install and test the sample driver. Here's the general syntax for the devcon tool that you will use to install the driver:</p>
+<dl>
+<dd><i>devcon install &lt;INF file&gt; &lt;hardware ID&gt;</i></dd>
+</dl>
+<p>The INF file required for installing this driver is <i>echo.inf</i>. The inf file contains the hardware ID for installing the <i>echo.sys</i>. For the echo sample the hardware ID  is <b>root\ECHO</b>.</p>
+<p>On the target computer, open a Command Prompt window as Administrator. Navigate to your driver package folder, and enter the following command:</p>
+<dl>
+<dd><b>devcon install echo.inf root\ECHO</b></dd>
+</dl>
+<p>If you get an error message about <i>devcon</i> not being recognized, try adding the path to the <i>devcon</i> tool. For example, if you copied it to a folder called <i>C:\Tools</i>, then try using the following command:</p>
+<dl>
+<dd><b>c:\tools\devcon install echo.inf root\ECHO</b></dd>
+</dl>
+<p>A dialog box will appear indicating that the test driver is an unsigned driver. Click on “Install this driver anyway” to proceed.</p>
+<p></p><img src="images/DebugLab_image_Install_Security_Warning.png" alt="Windows Security Warning - Windows can't verify the publisher of this driver software"/><p></p>
+<p>For more detailed instructions, see <a href="http://msdn.microsoft.com/en-us/library/windows/hardware/hh698272(v=vs.85).aspx">Configuring a Computer for Driver Deployment, Testing, and Debugging</a>.</p>
+<p>After successfully installing the sample driver, you're now ready to test it.</p>
+</li>
+<li>
+<p><b>Examine the driver in Device Manager</b></p>
+<p>	On the target computer, in a Command Prompt window, enter <b>devmgmt</b> open Device Manager. In Device Manager, on the View menu, choose Devices by type. In the device tree, locate <i>Sample WDF Echo Driver</i> in the Sample Device node. </p>
+<p></p><img src="images/DebugLab_image_Device_Manager_Echo.png" alt="Device Manager tree with the Sample WDF Echo Driver highlighted"/><p></p>
+</li>
+<li>
+<p><b>Test  the driver</b></p>
+<p>	Type <b>echoapp</b> to start the test echo app to confirm that the driver is functional. </p>
+<pre class="syntax" xml:space="preserve"><code>C:\Samples\KMDF_Echo_Sample&gt; echoapp
+DevicePath: \\?\root#sample#0005#{cdc35b6e-0be4-4936-bf5f-5537380a7c1a}
+Opened device successfully
+512 Pattern Bytes Written successfully
+512 Pattern Bytes Read successfully
+Pattern Verified successfully
+30720 Pattern Bytes Written successfully
+30720 Pattern Bytes Read successfully
+Pattern Verified successfully
+</code></pre>
+</li>
+</ol>
+<h3><a id="UseWinDbgToDisplayInformation"></a><a id="usewindbgtodisplayinformation"></a><a id="USEWINDBGTODISPLAYINFORMATION"></a>Section 5: Use WinDbg to display information about the driver</h3>
+<p><i>In Section 5, you will set the symbol path and use kernel debugger commands to display information about the KMDF echo sample driver. </i></p>
+<p>View information about the driver by performing the following steps.  </p>
+<p><b>&lt;-On the host   system</b></p>
+<ol>
+<li>
+<p>	If you closed the debugger, open it again using the following command in the administrator command prompt window.</p>
+<pre class="syntax" xml:space="preserve"><code>WinDbg -k net:port=50000,key=1.2.3.4</code></pre>
+</li>
+<li>Use Ctrl+Break (Scroll Lock) to break into the code running on the target system.</li>
+</ol>
+<p class="proch"><img src="../common/wedge.gif" alt=""/><b>Setting the symbol path</b></p>
+<ol>
+<li>To set the symbols path to the Microsoft symbol server in the WinDbg environment, use the <b>.symfix</b> command.<pre class="syntax" xml:space="preserve"><code>0: kd&gt; .symfix</code></pre>
+</li>
+<li>To add your local symbol location to use your local symbols, add the path using <b>.sympath+</b> and then <b>.reload /f</b>. <pre class="syntax" xml:space="preserve"><code>0: kd&gt; .sympath+ C:\DriverSamples\general\echo\kmdf
+0: kd&gt; .reload /f
+</code></pre>
+<div class="alert"><b>Note</b>  The <b>.reload</b> command with the <b>/f</b> force option deletes all symbol information for the specified module and reloads the symbols. In some cases, this command also reloads or unloads the module itself. </div>
+<div> </div>
+</li>
+</ol>
+<div class="alert"><b>Note</b>  You must load the proper symbols to use advanced functionality that WinDbg provides. If you do not have symbols properly configured, you will receive messages indicating that symbols are not available when you attempt to use functionality that is dependent on symbols. 
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; dv
+Unable to enumerate locals, HRESULT 0x80004005
+Private symbols (symbols.pri) are required for locals.
+Type “.hh dbgerr005” for details.
+</code></pre>
+</div>
+<div> </div>
+<div class="alert"><b>Note</b>  <p class="note"><b>Symbol servers</b></p>
+<p class="note">There are a number of approaches that can be used to work with symbols. In many situations, you can configure the PC to access symbols from a symbol server that Microsoft provides when they are needed. This walkthrough assumes that this approach will be used. If the symbols in your environment are in a different location, modify the steps to use that location. For additional information, see <a href="symbol_stores_and_symbol_servers.htm">Symbol Stores and Symbol Servers</a>.</p>
+</div>
+<div> </div>
+<div class="alert"><b>Note</b>  <p class="note"><b>Understanding source code symbol requirements</b></p>
+<p class="note"> To perform source debugging, you must build a checked (debug) version of your binaries. The compiler will create symbol files (.pdb files). These symbol files will show the debugger how the binary instructions correspond to the source lines.
+The actual source files themselves must also be accessible to the debugger. </p>
+<p class="note">The symbol files do not contain the text of the source code.
+For debugging, it is best if the linker does not optimize your code. Source debugging and access to local variables are more difficult, and sometimes nearly impossible, if the code has been optimized.
+If you are having problems viewing local variables or source lines, set the following build options:
+</p>
+<pre class="syntax" xml:space="preserve"><code>set COMPILE_DEBUG=1
+set ENABLE_OPTIMIZER=0
+</code></pre>
+</div>
+<div> </div>
+<ol>
+<li>
+<p>Type the following in the command area of the debugger to display information about the echo driver :</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; lm m echo* v
+Browse full module list
+start             end                 module name
+fffff801`4ae80000 fffff801`4ae89000   ECHO       (private pdb symbols)  C:\Samples\KMDF_ECHO_SAMPLE\echo.pdb
+    Loaded symbol image file: ECHO.sys
+    Image path: \SystemRoot\system32\DRIVERS\ECHO.sys
+    Image name: ECHO.sys
+...  
+</code></pre>
+<p>For information, see <a href="lm__list_loaded_modules_.htm"><b>lm</b></a>.</p>
+</li>
+<li>Because we set prefer_dml =1 earlier, some elements of the output are hot links that you can click on.  Click on the <i>Browse all global symbols link</i> in the debug output to display information about items symbols that start with the letter “a”.<pre class="syntax" xml:space="preserve"><code>0: kd&gt; x /D Echo!a*</code></pre>
+</li>
+<li>
+<p>	As it turns out, the echo sample doesn’t contain any symbols that start with the letter “a”, so to display information about all of the symbols associated with echo driver that start with Echo, type <b>x ECHO!Echo*</b>. </p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; x ECHO!Echo*
+fffff801`0bf95690 ECHO!EchoEvtIoQueueContextDestroy (void *)
+fffff801`0bf95000 ECHO!EchoEvtDeviceSelfManagedIoStart (struct WDFDEVICE__ *)
+fffff801`0bf95ac0 ECHO!EchoEvtTimerFunc (struct WDFTIMER__ *)
+fffff801`0bf9b120 ECHO!EchoEvtDeviceSelfManagedIoSuspend (struct WDFDEVICE__ *)
+...</code></pre>
+<p>For information, see <a href="x__examine_symbols_.htm"><b>x (Examine Symbols)</b></a>.</p>
+</li>
+<li>The <b>!lmi</b> extension displays detailed information about a module. Type <b>!lmi echo</b>. Your output should be similar to the text shown below.<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !lmi echo
+Loaded Module Info: [echo] 
+         Module: ECHO
+   Base Address: fffff8010bf94000
+     Image Name: ECHO.sys
+… 
+</code></pre>
+</li>
+<li>Use the <b>!dh</b> extension to display header information as shown below.<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !dh echo
+
+File Type: EXECUTABLE IMAGE
+FILE HEADER VALUES
+     14C machine (i386)
+       6 number of sections
+54AD8A42 time date stamp Wed Jan 07 11:34:26 2015
+...
+</code></pre>
+</li>
+<li>
+<p><b>Setting the debug mask </b></p>
+<p>Type the following to change the default debug bit mask so that all debug messages from the target system will be displayed in the debugger. </p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !ed nt!Kd_DEFAULT_MASK  0xFFFFFFFF</code></pre>
+<p>Some drivers will display additional information when the mask of   0xFFFFFFFF is used. Set the mask to 0x00000000 if you would like to reduce the amount of information that is displayed.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !ed nt!Kd_DEFAULT_MASK  0x00000000</code></pre>
+</li>
+</ol>
+<h3><a id="DisplayingThePlugAndPlayDeviceTree"></a><a id="displayingtheplugandplaydevicetree"></a><a id="DISPLAYINGTHEPLUGANDPLAYDEVICETREE"></a>Section 6: Displaying Plug and Play device tree information</h3>
+<p><i>In Section 6, you will  display information about the echo sample device driver and where it lives in the Plug and Play device tree. </i></p>
+<p>Information about the device driver in the plug and play device tree can be useful for troubleshooting.  For example, if a device driver is not resident in the device tree, there may an issue with the installation of the device driver.  </p>
+<p>For more information about the device node debug extension, see        <a href="_devnode.htm"><b>!devnode</b></a>.</p>
+<p><b>&lt;-On the host   system</b></p>
+<ol>
+<li>
+<p>To see all the device nodes in the Plug and Play device tree, enter the <b>!devnode 0 1</b> command.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !devnode 0 1
+Dumping IopRootDeviceNode (= 0xffffe0005a3a8d30)
+DevNode 0xffffe0005a3a8d30 for PDO 0xffffe0005a3a9e50
+  InstancePath is "HTREE\ROOT\0"
+  State = DeviceNodeStarted (0x308)
+  Previous State = DeviceNodeEnumerateCompletion (0x30d)
+  DevNode 0xffffe0005a3a3d30 for PDO 0xffffe0005a3a4e50
+    InstancePath is "ROOT\volmgr\0000"
+    ServiceName is "volmgr"
+    State = DeviceNodeStarted (0x308)
+    Previous State = DeviceNodeEnumerateCompletion (0x30d)
+    DevNode 0xffffe0005a324560 for PDO 0xffffe0005bd95ca0…
+…</code></pre>
+</li>
+<li>
+<p>Use Ctrl+F to search in the output that is generated to look for the name of the device driver, <i>echo</i>.</p>
+<p></p><img src="images/DebugLab_image_Find_Dialog.png" alt="Find dialog box showing the term echo being searched for"/><p></p>
+</li>
+<li>
+<p>The echo device driver should be loaded. Use the <b>!devnode 0 1 echo</b> command to display plug and play information associated with our echo device driver as shown below.</p>
+<pre class="syntax" xml:space="preserve"><code>0: Kd&gt; !devnode 0 1 echo
+Dumping IopRootDeviceNode (= 0xffffe0007b725d30)
+DevNode 0xffffe0007b71a630 for PDO 0xffffe0007b71a960
+  InstancePath is "ROOT\SAMPLE\0000"
+  ServiceName is "ECHO"
+  State = DeviceNodeStarted (0x308)
+  Previous State = DeviceNodeEnumerateCompletion (0x30d)
+…
+</code></pre>
+</li>
+<li>
+<p>	The output displayed in the previous command includes the PDO associated with the running instance of our driver, in this example it is <i>0xffffe0007b71a960</i>. Enter the <b>!devobj</b><i>&lt;PDO address&gt;</i> command to display plug and play information associated with the echo device driver on your PC. Use the PDO address that <b>!devnode</b> displays on your PC, not the one shown here.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !devobj 0xffffe0007b71a960
+Device object (ffffe0007b71a960) is for:
+ 0000000e \Driver\PnpManager DriverObject ffffe0007b727e60
+Current Irp 00000000 RefCount 0 Type 00000004 Flags 00001040
+Dacl ffffc102c9b36031 DevExt 00000000 DevObjExt ffffe0007b71aab0 DevNode ffffe0007b71a630 
+ExtensionFlags (0x00000800)  DOE_DEFAULT_SD_PRESENT
+Characteristics (0x00000180)  FILE_AUTOGENERATED_DEVICE_NAME, FILE_DEVICE_SECURE_OPEN
+AttachedDevice (Upper) ffffe000801fee20 \Driver\ECHO
+Device queue is not busy.
+</code></pre>
+</li>
+<li>
+<p>	The output displayed in the <b>!devnode 0 1</b> command includes the PDO address associated with the running instance of our driver, in this example it is <i>0xffffe0007b71a960</i>. Enter the <b>!devstack</b><i>&lt;PDO address&gt;</i> command to display plug and play information associated with the device driver. Use the PDO address that <b>!devnode</b> displays on your PC, not the one shown below. </p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !devstack 0xffffe0007b71a960
+  !DevObj           !DrvObj            !DevExt           ObjectName
+  ffffe000801fee20  \Driver\ECHO       ffffe0007f72eff0  
+&gt; ffffe0007b71a960  \Driver\PnpManager 00000000  0000000e
+!DevNode ffffe0007b71a630 :
+  DeviceInst is "ROOT\SAMPLE\0000"
+  ServiceName is "ECHO"
+</code></pre>
+</li>
+</ol>
+<p>The output shows that we have a pretty simple device driver stack. The echo driver is a child of the PnPManager node. The PnPManager is a root node.</p>
+<pre class="syntax" xml:space="preserve"><code>\Driver\ECHO      
+\Driver\PnpManager
+</code></pre>
+<p>This diagram shows a more complex device node tree. </p><img src="images/DebugLab_image_Device_Node_Tree.png" alt="Device node tree with about 20 nodes"/><div class="alert"><b>Note</b>  For more information about more complex driver stacks, see Driver stacks and Device nodes and device stacks on MSDN.</div>
+<div> </div>
+<h3><a id="WorkingWithBreakpoints"></a><a id="workingwithbreakpoints"></a><a id="WORKINGWITHBREAKPOINTS"></a>Section 7: Working with breakpoints and source code</h3>
+<p><i>In Section 7, you will  set breakpoints and single step through kernel mode source code. </i></p>
+<div class="alert"><b>Note</b>  <p class="note"><b>Setting breakpoints using commands</b></p>
+<p class="note">To be able to step through code and check the values of variables in real time, we need to enable breakpoints and set a path to the source code.</p>
+<p class="note">Breakpoints are used to stop code execution at a particular line of code. You can then step forward in the code from that point, to debug that specific section of code.  </p>
+<p class="note">To set a breakpoint using a debug command, use one of the following <b>b</b> commands:</p>
+<table>
+<tr>
+<td>
+<p>bp</p>
+</td>
+<td>
+<p>Sets a breakpoint that will be active until the module it is in is unloaded.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>bu</p>
+</td>
+<td>
+<p>Sets a breakpoint that is unresolved when the module is unloaded and re-enables when the module reloads.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>bm</p>
+</td>
+<td>
+<p>Sets a breakpoint for a symbol. This command will use bu or bp appropriately and allows wildcards * to be used to set breakpoints on every symbols that matches (like all methods in a class).</p>
+</td>
+</tr>
+</table>
+<p> </p>
+</div>
+<div> </div>
+<p>For more information, see <a href="source_window.htm">Source Code Debugging in WinDbg</a> in the debugging reference documentation.</p>
+<p><b>&lt;-On the host   system</b></p>
+<ol>
+<li>
+<p>Use the WinDbg UI to confirm that <b>Debug</b> &gt; <b>Source Mode</b> is enabled in the current WinDbg session. </p>
+</li>
+<li>
+<p>Add your local code location to the source path by typing the following command.</p>
+<pre class="syntax" xml:space="preserve"><code>.srcpath+ C:\DriverSamples\KMDF_Echo_Sample\driver\AutoSync</code></pre>
+</li>
+<li>
+<p>Add your local symbol location to the symbol path by typing the following command.</p>
+<pre class="syntax" xml:space="preserve"><code>.sympath+ C:\DriverSamples\KMDF_Echo_Sample\driver\AutoSync</code></pre>
+</li>
+<li>
+<p>	We will use the <b>x</b> command to examine the symbols associated with the echo driver to determine the function name to use for the breakpoint.   We can use a wild card or Ctrl+F to locate the <b>DeviceAdd</b> function name.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; x ECHO!EchoEvt*
+8b4c7490          ECHO!EchoEvtIoQueueContextDestroy (void *)
+8b4c7000          ECHO!EchoEvtDeviceSelfManagedIoStart (struct WDFDEVICE__ *)
+8b4c7820          ECHO!EchoEvtTimerFunc (struct WDFTIMER__ *)
+8b4cb0e0          ECHO!EchoEvtDeviceSelfManagedIoSuspend (struct WDFDEVICE__ *)
+8b4c75d0          ECHO!EchoEvtIoWrite (struct WDFQUEUE__ *, struct WDFREQUEST__ *, unsigned int)
+8b4cb170          ECHO!EchoEvtDeviceAdd (struct WDFDRIVER__ *, struct 
+…
+</code></pre>
+<p>The output above shows that <b>DeviceAdd</b> method for our echo driver is <i>ECHO!EchoEvtDeviceAdd</i>.</p>
+<p>Alternatively, we could review the source code to locate the desired function name for our breakpoint.</p>
+</li>
+<li>
+<p>Set the breakpoint with the <b>bm</b> command using the name of the driver, followed by the function name (for example <b>AddDevice</b>) where you want to set the breakpoint, separated by an exclamation mark. We will use <b>AddDevice</b> to watch the driver being loaded. </p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; bm ECHO!EchoEvtDeviceAdd
+  1: fffff801`0bf9b1c0 @!"ECHO!EchoEvtDeviceAdd"
+</code></pre>
+<div class="alert"><b>Note</b>  <p class="note">You can use different syntax in conjunction with setting variables like &lt;module&gt;!&lt;symbol&gt;, &lt;class&gt;::&lt;method&gt;,‘&lt;file.cpp&gt;:&lt;line number&gt;’, or skip a number of times &lt;condition&gt; &lt;#&gt;.  For more information, see <a href="setting_a_conditional_breakpoint.htm">Conditional breakpoints in WinDbg and other Windows debuggers</a>.</p>
+</div>
+<div> </div>
+</li>
+<li>
+<p>List the current breakpoints to confirm that the breakpoint was set by typing the <b>bl</b> command.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; bl
+1 e fffff801`0bf9b1c0     0001 (0001) ECHO!EchoEvtDeviceAdd
+</code></pre>
+<p>The "e" in the output shown above  indicates that the breakpoint number 1 is enabled to fire.</p>
+</li>
+<li>
+<p>Restart code execution on the target system  by typing the <b>go</b> command <b>g</b>.</p>
+</li>
+<li>
+<p><b>-&gt; On the target system</b></p>
+<p>In Windows, open <b>Device Manager</b> using the icon or by entering <b>mmc devmgmt.msc</b>. In Device Manager, expand the <b>Samples</b> node. </p>
+</li>
+<li>
+<p>Right-click on the KMDF Echo driver entry and select <b>Disable</b> from the menu.</p>
+</li>
+<li>
+<p>Right-click on the KMDF Echo driver entry again and select <b>Enable</b> from the menu.</p>
+</li>
+<li>
+<p><b>&lt;- On the host system</b></p>
+<p>When the driver is enabled, the <i>AddDevice</i> debug breakpoint should fire, and the execution of the driver code on the target system should halt. When the breakpoint is hit, the execution should be stopped at the start of the <i>AddDevice</i> routine. The debug command output will display "Breakpoint 1 hit".</p>
+<p></p><img src="images/DebugLab_image_Breakpoint_Echo_DeviceAdd.png" alt="WinDbg showing sample code locals and command windows"/><p></p>
+</li>
+<li>
+<p>Step through the code line-by-line by typing the <b>p</b> command or pressing F10 until you reach the following end of the <i>AddDevice</i> routine. The Brace character “}” will be highlighted as shown.</p>
+<p></p><img src="images/DebugLab_image_Breakpoint_End_DeviceAdd.png" alt="Code window showing brace character highlighted at start of AddDevice routine"/><p></p>
+</li>
+<li>In the next section, we will examine the state of the variables after the DeviceAdd code has executed.</li>
+</ol>
+<div class="alert"><b>Note</b>  <p class="note"><b>Modifying breakpoint state</b></p>
+<p class="note">You can modify existing breakpoints by using the following commands:</p>
+<table>
+<tr>
+<td>
+<p>bl</p>
+</td>
+<td>
+<p>Lists breakpoints.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>bc</p>
+</td>
+<td>
+<p>Clears a breakpoint from the list. Use bc * to clear all breakpoints.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>bd</p>
+</td>
+<td>
+<p>Disables a breakpoint. Use bd * to disable all breakpoints.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>be</p>
+</td>
+<td>
+<p>Enables a breakpoint. Use be * to enable all breakpoints.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p class="note">Alternatively, you can also modify breakpoints by clicking <b>edit</b> &gt; <b>breakpoints</b> in WinDbg. Note that the breakpoint dialog box only works with existing breakpoints. New breakpoints must be set from the command line.</p>
+</div>
+<div> </div>
+<div class="alert"><b>Note</b>  <p class="note"><b>Setting memory access breakpoints</b></p>
+<p class="note">You can also set breakpoints that fire when a  memory location is accessed. Use the <b>ba</b>  (break on access) command, with the following syntax.</p>
+<pre class="syntax" xml:space="preserve"><code>ba &lt;access&gt; &lt;size&gt; &lt;address&gt; {options}</code></pre>
+<table>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>e</p>
+</td>
+<td>
+<p>execute (when CPU fetches an instruction from the address)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>r</p>
+</td>
+<td>
+<p>read/write (when CPU reads or writes to the address)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>w</p>
+</td>
+<td>
+<p>write (when the CPU writes to the address)</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p class="note">Note that you can only set four data breakpoints at any given time and it is up to you to make sure that you are aligning your data correctly or you won’t trigger the breakpoint (i.e. words must end in addresses divisible by 2, dwords are divisible by 4, and quadwords by 0 or 8)</p>
+<p class="note">For example, to set a read/write breakpoint on a specific memory address, you could use a command like this.</p>
+<pre class="syntax" xml:space="preserve"><code>ba r 4 0x0003f7bf0</code></pre>
+</div>
+<div> </div>
+<div class="alert"><b>Note</b>  <p class="note"><b>Stepping through code from the Debugger Command window</b></p>
+<p class="note">The following are the commands that you can use to step through your code. The associated keyboard short cuts are shown in parentheses:</p>
+<ul>
+<li>
+<p>Break in (Ctrl+Break) - This command will interrupt a system as long as the system is running and is in communication with WinDbg (the sequence in the Kernel Debugger is Ctrl+C).</p>
+</li>
+<li>
+<p>Run to cursor (F7 or Ctrl+F10) – Place the cursor in a source or disassembly window where you want the execution to break, then press F7; code execution will run to that point. Note that if the flow of code execution does not reach the point indicated by the cursor (e.g., an IF statement isn't executed), WinDbg would not break, because the code execution did not reach the indicated point.</p>
+</li>
+<li>
+<p>Run (F5) – Run until a breakpoint is encountered or an event like a bug check occurs.</p>
+</li>
+<li>
+<p>Step over (F10) – This command causes code execution to proceed one statement  or one instruction at a time. If a call is encountered, code execution passes over the call without entering the called routine. (If the programming language is C or C++ and WinDbg is in source mode, source mode can be turned on or off using <b>Debug</b>&gt;<b>Source Mode</b>).</p>
+</li>
+<li>
+<p>Step in (F11) – This command is like step-over, except that the execution of a call does go into the called routine.</p>
+</li>
+<li>
+<p>Step out (Shift+F11) – This command causes execution to run to and exit from the current routine (current place in the call stack). This is useful if you've seen enough of the routine.</p>
+</li>
+</ul>
+</div>
+<div> </div>
+<p>For more information, see <a href="source_window.htm">Source Code Debugging in WinDbg</a> in the debugging reference documentation.</p>
+<h3><a id="ViewingVariables"></a><a id="viewingvariables"></a><a id="VIEWINGVARIABLES"></a>Section 8: Viewing variables and call stacks</h3>
+<p><i>In Section 8, you will  display information about variables and call stacks. </i></p>
+<p>This lab assumes that you are stopped  at the <i>AddDevice</i> routine using the process described earlier. To view the output show here, repeat the steps described previously, if necessary.</p>
+<p><b>&lt;- On the host   system</b></p>
+<p><b>Display variables</b></p>
+<p>Use the <b>view</b>&gt; <b>local</b> menu item to display local variables.</p>
+<p></p><img src="images/DebugLab_image_Display_Variables.png" alt="WinDbg local variables window"/><p><b>Global variables</b></p>
+<p>You can find the location of a global variable address by typing <i>? &lt;variable name&gt;</i>. </p>
+<p><b>Local variables</b></p>
+<p>You can display the names and values of all local variables for a given frame by typing the <b>dv</b> command.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; dv
+         Driver = 0x00001fff`7ff9c838
+     DeviceInit = 0xffffd001`51978190
+         status = 0n0
+</code></pre>
+<p><b>Callstacks</b></p>
+<div class="alert"><b>Note</b>  <p class="note">The call stack is the chain of function calls that have led to the current location of the program counter. The top function on the call stack is the current function, and the next function is the function that called the current function, and so on.</p>
+<p class="note">To display the call stack, use the k* commands:</p>
+<table>
+<tr>
+<td>
+<p>kb</p>
+</td>
+<td>
+<p>Displays the stack and first three parameters.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>kp</p>
+</td>
+<td>
+<p>Displays the stacks and the full list of parameters.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>kn</p>
+</td>
+<td>
+<p>Allows you to see the stack with the frame information next to it.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+</div>
+<div> </div>
+<p><b>&lt;-On the host   system</b></p>
+<p>1. If you want to keep the call stack available, you can click <b>view</b> &gt; <b>call stack</b> to view it. Click on the columns at the top of the window to toggle the display of additional information.</p>
+<p></p><img src="images/DebugLab_image_Display_Callstacks.png" alt="WinDbg display call stacks window"/><p></p>
+<p>2. Use the <b>kn</b> command to show the call stack while debugging the sample adapter code in a break state.</p>
+<pre class="syntax" xml:space="preserve"><code>3: kd&gt; kn
+# Child-SP          RetAddr           Call Site
+00 ffffd001`51978110 fffff801`0942f55b ECHO!EchoEvtDeviceAdd+0x66 [c:\Samples\kmdf echo sample\c++\driver\autosync\driver.c @ 138]
+01 (Inline Function) --------`-------- Wdf01000!FxDriverDeviceAdd::Invoke+0x30 [d:\wbrtm\minkernel\wdf\framework\shared\inc\private\common\fxdrivercallbacks.hpp @ 61]
+02 ffffd001`51978150 fffff801`eed8097d Wdf01000!FxDriver::AddDevice+0xab [d:\wbrtm\minkernel\wdf\framework\shared\core\km\fxdriverkm.cpp @ 72]
+03 ffffd001`51978570 fffff801`ef129423 nt!PpvUtilCallAddDevice+0x35 [d:\9142\minkernel\ntos\io\pnpmgr\verifier.c @ 104]
+04 ffffd001`519785b0 fffff801`ef0c4112 nt!PnpCallAddDevice+0x63 [d:\9142\minkernel\ntos\io\pnpmgr\enum.c @ 7397]
+05 ffffd001`51978630 fffff801`ef0c344f nt!PipCallDriverAddDevice+0x6e2 [d:\9142\minkernel\ntos\io\pnpmgr\enum.c @ 3390]
+...
+</code></pre>
+<p>The call stack shows that the kernel (nt) called into plug and play code (PnP), that called driver framework code (Wdf) that subsequently called the echo driver <b>DeviceAdd</b> function.</p>
+<h3><a id="DisplayingProcessesAndThreads"></a><a id="displayingprocessesandthreads"></a><a id="DISPLAYINGPROCESSESANDTHREADS"></a>Section 9: Displaying processes and threads</h3>
+<h3><a id="Processes"></a><a id="processes"></a><a id="PROCESSES"></a>Processes</h3>
+<p><i>In Section 9, you will  display information about the process and threads running in kernel mode. </i></p>
+<div class="alert"><b>Note</b>  <p class="note">You can display or set process information by using the  <a href="_process.htm"><b>!process</b></a> debugger extension. We will set a breakpoint to examine the process that are used when a sound is played.</p>
+</div>
+<div> </div>
+<ol>
+<li>
+<p><b>&lt;- On the host   system</b></p>
+<p>Type the <b>dv</b> command to examine the locale variables associated with the <b>EchoEvtIo</b> routine as shown.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; dv ECHO!EchoEvtIo*
+ECHO!EchoEvtIoQueueContextDestroy
+ECHO!EchoEvtIoWrite
+ECHO!EchoEvtIoRead         
+</code></pre>
+</li>
+<li>Clear the previous breakpoints using <b>bc *</b>.<pre class="syntax" xml:space="preserve"><code>0: kd&gt; bc *  </code></pre>
+</li>
+<li>
+<p>3.	Set a symbol breakpoint on the <b>EchoEvtIo</b> routines using the following command.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; bm ECHO!EchoEvtIo*
+  2: aade5490          @!”ECHO!EchoEvtIoQueueContextDestroy”
+  3: aade55d0          @!”ECHO!EchoEvtIoWrite”
+  4: aade54c0          @!”ECHO!EchoEvtIoRead”
+</code></pre>
+</li>
+<li>
+<p>List the breakpoints to confirm that the breakpoint is set properly.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; bl
+1 e aabf0490 [c:\Samples\kmdf echo sample\c++\driver\autosync\queue.c @ 197]    0001 (0001) ECHO!EchoEvtIoQueueContextDestroy
+...
+</code></pre>
+</li>
+<li>
+<p>	Type <b>g</b> to restart code execution. </p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; g</code></pre>
+</li>
+<li>
+<p><b>-&gt; On the target   system</b></p>
+<p>	Run the EchoApp.exe driver test program on the target system.</p>
+</li>
+<li>
+<p><b>&lt;- On the host   system</b></p>
+<p>	When the test app runs, the I/O routine in the driver will be called. This will cause the breakpoint to fire, and execution of the driver code on the target system will halt. </p>
+<pre class="syntax" xml:space="preserve"><code>Breakpoint 2 hit
+ECHO!EchoEvtIoWrite:
+fffff801`0bf95810 4c89442418      mov     qword ptr [rsp+18h],r8
+</code></pre>
+</li>
+<li>
+<p>Use the <b>!process</b> command to display the current process that is involved in running echoapp.exe.</p>
+<pre class="syntax" xml:space="preserve"><code>
+0: kd&gt; !process
+PROCESS ffffe0007e6a7780
+    SessionId: 1  Cid: 03c4    Peb: 7ff7cfec4000  ParentCid: 0f34
+    DirBase: 1efd1b000  ObjectTable: ffffc001d77978c0  HandleCount:  34.
+    Image: echoapp.exe
+    VadRoot ffffe000802c79f0 Vads 30 Clone 0 Private 135. Modified 5. Locked 0.
+    DeviceMap ffffc001d83c6e80
+    Token                             ffffc001cf270050
+    ElapsedTime                       00:00:00.052
+    UserTime                          00:00:00.000
+    KernelTime                        00:00:00.000
+    QuotaPoolUsage[PagedPool]         33824
+    QuotaPoolUsage[NonPagedPool]      4464
+    Working Set Sizes (now,min,max)  (682, 50, 345) (2728KB, 200KB, 1380KB)
+    PeakWorkingSetSize                652
+    VirtualSize                       16 Mb
+    PeakVirtualSize                   16 Mb
+    PageFaultCount                    688
+    MemoryPriority                    BACKGROUND
+    BasePriority                      8
+    CommitCharge                      138
+
+        THREAD ffffe00080e32080  Cid 03c4.0ec0  Teb: 00007ff7cfece000 Win32Thread: 0000000000000000 RUNNING on processor 1
+</code></pre>
+<p>The output shows that the process is associated with the echoapp.exe which was running when our breakpoint on the driver write event was hit. For more information, see <a href="_process.htm"><b>!process</b></a>.</p>
+</li>
+<li>Use the <b>!process 0 0</b> to display summary information for all processes. In the output, use CTRL+F to locate the same process address for the process associated with the echoapp.exe image. In the example shown below, the process address is ffffe0007e6a7780.<pre class="syntax" xml:space="preserve"><code>
+...
+
+PROCESS ffffe0007e6a7780
+    SessionId: 1  Cid: 0f68    Peb: 7ff7cfe7a000  ParentCid: 0f34
+    DirBase: 1f7fb9000  ObjectTable: ffffc001cec82780  HandleCount:  34.
+    Image: echoapp.exe
+
+...
+</code></pre>
+</li>
+<li>
+<p>	Record the process ID associated with echoapp.exe to use later in this lab.  You can also use CTRL+C, to copy the address to the copy buffer for later use.  </p>
+<p></p>
+<p>_____________________________________________________(echoapp.exe process address)</p>
+</li>
+<li>
+<p>	Enter <b>g</b> as required into the debugger to run the code forward until the echoapp.exe finishes running. It will hit the breakpoint in the read and write event a number of times. When echoapp.exe finishes, break in to the debugger, by pressing CTRL+ScrLk (Ctrl+Break). </p>
+</li>
+<li>
+<p>	Use the <b>!process</b> command to confirm that you are now running a different process. In the output shown below, the process with the Image value of <i>System</i> is different from the <i>Echo</i> Image value. </p>
+<pre class="syntax" xml:space="preserve"><code>1: kd&gt; !process
+PROCESS ffffe0007b65d900
+    SessionId: none  Cid: 0004    Peb: 00000000  ParentCid: 0000
+    DirBase: 001ab000  ObjectTable: ffffc001c9a03000  HandleCount: 786.
+    Image: System
+    VadRoot ffffe0007ce45930 Vads 14 Clone 0 Private 22. Modified 131605. Locked 64.
+    DeviceMap ffffc001c9a0c220
+    Token                             ffffc001c9a05530
+    ElapsedTime                       21:31:02.516
+...
+</code></pre>
+<p>The output above shows that a system process ffffe0007b65d900 was running, when we stopped the OS.</p>
+</li>
+<li>
+<p>	Now, use the <b>!process</b> command to try to look at the process ID that had been associated with echoapp.exe that you recorded earlier. Provide your echoapp.exe process address that you recorded earlier, instead of the example process address shown below.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !process ffffe0007e6a7780
+TYPE mismatch for process object at 82a9acc0
+</code></pre>
+<p>The process object is now longer available, as the echoapp.exe process is no longer running.</p>
+</li>
+</ol>
+<h3><a id="Threads"></a><a id="threads"></a><a id="THREADS"></a>Threads</h3>
+<div class="alert"><b>Note</b>  <p class="note">The commands to view and set threads are very similar to those of processes.  Use the <a href="_thread.htm"><b>!thread</b></a> command to view threads. Use <a href="_thread__set_register_context_.htm"><b>.thread</b></a>  to set the current threads.</p>
+</div>
+<div> </div>
+<ol>
+<li>
+<p><b>&lt;- On the host   system</b></p>
+<p>	Enter <b>g</b> into the debugger to restart code execution on the target system. </p>
+</li>
+<li>
+<p><b>-&gt; On the target   system</b></p>
+<p>	Run the EchoApp.exe driver test program on the target system.</p>
+</li>
+<li>
+<p><b>&lt;- On the host   system</b></p>
+<p>The breakpoint will be hit and code execution will halt. </p>
+<pre class="syntax" xml:space="preserve"><code>Breakpoint 4 hit
+ECHO!EchoEvtIoRead:
+aade54c0 55              push    ebp
+</code></pre>
+</li>
+<li>
+<p>To view the threads that are running, type <a href="_thread.htm"><b>!thread</b></a>. Information similar to the following should be displayed:</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt;  !thread
+THREAD ffffe000809a0880  Cid 0b28.1158  Teb: 00007ff7d00dd000 Win32Thread: 0000000000000000 RUNNING on processor 0
+IRP List:
+    ffffe0007bc5be10: (0006,01f0) Flags: 00060a30  Mdl: 00000000
+Not impersonating
+DeviceMap                 ffffc001d83c6e80
+Owning Process            ffffe0008096c900       Image:         echoapp.exe
+...
+</code></pre>
+<p>Note the image name of <i>echoapp.exe</i>, indicating that we are looking at the thread associated with the test app.</p>
+</li>
+<li>
+<p>4.	Use the <b>!process</b> command to determine if this is the only thread running in the process associated with echoapp.exe.  Note that the thread number of the running thread in the process is the same thread running that the !thread command displayed. </p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !process
+PROCESS ffffe0008096c900
+    SessionId: 1  Cid: 0b28    Peb: 7ff7d00df000  ParentCid: 0f34
+    DirBase: 1fb746000  ObjectTable: ffffc001db6b52c0  HandleCount:  34.
+    Image: echoapp.exe
+    VadRoot ffffe000800cf920 Vads 30 Clone 0 Private 135. Modified 8. Locked 0.
+    DeviceMap ffffc001d83c6e80
+    Token                             ffffc001cf5dc050
+    ElapsedTime                       00:00:00.048
+    UserTime                          00:00:00.000
+    KernelTime                        00:00:00.000
+    QuotaPoolUsage[PagedPool]         33824
+    QuotaPoolUsage[NonPagedPool]      4464
+    Working Set Sizes (now,min,max)  (681, 50, 345) (2724KB, 200KB, 1380KB)
+    PeakWorkingSetSize                651
+    VirtualSize                       16 Mb
+    PeakVirtualSize                   16 Mb
+    PageFaultCount                    686
+    MemoryPriority                    BACKGROUND
+    BasePriority                      8
+    CommitCharge                      138
+
+        THREAD ffffe000809a0880  Cid 0b28.1158  Teb: 00007ff7d00dd000 Win32Thread: 0000000000000000 RUNNING on processor 0
+</code></pre>
+</li>
+<li>
+<p>	Use the <b>!process 0 0 command</b> to locate the process  address of two related processes  and record those process address here.</p>
+<p></p>
+<p>Cmd.exe: ____________________________________________________________</p>
+<p></p>
+<p>EchoApp.exe:  _______________________________________________________</p>
+<p></p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !process 0 0 
+
+…
+
+PROCESS ffffe0007bbde900
+    SessionId: 1  Cid: 0f34    Peb: 7ff72dfa7000  ParentCid: 0c64
+    DirBase: 19c5fa000  ObjectTable: ffffc001d8c2f300  HandleCount:  31.
+    Image: cmd.exe
+…
+PROCESS ffffe0008096c900
+    SessionId: 1  Cid: 0b28    Peb: 7ff7d00df000  ParentCid: 0f34
+    DirBase: 1fb746000  ObjectTable: ffffc001db6b52c0  HandleCount:  34.
+    Image: echoapp.exe
+…
+</code></pre>
+<div class="alert"><b>Note</b>  You can alternatively use <b>!process 0 17</b> to display detailed information about every process. The output from this command can be lengthy. The output can be searched using Ctrl+F.</div>
+<div> </div>
+</li>
+<li>
+<p>	Use the <b>!process</b> command to list process information for both processes running your PC. Provide the process address from your <b>!process 0 0</b> output, not the address shown below.</p>
+<p>This example output is for the cmd.exe process ID that was recorded earlier. Note that the image name for this process ID is cmd.exe.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt;  !process ffffe0007bbde900
+PROCESS ffffe0007bbde900
+    SessionId: 1  Cid: 0f34    Peb: 7ff72dfa7000  ParentCid: 0c64
+    DirBase: 19c5fa000  ObjectTable: ffffc001d8c2f300  HandleCount:  31.
+    Image: cmd.exe
+    VadRoot ffffe0007bb8e7b0 Vads 25 Clone 0 Private 117. Modified 20. Locked 0.
+    DeviceMap ffffc001d83c6e80
+    Token                             ffffc001d8c48050
+    ElapsedTime                       21:33:05.840
+    UserTime                          00:00:00.000
+    KernelTime                        00:00:00.000
+    QuotaPoolUsage[PagedPool]         24656
+    QuotaPoolUsage[NonPagedPool]      3184
+    Working Set Sizes (now,min,max)  (261, 50, 345) (1044KB, 200KB, 1380KB)
+    PeakWorkingSetSize                616
+    VirtualSize                       2097164 Mb
+    PeakVirtualSize                   2097165 Mb
+    PageFaultCount                    823
+    MemoryPriority                    FOREGROUND
+    BasePriority                      8
+    CommitCharge                      381
+
+        THREAD ffffe0007cf34880  Cid 0f34.0f1c  Teb: 00007ff72dfae000 Win32Thread: 0000000000000000 WAIT: (UserRequest) UserMode Non-Alertable
+            ffffe0008096c900  ProcessObject
+        Not impersonating
+...
+</code></pre>
+<p></p>
+<p>This example output is for the echoapp.exe process ID that was recorded earlier.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt;  !process ffffe0008096c900
+PROCESS ffffe0008096c900
+    SessionId: 1  Cid: 0b28    Peb: 7ff7d00df000  ParentCid: 0f34
+    DirBase: 1fb746000  ObjectTable: ffffc001db6b52c0  HandleCount:  34.
+    Image: echoapp.exe
+    VadRoot ffffe000800cf920 Vads 30 Clone 0 Private 135. Modified 8. Locked 0.
+    DeviceMap ffffc001d83c6e80
+    Token                             ffffc001cf5dc050
+    ElapsedTime                       00:00:00.048
+    UserTime                          00:00:00.000
+    KernelTime                        00:00:00.000
+    QuotaPoolUsage[PagedPool]         33824
+    QuotaPoolUsage[NonPagedPool]      4464
+    Working Set Sizes (now,min,max)  (681, 50, 345) (2724KB, 200KB, 1380KB)
+    PeakWorkingSetSize                651
+    VirtualSize                       16 Mb
+    PeakVirtualSize                   16 Mb
+    PageFaultCount                    686
+    MemoryPriority                    BACKGROUND
+    BasePriority                      8
+    CommitCharge                      138
+
+        THREAD ffffe000809a0880  Cid 0b28.1158  Teb: 00007ff7d00dd000 Win32Thread: 0000000000000000 RUNNING on processor 0
+        IRP List:
+            ffffe0007bc5be10: (0006,01f0) Flags: 00060a30  Mdl: 00000000
+        Not impersonating
+...
+</code></pre>
+</li>
+<li>
+<p>	Record the first thread address associated with the two processes here.
+</p>
+<p></p>
+<p>Cmd.exe: ____________________________________________________
+ </p>
+<p></p>
+<p>EchoApp.exe:  _________________________________________________
+</p>
+<p></p>
+</li>
+<li>
+<p>	Use the <b>!Thread</b> command to display information about the current thread.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt;  !Thread
+THREAD ffffe000809a0880  Cid 0b28.1158  Teb: 00007ff7d00dd000 Win32Thread: 0000000000000000 RUNNING on processor 0
+IRP List:
+    ffffe0007bc5be10: (0006,01f0) Flags: 00060a30  Mdl: 00000000
+Not impersonating
+DeviceMap                 ffffc001d83c6e80
+Owning Process            ffffe0008096c900       Image:         echoapp.exe
+Attached Process          N/A            Image:         N/A
+...
+</code></pre>
+<p>As expected, the current thread is the thread associated with echoapp.exe and it is in a running state.</p>
+</li>
+<li>
+<p>	Use the <b>!Thread</b> command to display information about the thread associated with cmd.exe process. Provide the thread address you recorded earlier.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !Thread ffffe0007cf34880
+THREAD ffffe0007cf34880  Cid 0f34.0f1c  Teb: 00007ff72dfae000 Win32Thread: 0000000000000000 WAIT: (UserRequest) UserMode Non-Alertable
+    ffffe0008096c900  ProcessObject
+Not impersonating
+DeviceMap                 ffffc001d83c6e80
+Owning Process            ffffe0007bbde900       Image:         cmd.exe
+Attached Process          N/A            Image:         N/A
+Wait Start TickCount      4134621        Ticks: 0
+Context Switch Count      4056           IdealProcessor: 0             
+UserTime                  00:00:00.000
+KernelTime                00:00:01.421
+Win32 Start Address 0x00007ff72e9d6e20
+Stack Init ffffd0015551dc90 Current ffffd0015551d760
+Base ffffd0015551e000 Limit ffffd00155518000 Call 0
+Priority 14 BasePriority 8 UnusualBoost 3 ForegroundBoost 2 IoPriority 2 PagePriority 5
+Child-SP          RetAddr           : Args to Child                                                           : Call Site
+ffffd001`5551d7a0 fffff801`eed184fe : fffff801`eef81180 ffffe000`7cf34880 00000000`fffffffe 00000000`fffffffe : nt!KiSwapContext+0x76 [d:\9142\minkernel\ntos\ke\amd64\ctxswap.asm @ 109]
+ffffd001`5551d8e0 fffff801`eed17f79 : ffff03a5`ca56a3c8 000000de`b6a6e990 000000de`b6a6e990 00007ff7`d00df000 : nt!KiSwapThread+0x14e [d:\9142\minkernel\ntos\ke\thredsup.c @ 6347]
+ffffd001`5551d980 fffff801`eecea340 : ffffd001`5551da18 00000000`00000000 00000000`00000000 00000000`00000388 : nt!KiCommitThreadWait+0x129 [d:\9142\minkernel\ntos\ke\waitsup.c @ 619]
+...
+</code></pre>
+<p>This thread is associated with cmd.exe and is in a wait state.</p>
+</li>
+<li>
+<p>	Provide the thread address of the waiting CMD.exe thread to change the context to that waiting thread.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; .Thread ffffe0007cf34880
+Implicit thread is now ffffe000`7cf34880</code></pre>
+</li>
+<li>
+<p>	Use the <b>k</b> command to view the call stack associated with the waiting thread. </p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; k
+  *** Stack trace for last set context - .thread/.cxr resets it
+ # Child-SP          RetAddr           Call Site
+00 ffffd001`5551d7a0 fffff801`eed184fe nt!KiSwapContext+0x76 [d:\9142\minkernel\ntos\ke\amd64\ctxswap.asm @ 109]
+01 ffffd001`5551d8e0 fffff801`eed17f79 nt!KiSwapThread+0x14e [d:\9142\minkernel\ntos\ke\thredsup.c @ 6347]
+02 ffffd001`5551d980 fffff801`eecea340 nt!KiCommitThreadWait+0x129 [d:\9142\minkernel\ntos\ke\waitsup.c @ 619]
+03 ffffd001`5551da00 fffff801`ef02e642 nt!KeWaitForSingleObject+0x2c0 [d:\9142\minkernel\ntos\ke\wait.c @ 683]
+...
+</code></pre>
+<p>Call stack elements such as <b>KiCommitThreadWait</b> indicate that this thread is not running as is expected. </p>
+</li>
+</ol>
+<div class="alert"><b>Note</b>  <p class="note">For more information about threads and processes, see the following references on MSDN:</p>
+<p class="note"><a href="threads_and_processes.htm">Threads and Processes</a></p>
+<p class="note"><a href="changing_contexts.htm">Changing Contexts</a></p>
+</div>
+<div> </div>
+<h3><a id="Section_10__IRQL__Registers_and_Ending_the_WinDbg_session"></a><a id="section_10__irql__registers_and_ending_the_windbg_session"></a><a id="SECTION_10__IRQL__REGISTERS_AND_ENDING_THE_WINDBG_SESSION"></a>Section 10: IRQL, Registers and Ending the WinDbg session</h3>
+<h3><a id="IRQLRegistersMemory"></a><a id="irqlregistersmemory"></a><a id="IRQLREGISTERSMEMORY"></a>Viewing the saved IRQL</h3>
+<p><i>In Section 10, you will  display the IRQL, and the contents of the regsisters. </i></p>
+<p><b>&lt;- On the host   system</b></p>
+<p>The interrupt request level (IRQL) is used to manage the priority of interrupt servicing. Each processor has an IRQL setting that threads can raise or lower. Interrupts that occur at or below the processor's IRQL setting are masked and will not interfere with the current operation. Interrupts that occur above the processor's IRQL setting take precedence over the current operation.
+The <a href="_irql.htm"><b>!irql</b></a> extension displays the interrupt request level (IRQL) on the current processor of the target computer before the debugger break occurred. When the target computer breaks into the debugger, the IRQL changes, but the IRQL that was effective just before the debugger break is saved and is displayed by <b>!irql</b>.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; !irql
+Debugger saved IRQL for processor 0x0 -- 2 (DISPATCH_LEVEL)
+</code></pre>
+<h3><a id="ViewingTheRegisters"></a><a id="viewingtheregisters"></a><a id="VIEWINGTHEREGISTERS"></a>Viewing the registers</h3>
+<p><b>&lt;-On the host   system</b></p>
+<p>Display the contents of the registers for the current thread on the current processor by using the <a href="r__registers_.htm"><b>r (Registers)</b></a> command.</p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; r
+rax=000000000000c301 rbx=ffffe00173eed880 rcx=0000000000000001
+rdx=000000d800000000 rsi=ffffe00173eed8e0 rdi=ffffe00173eed8f0
+rip=fffff803bb757020 rsp=ffffd001f01f8988 rbp=ffffe00173f0b620
+ r8=000000000000003e  r9=ffffe00167a4a000 r10=000000000000001e
+r11=ffffd001f01f88f8 r12=0000000000000000 r13=ffffd001f01efdc0
+r14=0000000000000001 r15=0000000000000000
+iopl=0         nv up ei pl nz na pe nc
+cs=0010  ss=0018  ds=002b  es=002b  fs=0053  gs=002b             efl=00000202
+nt!DbgBreakPointWithStatus:
+fffff803`bb757020 cc              int     3
+</code></pre>
+<p>Alternatively, you can display the contents of the registers by clicking <b>view</b> &gt; <b>registers</b>.  For more information see <a href="r__registers_.htm"><b>r (Registers)</b></a>. </p>
+<p>Viewing the contents of the registers can be helpful when stepping through assembly language code execution and in other scenarios. For more information about assembly language disassembly, see <a href="annotated_x86_disassembly.htm">Annotated x86 Disassembly</a> and <a href="annotated_x64_disassembly.htm">Annotated x64 Disassembly</a>.</p>
+<p>For information about contents of the register, see <a href="x86_architecture.htm">x86 Architecture</a> and <a href="x64_architecture.htm">x64 Architecture</a>.</p>
+<h3><a id="EndingTheSession"></a><a id="endingthesession"></a><a id="ENDINGTHESESSION"></a>Ending the WinDbg session</h3>
+<p><b>&lt;-On the host   system</b></p>
+<p>To end a user-mode debugging session, return the debugger to dormant mode, and set the target application to run again, enter the <b>qd</b> (Quit and Detach) command.</p>
+<p>Be sure and use the <b>g</b> command to let the target computer run code, so that it can be used. It also a good idea to clear any break points using <b>bc *</b>, so that the target computer won't break and try to connect to the host computer debugger. </p>
+<pre class="syntax" xml:space="preserve"><code>0: kd&gt; qd</code></pre>
+<p>For more information, see <a href="ending_a_debugging_session_in_windbg.htm">Ending a Debugging Session in WinDbg</a> in the debugging reference documentation.</p>
+<h2><a id="WindowsDebuggingResources"></a><a id="windowsdebuggingresources"></a><a id="WINDOWSDEBUGGINGRESOURCES"></a>Section 11: Windows debugging resources</h2>
+<p>Additional information is available on Windows debugging.  Note that some of these books will use older versions of Windows such as Windows Vista in their examples, but the concepts discussed are applicable to most versions of Windows.</p>
+<p><b>Books</b></p>
+<ul>
+<li>
+<p>Advanced Windows Debugging by Mario Hewardt and Daniel Pravat</p>
+</li>
+<li>
+<p>Inside Windows Debugging: A Practical Guide to Debugging and Tracing Strategies in Windows® by Tarik Soulami</p>
+</li>
+<li>
+<p>Windows Internals by Mark E. Russinovich, David A. Solomon and Alex Ionescu</p>
+</li>
+</ul>
+<p><b>Video</b></p>
+<p>The Defrag Tools Show WinDbg Episodes 13-29  <a href="http://channel9.msdn.com/Shows/Defrag-Tools">http://channel9.msdn.com/Shows/Defrag-Tools
+</a></p>
+<p><b>Training Vendors:</b></p>
+<p>OSR
+<a href="https://www.osr.com/">https://www.osr.com/</a></p>
+<p></p>
+<h2><a id="related_topics"></a>Related topics</h2>
+<dl>
+<dt><a href="standard_debugging_techniques.htm">Standard Debugging Techniques</a></dt>
+<dt><a href="specialized_debugging_techniques.htm">Specialized Debugging Techniques</a></dt>
+<dt><a href="getting_started_with_windows_debugging.htm">Getting Started with Windows Debugging</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Debug Universal Drivers - Step by Step Lab (Echo Kernel-Mode)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

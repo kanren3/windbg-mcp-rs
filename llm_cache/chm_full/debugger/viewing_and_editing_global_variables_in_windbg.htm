@@ -1,0 +1,42 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Viewing and Editing Global Variables in WinDbg"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Viewing and Editing Global Variables in WinDbg</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.viewing_and_editing_global_variables_in_windbg"></a>Viewing and Editing Global Variables in WinDbg</h1>
+</div>
+<h2><a id="ddk_debugging_bios_code_dbg"></a><a id="DDK_DEBUGGING_BIOS_CODE_DBG"></a></h2>
+<p>The debugger interprets the name of a global variable as a virtual address. Therefore, you can use all of the commands that are described in <a href="accessing_memory_by_virtual_address.htm">Accessing Memory by Virtual Address</a> to read or write global variables.</p>
+<p>In addition, you can use the <a href="___evaluate_expression_.htm"><b>? (Evaluate Expression)</b></a> command to display the address that is associated with any symbol.
+    
+    
+    
+    
+    
+    
+    </p>
+<p>In WinDbg, you can also use the Watch window to display and change global and local variables. The Watch window can display any list of variables that you want. These variables can include global variables and local variables from any function. At any time, the Watch window displays the values of those variables that match the current function's scope. You can also change the values of these variables through the Watch window.</p>
+<p>To open the Watch window, choose <b>Watch</b> from the <b>View</b> menu. You can also press ALT+2 or click the <b>Watch</b> button on the toolbar: <img src="images/tbwatch.png" alt="Screen shot of the Watch button"/>. ALT+SHIFT+2 closes the Watch window.</p>
+<p>The following screen shot shows an example of a Watch window.</p><img src="images/window-watch.png" alt="Screen shot of the Watch window "/><p>The Watch window can contain four columns. The <b>Name</b> and <b>Value</b> columns are always displayed, and the <b>Type</b> and <b>Location</b> columns are optional. To display the <b>Type</b> and <b>Location</b> columns, click the <b>Typecast</b> and <b>Locations</b> buttons, respectively, on the toolbar.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Viewing and Editing Global Variables in WinDbg%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

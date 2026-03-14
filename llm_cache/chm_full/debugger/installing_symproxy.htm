@@ -1,0 +1,54 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Installing SymProxy"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Installing SymProxy</title>
+
+<meta name="MS-HAID" content="r09_symbols_90664113-4670-4ba2-9eab-af876ae29882.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.installing_symproxy"></a>Installing SymProxy</h1>
+</div>
+<h2><a id="Summary_of_installation_tasks"></a><a id="summary_of_installation_tasks"></a><a id="SUMMARY_OF_INSTALLATION_TASKS"></a>Summary of installation tasks</h2>
+<p>The following summarizes the tasks to install and configure SymProxy.</p>
+<ul>
+<li>
+<p>The SymProxy files need to be copied to the %WINDIR%\system32\inetsrv folder for IIS. This task is discussed below.</p>
+</li>
+<li>
+<p>The registry needs to be configured for SymProxy. For more information see <a href="configuring_the_registry.htm">Configuring the Registry</a>.</p>
+</li>
+<li>
+<p>The manifest needs to be registered as Performance Counters and ETW events, and the Event Log needs to be configured. </p>
+</li>
+<li>
+<p>IIS needs to be configured. For more information, see <a href="choosing_network_security_credentials.htm">Choosing Network Security Credentials</a> and <a href="configuring_iis_for_symproxy.htm">Configuring IIS for SymProxy</a>.</p>
+</li>
+<li>
+<p>Confirm that SymProxy is running as expected using the status page. For more information see <a href="checking_and_updating_status.htm">Checking and Updating Status</a>. </p>
+</li>
+</ul>
+<p>These steps can be automated using the Install.cmd file. For more information, see <a href="symproxy_automated_installation.htm">SymProxy Automated Installation</a>.</p>
+<h2><a id="Copy_the_SymProxy_files_to_IIS"></a><a id="copy_the_symproxy_files_to_iis"></a><a id="COPY_THE_SYMPROXY_FILES_TO_IIS"></a>Copy the SymProxy files to IIS</h2>
+<p>The SymProxy files are included in the Debuggers directory of the Windows Driver Kit. For example this is the location of the 64 bit files for Windows 10 kit. C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\symproxy.</p>
+<p>To install SymProxy on the server, copy symproxy.dll,  symsrv.dll and symproxy.man to %WINDIR%\system32\inetsrv.</p>
+<p>In order to prevent problems that could occur in accessing the Microsoft Symbol Store at http://msdl.microsoft.com/downloads/symbols, create a blank file called %WINDIR%\system32\inetsrv\symsrv.yes.  The contents of this file are not important. When symsrv.yes file is present, it automatically accepts the EULA for the Microsoft Public Symbol Store.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Installing SymProxy%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

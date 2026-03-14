@@ -1,0 +1,47 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Finding the Process ID"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Finding the Process ID</title>
+
+<meta name="MS-HAID" content="r04_setup_3_a40111cb-c7c2-451d-b09a-8a2e579f8514.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.finding_the_process_id"></a>Finding the Process ID</h1>
+</div>
+<h2><a id="ddk_finding_the_process_id_dbg"></a><a id="DDK_FINDING_THE_PROCESS_ID_DBG"></a></h2>
+<p>Each process running in Microsoft Windows is assigned a unique decimal number called the <i>process ID</i>, or <i>PID</i>. This number is used to specify the process when attaching a debugger to it.</p>
+<p>There are several ways to determine the PID for a given application: using the Task Manager, using the <b>tasklist</b> command, using the TList utility, or using the debugger.</p>
+<h3><a id="task_manager"></a><a id="TASK_MANAGER"></a>Task Manager</h3>
+<p>The <i>Task Manager</i> may be activated in a number of ways, but the simplest is to press CTRL+ALT+DELETE and then click <b>Task Manager</b>.</p>
+<p>If you select the <b>Processes</b> tab, each process and its PID will be listed, along with other useful information.</p>
+<p>Some kernel errors may cause delays in Task Manager's graphical interface.</p>
+<h3><a id="the_tasklist_command"></a><a id="THE_TASKLIST_COMMAND"></a>The Tasklist Command</h3>
+<p>In Windows XP and later versions of Windows, you can use the <b>tasklist</b> command from a Command Prompt window. This displays all processes, their PIDs, and a variety of other details.</p>
+<h3><a id="tlist"></a><a id="TLIST"></a>TList</h3>
+<p>TList (Task List Viewer, tlist.exe) is a command-line utility that displays a list of tasks, or user-mode processes, currently running on the local computer. TList is included in the Debugging Tools for Windows package.</p>
+<p>When you run TList from the command prompt, it will display a list of all the user-mode processes in memory with a unique process identification (PID) number. For each process, it shows the PID, process name, and, if the process has a window, the title of that window.</p>
+<p>For more information, see <a href="tlist.htm">TList</a>.</p>
+<h3><a id="the__tlist_debugger_command"></a><a id="THE__TLIST_DEBUGGER_COMMAND"></a>The .tlist Debugger Command</h3>
+<p>If there is already a user-mode debugger running on the system in question, the <a href="_tlist__list_process_ids_.htm"><b>.tlist (List Process IDs)</b></a> command will display a list of all PIDs on that system.</p>
+<h3><a id="csrss_and_user_mode_drivers"></a><a id="CSRSS_AND_USER_MODE_DRIVERS"></a>CSRSS and User-Mode Drivers</h3>
+<p>To debug a user-mode driver running on another computer, debug the Client Server Run-Time Subsystem (CSRSS) process. For more information, see <a href="debugging_csrss.htm">Debugging CSRSS</a>.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Finding the Process ID%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

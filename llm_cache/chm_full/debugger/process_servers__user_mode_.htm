@@ -1,0 +1,45 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Process Servers (User Mode)"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Process Servers (User Mode)</title>
+
+<meta name="MS-HAID" content="r08_use_remote_0828c18f-b042-4288-9b58-a56e3076eb2e.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.process_servers__user_mode_"></a>Process Servers (User Mode)</h1>
+</div>
+<h2><a id="ddk_process_servers_user_mode__dbg"></a><a id="DDK_PROCESS_SERVERS_USER_MODE__DBG"></a></h2>
+<p>Remote debugging through a process server involves running a small application called a <i>process server</i> on the server computer. Then a user-mode debugger is started on the client computer. Since this debugger will be doing all of the actual processing, it is called the <i>smart client</i>.</p>
+<p>The Debugging Tools for Windows package includes a process server called DbgSrv (dbgsrv.exe) for use in user mode.</p>
+<p>The two computers do not have to be running the same version of Windows; they can be running any version of Windows. However, the debugger binaries used on the client and the DbgSrv binary used on the server must be from the same release of the Debugging Tools for Windows package. This method cannot be used for dump-file debugging. </p>
+<p>To set up this remote session, the process server is set up first, and then the smart client is activated. Any number of smart clients can operate through a single process server -- these debugging sessions will remain separate and will not interfere with each other. If a debugging session is ended, the process server will continue to run and can be used for new debugging sessions.</p>
+<p>
+<h2><a id="in_this_section"></a>In this section</h2>
+<ul>
+<li><a href="activating_a_process_server.htm"><b>Activating a Process Server</b></a></li>
+<li><a href="searching_for_process_servers.htm"><b>Searching for Process Servers</b></a></li>
+<li><a href="activating_a_smart_client.htm"><b>Activating a Smart Client</b></a></li>
+<li><a href="process_server_examples.htm">Process Server Examples</a></li>
+<li><a href="controlling_a_process_server_session.htm">Controlling a Process Server Session</a></li>
+</ul>
+</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Process Servers (User Mode)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

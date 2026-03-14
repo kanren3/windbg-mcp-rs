@@ -1,0 +1,122 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The f and fp commands fill the specified memory range with a repeating pattern.These commands should not be confused with the ~F (Freeze Thread) command."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>f, fp (Fill Memory)</title>
+
+<meta name="MS-HAID" content="r16_cmds_C_8a73604a-382c-4d01-ba56-871a7675f6bc.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.f__fp__fill_memory_"></a>f, fp (Fill Memory)</h1>
+</div>
+<p>The <b>f</b> and <b>fp</b> commands fill the specified memory range with a repeating pattern.</p>
+<p>These commands should not be confused with the <a href="_f__freeze_thread_.htm"><b>~F (Freeze Thread)</b></a> command.</p>
+<pre class="syntax">f Range Pattern 
+fp [MemoryType] PhysicalRange Pattern</pre>
+<h2><a id="ddk_cmd_fill_memory_dbg"></a><a id="DDK_CMD_FILL_MEMORY_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______Range______"></a><a id="_______range______"></a><a id="_______RANGE______"></a>       <i>Range</i>      </dt>
+<dd>
+<p>Specifies the range in virtual memory to fill. For more syntax details, see <a href="address_and_address_range_syntax.htm">Address and Address Range Syntax</a>.</p>
+</dd>
+<dt><a id="_______PhysicalRange______"></a><a id="_______physicalrange______"></a><a id="_______PHYSICALRANGE______"></a>       <i>PhysicalRange</i>      </dt>
+<dd>
+<p>(Kernel mode only)  Specifies the range in physical memory to fill. The syntax of <i>PhysicalRange</i> is the same as that of a virtual memory range, except that no symbol names are permitted.</p>
+</dd>
+<dt><a id="_______MemoryType______"></a><a id="_______memorytype______"></a><a id="_______MEMORYTYPE______"></a>       <i>MemoryType</i>      </dt>
+<dd>
+<p>(Kernel mode only) Specifies the type of physical memory, which can be one of the following:</p>
+<p></p>
+<dl>
+<dt><a id="_c_"></a><a id="_C_"></a><b>[c]</b></dt>
+<dd>
+<p>Cached memory.</p>
+</dd>
+<dt><a id="_uc_"></a><a id="_UC_"></a><b>[uc]</b></dt>
+<dd>
+<p>Uncached memory.</p>
+</dd>
+<dt><a id="_wc_"></a><a id="_WC_"></a><b>[wc]</b></dt>
+<dd>
+<p>Write-combined memory.</p>
+</dd>
+</dl>
+</dd>
+<dt><a id="_______Pattern______"></a><a id="_______pattern______"></a><a id="_______PATTERN______"></a>       <i>Pattern</i>      </dt>
+<dd>
+<p>Specifies one or more byte values with which to fill memory.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>
+<dl>
+<dt><b>f:</b> user mode, kernel mode</dt>
+<dt><b>fp:</b> kernel mode only</dt>
+</dl>
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>all </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For an overview of memory manipulation and a description of other memory-related commands, see <a href="reading_and_writing_memory.htm">Reading and Writing Memory</a>.</p>
+<h2>Remarks</h2>
+<p>This command fills the memory area specified by <i>range</i> with the specified <i>pattern</i>, repeated as many times as necessary.</p>
+<p></p>
+<p>The <i>pattern</i> parameter must be input as a series of bytes. These can be entered as numeric or as ASCII characters.</p>
+<p>Numeric values will be interpreted as numbers in the current radix (16, 10, or 8). To change the default radix, use the <a href="n__set_number_base_.htm"><b>n (Set Number Base)</b></a> command. The default radix can be overridden by specifying the <b>0x</b> prefix (hexadecimal), the <b>0n</b> prefix (decimal), the <b>0t</b> prefix (octal), or the <b>0y</b> prefix (binary).</p>
+<div class="alert"><b>Note</b>    The default radix behaves differently when C++ expressions are being used. For more information, see the <a href="evaluating_expressions.htm">Evaluating Expressions</a> topic.</div>
+<div> </div>
+<p>If ASCII characters are used, each character must be enclosed in single straight quotation marks. C-style escape characters (such as '\0' or '\n') may not be used. </p>
+<p>If multiple bytes are specified, they must be separated by spaces.</p>
+<p>If <i>pattern</i> has more values than the number of bytes in the range, the debugger ignores the extra values.</p>
+<p>Here are some examples. Assuming the current radix is 16, the following command will fill memory locations 0012FF40 through 0012FF5F with the pattern "ABC", repeated several times:</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; f 0012ff40 L20 'A' 'B' 'C'</code></pre>
+<p>The following command has the exact same effect:</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; f 0012ff40 L20 41 42 43</code></pre>
+<p>The following examples show how you can use the physical memory types (<b>c</b>, <b>uc</b>, and <b>wc</b>) with the <b>fp</b> command in kernel mode:</p>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; fp [c] 0012ff40 L20 'A' 'B' 'C'</code></pre>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; fp [uc] 0012ff40 L20 'A' 'B' 'C'</code></pre>
+<pre class="syntax" xml:space="preserve"><code>kd&gt; fp [wc] 0012ff40 L20 'A' 'B' 'C'</code></pre>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20f, fp (Fill Memory)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,212 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Example 15: Using Object Reference Tracing"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Example 15: Using Object Reference Tracing</title>
+
+<meta name="MS-HAID" content="GFlags_5c012392-d8d0-4ee7-b66b-bbe971e1b871.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.example_15__using_object_reference_tracing"></a>Example 15: Using Object Reference Tracing</h1>
+</div>
+<p>Object Reference Tracing is a Windows feature that records a sequential stack trace when an object is referenced or dereferenced. It is designed to detect errors in object handling that can lead to crashes or memory leaks. Some of these errors are difficult to detect because they do not appear consistently. For detailed information, see <a href="object_reference_tracing.htm">Object Reference Tracing</a>.</p>
+<p>You can configure Object Reference Tracing by using the <b>Global Flags</b> dialog box or at a command prompt. The following examples use the command prompt. For information about using the <b>Global Flags</b> dialog box to configure Object Reference Tracing, see <a href="configuring_object_reference_tracing.htm">Configuring Object Reference Tracing</a>.</p>
+<p>You can use Gflags to enable, disable, and configure Object Reference Tracing. The process is as follows: </p>
+<ul>
+<li>
+<p><b>Use Gflags to enable Object Reference Tracing</b> in the registry or as a kernel flag (run time) setting. If you add the setting to the registry, you must restart the computer to start tracing. If you enable the run time version of the settings, the trace starts immediately, but the trace settings  revert to those in the registry key when you shut down or restart the computer.</p>
+</li>
+<li>
+<p><b>Start the process that creates the suspect object</b>. The trace includes only objects created by processes that are started after the trace begins. If the process starts during or soon after restarting, add the trace settings to the registry, and then restart the system.</p>
+</li>
+<li>
+<p><b>Use the </b><a href="_obtrace.htm"><b>!obtrace</b></a><b> debugger extension</b> to view the trace. By default, the trace is maintained until the object is destroyed, but you can use the <b>/p</b> parameter to maintain the trace until tracing is disabled.</p>
+</li>
+<li>
+<p><b>Use Gflags to disable Object Reference Tracing</b>.in the registry or as a kernel flag (run time) setting.  If you delete the setting from the registry, you must restart the computer to end tracing.  If you disable the run time version of the settings, the trace ends immediately, but the trace settings revert to those in the registry when you shut down or restart the computer.</p>
+</li>
+</ul>
+<p>These examples show how to use Gflags to enable and disable object reference tracing. \</p>
+<h3><a id="enable_run_time_tracing"></a><a id="ENABLE_RUN_TIME_TRACING"></a>Enable Run-time Tracing</h3>
+<p>The following command enables Object Reference Tracing at the command prompt. The command uses the <b>/ko</b> parameter to enable Object Reference Tracing as a kernel flag (run time) setting. The command uses the <b>/t</b> parameter to specify the pool tags <b>Tag1</b> and <b>Fred</b>. As a result, all objects that are created with <b>Tag1</b> or <b>Fred</b> are traced.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>gflags /ko /t Tag1;Fred</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Because the command changes the kernel flag (run-time) settings, object reference tracing starts immediately. The trace will include all objects with the pool tags <b>Tag1</b> or <b>Fred</b> that are created by processes that start after the command is submitted.</p>
+<p>Gflags responds by printing the following message:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>Running Kernel Settings :
+Object Ref Tracing Enabled
+        Temporary Traces
+        Pool Tags: Tag1;Fred
+        Process Name: All Processes</pre>
+</td>
+</tr>
+</table></span></div>
+<p>This message indicates that Object Reference Tracing is enabled. "Temporary Traces" indicates that all records of the trace are deleted when the object is destroyed. To make the trace "permanent," use the <b>/p</b> parameter, which directs Windows to retain the trace data until Object Reference Tracing is disabled, or the computer is shut down or restarted.</p>
+<h3><a id="enable_tracing_in_the_registry"></a><a id="ENABLE_TRACING_IN_THE_REGISTRY"></a>Enable Tracing in the Registry</h3>
+<p>The following command adds an Object Reference Tracing configuration to the registry. The trace that you configure begins when you restart the computer.</p>
+<p>The command uses the <b>/ro</b> parameter to enable Object Reference Tracing as a registry setting. The command uses the <b>/i</b> to specify the process for notepad.exe and the <b>/t</b> parameter to specify the pool tags <b>Tag1</b> and <b>Fred</b>. As a result, all objects that are created by the Notepad process with the <b>Tag1</b> or <b>Fred</b> pool tags are traced. The command also uses the <b>/p</b> parameter, which retains the trace data until the tracing is disabled.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>gflags /ro /t Tag1;Fred /i Notepad.exe /p</pre>
+</td>
+</tr>
+</table></span></div>
+<p>When you submit the command, Gflags stores the information in the registry. However, because registry settings are not effective until you restart the computer, this object reference tracing is configured, but is not yet started. </p>
+<p>Gflags responds by printing the following message:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>Boot Registry Settings :
+Object Ref Tracing Enabled
+        Permanent Traces
+        Pool Tags: Tag1;Fred
+        Process Name: Notepad.exe</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The message indicates that Object Reference Tracing is enabled in the registry. "Permanent Traces" indicates that the trace data will be retained until you shut down or restart the computer. The message also lists the pool tags and image file names that will be traced.</p>
+<h3><a id="display_the_object_reference_tracing_configuration"></a><a id="DISPLAY_THE_OBJECT_REFERENCE_TRACING_CONFIGURATION"></a>Display the Object Reference Tracing Configuration</h3>
+<p>You can display the Object Reference Tracing configuration that is currently effective or is stored in the registry to be used when the computer is restarted.</p>
+<p>In this example, there is one Object Reference Tracing configuration stored in the registry and a different one configured for run time. The run-time trace begins immediately (and overrides any registry settings). However, if you restart the system, the run-time settings are lost, and the Object Reference Tracing session registry settings become effective.</p>
+<p>The following command displays the run time Object Reference Tracing configuration. It uses the <b>/ko</b> parameter with no other parameters.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>gflags /ko</pre>
+</td>
+</tr>
+</table></span></div>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>Running Kernel Settings :
+Object Ref Tracing Enabled
+        Temporary Traces
+        Pool Tags: Tag1;Fred
+        Process Name: All Processes</pre>
+</td>
+</tr>
+</table></span></div>
+<p>If Object Reference Tracing is enabled, as it is in this example, the settings that are displayed describe a trace that is in progress.</p>
+<p>The following command displays the Object Reference Tracing configuration data stored in the registry. It uses the <b>/ro</b> parameter with no other parameters.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>gflags /ro</pre>
+</td>
+</tr>
+</table></span></div>
+<p>In response, Gflags displays the data stored in the registry:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>Boot Registry Settings :
+Object Ref Tracing Enabled
+        Permanent Traces
+        Pool Tags: Tag1;Fred
+        Process Name: Notepad.exe</pre>
+</td>
+</tr>
+</table></span></div>
+<p>If you have restarted the computer since you added the Object Reference Tracing configuration to the registry, the settings that are displayed in response to a gflags /ro command describe the trace that is in progress. However, if you have not yet restarted, or you have restarted, but then started a run-time object reference trace (<b>/ko</b>), the settings that are stored in the registry are not currently effective, but they will become effective again when you reboot the system.</p>
+<h3><a id="disable_object_reference_tracing"></a><a id="DISABLE_OBJECT_REFERENCE_TRACING"></a>Disable Object Reference Tracing</h3>
+<p>When you disable run-time (kernel flag) Object Reference Tracing settings, the trace stops immediately. When you disable Object Reference Tracing settings in the registry, the trace stops when you restart the computer.</p>
+<p>The following command disables run-time Object Reference Tracing. It uses the <b>/d</b> parameter to disable all settings. You cannot disable settings selectively.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>gflags /ko -d</pre>
+</td>
+</tr>
+</table></span></div>
+<p>When the command succeeds, Gflags responds with the following message:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>Running Kernel Settings :
+Object Ref Tracing Disabled</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The following command disables run-time Object Reference Tracing. </p>
+<p>The following command disables Object Reference Tracing settings in the registry. It uses the <b>/d</b> parameter to disable all settings. You cannot disable settings selectively. This command is effective when you restart the computer.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>gflags /ro -d</pre>
+</td>
+</tr>
+</table></span></div>
+<p>When the command succeeds, Gflags responds with the following message:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>Boot Registry Settings :
+Object Ref Tracing Disabled</pre>
+</td>
+</tr>
+</table></span></div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Example 15: Using Object Reference Tracing%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

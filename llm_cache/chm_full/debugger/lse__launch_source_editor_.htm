@@ -1,0 +1,77 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The lse command opens an editor for the current source file."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>lse (Launch Source Editor)</title>
+
+<meta name="MS-HAID" content="r17_cmds_I_0055a635-ecbb-4018-b998-60bbf986be5a.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.lse__launch_source_editor_"></a>lse (Launch Source Editor)</h1>
+</div>
+<p>The <b>lse</b> command opens an editor for the current source file.</p>
+<pre class="syntax">
+    <b>lse</b> 
+</pre>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>User-mode, kernel-mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>Live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>All </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>The <b>lse</b> command opens an editor for the current source file.  This command is equivalent to clicking <b>Edit this file</b> in the shortcut menu of the <a href="source_window.htm">Source window</a> in WinDbg.</p>
+<p>The editor is opened on the computer that the target is running on, so you cannot use the <b>lse</b> command from a remote client.</p>
+<p>The WinDiff editor registry information or the value of the WINDBG_INVOKE_EDITOR environment variable determine which editor is opened.  For example, consider the following value of WINDBG_INVOKE_EDITOR.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>c:\my\path\myeditor.exe -file %f -line %l</pre>
+</td>
+</tr>
+</table></span></div>
+<p>This value indicates that Myeditor.exe opens to the one-based line number of the current source file.  The <b>%l</b> option indicates that line numbers should be read as one-based, and <b>%f</b> indicates that the current source file should be used. You could also include <b>%L</b> to indicate that line numbers are zero-based or <b>%p</b> to indicate that the current source file should be used.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20lse (Launch Source Editor)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

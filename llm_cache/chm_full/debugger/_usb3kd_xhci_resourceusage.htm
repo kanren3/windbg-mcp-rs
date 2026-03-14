@@ -1,0 +1,104 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !usb3kd.xhci_resourceusage extension displays the resources used by a USB 3.0 host controller."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!usb3kd.xhci_resourceusage</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._usb3kd_xhci_resourceusage"></a>!usb3kd.xhci_resourceusage</h1>
+</div>
+<p>The  <a href="_usb3kd_device_info.htm"><b>!usb3kd.xhci_resourceusage</b></a> extension displays the resources used by a USB 3.0 host controller.</p>
+<pre class="syntax"><b>!usb3kd.xhci_resourceusage </b><i>DeviceExtension</i></pre>
+<h2><a id="ddk__devobj_dbg"></a><a id="DDK__DEVOBJ_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______DeviceExtension______"></a><a id="_______deviceextension______"></a><a id="_______DEVICEEXTENSION______"></a>       <i>DeviceExtension</i>      </dt>
+<dd>
+<p>Address of the device extension for the host controller's functional device object (FDO).</p>
+</dd>
+</dl>
+<h2><a id="DLL"></a><a id="dll"></a>DLL</h2>
+<p>Usb3kd.dll
+     </p>
+<h2>Remarks</h2>
+<p> The output the <b>!xhci_resourceusage</b> command is based on the data structures maintained by the USB 3.0 host controller driver (UsbXhci.sys). For more information about the USB 3.0 host controller driver and other drivers in the USB stack, see <a href="http://go.microsoft.com/fwlink/p?LinkID=251983">USB Driver Stack Architecture</a>.</p>
+<h2>Examples</h2>
+<p>To obtain the address of the device extension, look at the output of the <a href="_usb3kd_xhci_dumpall.htm"><b>!xhci_dumpall</b></a> command. In the following example, the address of the device extension is 0xfffffa800536e2d0.</p>
+<div class="code"><span codelanguage="cmd"><table>
+<tr>
+<th>cmd</th>
+</tr>
+<tr>
+<td>
+<pre>3: kd&gt; !xhci_dumpall
+
+Dumping all the XHCI controllers - DrvObj 0xfffffa80053072f0
+------------------------------------------------------------
+1)  ... - PCI: VendorId ... DeviceId ... RevisionId ... Firmware ...
+
+    dt USBXHCI!_CONTROLLER_DATA 0xfffffa80052f20c0
+    !rcdrlogdump USBXHCI -a 0xfffffa8005068520
+    !rcdrlogdump USBXHCI -a 0xfffffa8004e8b9a0 (rundown)
+    !wdfdevice 0x57ffac91fd8
+    !xhci_capability 0xfffffa800536e2d0
+    !xhci_registers 0xfffffa800536e2d0
+    !xhci_commandring 0xfffffa800536e2d0 (No commands are pending)
+    !xhci_deviceslots 0xfffffa800536e2d0
+    !xhci_eventring 0xfffffa800536e2d0
+    !xhci_resourceusage 0xfffffa800536e2d0
+    ...</pre>
+</td>
+</tr>
+</table></span></div>
+<p>Now you can pass the address of the device extension to the <b>!xhci_resourceusage</b> command.</p>
+<div class="code"><span codelanguage="cmd"><table>
+<tr>
+<th>cmd</th>
+</tr>
+<tr>
+<td>
+<pre> 3: kd&gt; !xhci_resourceusage 0xfffffa800536e2d0
+
+Dumping CommonBuffer Resources
+------------------------------
+    dt USBXHCI!_COMMON_BUFFER_DATA 0xfffffa80059a5920
+    DmaEnabler:!wdfdmaenabler 0x57ffa65a9c8
+
+    CommonBuffers Large: Total 9 Available 2 Used 7 TotalBytes 36864
+        [ 1] dt _TRACKING_DATA 0xfffffa80059a6768 VA 0xfffffa8005370000 LA 0x117170000 ...
+        [ 2] dt _TRACKING_DATA 0xfffffa80059a4768 VA 0xfffffa8005373000 LA 0x117173000 ...
+        ...
+    CommonBuffers Small: Total 32 Available 8 Used 24 TotalBytes 16384
+        [ 1] dt _TRACKING_DATA 0xfffffa80059a2798 VA 0xfffffa8005aeb000 LA 0x1168eb000 ...
+        [ 2] dt _TRACKING_DATA 0xfffffa80059a27e8 VA 0xfffffa8005aeb200 LA 0x1168eb200 ...
+        ...
+</pre>
+</td>
+</tr>
+</table></span></div>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="usb_3_extensions.htm">USB 3.0 Extensions</a></dt>
+<dt><a href="_usb3kd_xhci_dumpall.htm"><b>!xhci_dumpall</b></a></dt>
+<dt><a href="http://go.microsoft.com/fwlink/p?LinkID=227351">Universal Serial Bus (USB) Drivers</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!usb3kd.xhci_resourceusage%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

@@ -1,0 +1,45 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Using Callback Objects"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Using Callback Objects</title>
+
+<meta name="MS-HAID" content="Engine_DG_f76855d1-672f-4a0e-b4da-a2b4c2ac4e5d.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.using_callback_objects"></a>Using Callback Objects</h1>
+</div>
+<p>There are three callback COM like interfaces that are used by the engine: <a href="idebugeventcallbacks.htm">IDebugEventCallbacks</a> for notifying <a href="debugger_extensions.htm">debugger extensions</a> and applications of changes to the engine or target, <a href="idebuginputcallbacks.htm">IDebugInputCallbacks</a> for requesting input, and <a href="idebugoutputcallbacks.htm">IDebugOutputCallbacks</a> for sending output.</p>
+<p>Callback objects are registered with clients.  At most, one instance of each of the three callback interfaces can be registered with each client (the Unicode and ASCII versions of a interface count as the same interface).</p>
+<p>When a client is created, the engine remembers the thread in which it was created. The engine uses this same thread whenever it makes a call to a callback instance registered with the client.  If the thread is in use, the engine will queue the calls it needs to make.  To allow the engine to make these calls, the method <a href="dispatchcallbacks.htm"><i>DispatchCallbacks</i></a> should be called whenever a client's thread is idle.  The method <a href="exitdispatch.htm"><b>ExitDispatch</b></a> will cause <i>DispatchCallbacks</i> to return.  If the thread is the same thread that was used to start the debugger session, then the engine can make the callback calls during the <a href="waitforevent.htm"><b>WaitForEvent</b></a> method, and <i>DispatchCallbacks</i> does not need to be called.</p>
+<p>The method <a href="flushcallbacks.htm"><b>FlushCallbacks</b></a> tells the engine to send all buffered output to the output callbacks.</p>
+<h3><a id="event_callbacks"></a><a id="EVENT_CALLBACKS"></a>Event Callback Objects</h3>
+<p>The <a href="idebugeventcallbacks.htm">IDebugEventCallbacks</a> interface is used by the engine to notify the debugger extensions and applications of <a href="events.htm#events">events</a> and changes to the engine and target.  An implementation of <b>IDebugEventCallbacks</b> can be registered with a client using <a href="seteventcallbacks.htm"><i>SetEventCallbacks</i></a>.  The current implementation registered with a client can be found using <a href="geteventcallbacks.htm"><i>GetEventCallbacks</i></a>.  The number of event callbacks registered across all clients can be found using <a href="getnumbereventcallbacks.htm"><i>GetNumberEventCallbacks</i></a>.</p>
+<p>For details on how the engine manages events, see <a href="monitoring_events.htm">Monitoring Events</a>.</p>
+<h3><a id="input_callbacks"></a><a id="INPUT_CALLBACKS"></a>Input Callback Objects</h3>
+<p>The <a href="idebuginputcallbacks.htm">IDebugInputCallbacks</a> interface is used by the engine to request input from debugger extensions and applications.  An implementation of <b>IDebugInputCallbacks</b> can be registered with a client using <a href="setinputcallbacks.htm"><i>SetInputCallbacks</i></a>.  The current implementation registered with a client can be found using <a href="getinputcallbacks.htm"><i>GetInputCallbacks</i></a>.  The number of input callbacks registered across all clients can be found using <a href="getnumberinputcallbacks.htm"><i>GetNumberInputCallbacks</i></a>.</p>
+<p>For details on how the engine manages input, see <a href="using_input_and_output.htm">Input and Output</a>.</p>
+<h3><a id="output_callbacks"></a><a id="OUTPUT_CALLBACKS"></a>Output Callback Objects</h3>
+<p>The <b>IDebugOutputCallbacks</b> interface is used by the engine to send output to the debugger extensions and applications.  An implementation of <b>IDebugOutputCallbacks</b> can be registered with a client using <a href="setoutputcallbacks.htm"><i>SetOutputCallbacks</i></a>.  The current implementation registered with a client can be found using <a href="getoutputcallbacks.htm"><i>GetOutputCallbacks</i></a>.  The number of output callbacks registered across all clients can be found using <a href="getnumberoutputcallbacks.htm"><i>GetNumberOutputCallbacks</i></a>.</p>
+<p>For details on how the engine manages output, see <a href="using_input_and_output.htm">Input and Output</a>.</p>
+<div class="alert"><b>Note</b>    As is typical for COM objects, the engine will call <b>IUnknown::AddRef</b> on a callback COM object when it is registered with a client, and <b>IUnknown::Release</b> when the object is replaced or the client is deleted.</div>
+<div> </div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Using Callback Objects%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

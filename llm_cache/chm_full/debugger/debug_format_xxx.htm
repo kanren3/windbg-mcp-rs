@@ -1,0 +1,202 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="DEBUG_FORMAT_XXX"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>DEBUG_FORMAT_XXX</title>
+
+<meta name="MS-HAID" content="Structures_028478d4-21bb-446c-bb20-579405e62fb0.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.debug_format_xxx"></a>DEBUG_FORMAT_XXX</h1>
+</div>
+<h2><a id="ddk_debug_format_xxx_dbx"></a><a id="DDK_DEBUG_FORMAT_XXX_DBX"></a></h2>
+<p>The DEBUG_FORMAT_<i>XXX</i> bit-flags are used by <a href="writedumpfile2.htm"><b>WriteDumpFile2</b></a> and <a href="writedumpfilewide.htm"><b>WriteDumpFileWide</b></a> to determine the format of a crash dump file and, for user-mode Minidumps, what information to include in the file.</p>
+<p>The following bit-flags apply to all crash dump files.</p>
+<table>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>DEBUG_FORMAT_WRITE_CAB</p>
+</td>
+<td>
+<p>Package the crash dump file in a CAB file.  The supplied file name or file handle is used for the CAB file; the crash dump is first created in a temporary file before being moved into the CAB file.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_FORMAT_CAB_SECONDARY_FILES</p>
+</td>
+<td>
+<p>
+<dl>
+<dt>Include the current symbols and mapped images in the CAB file.</dt>
+<dt>If DEBUG_FORMAT_WRITE_CAB is not set, this flag is ignored.</dt>
+</dl>
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_FORMAT_NO_OVERWRITE</p>
+</td>
+<td>
+<p>Do not overwrite existing files.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>The following bit-flags can also be included for user-mode Minidumps.</p>
+<table>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>DEBUG_FORMAT_USER_SMALL_FULL_MEMORY</p>
+</td>
+<td>
+<p>Add full memory data.  All accessible committed pages owned by the target application will be included.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_FORMAT_USER_SMALL_HANDLE_DATA</p>
+</td>
+<td>
+<p>Add data about the handles that are associated with the target application.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_FORMAT_USER_SMALL_UNLOADED_MODULES</p>
+</td>
+<td>
+<p>Add unloaded module information.  This information is available only in Windows Server 2003 and later versions of Windows.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_FORMAT_USER_SMALL_INDIRECT_MEMORY</p>
+</td>
+<td>
+<p>Add indirect memory.  A small region of memory that surrounds any address that is referenced by a pointer on the stack or backing store is included.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_FORMAT_USER_SMALL_DATA_SEGMENTS</p>
+</td>
+<td>
+<p>Add all data segments within the executable images.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_FORMAT_USER_SMALL_FILTER_MEMORY</p>
+</td>
+<td>
+<p>Set to zero all of the memory on the stack and in the backing store that is not useful for recreating the stack trace.  This can make compression of the Minidump more efficient and increase privacy by removing unnecessary information.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_FORMAT_USER_SMALL_FILTER_PATHS</p>
+</td>
+<td>
+<p>Remove the module paths, leaving only the module names.  This is useful for protecting privacy by hiding the directory structure (which may contain the user's name).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_FORMAT_USER_SMALL_PROCESS_THREAD_DATA</p>
+</td>
+<td>
+<p>Add the process environment block (PEB) and thread environment block (TEB).  This flag can be used to provide Windows system information for threads and processes.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_FORMAT_USER_SMALL_PRIVATE_READ_WRITE_MEMORY</p>
+</td>
+<td>
+<p>Add all committed private read-write memory pages.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_FORMAT_USER_SMALL_NO_OPTIONAL_DATA</p>
+</td>
+<td>
+<p>
+<dl>
+<dt>Prevent privacy-sensitive data from being included in the Minidump.  Currently, this flag excludes from the Minidump data that would have been added due to the following flags being set:</dt>
+<dt>DEBUG_FORMAT_USER_SMALL_PROCESS_THREAD_DATA,</dt>
+<dt>DEBUG_FORMAT_USER_SMALL_FULL_MEMORY,</dt>
+<dt>DEBUG_FORMAT_USER_SMALL_INDIRECT_MEMORY,</dt>
+<dt>DEBUG_FORMAT_USER_SMALL_PRIVATE_READ_WRITE_MEMORY.</dt>
+</dl>
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_FORMAT_USER_SMALL_FULL_MEMORY_INFO</p>
+</td>
+<td>
+<p>Add all basic memory information.  This is the information returned by the <a href="queryvirtual.htm"><b>QueryVirtual</b></a> method.  The information for all memory is included, not just valid memory, which allows the debugger to reconstruct the complete virtual memory layout from the Minidump.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_FORMAT_USER_SMALL_THREAD_INFO</p>
+</td>
+<td>
+<p>Add additional thread information, which includes execution time, start time, exit time, start address, and exit status.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_FORMAT_USER_SMALL_CODE_SEGMENTS</p>
+</td>
+<td>
+<p>Add all code segments with the executable images.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>DbgEng.h (include DbgEng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20DEBUG_FORMAT_XXX%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

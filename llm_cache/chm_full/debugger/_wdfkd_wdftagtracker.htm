@@ -1,0 +1,80 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !wdfkd.wdftagtracker extension displays all available tag information (including tag value, line, file, and time) for a specified tag tracker."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!wdfkd.wdftagtracker</title>
+
+<meta name="MS-HAID" content="r33~c_exts_WDF_75be6e99-7a98-4f80-a7f5-947e3d23cf1f.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._wdfkd_wdftagtracker"></a>!wdfkd.wdftagtracker</h1>
+</div>
+<p>The <b>!wdfkd.wdftagtracker</b> extension displays all available tag information (including tag value, line, file, and time) for a specified tag tracker.   </p>
+<pre class="syntax"><b>!wdfkd.wdftagtracker </b><i>TagObjectPointer</i><b> </b>[<i>Flags</i>]</pre>
+<h2><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______TagObjectPointer______"></a><a id="_______tagobjectpointer______"></a><a id="_______TAGOBJECTPOINTER______"></a>       <i>TagObjectPointer</i>      </dt>
+<dd>
+<p>A pointer to a tag tracker. </p>
+</dd>
+<dt><a id="_______Flags______"></a><a id="_______flags______"></a><a id="_______FLAGS______"></a>       <i>Flags</i>      </dt>
+<dd>
+<p>Optional. The kind of information to display.  <i>Flags</i> can be any combination of the following bits. The default value is 0x0.</p>
+<p></p>
+<dl>
+<dt><a id="Bit_0__0x1_"></a><a id="bit_0__0x1_"></a><a id="BIT_0__0X1_"></a>Bit 0 (0x1)</dt>
+<dd>
+<p>Displays the history of acquire operations and release operations on the object. </p>
+</dd>
+<dt><a id="Bit_1__0x2_"></a><a id="bit_1__0x2_"></a><a id="BIT_1__0X2_"></a>Bit 1 (0x2)</dt>
+<dd>
+<p>Displays the line number of the object in hexadecimal instead of decimal. </p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<p>
+       Wdfkd.dll
+      </p>
+<h3><a id="Frameworks"></a><a id="frameworks"></a><a id="FRAMEWORKS"></a>Frameworks</h3>
+<p>
+       KMDF 1, UMDF 2</p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For more information, see <a href="kernel_mode_driver_framework_debugging.htm">Kernel-Mode Driver Framework Debugging</a>.</p>
+<h2>Remarks</h2>
+<p>To retrieve a pointer to a tag tracker, use the <a href="_wdfkd_wdfobject.htm"><b>!wdfkd.wdfobject</b></a> extension on an internal framework object pointer. </p>
+<p>To use tag tracking, you must enable both the Kernel-Mode Driver Framework (KMDF) verifier and handle tracking in the registry. Both of these settings are stored in the driver's <b>Parameters\Wdf</b> subkey of the <b>HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services</b> key.</p>
+<p>To enable the KMDF verifier, set a nonzero value for <b>VerifierOn</b>. </p>
+<p>To enable handle tracking, set the value of <b>TrackHandles</b> to the name of one or more object types, or specify an asterisk (*) to track all object types. For example, the following example specifies the tracking of references to all WDFDEVICE and WDFQUEUE objects.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>TrackHandles: MULTI_SZ: WDFDEVICE WDFQUEUE</pre>
+</td>
+</tr>
+</table></span></div>
+<p>When you enable handle tracking for an object type, the framework tracks the references that are taken on any object of that type. This setting is useful in finding driver memory leaks that unreleased references cause. <b>TrackHandles</b> works only if the KMDF verifier is enabled. </p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!wdfkd.wdftagtracker%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

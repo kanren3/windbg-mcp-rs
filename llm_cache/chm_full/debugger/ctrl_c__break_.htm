@@ -1,0 +1,115 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The CTRL+C key breaks into the debugger, stopping the target application or target computer, and cancels debugger commands."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>CTRL+C (Break)</title>
+
+<meta name="MS-HAID" content="r23_keys_5e05b1f2-1c9d-4f1a-a681-4994b0fe679c.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.ctrl_c__break_"></a>CTRL+C (Break)</h1>
+</div>
+<p>The CTRL+C key breaks into the debugger, stopping the target application or target computer, and cancels debugger commands.</p>
+<p>CDB Syntax</p>
+<pre class="syntax">CTRL+C 
+</pre>
+<p>KD Syntax</p>
+<pre class="syntax">CTRL+C 
+</pre>
+<p>Target Computer Syntax</p>
+<pre class="syntax">SYSRQ 
+ALT+SYSRQ 
+F12 
+</pre>
+<h2><a id="ddk_meta_ctrl_c_dbg"></a><a id="DDK_META_CTRL_C_DBG"></a></h2>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Debuggers</b></p>
+</td>
+<td>
+<p>CDB and KD only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>user mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Targets</b></p>
+</td>
+<td>
+<p>live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>all </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For other methods of issuing this command and an overview of related commands, see <a href="controlling_the_target.htm">Controlling the Target</a>. </p>
+<h2>Remarks</h2>
+<p><b>     
+      When Using CDB:
+</b></p>
+<p>In user mode, the CTRL+C key causes the target application to break into the debugger. The target application freezes, the debugger becomes active, and debugger commands can be entered.</p>
+<p>If the debugger is already active, CTRL+C does not affect the target application. It can be, however, used to terminate a debugger command. For instance, if you have requested a long display and no longer want to see it, CTRL+C will end the display and return you to the debugger command prompt.</p>
+<p>When performing remote debugging with CDB, CTRL+C can be pressed on the host computer's keyboard. If you want to issue a break from the target computer's keyboard, use CTRL+C on an x86 machine.</p>
+<p>The F12 key can be used to get a command prompt when the application being debugged is busy. Set the focus on one of the target application's windows and press the F12 key on the target computer.</p>
+<p><b>     
+      When Using KD:
+</b></p>
+<p>In kernel mode, the CTRL+C key causes the target computer to break into the debugger. This locks the target computer and wakes up the debugger.</p>
+<p>When debugging a system that is still running, CTRL+C must be pressed on the host keyboard to get the initial command prompt.</p>
+<p>If the debugger is already active, CTRL+C does not affect the target computer. It can be used, however, to terminate a debugger command. For instance, if you have requested a long display and no longer want to see it, CTRL+C will end the display and return you to the debugger command prompt.</p>
+<p>CTRL+C can also be used to get a command prompt when a debugger command is generating a long display or when the target computer is busy. When debugging an x86 machine, it can be pressed on either the host or target keyboard.</p>
+<p>SYSRQ (or ALT+SYSRQ on an enhanced keyboard) is similar. It works from the host or target keyboard on any processor. However, it only works if the prompt has been acquired by pressing CTRL+C at least once before.</p>
+<p>The SYSRQ key can be disabled by editing the registry. In the registry key</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\i8042prt\Parameters</pre>
+</td>
+</tr>
+</table></span></div>
+<p>create a value named <b>BreakOnSysRq</b>, and set it equal to DWORD 0x0. Then reboot. After this is done, pressing the SYSRQ key on the target computer's keyboard will not break into the kernel debugger.</p>
+<p><b>     
+      When Debugging KD with CDB:
+</b></p>
+<p>If you are debugging KD with CDB, then CTRL+C will be intercepted by the host debugger (CDB). To break into the target debugger (KD), you should use <a href="ctrl_f__break_to_kd_.htm"><b>CTRL+F</b></a> instead.</p>
+<div class="alert"><b>Note</b>    Note that in WinDbg, CTRL+C is a <a href="keyboard_shortcuts.htm">shortcut key</a> that is used to copy text from a window. To issue a break command in WinDbg, use <a href="debug___break.htm">CTRL+BREAK</a> or select Debug | Break from the menu.</div>
+<div> </div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20CTRL+C (Break)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

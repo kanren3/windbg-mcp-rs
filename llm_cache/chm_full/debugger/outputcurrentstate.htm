@@ -1,0 +1,142 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The OutputCurrentState method prints the current state of the current target to the debugger console."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>IDebugControl::OutputCurrentState method</title>
+
+<meta name="MS-HAID" content="IDebugControl_1a038e3b-1bf3-47d0-8e40-b2ebc3506308.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.outputcurrentstate"></a>IDebugControl::OutputCurrentState method</h1>
+</div>
+<p>The <b>OutputCurrentState</b> method prints the current state of the current target to the debugger console.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>HRESULT OutputCurrentState(
+  [in] ULONG OutputControl,
+  [in] ULONG Flags
+);</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Parameters</h2>
+<dl>
+<dt><i>OutputControl</i> [in]</dt>
+<dd>
+<p>Specifies which clients to send the output to.  For possible values see <a href="debug_outctl_xxx.htm"><b>DEBUG_OUTCTL_XXX</b></a>.</p>
+</dd>
+<dt><i>Flags</i> [in]</dt>
+<dd>
+<p>Specifies the bit set that determines the information to print to the debugger console.  <i>Flags</i> can be any combination of values from the following table.</p>
+<table>
+<tr>
+<th>Flag</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>DEBUG_CURRENT_SYMBOL</p>
+</td>
+<td>
+<p>Symbol string for the address of the current instruction.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_CURRENT_DISASM</p>
+</td>
+<td>
+<p>Disassembly of the current instruction.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_CURRENT_REGISTERS</p>
+</td>
+<td>
+<p>Current register values.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>DEBUG_CURRENT_SOURCE_LINE</p>
+</td>
+<td>
+<p>File name and line number of the source corresponding to the current instruction.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>Alternatively, <i>Flags</i> can be set to DEBUG_CURRENT_DEFAULT.  This value includes all of the above flags.</p>
+</dd>
+</dl>
+<h2>Return value</h2>
+<p>This method may also return error values.  See <a href="hresult_values.htm"><b>Return Values</b></a> for more details.</p>
+<table>
+<tr>
+<th>Return code</th>
+<th>Description</th>
+</tr>
+<tr>
+<td width="40%">
+<dl>
+<dt><b>S_OK</b></dt>
+</dl>
+</td>
+<td width="60%">
+<p>The method was successful.</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>Setting the flags contained in <i>Flags</i> merely allows the information to be printed.  The information will not always be printed (for example, it will not be printed if it is not available).</p>
+<p>This is the same status information that is printed when breaking into the debugger.</p>
+<p>For more information, see <a href="target_information.htm">Target Information</a>.</p>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Target platform</p>
+</th>
+<td width="70%">
+<dl>
+<dt></dt>
+</dl>
+</td>
+</tr>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Dbgeng.h (include Dbgeng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20IDebugControl::OutputCurrentState method%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

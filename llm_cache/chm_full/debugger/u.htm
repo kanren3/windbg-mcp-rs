@@ -1,0 +1,66 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Robots" content="noindex, nofollow"/>
+<meta name="Description" content="Glossary page"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>U</title>
+
+<meta name="MS-HAID" content="dbg_glossary_fa191f80-14a9-47a0-bf4a-13d29c85162b.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.u"></a>U</h1>
+</div>
+<dl>
+<dt><a id="user_mode"></a><a id="USER_MODE"></a><b>user mode</b></dt>
+<dd>
+<p>Applications and subsystems run within Windows in <i>user mode</i>. Processes that run in user mode do so within their own virtual address spaces. They are restricted from gaining direct access to many parts of the system, including system hardware, memory that was not allocated for their use, and other portions of the system that might compromise system integrity. Because processes that run in user mode are effectively isolated from the system and other user-mode processes, they cannot interfere with these resources.</p>
+<p>User-mode processes can be grouped in the following categories: </p>
+<ul>
+<li>
+<p>System Processes </p>
+<p>These perform important functions and are integral part of the operating system. System processes include such items as the logon process and the session manager process. </p>
+</li>
+<li>
+<p>Server Processes</p>
+<p>These are operating system services such as the Event Log and the Scheduler. They can be configured to start automatically at boot time.</p>
+</li>
+<li>
+<p>Environment Subsystems</p>
+<p>These are used to create a complete operating system environment for the applications. Windows provides the following three environments: Win32, POSIX, and OS/2.</p>
+</li>
+<li>
+<p>User Applications</p>
+<p>There are five types: Win32, Windows 3.1, Microsoft MS-DOS, POSIX, and OS/2.</p>
+</li>
+</ul>
+</dd>
+<dt><a id="user_mode_debugging"></a><a id="USER_MODE_DEBUGGING"></a><b>user-mode debugging</b></dt>
+<dd>
+<p>A debugger session in which the target is running in user mode. </p>
+</dd>
+<dt><a id="user_mode_target"></a><a id="USER_MODE_TARGET"></a><b>user-mode target</b></dt>
+<dd>
+<p>
+     See 
+     target application.</p>
+</dd>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20U%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

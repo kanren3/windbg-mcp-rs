@@ -1,0 +1,51 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Client Objects"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Client Objects</title>
+
+<meta name="MS-HAID" content="Engine_Overview_2838c538-1dc7-4494-b92d-49e58a4ad2aa.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.client_objects"></a>Client Objects</h1>
+</div>
+<h2><a id="client_objects"></a><a id="CLIENT_OBJECTS"></a></h2>
+<p>Almost all interaction with the <a href="introduction.htm#debugger_engine">debugger engine</a> is through <i>client objects</i>, often simply referred to as <i>clients</i>.  Each client provides an implementation of the top-level engine interfaces.  Each interface provides a different set of methods, which can be used to interact with the engine and, through the engine, the targets.  An instance of the engine can have many clients, each with its own state.</p>
+<h3><a id="primary_clients"></a><a id="PRIMARY_CLIENTS"></a>Primary Clients</h3>
+<p>A <i>primary client</i> is a client that has joined the current debugging session.  Initially, when a new client object is created, it is not a primary client.  A client becomes a primary client when it is used to acquire a target (for example, by calling <a href="createprocess2.htm"><b>CreateProcess2</b></a>) or is connected to the debugging session using <a href="connectsession.htm"><b>ConnectSession</b></a>.  The debugger command <a href="_clients__list_debugging_clients_.htm"><b>.clients</b></a> lists only the primary clients.</p>
+<h3><a id="callback_objects"></a><a id="CALLBACK_OBJECTS"></a>Callback Objects</h3>
+<p>Callback objects can be registered with each client.  There are three types of callback objects:</p>
+<ol>
+<li>
+<p><b>Input Callback Objects</b> (or <i>input callbacks</i>): the engine calls input callbacks to request input.  For example, a debugger with a console window could register an input callback to provide the engine with input from the user, or a debugger might register an input callback to provide the engine with input from a file.</p>
+</li>
+<li>
+<p><b>Output Callback Objects</b> (or <i>output callbacks</i>): the engine calls output callbacks to display output.  For example, a debugger with a console window could register an output callback to present the debugger's output to the user, or a debugger might register an output callback to send the output to a log file.</p>
+</li>
+<li>
+<p><b>Event Callback Objects</b> (or <i>event callbacks</i>): the engine calls event callbacks whenever an event occurs in a target (or there is a change in the engine's state).  For example, a debugger extension library could register an event callback to monitor certain events or perform automated actions when an particular event occurs.</p>
+</li>
+</ol>
+<h3><a id="remote_debugging"></a><a id="REMOTE_DEBUGGING"></a>Remote Debugging</h3>
+<p>Client objects facilitate communication to remote instances of the host engine.  The <a href="debugconnect.htm"><b>DebugConnect</b></a> function creates a client object that is connected to a remote engine instance; methods called on this client are executed by the remote engine and callback objects registered locally with the client will be called when the remote engine makes callback calls.</p>
+<h3><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For details about creating and using client objects, see <a href="using_callback_objects.htm">Using Callback Objects</a>.  For details about registering callback objects, see Using Callback Objects.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Client Objects%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

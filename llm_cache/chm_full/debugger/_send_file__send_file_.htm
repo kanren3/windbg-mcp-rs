@@ -1,0 +1,86 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The .send_file command copies files. If you are performing remote debugging through a process server, it sends a file from the smart client's computer to the process server's computer."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>.send_file (Send File)</title>
+
+<meta name="MS-HAID" content="r22_metacmds_S_78834f7c-afe7-4962-84b9-8ea22229ec42.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._send_file__send_file_"></a>.send_file (Send File)</h1>
+</div>
+<p>The <b>.send_file</b> command copies files. If you are performing remote debugging through a process server, it sends a file from the smart client's computer to the process server's computer.</p>
+<pre class="syntax">
+ <b>.send_file </b>[<b>-f</b>]<b> </b><i>Source Destination</i> 
+<b>.send_file </b>[<b>-f</b>]<b> -s </b><i>Destination</i> 
+</pre>
+<h2><a id="ddk_meta_send_file_dbg"></a><a id="DDK_META_SEND_FILE_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="_______-f______"></a><a id="_______-F______"></a>       <b>-f</b>      </dt>
+<dd>
+<p>Forces file creation. By default, <b>.send_file</b> will not overwrite any existing files. If the -f switch is used, the destination file will always be created, and any existing file with the same name will be overwritten.</p>
+</dd>
+<dt><a id="_______Source______"></a><a id="_______source______"></a><a id="_______SOURCE______"></a>       <i>Source</i>      </dt>
+<dd>
+<p>Specifies the full path and filename of the file to be sent. If you are debugging through a process server, this file must be located on the computer where the smart client is running.</p>
+</dd>
+<dt><a id="_______Destination______"></a><a id="_______destination______"></a><a id="_______DESTINATION______"></a>       <i>Destination</i>      </dt>
+<dd>
+<p>Specifies the directory where the file is to be written. If you are debugging through a process server, this directory name is evaluated on the computer where the process server is running.</p>
+</dd>
+<dt><a id="_______-s______"></a><a id="_______-S______"></a>       <b>-s</b>      </dt>
+<dd>
+<p>Causes the debugger to copy all loaded symbol files.</p>
+</dd>
+</dl>
+<h3><a id="Environment"></a><a id="environment"></a><a id="ENVIRONMENT"></a>Environment</h3>
+<table>
+<tr>
+<td>
+<p><b>Modes</b></p>
+</td>
+<td>
+<p>user mode, kernel mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>
+          Targets</b></p>
+</td>
+<td>
+<p>live, crash dump</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Platforms</b></p>
+</td>
+<td>
+<p>all </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>This command is particularly useful when you have been performing remote debugging through a process server, but wish to begin debugging locally instead. In this case you can use the .send_file -s command to copy all the symbol files that the debugger has been using to the process server. These symbol files can then be used by a debugger running on the local computer.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20.send_file (Send File)%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

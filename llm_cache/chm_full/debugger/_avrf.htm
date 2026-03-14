@@ -1,0 +1,160 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !avrf extension controls the settings of Application Verifier and displays a variety of output produced by Application Verifier."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!avrf</title>
+
+<meta name="MS-HAID" content="r31_exts_user_b0bf4f15-c226-4d95-824f-4ff50e91ee7b.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._avrf"></a>!avrf</h1>
+</div>
+<p>The <b>!avrf</b> extension controls the settings of <a href="application_verifier.htm">Application Verifier</a> and displays a variety of output produced by Application Verifier.</p>
+<pre class="syntax"><b>!avrf</b>
+<b>!avrf -vs { </b><i>Length</i><b> | -a </b><i>Address</i><b> }</b>
+<b>!avrf -hp { </b><i>Length</i><b> | -a </b><i>Address</i><b> }</b>
+<b>!avrf -cs { </b><i>Length</i><b> | -a </b><i>Address</i><b> }</b>
+<b>!avrf -dlls [ </b><i>Length</i><b> ]</b>
+<b>!avrf -trm</b>
+<b>!avrf -ex [ </b><i>Length</i><b> ]</b> 
+<b>!avrf -threads [ </b><i>ThreadID</i><b> ]</b>
+<b>!avrf -tp [ </b><i>ThreadID</i><b> ]</b>
+<b>!avrf -srw  [ </b><i>Address</i><b> | </b><i>Address Length</i><b> ] [ -stats ]</b>
+<b>!avrf -leak  [ -m </b><i>ModuleName</i><b>] [ -r </b><i>ResourceType</i><b>] [ -a </b><i>Address</i><b> ] [ -t ]</b>
+<b>!avrf -trace </b><i>TraceIndex</i> 
+<b>!avrf -cnt</b>
+<b>!avrf -brk [</b><i>BreakEventType</i><b>]</b>  
+<b>!avrf -flt [</b><i>EventType</i><b> </b><i>Probability</i><b>]</b> 
+<b>!avrf -flt break </b><i>EventType</i> 
+<b>!avrf -flt stacks </b><i>Length</i> 
+<b>!avrf -trg [ </b><i>Start End</i><b> | dll </b><i>Module</i><b> | all ]</b> 
+<b>!avrf -settings </b>
+<b>!avrf -skp [ </b><i>Start End</i><b> | dll </b><i>Module</i><b> | all | </b><i>Time</i><b> ]</b> 
+</pre>
+<h2><a id="ddk__avrf_dbg"></a><a id="DDK__AVRF_DBG"></a>Parameters</h2>
+<p></p>
+<dl>
+<dt><a id="-vs___Length___-a_Address__"></a><a id="-vs___length___-a_address__"></a><a id="-VS___LENGTH___-A_ADDRESS__"></a><b>-vs { </b><i>Length</i><b> | -a </b><i>Address</i><b> }</b></dt>
+<dd>
+<p>Displays the virtual space operation log. <i>Length</i> specifies the number of records to display, starting with the most recent. <i>Address</i> specifies the virtual address. Records of the virtual operations that contain this virtual address are displayed.</p>
+</dd>
+<dt><a id="-hp___Length___-a_Address__"></a><a id="-hp___length___-a_address__"></a><a id="-HP___LENGTH___-A_ADDRESS__"></a><b>-hp { </b><i>Length</i><b> | -a </b><i>Address</i><b> }</b></dt>
+<dd>
+<p>Displays the heap operation log. <i>Address</i> specifies the heap address. Records of the heap operations that contain this heap address are displayed.</p>
+</dd>
+<dt><a id="-cs___Length___-a_Address__"></a><a id="-cs___length___-a_address__"></a><a id="-CS___LENGTH___-A_ADDRESS__"></a><b>-cs { </b><i>Length</i><b> | -a </b><i>Address</i><b> }</b></dt>
+<dd>
+<p>Displays the critical section delete log.  <i>Length</i> specifies the number of records to display, starting with the most recent. <i>Address</i> specifies the critical section address. Records for the particular critical section are displayed when <i>Address</i> is specified.
+</p>
+</dd>
+<dt><a id="-dlls___Length__"></a><a id="-dlls___length__"></a><a id="-DLLS___LENGTH__"></a><b>-dlls [ </b><i>Length</i><b> ]</b></dt>
+<dd>
+<p>Displays the DLL load/unload log. <i>Length</i> specifies the number of records to display, starting with the most recent. 
+</p>
+</dd>
+<dt><a id="-trm"></a><a id="-TRM"></a><b>-trm</b></dt>
+<dd>
+<p>Displays a log of all terminated and suspended threads. 
+</p>
+</dd>
+<dt><a id="-ex___Length__"></a><a id="-ex___length__"></a><a id="-EX___LENGTH__"></a><b>-ex [ </b><i>Length</i><b> ]</b></dt>
+<dd>
+<p>Displays the exception log. Application Verifier tracks all the exceptions in the application.
+</p>
+</dd>
+<dt><a id="-threads___ThreadID__"></a><a id="-threads___threadid__"></a><a id="-THREADS___THREADID__"></a><b>-threads [ </b><i>ThreadID</i><b> ]</b></dt>
+<dd>
+<p>Displays information about threads in the target process. For child threads, the stack size and the <b>CreateThread </b>flags specified by the parent are also displayed. If you provide a thread ID, information for only that thread is displayed.
+</p>
+</dd>
+<dt><a id="-tp___ThreadID___"></a><a id="-tp___threadid___"></a><a id="-TP___THREADID___"></a><b>-tp [ </b><i>ThreadID</i><b> ]
+</b></dt>
+<dd>
+<p>Displays the threadpool log. This log contains stack traces for various operations such as changing the thread affinity mask, changing thread priority, posting thread messages, and initializing or uninitializing COM from within the threadpool callback. If you provide a thread ID, information for  that thread only is displayed.
+</p>
+</dd>
+<dt><a id="-srw____Address___Address_Length_____-stats___"></a><a id="-srw____address___address_length_____-stats___"></a><a id="-SRW____ADDRESS___ADDRESS_LENGTH_____-STATS___"></a><b>-srw  [ </b><i>Address</i><b> | </b><i>Address Length</i><b> ] [ -stats ]
+</b></dt>
+<dd>
+<p>Displays the Slim Reader/Writer (SRW) log. If you specify <i>Address</i>, records for the SRW lock at that address are displayed. If you specify <i>Address</i> and <i>Length</i>, records for SRW locks in that address range are displayed.  If you include the <b>-stats</b> option, the SRW lock statistics are displayed.</p>
+</dd>
+<dt><a id="-leak___-m_ModuleName____-r_ResourceType____-a_Address_____-t___"></a><a id="-leak___-m_modulename____-r_resourcetype____-a_address_____-t___"></a><a id="-LEAK___-M_MODULENAME____-R_RESOURCETYPE____-A_ADDRESS_____-T___"></a><b>-leak [ -m </b><i>ModuleName</i><b>] [ -r </b><i>ResourceType</i><b>] [ -a </b><i>Address</i><b> ] [ -t ]
+</b></dt>
+<dd>
+<p>Displays the outstanding resources log. These resources may or may not be leaks at any given point. If you specify <i>Modulename</i> (including the extension), all outstanding resources in the specified module are displayed. If you specify <i>ResourceType</i>, all outstanding resources of that resource type are displayed. If you specify <i>Address</i>, records of outstanding resources with that address are displayed. <i>ResourceType</i> can be one of the following:</p>
+<dl>
+<dd>Heap: Displays heap allocations using Win32 Heap APIs</dd>
+<dd>Local: Displays Local/Global allocations</dd>
+<dd>CRT: Displays allocations using CRT APIs</dd>
+<dd>Virtual: Displays Virtual reservations</dd>
+<dd>BSTR: Displays BSTR allocations</dd>
+<dd>Registry: Displays Registry key opens</dd>
+<dd>Power: Displays power notification objects</dd>
+<dd>Handle: Displays thread, file, and event handle allocations</dd>
+</dl>
+</dd>
+<dt><a id="-trace_TraceIndex"></a><a id="-trace_traceindex"></a><a id="-TRACE_TRACEINDEX"></a><b>-trace </b><i>TraceIndex</i></dt>
+<dd>
+<p>Displays a stack trace for the specified trace index. Some structures use this 16-bit index number to identify a stack trace. This index points to a location within the stack trace database.</p>
+</dd>
+<dt><a id="-cnt"></a><a id="-CNT"></a><b>-cnt</b></dt>
+<dd>
+<p>Displays a list of global counters.</p>
+</dd>
+<dt><a id="-brk___BreakEventType__"></a><a id="-brk___breakeventtype__"></a><a id="-BRK___BREAKEVENTTYPE__"></a><b>-brk [ </b><i>BreakEventType</i><b> ]</b></dt>
+<dd>
+<p>Specifies a break event. <i>BreakEventType</i> is the type number of the break event. For a list of possible types, and a list of the current break event settings, enter <b>!avrf -brk</b>.</p>
+</dd>
+<dt><a id="-flt___EventType_Probability__"></a><a id="-flt___eventtype_probability__"></a><a id="-FLT___EVENTTYPE_PROBABILITY__"></a><b>-flt [ </b><i>EventType Probability</i><b> ]</b></dt>
+<dd>
+<p>Specifies a fault injection. <i>EventType</i> is the type number of the event. <i>Probability</i> is the frequency with which the event will fail. This can be any integer between 0 and 1,000,000 (0xF4240).
+If you enter <b>!avrf -flt</b> with no additional parameters, the current fault injection settings are displayed.</p>
+</dd>
+<dt><a id="-flt_break_EventType"></a><a id="-flt_break_eventtype"></a><a id="-FLT_BREAK_EVENTTYPE"></a>-<b>flt break </b><i>EventType</i></dt>
+<dd>
+<p>Causes Application Verifier to break into the debugger each time this fault, specified by <i>EventType</i>, is injected.</p>
+</dd>
+<dt><a id="-flt_stacks_Length"></a><a id="-flt_stacks_length"></a><a id="-FLT_STACKS_LENGTH"></a><b>-flt stacks </b><i>Length</i></dt>
+<dd>
+<p>Displays <i>Length</i> number of stack traces for the most recent fault-injected operations. 
+</p>
+</dd>
+<dt><a id="-trg___Start_End___dll_Module___all____"></a><a id="-trg___start_end___dll_module___all____"></a><a id="-TRG___START_END___DLL_MODULE___ALL____"></a><b>-trg [ </b><i>Start End</i><b> | dll </b><i>Module</i><b> | all ] 
+</b></dt>
+<dd>
+<p>Specifies a target range. <i>Start</i> is the beginning address of the target range. <i>End</i> is the ending address of the target range. <i>Module</i> specifies the name (including the .exe or .dll extension, but not including the path) of a module to be targeted. If you enter  <b>-trg all</b>, all target ranges are reset.
+If you enter  <b>-trg</b> with no additional parameters, the current target ranges are displayed.</p>
+</dd>
+<dt><a id="-skp___Start_End___dll_Module___all___Time____"></a><a id="-skp___start_end___dll_module___all___time____"></a><a id="-SKP___START_END___DLL_MODULE___ALL___TIME____"></a><b>-skp [ </b><i>Start End</i><b> | dll </b><i>Module</i><b> | all | </b><i>Time</i><b> ] 
+</b></dt>
+<dd>
+<p>Specifies an exclusion range. <i>Start</i> is the beginning address of the exclusion range. <i>End</i> is the ending address of the exclusion range. Module specifies the name of a module to be targeted or excluded. <i>Module</i> specifies the name (including the .exe or .dll extension, but not including the path) of a module to be excluded. If you enter <b>-skp all</b>, all target ranges or exclusion ranges are reset. If you enter a<i>Time</i> value, all faults are suppressed for <i>Time</i> milliseconds after execution resumes.</p>
+</dd>
+</dl>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<p>exts.dll</p>
+<h3><a id="Additional_Information"></a><a id="additional_information"></a><a id="ADDITIONAL_INFORMATION"></a>Additional Information</h3>
+<p>For information about how to download and install Application Verifier and its documentation, see <a href="application_verifier.htm">Application Verifier</a>. </p>
+<h2>Remarks</h2>
+<p>When the <b>!avrf</b> extension is used with no parameters, it displays the current Application Verifier options.  If the <b>Full page heap</b> or <b>Fast fill heap</b> option has been enabled, information about active page heaps is displayed as well.  For some examples, see "Heap Operation Logs" in the Application Verifier documentation.</p>
+<p>If an Application Verifier Stop has occurred, the <b>!avrf</b> extension with no parameters will reveal the nature of the stop and its cause.  For some examples, see "Debugging Application Verifier Stops" in the Application Verifier documentation.</p>
+<p>If symbols for ntdll.dll and verifier.dll are missing, the <b>!avrf</b> extension generates an error message.  For information about how to address this problem, see "Setting Up a Debugger for Application Verifier" in the Application Verifier documentation.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!avrf%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

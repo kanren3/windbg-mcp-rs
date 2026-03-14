@@ -1,0 +1,121 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Robots" content="noindex, nofollow"/>
+<meta name="Description" content="Glossary page"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>D</title>
+
+<meta name="MS-HAID" content="dbg_glossary_e3f0f980-4b88-4e00-934b-0443c9640c06.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.d"></a>D</h1>
+</div>
+<dl>
+<dt><a id="data_breakpoint"></a><a id="DATA_BREAKPOINT"></a><b>data breakpoint</b></dt>
+<dd>
+<p>See
+     processor breakpoint.</p>
+</dd>
+<dt><a id="dbgeng_extension"></a><a id="DBGENG_EXTENSION"></a><b>DbgEng extension</b></dt>
+<dd>
+<p>A debugger extension based on the prototypes in the dbgeng.h header file.  These extensions use the debugger engine API to communicate with the debugger engine.</p>
+</dd>
+<dt><a id="debug_build"></a><a id="DEBUG_BUILD"></a><b>debug build</b></dt>
+<dd>
+<p>See
+     Checked Build.</p>
+</dd>
+<dt><a id="debuggee"></a><a id="DEBUGGEE"></a><b>debuggee</b></dt>
+<dd>
+<p>See
+     target.</p>
+</dd>
+<dt><a id="debugger"></a><a id="DEBUGGER"></a><b>debugger</b></dt>
+<dd>
+<p>A debugger engine application that uses the full functionality of the debugger engine.  For example, WinDbg, CDB, NTSD, and KD are debuggers.</p>
+</dd>
+<dt><a id="debugger_console"></a><a id="DEBUGGER_CONSOLE"></a><b>debugger console</b></dt>
+<dd>
+<p>A fictional entity representing the source of the debugger engine input and the destination of its output.  In reality, the debugger engine only uses input and output callbacks and has no notion of what is being used to implement them.</p>
+<p>Typically, input is received from the Debugger Command window and output is sent to the same window.  However, the input and output callbacks can provide many other sources of input and destinations for output, for example, remote connections, script files, and log files.</p>
+</dd>
+<dt><a id="debugger_engine"></a><a id="DEBUGGER_ENGINE"></a><b>debugger engine</b></dt>
+<dd>
+<p>A library for manipulating debugging targets.  Its interface is based on the prototypes in the dbgeng.h file.  It is used by debuggers, extensions, and debugger engine applications.</p>
+</dd>
+<dt><a id="debugger_engine_api"></a><a id="DEBUGGER_ENGINE_API"></a><b>debugger engine API</b></dt>
+<dd>
+<p>A powerful interface to control the behavior of the debugger engine.  It may be used by debuggers, DbgEng extensions, and debugger engine applications.  The prototypes for this interface are found in the dbgeng.h header file.</p>
+</dd>
+<dt><a id="debugger_engine_application"></a><a id="DEBUGGER_ENGINE_APPLICATION"></a><b>debugger engine application</b></dt>
+<dd>
+<p>A stand-alone application that uses the debugger engine API to control the debugger engine.</p>
+</dd>
+<dt><a id="debugger_extension"></a><a id="DEBUGGER_EXTENSION"></a><b>debugger extension</b></dt>
+<dd>
+<p>An external function that can run inside the debugger.  Each extension is exported from a module known as an debugger extension DLL.  The debugger engine invokes the debugger extension by calling its code within the DLL.  Some debugger extensions ship with Debugging Tools for Windows.  You can write your own extensions to automate any number of debugger features or to customize the output of the information accessible to the debugger.</p>
+<p>Also referred to as an , or simply .</p>
+</dd>
+<dt><a id="debugger_extension_dll"></a><a id="DEBUGGER_EXTENSION_DLL"></a><b>debugger extension DLL</b></dt>
+<dd>
+<p>A DLL containing debugger extensions.  When the debugger engine loads the DLL these extensions become available for use within the debugger.  </p>
+</dd>
+<dt><a id="debugger_extension_library"></a><a id="DEBUGGER_EXTENSION_LIBRARY"></a><b>debugger extension library</b></dt>
+<dd>
+<p>See
+     debugger extension DLL.</p>
+</dd>
+<dt><a id="debugging_client"></a><a id="DEBUGGING_CLIENT"></a><b>debugging client</b></dt>
+<dd>
+<p>An instance of the debugger engine acting as a proxy, sending debugger commands and I/O to the debugging server.</p>
+</dd>
+<dt><a id="debugging_server"></a><a id="DEBUGGING_SERVER"></a><b>debugging server</b></dt>
+<dd>
+<p>An instance of the debugger engine acting as a host, listening for connections from debugging clients.</p>
+</dd>
+<dt><a id="debugging_session"></a><a id="DEBUGGING_SESSION"></a><b>debugging session</b></dt>
+<dd>
+<p>The debugging session is the actual act of running a software debugging program, such as WinDbg, KD, or CDB, to debug a software component, system service, application, or operating system. The debugging session can also be run against a memory dump file for analysis.</p>
+<p>A debugging session starts when a  acquires a  and lasts until all targets have been discarded.</p>
+</dd>
+<dt><a id="default_exception_filter"></a><a id="DEFAULT_EXCEPTION_FILTER"></a><b>default exception filter</b></dt>
+<dd>
+<p>The event filter which applies to exception events that do not match any other exception filters.  The default exception filter is a specific exception filter.</p>
+</dd>
+<dt><a id="dormant_mode"></a><a id="DORMANT_MODE"></a><b>dormant mode</b></dt>
+<dd>
+<p>A state in which a debugger program is running, but without a target or active session.</p>
+</dd>
+<dt><a id="downstream_store"></a><a id="DOWNSTREAM_STORE"></a><b>downstream store</b></dt>
+<dd>
+<p>A cache of symbols created by a symbol server.  Typically this cache is on your local machine, while the symbol store is located remotely.  If you have a chain of symbol servers, the downstream store can be located on any computer downstream from the symbol store. </p>
+</dd>
+<dt><a id="dump_file"></a><a id="DUMP_FILE"></a><b>dump file</b></dt>
+<dd>
+<p>See
+     crash dump file.</p>
+</dd>
+<dt><a id="dump_target"></a><a id="DUMP_TARGET"></a><b>dump target</b></dt>
+<dd>
+<p>A crash dump file that is being debugged.</p>
+</dd>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20D%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

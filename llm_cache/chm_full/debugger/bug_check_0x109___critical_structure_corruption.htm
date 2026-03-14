@@ -1,0 +1,479 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The CRITICAL_STRUCTURE_CORRUPTION bug check has a value of 0x00000109. This indicates that the kernel has detected critical kernel code or data corruption."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Bug Check 0x109:  CRITICAL_STRUCTURE_CORRUPTION</title>
+
+<meta name="MS-HAID" content="t07_bugs_E0_55e5b681-57ea-48af-b344-63f76753edcc.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.bug_check_0x109___critical_structure_corruption"></a>Bug Check 0x109:  CRITICAL_STRUCTURE_CORRUPTION</h1>
+</div>
+<p>The CRITICAL_STRUCTURE_CORRUPTION bug check has a value of 0x00000109. This indicates that the kernel has detected critical kernel code or data corruption.</p>
+<p>
+<div class="alert"><b>Important </b>This topic is for programmers. If you are a customer who has received a blue screen error code while using your computer, see 
+            <a href="http://windows.microsoft.com/en-us/windows-10/troubleshoot-blue-screen-errors" xmlns:loc="http://microsoft.com/wdcml/l10n">Troubleshoot blue screen errors</a>.</div>
+</p>
+<h2>  CRITICAL_STRUCTURE_CORRUPTION Parameters</h2>
+<p>The following parameters are displayed on the blue screen.</p>
+<table>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<p>1</p>
+</td>
+<td>
+<p>Reserved </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>2</p>
+</td>
+<td>
+<p>Reserved </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>3</p>
+</td>
+<td>
+<p>Reserved </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>4</p>
+</td>
+<td>
+<p>The type of the corrupted region. (See the following table later on this page.)</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p>The value of Parameter 4 indicates the type of corrupted region.</p>
+<table>
+<tr>
+<th>Parameter 4</th>
+<th>Type of Corrupted Region, Type of Corruption, or Type of Action Taken That Caused the Corruption</th>
+</tr>
+<tr>
+<td>
+<p>0x0</p>
+</td>
+<td>
+<p>A generic data region</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x1</p>
+</td>
+<td>
+<p>A function modification or the Itanium-based function location </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x2</p>
+</td>
+<td>
+<p>A processor interrupt dispatch table (IDT)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x3</p>
+</td>
+<td>
+<p>A processor global descriptor table (GDT)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x4</p>
+</td>
+<td>
+<p>A type-1 process list corruption</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x5</p>
+</td>
+<td>
+<p>A type-2 process list corruption</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x6</p>
+</td>
+<td>
+<p>A debug routine modification</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x7</p>
+</td>
+<td>
+<p>A critical MSR modification</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x8</p>
+</td>
+<td>
+<p> Object type</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x9</p>
+</td>
+<td>
+<p>A processor IVT</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0xA</p>
+</td>
+<td>
+<p>Modification of a system service function</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0xB</p>
+</td>
+<td>
+<p>A generic session data region</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0xC</p>
+</td>
+<td>
+<p>Modification of a session function or .pdata</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0xD</p>
+</td>
+<td>
+<p>Modification of an import table</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0xE</p>
+</td>
+<td>
+<p>Modification of a session import table</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0xF</p>
+</td>
+<td>
+<p>Ps Win32 callout modification</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x10</p>
+</td>
+<td>
+<p>Debug switch routine modification</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x11</p>
+</td>
+<td>
+<p>IRP allocator modification</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x12</p>
+</td>
+<td>
+<p>Driver call dispatcher modification</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x13</p>
+</td>
+<td>
+<p>IRP completion dispatcher modification</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x14</p>
+</td>
+<td>
+<p>IRP deallocator modification</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x15</p>
+</td>
+<td>
+<p>A processor control register</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x16</p>
+</td>
+<td>
+<p>Critical floating point control register modification</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x17</p>
+</td>
+<td>
+<p>Local APIC modification</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x18</p>
+</td>
+<td>
+<p>Kernel notification callout modification</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x19</p>
+</td>
+<td>
+<p>Loaded module list modification</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x1A</p>
+</td>
+<td>
+<p>Type 3 process list corruption</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x1B</p>
+</td>
+<td>
+<p>Type 4 process list corruption</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x1C</p>
+</td>
+<td>
+<p>Driver object corruption</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x1D</p>
+</td>
+<td>
+<p>Executive callback object modification</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x1E</p>
+</td>
+<td>
+<p>Modification of module padding</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x1F</p>
+</td>
+<td>
+<p>Modification of a protected process</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x20</p>
+</td>
+<td>
+<p>A generic data region</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x21</p>
+</td>
+<td>
+<p>A page hash mismatch</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x22</p>
+</td>
+<td>
+<p>A session page hash mismatch</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x23</p>
+</td>
+<td>
+<p>Load config directory modification</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x24</p>
+</td>
+<td>
+<p>Inverted function table modification</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x25</p>
+</td>
+<td>
+<p>Session configuration modification</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x26</p>
+</td>
+<td>
+<p>An extended processor control register</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x27</p>
+</td>
+<td>
+<p>Type 1 pool corruption</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x28</p>
+</td>
+<td>
+<p>Type 2 pool corruption</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x29</p>
+</td>
+<td>
+<p>Type 3 pool corruption</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x101</p>
+</td>
+<td>
+<p>General pool corruption</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>0x102</p>
+</td>
+<td>
+<p>Modification of win32k.sys</p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p></p>
+<h2>Cause</h2>
+<p>There are generally three different causes for this bug check:</p>
+<ol>
+<li>
+<p>A driver has inadvertently, or deliberately, modified critical kernel code or data.  Microsoft Windows Server 2003 with Service Pack 1 (SP1) and later versions of Windows for x64-based computers do not allow the kernel to be patched except through authorized Microsoft-originated hot patches.  For more information, see <a href="http://go.microsoft.com/fwlink/p/?linkid=50719">Patching Policy for x64-based Systems</a>.  </p>
+</li>
+<li>
+<p>A developer attempted to set a normal kernel breakpoint using a kernel debugger that was not attached when the system was started.  Normal breakpoints (<a href="bp__bu__bm__set_breakpoint_.htm"><b>bp</b></a>) can only be set if the debugger is attached at start time.  Processor breakpoints (<a href="ba__break_on_access_.htm"><b>ba</b></a>) can be set at any time.</p>
+</li>
+<li>
+<p>A hardware corruption occurred.  For example, the kernel code or data could have been stored in memory that failed.  </p>
+</li>
+</ol>
+<h2>Resolution</h2>
+<p>The <a href="_analyze.htm"><b>!analyze</b></a> debug extension displays information about  the bug check and can be very helpful in determining the root cause.</p>
+<p>To start, examine the stack trace using the <a href="k__kb__kc__kd__kp__kp__kv__display_stack_backtrace_.htm"><b>k, kb, kc, kd, kp, kP, kv (Display Stack Backtrace)</b></a> command. You can specify the processor number to examine the stacks on all processors.</p>
+<p>You can also set a breakpoint in the code leading up to this stop code and attempt to single step forward into the faulting code.</p>
+<p>For more information see the following topics:</p>
+<p><a href="crash_dump_files.htm">Crash dump analysis using the Windows debuggers (WinDbg)</a></p>
+<p>If you are not equipped to use the Windows debugger to work on   this problem, you can use some basic troubleshooting techniques. </p>
+<ul>
+<li>
+<p>Check the System Log in Event Viewer for additional error messages that might help identify the device or driver that is causing this bug check. </p>
+</li>
+<li>
+<p>If a driver is identified in the bug check message, disable the driver or check with the manufacturer for driver updates. </p>
+</li>
+<li>
+<p>Run the Windows Memory Diagnostics tool, to test the memory. In the control panel search box, type Memory, and then click <b>Diagnose your computer's memory problems</b>.‌ After the test is run,  use Event viewer to view the results under  the System log. Look for the <i>MemoryDiagnostics-Results</i>
+entry to view the results.</p>
+</li>
+<li>
+<p>You can try running the hardware diagnostics supplied by the system manufacturer. </p>
+</li>
+<li>
+<p>Confirm that any new hardware that is installed is compatible with the installed version of Windows. For example, you can get information about required hardware at <a href="https://www.microsoft.com/en-us/windows/windows-10-specifications">Windows 10
+
+Specifications</a>.</p>
+</li>
+<li>
+<p>For additional general troubleshooting information, see <a href="blue_screen_data.htm"><b>Blue Screen Data</b></a>. </p>
+</li>
+</ul>
+<p> </p>
+<p> </p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

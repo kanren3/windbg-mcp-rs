@@ -1,0 +1,95 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The !gs extension analyzes a /GS stack overflow."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>!gs</title>
+
+<meta name="MS-HAID" content="r24_exts_general_A_7288b132-9cdf-41a4-8435-d3231e26e76b.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger._gs"></a>!gs</h1>
+</div>
+<p>The <b>!gs</b> extension analyzes a /GS stack overflow. </p>
+<pre class="syntax"><b>!gs</b></pre>
+<h3><a id="DLL"></a><a id="dll"></a>DLL</h3>
+<table>
+<tr>
+<td>
+<p><b>Windows 2000
+         </b></p>
+</td>
+<td>
+<p>
+          Ext.dll
+         </p>
+</td>
+</tr>
+<tr>
+<td>
+<p><b>Windows XP and later
+         </b></p>
+</td>
+<td>
+<p>
+          Ext.dll
+         </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<h2>Remarks</h2>
+<p>The <b>!gs</b>extension helps debug buffer overruns. Run <b>!gs</b>when you encounter a STATUS_STACK_BUFFER_OVERRUN error, as the following example shows.</p>
+<pre class="syntax" xml:space="preserve"><code>0:000&gt; !gs
+Corruption occurred in mshtml!CDoc::OnPaint or one of its callers
+Real canary not found at 0x74866010
+Canary at gsfailure frame 0x292ea4e7
+Corrupted canary 0x0013e2c8: 0x00000000
+Corrupted cookie value too generic, skipping init bit-flip check
+a caller of mshtml!CDoc::OnPaint has corrupted the EBP from 0x0013e254 to 0x0013
+e234
+check callers (without canary) of mshtml!CDoc::OnPaint for 0x1 bytes of overflow
+
+The canary doesn't look corrupted. Not sure how we got here
+EBP/ESP check skipped: No saved EBP in exception context
+Function mshtml!CDoc::OnPaint:
+  00000000 - 00000004 this                      CDoc*
+ 0013de40 - 0013e180 rd                        CDoc::OnPaint::__l39::REGION_DAT
+A
+  0013e180 - 0013e18c Lock                      CDoc::CLock
+  0013e18c - 0013e224 DI                        CFormDrawInfo
+  0013e23c - 0013e240 hwndInplace               HWND__*
+  0013e240 - 0013e244 prc                       tagRECT*
+  0013e248 - 0013e250 ptBefore                  tagPOINT
+  0013e250 - 0013e254 fViewIsReady              int
+  0013e250 - 0013e254 fHtPalette                int
+  0013e254 - 0013e258 fNoPaint                  int
+  0013e258 - 0013e260 ptAfter                   tagPOINT
+  0013e260 - 0013e264 c                         int
+  0013e264 - 0013e268 hrgn                      HRGN__*
+  0013e268 - 0013e2a8 ps                        tagPAINTSTRUCT
+Candidate buffer : ps 0013e268 to 0013e2a7
+  0013e268 ea 04 01 a7 00 00 00 00-10 01 00 00 f3 00 00 00 ................
+  0013e278 ed 03 00 00 44 02 00 00-84 e5 13 00 f4 e2 13 00 ....D...........
+  ...
+  0013e2ac 38 20 01 03 10 e3 13 00-68 6b e6 01 d0 e6 03 00 8 ......hk......
+ 0013e2bc 80 fa 03 00 0d 00 00 00-10 08 19 00 00 00 00 00 ................
+0:000&gt;</code></pre>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20!gs%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

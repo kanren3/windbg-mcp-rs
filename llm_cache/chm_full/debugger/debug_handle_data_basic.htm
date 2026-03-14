@@ -1,0 +1,89 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The DEBUG_HANDLE_DATA_BASIC structure contains handle-related information about a system object."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>DEBUG_HANDLE_DATA_BASIC structure</title>
+
+<meta name="MS-HAID" content="Structures_e4fb66c0-8e88-4f35-a103-0cc0f7cc1bfd.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.debug_handle_data_basic"></a>DEBUG_HANDLE_DATA_BASIC structure</h1>
+</div>
+<p>The DEBUG_HANDLE_DATA_BASIC structure contains handle-related information about a system object.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>typedef struct _DEBUG_HANDLE_DATA_BASIC {
+  ULONG TypeNameSize;
+  ULONG ObjectNameSize;
+  ULONG Attributes;
+  ULONG GrantedAccess;
+  ULONG HandleCount;
+  ULONG PointerCount;
+} DEBUG_HANDLE_DATA_BASIC, *PDEBUG_HANDLE_DATA_BASIC;</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Members</h2>
+<dl>
+<dt><b>TypeNameSize</b></dt>
+<dd>
+<p>The size, in characters, of the object-type name.</p>
+</dd>
+<dt><b>ObjectNameSize</b></dt>
+<dd>
+<p>The size, in characters, of the object's name.</p>
+</dd>
+<dt><b>Attributes</b></dt>
+<dd>
+<p>A bit-set that contains the handle's attributes.  For possible values, see "Handle" in the Windows Driver Kit (WDK).</p>
+</dd>
+<dt><b>GrantedAccess</b></dt>
+<dd>
+<p>A bit-set that specifies the access mask for the object that is represented by the handle.  For details, see ACCESS_MASK in the Platform SDK documentation.</p>
+</dd>
+<dt><b>HandleCount</b></dt>
+<dd>
+<p>The number of handle references for the object.</p>
+</dd>
+<dt><b>PointerCount</b></dt>
+<dd>
+<p>The number of pointer references for the object.</p>
+</dd>
+</dl>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>DbgEng.h (include DbgEng.h)</dt>
+</dl>
+</td>
+</tr>
+</table>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20DEBUG_HANDLE_DATA_BASIC structure%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

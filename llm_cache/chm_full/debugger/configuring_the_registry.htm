@@ -1,0 +1,494 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Configuring the Registry"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Configuring the Registry</title>
+
+<meta name="MS-HAID" content="r09_symbols_c3f5ea57-d8ac-4f74-9e46-d033009e46a3.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.configuring_the_registry"></a>Configuring the Registry</h1>
+</div>
+<p>SymProxy stores its settings in this registry key.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>HKLM/Software/Microsoft/Symbol Server Proxy</pre>
+</td>
+</tr>
+</table></span></div>
+<p>This registry key controls the location from which to find symbols to store in the Web site, the logging level, and whether or not SymProxy operates with a direct connection to the network.  You can create this key by running the SymProxy registration tool (Symproxy.reg) provided with Debugging Tools for Windows.  Type <b>symproxy.reg</b> at the command prompt or double-click it from Windows Explorer.</p>
+<p>This will add entries for the settings that will be prefixed with an "x" so that they are disabled.  To enable a setting, remove the "x" from in front of the desired setting.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Symbol Server Proxy]
+"Available Settings"="Remove the 'x' prefix to use the setting"
+"xLogLevel"=dword:0000000f
+"xNoInternetProxy"=dword:00000001
+"xNoFilePointers"=dword:00000001
+"xNoUncompress"=dword:00000001
+"xNoCache"=dword:00000001
+"xMissTimeout"=dword:00000e10
+"xMissAgeTimeout"=dword:00015180
+"xMissAgeCheck"=dword:00000e10
+"xMissFileCache"=dword:00000001
+"xMissFileThreads"=dword:00000010
+"xFailureCount"=dword:00000004
+"xFailurePeriod"=dword:00000078
+"xFailureTimeout"=dword:00002d
+"xFailureBlackout"=dword:0000384
+
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The symproxy.reg registry file assumes a virtual directory name of Symbols and configures the Symbol Path to use the Microsoft Public Symbol Server.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Symbol Server Proxy\Web Directories]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Symbol Server Proxy\Web Directories\Symbols]
+"SymbolPath"="https://msdl.microsoft.com/download/symbols"
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The event logging entries in symproxy.reg are covered latter in the Event Log section of this topic.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\EventLog\Application\Microsoft-Windows-SymProxy]
+"ProviderGuid"="{0876099c-a903-47ff-af14-52035bb479ef}"
+"EventMessageFile"=hex(2):25,00,53,00,79,00,73,00,74,00,65,00,6d,00,52,00,6f,\
+  00,6f,00,74,00,25,00,5c,00,73,00,79,00,73,00,74,00,65,00,6d,00,33,00,32,00,\
+  5c,00,69,00,6e,00,65,00,74,00,73,00,72,00,76,00,5c,00,53,00,79,00,6d,00,50,\
+  00,72,00,6f,00,78,00,79,00,2e,00,64,00,6c,00,6c,00,00,00
+"TypesSupported"=dword:00000007
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The web directory entries in symproxy.reg are discussed in this topic.</p>
+<h3><a id="web_directories"></a><a id="WEB_DIRECTORIES"></a>Web Directories</h3>
+<p>For each virtual directory generated in IIS that you are using as a symbol store, you must setup a registry key below the <b>Web Directories</b> subkey of the following registry key. </p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>HKLM/Software/Microsoft/Symbol Server Proxy</pre>
+</td>
+</tr>
+</table></span></div>
+<p class="proch"><img src="../common/wedge.gif" alt=""/><b>To edit the registry key for a symbol store virtual directory
+     </b></p>
+<ul>
+<li>
+<p>Edit the contents of <b>SymbolPath</b> to contain all of the symbol stores used by the SymProxy symbol store.  If there is more than one symbol store being used, separate them with semicolons.  A maximum of 10 stores is supported for each value.  HTTP paths must include the <b>http:// prefix</b>, and UNC paths must include the <b>\\</b> prefix.</p>
+</li>
+</ul>
+<p>For example, if one of the virtual directories is called Symbols, and the symbols stores that it accesses are located at the UNC store \\symbols\symbols and the HTTP store https://msdl.microsoft.com/download/symbols, create the following registry key.</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>HKLM/Software/Microsoft/Symbol Server Proxy/Web Directories/Symbols</pre>
+</td>
+</tr>
+</table></span></div>
+<p>After this key is created, edit its <b>SymbolPath</b> to be \\symbols\symbols;https://msdl.microsoft.com/download/symbols.  This can be seen in the following screenshot of the Registry Editor.</p><img src="images/symproxy_registry.png" alt="Screen shot of the Registry Editor showing a revised SymbolPath"/><p>In this example, SymProxy first searches for symbols in \\symbols\symbols.  If the files are not found there, the Microsoft Symbol Store will be used.</p>
+<p></p>
+<ul>
+<li>
+<p>In each of the keys under Web Directories that match the Virtual Directory names, a REG_SZ called SymbolPath needs to be created.  The value contains all the upstream symbol stores that will be used to populate the SymProxy symbol store.</p>
+</li>
+<li>
+<p>	A maximum of 10 entries are supported.</p>
+</li>
+<li>
+<p>	Separate entries with semicolons.</p>
+</li>
+<li>
+<p>	UNC paths need to include the “\\” prefix</p>
+</li>
+<li>
+<p>HTTP paths need to include the “http://” prefix</p>
+</li>
+<li>
+<p>Order the values from least expensive to most expensive.</p>
+<p>	- You will need to balance usage performance goals vs. server and data communications costs in the calculation.</p>
+<p> - 	In general, put local SMB/HTTP servers before internet HTTP servers.</p>
+</li>
+</ul>
+<h3><a id="SymProxy_Performance_Counters"></a><a id="symproxy_performance_counters"></a><a id="SYMPROXY_PERFORMANCE_COUNTERS"></a>SymProxy Performance Counters</h3>
+<p>SymProxy can emit performance counters via a provider called SymProxy.</p>
+<p>To enable the performance counters support, register the symproxy manifest file in an administrator  command window:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>C:\&gt; lodctr.exe /m:%WINDIR%\system32\inetsrv\symproxy.man</pre>
+</td>
+</tr>
+</table></span></div>
+<p>To disable the performance counters support, unregister the manifest:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>C:\&gt; unlodctr.exe /m:%WINDIR%\system32\inetsrv\symproxy.man</pre>
+</td>
+</tr>
+</table></span></div>
+<h3><a id="SymProxy_Event_Tracing_for_Windows"></a><a id="symproxy_event_tracing_for_windows"></a><a id="SYMPROXY_EVENT_TRACING_FOR_WINDOWS"></a>SymProxy Event Tracing for Windows</h3>
+<p>SymProxy can create ETW events via a provider called Microsoft-Windows-SymProxy. </p>
+<p></p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>C:\&gt; logman query providers | findstr SymProxy
+Microsoft-Windows-SymProxy {0876099C-A903-47FF-AF14-52035BB479EF}
+</pre>
+</td>
+</tr>
+</table></span></div>
+<p>To enable the ETW support, register the manifest file:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>C:\&gt; wevtutil.exe install-manifest %WINDIR%\system32\inetsrv\symproxy.man</pre>
+</td>
+</tr>
+</table></span></div>
+<p>To disable the ETW support, unregister the manifest file:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>C:\&gt; wevtutil.exe uninstall-manifest %WINDIR%\system32\inetsrv\symproxy.man</pre>
+</td>
+</tr>
+</table></span></div>
+<h3><a id="Event_Log"></a><a id="event_log"></a><a id="EVENT_LOG"></a>Event Log</h3>
+<p>If ETW is configured, the events are recorded as events in the <i>Operational and Analytic </i>channels under <i>Applications and Services Logs\Microsoft\Windows\SymProxy</i> in the Event Log.</p>
+<p>To correctly view the message of the Event Log entries, the Event Log area of the symproxy.reg file needs to be added to the registry:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\EventLog\Application\Microsoft-Windows-SymProxy]
+"ProviderGuid"="{0876099c-a903-47ff-af14-52035bb479ef}"
+"EventMessageFile"=hex(2):25,00,53,00,79,00,73,00,74,00,65,00,6d,00,52,00,6f,\
+  00,6f,00,74,00,25,00,5c,00,73,00,79,00,73,00,74,00,65,00,6d,00,33,00,32,00,\
+  5c,00,69,00,6e,00,65,00,74,00,73,00,72,00,76,00,5c,00,53,00,79,00,6d,00,50,\
+  00,72,00,6f,00,78,00,79,00,2e,00,64,00,6c,00,6c,00,00,00
+"TypesSupported"=dword:00000007</pre>
+</td>
+</tr>
+</table></span></div>
+<h3><a id="SymProxy_Events"></a><a id="symproxy_events"></a><a id="SYMPROXY_EVENTS"></a>SymProxy Events</h3>
+<p>SymProxy logs the following events:<table>
+<tr>
+<td><b>Event ID</b></td>
+<td><b>Description</b></td>
+<td><b>Channel</b></td>
+</tr>
+<tr>
+<td>1</td>
+<td>Start of the ISAPI filter</td>
+<td>Admin</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Stop of the ISAPI filter</td>
+<td>Admin</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Configuration of the ISAPI filter</td>
+<td>Admin</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Miss Cache Statistics</td>
+<td>Admin</td>
+</tr>
+<tr>
+<td>10</td>
+<td>URL Request - Local Cache Hit</td>
+<td>Operational</td>
+</tr>
+<tr>
+<td>11</td>
+<td>URL Request - Local Cache Miss</td>
+<td>Operational</td>
+</tr>
+<tr>
+<td>20</td>
+<td>Symbol Download via SymSrv</td>
+<td>Operational</td>
+</tr>
+<tr>
+<td>30</td>
+<td>Critical Symbol Missing</td>
+<td>Admin</td>
+</tr>
+<tr>
+<td>31</td>
+<td>Critical Image Missing</td>
+<td>Admin</td>
+</tr>
+<tr>
+<td>40</td>
+<td>SymSrv – Path Not Found</td>
+<td>Admin</td>
+</tr>
+<tr>
+<td>41</td>
+<td>SymSrv – File Not Found</td>
+<td>Admin</td>
+</tr>
+<tr>
+<td>42</td>
+<td>SymSrv – Access Denied</td>
+<td>Admin</td>
+</tr>
+<tr>
+<td>43</td>
+<td>SymSrv – Path Too Long</td>
+<td>Admin</td>
+</tr>
+<tr>
+<td>49</td>
+<td>SymSrv – Error Code</td>
+<td>Admin</td>
+</tr>
+<tr>
+<td>90</td>
+<td>Lock Contention</td>
+<td>Operational</td>
+</tr>
+<tr>
+<td>100</td>
+<td>General Critical Message</td>
+<td>Analytic</td>
+</tr>
+<tr>
+<td>101</td>
+<td>General Error Message</td>
+<td>Analytic</td>
+</tr>
+<tr>
+<td>102</td>
+<td>General Warning Message</td>
+<td>Analytic</td>
+</tr>
+<tr>
+<td>103</td>
+<td>General Informational Message</td>
+<td>Analytic</td>
+</tr>
+<tr>
+<td>104</td>
+<td>General Analytic Message</td>
+<td>Analytic</td>
+</tr>
+<tr>
+<td>105</td>
+<td>General Debug Message</td>
+<td>Debug</td>
+</tr>
+</table>
+<p> </p>
+</p>
+<h3><a id="Symbol_Server_Proxy_Configuration"></a><a id="symbol_server_proxy_configuration"></a><a id="SYMBOL_SERVER_PROXY_CONFIGURATION"></a>Symbol Server Proxy Configuration</h3>
+<p>SymProxy stores its configuration settings in the following registry key area:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>HKLM/Software/Microsoft/Symbol Server Proxy</pre>
+</td>
+</tr>
+</table></span></div>
+<p>From this location, SymProxy acquires its global settings and the symbol paths of upstream symbol stores.</p>
+<p>You can create this key by merging in the symproxy.reg file you customized as discussed earlier. </p>
+<h3><a id="Symbol_Server_Proxy__key"></a><a id="symbol_server_proxy__key"></a><a id="SYMBOL_SERVER_PROXY__KEY"></a>Symbol Server Proxy’ key</h3>
+<p>The Symbol Server Proxy registry key supports the following global settings (all REG_DWORD). Settings can be applied live by recycling the application pool. A new w3wp.exe process will be created and it will read the new values. Once all pending requests to the old w3wp.exe process have completed, the old w3wp.exe process will end. IIS by default recycles w3wp.exe processes every 1,740 minutes (29 hours).</p>
+<p></p>
+<table>
+<tr>
+<td>REG_DWORDl</td>
+<td>Description</td>
+</tr>
+<tr>
+<td>LogLevel</td>
+<td>
+<p>By default, SymProxy doesn’t log an extensive amount of information about its use of SymSrv.dll.
+Creating REG_DWORD:"LogLevel " with a value of 5 (Analytic) or 6 (Debug), enables the additional logging.
+</p>
+</td>
+</tr>
+<tr>
+<td>NoInternetProxy</td>
+<td>
+<p>When running as a service, SymSrv.dll uses WinHTTP instead of WinInet to make HTTP requests. Consequently, you may need to set up HTTP proxy settings so that the service can access outside network resources. You can do this using the netsh program. Type “netsh.exe winhttp -?” for instructions.</p>
+<p>By default, SymProxy uses the designated HTTP proxy. If no HTTP proxy is configured, SymProxy will use a dummy proxy. This allows secure access to HTTP sites within your intranet. As a side effect, this prevents SymProxy from directly connecting to non-secure sites.</p>
+<p>Creating the REG_DWORD:"NoInternetProxy" value configures SymProxy to operate without a proxy, allowing a direct connection.</p>
+</td>
+</tr>
+<tr>
+<td>NoFilePointers
+</td>
+<td>
+<p>By default, for symbols that don’t exist, SymProxy will look for a file.ptr file next to the requested file (in the local cache). If found, it will return the location specified by the file.ptr file. This ability is only required when the local cache is being populated by SymStore.exe.</p>
+<p>Create the REG_DWORD:"NoFilePointers" value to skip the lookup.</p>
+</td>
+</tr>
+<tr>
+<td>NoUncompress</td>
+<td>
+<p>By default, SymProxy will decompress downloaded symbols before returning the file to the caller. This reduces CPU at the client, but increases I/O.</p>
+<p>Create the REG_DWORD:"NoUncompress" value to skip the decompression.</p>
+</td>
+</tr>
+<tr>
+<td>NoCache </td>
+<td>
+<p>By default, SymProxy will cache downloaded symbols to the local file system, defined by the virtual directory’s path.</p>
+<p>Create the REG_DWORD:"NoCache" value to skip the download and to provide the remote path of the file to the client instead.</p>
+</td>
+</tr>
+<tr>
+<td>MissTimeout </td>
+<td>
+<p>Timeout period, in seconds, for which missing symbols are reported as missing without re-querying the upstream symbol servers.</p>
+<p>A miss is associated with a UTC based time. Subsequent requests for the file are immediately rejected for N seconds.</p>
+<p>The first request for the file after N seconds causes the upstream symbol stores to be re-queried.</p>
+<p>On success, the symbol file is returned and the miss is deleted.</p>
+<p>On failure, the miss is moved forward to the current time (in UTC) to start a new timeout period.</p>
+<p>Use the “Miss Cache *” counters to monitor the misses.</p>
+<p>•	Unspecified - (default) 300 seconds/5 minutes</p>
+<p>•	0 – Feature disabled</p>
+<p>•	N – Timeout lasts N seconds</p>
+</td>
+</tr>
+<tr>
+<td>MissAgeCheck</td>
+<td>
+<p>Period between Miss Age checks. The Miss cache is scanned and records older than MissAgeTimeout seconds are removed.</p>
+<p>The current statistics are saved to the Event Log using Event ID 4.</p>
+<p>•	Unspecified - (default) 3600 seconds / 1 hour</p>
+<p>•	0 – Feature disabled</p>
+<p>•	N – Period between checks in N seconds</p>
+</td>
+</tr>
+<tr>
+<td>MissFileCache</td>
+<td>
+<p>By default, SymProxy does not save miss information to disk. Create the REG_DWORD:"MissFileCache" value to cache miss information in the symbol folder tree. Create the REG_DWORD:"MissFileCache" value to cache miss information in the symbol folder tree.</p>
+<p> Enable MissFileCache when miss informarion needs to be shared across an IIS farm. Enabling MissFileCache also makes worker process recycling more efficient.</p>
+<p>MissFileCache causes an I/O operation on the first request for a missing symbol (Miss File Read), the download of a symbol (Miss File Delete), and a failed symbol lookup (Miss File Write).</p>
+<p>Use the “Miss File XXX/sec” counters to monitor the operations.</p>
+<p>It is safe to delete .miss files while the SymProxy is running:
+</p>
+<p>
+C:\&gt; del C:\SymStore\Symbols\*.miss /s</p>
+</td>
+</tr>
+<tr>
+<td>MissFileThreads</td>
+<td>
+<p>By default, SymProxy performs up to 16 concurrent asynchronous file I/O operations for the Miss File feature. Creating the REG_DWORD:" MissFileThreads" value overrides the default limit. Values can be between 1 and 64.</p>
+<p>Use the “Miss File Queue Depth” counter to monitor the load.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>FailureTimeout</p>
+<p>FailureCount</p>
+<p>FailurePeriod</p>
+<p>FailureBlackout</p>
+</td>
+<td>
+<p>The Blackout feature is used to termporarly disable upstream symbol stores that are unresponsive.
+The Blackout feature uses 4 REG_DWORD values to define the behaviour. By default, the feature is disabled.
+</p>
+<p>For each upstream symbol store defined in a Symbol Path, failures are individually recorded. If a request takes longer than FailureTimeout (msec), the failure count is incremented.</p>
+<p>The Symbol Path is marked as dead after FailureCount failures in FailurePeriod seconds. At this time, all requests are ignored until FailureBlackout seconds have elapsed. The first caller after the timeout tests the upstream symbol store. On success, the timeout is removed and requests are allowed. On failure, the time is set to Now+FailureBlackout seconds. After that time, the upstream symbol store is tested again. </p>
+</td>
+</tr>
+</table>
+<p> </p>
+<p></p>
+<h3><a id="accessing_outside_network_resources"></a><a id="ACCESSING_OUTSIDE_NETWORK_RESOURCES"></a>Accessing Outside Network Resources</h3>
+<p>When SymSrv is used in conjunction with SymProxy, it runs as a service and uses the WinHTTP API to access symbols over an HTTP connection.  This differs from its usual behavior of using WinInet for this purpose.</p>
+<p>Consequently, you may need to set up HTTP proxy settings so that this service can access outside network resources.  Use one of the following methods to configure these settings:</p>
+<ul>
+<li>In Windows Vista, Windows Server 2008, and later versions of Windows, use the Netsh tool (netsh.exe). For instructions, type the following in a Command Prompt window: <div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>netsh winhttp -? </pre>
+</td>
+</tr>
+</table></span></div>
+</li>
+</ul>
+<p>The default behavior of SymProxy is to use whatever HTTP proxy is designated by either ProxyCfg or Netsh.  If no HTTP proxy is configured, SymProxy uses a dummy proxy to allow access to secure HTTP sites within your intranet.  As a side effect, this technique prevents SymProxy from working with direct connections to the external Internet.  If you wish to permit SymProxy to operate with a direct connection to the Internet, create a REG_DWORD value named <b>NoInternetProxy</b> in the <b>Symbol Server Proxy</b> key of your registry.  Set the value of <b>NoInternetProxy</b> to 1 and verify that there is no HTTP proxy indicated by ProxyCfg.</p>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Configuring the Registry%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

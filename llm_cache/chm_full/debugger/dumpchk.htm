@@ -1,0 +1,229 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="DumpChk"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>DumpChk</title>
+
+<meta name="MS-HAID" content="DumpChk_0f7d95cc-673c-4157-8c03-5ffc5a501257.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.dumpchk"></a>DumpChk</h1>
+</div>
+<p>DumpChk (the Microsoft Crash Dump File Checker tool) is a program that performs a quick analysis of a crash dump file.  This enables you to see summary information about what the dump file contains.  If the dump file is corrupt in such a way that it cannot be opened by a debugger, DumpChk reveals this fact.</p>
+<h2><a id="Where_to_get_DumpChk"></a><a id="where_to_get_dumpchk"></a><a id="WHERE_TO_GET_DUMPCHK"></a>Where to get DumpChk</h2>
+<p>DumpChk.exe is included in <a href="introduction6.htm">Debugging Tools for Windows</a>.</p>
+<h2><a id="DumpChk_command-line_options"></a><a id="dumpchk_command-line_options"></a><a id="DUMPCHK_COMMAND-LINE_OPTIONS"></a>DumpChk command-line options</h2>
+<p>
+<pre class="syntax"><b>DumpChk [-y </b><i>SymbolPath</i><b>] </b><i>DumpFile</i></pre>
+</p>
+<h3><a id="Parameters"></a><a id="parameters"></a><a id="PARAMETERS"></a>Parameters</h3>
+<p></p>
+<dl>
+<dt><a id="_______-y________SymbolPath______"></a><a id="_______-y________symbolpath______"></a><a id="_______-Y________SYMBOLPATH______"></a>       <b>-y</b>        <i>SymbolPath</i>      </dt>
+<dd>
+<p><i>SymbolPath</i> specifies where DumpChk is to search for symbols.  Symbol information may be necessary for some dump files.  It can also help to improve the information shown in the dump file by allowing symbol names to be resolved.</p>
+</dd>
+<dt><a id="_______DumpFile______"></a><a id="_______dumpfile______"></a><a id="_______DUMPFILE______"></a>       <i>DumpFile</i>      </dt>
+<dd>
+<p><i>DumpFile</i> specifies the crash dump file that is to be analyzed.  This may include an absolute or relative directory path or universal naming convention (UNC) path.  If <i>DumpFile</i> contains spaces, it must be enclosed in quotation marks. </p>
+</dd>
+</dl>
+<h2><a id="Using_DumpChk"></a><a id="using_dumpchk"></a><a id="USING_DUMPCHK"></a>Using DumpChk</h2>
+<p>Here is an example in which the dump file is corrupt.  The error shown at the end, <code>DebugClient cannot open DumpFile</code>, indicates that some kind of corruption must have occurred:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>C:\Debuggers&gt; dumpchk c:\mydir\dumpfile2.dmp 
+
+Loading dump file c:\mydir\dumpfile2.dmp
+
+Microsoft (R) Windows Debugger Version 6.9.0003.113 X86
+Copyright (C) Microsoft. All rights reserved.
+
+
+Loading Dump File [c:\mydir\dumpfile2.dmp]
+Could not match Dump File signature - invalid file format
+Could not open dump file [c:\mydir\dumpfile2.dmp], HRESULT 0x80004002
+    "No such interface supported"
+**** DebugClient cannot open DumpFile - error 80004002   </pre>
+</td>
+</tr>
+</table></span></div>
+<p>Because this display does not end with the words <code>Finished dump check</code>, the dump file is corrupt.  The error message at the end explains that the dump file could not be opened.</p>
+<p>Note that other errors may be listed, some of which are actually benign.  For example, the following error message does not represent a problem:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>error 3 InitTypeRead( nt!_PEB at 7ffd5000) </pre>
+</td>
+</tr>
+</table></span></div>
+<p>Here is an example of DumpChk run on a healthy user-mode minidump.  The display begins with an overall summary of the dump file, and then gives detailed information about what data is contained in the dump file:</p>
+<div class="code"><span codelanguage=""><table>
+<tr>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre>C:\Debuggers&gt; dumpchk c:\mydir\dumpfile1.dmp 
+
+Loading dump file c:\mydir\dumpfile1.dmp
+
+Microsoft (R) Windows Debugger Version 6.9.0003.113 X86
+Copyright (C) Microsoft. All rights reserved.
+
+
+Loading Dump File [c:\mydir\dumpfile1.dmp]
+User Mini Dump File with Full Memory: Only application data is available
+
+Symbol search path is: srv*C:\CODE\LocalStore*\\symbols\symbols
+Executable search path is: 
+Windows Vista Version 6000 MP (2 procs) Free x86 compatible
+Product: WinNt, suite: SingleUserTS
+Debug session time: Tue Jun 17 02:28:23.000 2008 (GMT-7)
+System Uptime: 0 days 15:43:52.861
+Process Uptime: 0 days 0:00:26.000
+...
+This dump file has an exception of interest stored in it.
+The stored exception information can be accessed via .ecxr.
+
+----- User Mini Dump Analysis
+
+MINIDUMP_HEADER:
+Version         A793 (6903)
+NumberOfStreams 12
+Flags           1826
+                0002 MiniDumpWithFullMemory
+                0004 MiniDumpWithHandleData
+                0020 MiniDumpWithUnloadedModules
+                0800 MiniDumpWithFullMemoryInfo
+                1000 MiniDumpWithThreadInfo
+
+Streams:
+Stream 0: type ThreadListStream (3), size 00000064, RVA 000001BC
+  2 threads
+  RVA 000001C0, ID 1738, Teb:000000007FFDF000
+  RVA 000001F0, ID 1340, Teb:000000007FFDE000
+Stream 1: type ThreadInfoListStream (17), size 0000008C, RVA 00000220
+  RVA 0000022C, ID 1738
+  RVA 0000026C, ID 1340
+Stream 2: type ModuleListStream (4), size 00000148, RVA 000002AC
+  3 modules
+  RVA 000002B0, 00400000 - 00438000: 'C:\CODE\TimeTest\Debug\TimeTest.exe'
+  RVA 0000031C, 779c0000 - 77ade000: 'C:\Windows\System32\ntdll.dll'
+  RVA 00000388, 76830000 - 76908000: 'C:\Windows\System32\kernel32.dll'
+Stream 3: type Memory64ListStream (9), size 00000290, RVA 00001D89
+  40 memory ranges
+  RVA 0x2019 BaseRva
+  range#    RVA      Address      Size
+       0 00002019    00010000   00010000
+       1 00012019    00020000   00005000
+       2 00017019    0012e000   00002000
+
+ (additional stream data deleted)   
+
+Stream 9: type UnusedStream (0), size 00000000, RVA 00000000
+Stream 10: type UnusedStream (0), size 00000000, RVA 00000000
+Stream 11: type UnusedStream (0), size 00000000, RVA 00000000
+
+
+Windows Vista Version 6000 MP (2 procs) Free x86 compatible
+Product: WinNt, suite: SingleUserTS
+kernel32.dll version: 6.0.6000.16386 (vista_rtm.061101-2205)
+Debug session time: Tue Jun 17 02:28:23.000 2008 (GMT-7)
+System Uptime: 0 days 15:43:52.861
+Process Uptime: 0 days 0:00:26.000
+  Kernel time: 0 days 0:00:00.000
+  User time: 0 days 0:00:00.000
+PEB at 7ffd9000
+    InheritedAddressSpace:    No
+    ReadImageFileExecOptions: No
+    BeingDebugged:            Yes
+    ImageBaseAddress:         00400000
+    Ldr                       77a85d00
+    Ldr.Initialized:          Yes
+    Ldr.InInitializationOrderModuleList: 002c1e30 . 002c2148
+    Ldr.InLoadOrderModuleList:           002c1da0 . 002c2138
+    Ldr.InMemoryOrderModuleList:         002c1da8 . 002c2140
+            Base TimeStamp                     Module
+          400000 47959d85 Jan 21 23:38:45 2008 C:\CODE\TimeTest\Debug\TimeTest.exe
+        779c0000 4549bdc9 Nov 02 02:43:37 2006 C:\Windows\system32\ntdll.dll
+        76830000 4549bd80 Nov 02 02:42:24 2006 C:\Windows\system32\kernel32.dll
+    SubSystemData:     00000000
+    ProcessHeap:       002c0000
+    ProcessParameters: 002c14c0
+    WindowTitle:  'C:\CODE\TimeTest\Debug\TimeTest.exe'
+    ImageFile:    'C:\CODE\TimeTest\Debug\TimeTest.exe'
+    CommandLine:  '\CODE\TimeTest\Debug\TimeTest.exe'
+    DllPath:      'C:\CODE\TimeTest\Debug;C:\Windows\system32;C:\Windows\system;
+    Environment:  002c0808
+        =C:=C:\CODE
+        =ExitCode=00000000
+        ALLUSERSPROFILE=C:\ProgramData
+        AVENGINE=C:\PROGRA~1\CA\SHARED~1\SCANEN~1
+        CommonProgramFiles=C:\Program Files\Common Files
+        COMPUTERNAME=EMNET
+        ComSpec=C:\Windows\system32\cmd.exe
+        configsetroot=C:\Windows\ConfigSetRoot
+        FP_NO_HOST_CHECK=NO
+        HOMEDRIVE=C:
+        NUMBER_OF_PROCESSORS=2
+        OS=Windows_NT
+        Path=C:\DTFW\200804~2.113\winext\arcade;C:\Windows\system32
+        PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC
+        PROCESSOR_ARCHITECTURE=x86
+        PROCESSOR_IDENTIFIER=x86 Family 6 Model 15 Stepping 13, GenuineIntel
+        PROCESSOR_LEVEL=6
+        PROCESSOR_REVISION=0f0d
+        ProgramData=C:\ProgramData
+        ProgramFiles=C:\Program Files
+        PROMPT=$P$G
+        PUBLIC=C:\Users\Public
+        RoxioCentral=C:\Program Files\Common Files\Roxio Shared\9.0\Roxio Central33\
+        SESSIONNAME=Console
+        SystemDrive=C:
+        SystemRoot=C:\Windows
+        USERDNSDOMAIN=NORTHSIDE.COMPANY.COM
+        USERDOMAIN=NORTHSIDE
+        USERNAME=myname
+        USERPROFILE=C:\Users\myname
+        WINDBG_DIR=C:\DTFW\200804~2.113
+        windir=C:\Windows
+        WINLAYTEST=200804~2.113
+        _NT_SOURCE_PATH=C:\mysources
+        _NT_SYMBOL_PATH=C:\mysymbols
+Finished dump check</pre>
+</td>
+</tr>
+</table></span></div>
+<p>The output begins by identifying the characteristics of the dump file - in this case, a user-mode minidump with full memory information, including application data but not operating-system data. This is followed by the symbol path being used by DumpChk, and then a summary of the dump file contents. </p>
+<p>Because this display ends with the words <code>Finished dump check</code>, the dump file is probably not corrupt, and can be opened by a debugger. However, more subtle forms of corrruption might still be present in the file.</p>
+<h2><a id="related_topics"></a>Related topics</h2>
+<dl>
+<dt><a href="extra_tools.htm">Tools Included in Debugging Tools for Windows</a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20DumpChk%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

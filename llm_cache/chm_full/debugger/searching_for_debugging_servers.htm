@@ -1,0 +1,46 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="You can use KD or CDB with the -QR command-line option to obtain a list of available debugging servers that are running on a network server.This list may include servers that no longer exist but which were not shut down properly -- connecting to one of these generates an error message. The list will also include process servers and KD connection servers. The server type will be indicated in each case.The syntax for this is as follows:"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Searching for Debugging Servers</title>
+
+<meta name="MS-HAID" content="r08_use_remote_3b069af0-5e17-48d7-864a-9b45f6ee1aa4.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.searching_for_debugging_servers"></a>Searching for Debugging Servers</h1>
+</div>
+<p>You can use KD or CDB with the <b>-QR</b> command-line option to obtain a list of available debugging servers that are running on a network server.</p>
+<p>This list may include servers that no longer exist but which were not shut down properly -- connecting to one of these generates an error message. The list will also include process servers and KD connection servers. The server type will be indicated in each case.</p>
+<p>The syntax for this is as follows:</p>
+<pre class="syntax">
+<i>Debugger</i><b> -QR \\</b><i>Server</i><b> 
+</b></pre>
+<h2><a id="ddk_searching_for_debugging_servers_dbg"></a><a id="DDK_SEARCHING_FOR_DEBUGGING_SERVERS_DBG"></a></h2>
+<p><i>Debugger</i> can be either KD or CDB -- the display will be the same in either case. The two backslashes (<b>\\</b>) preceding <i>Server</i> are optional.</p>
+<p>In WinDbg, you can use the <b>Connect to Remote Debugger Session</b> dialog box to browse a list of available servers. See <a href="file___connect_to_remote_session.htm">File | Connect to Remote Session</a> for details.</p>
+<div class="alert"><b>Note</b>  For a debugging server to be discoverable, it must be activated with elevated privileges. For more information, see <a href="activating_a_debugging_server.htm">Activating a Debugging Server</a>.</div>
+<div> </div>
+<div class="alert"><b>Note</b>  <p class="note">If you are not logged on to the client computer with an account that has access to the server computer, you might need to provide a user name and password. On the client computer, in a Command Prompt window, enter the following command.</p><b>net use \\</b><i>Server</i><b>\ipc$ /user:</b><i>UserName</i><p class="note">where <i>Server</i> is the name of the server computer, and <i>UserName</i> is the name of an account that has access to the server computer.</p>
+<p class="note">When you are prompted, enter the password for <i>UserName</i>.</p>
+<p class="note">After this command succeeds, you can discover debugging servers (running on the server computer) by using  <b>-QR</b> or <b>Connect to Remote Debugger Session</b>.</p>
+</div>
+<div> </div>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Searching for Debugging Servers%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

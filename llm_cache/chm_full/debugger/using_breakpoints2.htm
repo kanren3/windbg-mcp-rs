@@ -1,0 +1,42 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Using Breakpoints"/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>Using Breakpoints</title>
+
+<meta name="MS-HAID" content="Engine_DG_4f9c88b1-f2a7-4a25-b1ff-ac050eb5c42d.xml"/>
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.using_breakpoints2"></a>Using Breakpoints</h1>
+</div>
+<h2><a id="ddk_breakpoints_dbx"></a><a id="DDK_BREAKPOINTS_DBX"></a></h2>
+<p>Breakpoints are event triggers which, when the breakpoint's conditions are satisfied, will halt execution of the target and break into the debugger. Breakpoints allow the user to analyze and perhaps modify the target when execution reaches a certain point or when a certain memory location is accessed.</p>
+<p>The debugger engine inserts a <i>software breakpoint</i> into a target by modifying the processor instruction at the breakpoint's location; this modification is invisible to the engine's clients.  A software breakpoint is triggered when the target executes the instruction at the breakpoint location.  A <i>processor breakpoint</i> is inserted into the target's processor by the debugger engine; its capabilities are processor-specific.  It is triggered by the processor when the memory at the breakpoint location is accessed; what type of access will trigger this breakpoint is specified when the breakpoint is created. </p>
+<p>This topic includes:</p>
+<dl>
+<dd>
+<p><a href="setting_breakpoints.htm">Setting Breakpoints</a></p>
+</dd>
+<dd>
+<p><a href="controlling_breakpoint_flags_and_parameters.htm">Controlling Breakpoint Flags and Parameters</a></p>
+</dd>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20Using Breakpoints%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

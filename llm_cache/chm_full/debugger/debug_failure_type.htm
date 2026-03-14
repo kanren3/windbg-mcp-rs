@@ -1,0 +1,84 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mssdk="winsdk" xmlns:script="urn:script" xmlns:build="urn:build" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="The values in the DEBUG_FAILURE_TYPE enumeration indicate the type of a failure."/>
+<meta name="MSHAttr" content="PreferredSiteName:MSDN"/>
+<meta name="MSHAttr" content="PreferredLib:/library/windows/hardware"/>
+<title>DEBUG_FAILURE_TYPE enumeration</title>
+
+
+
+<link rel="STYLESHEET" type="text/css" HREF="../common/backsdk4.css"/>
+
+
+</head>
+<body>
+
+<div id="mainSection">
+<div class="clsServerSDKContent">
+<h1><a id="debugger.debug_failure_type"></a>DEBUG_FAILURE_TYPE enumeration</h1>
+</div>
+<p>The values in the <b>DEBUG_FAILURE_TYPE</b> enumeration indicate the type of a failure.</p>
+<h2>Syntax</h2>
+<div class="code"><span codelanguage="ManagedCPlusPlus"><table>
+<tr>
+<th>C++</th>
+</tr>
+<tr>
+<td>
+<pre>typedef enum _DEBUG_FAILURE_TYPE { 
+  DEBUG_FLR_UNKNOWN,
+  DEBUG_FLR_KERNEL,
+  DEBUG_FLR_USER_CRASH,
+  DEBUG_FLR_IE_CRASH
+} DEBUG_FAILURE_TYPE;</pre>
+</td>
+</tr>
+</table></span></div>
+<h2>Constants</h2>
+<dl>
+<dt><a id="DEBUG_FLR_UNKNOWN"></a><a id="debug_flr_unknown"></a><b>DEBUG_FLR_UNKNOWN</b></dt>
+<dd>
+<p>The failure type is not known.</p>
+</dd>
+<dt><a id="DEBUG_FLR_KERNEL"></a><a id="debug_flr_kernel"></a><b>DEBUG_FLR_KERNEL</b></dt>
+<dd>
+<p>The failing code was running in kernel mode.</p>
+</dd>
+<dt><a id="DEBUG_FLR_USER_CRASH"></a><a id="debug_flr_user_crash"></a><b>DEBUG_FLR_USER_CRASH</b></dt>
+<dd>
+<p>The failing code was running in user mode.</p>
+</dd>
+<dt><a id="DEBUG_FLR_IE_CRASH"></a><a id="debug_flr_ie_crash"></a><b>DEBUG_FLR_IE_CRASH</b></dt>
+<dd>
+<p>The failure occurred in the application iexplore.exe.</p>
+</dd>
+</dl>
+<h2>Requirements</h2>
+<table>
+<tr>
+<th width="30%">
+<p>Header</p>
+</th>
+<td width="70%">
+<dl>
+<dt>Extsfns.h</dt>
+</dl>
+</td>
+</tr>
+</table>
+<h2><a id="see_also"></a>See also</h2>
+<dl>
+<dt><a href="writing_an_analysis_extension_to_extend__analyze.htm">Writing an Analysis Extension Plug-in to Extend !analyze</a></dt>
+<dt><a href="idebugfailureanalysis2.htm"><b>IDebugFailureAnalysis2</b></a></dt>
+<dt><a href="_efn_analyze.htm"><b>_EFN_Analyze</b></a></dt>
+</dl>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [debugger\debugger]:%20DEBUG_FAILURE_TYPE enumeration%20 RELEASE:%20(3/16/2017)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+<p style="text-align:left;font-family:Arial,sanserif;font-size:100%;color:black">
+&#x00a9;&#x00a0;2016 Microsoft. All rights reserved.</p>
+
+</body>
+</html>

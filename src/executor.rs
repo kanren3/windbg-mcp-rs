@@ -29,9 +29,14 @@ pub enum ExecutionMode {
     Mock { responses: HashMap<String, String> },
 }
 
-struct DispatcherRequest {
-    command: String,
-    response: oneshot::Sender<Result<String, ExecutionError>>,
+enum DispatcherRequest {
+    Execute {
+        command: String,
+        response: oneshot::Sender<Result<String, ExecutionError>>,
+    },
+    Interrupt {
+        response: oneshot::Sender<Result<String, ExecutionError>>,
+    },
 }
 
 #[derive(Clone)]
@@ -59,8 +64,16 @@ impl CommandDispatcher {
                 };
 
                 while let Some(request) = receiver.blocking_recv() {
-                    let result = executor.execute(&request.command);
-                    let _ = request.response.send(result);
+                    match request {
+                        DispatcherRequest::Execute { command, response } => {
+                            let result = executor.execute(&command);
+                            let _ = response.send(result);
+                        }
+                        DispatcherRequest::Interrupt { response } => {
+                            let result = executor.interrupt();
+                            let _ = response.send(result);
+                        }
+                    }
                 }
             })
             .map_err(|error| ExecutionError::Startup(error.to_string()))?;
@@ -75,8 +88,21 @@ impl CommandDispatcher {
     pub async fn execute(&self, command: impl Into<String>) -> Result<String, ExecutionError> {
         let (response_tx, response_rx) = oneshot::channel();
         self.sender
-            .send(DispatcherRequest {
+            .send(DispatcherRequest::Execute {
                 command: command.into(),
+                response: response_tx,
+            })
+            .map_err(|_| ExecutionError::WorkerStopped)?;
+
+        response_rx
+            .await
+            .map_err(|_| ExecutionError::WorkerStopped)?
+    }
+
+    pub async fn interrupt(&self) -> Result<String, ExecutionError> {
+        let (response_tx, response_rx) = oneshot::channel();
+        self.sender
+            .send(DispatcherRequest::Interrupt {
                 response: response_tx,
             })
             .map_err(|_| ExecutionError::WorkerStopped)?;
@@ -118,6 +144,12 @@ pub fn build_command(
 
 trait BlockingExecutor {
     fn execute(&mut self, command: &str) -> Result<String, ExecutionError>;
+
+    fn interrupt(&mut self) -> Result<String, ExecutionError> {
+        Err(ExecutionError::Command(
+            "interrupt is not supported for this execution mode".to_string(),
+        ))
+    }
 }
 
 fn build_executor(mode: ExecutionMode) -> Result<Box<dyn BlockingExecutor>, ExecutionError> {
@@ -170,6 +202,10 @@ impl BlockingExecutor for MockExecutor {
             .cloned()
             .unwrap_or_else(|| format!("mock-executed: {command}")))
     }
+
+    fn interrupt(&mut self) -> Result<String, ExecutionError> {
+        Ok("mock-interrupted".to_string())
+    }
 }
 
 #[cfg(windows)]
@@ -178,9 +214,9 @@ mod windows_impl {
 
     use windows::{
         Win32::System::Diagnostics::Debug::Extensions::{
-            DEBUG_ATTACH_DEFAULT, DEBUG_ATTACH_NONINVASIVE, DEBUG_EXECUTE_DEFAULT,
+            DEBUG_ATTACH_DEFAULT, DEBUG_ATTACH_NONINVASIVE, DEBUG_CONNECT_SESSION_NO_ANNOUNCE,
+            DEBUG_CONNECT_SESSION_NO_VERSION, DEBUG_EXECUTE_DEFAULT, DEBUG_INTERRUPT_ACTIVE,
             DEBUG_OUTCTL_THIS_CLIENT, DebugCreate, IDebugClient, IDebugControl,
-            DEBUG_CONNECT_SESSION_NO_ANNOUNCE, DEBUG_CONNECT_SESSION_NO_VERSION,
             IDebugOutputCallbacks, IDebugOutputCallbacks_Impl,
         },
         core::{Interface, PCSTR, Result as WinResult, implement},
@@ -288,6 +324,10 @@ mod windows_impl {
         pub(crate) fn execute_command(&mut self, command: &str) -> Result<String, ExecutionError> {
             <Self as BlockingExecutor>::execute(self, command)
         }
+
+        pub(crate) fn interrupt_target(&mut self) -> Result<String, ExecutionError> {
+            <Self as BlockingExecutor>::interrupt(self)
+        }
     }
 
     impl BlockingExecutor for DbgEngExecutor {
@@ -319,6 +359,19 @@ mod windows_impl {
 
             Ok(captured.lock().expect("buffer lock poisoned").clone())
         }
+
+        fn interrupt(&mut self) -> Result<String, ExecutionError> {
+            let control = self
+                .client
+                .cast::<IDebugControl>()
+                .map_err(|error| ExecutionError::Command(error.to_string()))?;
+            unsafe {
+                control
+                    .SetInterrupt(DEBUG_INTERRUPT_ACTIVE)
+                    .map_err(|error| ExecutionError::Command(error.to_string()))?;
+            }
+            Ok("interrupt requested".to_string())
+        }
     }
 }
 
@@ -345,5 +398,19 @@ mod tests {
         let entry = catalog.lookup("bp").expect("bp entry should exist");
         let error = build_command(entry, Some("bogus"), None).expect_err("variant must fail");
         assert!(matches!(error, ExecutionError::InvalidVariant { .. }));
+    }
+
+    #[tokio::test]
+    async fn mock_dispatcher_supports_interrupt() {
+        let dispatcher = CommandDispatcher::spawn(ExecutionMode::Mock {
+            responses: HashMap::new(),
+        })
+        .expect("mock dispatcher should start");
+
+        let result = dispatcher
+            .interrupt()
+            .await
+            .expect("interrupt should succeed");
+        assert_eq!(result, "mock-interrupted");
     }
 }

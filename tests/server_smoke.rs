@@ -21,6 +21,21 @@ async fn mock_dispatcher_returns_scripted_output() {
     assert_eq!(output, "ntdll!_PEB_LDR_DATA");
 }
 
+#[tokio::test]
+async fn mock_dispatcher_interrupt_returns_status() {
+    let dispatcher = CommandDispatcher::spawn(ExecutionMode::Mock {
+        responses: HashMap::new(),
+    })
+    .expect("mock dispatcher should start");
+
+    let output = dispatcher
+        .interrupt()
+        .await
+        .expect("mock interrupt should succeed");
+
+    assert_eq!(output, "mock-interrupted");
+}
+
 #[test]
 fn catalog_exposes_resource_tool_and_prompt_names() {
     let entry = Catalog::global().lookup("dt").expect("dt entry must exist");

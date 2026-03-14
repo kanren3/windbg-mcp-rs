@@ -1,16 +1,16 @@
 use std::ffi::CString;
 
 use windows::{
-    core::{Interface, Ref, Result as WinResult, HRESULT, PCSTR},
     Win32::{
         Foundation::{E_FAIL, E_POINTER, S_OK},
         System::Diagnostics::Debug::Extensions::{
-            IDebugClient, IDebugControl, DEBUG_OUTPUT_ERROR, DEBUG_OUTPUT_NORMAL,
+            DEBUG_OUTPUT_ERROR, DEBUG_OUTPUT_NORMAL, IDebugClient, IDebugControl,
         },
     },
+    core::{HRESULT, Interface, PCSTR, Ref, Result as WinResult},
 };
 
-use crate::{executor::DbgEngExecutor, plugin_server::PluginServerControl, Catalog};
+use crate::{Catalog, executor::DbgEngExecutor, plugin_server::PluginServerControl};
 
 const EXTENSION_MAJOR: u32 = 0;
 const EXTENSION_MINOR: u32 = 1;
@@ -80,6 +80,10 @@ fn run_mcp_command(client: Ref<IDebugClient>, args: PCSTR) -> WinResult<()> {
         return command_stop(&control);
     }
 
+    if trimmed.eq_ignore_ascii_case("break") || trimmed.eq_ignore_ascii_case("interrupt") {
+        return command_interrupt(&control, client);
+    }
+
     if let Some(rest) = trimmed.strip_prefix("exec ") {
         return command_exec(&control, client, rest.trim());
     }
@@ -88,7 +92,7 @@ fn run_mcp_command(client: Ref<IDebugClient>, args: PCSTR) -> WinResult<()> {
 }
 
 fn help_text() -> &'static str {
-    "windbg-mcp commands:\n\n  !mcp help\n      Show this help text.\n\n  !mcp serve [host:port]\n      Start the MCP Streamable HTTP server inside the WinDbg plugin. Default bind: 127.0.0.1:50051, endpoint: /mcp\n\n  !mcp status\n      Show whether the in-process MCP server is running.\n\n  !mcp stop\n      Stop the in-process MCP server.\n\n  !mcp catalog [query]\n      List catalog entries or search the extracted debugger command catalog.\n\n  !mcp doc <token-or-id>\n      Show the static documentation for one extracted command topic.\n\n  !mcp exec <debugger command>\n      Execute a raw debugger command through dbgeng and print the captured output.\n\nIf the first token is not recognized as a subcommand, !mcp treats the input as `exec`."
+    "windbg-mcp commands:\n\n  !mcp help\n      Show this help text.\n\n  !mcp serve [host:port]\n      Start the MCP Streamable HTTP server inside the WinDbg plugin. Default bind: 127.0.0.1:50051, endpoint: /mcp\n\n  !mcp status\n      Show whether the in-process MCP server is running.\n\n  !mcp stop\n      Stop the in-process MCP server.\n\n  !mcp break\n      Request a debugger break into the currently running target. Alias: !mcp interrupt\n\n  !mcp catalog [query]\n      List catalog entries or search the extracted debugger command catalog.\n\n  !mcp doc <token-or-id>\n      Show the static documentation for one extracted command topic.\n\n  !mcp exec <debugger command>\n      Execute a raw debugger command through dbgeng and print the captured output.\n\nIf the first token is not recognized as a subcommand, !mcp treats the input as `exec`."
 }
 
 fn command_serve(control: &IDebugControl, bind: &str) -> WinResult<()> {
@@ -131,6 +135,15 @@ fn command_stop(control: &IDebugControl) -> WinResult<()> {
             DEBUG_OUTPUT_NORMAL,
         ),
         Err(error) => Err(windows::core::Error::new(E_FAIL, error)),
+    }
+}
+
+fn command_interrupt(control: &IDebugControl, client: IDebugClient) -> WinResult<()> {
+    let mut executor = DbgEngExecutor::from_existing_client(client)
+        .map_err(|error| windows::core::Error::new(E_POINTER, error.to_string()))?;
+    match executor.interrupt_target() {
+        Ok(output) => write_text(control, &format!("{output}\n"), DEBUG_OUTPUT_NORMAL),
+        Err(error) => write_text(control, &format!("{error}\n"), DEBUG_OUTPUT_ERROR),
     }
 }
 

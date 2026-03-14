@@ -38,7 +38,9 @@ impl PluginServerControl {
             .unwrap_or(DEFAULT_BIND_ADDRESS)
             .to_string();
 
-        let mut state = SERVER_STATE.lock().map_err(|_| "server state lock poisoned".to_string())?;
+        let mut state = SERVER_STATE
+            .lock()
+            .map_err(|_| "server state lock poisoned".to_string())?;
         if let Some(existing) = state.as_ref() {
             return Ok(existing.status.clone());
         }
@@ -73,7 +75,9 @@ impl PluginServerControl {
             })
             .map_err(|error| error.to_string())?;
 
-        let status = startup_rx.recv().map_err(|_| "plugin server failed to report startup status".to_string())??;
+        let status = startup_rx
+            .recv()
+            .map_err(|_| "plugin server failed to report startup status".to_string())??;
 
         *state = Some(RunningPluginServer {
             status: status.clone(),
@@ -85,13 +89,17 @@ impl PluginServerControl {
     }
 
     pub fn status() -> Result<Option<PluginServerStatus>, String> {
-        let state = SERVER_STATE.lock().map_err(|_| "server state lock poisoned".to_string())?;
+        let state = SERVER_STATE
+            .lock()
+            .map_err(|_| "server state lock poisoned".to_string())?;
         Ok(state.as_ref().map(|running| running.status.clone()))
     }
 
     pub fn stop() -> Result<Option<PluginServerStatus>, String> {
         let running = {
-            let mut state = SERVER_STATE.lock().map_err(|_| "server state lock poisoned".to_string())?;
+            let mut state = SERVER_STATE
+                .lock()
+                .map_err(|_| "server state lock poisoned".to_string())?;
             state.take()
         };
 
@@ -122,7 +130,9 @@ async fn run_server_loop(
         mcp_url: format!("http://{bind_address}/mcp"),
         bind_address,
     };
-    startup_tx.send(Ok(status)).map_err(|_| "plugin server startup receiver dropped".to_string())?;
+    startup_tx
+        .send(Ok(status))
+        .map_err(|_| "plugin server startup receiver dropped".to_string())?;
 
     let service: StreamableHttpService<WindbgMcpServer> = StreamableHttpService::new(
         || {

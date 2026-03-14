@@ -27,7 +27,7 @@ windbg-mcp-rs/
     catalog.rs
     executor.rs
     extension.rs
-    main.rs
+    plugin_server.rs
     server.rs
   tests/
   Cargo.toml
@@ -78,6 +78,7 @@ After building the DLL, load it in WinDbg and use:
 !mcp help
 !mcp serve 127.0.0.1:50051
 !mcp status
+!mcp break
 !mcp catalog dt
 !mcp doc dt
 !mcp exec dt _PEB_LDR_DATA -b
@@ -92,6 +93,7 @@ When `!mcp serve` succeeds, the MCP server is available on the reported Streamab
 - The runtime never parses `docs/debugger.chm`; it only uses the prepared static JSON catalog.
 - `llm_cache/` is only used as a preparation area for extracted CHM content.
 - Command execution is serialized through a dedicated worker that connects back into the active debugger session.
+- The MCP server also exposes a dedicated interrupt tool so clients can request a debugger break while the target is running.
 - There is no standalone `.exe` server target anymore; the DLL is the only intended runtime artifact.
 
 ## Verification

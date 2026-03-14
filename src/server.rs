@@ -17,6 +17,9 @@ struct ExecuteRawArgs {
     command: String,
 }
 
+#[derive(Debug, Default, Deserialize, JsonSchema)]
+struct InterruptTargetArgs {}
+
 #[derive(Debug, Deserialize, JsonSchema)]
 struct SearchCatalogArgs {
     query: String,
@@ -68,6 +71,15 @@ impl WindbgMcpServer {
             schema_for_type::<ExecuteRawArgs>(),
         )
         .with_title("Execute raw WinDbg command")
+    }
+
+    fn interrupt_tool(&self) -> Tool {
+        Tool::new(
+            "windbg_interrupt_target",
+            "Request a debugger break into the currently running target.",
+            schema_for_type::<InterruptTargetArgs>(),
+        )
+        .with_title("Interrupt running target")
     }
 
     fn search_tool(&self) -> Tool {
@@ -229,7 +241,11 @@ impl ServerHandler for WindbgMcpServer {
         _request: Option<PaginatedRequestParams>,
         _context: RequestContext<RoleServer>,
     ) -> Result<ListToolsResult, McpError> {
-        let mut tools = vec![self.generic_command_tool(), self.search_tool()];
+        let mut tools = vec![
+            self.generic_command_tool(),
+            self.search_tool(),
+            self.interrupt_tool(),
+        ];
         tools.extend(
             self.catalog()
                 .entries()
@@ -249,6 +265,9 @@ impl ServerHandler for WindbgMcpServer {
         }
         if name == "windbg_search_catalog" {
             return Some(self.search_tool());
+        }
+        if name == "windbg_interrupt_target" {
+            return Some(self.interrupt_tool());
         }
         self.catalog()
             .get_by_tool_name(name)
@@ -293,6 +312,17 @@ impl ServerHandler for WindbgMcpServer {
                 Ok(CallToolResult::structured(json!({
                     "query": args.query,
                     "matches": payload,
+                })))
+            }
+            "windbg_interrupt_target" => {
+                let _: InterruptTargetArgs = self.parse_arguments(request.arguments)?;
+                let output = self
+                    .dispatcher
+                    .interrupt()
+                    .await
+                    .map_err(|error| McpError::internal_error(error.to_string(), None))?;
+                Ok(CallToolResult::structured(json!({
+                    "status": output,
                 })))
             }
             name => {
@@ -452,5 +482,19 @@ mod tests {
             .expect("structured payload expected");
         assert_eq!(payload["command"], "dt _PEB_LDR_DATA");
         assert_eq!(payload["output"], "ntdll!_PEB_LDR_DATA");
+    }
+
+    #[test]
+    fn interrupt_tool_is_exposed() {
+        let dispatcher = CommandDispatcher::spawn(ExecutionMode::Mock {
+            responses: HashMap::new(),
+        })
+        .expect("dispatcher should start");
+        let server = WindbgMcpServer::new(dispatcher);
+
+        let tool = server
+            .get_tool("windbg_interrupt_target")
+            .expect("interrupt tool should be listed");
+        assert_eq!(tool.name, "windbg_interrupt_target");
     }
 }

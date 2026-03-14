@@ -1,104 +1,82 @@
 # windbg-mcp-rs
 
-`windbg-mcp-rs` is a pure WinDbg plugin DLL. It turns WinDbg debugger command documentation from `docs/debugger.chm` into a static MCP catalog and serves MCP from inside the WinDbg process.
+`windbg-mcp-rs` is a pure WinDbg extension DLL that exposes the current debugging session as an MCP server.
 
-## What is implemented
+- Read official WinDbg command documentation extracted from `docs/debugger.chm`
+- Execute WinDbg commands through dbgeng
+- Interrupt a running target from MCP
+- Use the server from any MCP client over Streamable HTTP
 
-- Rust implementation with `windows-rs` for debugger engine integration.
-- MCP server implementation with the official Rust SDK crate `rmcp`, hosted inside the WinDbg extension.
-- Static catalog extracted from `docs/debugger.chm` into `src/command_catalog.json`.
-- MCP resources for the catalog index and every extracted debugger command topic.
-- MCP prompts for every extracted debugger command topic.
-- MCP tools for raw execution, catalog search, and each extracted command topic.
-- WinDbg extension entry point `!mcp` for starting/stopping the MCP server, catalog lookup, and direct command execution.
+## Screenshots
 
-The current catalog contains the `Commands` and `Meta-Commands` sections from the WinDbg `Debugger Commands` documentation tree.
+![WinDbg MCP plugin screenshot 1](images/1.png)
 
-## Project layout
+![WinDbg MCP plugin screenshot 2](images/2.png)
 
-```text
-windbg-mcp-rs/
-  docs/
-    debugger.chm
-  llm_cache/
-    ... extracted CHM artifacts used to prepare the static catalog
-  src/
-    command_catalog.json
-    catalog.rs
-    executor.rs
-    extension.rs
-    plugin_server.rs
-    server.rs
-  tests/
-  Cargo.toml
-  README.md
-```
+## Quick Start
 
-## Build output
-
-Build the plugin DLL:
-
-```powershell
-cargo build
-```
-
-The WinDbg extension artifact is the generated DLL, for example `target\debug\windbg_mcp_rs.dll`.
-
-Build the optimized release artifact with:
+### 1. Build the DLL
 
 ```powershell
 cargo build --release
 ```
 
-The release DLL is written to `target\release\windbg_mcp_rs.dll` and the matching symbols are written to `target\release\windbg_mcp_rs.pdb`.
+### 2. Load it in WinDbg
 
-## Automated release
-
-The repository includes a GitHub Actions workflow at `.github/workflows/release-on-tag.yml`.
-
-- Pushing a tag that matches `v*` builds the project in release mode on `windows-latest`.
-- The workflow verifies that the pushed tag matches the version in `Cargo.toml`, for example `v0.1.0`.
-- The release publishes `windbg_mcp_rs.dll`, `windbg_mcp_rs.pdb`, a versioned zip archive, and a SHA-256 checksum file.
-
-Typical release flow:
-
-```powershell
-# update Cargo.toml version first
-git tag v0.1.0
-git push origin v0.1.0
+```text
+.load path\to\windbg_mcp_rs.dll
 ```
 
-This keeps GitHub Releases aligned with tagged versions instead of overwriting a rolling prerelease on every push.
+### 3. Start the MCP server
 
-## Using the WinDbg extension
+```text
+!mcp serve 127.0.0.1:50051
+```
 
-After building the DLL, load it in WinDbg and use:
+The MCP endpoint will be:
+
+```text
+http://127.0.0.1:50051/mcp
+```
+
+### 4. Connect your MCP client
+
+Point your client to:
+
+```text
+http://127.0.0.1:50051/mcp
+```
+
+## WinDbg Commands
+
+Use `!mcp help` to list all plugin commands.
+
+Common ones:
 
 ```text
 !mcp help
 !mcp serve 127.0.0.1:50051
 !mcp status
-!mcp break
-!mcp catalog dt
-!mcp doc dt
-!mcp exec dt _PEB_LDR_DATA -b
 !mcp stop
 ```
 
-When `!mcp serve` succeeds, the MCP server is available on the reported Streamable HTTP endpoint such as `http://127.0.0.1:50051/mcp`. The server shares the current WinDbg session by creating a new dbgeng client and calling `ConnectSession`.
+## What MCP Exposes
 
-## Notes
+- `Resources`: static WinDbg command documentation
+- `Tools`: executable debugger actions such as raw command execution, catalog search, and target interrupt
+- `Prompts`: guidance templates for using documented WinDbg commands
 
-- This is a fully Vibe Coding project.
-- The runtime never parses `docs/debugger.chm`; it only uses the prepared static JSON catalog.
-- `llm_cache/` is only used as a preparation area for extracted CHM content.
-- Command execution is serialized through a dedicated worker that connects back into the active debugger session.
-- The MCP server also exposes a dedicated interrupt tool so clients can request a debugger break while the target is running.
-- There is no standalone `.exe` server target anymore; the DLL is the only intended runtime artifact.
+Pure UI shortcut topics remain available as documentation, but they are not exposed as executable MCP tools.
 
-## Verification
+## Development
 
 ```powershell
 cargo check
 cargo test
 ```
+
+## Notes
+
+- The server runs inside the WinDbg process
+- The runtime does not parse `docs/debugger.chm`; it uses the prebuilt static catalog in `src/command_catalog.json`
+- The transport is Streamable HTTP

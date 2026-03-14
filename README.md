@@ -77,6 +77,8 @@ cargo test
 
 ## Notes
 
+- This project was written entirely with a Vibe Coding workflow
 - The server runs inside the WinDbg process
 - The runtime does not parse `docs/debugger.chm`; it uses the prebuilt static catalog in `src/command_catalog.json`
 - The transport is Streamable HTTP
+- Set your MCP client timeout as high as possible, because some WinDbg operations can take a long time to finish

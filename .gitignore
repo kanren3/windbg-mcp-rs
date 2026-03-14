@@ -1,1 +1,5 @@
 /target
+/llm_cache
+session.json
+session.md
+AGENTS.md

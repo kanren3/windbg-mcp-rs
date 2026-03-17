@@ -5,7 +5,6 @@ use serde::Deserialize;
 
 const RESOURCE_SCHEME: &str = "windbg://command/";
 const FULL_RESOURCE_SCHEME: &str = "windbg://command-full/";
-const INDEX_URI: &str = "windbg://catalog/index";
 const TEMPLATE_URI: &str = "windbg://command/{id}";
 const FULL_TEMPLATE_URI: &str = "windbg://command-full/{id}";
 
@@ -126,10 +125,6 @@ impl Catalog {
 
     pub fn len(&self) -> usize {
         self.entries.len()
-    }
-
-    pub fn command_index_uri(&self) -> &'static str {
-        INDEX_URI
     }
 
     pub fn command_template_uri(&self) -> &'static str {

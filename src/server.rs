@@ -1,5 +1,3 @@
-use std::sync::Arc;
-
 use rmcp::{
     ErrorData as McpError, RoleServer, ServerHandler, handler::server::common::schema_for_type,
     model::*, schemars::JsonSchema, service::RequestContext,
@@ -36,14 +34,12 @@ struct SearchCatalogArgs {
 
 #[derive(Clone)]
 pub struct WindbgMcpServer {
-    dispatcher: Arc<CommandDispatcher>,
+    dispatcher: CommandDispatcher,
 }
 
 impl WindbgMcpServer {
     pub fn new(dispatcher: CommandDispatcher) -> Self {
-        Self {
-            dispatcher: Arc::new(dispatcher),
-        }
+        Self { dispatcher }
     }
 
     fn catalog(&self) -> &'static Catalog {
@@ -321,7 +317,7 @@ impl ServerHandler for WindbgMcpServer {
         request: ReadResourceRequestParams,
         _context: RequestContext<RoleServer>,
     ) -> Result<ReadResourceResult, McpError> {
-        if request.uri == GUIDE_URI || request.uri == self.catalog().command_index_uri() {
+        if request.uri == GUIDE_URI {
             return Ok(ReadResourceResult::new(vec![ResourceContents::text(
                 render_guide(self.catalog()),
                 request.uri,

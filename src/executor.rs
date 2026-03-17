@@ -1,7 +1,6 @@
 use std::{
     collections::HashMap,
     ffi::CString,
-    path::PathBuf,
     sync::mpsc,
     thread,
     time::{Duration, Instant},
@@ -54,8 +53,6 @@ pub enum ExecutionError {
 
 pub enum ExecutionMode {
     CurrentSession,
-    AttachProcess { pid: u32, noninvasive: bool },
-    DumpFile { path: PathBuf },
     Mock { responses: HashMap<String, String> },
 }
 
@@ -375,28 +372,6 @@ fn build_executor(mode: ExecutionMode) -> Result<Box<dyn BlockingExecutor>, Exec
                 Err(ExecutionError::WindowsOnly)
             }
         }
-        ExecutionMode::AttachProcess { pid, noninvasive } => {
-            #[cfg(windows)]
-            {
-                Ok(Box::new(DbgEngExecutor::attach_process(pid, noninvasive)?))
-            }
-            #[cfg(not(windows))]
-            {
-                let _ = (pid, noninvasive);
-                Err(ExecutionError::WindowsOnly)
-            }
-        }
-        ExecutionMode::DumpFile { path } => {
-            #[cfg(windows)]
-            {
-                Ok(Box::new(DbgEngExecutor::open_dump_file(path)?))
-            }
-            #[cfg(not(windows))]
-            {
-                let _ = path;
-                Err(ExecutionError::WindowsOnly)
-            }
-        }
     }
 }
 
@@ -430,17 +405,16 @@ mod windows_impl {
 
     use windows::{
         Win32::System::Diagnostics::Debug::Extensions::{
-            DEBUG_ATTACH_DEFAULT, DEBUG_ATTACH_NONINVASIVE, DEBUG_CONNECT_SESSION_NO_ANNOUNCE,
-            DEBUG_CONNECT_SESSION_NO_VERSION, DEBUG_EXECUTE_DEFAULT, DEBUG_INTERRUPT_ACTIVE,
-            DEBUG_OUTCTL_THIS_CLIENT, DebugCreate, IDebugClient, IDebugControl,
-            IDebugOutputCallbacks, IDebugOutputCallbacks_Impl,
+            DEBUG_CONNECT_SESSION_NO_ANNOUNCE, DEBUG_CONNECT_SESSION_NO_VERSION,
+            DEBUG_EXECUTE_DEFAULT, DEBUG_INTERRUPT_ACTIVE, DEBUG_OUTCTL_THIS_CLIENT, DebugCreate,
+            IDebugClient, IDebugControl, IDebugOutputCallbacks, IDebugOutputCallbacks_Impl,
         },
         core::{Interface, PCSTR, Result as WinResult, implement},
     };
 
     use super::{
         BlockingExecutor, CString, DebuggerExecutionState, ExecutionError, INTERRUPT_POLL_INTERVAL,
-        INTERRUPT_WAIT_TIMEOUT, Instant, PathBuf,
+        INTERRUPT_WAIT_TIMEOUT, Instant,
     };
 
     #[implement(IDebugOutputCallbacks)]
@@ -482,51 +456,6 @@ mod windows_impl {
                         DEBUG_CONNECT_SESSION_NO_VERSION | DEBUG_CONNECT_SESSION_NO_ANNOUNCE,
                         0,
                     )
-                    .map_err(|error| ExecutionError::Startup(error.to_string()))?;
-            }
-
-            Ok(Self { client })
-        }
-
-        pub(crate) fn open_dump_file(path: PathBuf) -> Result<Self, ExecutionError> {
-            let c_path = CString::new(path.to_string_lossy().as_bytes())
-                .map_err(|_| ExecutionError::InvalidCString)?;
-            let client = unsafe { DebugCreate::<IDebugClient>() }
-                .map_err(|error| ExecutionError::Startup(error.to_string()))?;
-            let control = client
-                .cast::<IDebugControl>()
-                .map_err(|error| ExecutionError::Startup(error.to_string()))?;
-
-            unsafe {
-                client
-                    .OpenDumpFile(PCSTR(c_path.as_ptr() as _))
-                    .map_err(|error| ExecutionError::Startup(error.to_string()))?;
-                control
-                    .WaitForEvent(0, u32::MAX)
-                    .map_err(|error| ExecutionError::Startup(error.to_string()))?;
-            }
-
-            Ok(Self { client })
-        }
-
-        pub(crate) fn attach_process(pid: u32, noninvasive: bool) -> Result<Self, ExecutionError> {
-            let client = unsafe { DebugCreate::<IDebugClient>() }
-                .map_err(|error| ExecutionError::Startup(error.to_string()))?;
-            let control = client
-                .cast::<IDebugControl>()
-                .map_err(|error| ExecutionError::Startup(error.to_string()))?;
-            let flags = if noninvasive {
-                DEBUG_ATTACH_NONINVASIVE
-            } else {
-                DEBUG_ATTACH_DEFAULT
-            };
-
-            unsafe {
-                client
-                    .AttachProcess(0, pid, flags)
-                    .map_err(|error| ExecutionError::Startup(error.to_string()))?;
-                control
-                    .WaitForEvent(0, u32::MAX)
                     .map_err(|error| ExecutionError::Startup(error.to_string()))?;
             }
 

@@ -1,5 +1,4 @@
 use std::{
-    net::SocketAddr,
     sync::{LazyLock, Mutex, mpsc},
     thread::{self, JoinHandle},
 };
@@ -18,7 +17,6 @@ static SERVER_STATE: LazyLock<Mutex<Option<RunningPluginServer>>> =
 
 #[derive(Debug, Clone)]
 pub struct PluginServerStatus {
-    pub bind_address: String,
     pub mcp_url: String,
 }
 
@@ -125,10 +123,8 @@ async fn run_server_loop(
         .await
         .map_err(|error| error.to_string())?;
     let local_addr = listener.local_addr().map_err(|error| error.to_string())?;
-    let bind_address = socket_addr_to_string(local_addr);
     let status = PluginServerStatus {
-        mcp_url: format!("http://{bind_address}/mcp"),
-        bind_address,
+        mcp_url: format!("http://{}:{}/mcp", local_addr.ip(), local_addr.port()),
     };
     startup_tx
         .send(Ok(status))
@@ -154,8 +150,4 @@ async fn run_server_loop(
         .with_graceful_shutdown(async move { cancellation.cancelled_owned().await })
         .await
         .map_err(|error| error.to_string())
-}
-
-fn socket_addr_to_string(address: SocketAddr) -> String {
-    format!("{}:{}", address.ip(), address.port())
 }

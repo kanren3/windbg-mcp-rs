@@ -55,20 +55,6 @@ impl CatalogEntry {
         self.tokens.first().map(String::as_str).unwrap_or("")
     }
 
-    pub fn variants_required(&self) -> bool {
-        self.tokens.len() > 1
-    }
-
-    pub fn short_label(&self) -> String {
-        format!("{} - {}", self.primary_token(), self.summary)
-    }
-
-    pub fn syntax_preview(&self) -> Option<&str> {
-        self.user_mode_syntax
-            .as_deref()
-            .or(self.kernel_mode_syntax.as_deref())
-    }
-
     pub fn syntax_block(&self) -> Option<String> {
         format_structured_syntax(
             self.user_mode_syntax.as_deref(),
@@ -156,11 +142,6 @@ impl Catalog {
 
     pub fn get_by_id(&self, id: &str) -> Option<&CatalogEntry> {
         self.by_id.get(id).map(|index| &self.entries[*index])
-    }
-
-    pub fn get_by_resource_uri(&self, uri: &str) -> Option<&CatalogEntry> {
-        uri.strip_prefix(RESOURCE_SCHEME)
-            .and_then(|id| self.get_by_id(id))
     }
 
     pub fn resolve_resource_uri(&self, uri: &str) -> Option<(CatalogResourceKind, &CatalogEntry)> {

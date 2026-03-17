@@ -213,12 +213,6 @@ enum DispatcherRequest {
         command: String,
         response: oneshot::Sender<Result<CommandExecutionResult, ExecutionError>>,
     },
-    Interrupt {
-        response: oneshot::Sender<Result<DebuggerExecutionState, ExecutionError>>,
-    },
-    State {
-        response: oneshot::Sender<Result<DebuggerExecutionState, ExecutionError>>,
-    },
 }
 
 #[derive(Clone)]
@@ -251,14 +245,6 @@ impl CommandDispatcher {
                             let result = executor.execute(&command);
                             let _ = response.send(result);
                         }
-                        DispatcherRequest::Interrupt { response } => {
-                            let result = executor.interrupt();
-                            let _ = response.send(result);
-                        }
-                        DispatcherRequest::State { response } => {
-                            let result = executor.query_state();
-                            let _ = response.send(result);
-                        }
                     }
                 }
             })
@@ -287,31 +273,29 @@ impl CommandDispatcher {
             .await
             .map_err(|_| ExecutionError::WorkerStopped)?
     }
+}
 
-    pub async fn interrupt(&self) -> Result<DebuggerExecutionState, ExecutionError> {
-        let (response_tx, response_rx) = oneshot::channel();
-        self.sender
-            .send(DispatcherRequest::Interrupt {
-                response: response_tx,
-            })
-            .map_err(|_| ExecutionError::WorkerStopped)?;
-
-        response_rx
-            .await
-            .map_err(|_| ExecutionError::WorkerStopped)?
+pub fn query_current_session_state() -> Result<DebuggerExecutionState, ExecutionError> {
+    #[cfg(windows)]
+    {
+        let mut executor = DbgEngExecutor::connect_session()?;
+        executor.query_execution_state()
     }
+    #[cfg(not(windows))]
+    {
+        Err(ExecutionError::WindowsOnly)
+    }
+}
 
-    pub async fn state(&self) -> Result<DebuggerExecutionState, ExecutionError> {
-        let (response_tx, response_rx) = oneshot::channel();
-        self.sender
-            .send(DispatcherRequest::State {
-                response: response_tx,
-            })
-            .map_err(|_| ExecutionError::WorkerStopped)?;
-
-        response_rx
-            .await
-            .map_err(|_| ExecutionError::WorkerStopped)?
+pub fn interrupt_current_session() -> Result<DebuggerExecutionState, ExecutionError> {
+    #[cfg(windows)]
+    {
+        let mut executor = DbgEngExecutor::connect_session()?;
+        executor.interrupt_target()
+    }
+    #[cfg(not(windows))]
+    {
+        Err(ExecutionError::WindowsOnly)
     }
 }
 
@@ -684,21 +668,6 @@ mod tests {
         let entry = catalog.lookup("bp").expect("bp entry should exist");
         let error = build_command(entry, Some("bogus"), None).expect_err("variant must fail");
         assert!(matches!(error, ExecutionError::InvalidVariant { .. }));
-    }
-
-    #[tokio::test]
-    async fn mock_dispatcher_supports_interrupt() {
-        let dispatcher = CommandDispatcher::spawn(ExecutionMode::Mock {
-            responses: HashMap::new(),
-        })
-        .expect("mock dispatcher should start");
-
-        let result = dispatcher
-            .interrupt()
-            .await
-            .expect("interrupt should succeed");
-        assert!(result.ready_for_commands);
-        assert_eq!(result.status_name, "break");
     }
 
     #[test]

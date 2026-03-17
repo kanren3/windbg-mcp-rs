@@ -239,7 +239,7 @@ impl Catalog {
         output.push_str(
             "3. Read `windbg://command-full/{id}` only when the compact card is insufficient.\n",
         );
-        output.push_str("4. Call `windbg_get_state` before execution.\n");
+        output.push_str("4. Call `windbg_get_execution_state` before execution.\n");
         output.push_str("5. If the debugger is running or busy, call `windbg_interrupt_target` and then verify state again.\n");
         output.push_str(
             "6. Call `windbg_execute_command` only when the debugger is ready for commands.\n\n",
@@ -247,7 +247,7 @@ impl Catalog {
         output.push_str(&format!("Total entries: {}\n", self.len()));
         output.push_str(&format!("Commands: {}\n", command_count));
         output.push_str(&format!("Meta-commands: {}\n", meta_count));
-        output.push_str("Execution state tool: windbg_get_state\n");
+        output.push_str("Execution state tool: windbg_get_execution_state\n");
         output.push_str(&format!("Compact template: {}\n", TEMPLATE_URI));
         output.push_str(&format!("Full template: {}\n\n", FULL_TEMPLATE_URI));
 

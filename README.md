@@ -67,7 +67,7 @@ Common ones:
 
 Pure UI shortcut topics remain available as documentation, and command execution is exposed through a single `windbg_execute_command` tool.
 
-Recommended agent flow: call `windbg_search_catalog`, read `windbg://command/{id}`, fall back to `windbg://command-full/{id}` only when needed, call `windbg_get_state`, and then call `windbg_execute_command`.
+Recommended agent flow: call `windbg_search_catalog`, read `windbg://command/{id}`, fall back to `windbg://command-full/{id}` only when needed, call `windbg_get_execution_state`, and then call `windbg_execute_command`.
 
 If the debugger is running or busy, call `windbg_interrupt_target` explicitly and verify state again before executing the command.
 

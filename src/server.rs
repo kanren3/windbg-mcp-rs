@@ -9,7 +9,7 @@ use serde_json::{Value, json};
 
 use crate::{
     catalog::{Catalog, CatalogEntry, CatalogResourceKind, CatalogSection},
-    executor::CommandDispatcher,
+    executor::{CommandDispatcher, interrupt_current_session, query_current_session_state},
     resources::{GUIDE_URI, render_compact_command, render_full_command, render_guide},
 };
 
@@ -69,7 +69,7 @@ impl WindbgMcpServer {
 
     fn state_tool(&self) -> Tool {
         Tool::new(
-            "windbg_get_state",
+            "windbg_get_execution_state",
             "Query the current debugger execution state before deciding whether to interrupt or execute a command.",
             schema_for_type::<GetExecutionStateArgs>(),
         )
@@ -157,7 +157,7 @@ impl ServerHandler for WindbgMcpServer {
                 .build(),
         )
         .with_instructions(
-            "This server is organized around low-context resources plus a small toolset. Start with `windbg_search_catalog`, read `windbg://command/{id}`, optionally escalate to `windbg://command-full/{id}`, then call `windbg_get_state`. If the debugger is running or busy, call `windbg_interrupt_target` and verify state again before calling `windbg_execute_command`.",
+            "This server is organized around low-context resources plus a small toolset. Start with `windbg_search_catalog`, read `windbg://command/{id}`, optionally escalate to `windbg://command-full/{id}`, then call `windbg_get_execution_state`. If the debugger is running or busy, call `windbg_interrupt_target` and verify state again before calling `windbg_execute_command`.",
         )
     }
 
@@ -181,7 +181,7 @@ impl ServerHandler for WindbgMcpServer {
     fn get_tool(&self, name: &str) -> Option<Tool> {
         match name {
             "windbg_execute_command" => Some(self.generic_command_tool()),
-            "windbg_get_state" => Some(self.state_tool()),
+            "windbg_get_execution_state" => Some(self.state_tool()),
             "windbg_search_catalog" => Some(self.search_tool()),
             "windbg_interrupt_target" => Some(self.interrupt_tool()),
             _ => None,
@@ -208,12 +208,9 @@ impl ServerHandler for WindbgMcpServer {
                     "state_after": execution.state_after,
                 })))
             }
-            "windbg_get_state" => {
+            "windbg_get_execution_state" => {
                 let _: GetExecutionStateArgs = self.parse_arguments(request.arguments)?;
-                let state = self
-                    .dispatcher
-                    .state()
-                    .await
+                let state = query_current_session_state()
                     .map_err(|error| McpError::internal_error(error.to_string(), None))?;
                 Ok(CallToolResult::structured(json!({
                     "state": state,
@@ -238,7 +235,7 @@ impl ServerHandler for WindbgMcpServer {
                             "full_resource": entry.full_resource_uri(),
                             "routing": entry.tool_routing_name(),
                             "recommended_tool": entry.recommended_tool(),
-                            "execution_state_tool": "windbg_get_state",
+                            "execution_state_tool": "windbg_get_execution_state",
                         })
                     })
                     .collect();
@@ -248,7 +245,7 @@ impl ServerHandler for WindbgMcpServer {
                         "call windbg_search_catalog",
                         "read the compact resource for the best match",
                         "read the full resource only if needed",
-                        "call windbg_get_state",
+                        "call windbg_get_execution_state",
                         "if needed, call windbg_interrupt_target and verify state again",
                         "call windbg_execute_command or another recommended tool"
                     ],
@@ -257,10 +254,7 @@ impl ServerHandler for WindbgMcpServer {
             }
             "windbg_interrupt_target" => {
                 let _: InterruptTargetArgs = self.parse_arguments(request.arguments)?;
-                let state = self
-                    .dispatcher
-                    .interrupt()
-                    .await
+                let state = interrupt_current_session()
                     .map_err(|error| McpError::internal_error(error.to_string(), None))?;
                 Ok(CallToolResult::structured(json!({
                     "state": state,
@@ -360,7 +354,7 @@ mod tests {
     use std::collections::HashMap;
 
     use super::*;
-    use crate::executor::{DebuggerExecutionState, ExecutionMode};
+    use crate::executor::ExecutionMode;
 
     #[tokio::test]
     async fn command_tool_uses_mock_dispatcher() {
@@ -426,9 +420,9 @@ mod tests {
         let server = WindbgMcpServer::new(dispatcher);
 
         let tool = server
-            .get_tool("windbg_get_state")
+            .get_tool("windbg_get_execution_state")
             .expect("state tool should be listed");
-        assert_eq!(tool.name, "windbg_get_state");
+        assert_eq!(tool.name, "windbg_get_execution_state");
     }
 
     #[test]
@@ -463,18 +457,5 @@ mod tests {
 
         let preview = server.syntax_preview(entry).expect("preview should exist");
         assert!(preview.contains("User-Mode"));
-    }
-
-    #[tokio::test]
-    async fn state_tool_returns_mock_break_state() {
-        let dispatcher = CommandDispatcher::spawn(ExecutionMode::Mock {
-            responses: HashMap::new(),
-        })
-        .expect("dispatcher should start");
-        let state = dispatcher
-            .state()
-            .await
-            .expect("state query should succeed");
-        assert_eq!(state, DebuggerExecutionState::break_state());
     }
 }

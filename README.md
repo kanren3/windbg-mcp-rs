@@ -62,11 +62,14 @@ Common ones:
 
 ## What MCP Exposes
 
-- `Resources`: static WinDbg command documentation
-- `Tools`: executable debugger actions such as raw command execution, catalog search, and target interrupt
-- `Prompts`: guidance templates for using documented WinDbg commands
+- `Resources`: a low-context guide resource and compact/full WinDbg command documentation resources
+- `Tools`: a compact toolset for catalog search, execution-state query, command execution, and target interrupt
 
-Pure UI shortcut topics remain available as documentation, but they are not exposed as executable MCP tools.
+Pure UI shortcut topics remain available as documentation, and command execution is exposed through a single `windbg_execute_command` tool.
+
+Recommended agent flow: call `windbg_search_catalog`, read `windbg://command/{id}`, fall back to `windbg://command-full/{id}` only when needed, call `windbg_get_state`, and then call `windbg_execute_command`.
+
+If the debugger is running or busy, call `windbg_interrupt_target` explicitly and verify state again before executing the command.
 
 ## Development
 
@@ -79,6 +82,6 @@ cargo test
 
 - This project was written entirely with a Vibe Coding workflow
 - The server runs inside the WinDbg process
-- The runtime does not parse `docs/debugger.chm`; it uses the prebuilt static catalog in `src/command_catalog.json`
+- The runtime does not parse `docs/debugger.chm`; it uses the prebuilt static catalog in `src/catalog.json`
 - The transport is Streamable HTTP
 - Set your MCP client timeout as high as possible, because some WinDbg operations can take a long time to finish

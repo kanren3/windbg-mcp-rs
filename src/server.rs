@@ -8,9 +8,13 @@ use serde::Deserialize;
 use serde_json::{Value, json};
 
 use crate::{
-    catalog::{Catalog, CatalogEntry, CatalogSection},
-    executor::{CommandDispatcher, build_command},
+    catalog::{Catalog, CatalogEntry, CatalogResourceKind, CatalogSection},
+    executor::CommandDispatcher,
+    resources::{GUIDE_URI, render_compact_command, render_full_command, render_guide},
 };
+
+#[cfg(test)]
+use crate::executor::build_command;
 
 #[derive(Debug, Deserialize, JsonSchema)]
 struct ExecuteRawArgs {
@@ -20,24 +24,14 @@ struct ExecuteRawArgs {
 #[derive(Debug, Default, Deserialize, JsonSchema)]
 struct InterruptTargetArgs {}
 
+#[derive(Debug, Default, Deserialize, JsonSchema)]
+struct GetExecutionStateArgs {}
+
 #[derive(Debug, Deserialize, JsonSchema)]
 struct SearchCatalogArgs {
     query: String,
     section: Option<CatalogSection>,
     limit: Option<u32>,
-}
-
-#[derive(Debug, Deserialize, JsonSchema)]
-struct DocumentedCommandArgs {
-    variant: Option<String>,
-    arguments: Option<String>,
-}
-
-#[derive(Debug, Deserialize, JsonSchema)]
-struct CommandPromptArgs {
-    user_request: String,
-    variant: Option<String>,
-    notes: Option<String>,
 }
 
 #[derive(Clone)]
@@ -66,17 +60,26 @@ impl WindbgMcpServer {
 
     fn generic_command_tool(&self) -> Tool {
         Tool::new(
-            "windbg_execute_raw",
-            "Execute a raw WinDbg command string through dbgeng.",
+            "windbg_execute_command",
+            "Execute a WinDbg command string through dbgeng. The debugger must already be ready for commands; query state first and interrupt explicitly when needed.",
             schema_for_type::<ExecuteRawArgs>(),
         )
-        .with_title("Execute raw WinDbg command")
+        .with_title("Execute WinDbg command")
+    }
+
+    fn state_tool(&self) -> Tool {
+        Tool::new(
+            "windbg_get_state",
+            "Query the current debugger execution state before deciding whether to interrupt or execute a command.",
+            schema_for_type::<GetExecutionStateArgs>(),
+        )
+        .with_title("Get debugger execution state")
     }
 
     fn interrupt_tool(&self) -> Tool {
         Tool::new(
             "windbg_interrupt_target",
-            "Request a debugger break into the currently running target.",
+            "Request a debugger break into the currently running target and wait until debugger commands are accepted again.",
             schema_for_type::<InterruptTargetArgs>(),
         )
         .with_title("Interrupt running target")
@@ -85,116 +88,37 @@ impl WindbgMcpServer {
     fn search_tool(&self) -> Tool {
         Tool::new(
             "windbg_search_catalog",
-            "Search the static debugger command catalog extracted from debugger.chm.",
+            "Search the static debugger command catalog extracted from debugger.chm and return the best low-context resources to read before execution.",
             schema_for_type::<SearchCatalogArgs>(),
         )
         .with_title("Search WinDbg catalog")
     }
 
-    fn entry_tool(&self, entry: &CatalogEntry) -> Tool {
-        let mut description = entry.summary.clone();
-        if entry.variants_required() {
-            description.push_str(" Variants: ");
-            description.push_str(&entry.tokens.join(", "));
-            description.push('.');
-        }
-        if !entry.supports_text_execution {
-            description.push_str(
-                " This topic is documented as a keyboard action, so the tool returns documentation guidance instead of executing debugger text.",
-            );
+    fn syntax_preview(&self, entry: &CatalogEntry) -> Option<String> {
+        let syntax = entry.syntax_block()?;
+        let syntax = syntax.trim();
+        if syntax.is_empty() {
+            return None;
         }
 
-        Tool::new(
-            entry.tool_name(),
-            description,
-            schema_for_type::<DocumentedCommandArgs>(),
-        )
-        .with_title(entry.title.clone())
+        let preview = syntax
+            .lines()
+            .find(|line| !line.trim().is_empty())
+            .unwrap_or(syntax);
+        let preview = preview.trim();
+        if preview.len() <= 160 {
+            Some(preview.to_string())
+        } else {
+            Some(format!("{}...", &preview[..157]))
+        }
     }
 
-    fn entry_prompt(&self, entry: &CatalogEntry) -> Prompt {
-        Prompt::new(
-            entry.prompt_name(),
-            Some(format!(
-                "Use the official documentation for {} to plan a tool call.",
-                entry.title
-            )),
-            Some(vec![
-                PromptArgument::new("user_request")
-                    .with_description("What the user wants to learn or do in the debugger")
-                    .with_required(true),
-                PromptArgument::new("variant").with_description(
-                    "Optional documented command token when the page covers multiple tokens",
-                ),
-                PromptArgument::new("notes")
-                    .with_description("Optional extra constraints for the command construction"),
-            ]),
-        )
-        .with_title(entry.title.clone())
-    }
-
-    fn render_resource(&self, entry: &CatalogEntry) -> String {
-        let mut output = String::new();
-        output.push_str(&format!("Title: {}\n", entry.title));
-        output.push_str(&format!("Section: {:?}\n", entry.section));
-        output.push_str(&format!("Tokens: {}\n", entry.tokens.join(", ")));
-        output.push_str(&format!("Topic: {}\n", entry.topic_path));
-        output.push_str(&format!("Tool: {}\n", entry.tool_name()));
-        output.push_str(&format!("Prompt: {}\n", entry.prompt_name()));
-        output.push_str(&format!("Summary: {}\n", entry.summary));
-
-        if let Some(syntax) = &entry.user_mode_syntax {
-            output.push_str("\nUser-Mode Syntax\n----------------\n");
-            output.push_str(syntax);
-            output.push('\n');
-        }
-
-        if let Some(syntax) = &entry.kernel_mode_syntax {
-            output.push_str("\nKernel-Mode Syntax\n------------------\n");
-            output.push_str(syntax);
-            output.push('\n');
-        }
-
-        output.push_str("\nDocumentation\n-------------\n");
-        output.push_str(&entry.documentation);
-        output
-    }
-
-    fn render_prompt(&self, entry: &CatalogEntry, args: CommandPromptArgs) -> GetPromptResult {
-        let tool_name = entry.tool_name();
-        let variants = entry.tokens.join(", ");
-        let syntax = entry
-            .user_mode_syntax
-            .as_deref()
-            .or(entry.kernel_mode_syntax.as_deref())
-            .unwrap_or("No syntax block was present in this topic.");
-
-        let mut guidance = format!(
-            "Official WinDbg topic: {}\n\nSummary: {}\n\nDocumented tokens: {}\n\nSyntax:\n{}\n\nUse only the documented command variants and arguments from this topic. After deciding on the exact invocation, call the MCP tool `{}`.",
-            entry.title, entry.summary, variants, syntax, tool_name
-        );
-
-        if let Some(notes) = args.notes.as_deref() {
-            guidance.push_str("\n\nExtra notes: ");
-            guidance.push_str(notes);
-        }
-
-        if let Some(variant) = args.variant.as_deref() {
-            guidance.push_str("\n\nPreferred variant: ");
-            guidance.push_str(variant);
-        }
-
-        GetPromptResult::new(vec![
-            PromptMessage::new_text(PromptMessageRole::Assistant, guidance),
-            PromptMessage::new_text(PromptMessageRole::User, args.user_request),
-        ])
-        .with_description(format!("Prompt for {}", entry.title))
-    }
-
+    #[cfg(test)]
     async fn run_entry_tool(
         &self,
         entry: &CatalogEntry,
-        args: DocumentedCommandArgs,
+        variant: Option<&str>,
+        arguments: Option<&str>,
     ) -> Result<CallToolResult, McpError> {
         if !entry.supports_text_execution {
             let content = format!(
@@ -205,9 +129,9 @@ impl WindbgMcpServer {
             return Ok(CallToolResult::error(vec![Content::text(content)]));
         }
 
-        let command = build_command(entry, args.variant.as_deref(), args.arguments.as_deref())
+        let command = build_command(entry, variant, arguments)
             .map_err(|error| McpError::invalid_params(error.to_string(), None))?;
-        let output = self
+        let execution = self
             .dispatcher
             .execute(command.clone())
             .await
@@ -217,7 +141,9 @@ impl WindbgMcpServer {
             "entry_id": entry.id,
             "title": entry.title,
             "command": command,
-            "output": output,
+            "output": execution.output,
+            "state_before": execution.state_before,
+            "state_after": execution.state_after,
         })))
     }
 }
@@ -226,13 +152,12 @@ impl ServerHandler for WindbgMcpServer {
     fn get_info(&self) -> ServerInfo {
         ServerInfo::new(
             ServerCapabilities::builder()
-                .enable_prompts()
                 .enable_resources()
                 .enable_tools()
                 .build(),
         )
         .with_instructions(
-            "This server exposes WinDbg debugger command documentation extracted from debugger.chm. Use command resources for official documentation, prompt entries to plan a documented invocation, and tools to execute debugger commands through dbgeng without inventing undocumented behavior.",
+            "This server is organized around low-context resources plus a small toolset. Start with `windbg_search_catalog`, read `windbg://command/{id}`, optionally escalate to `windbg://command-full/{id}`, then call `windbg_get_state`. If the debugger is running or busy, call `windbg_interrupt_target` and verify state again before calling `windbg_execute_command`.",
         )
     }
 
@@ -241,37 +166,26 @@ impl ServerHandler for WindbgMcpServer {
         _request: Option<PaginatedRequestParams>,
         _context: RequestContext<RoleServer>,
     ) -> Result<ListToolsResult, McpError> {
-        let mut tools = vec![
-            self.generic_command_tool(),
-            self.search_tool(),
-            self.interrupt_tool(),
-        ];
-        tools.extend(
-            self.catalog()
-                .entries()
-                .iter()
-                .map(|entry| self.entry_tool(entry)),
-        );
         Ok(ListToolsResult {
-            tools,
+            tools: vec![
+                self.generic_command_tool(),
+                self.state_tool(),
+                self.search_tool(),
+                self.interrupt_tool(),
+            ],
             next_cursor: None,
             meta: None,
         })
     }
 
     fn get_tool(&self, name: &str) -> Option<Tool> {
-        if name == "windbg_execute_raw" {
-            return Some(self.generic_command_tool());
+        match name {
+            "windbg_execute_command" => Some(self.generic_command_tool()),
+            "windbg_get_state" => Some(self.state_tool()),
+            "windbg_search_catalog" => Some(self.search_tool()),
+            "windbg_interrupt_target" => Some(self.interrupt_tool()),
+            _ => None,
         }
-        if name == "windbg_search_catalog" {
-            return Some(self.search_tool());
-        }
-        if name == "windbg_interrupt_target" {
-            return Some(self.interrupt_tool());
-        }
-        self.catalog()
-            .get_by_tool_name(name)
-            .map(|entry| self.entry_tool(entry))
     }
 
     async fn call_tool(
@@ -280,16 +194,29 @@ impl ServerHandler for WindbgMcpServer {
         _context: RequestContext<RoleServer>,
     ) -> Result<CallToolResult, McpError> {
         match request.name.as_ref() {
-            "windbg_execute_raw" => {
+            "windbg_execute_command" => {
                 let args: ExecuteRawArgs = self.parse_arguments(request.arguments)?;
-                let output = self
+                let execution = self
                     .dispatcher
                     .execute(args.command.clone())
                     .await
                     .map_err(|error| McpError::internal_error(error.to_string(), None))?;
                 Ok(CallToolResult::structured(json!({
-                    "command": args.command,
-                    "output": output,
+                    "command": execution.command,
+                    "output": execution.output,
+                    "state_before": execution.state_before,
+                    "state_after": execution.state_after,
+                })))
+            }
+            "windbg_get_state" => {
+                let _: GetExecutionStateArgs = self.parse_arguments(request.arguments)?;
+                let state = self
+                    .dispatcher
+                    .state()
+                    .await
+                    .map_err(|error| McpError::internal_error(error.to_string(), None))?;
+                Ok(CallToolResult::structured(json!({
+                    "state": state,
                 })))
             }
             "windbg_search_catalog" => {
@@ -301,70 +228,46 @@ impl ServerHandler for WindbgMcpServer {
                     .map(|entry| {
                         json!({
                             "id": entry.id,
+                            "primary_token": entry.primary_token(),
                             "title": entry.title,
                             "tokens": entry.tokens,
                             "summary": entry.summary,
-                            "tool": entry.tool_name(),
+                            "supports_text_execution": entry.supports_text_execution,
+                            "syntax_preview": self.syntax_preview(entry),
                             "resource": entry.resource_uri(),
+                            "full_resource": entry.full_resource_uri(),
+                            "routing": entry.tool_routing_name(),
+                            "recommended_tool": entry.recommended_tool(),
+                            "execution_state_tool": "windbg_get_state",
                         })
                     })
                     .collect();
                 Ok(CallToolResult::structured(json!({
                     "query": args.query,
+                    "recommended_flow": [
+                        "call windbg_search_catalog",
+                        "read the compact resource for the best match",
+                        "read the full resource only if needed",
+                        "call windbg_get_state",
+                        "if needed, call windbg_interrupt_target and verify state again",
+                        "call windbg_execute_command or another recommended tool"
+                    ],
                     "matches": payload,
                 })))
             }
             "windbg_interrupt_target" => {
                 let _: InterruptTargetArgs = self.parse_arguments(request.arguments)?;
-                let output = self
+                let state = self
                     .dispatcher
                     .interrupt()
                     .await
                     .map_err(|error| McpError::internal_error(error.to_string(), None))?;
                 Ok(CallToolResult::structured(json!({
-                    "status": output,
+                    "state": state,
                 })))
             }
-            name => {
-                let entry = self
-                    .catalog()
-                    .get_by_tool_name(name)
-                    .ok_or_else(|| McpError::method_not_found::<CallToolRequestMethod>())?;
-                let args: DocumentedCommandArgs = self.parse_arguments(request.arguments)?;
-                self.run_entry_tool(entry, args).await
-            }
+            _ => Err(McpError::method_not_found::<CallToolRequestMethod>()),
         }
-    }
-
-    async fn list_prompts(
-        &self,
-        _request: Option<PaginatedRequestParams>,
-        _context: RequestContext<RoleServer>,
-    ) -> Result<ListPromptsResult, McpError> {
-        let prompts = self
-            .catalog()
-            .entries()
-            .iter()
-            .map(|entry| self.entry_prompt(entry))
-            .collect();
-        Ok(ListPromptsResult {
-            prompts,
-            next_cursor: None,
-            meta: None,
-        })
-    }
-
-    async fn get_prompt(
-        &self,
-        request: GetPromptRequestParams,
-        _context: RequestContext<RoleServer>,
-    ) -> Result<GetPromptResult, McpError> {
-        let entry = self
-            .catalog()
-            .get_by_prompt_name(&request.name)
-            .ok_or_else(|| McpError::method_not_found::<GetPromptRequestMethod>())?;
-        let args: CommandPromptArgs = self.parse_arguments(request.arguments)?;
-        Ok(self.render_prompt(entry, args))
     }
 
     async fn list_resources(
@@ -372,25 +275,19 @@ impl ServerHandler for WindbgMcpServer {
         _request: Option<PaginatedRequestParams>,
         _context: RequestContext<RoleServer>,
     ) -> Result<ListResourcesResult, McpError> {
-        let mut resources = vec![
-            RawResource::new(self.catalog().command_index_uri(), "windbg catalog")
-                .with_title("WinDbg command catalog index")
-                .with_description("All command and meta-command topics extracted from debugger.chm")
-                .with_mime_type("text/plain")
-                .with_size(self.catalog().render_index().len() as u32)
-                .no_annotation(),
-        ];
-
-        resources.extend(self.catalog().entries().iter().map(|entry| {
-            RawResource::new(entry.resource_uri(), entry.title.clone())
-                .with_description(entry.summary.clone())
-                .with_mime_type("text/plain")
-                .with_size(entry.documentation.len() as u32)
-                .no_annotation()
-        }));
+        let guide = render_guide(self.catalog());
 
         Ok(ListResourcesResult {
-            resources,
+            resources: vec![
+                RawResource::new(GUIDE_URI, "windbg guide")
+                    .with_title("WinDbg MCP guide")
+                    .with_description(
+                        "Low-context workflow for mapping debugger requests to resources and tools",
+                    )
+                    .with_mime_type("text/plain")
+                    .with_size(guide.len() as u32)
+                    .no_annotation(),
+            ],
             next_cursor: None,
             meta: None,
         })
@@ -405,9 +302,18 @@ impl ServerHandler for WindbgMcpServer {
             resource_templates: vec![
                 RawResourceTemplate::new(
                     self.catalog().command_template_uri(),
-                    "windbg command documentation",
+                    "windbg compact command card",
                 )
-                .with_description("Official debugger command topic by extracted catalog id")
+                .with_description(
+                    "Compact syntax-first WinDbg command card by extracted catalog id",
+                )
+                .with_mime_type("text/plain")
+                .no_annotation(),
+                RawResourceTemplate::new(
+                    self.catalog().full_command_template_uri(),
+                    "windbg full command page",
+                )
+                .with_description("Full extracted debugger command topic by extracted catalog id")
                 .with_mime_type("text/plain")
                 .no_annotation(),
             ],
@@ -421,24 +327,29 @@ impl ServerHandler for WindbgMcpServer {
         request: ReadResourceRequestParams,
         _context: RequestContext<RoleServer>,
     ) -> Result<ReadResourceResult, McpError> {
-        if request.uri == self.catalog().command_index_uri() {
+        if request.uri == GUIDE_URI || request.uri == self.catalog().command_index_uri() {
             return Ok(ReadResourceResult::new(vec![ResourceContents::text(
-                self.catalog().render_index(),
+                render_guide(self.catalog()),
                 request.uri,
             )]));
         }
 
-        let entry = self
+        let (kind, entry) = self
             .catalog()
-            .get_by_resource_uri(&request.uri)
+            .resolve_resource_uri(&request.uri)
             .ok_or_else(|| {
                 McpError::resource_not_found(
                     "unknown_resource",
                     Some(json!({ "uri": request.uri })),
                 )
             })?;
+        let content = match kind {
+            CatalogResourceKind::Compact => render_compact_command(entry),
+            CatalogResourceKind::Full => render_full_command(entry),
+        };
+
         Ok(ReadResourceResult::new(vec![ResourceContents::text(
-            self.render_resource(entry),
+            content,
             request.uri,
         )]))
     }
@@ -449,10 +360,10 @@ mod tests {
     use std::collections::HashMap;
 
     use super::*;
-    use crate::executor::ExecutionMode;
+    use crate::executor::{DebuggerExecutionState, ExecutionMode};
 
     #[tokio::test]
-    async fn documented_tool_uses_mock_dispatcher() {
+    async fn command_tool_uses_mock_dispatcher() {
         let mut responses = HashMap::new();
         responses.insert(
             "dt _PEB_LDR_DATA".to_string(),
@@ -467,13 +378,7 @@ mod tests {
             .expect("dt entry should exist");
 
         let result = server
-            .run_entry_tool(
-                entry,
-                DocumentedCommandArgs {
-                    variant: None,
-                    arguments: Some("_PEB_LDR_DATA".to_string()),
-                },
-            )
+            .run_entry_tool(entry, None, Some("_PEB_LDR_DATA"))
             .await
             .expect("tool should succeed");
 
@@ -496,5 +401,80 @@ mod tests {
             .get_tool("windbg_interrupt_target")
             .expect("interrupt tool should be listed");
         assert_eq!(tool.name, "windbg_interrupt_target");
+    }
+
+    #[test]
+    fn command_tool_is_exposed() {
+        let dispatcher = CommandDispatcher::spawn(ExecutionMode::Mock {
+            responses: HashMap::new(),
+        })
+        .expect("dispatcher should start");
+        let server = WindbgMcpServer::new(dispatcher);
+
+        let tool = server
+            .get_tool("windbg_execute_command")
+            .expect("command tool should be listed");
+        assert_eq!(tool.name, "windbg_execute_command");
+    }
+
+    #[test]
+    fn state_tool_is_exposed() {
+        let dispatcher = CommandDispatcher::spawn(ExecutionMode::Mock {
+            responses: HashMap::new(),
+        })
+        .expect("dispatcher should start");
+        let server = WindbgMcpServer::new(dispatcher);
+
+        let tool = server
+            .get_tool("windbg_get_state")
+            .expect("state tool should be listed");
+        assert_eq!(tool.name, "windbg_get_state");
+    }
+
+    #[test]
+    fn compact_resource_stays_small_and_points_to_full_doc() {
+        let dispatcher = CommandDispatcher::spawn(ExecutionMode::Mock {
+            responses: HashMap::new(),
+        })
+        .expect("dispatcher should start");
+        let server = WindbgMcpServer::new(dispatcher);
+        let entry = server
+            .catalog()
+            .lookup("bp")
+            .expect("bp entry should exist");
+
+        let resource = render_compact_command(entry);
+        assert!(resource.contains("Syntax"));
+        assert!(resource.contains("windbg://command-full/bp_bu_bm_set_breakpoint"));
+        assert!(resource.contains("Next Step"));
+    }
+
+    #[test]
+    fn syntax_preview_uses_inferred_syntax_when_structured_syntax_is_missing() {
+        let dispatcher = CommandDispatcher::spawn(ExecutionMode::Mock {
+            responses: HashMap::new(),
+        })
+        .expect("dispatcher should start");
+        let server = WindbgMcpServer::new(dispatcher);
+        let entry = server
+            .catalog()
+            .lookup("bp")
+            .expect("bp entry should exist");
+
+        let preview = server.syntax_preview(entry).expect("preview should exist");
+        assert!(preview.contains("User-Mode"));
+    }
+
+    #[tokio::test]
+    async fn state_tool_returns_mock_break_state() {
+        let dispatcher = CommandDispatcher::spawn(ExecutionMode::Mock {
+            responses: HashMap::new(),
+        })
+        .expect("dispatcher should start");
+        let state = dispatcher
+            .state()
+            .await
+            .expect("state query should succeed");
+        assert_eq!(state, DebuggerExecutionState::break_state());
     }
 }

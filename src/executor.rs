@@ -1,8 +1,38 @@
-use std::{collections::HashMap, ffi::CString, path::PathBuf, sync::mpsc, thread};
+use std::{
+    collections::HashMap,
+    ffi::CString,
+    path::PathBuf,
+    sync::mpsc,
+    thread,
+    time::{Duration, Instant},
+};
 
+use serde::Serialize;
 use tokio::sync::oneshot;
 
 use crate::catalog::CatalogEntry;
+
+const EXECUTION_STATUS_NO_CHANGE: u32 = 0;
+const EXECUTION_STATUS_GO: u32 = 1;
+const EXECUTION_STATUS_GO_HANDLED: u32 = 2;
+const EXECUTION_STATUS_GO_NOT_HANDLED: u32 = 3;
+const EXECUTION_STATUS_STEP_OVER: u32 = 4;
+const EXECUTION_STATUS_STEP_INTO: u32 = 5;
+const EXECUTION_STATUS_BREAK: u32 = 6;
+const EXECUTION_STATUS_NO_DEBUGGEE: u32 = 7;
+const EXECUTION_STATUS_STEP_BRANCH: u32 = 8;
+const EXECUTION_STATUS_IGNORE_EVENT: u32 = 9;
+const EXECUTION_STATUS_RESTART_REQUESTED: u32 = 10;
+const EXECUTION_STATUS_REVERSE_GO: u32 = 11;
+const EXECUTION_STATUS_REVERSE_STEP_BRANCH: u32 = 12;
+const EXECUTION_STATUS_REVERSE_STEP_OVER: u32 = 13;
+const EXECUTION_STATUS_REVERSE_STEP_INTO: u32 = 14;
+const EXECUTION_STATUS_OUT_OF_SYNC: u32 = 15;
+const EXECUTION_STATUS_WAIT_INPUT: u32 = 16;
+const EXECUTION_STATUS_TIMEOUT: u32 = 17;
+
+const INTERRUPT_POLL_INTERVAL: Duration = Duration::from_millis(250);
+const INTERRUPT_WAIT_TIMEOUT: Duration = Duration::from_secs(15);
 
 #[derive(Debug, thiserror::Error)]
 pub enum ExecutionError {
@@ -29,13 +59,165 @@ pub enum ExecutionMode {
     Mock { responses: HashMap<String, String> },
 }
 
+#[derive(Debug, Clone, PartialEq, Eq, Serialize)]
+pub struct DebuggerExecutionState {
+    pub raw_status: u32,
+    pub status_name: String,
+    pub running: bool,
+    pub busy: bool,
+    pub ready_for_commands: bool,
+    pub requires_interrupt_before_command: bool,
+    pub summary: String,
+}
+
+impl DebuggerExecutionState {
+    pub fn from_raw(raw_status: u32) -> Self {
+        let (status_name, running, busy, summary) = match raw_status {
+            EXECUTION_STATUS_NO_CHANGE => (
+                "no_change",
+                false,
+                false,
+                "Debugger state is unchanged and commands can be issued.",
+            ),
+            EXECUTION_STATUS_GO => ("go", true, false, "The target is running."),
+            EXECUTION_STATUS_GO_HANDLED => (
+                "go_handled",
+                true,
+                false,
+                "The target is running after a handled event.",
+            ),
+            EXECUTION_STATUS_GO_NOT_HANDLED => (
+                "go_not_handled",
+                true,
+                false,
+                "The target is running after an unhandled event.",
+            ),
+            EXECUTION_STATUS_STEP_OVER => (
+                "step_over",
+                true,
+                false,
+                "The target is running while step-over is in progress.",
+            ),
+            EXECUTION_STATUS_STEP_INTO => (
+                "step_into",
+                true,
+                false,
+                "The target is running while step-into is in progress.",
+            ),
+            EXECUTION_STATUS_BREAK => (
+                "break",
+                false,
+                false,
+                "The target is broken in and ready for debugger commands.",
+            ),
+            EXECUTION_STATUS_NO_DEBUGGEE => (
+                "no_debuggee",
+                false,
+                false,
+                "No debuggee is currently active.",
+            ),
+            EXECUTION_STATUS_STEP_BRANCH => (
+                "step_branch",
+                true,
+                false,
+                "The target is running while step-branch is in progress.",
+            ),
+            EXECUTION_STATUS_IGNORE_EVENT => (
+                "ignore_event",
+                false,
+                true,
+                "The debugger is processing an event and is not ready for commands.",
+            ),
+            EXECUTION_STATUS_RESTART_REQUESTED => (
+                "restart_requested",
+                false,
+                true,
+                "The debugger is restarting the target.",
+            ),
+            EXECUTION_STATUS_REVERSE_GO => (
+                "reverse_go",
+                true,
+                false,
+                "The target is running in reverse execution mode.",
+            ),
+            EXECUTION_STATUS_REVERSE_STEP_BRANCH => (
+                "reverse_step_branch",
+                true,
+                false,
+                "The target is reverse-stepping through a branch.",
+            ),
+            EXECUTION_STATUS_REVERSE_STEP_OVER => (
+                "reverse_step_over",
+                true,
+                false,
+                "The target is reverse step-over running.",
+            ),
+            EXECUTION_STATUS_REVERSE_STEP_INTO => (
+                "reverse_step_into",
+                true,
+                false,
+                "The target is reverse step-into running.",
+            ),
+            EXECUTION_STATUS_OUT_OF_SYNC => (
+                "out_of_sync",
+                false,
+                true,
+                "The debugger is out of sync and not ready for commands.",
+            ),
+            EXECUTION_STATUS_WAIT_INPUT => (
+                "wait_input",
+                false,
+                true,
+                "The debugger is waiting for input and is treated as busy.",
+            ),
+            EXECUTION_STATUS_TIMEOUT => (
+                "timeout",
+                false,
+                true,
+                "The debugger reported a timeout and is treated as busy.",
+            ),
+            _ => (
+                "unknown",
+                false,
+                true,
+                "The debugger returned an unknown execution status; interrupt before issuing commands.",
+            ),
+        };
+        let ready_for_commands = !running && !busy;
+        Self {
+            raw_status,
+            status_name: status_name.to_string(),
+            running,
+            busy,
+            ready_for_commands,
+            requires_interrupt_before_command: !ready_for_commands,
+            summary: summary.to_string(),
+        }
+    }
+
+    pub fn break_state() -> Self {
+        Self::from_raw(EXECUTION_STATUS_BREAK)
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize)]
+pub struct CommandExecutionResult {
+    pub command: String,
+    pub output: String,
+    pub state_before: DebuggerExecutionState,
+    pub state_after: DebuggerExecutionState,
+}
+
 enum DispatcherRequest {
     Execute {
         command: String,
-        response: oneshot::Sender<Result<String, ExecutionError>>,
+        response: oneshot::Sender<Result<CommandExecutionResult, ExecutionError>>,
     },
     Interrupt {
-        response: oneshot::Sender<Result<String, ExecutionError>>,
+        response: oneshot::Sender<Result<DebuggerExecutionState, ExecutionError>>,
+    },
+    State {
+        response: oneshot::Sender<Result<DebuggerExecutionState, ExecutionError>>,
     },
 }
 
@@ -73,6 +255,10 @@ impl CommandDispatcher {
                             let result = executor.interrupt();
                             let _ = response.send(result);
                         }
+                        DispatcherRequest::State { response } => {
+                            let result = executor.query_state();
+                            let _ = response.send(result);
+                        }
                     }
                 }
             })
@@ -85,7 +271,10 @@ impl CommandDispatcher {
         Ok(Self { sender })
     }
 
-    pub async fn execute(&self, command: impl Into<String>) -> Result<String, ExecutionError> {
+    pub async fn execute(
+        &self,
+        command: impl Into<String>,
+    ) -> Result<CommandExecutionResult, ExecutionError> {
         let (response_tx, response_rx) = oneshot::channel();
         self.sender
             .send(DispatcherRequest::Execute {
@@ -99,10 +288,23 @@ impl CommandDispatcher {
             .map_err(|_| ExecutionError::WorkerStopped)?
     }
 
-    pub async fn interrupt(&self) -> Result<String, ExecutionError> {
+    pub async fn interrupt(&self) -> Result<DebuggerExecutionState, ExecutionError> {
         let (response_tx, response_rx) = oneshot::channel();
         self.sender
             .send(DispatcherRequest::Interrupt {
+                response: response_tx,
+            })
+            .map_err(|_| ExecutionError::WorkerStopped)?;
+
+        response_rx
+            .await
+            .map_err(|_| ExecutionError::WorkerStopped)?
+    }
+
+    pub async fn state(&self) -> Result<DebuggerExecutionState, ExecutionError> {
+        let (response_tx, response_rx) = oneshot::channel();
+        self.sender
+            .send(DispatcherRequest::State {
                 response: response_tx,
             })
             .map_err(|_| ExecutionError::WorkerStopped)?;
@@ -143,18 +345,42 @@ pub fn build_command(
 }
 
 trait BlockingExecutor {
-    fn execute(&mut self, command: &str) -> Result<String, ExecutionError>;
+    fn query_state(&mut self) -> Result<DebuggerExecutionState, ExecutionError>;
 
-    fn interrupt(&mut self) -> Result<String, ExecutionError> {
+    fn execute_ready(&mut self, command: &str) -> Result<String, ExecutionError>;
+
+    fn interrupt(&mut self) -> Result<DebuggerExecutionState, ExecutionError> {
         Err(ExecutionError::Command(
             "interrupt is not supported for this execution mode".to_string(),
         ))
+    }
+
+    fn execute(&mut self, command: &str) -> Result<CommandExecutionResult, ExecutionError> {
+        let state_before = self.query_state()?;
+        if state_before.requires_interrupt_before_command {
+            return Err(ExecutionError::Command(format!(
+                "debugger is not ready for commands (status: {}). {} Query execution state first and call `windbg_interrupt_target` if you need to break in.",
+                state_before.status_name, state_before.summary
+            )));
+        }
+        let output = self.execute_ready(command)?;
+        let state_after = self.query_state()?;
+
+        Ok(CommandExecutionResult {
+            command: command.to_string(),
+            output,
+            state_before,
+            state_after,
+        })
     }
 }
 
 fn build_executor(mode: ExecutionMode) -> Result<Box<dyn BlockingExecutor>, ExecutionError> {
     match mode {
-        ExecutionMode::Mock { responses } => Ok(Box::new(MockExecutor { responses })),
+        ExecutionMode::Mock { responses } => Ok(Box::new(MockExecutor {
+            responses,
+            state: DebuggerExecutionState::break_state(),
+        })),
         ExecutionMode::CurrentSession => {
             #[cfg(windows)]
             {
@@ -192,10 +418,15 @@ fn build_executor(mode: ExecutionMode) -> Result<Box<dyn BlockingExecutor>, Exec
 
 struct MockExecutor {
     responses: HashMap<String, String>,
+    state: DebuggerExecutionState,
 }
 
 impl BlockingExecutor for MockExecutor {
-    fn execute(&mut self, command: &str) -> Result<String, ExecutionError> {
+    fn query_state(&mut self) -> Result<DebuggerExecutionState, ExecutionError> {
+        Ok(self.state.clone())
+    }
+
+    fn execute_ready(&mut self, command: &str) -> Result<String, ExecutionError> {
         Ok(self
             .responses
             .get(command)
@@ -203,8 +434,9 @@ impl BlockingExecutor for MockExecutor {
             .unwrap_or_else(|| format!("mock-executed: {command}")))
     }
 
-    fn interrupt(&mut self) -> Result<String, ExecutionError> {
-        Ok("mock-interrupted".to_string())
+    fn interrupt(&mut self) -> Result<DebuggerExecutionState, ExecutionError> {
+        self.state = DebuggerExecutionState::break_state();
+        Ok(self.state.clone())
     }
 }
 
@@ -222,7 +454,10 @@ mod windows_impl {
         core::{Interface, PCSTR, Result as WinResult, implement},
     };
 
-    use super::{BlockingExecutor, CString, ExecutionError, PathBuf};
+    use super::{
+        BlockingExecutor, CString, DebuggerExecutionState, ExecutionError, INTERRUPT_POLL_INTERVAL,
+        INTERRUPT_WAIT_TIMEOUT, Instant, PathBuf,
+    };
 
     #[implement(IDebugOutputCallbacks)]
     struct OutputCollector {
@@ -321,17 +556,59 @@ mod windows_impl {
             Ok(Self { client })
         }
 
-        pub(crate) fn execute_command(&mut self, command: &str) -> Result<String, ExecutionError> {
+        pub(crate) fn execute_command(
+            &mut self,
+            command: &str,
+        ) -> Result<super::CommandExecutionResult, ExecutionError> {
             <Self as BlockingExecutor>::execute(self, command)
         }
 
-        pub(crate) fn interrupt_target(&mut self) -> Result<String, ExecutionError> {
+        pub(crate) fn interrupt_target(
+            &mut self,
+        ) -> Result<DebuggerExecutionState, ExecutionError> {
             <Self as BlockingExecutor>::interrupt(self)
+        }
+
+        pub(crate) fn query_execution_state(
+            &mut self,
+        ) -> Result<DebuggerExecutionState, ExecutionError> {
+            <Self as BlockingExecutor>::query_state(self)
+        }
+
+        fn control(&self) -> Result<IDebugControl, ExecutionError> {
+            self.client
+                .cast::<IDebugControl>()
+                .map_err(|error| ExecutionError::Command(error.to_string()))
+        }
+
+        fn wait_until_ready_for_commands(
+            control: &IDebugControl,
+        ) -> Result<DebuggerExecutionState, ExecutionError> {
+            let deadline = Instant::now() + INTERRUPT_WAIT_TIMEOUT;
+            loop {
+                let state = current_state(control)?;
+                if state.ready_for_commands {
+                    return Ok(state);
+                }
+                if Instant::now() >= deadline {
+                    return Err(ExecutionError::Command(format!(
+                        "timed out waiting for debugger to become ready; last status was {} ({})",
+                        state.status_name, state.raw_status
+                    )));
+                }
+
+                let timeout = INTERRUPT_POLL_INTERVAL.as_millis() as u32;
+                let _ = unsafe { control.WaitForEvent(0, timeout) };
+            }
         }
     }
 
     impl BlockingExecutor for DbgEngExecutor {
-        fn execute(&mut self, command: &str) -> Result<String, ExecutionError> {
+        fn query_state(&mut self) -> Result<DebuggerExecutionState, ExecutionError> {
+            current_state(&self.control()?)
+        }
+
+        fn execute_ready(&mut self, command: &str) -> Result<String, ExecutionError> {
             let captured = Arc::new(Mutex::new(String::new()));
             let callback: IDebugOutputCallbacks = OutputCollector::new(captured.clone()).into();
             let child = unsafe { self.client.CreateClient() }
@@ -360,18 +637,27 @@ mod windows_impl {
             Ok(captured.lock().expect("buffer lock poisoned").clone())
         }
 
-        fn interrupt(&mut self) -> Result<String, ExecutionError> {
-            let control = self
-                .client
-                .cast::<IDebugControl>()
-                .map_err(|error| ExecutionError::Command(error.to_string()))?;
+        fn interrupt(&mut self) -> Result<DebuggerExecutionState, ExecutionError> {
+            let control = self.control()?;
+            let state = current_state(&control)?;
+            if state.ready_for_commands {
+                return Ok(state);
+            }
+
             unsafe {
                 control
                     .SetInterrupt(DEBUG_INTERRUPT_ACTIVE)
                     .map_err(|error| ExecutionError::Command(error.to_string()))?;
             }
-            Ok("interrupt requested".to_string())
+
+            Self::wait_until_ready_for_commands(&control)
         }
+    }
+
+    fn current_state(control: &IDebugControl) -> Result<DebuggerExecutionState, ExecutionError> {
+        let raw_status = unsafe { control.GetExecutionStatus() }
+            .map_err(|error| ExecutionError::Command(error.to_string()))?;
+        Ok(DebuggerExecutionState::from_raw(raw_status))
     }
 }
 
@@ -411,6 +697,22 @@ mod tests {
             .interrupt()
             .await
             .expect("interrupt should succeed");
-        assert_eq!(result, "mock-interrupted");
+        assert!(result.ready_for_commands);
+        assert_eq!(result.status_name, "break");
+    }
+
+    #[test]
+    fn mock_executor_rejects_execution_when_running() {
+        let mut executor = MockExecutor {
+            responses: HashMap::from([("g".to_string(), "continued execution".to_string())]),
+            state: DebuggerExecutionState::from_raw(EXECUTION_STATUS_GO),
+        };
+
+        let error = executor.execute("g").expect_err("execute should fail");
+        assert!(
+            error
+                .to_string()
+                .contains("debugger is not ready for commands")
+        );
     }
 }

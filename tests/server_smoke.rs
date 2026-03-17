@@ -18,7 +18,7 @@ async fn mock_dispatcher_returns_scripted_output() {
         .await
         .expect("mock command should succeed");
 
-    assert_eq!(output, "ntdll!_PEB_LDR_DATA");
+    assert_eq!(output.output, "ntdll!_PEB_LDR_DATA");
 }
 
 #[tokio::test]
@@ -33,13 +33,12 @@ async fn mock_dispatcher_interrupt_returns_status() {
         .await
         .expect("mock interrupt should succeed");
 
-    assert_eq!(output, "mock-interrupted");
+    assert_eq!(output.status_name, "break");
+    assert!(output.ready_for_commands);
 }
 
 #[test]
-fn catalog_exposes_resource_tool_and_prompt_names() {
+fn catalog_exposes_resource_uri() {
     let entry = Catalog::global().lookup("dt").expect("dt entry must exist");
-    assert_eq!(entry.tool_name(), "windbg_cmd_dt__display_type_");
-    assert_eq!(entry.prompt_name(), "windbg_prompt_dt__display_type_");
-    assert_eq!(entry.resource_uri(), "windbg://command/dt__display_type_");
+    assert_eq!(entry.resource_uri(), "windbg://command/dt_display_type");
 }

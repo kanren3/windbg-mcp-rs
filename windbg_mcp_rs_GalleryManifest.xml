@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ExtensionPackages Version="1.0.0.0" Compression="none">
+  <ExtensionPackage>
+    <Name>windbg_mcp_rs</Name>
+    <Version>0.1.2</Version>
+    <MinDebuggerSupported>6.13.16.2161</MinDebuggerSupported>
+    <Description><![CDATA[Exposes the current WinDbg debugging session as an MCP (Model Context Protocol) server over HTTP, enabling AI agents to execute commands, search the command catalog, and interrupt the target.]]></Description>
+    <ReleaseNotes><![CDATA[Auto-starts MCP server at http://127.0.0.1:50051/mcp on extension load.]]></ReleaseNotes>
+    <Authors>kanren3</Authors>
+    <IconUri>
+    </IconUri>
+    <LicenseUri>
+    </LicenseUri>
+    <ProjectUri>https://github.com/kanren3/windbg-mcp-rs</ProjectUri>
+    <Tags>mcp,debugger,ai,http,server</Tags>
+    <Copyright><![CDATA[Copyright (c) 2026 kanren3]]></Copyright>
+    <DatePublished>
+    </DatePublished>
+    <DependOnPackages>
+    </DependOnPackages>
+    <Components>
+      <BinaryComponent Name="windbg_mcp_rs" Type="Engine">
+        <Files>
+          <File Architecture="Any" Module="winext\windbg_mcp_rs.dll" FilePathKind="RepositoryRelative" />
+        </Files>
+        <EngineCommands>
+          <EngineCommand Name="mcp">
+            <EngineCommandItem>
+              <Syntax><![CDATA[!mcp help]]></Syntax>
+              <Description><![CDATA[Show all windbg-mcp-rs commands.]]></Description>
+            </EngineCommandItem>
+            <EngineCommandItem>
+              <Syntax><![CDATA[!mcp serve [host:port]]]></Syntax>
+              <Description><![CDATA[Start the MCP Streamable HTTP server. Default bind: 127.0.0.1:50051, endpoint: /mcp. Auto-starts on extension load.]]></Description>
+            </EngineCommandItem>
+            <EngineCommandItem>
+              <Syntax><![CDATA[!mcp status]]></Syntax>
+              <Description><![CDATA[Show whether the in-process MCP server is running.]]></Description>
+            </EngineCommandItem>
+            <EngineCommandItem>
+              <Syntax><![CDATA[!mcp state]]></Syntax>
+              <Description><![CDATA[Show the current debugger execution state.]]></Description>
+            </EngineCommandItem>
+            <EngineCommandItem>
+              <Syntax><![CDATA[!mcp stop]]></Syntax>
+              <Description><![CDATA[Stop the in-process MCP server.]]></Description>
+            </EngineCommandItem>
+            <EngineCommandItem>
+              <Syntax><![CDATA[!mcp break]]></Syntax>
+              <Description><![CDATA[Request a debugger break into the currently running target.]]></Description>
+            </EngineCommandItem>
+            <EngineCommandItem>
+              <Syntax><![CDATA[!mcp interrupt]]></Syntax>
+              <Description><![CDATA[Alias for !mcp break.]]></Description>
+            </EngineCommandItem>
+            <EngineCommandItem>
+              <Syntax><![CDATA[!mcp catalog [query]]]></Syntax>
+              <Description><![CDATA[List catalog entries or search the extracted debugger command catalog.]]></Description>
+            </EngineCommandItem>
+            <EngineCommandItem>
+              <Syntax><![CDATA[!mcp doc <token-or-id>]]></Syntax>
+              <Description><![CDATA[Show the static documentation for one extracted command topic.]]></Description>
+            </EngineCommandItem>
+            <EngineCommandItem>
+              <Syntax><![CDATA[!mcp exec <debugger command>]]></Syntax>
+              <Description><![CDATA[Execute a raw debugger command through dbgeng.]]></Description>
+            </EngineCommandItem>
+          </EngineCommand>
+        </EngineCommands>
+      </BinaryComponent>
+    </Components>
+  </ExtensionPackage>
+</ExtensionPackages>

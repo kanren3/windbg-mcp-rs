@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Settings Version="1">
+  <Namespace Name="Extensions">
+    <Setting Name="ExtensionRepository" Type="VT_BSTR" Value="Implicit"></Setting>
+    <Namespace Name="ExtensionRepositories">
+      <Namespace Name="windbg-mcp-rs">
+        <Setting Name="Id" Type="VT_BSTR" Value="A1B2C3D4-E5F6-7890-ABCD-EF1234567890"></Setting>
+        <Setting Name="LocalCacheRootFolder" Type="VT_BSTR" Value="$LOCALAPPDATA$\DBG\ExtRepository"></Setting>
+        <Setting Name="IsEnabled" Type="VT_BOOL" Value="true"></Setting>
+      </Namespace>
+    </Namespace>
+  </Namespace>
+</Settings>

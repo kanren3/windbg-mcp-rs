@@ -28,6 +28,11 @@ pub unsafe extern "system" fn DebugExtensionInitialize(
         *version = (EXTENSION_MAJOR << 16) | EXTENSION_MINOR;
         *flags = 0;
     }
+
+    // Auto-start the MCP server when WinDbg loads the extension DLL.
+    // Errors are intentionally ignored — the user can still use !mcp serve manually.
+    let _ = PluginServerControl::start(None);
+
     S_OK
 }
 

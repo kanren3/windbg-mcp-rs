@@ -501,32 +501,6 @@ mod windows_impl {
             Ok(Self { client })
         }
 
-        pub(crate) fn from_existing_client(client: IDebugClient) -> Result<Self, ExecutionError> {
-            let _ = client
-                .cast::<IDebugControl>()
-                .map_err(|error| ExecutionError::Startup(error.to_string()))?;
-            Ok(Self { client })
-        }
-
-        pub(crate) fn execute_command(
-            &mut self,
-            command: &str,
-        ) -> Result<super::CommandExecutionResult, ExecutionError> {
-            <Self as BlockingExecutor>::execute(self, command)
-        }
-
-        pub(crate) fn interrupt_target(
-            &mut self,
-        ) -> Result<DebuggerExecutionState, ExecutionError> {
-            <Self as BlockingExecutor>::interrupt(self)
-        }
-
-        pub(crate) fn query_execution_state(
-            &mut self,
-        ) -> Result<DebuggerExecutionState, ExecutionError> {
-            <Self as BlockingExecutor>::query_state(self)
-        }
-
         fn control(&self) -> Result<IDebugControl, ExecutionError> {
             self.client
                 .cast::<IDebugControl>()

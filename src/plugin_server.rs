@@ -37,22 +37,6 @@ struct RunningPluginServer {
 pub struct PluginServerControl;
 
 impl PluginServerControl {
-    pub fn start_background(bind_address: Option<&str>) -> Result<(), String> {
-        let bind_address = bind_address.map(str::to_string);
-        thread::Builder::new()
-            .name("windbg-mcp-autostart".to_string())
-            .spawn(move || {
-                if let Ok(status) = Self::start(bind_address.as_deref()) {
-                    let _ = notify_windbg(&format!(
-                        "WinDbg MCP server auto-started at {}\n",
-                        status.mcp_url
-                    ));
-                }
-            })
-            .map(|_| ())
-            .map_err(|error| error.to_string())
-    }
-
     pub fn start(bind_address: Option<&str>) -> Result<PluginServerStatus, String> {
         let bind_address = bind_address
             .map(str::trim)

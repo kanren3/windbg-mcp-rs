@@ -38,20 +38,8 @@
               <Description><![CDATA[Show whether the in-process MCP server is running.]]></Description>
             </EngineCommandItem>
             <EngineCommandItem>
-              <Syntax><![CDATA[!mcp state]]></Syntax>
-              <Description><![CDATA[Show the current debugger execution state.]]></Description>
-            </EngineCommandItem>
-            <EngineCommandItem>
               <Syntax><![CDATA[!mcp stop]]></Syntax>
               <Description><![CDATA[Stop the in-process MCP server.]]></Description>
-            </EngineCommandItem>
-            <EngineCommandItem>
-              <Syntax><![CDATA[!mcp break]]></Syntax>
-              <Description><![CDATA[Request a debugger break into the currently running target.]]></Description>
-            </EngineCommandItem>
-            <EngineCommandItem>
-              <Syntax><![CDATA[!mcp interrupt]]></Syntax>
-              <Description><![CDATA[Alias for !mcp break.]]></Description>
             </EngineCommandItem>
             <EngineCommandItem>
               <Syntax><![CDATA[!mcp catalog [query]]]></Syntax>
@@ -60,10 +48,6 @@
             <EngineCommandItem>
               <Syntax><![CDATA[!mcp doc <token-or-id>]]></Syntax>
               <Description><![CDATA[Show the static documentation for one extracted command topic.]]></Description>
-            </EngineCommandItem>
-            <EngineCommandItem>
-              <Syntax><![CDATA[!mcp exec <debugger command>]]></Syntax>
-              <Description><![CDATA[Execute a raw debugger command through dbgeng.]]></Description>
             </EngineCommandItem>
           </EngineCommand>
         </EngineCommands>

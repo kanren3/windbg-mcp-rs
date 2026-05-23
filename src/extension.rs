@@ -32,19 +32,7 @@ pub unsafe extern "system" fn DebugExtensionInitialize(
 
     // Start the MCP HTTP server during extension load. This should return as
     // soon as the listener binds; debugger session connection is deferred.
-    match PluginServerControl::start(None) {
-        Ok(status) => {
-            let _ = notify_windbg(&format!(
-                "WinDbg MCP server is running at {}\n",
-                status.mcp_url
-            ));
-        }
-        Err(error) => {
-            let _ = notify_windbg(&format!(
-                "WinDbg MCP server auto-start failed: {error}\n"
-            ));
-        }
-    }
+    let _ = PluginServerControl::start(None);
 
     S_OK
 }

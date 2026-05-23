@@ -2,7 +2,7 @@
 <ExtensionPackages Version="1.0.0.0" Compression="none">
   <ExtensionPackage>
     <Name>windbg_mcp_rs</Name>
-    <Version>0.1.2</Version>
+    <Version>0.1.3</Version>
     <MinDebuggerSupported>6.13.16.2161</MinDebuggerSupported>
     <Description><![CDATA[Exposes the current WinDbg debugging session as an MCP (Model Context Protocol) server over HTTP, enabling AI agents to execute commands, search the command catalog, and interrupt the target.]]></Description>
     <ReleaseNotes><![CDATA[Auto-starts MCP server at http://127.0.0.1:50051/mcp on extension load.]]></ReleaseNotes>

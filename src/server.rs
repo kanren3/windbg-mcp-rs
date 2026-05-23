@@ -7,7 +7,7 @@ use serde_json::{Value, json};
 
 use crate::{
     catalog::{Catalog, CatalogEntry, CatalogResourceKind, CatalogSection},
-    executor::{CommandDispatcher, interrupt_current_session, query_current_session_state},
+    executor::CommandDispatcher,
     resources::{GUIDE_URI, render_compact_command, render_full_command, render_guide},
 };
 
@@ -57,7 +57,7 @@ impl WindbgMcpServer {
     fn generic_command_tool(&self) -> Tool {
         Tool::new(
             "windbg_execute_command",
-            "Execute a WinDbg command string through dbgeng. The debugger must already be ready for commands; query state first and interrupt explicitly when needed.",
+            "Execute a non-resuming WinDbg command string through dbgeng. The debugger must already be ready for commands; query state first and interrupt explicitly when needed. Execution-control commands such as g/p/t are blocked.",
             schema_for_type::<ExecuteRawArgs>(),
         )
         .with_title("Execute WinDbg command")
@@ -75,7 +75,7 @@ impl WindbgMcpServer {
     fn interrupt_tool(&self) -> Tool {
         Tool::new(
             "windbg_interrupt_target",
-            "Request a debugger break into the currently running target and wait until debugger commands are accepted again.",
+            "Request a debugger break into the currently running target. This only issues the break request; query execution state again to confirm the debugger has become ready for commands.",
             schema_for_type::<InterruptTargetArgs>(),
         )
         .with_title("Interrupt running target")
@@ -206,7 +206,10 @@ impl ServerHandler for WindbgMcpServer {
             }
             "windbg_get_execution_state" => {
                 let _: GetExecutionStateArgs = self.parse_arguments(request.arguments)?;
-                let state = query_current_session_state()
+                let state = self
+                    .dispatcher
+                    .query_state()
+                    .await
                     .map_err(|error| McpError::internal_error(error.to_string(), None))?;
                 Ok(CallToolResult::structured(json!({
                     "state": state,
@@ -250,7 +253,10 @@ impl ServerHandler for WindbgMcpServer {
             }
             "windbg_interrupt_target" => {
                 let _: InterruptTargetArgs = self.parse_arguments(request.arguments)?;
-                let state = interrupt_current_session()
+                let state = self
+                    .dispatcher
+                    .interrupt()
+                    .await
                     .map_err(|error| McpError::internal_error(error.to_string(), None))?;
                 Ok(CallToolResult::structured(json!({
                     "state": state,

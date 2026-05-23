@@ -1,4 +1,5 @@
 use std::{
+    ffi::CString,
     sync::{LazyLock, Mutex, mpsc},
     thread::{self, JoinHandle},
 };
@@ -7,6 +8,13 @@ use axum::Router;
 use rmcp::transport::streamable_http_server::{StreamableHttpServerConfig, StreamableHttpService};
 use tokio::net::TcpListener;
 use tokio_util::sync::CancellationToken;
+use windows::{
+    Win32::System::Diagnostics::Debug::Extensions::{
+        DEBUG_CONNECT_SESSION_NO_ANNOUNCE, DEBUG_CONNECT_SESSION_NO_VERSION, DEBUG_OUTPUT_NORMAL,
+        DebugCreate, IDebugClient, IDebugControl,
+    },
+    core::{Interface, PCSTR},
+};
 
 use crate::{CommandDispatcher, ExecutionMode, WindbgMcpServer};
 
@@ -29,6 +37,22 @@ struct RunningPluginServer {
 pub struct PluginServerControl;
 
 impl PluginServerControl {
+    pub fn start_background(bind_address: Option<&str>) -> Result<(), String> {
+        let bind_address = bind_address.map(str::to_string);
+        thread::Builder::new()
+            .name("windbg-mcp-autostart".to_string())
+            .spawn(move || {
+                if let Ok(status) = Self::start(bind_address.as_deref()) {
+                    let _ = notify_windbg(&format!(
+                        "WinDbg MCP server auto-started at {}\n",
+                        status.mcp_url
+                    ));
+                }
+            })
+            .map(|_| ())
+            .map_err(|error| error.to_string())
+    }
+
     pub fn start(bind_address: Option<&str>) -> Result<PluginServerStatus, String> {
         let bind_address = bind_address
             .map(str::trim)
@@ -119,6 +143,8 @@ async fn run_server_loop(
     cancellation: CancellationToken,
     startup_tx: mpsc::Sender<Result<PluginServerStatus, String>>,
 ) -> Result<(), String> {
+    let dispatcher = CommandDispatcher::spawn(ExecutionMode::CurrentSession)
+        .map_err(|error| error.to_string())?;
     let listener = TcpListener::bind(&bind_address)
         .await
         .map_err(|error| error.to_string())?;
@@ -131,10 +157,8 @@ async fn run_server_loop(
         .map_err(|_| "plugin server startup receiver dropped".to_string())?;
 
     let service: StreamableHttpService<WindbgMcpServer> = StreamableHttpService::new(
-        || {
-            let dispatcher = CommandDispatcher::spawn(ExecutionMode::CurrentSession)
-                .map_err(|error| std::io::Error::other(error.to_string()))?;
-            Ok(WindbgMcpServer::new(dispatcher))
+        move || {
+            Ok(WindbgMcpServer::new(dispatcher.clone()))
         },
         Default::default(),
         StreamableHttpServerConfig {
@@ -150,4 +174,33 @@ async fn run_server_loop(
         .with_graceful_shutdown(async move { cancellation.cancelled_owned().await })
         .await
         .map_err(|error| error.to_string())
+}
+
+fn notify_windbg(text: &str) -> Result<(), String> {
+    let client = unsafe { DebugCreate::<IDebugClient>() }.map_err(|error| error.to_string())?;
+    unsafe {
+        client
+            .ConnectSession(
+                DEBUG_CONNECT_SESSION_NO_VERSION | DEBUG_CONNECT_SESSION_NO_ANNOUNCE,
+                0,
+            )
+            .map_err(|error| error.to_string())?;
+    }
+
+    let control = client
+        .cast::<IDebugControl>()
+        .map_err(|error| error.to_string())?;
+
+    for line in text.lines() {
+        let mut escaped = line.replace('%', "%%");
+        escaped.push('\n');
+        let c_text = CString::new(escaped).map_err(|_| "output text contained NUL".to_string())?;
+        unsafe {
+            control
+                .Output(DEBUG_OUTPUT_NORMAL, PCSTR(c_text.as_ptr() as _))
+                .map_err(|error| error.to_string())?;
+        }
+    }
+
+    Ok(())
 }

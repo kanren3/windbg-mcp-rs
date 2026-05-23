@@ -1,10 +1,4 @@
-use std::{
-    collections::HashMap,
-    ffi::CString,
-    sync::mpsc,
-    thread,
-    time::{Duration, Instant},
-};
+use std::{collections::HashMap, ffi::CString, sync::mpsc, thread};
 
 use serde::Serialize;
 use tokio::sync::oneshot;
@@ -30,9 +24,6 @@ const EXECUTION_STATUS_OUT_OF_SYNC: u32 = 15;
 const EXECUTION_STATUS_WAIT_INPUT: u32 = 16;
 const EXECUTION_STATUS_TIMEOUT: u32 = 17;
 
-const INTERRUPT_POLL_INTERVAL: Duration = Duration::from_millis(250);
-const INTERRUPT_WAIT_TIMEOUT: Duration = Duration::from_secs(15);
-
 #[derive(Debug, thiserror::Error)]
 pub enum ExecutionError {
     #[error("command topic `{0}` cannot be executed as plain debugger text")]
@@ -45,6 +36,8 @@ pub enum ExecutionError {
     Startup(String),
     #[error("command execution failed: {0}")]
     Command(String),
+    #[error("execution-control command `{0}` is blocked; use explicit interrupt/state flow or run it directly in WinDbg")]
+    UnsafeExecutionControl(String),
     #[error("string contains an embedded NUL byte")]
     InvalidCString,
     #[error("this execution mode is only available on Windows")]
@@ -210,6 +203,12 @@ enum DispatcherRequest {
         command: String,
         response: oneshot::Sender<Result<CommandExecutionResult, ExecutionError>>,
     },
+    QueryState {
+        response: oneshot::Sender<Result<DebuggerExecutionState, ExecutionError>>,
+    },
+    Interrupt {
+        response: oneshot::Sender<Result<DebuggerExecutionState, ExecutionError>>,
+    },
 }
 
 #[derive(Clone)]
@@ -242,6 +241,14 @@ impl CommandDispatcher {
                             let result = executor.execute(&command);
                             let _ = response.send(result);
                         }
+                        DispatcherRequest::QueryState { response } => {
+                            let result = executor.query_state();
+                            let _ = response.send(result);
+                        }
+                        DispatcherRequest::Interrupt { response } => {
+                            let result = executor.interrupt();
+                            let _ = response.send(result);
+                        }
                     }
                 }
             })
@@ -270,29 +277,31 @@ impl CommandDispatcher {
             .await
             .map_err(|_| ExecutionError::WorkerStopped)?
     }
-}
 
-pub fn query_current_session_state() -> Result<DebuggerExecutionState, ExecutionError> {
-    #[cfg(windows)]
-    {
-        let mut executor = DbgEngExecutor::connect_session()?;
-        executor.query_execution_state()
-    }
-    #[cfg(not(windows))]
-    {
-        Err(ExecutionError::WindowsOnly)
-    }
-}
+    pub async fn query_state(&self) -> Result<DebuggerExecutionState, ExecutionError> {
+        let (response_tx, response_rx) = oneshot::channel();
+        self.sender
+            .send(DispatcherRequest::QueryState {
+                response: response_tx,
+            })
+            .map_err(|_| ExecutionError::WorkerStopped)?;
 
-pub fn interrupt_current_session() -> Result<DebuggerExecutionState, ExecutionError> {
-    #[cfg(windows)]
-    {
-        let mut executor = DbgEngExecutor::connect_session()?;
-        executor.interrupt_target()
+        response_rx
+            .await
+            .map_err(|_| ExecutionError::WorkerStopped)?
     }
-    #[cfg(not(windows))]
-    {
-        Err(ExecutionError::WindowsOnly)
+
+    pub async fn interrupt(&self) -> Result<DebuggerExecutionState, ExecutionError> {
+        let (response_tx, response_rx) = oneshot::channel();
+        self.sender
+            .send(DispatcherRequest::Interrupt {
+                response: response_tx,
+            })
+            .map_err(|_| ExecutionError::WorkerStopped)?;
+
+        response_rx
+            .await
+            .map_err(|_| ExecutionError::WorkerStopped)?
     }
 }
 
@@ -375,20 +384,53 @@ fn build_executor(mode: ExecutionMode) -> Result<Box<dyn BlockingExecutor>, Exec
     }
 }
 
+fn blocked_execution_control(command: &str) -> Option<&str> {
+    let first = command
+        .split_whitespace()
+        .next()
+        .unwrap_or_default()
+        .trim_start_matches('.')
+        .trim();
+
+    if first.is_empty() {
+        return None;
+    }
+
+    const BLOCKED: &[&str] = &[
+        "g",
+        "gh",
+        "gn",
+        "gu",
+        "p",
+        "pa",
+        "pc",
+        "pt",
+        "t",
+    ];
+
+    BLOCKED
+        .iter()
+        .copied()
+        .find(|token| first.eq_ignore_ascii_case(token))
+}
+
 struct MockExecutor {
     responses: HashMap<String, String>,
     state: DebuggerExecutionState,
 }
 
-impl BlockingExecutor for MockExecutor {
-    fn query_state(&mut self) -> Result<DebuggerExecutionState, ExecutionError> {
-        Ok(self.state.clone())
-    }
+    impl BlockingExecutor for MockExecutor {
+        fn query_state(&mut self) -> Result<DebuggerExecutionState, ExecutionError> {
+            Ok(self.state.clone())
+        }
 
-    fn execute_ready(&mut self, command: &str) -> Result<String, ExecutionError> {
-        Ok(self
-            .responses
-            .get(command)
+        fn execute_ready(&mut self, command: &str) -> Result<String, ExecutionError> {
+            if let Some(blocked) = blocked_execution_control(command) {
+                return Err(ExecutionError::UnsafeExecutionControl(blocked.to_string()));
+            }
+            Ok(self
+                .responses
+                .get(command)
             .cloned()
             .unwrap_or_else(|| format!("mock-executed: {command}")))
     }
@@ -412,10 +454,7 @@ mod windows_impl {
         core::{Interface, PCSTR, Result as WinResult, implement},
     };
 
-    use super::{
-        BlockingExecutor, CString, DebuggerExecutionState, ExecutionError, INTERRUPT_POLL_INTERVAL,
-        INTERRUPT_WAIT_TIMEOUT, Instant,
-    };
+    use super::{BlockingExecutor, CString, DebuggerExecutionState, ExecutionError, blocked_execution_control};
 
     #[implement(IDebugOutputCallbacks)]
     struct OutputCollector {
@@ -494,26 +533,6 @@ mod windows_impl {
                 .map_err(|error| ExecutionError::Command(error.to_string()))
         }
 
-        fn wait_until_ready_for_commands(
-            control: &IDebugControl,
-        ) -> Result<DebuggerExecutionState, ExecutionError> {
-            let deadline = Instant::now() + INTERRUPT_WAIT_TIMEOUT;
-            loop {
-                let state = current_state(control)?;
-                if state.ready_for_commands {
-                    return Ok(state);
-                }
-                if Instant::now() >= deadline {
-                    return Err(ExecutionError::Command(format!(
-                        "timed out waiting for debugger to become ready; last status was {} ({})",
-                        state.status_name, state.raw_status
-                    )));
-                }
-
-                let timeout = INTERRUPT_POLL_INTERVAL.as_millis() as u32;
-                let _ = unsafe { control.WaitForEvent(0, timeout) };
-            }
-        }
     }
 
     impl BlockingExecutor for DbgEngExecutor {
@@ -522,6 +541,9 @@ mod windows_impl {
         }
 
         fn execute_ready(&mut self, command: &str) -> Result<String, ExecutionError> {
+            if let Some(blocked) = blocked_execution_control(command) {
+                return Err(ExecutionError::UnsafeExecutionControl(blocked.to_string()));
+            }
             let captured = Arc::new(Mutex::new(String::new()));
             let callback: IDebugOutputCallbacks = OutputCollector::new(captured.clone()).into();
             let child = unsafe { self.client.CreateClient() }
@@ -563,7 +585,7 @@ mod windows_impl {
                     .map_err(|error| ExecutionError::Command(error.to_string()))?;
             }
 
-            Self::wait_until_ready_for_commands(&control)
+            current_state(&control)
         }
     }
 
@@ -612,5 +634,24 @@ mod tests {
                 .to_string()
                 .contains("debugger is not ready for commands")
         );
+    }
+
+    #[test]
+    fn blocked_execution_control_detects_resume_commands() {
+        assert_eq!(blocked_execution_control("g"), Some("g"));
+        assert_eq!(blocked_execution_control("gu"), Some("gu"));
+        assert_eq!(blocked_execution_control(".gh"), Some("gh"));
+        assert_eq!(blocked_execution_control("dt nt!_EPROCESS"), None);
+    }
+
+    #[test]
+    fn mock_executor_rejects_execution_control_commands() {
+        let mut executor = MockExecutor {
+            responses: HashMap::new(),
+            state: DebuggerExecutionState::break_state(),
+        };
+
+        let error = executor.execute("g").expect_err("g must be blocked");
+        assert!(matches!(error, ExecutionError::UnsafeExecutionControl(_)));
     }
 }

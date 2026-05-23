@@ -29,9 +29,9 @@ pub unsafe extern "system" fn DebugExtensionInitialize(
         *flags = 0;
     }
 
-    // Auto-start the MCP server when WinDbg loads the extension DLL.
-    // Errors are intentionally ignored — the user can still use !mcp serve manually.
-    let _ = PluginServerControl::start(None);
+    // Auto-start on a background thread so `.load` is never blocked by
+    // binding the HTTP listener or connecting a DbgEng session.
+    let _ = PluginServerControl::start_background(None);
 
     S_OK
 }
@@ -101,7 +101,7 @@ fn run_mcp_command(client: Ref<IDebugClient>, args: PCSTR) -> WinResult<()> {
 }
 
 fn help_text() -> &'static str {
-    "windbg-mcp commands:\n\n  !mcp help\n      Show this help text.\n\n  !mcp serve [host:port]\n      Start the MCP Streamable HTTP server inside the WinDbg plugin. Default bind: 127.0.0.1:50051, endpoint: /mcp\n\n  !mcp status\n      Show whether the in-process MCP server is running.\n\n  !mcp state\n      Show the current debugger execution state.\n\n  !mcp stop\n      Stop the in-process MCP server.\n\n  !mcp break\n      Request a debugger break into the currently running target. Alias: !mcp interrupt\n\n  !mcp catalog [query]\n      List catalog entries or search the extracted debugger command catalog.\n\n  !mcp doc <token-or-id>\n      Show the static documentation for one extracted command topic.\n\n  !mcp exec <debugger command>\n      Execute a raw debugger command through dbgeng. This command does not auto-interrupt; use !mcp state and !mcp break first when needed.\n\nIf the first token is not recognized as a subcommand, !mcp treats the input as `exec`."
+    "windbg-mcp commands:\n\n  !mcp help\n      Show this help text.\n\n  !mcp serve [host:port]\n      Start the MCP Streamable HTTP server inside the WinDbg plugin. Default bind: 127.0.0.1:50051, endpoint: /mcp\n\n  !mcp status\n      Show whether the in-process MCP server is running.\n\n  !mcp state\n      Show the current debugger execution state.\n\n  !mcp stop\n      Stop the in-process MCP server.\n\n  !mcp break\n      Request a debugger break into the currently running target. Alias: !mcp interrupt\n\n  !mcp catalog [query]\n      List catalog entries or search the extracted debugger command catalog.\n\n  !mcp doc <token-or-id>\n      Show the static documentation for one extracted command topic.\n\n  !mcp exec <debugger command>\n      Execute a non-resuming debugger command through dbgeng. This command does not auto-interrupt, and execution-control commands such as g/p/t are blocked; use !mcp state and !mcp break first when needed.\n\nIf the first token is not recognized as a subcommand, !mcp treats the input as `exec`."
 }
 
 fn command_serve(control: &IDebugControl, bind: &str) -> WinResult<()> {

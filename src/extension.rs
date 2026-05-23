@@ -10,7 +10,6 @@ use windows::{
     core::{HRESULT, Interface, PCSTR, Ref, Result as WinResult},
 };
 
-use crate::plugin_server::notify_windbg;
 use crate::{Catalog, plugin_server::PluginServerControl};
 
 const EXTENSION_MAJOR: u32 = 0;

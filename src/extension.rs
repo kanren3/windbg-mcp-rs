@@ -10,6 +10,7 @@ use windows::{
     core::{HRESULT, Interface, PCSTR, Ref, Result as WinResult},
 };
 
+use crate::plugin_server::notify_windbg;
 use crate::{Catalog, plugin_server::PluginServerControl};
 
 const EXTENSION_MAJOR: u32 = 0;
@@ -29,9 +30,21 @@ pub unsafe extern "system" fn DebugExtensionInitialize(
         *flags = 0;
     }
 
-    // Auto-start on a background thread so `.load` is never blocked by
-    // binding the HTTP listener or connecting a DbgEng session.
-    let _ = PluginServerControl::start(None);
+    // Start the MCP HTTP server during extension load. This should return as
+    // soon as the listener binds; debugger session connection is deferred.
+    match PluginServerControl::start(None) {
+        Ok(status) => {
+            let _ = notify_windbg(&format!(
+                "WinDbg MCP server is running at {}\n",
+                status.mcp_url
+            ));
+        }
+        Err(error) => {
+            let _ = notify_windbg(&format!(
+                "WinDbg MCP server auto-start failed: {error}\n"
+            ));
+        }
+    }
 
     S_OK
 }
@@ -105,7 +118,11 @@ fn command_serve(control: &IDebugControl, bind: &str) -> WinResult<()> {
             &format!("WinDbg MCP server is running at {}\n", status.mcp_url),
             DEBUG_OUTPUT_NORMAL,
         ),
-        Err(error) => Err(windows::core::Error::new(E_FAIL, error)),
+        Err(error) => write_text(
+            control,
+            &format!("Failed to start WinDbg MCP server: {error}\n"),
+            DEBUG_OUTPUT_ERROR,
+        ),
     }
 }
 

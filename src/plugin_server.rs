@@ -22,6 +22,8 @@ const DEFAULT_BIND_ADDRESS: &str = "127.0.0.1:50051";
 
 static SERVER_STATE: LazyLock<Mutex<Option<RunningPluginServer>>> =
     LazyLock::new(|| Mutex::new(None));
+static DISPATCHER_STATE: LazyLock<Mutex<Option<CommandDispatcher>>> =
+    LazyLock::new(|| Mutex::new(None));
 
 #[derive(Debug, Clone)]
 pub struct PluginServerStatus {
@@ -37,6 +39,41 @@ struct RunningPluginServer {
 pub struct PluginServerControl;
 
 impl PluginServerControl {
+    pub fn get_or_start_dispatcher() -> Result<CommandDispatcher, String> {
+        let existing = {
+            let state = DISPATCHER_STATE
+                .lock()
+                .map_err(|_| "dispatcher state lock poisoned".to_string())?;
+            state.clone()
+        };
+
+        if let Some(dispatcher) = existing {
+            return Ok(dispatcher);
+        }
+
+        match CommandDispatcher::spawn(ExecutionMode::CurrentSession) {
+            Ok(dispatcher) => {
+                let mut state = DISPATCHER_STATE
+                    .lock()
+                    .map_err(|_| "dispatcher state lock poisoned".to_string())?;
+                if let Some(existing) = state.as_ref() {
+                    return Ok(existing.clone());
+                }
+                let cloned = dispatcher.clone();
+                *state = Some(dispatcher);
+                let _ = notify_windbg("WinDbg MCP debugger session connected.\n");
+                Ok(cloned)
+            }
+            Err(error) => {
+                let message = error.to_string();
+                let _ = notify_windbg(&format!(
+                    "WinDbg MCP debugger session connection failed: {message}\n"
+                ));
+                Err(message)
+            }
+        }
+    }
+
     pub fn start(bind_address: Option<&str>) -> Result<PluginServerStatus, String> {
         let bind_address = bind_address
             .map(str::trim)
@@ -59,6 +96,7 @@ impl PluginServerControl {
         let join_handle = thread::Builder::new()
             .name("windbg-mcp-plugin-server".to_string())
             .spawn(move || {
+                let startup_error_tx = startup_tx.clone();
                 let runtime = match tokio::runtime::Builder::new_multi_thread()
                     .enable_io()
                     .enable_time()
@@ -76,6 +114,7 @@ impl PluginServerControl {
                 });
 
                 if let Err(error) = result {
+                    let _ = startup_error_tx.send(Err(error.clone()));
                     tracing::error!("plugin MCP server stopped with error: {error}");
                 }
             })
@@ -109,6 +148,10 @@ impl PluginServerControl {
             state.take()
         };
 
+        if let Ok(mut dispatcher_state) = DISPATCHER_STATE.lock() {
+            dispatcher_state.take();
+        }
+
         let Some(running) = running else {
             return Ok(None);
         };
@@ -127,8 +170,6 @@ async fn run_server_loop(
     cancellation: CancellationToken,
     startup_tx: mpsc::Sender<Result<PluginServerStatus, String>>,
 ) -> Result<(), String> {
-    let dispatcher = CommandDispatcher::spawn(ExecutionMode::CurrentSession)
-        .map_err(|error| error.to_string())?;
     let listener = TcpListener::bind(&bind_address)
         .await
         .map_err(|error| error.to_string())?;
@@ -141,9 +182,7 @@ async fn run_server_loop(
         .map_err(|_| "plugin server startup receiver dropped".to_string())?;
 
     let service: StreamableHttpService<WindbgMcpServer> = StreamableHttpService::new(
-        move || {
-            Ok(WindbgMcpServer::new(dispatcher.clone()))
-        },
+        || Ok(WindbgMcpServer::new()),
         Default::default(),
         StreamableHttpServerConfig {
             stateful_mode: true,
@@ -160,7 +199,7 @@ async fn run_server_loop(
         .map_err(|error| error.to_string())
 }
 
-fn notify_windbg(text: &str) -> Result<(), String> {
+pub(crate) fn notify_windbg(text: &str) -> Result<(), String> {
     let client = unsafe { DebugCreate::<IDebugClient>() }.map_err(|error| error.to_string())?;
     unsafe {
         client

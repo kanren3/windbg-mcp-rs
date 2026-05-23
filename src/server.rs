@@ -8,6 +8,7 @@ use serde_json::{Value, json};
 use crate::{
     catalog::{Catalog, CatalogEntry, CatalogResourceKind, CatalogSection},
     executor::CommandDispatcher,
+    plugin_server::PluginServerControl,
     resources::{GUIDE_URI, render_compact_command, render_full_command, render_guide},
 };
 
@@ -32,18 +33,36 @@ struct SearchCatalogArgs {
     limit: Option<u32>,
 }
 
-#[derive(Clone)]
+#[derive(Clone, Default)]
 pub struct WindbgMcpServer {
-    dispatcher: CommandDispatcher,
+    dispatcher_override: Option<CommandDispatcher>,
 }
 
 impl WindbgMcpServer {
-    pub fn new(dispatcher: CommandDispatcher) -> Self {
-        Self { dispatcher }
+    pub fn new() -> Self {
+        Self {
+            dispatcher_override: None,
+        }
+    }
+
+    #[cfg(test)]
+    fn with_dispatcher(dispatcher: CommandDispatcher) -> Self {
+        Self {
+            dispatcher_override: Some(dispatcher),
+        }
     }
 
     fn catalog(&self) -> &'static Catalog {
         Catalog::global()
+    }
+
+    fn dispatcher(&self) -> Result<crate::executor::CommandDispatcher, McpError> {
+        if let Some(dispatcher) = self.dispatcher_override.as_ref() {
+            return Ok(dispatcher.clone());
+        }
+
+        PluginServerControl::get_or_start_dispatcher()
+            .map_err(|error| McpError::internal_error(error, None))
     }
 
     fn parse_arguments<T>(&self, arguments: Option<JsonObject>) -> Result<T, McpError>
@@ -127,8 +146,8 @@ impl WindbgMcpServer {
 
         let command = build_command(entry, variant, arguments)
             .map_err(|error| McpError::invalid_params(error.to_string(), None))?;
-        let execution = self
-            .dispatcher
+        let dispatcher = self.dispatcher()?;
+        let execution = dispatcher
             .execute(command.clone())
             .await
             .map_err(|error| McpError::internal_error(error.to_string(), None))?;
@@ -192,8 +211,8 @@ impl ServerHandler for WindbgMcpServer {
         match request.name.as_ref() {
             "windbg_execute_command" => {
                 let args: ExecuteRawArgs = self.parse_arguments(request.arguments)?;
-                let execution = self
-                    .dispatcher
+                let dispatcher = self.dispatcher()?;
+                let execution = dispatcher
                     .execute(args.command.clone())
                     .await
                     .map_err(|error| McpError::internal_error(error.to_string(), None))?;
@@ -206,8 +225,8 @@ impl ServerHandler for WindbgMcpServer {
             }
             "windbg_get_execution_state" => {
                 let _: GetExecutionStateArgs = self.parse_arguments(request.arguments)?;
-                let state = self
-                    .dispatcher
+                let dispatcher = self.dispatcher()?;
+                let state = dispatcher
                     .query_state()
                     .await
                     .map_err(|error| McpError::internal_error(error.to_string(), None))?;
@@ -253,8 +272,8 @@ impl ServerHandler for WindbgMcpServer {
             }
             "windbg_interrupt_target" => {
                 let _: InterruptTargetArgs = self.parse_arguments(request.arguments)?;
-                let state = self
-                    .dispatcher
+                let dispatcher = self.dispatcher()?;
+                let state = dispatcher
                     .interrupt()
                     .await
                     .map_err(|error| McpError::internal_error(error.to_string(), None))?;
@@ -367,7 +386,7 @@ mod tests {
         );
         let dispatcher = CommandDispatcher::spawn(ExecutionMode::Mock { responses })
             .expect("dispatcher should start");
-        let server = WindbgMcpServer::new(dispatcher);
+        let server = WindbgMcpServer::with_dispatcher(dispatcher);
         let entry = server
             .catalog()
             .lookup("dt")
@@ -391,7 +410,7 @@ mod tests {
             responses: HashMap::new(),
         })
         .expect("dispatcher should start");
-        let server = WindbgMcpServer::new(dispatcher);
+        let server = WindbgMcpServer::with_dispatcher(dispatcher);
 
         let tool = server
             .get_tool("windbg_interrupt_target")
@@ -405,7 +424,7 @@ mod tests {
             responses: HashMap::new(),
         })
         .expect("dispatcher should start");
-        let server = WindbgMcpServer::new(dispatcher);
+        let server = WindbgMcpServer::with_dispatcher(dispatcher);
 
         let tool = server
             .get_tool("windbg_execute_command")
@@ -419,7 +438,7 @@ mod tests {
             responses: HashMap::new(),
         })
         .expect("dispatcher should start");
-        let server = WindbgMcpServer::new(dispatcher);
+        let server = WindbgMcpServer::with_dispatcher(dispatcher);
 
         let tool = server
             .get_tool("windbg_get_execution_state")
@@ -433,7 +452,7 @@ mod tests {
             responses: HashMap::new(),
         })
         .expect("dispatcher should start");
-        let server = WindbgMcpServer::new(dispatcher);
+        let server = WindbgMcpServer::with_dispatcher(dispatcher);
         let entry = server
             .catalog()
             .lookup("bp")
@@ -451,7 +470,7 @@ mod tests {
             responses: HashMap::new(),
         })
         .expect("dispatcher should start");
-        let server = WindbgMcpServer::new(dispatcher);
+        let server = WindbgMcpServer::with_dispatcher(dispatcher);
         let entry = server
             .catalog()
             .lookup("bp")

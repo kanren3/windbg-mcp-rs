@@ -18,26 +18,57 @@
 ### 1. Build the DLL
 
 ```powershell
-cargo build --release
+# x64 (default)
+cargo build --release --target x86_64-pc-windows-msvc
+
+# ARM64
+rustup target add aarch64-pc-windows-msvc
+cargo build --release --target aarch64-pc-windows-msvc
 ```
 
-### 2. Load it in WinDbg
+### 2. Install the extension
+
+**One-liner (recommended):**
+
+```powershell
+irm https://raw.githubusercontent.com/kanren3/windbg-mcp-rs/main/scripts/install.ps1 | iex
+```
+
+This downloads the latest release from GitHub and installs to all discovered WinDbg locations.  
+Run as **Administrator** to install to SDK debugger paths.
+
+**From local build (developers):**
+
+```powershell
+.\scripts\install.ps1 -LocalPath .\target
+```
+
+**Manual install:**
 
 ```text
-.load path\to\windbg_mcp_rs.dll
+# SDK Debuggers
+copy target\release\windbg_mcp_rs.dll                  <windbg>\winext\
+copy windbg_mcp_rs_GalleryManifest.xml                 <windbg>\OptionalExtensions\
+
+# WinDbg (Store) — use install.ps1 (manual setup is complex)
+# The script handles config.xml, GUID, and manifest path rewriting automatically.
+# If you must do it manually:
+#   DLL  → %LOCALAPPDATA%\DBG\EngineExtensions\
+#   Gallery files → %LOCALAPPDATA%\DBG\ExtRepository\windbg-mcp-rs\
+#   Then: .settings load %LOCALAPPDATA%\DBG\ExtRepository\windbg-mcp-rs\config.xml
+#   Then: .settings save
 ```
 
-### 3. Start the MCP server
+### 3. Verify
+
+Start WinDbg and run:
 
 ```text
-!mcp serve 127.0.0.1:50051
+!mcp status
 ```
 
-The MCP endpoint will be:
-
-```text
-http://127.0.0.1:50051/mcp
-```
+The MCP server **auto-starts** when the extension loads — no manual `!mcp serve` needed.  
+Endpoint: `http://127.0.0.1:50051/mcp`
 
 ### 4. Connect your MCP client
 
@@ -85,3 +116,6 @@ cargo test
 - The runtime does not parse `docs/debugger.chm`; it uses the prebuilt static catalog in `src/catalog.json`
 - The transport is Streamable HTTP
 - Set your MCP client timeout as high as possible, because some WinDbg operations can take a long time to finish
+- The server now auto-starts when the extension DLL is loaded. Run `!mcp stop` to stop it, `!mcp serve` to restart manually.
+- `windbg_mcp_rs_GalleryManifest.xml` enables WinDbg auto-loading when placed in `OptionalExtensions\` alongside the extension DLL.
+- Use `scripts\install.ps1` to automatically deploy the extension to all discovered WinDbg installations.

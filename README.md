@@ -67,7 +67,7 @@ Start WinDbg and run:
 !mcp status
 ```
 
-The MCP server **auto-starts** when the extension loads.  
+The MCP server **auto-starts** when WinDbg reports an active debugging session.  
 Endpoint: `http://127.0.0.1:50051/mcp`
 
 ### 4. Connect your MCP client
@@ -118,6 +118,6 @@ cargo test
 - The runtime does not parse `docs/debugger.chm`; it uses the prebuilt static catalog in `src/catalog.json`
 - The transport is Streamable HTTP
 - Set your MCP client timeout as high as possible, because some WinDbg operations can take a long time to finish
-- The server now auto-starts when the extension DLL is loaded. Run `!mcp stop` to stop it, or `!mcp serve` to start it again manually.
+- The server now auto-starts when WinDbg reports an active debugging session. Run `!mcp stop` to stop it, or `!mcp serve` to start it again manually.
 - `windbg_mcp_rs_GalleryManifest.xml` enables WinDbg auto-loading when placed in `OptionalExtensions\` alongside the extension DLL.
 - Use `scripts\install.ps1` to automatically deploy the extension to all discovered WinDbg installations.

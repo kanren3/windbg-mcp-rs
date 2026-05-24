@@ -4,12 +4,14 @@ use windows::{
     Win32::{
         Foundation::{E_FAIL, E_POINTER, S_OK},
         System::Diagnostics::Debug::Extensions::{
-            DEBUG_OUTPUT_ERROR, DEBUG_OUTPUT_NORMAL, IDebugClient, IDebugControl,
+            DEBUG_NOTIFY_SESSION_ACTIVE, DEBUG_NOTIFY_SESSION_INACTIVE, DEBUG_OUTPUT_ERROR,
+            DEBUG_OUTPUT_NORMAL, IDebugClient, IDebugControl,
         },
     },
     core::{HRESULT, Interface, PCSTR, Ref, Result as WinResult},
 };
 
+use crate::plugin_server::notify_windbg;
 use crate::{Catalog, plugin_server::PluginServerControl};
 
 const EXTENSION_MAJOR: u32 = 0;
@@ -29,16 +31,34 @@ pub unsafe extern "system" fn DebugExtensionInitialize(
         *flags = 0;
     }
 
-    // Start the MCP HTTP server during extension load. This should return as
-    // soon as the listener binds; debugger session connection is deferred.
-    let _ = PluginServerControl::start(None);
-
     S_OK
 }
 
 #[unsafe(no_mangle)]
 pub unsafe extern "system" fn DebugExtensionUninitialize() {
-    let _ = PluginServerControl::stop();
+    // Session teardown should already arrive through DebugExtensionNotify.
+}
+
+#[unsafe(no_mangle)]
+pub unsafe extern "system" fn DebugExtensionNotify(notify: u32, _argument: u64) {
+    match notify {
+        DEBUG_NOTIFY_SESSION_ACTIVE => match PluginServerControl::start(None) {
+            Ok(status) => {
+                let _ = notify_windbg(&format!(
+                    "WinDbg MCP server is running at {}\n",
+                    status.mcp_url
+                ));
+            }
+            Err(error) => {
+                let _ = notify_windbg(&format!("WinDbg MCP server auto-start failed: {error}\n"));
+            }
+        },
+        DEBUG_NOTIFY_SESSION_INACTIVE => {
+            let _ = notify_windbg("WinDbg MCP server is stopping...\n");
+            let _ = PluginServerControl::stop();
+        }
+        _ => {}
+    }
 }
 
 #[unsafe(no_mangle)]

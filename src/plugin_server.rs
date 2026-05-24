@@ -11,12 +11,14 @@ use tokio_util::sync::CancellationToken;
 use windows::{
     Win32::System::Diagnostics::Debug::Extensions::{
         DEBUG_CONNECT_SESSION_NO_ANNOUNCE, DEBUG_CONNECT_SESSION_NO_VERSION, DEBUG_OUTPUT_NORMAL,
-        DebugCreate, IDebugClient, IDebugControl,
+        IDebugControl,
     },
     core::{Interface, PCSTR},
 };
 
-use crate::{CommandDispatcher, ExecutionMode, WindbgMcpServer};
+use crate::{
+    CommandDispatcher, ExecutionMode, WindbgMcpServer, primary_client::create_client_from_primary,
+};
 
 const DEFAULT_BIND_ADDRESS: &str = "127.0.0.1:50051";
 
@@ -200,7 +202,7 @@ async fn run_server_loop(
 }
 
 pub(crate) fn notify_windbg(text: &str) -> Result<(), String> {
-    let client = unsafe { DebugCreate::<IDebugClient>() }.map_err(|error| error.to_string())?;
+    let client = create_client_from_primary()?;
     unsafe {
         client
             .ConnectSession(

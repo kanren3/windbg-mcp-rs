@@ -2,6 +2,8 @@ pub mod catalog;
 pub mod executor;
 #[cfg(windows)]
 pub mod plugin_server;
+#[cfg(windows)]
+pub mod primary_client;
 pub mod resources;
 pub mod server;
 

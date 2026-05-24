@@ -12,7 +12,11 @@ use windows::{
 };
 
 use crate::plugin_server::notify_windbg;
-use crate::{Catalog, plugin_server::PluginServerControl};
+use crate::{
+    Catalog,
+    plugin_server::PluginServerControl,
+    primary_client::{clear_primary_client, initialize_primary_client},
+};
 
 const EXTENSION_MAJOR: u32 = 0;
 const EXTENSION_MINOR: u32 = 1;
@@ -31,12 +35,18 @@ pub unsafe extern "system" fn DebugExtensionInitialize(
         *flags = 0;
     }
 
+    if let Err(error) = initialize_primary_client() {
+        let _ = notify_windbg(&format!(
+            "Failed to initialize WinDbg MCP primary client: {error}\n"
+        ));
+    }
+
     S_OK
 }
 
 #[unsafe(no_mangle)]
 pub unsafe extern "system" fn DebugExtensionUninitialize() {
-    // Session teardown should already arrive through DebugExtensionNotify.
+    clear_primary_client();
 }
 
 #[unsafe(no_mangle)]

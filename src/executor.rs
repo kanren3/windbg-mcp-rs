@@ -448,11 +448,13 @@ mod windows_impl {
     use windows::{
         Win32::System::Diagnostics::Debug::Extensions::{
             DEBUG_CONNECT_SESSION_NO_ANNOUNCE, DEBUG_CONNECT_SESSION_NO_VERSION,
-            DEBUG_EXECUTE_DEFAULT, DEBUG_INTERRUPT_ACTIVE, DEBUG_OUTCTL_THIS_CLIENT, DebugCreate,
-            IDebugClient, IDebugControl, IDebugOutputCallbacks, IDebugOutputCallbacks_Impl,
+            DEBUG_EXECUTE_DEFAULT, DEBUG_INTERRUPT_ACTIVE, DEBUG_OUTCTL_THIS_CLIENT, IDebugClient,
+            IDebugControl, IDebugOutputCallbacks, IDebugOutputCallbacks_Impl,
         },
         core::{Interface, PCSTR, Result as WinResult, implement},
     };
+
+    use crate::primary_client::create_client_from_primary;
 
     use super::{BlockingExecutor, CString, DebuggerExecutionState, ExecutionError, blocked_execution_control};
 
@@ -486,8 +488,7 @@ mod windows_impl {
 
     impl DbgEngExecutor {
         pub(crate) fn connect_session() -> Result<Self, ExecutionError> {
-            let client = unsafe { DebugCreate::<IDebugClient>() }
-                .map_err(|error| ExecutionError::Startup(error.to_string()))?;
+            let client = create_client_from_primary().map_err(ExecutionError::Startup)?;
 
             unsafe {
                 client

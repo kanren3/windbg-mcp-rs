@@ -44,7 +44,7 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
-$ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+$ScriptDir = if ($MyInvocation.MyCommand.Path) { Split-Path -Parent $MyInvocation.MyCommand.Path } else { "" }
 $RepoOwner = "kanren3"
 $RepoName  = "windbg-mcp-rs"
 $TempDir   = Join-Path $env:TEMP "windbg-mcp-rs-install"

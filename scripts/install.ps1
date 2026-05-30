@@ -236,9 +236,9 @@ if ($LocalPath) {
 
         $archManifest = Get-ChildItem $archTemp -Recurse -Filter "windbg_mcp_rs_GalleryManifest.xml" | Select-Object -First 1 -ExpandProperty FullName
         if (-not $archManifest) {
-            Write-Host "    Manifest not in zip — downloading from main branch..." -ForegroundColor Yellow
+            Write-Host "    Manifest not in zip — downloading from master branch..." -ForegroundColor Yellow
             $archManifest = Join-Path $archTemp "windbg_mcp_rs_GalleryManifest.xml"
-            Invoke-WebRequest -Uri "https://raw.githubusercontent.com/$RepoOwner/$RepoName/main/windbg_mcp_rs_GalleryManifest.xml" -OutFile $archManifest
+            Invoke-WebRequest -Uri "https://raw.githubusercontent.com/$RepoOwner/$RepoName/master/windbg_mcp_rs_GalleryManifest.xml" -OutFile $archManifest
         }
 
         $dllByArch[$arch] = @{ Dll = $archDll; Manifest = $archManifest }

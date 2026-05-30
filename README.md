@@ -31,7 +31,7 @@ cargo build --release --target aarch64-pc-windows-msvc
 **One-liner (recommended):**
 
 ```powershell
-irm https://raw.githubusercontent.com/kanren3/windbg-mcp-rs/main/scripts/install.ps1 | iex
+irm https://raw.githubusercontent.com/kanren3/windbg-mcp-rs/master/scripts/install.ps1 | iex
 ```
 
 This downloads the latest release from GitHub and installs to all discovered WinDbg locations.  

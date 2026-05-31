@@ -384,8 +384,7 @@ mod tests {
             "dt _PEB_LDR_DATA".to_string(),
             "ntdll!_PEB_LDR_DATA".to_string(),
         );
-        let dispatcher = CommandDispatcher::spawn(ExecutionMode::Mock { responses })
-            .expect("dispatcher should start");
+        let (dispatcher, _handle) = CommandDispatcher::spawn(ExecutionMode::Mock { responses }).expect("dispatcher should start");
         let server = WindbgMcpServer::with_dispatcher(dispatcher);
         let entry = server
             .catalog()
@@ -406,10 +405,9 @@ mod tests {
 
     #[test]
     fn interrupt_tool_is_exposed() {
-        let dispatcher = CommandDispatcher::spawn(ExecutionMode::Mock {
+        let (dispatcher, _handle) = CommandDispatcher::spawn(ExecutionMode::Mock {
             responses: HashMap::new(),
-        })
-        .expect("dispatcher should start");
+        }).expect("dispatcher should start");
         let server = WindbgMcpServer::with_dispatcher(dispatcher);
 
         let tool = server
@@ -420,10 +418,9 @@ mod tests {
 
     #[test]
     fn command_tool_is_exposed() {
-        let dispatcher = CommandDispatcher::spawn(ExecutionMode::Mock {
+        let (dispatcher, _handle) = CommandDispatcher::spawn(ExecutionMode::Mock {
             responses: HashMap::new(),
-        })
-        .expect("dispatcher should start");
+        }).expect("dispatcher should start");
         let server = WindbgMcpServer::with_dispatcher(dispatcher);
 
         let tool = server
@@ -434,10 +431,9 @@ mod tests {
 
     #[test]
     fn state_tool_is_exposed() {
-        let dispatcher = CommandDispatcher::spawn(ExecutionMode::Mock {
+        let (dispatcher, _handle) = CommandDispatcher::spawn(ExecutionMode::Mock {
             responses: HashMap::new(),
-        })
-        .expect("dispatcher should start");
+        }).expect("dispatcher should start");
         let server = WindbgMcpServer::with_dispatcher(dispatcher);
 
         let tool = server
@@ -448,10 +444,9 @@ mod tests {
 
     #[test]
     fn compact_resource_stays_small_and_points_to_full_doc() {
-        let dispatcher = CommandDispatcher::spawn(ExecutionMode::Mock {
+        let (dispatcher, _handle) = CommandDispatcher::spawn(ExecutionMode::Mock {
             responses: HashMap::new(),
-        })
-        .expect("dispatcher should start");
+        }).expect("dispatcher should start");
         let server = WindbgMcpServer::with_dispatcher(dispatcher);
         let entry = server
             .catalog()
@@ -466,10 +461,9 @@ mod tests {
 
     #[test]
     fn syntax_preview_uses_inferred_syntax_when_structured_syntax_is_missing() {
-        let dispatcher = CommandDispatcher::spawn(ExecutionMode::Mock {
+        let (dispatcher, _handle) = CommandDispatcher::spawn(ExecutionMode::Mock {
             responses: HashMap::new(),
-        })
-        .expect("dispatcher should start");
+        }).expect("dispatcher should start");
         let server = WindbgMcpServer::with_dispatcher(dispatcher);
         let entry = server
             .catalog()

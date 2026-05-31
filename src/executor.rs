@@ -1,4 +1,4 @@
-use std::{collections::HashMap, ffi::CString, sync::mpsc, thread};
+use std::{collections::HashMap, ffi::CString, sync::mpsc, thread::{self, JoinHandle}};
 
 use serde::Serialize;
 use tokio::sync::oneshot;
@@ -217,11 +217,11 @@ pub struct CommandDispatcher {
 }
 
 impl CommandDispatcher {
-    pub fn spawn(mode: ExecutionMode) -> Result<Self, ExecutionError> {
+    pub fn spawn(mode: ExecutionMode) -> Result<(Self, JoinHandle<()>), ExecutionError> {
         let (sender, mut receiver) = tokio::sync::mpsc::unbounded_channel::<DispatcherRequest>();
         let (ready_tx, ready_rx) = mpsc::channel();
 
-        thread::Builder::new()
+        let join_handle = thread::Builder::new()
             .name("windbg-mcp-dispatcher".to_string())
             .spawn(move || {
                 let mut executor = match build_executor(mode) {
@@ -258,7 +258,7 @@ impl CommandDispatcher {
             .recv()
             .map_err(|_| ExecutionError::WorkerStopped)??;
 
-        Ok(Self { sender })
+        Ok((Self { sender }, join_handle))
     }
 
     pub async fn execute(
@@ -628,5 +628,39 @@ mod tests {
 
         let error = executor.execute("g").expect_err("g must be blocked");
         assert!(matches!(error, ExecutionError::UnsafeExecutionControl(_)));
+    }
+
+    #[test]
+    fn dispatcher_thread_exits_when_sender_dropped() {
+        let (dispatcher, handle) = CommandDispatcher::spawn(ExecutionMode::Mock {
+            responses: HashMap::new(),
+        })
+        .expect("dispatcher should start");
+
+        // Drop the only sender → dispatcher thread exits its recv loop
+        drop(dispatcher);
+
+        // Join must succeed (thread already exited, no panic)
+        handle
+            .join()
+            .expect("dispatcher thread should exit cleanly when sender is dropped");
+    }
+
+    #[test]
+    fn dispatcher_lifecycle_spawn_join_respawn() {
+        let (d1, h1) = CommandDispatcher::spawn(ExecutionMode::Mock {
+            responses: HashMap::new(),
+        })
+        .expect("first spawn");
+        drop(d1);
+        h1.join().expect("first join");
+
+        // After first dispatcher is fully stopped, a second spawn must succeed.
+        let (d2, h2) = CommandDispatcher::spawn(ExecutionMode::Mock {
+            responses: HashMap::new(),
+        })
+        .expect("second spawn after cleanup");
+        drop(d2);
+        h2.join().expect("second join");
     }
 }
